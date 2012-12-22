@@ -7,7 +7,7 @@ Configuration(
     description = 'Common definitions for debug/release of test1',
     
     requires = [
-        'os.package.platforms.synthetic.osx.cl-sjlj',
+        'os.component.platforms.synthetic.osx.cl-sjlj',
     ],
     
     # parent = '',

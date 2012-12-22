@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
-Package(
-    id = 'os.package.platforms.synthetic.osx.cl-sjlj',
-    name = 'OS X command line setjump/longjump platform',
-    description = 'Support for a simple OS X environment, running as a \
+Component(
+    id='os.component.platforms.synthetic.osx.cl-sjlj',
+    name='OS X command line setjump/longjump platform',
+    description='Support for a simple OS X environment, running as a \
 command line tool, without system threading.',
     
-    platform = 'synthetic',
+    platform='synthetic',
 
-    headerDefinition = 'OS_INCLUDE_PLATFORM_SYNTHETIC_OSX_SJLJ',
+    headerDefinition='OS_INCLUDE_PLATFORM_SYNTHETIC_OSX_SJLJ',
 
-    requires = [
-        'os.package.hal.arch.synthetic.osx',
+    requires=[
+        'os.component.hal.arch.synthetic.osx',
     ]
 )

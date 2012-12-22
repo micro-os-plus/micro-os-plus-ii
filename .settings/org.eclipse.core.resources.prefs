@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//packages/hal/arch/cortexm/meta/arch.py=utf-8
+encoding//packages/hal/arch/cortexm/stm32f/meta/family.py=utf-8
+encoding//packages/hal/arch/meta/arch.py=utf-8
+encoding//packages/hal/arch/synthetic/meta/arch.py=utf-8
+encoding//packages/hal/arch/synthetic/osx/meta/family.py=utf-8
+encoding//packages/hal/platforms/Olimex/stm32-h103/meta/board.py=utf-8
+encoding//packages/hal/platforms/meta/platforms.py=utf-8
+encoding//packages/hal/platforms/synthetic/osx/cl-sjlj/meta/platform.py=utf-8
+encoding//packages/hal/platforms/synthetic/osx/cl-sjlj/tests/test1/config.py=utf-8
+encoding//packages/meta/master.py=utf-8
+encoding//packages/portable/devices/debug/meta/debug.py=utf-8
+encoding//packages/portable/devices/debug/tests/conversions/meta/config.py=utf-8
+encoding//packages/portable/devices/meta/devices.py=utf-8
+encoding//packages/portable/kernel/meta/kernel.py=utf-8
