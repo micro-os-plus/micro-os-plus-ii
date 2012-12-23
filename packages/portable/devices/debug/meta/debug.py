@@ -8,4 +8,8 @@ Component(
     compile=[
         'Debug.cpp',
     ],
+          
+    scripts=[
+        'tests/conversions/meta/test.py'
+    ],
 )

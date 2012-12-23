@@ -7,7 +7,7 @@ Configuration(
     description = 'Test all conversions provided by the Debug device.',
     
     requires = [
-        'os.component.portable.devices.debug',
+        'os.component.portable.devices.debug.tests.conversions',
     ],
                   
     children = [
@@ -18,6 +18,10 @@ Configuration(
             name = 'Test Debug conversions on OS X sjlj',
             description = 'Common definitions for Debug/Release build configurations running on OS X',
             
+            requires=[
+                # mandatory platform requirement
+                'os.component.platforms.synthetic.osx.cl-sjlj',
+            ],
             buildFolder = 'osx/cl-sjlj/debug/conversions',
             
             children = [
@@ -35,7 +39,7 @@ Configuration(
                     description = 'Debug build configuration for conversions',
                     buildFolder = '$(PARENT)/Debug',
                     
-                    compilerDefinitions = [
+                    preprocessorSymbols = [
                         'DEBUG=1',
                     ],
                 ), 

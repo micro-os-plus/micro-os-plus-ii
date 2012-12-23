@@ -6,7 +6,9 @@ Component(
     description='Support for all synthetic architectures. These are \
 architectures synthesised on other existing architectures, like OS X, \
 Linux, Windows.',
-    
+
+    kind='architecture',
+        
     scripts=[
         'osx/meta/family.py',
     ],
