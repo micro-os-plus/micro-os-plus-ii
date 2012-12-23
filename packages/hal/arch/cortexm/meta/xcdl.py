@@ -8,6 +8,6 @@ Component(
     kind='architecture',
     
     scripts=[
-        'stm32f/meta/family.py',
+        'stm32f/meta/xcdl.py',
     ],
 )

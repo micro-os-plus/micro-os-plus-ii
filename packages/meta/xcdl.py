@@ -27,10 +27,10 @@ Component(
     # are not yet implemented!
     
     scripts=[
-        'portable/kernel/meta/kernel.py',
-        'portable/devices/meta/devices.py',
-        'hal/arch/meta/arch.py',
-        'hal/platforms/meta/platforms.py',
+        'portable/kernel/meta/xcdl.py',
+        'portable/devices/meta/xcdl.py',
+        'hal/arch/meta/xcdl.py',
+        'hal/platforms/meta/xcdl.py',
     ],
     
     

@@ -10,6 +10,6 @@ Linux, Windows.',
     kind='architecture',
         
     scripts=[
-        'osx/meta/family.py',
+        'osx/meta/xcdl.py',
     ],
 )

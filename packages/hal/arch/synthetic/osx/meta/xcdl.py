@@ -8,6 +8,6 @@ Component(
     kind='family',
     
     scripts=[
-        'devices/debug/meta/debug.py',
+        'devices/debug/meta/xcdl.py',
     ],
 )

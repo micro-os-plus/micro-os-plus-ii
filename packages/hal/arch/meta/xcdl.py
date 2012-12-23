@@ -6,7 +6,7 @@ Component(
     description='All µOS++ Second Edition supported architectures.',
     
     scripts = [
-        'cortexm/meta/arch.py',
-        'synthetic/meta/arch.py',
+        'cortexm/meta/xcdl.py',
+        'synthetic/meta/xcdl.py',
     ],
 )

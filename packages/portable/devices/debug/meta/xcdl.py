@@ -10,6 +10,6 @@ Component(
     ],
           
     scripts=[
-        'tests/conversions/meta/test.py'
+        'tests/conversions/meta/xcdl.py'
     ],
 )

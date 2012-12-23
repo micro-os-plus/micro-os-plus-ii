@@ -6,7 +6,7 @@ Component(
     description='All µOS++ Second Edition portable devices packages.',
     
     scripts=[
-        'debug/meta/debug.py',
+        'debug/meta/xcdl.py',
     ],
     
 )

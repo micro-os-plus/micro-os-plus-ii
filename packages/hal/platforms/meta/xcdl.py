@@ -6,7 +6,7 @@ Component(
     description='All µOS++ Second Edition supported platforms.',
     
     scripts=[
-        'Olimex/stm32-h103/meta/board.py',
-        'synthetic/osx/cl-sjlj/meta/platform.py',
+        'Olimex/stm32-h103/meta/xcdl.py',
+        'synthetic/osx/cl-sjlj/meta/xcdl.py',
     ],
 )
