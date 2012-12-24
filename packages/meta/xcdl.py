@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 Component(
-    id='os.component.root',
+    id='component.os.root',
     name='The µOS++ SE repository',
     description='All µOS++ Second Edition components are below this node.',
-        
+
+    kind='root',
+            
     # The below files are relative to the root of the packages repository.
 
     # Since the config scripts are located in the 'meta' subfolder, we need to 
@@ -26,12 +28,12 @@ Component(
     # WARNING: be sure the list is top down, since forward parent references
     # are not yet implemented!
     
-    scripts=[
-        'portable/kernel/meta/xcdl.py',
-        'portable/devices/meta/xcdl.py',
-        'hal/arch/meta/xcdl.py',
-        'hal/platforms/meta/xcdl.py',
-    ],
+    #scripts=[
+    #    'portable/kernel/meta/xcdl.py',
+    #    'portable/devices/meta/xcdl.py',
+    #    'hal/arch/meta/xcdl.py',
+    #    'hal/platforms/meta/xcdl.py',
+    #],
     
     
 )

@@ -1,16 +1,11 @@
 eclipse.preferences.version=1
-encoding//packages/hal/arch/cortexm/meta/xcdl.py=utf-8
 encoding//packages/hal/arch/cortexm/stm32f/meta/xcdl.py=utf-8
-encoding//packages/hal/arch/meta/xcdl.py=utf-8
-encoding//packages/hal/arch/synthetic/meta/xcdl.py=utf-8
 encoding//packages/hal/arch/synthetic/osx/meta/xcdl.py=utf-8
 encoding//packages/hal/platforms/Olimex/stm32-h103/meta/xcdl.py=utf-8
-encoding//packages/hal/platforms/meta/xcdl.py=utf-8
 encoding//packages/hal/platforms/synthetic/osx/cl-sjlj/meta/xcdl.py=utf-8
 encoding//packages/hal/platforms/synthetic/osx/cl-sjlj/tests/test1/config.py=utf-8
 encoding//packages/meta/xcdl.py=utf-8
 encoding//packages/portable/devices/debug/meta/xcdl.py=utf-8
 encoding//packages/portable/devices/debug/tests/conversions/meta/config.py=utf-8
 encoding//packages/portable/devices/debug/tests/conversions/meta/xcdl.py=utf-8
-encoding//packages/portable/devices/meta/xcdl.py=utf-8
 encoding//packages/portable/kernel/meta/xcdl.py=utf-8

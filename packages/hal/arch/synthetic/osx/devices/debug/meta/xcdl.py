@@ -1,6 +1,6 @@
 
 Component(
-    id = 'os.component.hal.arch.synthetic.osx.debug',
+    id = 'component.os.hal.arch.synthetic.osx.debug',
     name = 'Synthetic OS X architecture debug',
     description = 'Implementation for the debug device.',
     

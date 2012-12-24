@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 Component(
-    id='os.component.hal.arch.cortexm.stm32f',
+    id='component.os.hal.arch.cortexm.stm32f',
     name='ST ARM Cortex-M STM32F* families',
     description='Support for STM32F[124]xx ARM Cortex-M processors.',
     

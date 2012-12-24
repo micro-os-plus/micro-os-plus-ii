@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 Component(
-    id='os.component.portable.devices.debug',
+    id='component.os.portable.devices.debug',
     name='Debug tracing output',
     description='Support for the device used to output tracing info.',
     
