@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-Component(
-    id='component.os.portable.kernel',
+Package(
+    id='package.os.portable.kernel',
     name='The µOS++ SE kernel',
     description='All µOS++ Second Edition portable kernel packages.',
     

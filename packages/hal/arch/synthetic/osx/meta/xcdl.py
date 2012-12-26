@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-Component(
-    id='component.os.hal.arch.synthetic.osx',
+Package(
+    id='package.os.hal.arch.synthetic.osx',
     name='Synthetic OS X architecture',
     description='Support for the family of OS X synthetic targets.',
     
     kind='family',
     
-    scripts=[
-        'devices/debug/meta/xcdl.py',
-    ],
+    # scripts=[
+    #    'devices/debug/meta/xcdl.py',
+    # ],
 )

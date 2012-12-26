@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-Component(
-    id='component.os.portable.devices.debug',
+Package(
+    id='package.os.portable.devices.debug',
     name='Debug tracing output',
     description='Support for the device used to output tracing info.',
     
@@ -11,5 +11,13 @@ Component(
           
     scripts=[
         'tests/conversions/meta/xcdl.py'
+    ],
+          
+    children=[
+        Interface(
+            id='interface.os.portable.devices.debug',
+            name='Debug tracing output implementation',
+            description='Platform implementation for the Debug tracing output.',
+        ),
     ],
 )

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-Component(
-    id='component.os.root',
+Package(
+    id='package.os.root',
     name='The µOS++ SE repository',
     description='All µOS++ Second Edition components are below this node.',
 
