@@ -5,9 +5,6 @@ Package(
     name='Synthetic OS X architecture',
     description='Support for the family of OS X synthetic targets.',
     
-    kind='family',
+    category='family',
     
-    # scripts=[
-    #    'devices/debug/meta/xcdl.py',
-    # ],
 )

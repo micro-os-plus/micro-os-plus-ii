@@ -5,7 +5,7 @@ Package(
     name='The µOS++ SE repository',
     description='All µOS++ Second Edition components are below this node.',
 
-    kind='root',
+    category='root',
             
     # The below files are relative to the root of the packages repository.
 
@@ -20,20 +20,9 @@ Package(
     # This value is inherited by all children.
     sourcesPaths=['src', '.'],
     
-    headerPath='include/xcdl/OS_Defines.h',
+    # Each component tree will generate a subfolder below the build folder
+    buildSubFolder='micro-os-plus',
     
-    # Build the list of all available packages, relative to the root of the 
-    # packages repository
-    
-    # WARNING: be sure the list is top down, since forward parent references
-    # are not yet implemented!
-    
-    #scripts=[
-    #    'portable/kernel/meta/xcdl.py',
-    #    'portable/devices/meta/xcdl.py',
-    #    'hal/arch/meta/xcdl.py',
-    #    'hal/platforms/meta/xcdl.py',
-    #],
-    
+    headerFile='include/xcdl/OS_Defines.h',
     
 )

@@ -5,14 +5,9 @@ Package(
     name='Test Debug conversions',
     description='Test all conversions provided by the Debug device.',
     
-    kind='test',
+    category='test',
     
-    loadPackages=[
-        'package.os.portable.kernel',
-        'package.os.portable.devices.debug',
-    ],
-
-    compile=[
+    sourceFiles=[
         'main.cpp',
     ],
 )

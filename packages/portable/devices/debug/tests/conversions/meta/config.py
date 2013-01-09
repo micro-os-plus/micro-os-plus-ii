@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+PackageFolder('../../../../../..')
+
 Configuration(
               
     id='config.os.portable.devices.debug.tests.conversions',
@@ -9,6 +11,9 @@ Configuration(
     loadPackages=[
         # mandatory test code requirement
         'package.os.portable.devices.debug.tests.conversions',
+        
+        # the minimal template
+        'package.os.templates.minimal',
     ],
                   
     children=[

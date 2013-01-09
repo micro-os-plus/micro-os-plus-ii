@@ -10,7 +10,7 @@ Package(
         'interface.os.portable.devices.debug',
     ],
           
-    compile=[
+    sourceFiles=[
         'DebugImplementation.cpp',
     ],
 )

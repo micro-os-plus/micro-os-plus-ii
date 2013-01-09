@@ -5,8 +5,9 @@ Package(
     name='Olimex STM32-H103 board',
     description='Support for the Olimex STM32-H103 development board, based on STM32F103.',
     
-    kind='board',
+    category='board',
     
+    # platform packages shall load corresponding hal packages
     loadPackages=[
         'package.os.hal.arch.cortexm.stm32f',
     ],
