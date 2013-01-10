@@ -5,7 +5,7 @@ Package(
     name='The µOS++ SE kernel',
     description='All µOS++ Second Edition portable kernel packages.',
     
-    compile=[
+    sourceFiles=[
         'OS.cpp',
         'OS_Greeting.cpp',
     ],
