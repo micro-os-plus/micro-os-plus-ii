@@ -28,7 +28,10 @@ Configuration(
                 # mandatory platform requirement
                 'package.os.hal.platforms.synthetic.osx.cl-sjlj',
             ],
-            buildFolder='osx/cl-sjlj/debug/conversions',
+            #buildFolder='osx/cl-sjlj/debug/conversions',
+            buildFolder='osx_cl-sjlj_debug_conversions',
+            
+            artifactFileName='conversions.elf',
             
             children=[
                             
