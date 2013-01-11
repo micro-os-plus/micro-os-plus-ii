@@ -20,10 +20,16 @@ Package(
     # call for inclusions must be created.
     headerFile='include/xcdl/OS_Defines.h',
     
-    # Each repository must contribute an include path to it's root.
-    # The second definition is related to the previous 'headerFile', and 
-    # allows the compiler to locate the dynamically generated headers.
-    #buildIncludeFolders=['$(REPO)', '$(BUILD)/include'],
-    buildIncludeFolders=['/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages', '/Users/ilg/tmp/build/include'],
+    # The folders where to search for include files during build
+    buildIncludeFolders=[
+        # Each repository must contribute an include path to it's root.
+        '$(REPO_DIR)', 
+        
+        # In addition, the folder where the dynamically generated header files
+        # are stored is also used as include folder.
+        '$(BUILD_DIR)/include',
+    ],
+        
+        
     
 )
