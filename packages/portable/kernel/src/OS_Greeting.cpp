@@ -6,7 +6,7 @@
 
 #include "portable/kernel/include/OS_Defines.h"
 
-#if defined(DEBUG) || defined(OS_INCLUDE_GREETING)
+#if defined(OS_INCLUDE_GREETING)
 
 #include "../include/OS_Greeting.h"
 

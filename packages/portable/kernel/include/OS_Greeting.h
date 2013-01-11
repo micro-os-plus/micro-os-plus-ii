@@ -9,9 +9,9 @@
 
 #include "portable/kernel/include/OS_Defines.h"
 
-#if defined(DEBUG) || defined(OS_INCLUDE_GREETING)
+#if defined(OS_INCLUDE_GREETING)
 
-#include "xcdl/OS_App_Defines.h"
+#include "xcdl/OS_Greeting_Defines.h"
 
 #if defined(APP_CFGINT_VERSION_MAJOR) && defined(APP_CFGINT_VERSION_MINOR) && defined(APP_CFGINT_VERSION_REVISION)
 

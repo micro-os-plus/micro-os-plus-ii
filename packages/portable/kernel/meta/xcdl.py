@@ -7,6 +7,9 @@ Package(
     
     sourceFiles=[
         'OS.cpp',
-        'OS_Greeting.cpp',
+    ],
+        
+    includes=[
+        'greeting.py',
     ],
 )
