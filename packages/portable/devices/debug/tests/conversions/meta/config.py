@@ -28,8 +28,7 @@ Configuration(
                 # mandatory platform requirement
                 'package.os.hal.platforms.synthetic.osx.cl-sjlj',
             ],
-            #buildFolder='osx/cl-sjlj/debug/conversions',
-            buildFolder='osx_cl-sjlj_debug_conversions',
+            buildFolder='osx/cl-sjlj/debug/conversions',
             
             artifactFileName='conversions.elf',
             
@@ -39,6 +38,7 @@ Configuration(
                     id='config.os.portable.devices.debug.tests.conversions.osx.cl-sjlj.release',
                     name='Release OS X sjlj conversion test',
                     description='Release build configuration for conversions',
+                    
                     buildFolder='$(PARENT)/Release',
                 ),
 
@@ -46,6 +46,7 @@ Configuration(
                     id='config.os.portable.devices.debug.tests.conversions.osx.cl-sjlj.debug',
                     name='Debug OS X sjlj conversion test',
                     description='Debug build configuration for conversions',
+                    
                     buildFolder='$(PARENT)/Debug',
                     
                     preprocessorSymbols=[
