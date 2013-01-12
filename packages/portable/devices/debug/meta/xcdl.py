@@ -2,16 +2,16 @@
 
 Package(
     id='package.os.portable.devices.debug',
-    name='Debug tracing output',
+    name='Debug tracing output support',
     description='Support for the device used to output tracing info.',
     
     sourceFiles=[
         'Debug.cpp',
     ],
           
-    #scripts=[
-    #    'tests/conversions/meta/xcdl.py'
-    #],
+    requires=[
+        'enable("package.os.portable.kernel.greeting")',
+    ],
           
     children=[
         Interface(

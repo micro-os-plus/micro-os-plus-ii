@@ -5,7 +5,7 @@ PackageFolder('../../../../../..')
 Configuration(
               
     id='config.os.portable.devices.debug.tests.conversions',
-    name='Test Debug conversions',
+    name='Test Debug conversions configuration',
     description='Test all conversions provided by the Debug device.',
     
     loadPackages=[
@@ -21,7 +21,7 @@ Configuration(
         Configuration(
               
             id='config.os.portable.devices.debug.tests.conversions.osx.cl-sjlj',
-            name='Test Debug conversions on OS X sjlj',
+            name='Test Debug conversions on OS X sjlj configuration',
             description='Common definitions for Debug/Release build configurations running on OS X',
             
             loadPackages=[
@@ -36,7 +36,7 @@ Configuration(
                             
                 Configuration(
                     id='config.os.portable.devices.debug.tests.conversions.osx.cl-sjlj.release',
-                    name='Release OS X sjlj conversion test',
+                    name='Release OS X sjlj conversion test configuration',
                     description='Release build configuration for conversions',
                     
                     buildFolder='$(PARENT)/Release',
@@ -44,7 +44,7 @@ Configuration(
 
                 Configuration(
                     id='config.os.portable.devices.debug.tests.conversions.osx.cl-sjlj.debug',
-                    name='Debug OS X sjlj conversion test',
+                    name='Debug OS X sjlj conversion test configuration',
                     description='Debug build configuration for conversions',
                     
                     buildFolder='$(PARENT)/Debug',
