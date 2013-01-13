@@ -48,7 +48,7 @@ either by the debug inits, when enabled, or by the application itself.',
             name='Application Version Major',
             description='A number defining the application version major',
             
-            valueType='number',
+            valueType='int',
             defaultValue='1',
 
             headerFile='include/xcdl/OS_Greeting_Defines.h',
@@ -65,7 +65,7 @@ either by the debug inits, when enabled, or by the application itself.',
             name='Application Version Minor',
             description='A number defining the application version minor',
             
-            valueType='number',
+            valueType='int',
             defaultValue='1',
 
             headerFile='include/xcdl/OS_Greeting_Defines.h',
@@ -82,7 +82,7 @@ either by the debug inits, when enabled, or by the application itself.',
             name='Application Version Revision',
             description='A number defining the application version revision',
             
-            valueType='number',
+            valueType='int',
             defaultValue='1',
 
             headerFile='include/xcdl/OS_Greeting_Defines.h',

@@ -15,6 +15,11 @@ Configuration(
         # the minimal template
         'package.os.templates.minimal',
     ],
+    
+    requires=[
+        'setValue("package.os.portable.kernel.greeting.app.name", "Test Debug conversions")',
+        'setValue("package.os.portable.kernel.greeting.app.version.revision", 2)',
+    ],
                   
     children=[
  
