@@ -11,12 +11,13 @@ Package(
           
     requires=[
         'enable("package.os.portable.kernel.greeting")',
+        'implementationsOf("interface.os.portable.devices.debug") == 1',
     ],
           
     children=[
         Interface(
             id='interface.os.portable.devices.debug',
-            name='Debug tracing output implementation',
+            name='Debug tracing output interface',
             description='Platform implementation for the Debug tracing output.',
         ),
     ],
