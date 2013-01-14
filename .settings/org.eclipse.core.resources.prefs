@@ -10,4 +10,5 @@ encoding//packages/portable/devices/debug/tests/conversions/meta/config.py=utf-8
 encoding//packages/portable/devices/debug/tests/conversions/meta/xcdl.py=utf-8
 encoding//packages/portable/kernel/meta/greeting.py=utf-8
 encoding//packages/portable/kernel/meta/xcdl.py=utf-8
-encoding//packages/templates/meta/xcdl.py=utf-8
+encoding//packages/support/templates/xcdl.py=utf-8
+encoding//packages/support/toolchains/xcdl.py=utf-8
