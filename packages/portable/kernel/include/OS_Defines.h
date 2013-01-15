@@ -24,21 +24,21 @@
 // Operating System versions and greeting definitions
 
 // Notice: do not use parenthesis! (the values will be stringified)
-#define OS_CFGINT_VERSION_MAJOR         4
-#define OS_CFGINT_VERSION_MINOR         3
-#define OS_CFGINT_VERSION_REVISION      7628
+#define OS_INTEGER_VERSION_MAJOR        4
+#define OS_INTEGER_VERSION_MINOR        3
+#define OS_INTEGER_VERSION_REVISION     7628
 
-#define OS_CFGSTR_STRINGIFY(x)          OS_CFGSTR_SHARP(x)
-#define OS_CFGSTR_SHARP(x)              #x
+#define OS_SHARP(x)                     #x
+#define OS_STRINGIFY(x)                 OS_SHARP(x)
 
 // stringify above integers
-#define OS_CFGSTR_VERSION_MAJOR         OS_CFGSTR_STRINGIFY(OS_CFGINT_VERSION_MAJOR)
-#define OS_CFGSTR_VERSION_MINOR         OS_CFGSTR_STRINGIFY(OS_CFGINT_VERSION_MINOR)
-#define OS_CFGSTR_VERSION_REVISION      OS_CFGSTR_STRINGIFY(OS_CFGINT_VERSION_REVISION)
+#define OS_STRING_VERSION_MAJOR         OS_STRINGIFY(OS_INTEGER_VERSION_MAJOR)
+#define OS_STRING_VERSION_MINOR         OS_STRINGIFY(OS_INTEGER_VERSION_MINOR)
+#define OS_STRING_VERSION_REVISION      OS_STRINGIFY(OS_INTEGER_VERSION_REVISION)
 
-#define OS_CFGSTR_VERSION               OS_CFGSTR_VERSION_MAJOR "." OS_CFGSTR_VERSION_MINOR "." OS_CFGSTR_VERSION_REVISION
+#define OS_STRING_VERSION               OS_STRING_VERSION_MAJOR "." OS_STRING_VERSION_MINOR "." OS_STRING_VERSION_REVISION
 
-#define OS_CFGSTR_GREETING              "uOS++ v" OS_CFGSTR_VERSION ", GCC " __VERSION__
+#define OS_STRING_GREETING              "uOS++ v" OS_STRING_VERSION ", GCC " __VERSION__
 
 // ----------------------------------------------------------------------------
 

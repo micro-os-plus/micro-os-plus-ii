@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+# Copyright (C) 2013 Liviu Ionescu.
+# This file is part of the uOS++ SE distribution.
+
 Component(
     id='package.os.portable.kernel.greeting',
     name='Application specific greeting',
@@ -13,7 +16,7 @@ either by the debug inits, when enabled, or by the application itself.',
     headerDefinition='OS_INCLUDE_GREETING',
     
     # debug will require it
-    isEnabled='False',
+    isEnabled=False,
           
     children=[
         
@@ -26,8 +29,7 @@ either by the debug inits, when enabled, or by the application itself.',
             defaultValue='Sample Application',
             
             headerFile='include/xcdl/OS_Greeting_Defines.h',
-            headerDefinition='APP_CFGSTR_APPLICATION_NAME',
-
+            headerDefinition='APP_STRING_APPLICATION_NAME',
         ),
 
         Option(
@@ -39,8 +41,7 @@ either by the debug inits, when enabled, or by the application itself.',
             defaultValue='livius.net',
 
             headerFile='include/xcdl/OS_Greeting_Defines.h',
-            headerDefinition='APP_CFGSTR_APPLICATION_MANUFACTURER',
-            
+            headerDefinition='APP_STRING_APPLICATION_MANUFACTURER',            
         ),
 
         Option(
@@ -52,12 +53,11 @@ either by the debug inits, when enabled, or by the application itself.',
             defaultValue='1',
 
             headerFile='include/xcdl/OS_Greeting_Defines.h',
-            headerDefinition='APP_CFGINT_VERSION_MAJOR',
+            headerDefinition='APP_INTEGER_VERSION_MAJOR',
             
             # This value needs to be stringified, so no parenthesis 
             # should be used here
-            valueFormat='{0}',
-            
+            valueFormat='{0}',            
         ),
 
         Option(
@@ -69,12 +69,11 @@ either by the debug inits, when enabled, or by the application itself.',
             defaultValue='1',
 
             headerFile='include/xcdl/OS_Greeting_Defines.h',
-            headerDefinition='APP_CFGINT_VERSION_MINOR',
+            headerDefinition='APP_INTEGER_VERSION_MINOR',
 
             # This value needs to be stringified, so no parenthesis 
             # should be used here
-            valueFormat='{0}',
-            
+            valueFormat='{0}',            
         ),
 
         Option(
@@ -86,12 +85,11 @@ either by the debug inits, when enabled, or by the application itself.',
             defaultValue='1',
 
             headerFile='include/xcdl/OS_Greeting_Defines.h',
-            headerDefinition='APP_CFGINT_VERSION_REVISION',
+            headerDefinition='APP_INTEGER_VERSION_REVISION',
             
             # This value needs to be stringified, so no parenthesis 
             # should be used here
-            valueFormat='{0}',
-            
+            valueFormat='{0}',            
         ),
 
     ],
