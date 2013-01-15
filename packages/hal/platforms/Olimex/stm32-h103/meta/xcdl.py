@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+# Copyright (C) 2013 Liviu Ionescu.
+# This file is part of the uOS++ SE distribution.
+
 Package(
     id='package.os.hal.platforms.olimex.stm32-h103',
     name='Olimex STM32-H103 board',

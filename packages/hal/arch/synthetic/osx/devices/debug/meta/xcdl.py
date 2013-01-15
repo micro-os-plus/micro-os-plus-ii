@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+# Copyright (C) 2013 Liviu Ionescu.
+# This file is part of the uOS++ SE distribution.
 
 Package(
     id='package.os.hal.arch.synthetic.osx.debug',

@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//packages/hal/arch/cortexm/stm32f/meta/xcdl.py=utf-8
+encoding//packages/hal/arch/synthetic/osx/devices/debug/meta/xcdl.py=utf-8
 encoding//packages/hal/arch/synthetic/osx/meta/xcdl.py=utf-8
 encoding//packages/hal/platforms/Olimex/stm32-h103/meta/xcdl.py=utf-8
 encoding//packages/hal/platforms/synthetic/osx/cl-sjlj/meta/xcdl.py=utf-8

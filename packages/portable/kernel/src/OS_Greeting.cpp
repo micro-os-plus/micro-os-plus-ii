@@ -13,7 +13,7 @@
 namespace os
 {
   // Default greeting message
-  const char greeting[] = APP_CFGSTR_GREETING;
+  const char greeting[] = APP_STRING_GREETING;
 }
 
 #endif /* defined(DEBUG) || defined(OS_INCLUDE_GREETING) */
