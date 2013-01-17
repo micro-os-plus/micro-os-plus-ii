@@ -9,7 +9,7 @@ Package(
     description='All µOS++ Second Edition portable kernel packages.',
     
     sourceFiles=[
-        'OS.cpp',
+        'OS_Inits.cpp',
     ],
         
     includes=[
@@ -25,6 +25,30 @@ Package(
             isEnabled=False,
             
             headerDefinition='DEBUG',
+        ),
+              
+        Option(
+            id='option.os.portable.kernel.os-init.early.priority',
+            name='The earlyInitialyse() init_priority',
+            description='The initialisation priority of the earlyInitialyse() function.',
+            
+            headerFile='include/portable/kernel/include/OS_Inits_Defines.h',
+            headerDefinition='OS_INTEGER_EARLYINITIALISE_INIT_PRIORITY',
+            
+            valueType='int',
+            defaultValue=101,
+        ),
+
+        Option(
+            id='option.os.portable.kernel.os-init.debug.priority',
+            name='The Debug() class init_priority',
+            description='The static constructor priority of the Debug() class.',
+            
+            headerFile='include/portable/kernel/include/OS_Inits_Defines.h',
+            headerDefinition='OS_INTEGER_DEBUG_INIT_PRIORITY',
+            
+            valueType='int',
+            defaultValue=102,
         ),
     ],
 )
