@@ -10,6 +10,8 @@
 
 #include "../include/Debug.h"
 
+#if defined(DEBUG)
+
 #if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_OSX_DEVICES_DEBUGIMPLEMENTATION)
 #include "hal/arch/synthetic/osx/devices/debug/include/DebugImplementation.h"
 #else
@@ -34,6 +36,9 @@ namespace os
     {
       putDestructor("os::device::Debug::~Debug", this);
     }
+
+    // If DEBUG is disabled, all methods defined here
+    // should have an empty equivalent in the inline section of Debug.h.
 
     void
     Debug::earlyInitialise(void)
@@ -244,3 +249,5 @@ namespace os
 
   } /* namespace device */
 } /* namespace os */
+
+#endif /* defined(DEBUG) */

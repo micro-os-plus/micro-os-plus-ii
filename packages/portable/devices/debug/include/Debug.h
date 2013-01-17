@@ -18,8 +18,15 @@ namespace os
     class Debug
     {
     public:
+
+#if defined(DEBUG)
+
+      // Constructor/Destructor are used only for informative purposes
+      // if DEBUG is enabled.
       Debug();
       ~Debug();
+
+#endif /* defined(DEBUG) */
 
       static void
       earlyInitialise(void);
@@ -104,7 +111,6 @@ namespace os
       putDec(intmax_t v, size_t n = 0);
 #endif
 
-
       static void
       putConstructor(const char* pcStr, const void* pcAddr);
 
@@ -119,7 +125,8 @@ namespace os
       flush(void);
 
       static void
-      assert(const char* pcFunc, const char* pcFile, unsigned int lineno, const char* pcSexp);
+      assert(const char* pcFunc, const char* pcFile, unsigned int lineno,
+          const char* pcSexp);
 
     private:
       static void
@@ -192,52 +199,150 @@ namespace os
 #if (__SIZEOF_SIZE_T__ == 8)
     inline void
     Debug::putHex(uintmax_t v)
-    {
-      putHex((uint64_t) v);
-    }
+      {
+        putHex((uint64_t) v);
+      }
 #endif
 
-  inline void
-  Debug::putDec(uint8_t v, size_t n)
+    inline void
+    Debug::putDec(uint8_t v, size_t n)
     {
       putDec((uint32_t) v, n);
     }
 
-  inline void
-  Debug::putDec(uint16_t v, size_t n)
+    inline void
+    Debug::putDec(uint16_t v, size_t n)
     {
       putDec((uint32_t) v, n);
     }
 
 #if (__SIZEOF_SIZE_T__ == 8)
-  inline void
-  Debug::putDec(uintmax_t v, size_t n)
-    {
-      putDec((uint64_t) v, n);
-    }
+    inline void
+    Debug::putDec(uintmax_t v, size_t n)
+      {
+        putDec((uint64_t) v, n);
+      }
 #endif
 
-  inline void
-  Debug::putDec(int8_t v, size_t n)
+    inline void
+    Debug::putDec(int8_t v, size_t n)
     {
       putDec((int32_t) v, n);
     }
 
-  inline void
-  Debug::putDec(int16_t v, size_t n)
+    inline void
+    Debug::putDec(int16_t v, size_t n)
     {
       putDec((uint32_t) v, n);
     }
 
 #if (__SIZEOF_SIZE_T__ == 8)
-  inline void
-  Debug::putDec(intmax_t v, size_t n)
-    {
-      putDec((int64_t) v, n);
-    }
+    inline void
+    Debug::putDec(intmax_t v, size_t n)
+      {
+        putDec((int64_t) v, n);
+      }
 #endif
 
-}
+#if !defined(DEBUG)
+
+    // ----- Inline section ---------------------------------------------------
+    // If DEBUG is disabled, all methods defined in Debug.cpp
+    // should have an empty equivalent.
+
+    inline void
+    Debug::earlyInitialise(void)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putNewLine()
+    {
+      ;
+    }
+
+    inline void
+    Debug::putChar(char c)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putString(const char* cpStr)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putHex(uint32_t v, size_t n)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putHex(uint64_t v)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putDec(uint32_t v, size_t n)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putDec(int32_t v, size_t n)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putDec(uint64_t v, size_t n)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putDec(int64_t v, size_t n)
+    {
+      ;
+    }
+
+    // Constructors and destructors
+
+    inline void
+    Debug::putConstructor(const char* pcStr, const void* pcAddr)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putConstructorWithIndex(const char* pcStr, uint16_t i,
+        const void* pcAddr)
+    {
+      ;
+    }
+
+    inline void
+    Debug::putDestructor(const char* pcStr, const void* pc)
+    {
+      ;
+    }
+
+    // Assert details
+
+    inline void
+    Debug::assert(const char* pcFunc, const char* pcFile, unsigned int lineno,
+        const char* pcSexp)
+    {
+      ;
+    }
+
+#endif /* !defined(DEBUG) */
+
+  }
 /* namespace device */
 } /* namespace os */
 
