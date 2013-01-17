@@ -8,12 +8,15 @@
 
 #include "portable/devices/debug/include/Debug.h"
 
+// Dynamically generated
+#include "portable/kernel/include/OS_Inits_Defines.h"
+
 namespace os
 {
   namespace core
   {
     void
-    earlyInitialise(void) __attribute__((constructor(1)));
+    earlyInitialise(void) __attribute__((constructor(OS_INTEGER_EARLYINITIALISE_INIT_PRIORITY)));
   }
 }
 
@@ -32,5 +35,5 @@ namespace os
   }
 }
 
-os::device::Debug debug __attribute__((init_priority(101)));
+os::device::Debug debug __attribute__((init_priority(OS_INTEGER_DEBUG_INIT_PRIORITY)));
 
