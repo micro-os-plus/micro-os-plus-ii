@@ -22,8 +22,9 @@ Configuration(
     requires=[
         #'setValue("package.os.portable.kernel.greeting.app.name", "Test Debug conversions")',
         'setValue("APP_STRING_APPLICATION_NAME", "Test Debug conversions")',
+        
         #'setValue("package.os.portable.kernel.greeting.app.version.revision", 2)',
-        'setValue("APP_INTEGER_VERSION_REVISION", 2)',
+        'setValue("APP_INTEGER_VERSION_REVISION", 3)',
     ],
                   
     children=[

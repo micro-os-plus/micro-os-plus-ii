@@ -13,7 +13,7 @@ main()
   debug.putNewLine();
   debug.putString("main()");
   debug.putNewLine();
-  debug.putString("Test Debug various conversions");
+  debug.putString("Test various conversions implemented by the Debug() class");
   debug.putNewLine();
 
   debug.putNewLine();
@@ -287,3 +287,25 @@ main()
 
   return 0;
 }
+
+
+class OtherClass
+{
+public:
+  OtherClass();
+  ~OtherClass();
+};
+
+OtherClass::OtherClass()
+{
+  debug.putConstructor("OtherClass::OtherClass", this);
+}
+
+OtherClass::~OtherClass()
+{
+  debug.putDestructor("OtherClass::~OtherClass", this);
+}
+
+
+OtherClass otherObject;
+
