@@ -8,9 +8,6 @@ Package(
     name='The µOS++ SE kernel',
     description='All µOS++ Second Edition portable kernel packages.',
     
-    sourceFiles=[
-        'OS_Inits.cpp',
-    ],
         
     includes=[
         'greeting.py',
@@ -28,27 +25,19 @@ Package(
         ),
               
         Option(
-            id='option.os.portable.kernel.os-init.early.priority',
-            name='The earlyInitialyse() init_priority',
-            description='The initialisation priority of the earlyInitialyse() function.',
-            
-            headerFile='include/portable/kernel/include/OS_Inits_Defines.h',
-            headerDefinition='OS_INTEGER_EARLYINITIALISE_INIT_PRIORITY',
-            
-            valueType='int',
-            defaultValue=101,
+            id='option.os.portable.kernel.early',
+            name='Early initialisation class',
+            description='The constructor of this class should be run in the\
+first place, to run all system initialisation.',
+                
+            # No other object should share this priority to ensure this
+            # object is constructed first
+            linkPriority=0,
+                    
+            sourceFiles=[
+                'OSEarlyInitialisation.cpp',
+            ],
         ),
-
-        Option(
-            id='option.os.portable.kernel.os-init.debug.priority',
-            name='The Debug() class init_priority',
-            description='The static constructor priority of the Debug() class.',
-            
-            headerFile='include/portable/kernel/include/OS_Inits_Defines.h',
-            headerDefinition='OS_INTEGER_DEBUG_INIT_PRIORITY',
-            
-            valueType='int',
-            defaultValue=102,
-        ),
+              
     ],
 )
