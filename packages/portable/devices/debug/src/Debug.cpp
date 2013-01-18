@@ -6,7 +6,7 @@
 
 #include "portable/kernel/include/OS_Defines.h"
 
-#include "portable/kernel/include/OS_Greeting.h"
+#include "portable/kernel/include/OSGreeting.h"
 
 #include "../include/Debug.h"
 

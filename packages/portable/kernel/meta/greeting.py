@@ -10,7 +10,7 @@ Component(
 either by the debug inits, when enabled, or by the application itself.',
     
     sourceFiles=[
-        'OS_Greeting.cpp',
+        'OSGreeting.cpp',
     ],
          
     headerDefinition='OS_INCLUDE_GREETING',

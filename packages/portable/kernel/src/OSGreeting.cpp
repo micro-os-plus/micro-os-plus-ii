@@ -8,7 +8,7 @@
 
 #if defined(OS_INCLUDE_GREETING)
 
-#include "../include/OS_Greeting.h"
+#include "../include/OSGreeting.h"
 
 namespace os
 {
