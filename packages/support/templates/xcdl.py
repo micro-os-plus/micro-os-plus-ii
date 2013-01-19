@@ -12,7 +12,7 @@ Package(
     category='template',
     
     loadPackages=[
-        'package.os.portable.kernel',
+        'package.os.portable.core',
         'package.os.portable.devices.debug',
     ],
 )

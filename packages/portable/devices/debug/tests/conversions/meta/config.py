@@ -20,10 +20,10 @@ Configuration(
     ],
     
     requires=[
-        #'setValue("package.os.portable.kernel.greeting.app.name", "Test Debug conversions")',
+        #'setValue("package.os.portable.core.greeting.app.name", "Test Debug conversions")',
         'setValue("APP_STRING_APPLICATION_NAME", "Test Debug conversions")',
         
-        #'setValue("package.os.portable.kernel.greeting.app.version.revision", 2)',
+        #'setValue("package.os.portable.core.greeting.app.version.revision", 2)',
         'setValue("APP_INTEGER_VERSION_REVISION", 3)',
     ],
                   
@@ -52,7 +52,7 @@ Configuration(
                     
                     buildFolder='$(PARENT)/llvm/Release',
                     
-                    toolchain='toolchain.osx.llvm.release',
+                    toolchain='toolchain.osx.x64.llvm.release',
                 ),
 
                 Configuration(
@@ -70,7 +70,7 @@ Configuration(
                     #preprocessorSymbols=[
                     #    'DEBUG=1',
                     #],
-                    toolchain='toolchain.osx.llvm.debug',
+                    toolchain='toolchain.osx.x64.llvm.debug',
                 ),
 
                 Configuration(

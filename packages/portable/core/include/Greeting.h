@@ -4,21 +4,21 @@
  *      This file is part of the uOS++ distribution.
  */
 
-#ifndef OS_PORTABLE_KERNEL_INCLUDE_OS_GREETING_H_
-#define OS_PORTABLE_KERNEL_INCLUDE_OS_GREETING_H_
+#ifndef OS_PORTABLE_CORE_INCLUDE_OS_GREETING_H_
+#define OS_PORTABLE_CORE_INCLUDE_OS_GREETING_H_
 
-#include "portable/kernel/include/OS_Defines.h"
+#include "portable/core/include/OS_Defines.h"
 
 #if defined(OS_INCLUDE_GREETING)
 
-#include "xcdl/OS_Greeting_Defines.h"
+#include "portable/core/include/XCDL_Greeting_Defines.h"
 
 #if defined(APP_INTEGER_VERSION_MAJOR) && defined(APP_INTEGER_VERSION_MINOR) && defined(APP_INTEGER_VERSION_REVISION)
 
 // Strings
-#define APP_STRING_VERSION_MAJOR        OS_STRINGIFY(APP_INTEGER_VERSION_MAJOR)
-#define APP_STRING_VERSION_MINOR        OS_STRINGIFY(APP_INTEGER_VERSION_MINOR)
-#define APP_STRING_VERSION_REVISION     OS_STRINGIFY(APP_INTEGER_VERSION_REVISION)
+#define APP_STRING_VERSION_MAJOR        OS_MACRO_STRINGIFY(APP_INTEGER_VERSION_MAJOR)
+#define APP_STRING_VERSION_MINOR        OS_MACRO_STRINGIFY(APP_INTEGER_VERSION_MINOR)
+#define APP_STRING_VERSION_REVISION     OS_MACRO_STRINGIFY(APP_INTEGER_VERSION_REVISION)
 
 #define APP_STRING_VERSION              APP_STRING_VERSION_MAJOR "." APP_STRING_VERSION_MINOR "." APP_STRING_VERSION_REVISION
 
@@ -40,9 +40,10 @@
 
 namespace os
 {
-  extern const char greeting[] __attribute__((weak));
+  extern const char appGreeting[] __attribute__((weak));
+  extern const char osGreeting[] __attribute__((weak));
 }
 
 #endif /* defined(OS_INCLUDE_GREETING) */
 
-#endif /* OS_PORTABLE_KERNEL_INCLUDE_OS_GREETING_H_ */
+#endif /* OS_PORTABLE_CORE_INCLUDE_OS_GREETING_H_ */

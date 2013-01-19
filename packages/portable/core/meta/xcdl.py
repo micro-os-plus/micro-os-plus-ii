@@ -4,9 +4,9 @@
 # This file is part of the uOS++ SE distribution.
 
 Package(
-    id='package.os.portable.kernel',
-    name='The µOS++ SE kernel',
-    description='All µOS++ Second Edition portable kernel packages.',
+    id='package.os.portable.core',
+    name='The µOS++ SE core package',
+    description='All µOS++ Second Edition portable core packages.',
     
         
     includes=[
@@ -15,7 +15,7 @@ Package(
         
     children=[
         Option(
-            id='option.os.portable.kernel.debug',
+            id='option.os.portable.core.debug',
             name='The main debug swich',
             description='Should be enabled for the debug output to be active.',
             
@@ -25,7 +25,7 @@ Package(
         ),
               
         Option(
-            id='option.os.portable.kernel.early',
+            id='option.os.portable.core.early',
             name='Early initialisation class',
             description='The constructor of this class should be run in the\
 first place, to run all system initialisation.',
@@ -35,7 +35,7 @@ first place, to run all system initialisation.',
             linkPriority=0,
                     
             sourceFiles=[
-                'OSEarlyInitialisation.cpp',
+                'EarlyInitialisation.cpp',
             ],
         ),
               

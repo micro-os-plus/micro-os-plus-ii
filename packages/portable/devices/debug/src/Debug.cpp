@@ -1,12 +1,12 @@
 /*
- *	Copyright (C) 2012 Liviu Ionescu.
+ *	Copyright (C) 2012-2013 Liviu Ionescu.
  *
  *	This file is part of the uOS++ distribution.
  */
 
-#include "portable/kernel/include/OS_Defines.h"
+#include "portable/core/include/OS_Defines.h"
 
-#include "portable/kernel/include/OSGreeting.h"
+#include "portable/core/include/Greeting.h"
 
 #include "../include/Debug.h"
 
@@ -47,7 +47,9 @@ namespace os
 
       os::hal::device::debug::Implementation::putNewLine();
       os::hal::device::debug::Implementation::putNewLine();
-      os::hal::device::debug::Implementation::putBytes(os::greeting, strlen(os::greeting));
+      os::hal::device::debug::Implementation::putBytes(os::appGreeting, strlen(os::appGreeting));
+      os::hal::device::debug::Implementation::putNewLine();
+      os::hal::device::debug::Implementation::putBytes(os::osGreeting, strlen(os::osGreeting));
       os::hal::device::debug::Implementation::putNewLine();
     }
 

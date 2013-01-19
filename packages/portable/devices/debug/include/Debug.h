@@ -1,5 +1,5 @@
 /*
- *	Copyright (C) 2012 Liviu Ionescu.
+ *	Copyright (C) 2012-2013 Liviu Ionescu.
  *
  *	This file is part of the uOS++ distribution.
  */
