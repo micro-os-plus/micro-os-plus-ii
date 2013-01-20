@@ -29,7 +29,7 @@ namespace os
           static void
           putNewLine(void);
 
-          static int
+          static ssize_t
           putBytes(const void* cpBuf, size_t n);
 
         };

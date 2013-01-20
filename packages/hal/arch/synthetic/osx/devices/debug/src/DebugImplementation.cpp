@@ -41,11 +41,11 @@ namespace os
           return;
         }
 
-        int
+        ssize_t
         Implementation::putBytes(const void* cpBuf, size_t n)
         {
           // write the byte array in a single, atomic, sequence
-          return ::write(1, cpBuf, (unsigned long) n);
+          return ::write(1, cpBuf, n);
         }
 
       } /* namespace debug */

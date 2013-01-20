@@ -306,6 +306,10 @@ OtherClass::~OtherClass()
   debug.putDestructor("OtherClass::~OtherClass", this);
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wexit-time-destructors"
 
 OtherClass otherObject;
 
+#pragma GCC diagnostic pop

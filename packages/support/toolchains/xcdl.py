@@ -30,9 +30,10 @@ Toolchain(
     compilerDepsOptions='-MMD -MP',
     compilerOutputOptions='-o "$@"',
     compilerInputOptions='"$<"',
-    compilerWarningOptions='-Wall',
+    #compilerWarningOptions='-Weverything -Wno-global-constructors -Wno-exit-time-destructors',
+    compilerWarningOptions='-Weverything',
     compilerMiscOptions='-emit-llvm -fsigned-char -fmessage-length=0 -c',
-    compilerDebugOptions='-g3',
+    compilerDebugOptions='-g',
     compilerOptimisationOptions='-O0',
     
     linkerMiscOptions='-native',
@@ -70,7 +71,7 @@ Toolchain(
             
             category='base',
 
-            compilerArchitecture='-arch=x86_64',
+            compilerCpu='-arch x86_64',
             
             children=[
                       
@@ -101,19 +102,19 @@ Toolchain(
         Toolchain(
                   
             id='toolchain.osx.x32.llvm.base',
-            name='OS X Apple x86_32 LLVM Base',
-            description='The Apple OS X x86_32 LLVM toolchain base',
+            name='OS X Apple i386 LLVM Base',
+            description='The Apple OS X i386 LLVM toolchain base',
             
             category='base',
 
-            compilerArchitecture='-arch=i386',
+            compilerCpu='-arch i386',
             
             children=[
                       
                 Toolchain(
                     id='toolchain.osx.x32.llvm.debug',
-                    name='OS X Apple x86_32 LLVM Debug',
-                    description='The Apple OS X x86_32 LLVM toolchain for debug builds',
+                    name='OS X Apple i386 LLVM Debug',
+                    description='The Apple OS X i386 LLVM toolchain for debug builds',
                     
                     category='debug',
                     
@@ -123,8 +124,8 @@ Toolchain(
         
                 Toolchain(
                     id='toolchain.osx.x32.llvm.release',
-                    name='OS X Apple x86_32 LLVM Release',
-                    description='The Apple OS X x86_32 LLVM toolchain for release builds',
+                    name='OS X Apple i386 LLVM Release',
+                    description='The Apple OS X i386 LLVM toolchain for release builds',
                     
                     category='release',
                     
@@ -162,7 +163,8 @@ Toolchain(
     compilerMiscOptions='-fsigned-char -fmessage-length=0 -c',
     compilerDebugOptions='-g3',
     compilerOptimisationOptions='-O0',
-    compilerArchitecture='-arch=x86_64',
+    
+    compilerCpu='-arch x86_64',
     
     linkerMiscOptions='',
     
@@ -332,7 +334,7 @@ Toolchain(
 
             programNameSuffix='',
             
-            compilerArchitecture='-arch=x86_64',
+            compilerCpu='-arch x86_64',
                         
             children=[
                       
@@ -394,21 +396,21 @@ Toolchain(
         Toolchain(
                    
             id='toolchain.linux.x32.gcc.base',
-            name='Linux x86_32 GCC Base',
-            description='The Linux x86_32 GCC toolchain base',
+            name='Linux i386 GCC Base',
+            description='The Linux i386 GCC toolchain base',
             
             category='base',
 
             programNameSuffix='',
             
-            compilerArchitecture='-arch=i386',
+            compilerCpu='-arch i386',
             
             children=[
                       
                 Toolchain(
                     id='toolchain.linux.x32.gcc46.debug',
-                    name='Linux x86_32 GCC 4.6 Debug',
-                    description='The Linux x86_32 GCC 4.6 toolchain for debug builds',
+                    name='Linux i386 GCC 4.6 Debug',
+                    description='The Linux i386 GCC 4.6 toolchain for debug builds',
                     
                     category='debug',
         
@@ -420,8 +422,8 @@ Toolchain(
         
                 Toolchain(
                     id='toolchain.linux.x32.gcc46.release',
-                    name='Linux x86_32 GCC 4.6 Release',
-                    description='The Linux x86_32 GCC 4.6 toolchain for release builds',
+                    name='Linux i386 GCC 4.6 Release',
+                    description='The Linux i386 GCC 4.6 toolchain for release builds',
                     
                     category='release',
                     
@@ -433,8 +435,8 @@ Toolchain(
         
                 Toolchain(
                     id='toolchain.linux.x32.gcc47.debug',
-                    name='Linux x86_32 GCC 4.7 Debug',
-                    description='The Linux x86_32 GCC 4.7 toolchain for debug builds',
+                    name='Linux i386 GCC 4.7 Debug',
+                    description='The Linux i386 GCC 4.7 toolchain for debug builds',
                     
                     category='debug',
         
@@ -446,8 +448,8 @@ Toolchain(
         
                 Toolchain(
                     id='toolchain.linux.x32.gcc47.release',
-                    name='Linux x86_32 GCC 4.7 Release',
-                    description='The Linux x86_32 GCC 4.7 toolchain for release builds',
+                    name='Linux i386 GCC 4.7 Release',
+                    description='The Linux i386 GCC 4.7 toolchain for release builds',
                     
                     category='release',
                     

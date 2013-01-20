@@ -37,6 +37,9 @@ namespace os
       static void
       putChar(char c);
 
+      static void
+      putChar(unsigned char c);
+
       // All strings
       static void
       putString(const char* cpStr);
@@ -124,7 +127,7 @@ namespace os
       static void
       flush(void);
 
-      static void
+      static void __attribute__((noreturn))
       assert(const char* pcFunc, const char* pcFile, unsigned int lineno,
           const char* pcSexp);
 
@@ -133,6 +136,12 @@ namespace os
       putHex(uint32_t v, size_t n);
 
     };
+
+    inline void
+    Debug::putChar(unsigned char c)
+    {
+      putChar((char) c);
+    }
 
     inline void
     Debug::putString(char* cpStr)
