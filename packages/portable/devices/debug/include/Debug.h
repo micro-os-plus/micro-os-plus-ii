@@ -115,6 +115,9 @@ namespace os
 #endif
 
       static void
+      putMethodNameWithAddress(const char* pcStr, const void* pcAddr);
+
+      static void
       putConstructor(const char* pcStr, const void* pcAddr);
 
       static void
@@ -272,49 +275,55 @@ namespace os
     }
 
     inline void
-    Debug::putChar(char c)
+    Debug::putChar(char c __attribute__((unused)))
     {
       ;
     }
 
     inline void
-    Debug::putString(const char* cpStr)
+    Debug::putString(const char* cpStr __attribute__((unused)))
     {
       ;
     }
 
     inline void
-    Debug::putHex(uint32_t v, size_t n)
+    Debug::putHex(uint32_t v __attribute__((unused)), size_t n __attribute__((unused)))
     {
       ;
     }
 
     inline void
-    Debug::putHex(uint64_t v)
+    Debug::putHex(uint64_t v __attribute__((unused)))
     {
       ;
     }
 
     inline void
-    Debug::putDec(uint32_t v, size_t n)
+    Debug::putDec(uint32_t v __attribute__((unused)), size_t n __attribute__((unused)))
     {
       ;
     }
 
     inline void
-    Debug::putDec(int32_t v, size_t n)
+    Debug::putDec(int32_t v __attribute__((unused)), size_t n __attribute__((unused)))
     {
       ;
     }
 
     inline void
-    Debug::putDec(uint64_t v, size_t n)
+    Debug::putDec(uint64_t v __attribute__((unused)), size_t n __attribute__((unused)))
     {
       ;
     }
 
     inline void
-    Debug::putDec(int64_t v, size_t n)
+    Debug::putDec(int64_t v __attribute__((unused)), size_t n __attribute__((unused)))
+    {
+      ;
+    }
+
+    inline void
+    Debug::putMethodNameWithAddress(const char* pcStr __attribute__((unused)), const void* pcAddr __attribute__((unused)))
     {
       ;
     }
@@ -322,20 +331,20 @@ namespace os
     // Constructors and destructors
 
     inline void
-    Debug::putConstructor(const char* pcStr, const void* pcAddr)
+    Debug::putConstructor(const char* pcStr __attribute__((unused)), const void* pcAddr __attribute__((unused)))
     {
       ;
     }
 
     inline void
-    Debug::putConstructorWithIndex(const char* pcStr, uint16_t i,
-        const void* pcAddr)
+    Debug::putConstructorWithIndex(const char* pcStr __attribute__((unused)), uint16_t i __attribute__((unused)),
+        const void* pcAddr __attribute__((unused)))
     {
       ;
     }
 
     inline void
-    Debug::putDestructor(const char* pcStr, const void* pc)
+    Debug::putDestructor(const char* pcStr __attribute__((unused)), const void* pc __attribute__((unused)))
     {
       ;
     }
@@ -343,16 +352,17 @@ namespace os
     // Assert details
 
     inline void
-    Debug::assert(const char* pcFunc, const char* pcFile, unsigned int lineno,
-        const char* pcSexp)
+    Debug::assert(const char* pcFunc __attribute__((unused)), const char* pcFile __attribute__((unused)), unsigned int lineno __attribute__((unused)),
+        const char* pcSexp __attribute__((unused)))
     {
-      ;
+      // noreturn
+      for(;;)
+        ;
     }
 
 #endif /* !defined(DEBUG) */
 
-  }
-/* namespace device */
+  } /* namespace device */
 } /* namespace os */
 
 #endif /* OS_PORTABLE_DEVICES_DEBUG_H_ */
