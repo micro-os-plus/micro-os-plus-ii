@@ -8,5 +8,9 @@ Package(
     name='Synthetic OS X architecture',
     description='Support for the family of OS X synthetic targets.',
     
-    category='family',    
+    category='family',   
+    
+    loadPackages=[
+        'package.os.hal.arch.synthetic.posix.infra',
+    ], 
 )
