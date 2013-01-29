@@ -30,7 +30,6 @@ Toolchain(
     compilerDepsOptions='-MMD -MP',
     compilerOutputOptions='-o "$@"',
     compilerInputOptions='"$<"',
-    #compilerWarningOptions='-Weverything -Wno-global-constructors -Wno-exit-time-destructors',
     compilerWarningOptions='-Weverything',
     compilerMiscOptions='-emit-llvm -fsigned-char -fmessage-length=0 -c',
     compilerDebugOptions='-g',
