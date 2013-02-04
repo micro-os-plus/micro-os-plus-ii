@@ -30,8 +30,8 @@ Toolchain(
     compilerDepsOptions='-MMD -MP',
     compilerOutputOptions='-o "$@"',
     compilerInputOptions='"$<"',
-    compilerWarningOptions='-Weverything',
-    compilerMiscOptions='-emit-llvm -fsigned-char -fmessage-length=0 -c',
+    compilerWarningOptions='-Weverything -Wno-c++98-compat',
+    compilerMiscOptions='-emit-llvm -std=c++11 -fsigned-char -fmessage-length=0 -c',
     compilerDebugOptions='-g',
     compilerOptimisationOptions='-O0',
     
@@ -46,7 +46,7 @@ Toolchain(
     cpp=Tool(
         programName='clang++',
         description='Apple LLVM Clang++',    
-        options='',
+        options='-std=c++11',
     ),
           
     asm=Tool(
