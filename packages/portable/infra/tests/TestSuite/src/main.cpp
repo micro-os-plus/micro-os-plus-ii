@@ -20,13 +20,13 @@ namespace os
 
       start(__FILE__);
 
-      check(true, "check true constant");
-      check(false, "check false constant");
+      checkAndReport(true, "check true constant");
+      checkAndReport(false, "check false constant");
 
-      pass("a passed test");
-      fail("a failed test");
+      reportPassed("a passed test");
+      reportFailed("a failed test");
 
-      info("there should be 2 failed cases and 2 passed cases");
+      reportInfo("there should be 2 failed cases and 2 passed cases");
 
       stop(__FILE__);
     }
