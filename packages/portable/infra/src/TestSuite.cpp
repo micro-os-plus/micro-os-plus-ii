@@ -26,19 +26,22 @@ namespace os
     {
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
 
-      this->pClassName = 0;
+      this->pClassName = 0;     // initialise pointer to class name
 
-      this->countPassed = 0;
-      this->countFailed = 0;
+      this->countPassed = 0;    // initialise count of passed tests
+      this->countFailed = 0;    // initialise count of failed tests
 
-      this->xmlFileDescriptor = -1;
+      this->xmlFileDescriptor = -1; // set file descriptor to none
     }
 
     TestSuite::~TestSuite()
     {
       if (this->xmlFileDescriptor != -1)
-        os::infra::TestSuiteImplementation::closeFile(this->xmlFileDescriptor);
-
+        {
+          // if the file descriptor was opened, close it now
+          os::infra::TestSuiteImplementation::closeFile(
+              this->xmlFileDescriptor);
+        }
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
     }
 
@@ -48,7 +51,8 @@ namespace os
       char* fileName = 0;
       fileName = os::infra::TestSuiteImplementation::getFileNamePointer(argc,
           argv);
-      // Warning: the pointer is to the argv array
+      // Warning: the pointer is to the argv array, bu this is not fatal, since
+      // the array is static.
 
       if (fileName != 0)
         {
@@ -64,10 +68,11 @@ namespace os
     void
     TestSuite::start(const char* pMessage) const
     {
-      output(LineType::START, pMessage);
+      outputLine(OutputLineType::START, pMessage);
 
       if (this->xmlFileDescriptor != -1)
         {
+          // open the jUnit XML elements
           writeStringToFile("<testsuites><testsuite>\n");
         }
     }
@@ -75,19 +80,19 @@ namespace os
     void
     TestSuite::pass(const char* pMessage)
     {
-      output(LineType::PASS, pMessage);
-      outXml(false, pMessage);
+      outputLine(OutputLineType::PASS, pMessage);
+      writeToXmlFile(false, pMessage);
 
-      ++this->countPassed;
+      ++(this->countPassed); // one more passed test
     }
 
     void
     TestSuite::fail(const char* pMessage)
     {
-      output(LineType::FAIL, pMessage);
-      outXml(true, pMessage);
+      outputLine(OutputLineType::FAIL, pMessage);
+      writeToXmlFile(true, pMessage);
 
-      ++this->countFailed;
+      ++(this->countFailed); // one more failed test
     }
 
     void
@@ -106,48 +111,45 @@ namespace os
     void
     TestSuite::info(const char* pMessage) const
     {
-      output(LineType::INFO, pMessage);
+      outputLine(OutputLineType::INFO, pMessage);
     }
 
     void
     TestSuite::stop(const char* pMessage) const
     {
-      putString("STAT:");
-      putString("\"Failed=");
-      putNumber(this->countFailed);
-      putString(", Passed=");
-      putNumber(this->countPassed);
-      putString("\"");
-      putNewLine();
-
-      output(LineType::STOP, pMessage);
+      outputLine(OutputLineType::STAT, 0);
+      outputLine(OutputLineType::STOP, pMessage);
 
       if (this->xmlFileDescriptor != -1)
         {
+          // close the elements opened at START
           writeStringToFile("</testsuite></testsuites>\n");
         }
     }
 
     void
-    TestSuite::output(LineType_t lineType, const char* pMessage) const
+    TestSuite::outputLine(OutputLineType_t lineType, const char* pMessage) const
     {
       const char* pStr;
       switch (lineType)
         {
-      case LineType::START:
+      case OutputLineType::START:
         pStr = "START";
         break;
-      case LineType::STOP:
+      case OutputLineType::STOP:
         pStr = "STOP";
         break;
-      case LineType::PASS:
+      case OutputLineType::PASS:
         pStr = "PASS";
         break;
-      case LineType::FAIL:
+      case OutputLineType::FAIL:
         pStr = "FAIL";
         break;
-      case LineType::INFO:
+      case OutputLineType::INFO:
         pStr = "INFO";
+        break;
+      case OutputLineType::STAT:
+        pStr = "STAT";
         break;
       default:
         pStr = "????";
@@ -157,29 +159,57 @@ namespace os
       putString(pStr);
       putString(":");
       putString("\"");
-      if (lineType == LineType::START)
+      if (lineType == OutputLineType::START)
         {
           putString("Starting tests from '");
+          putString(pMessage);
+          putString("'");
         }
-      else if (lineType == LineType::STOP)
+      else if (lineType == OutputLineType::STOP)
         {
           putString("Completing tests from '");
+          putString(pMessage);
+          putString("'");
         }
-      putString(pMessage);
-      putString("'\"");
+      else if (lineType == OutputLineType::STAT)
+        {
+          putString("Failed=");
+          putNumber(this->countFailed);
+          putString(", Passed=");
+          putNumber(this->countPassed);
+        }
+      else
+        {
+          putString(pMessage);
+        }
+      putString("\"");
       putNewLine();
     }
 
     ssize_t
     TestSuite::writeStringToFile(const char* pString) const
     {
+      if (pString == 0)
+        return 0;
+
+      size_t len = strlen(pString);
+      if (len == 0)
+        return 0;
+
       return os::infra::TestSuiteImplementation::writeFile(
-          this->xmlFileDescriptor, pString, strlen(pString));
+          this->xmlFileDescriptor, pString, len);
     }
 
     ssize_t
     TestSuite::putString(const char* pString) const
     {
+      if (pString == 0)
+        return 0;
+
+      size_t len = strlen(pString);
+      if (len == 0)
+        return 0;
+
       return os::infra::TestSuiteImplementation::putBytes(pString,
           strlen(pString));
     }
@@ -190,7 +220,7 @@ namespace os
       return os::infra::TestSuiteImplementation::putNewLine();
     }
 
-    void
+    ssize_t
     TestSuite::putNumber(int n) const
     {
       char buf[10];
@@ -223,20 +253,22 @@ namespace os
           buf[--i] = '-';
         }
 
-      putString(&buf[i]);
+      return putString(&buf[i]);
     }
 
-    // The jUnit xml looks like this:
-
-    // <testsuites><testsuite>
-    // <testcase classname="os::infra::TestSuite" name="check true constant"/>
-    // <testcase classname="os::infra::TestSuite" name="check false constant"><failure/></testcase>
-    // <testcase classname="os::infra::TestSuite" name="a passed test"/>
-    // <testcase classname="os::infra::TestSuite" name="a failed test"><failure/></testcase>
-    // </testsuite></testsuites>
+    /// The JUnit XML looks like this:
+    ///
+    /// ~~~
+    /// <testsuites><testsuite>
+    ///   <testcase classname="os::infra::TestSuite" name="check true constant"/>
+    ///   <testcase classname="os::infra::TestSuite" name="check false constant"><failure/></testcase>
+    ///   <testcase classname="os::infra::TestSuite" name="a passed test"/>
+    ///   <testcase classname="os::infra::TestSuite" name="a failed test"><failure/></testcase>
+    /// </testsuite></testsuites>
+    /// ~~~
 
     void
-    TestSuite::outXml(bool isFailure, const char* pMessage)
+    TestSuite::writeToXmlFile(bool isFailure, const char* pMessage)
     {
       if (this->xmlFileDescriptor != -1)
         {
@@ -248,7 +280,7 @@ namespace os
               writeStringToFile(this->pClassName);
               writeStringToFile("\"");
             }
-          if (pMessage)
+          if (pMessage != 0)
             {
               writeStringToFile(" name=\"");
               writeStringToFile(pMessage);
