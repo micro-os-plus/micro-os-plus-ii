@@ -1,8 +1,8 @@
-/*
- *      Copyright (C) 2012-2013 Liviu Ionescu.
- *
- *      This file is part of the uOS++ distribution.
- */
+//
+//      Copyright (C) 2012-2013 Liviu Ionescu.
+//
+//      This file is part of the uOS++ distribution.
+//
 
 #ifndef OS_PORTABLE_CORE_OS_DEFINES_H_
 #define OS_PORTABLE_CORE_OS_DEFINES_H_
