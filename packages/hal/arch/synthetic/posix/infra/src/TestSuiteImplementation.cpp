@@ -16,88 +16,117 @@
 
 namespace hal
 {
-  namespace arch
+  namespace posix
   {
-    namespace synthetic
+    namespace infra
     {
-      namespace posix
+
+      /// \par Description
+      ///
+      /// \details
+      /// Process the command line parameters. If `-j filename` is
+      /// encountered, a pointer to the given file name is returned.
+      ///
+      //// If errors occur, the process is abruptly ended.
+      /// ___
+      char*
+      TestSuiteImplementation::getFileNamePointer(int argc, char* argv[])
       {
-        namespace infra
-        {
+        opterr = 0;
+        int c;
 
-          char*
-          TestSuiteImplementation::getFileNamePointer(int argc, char* argv[])
+        char* fileName = 0;
+
+        while ((c = getopt(argc, argv, "j:")) != -1)
           {
-            opterr = 0;
-            int c;
-
-            char* fileName = 0;
-
-            while ((c = getopt(argc, argv, "j:")) != -1)
+            switch (c)
               {
-                switch (c)
-                  {
-                case 'j':
-                  // TODO: copy string
-                  fileName = optarg;
-                  break;
-                case '?':
-                  if (optopt == 'j')
-                    std::cerr << "Option '-" << (char) optopt
-                        << "' requires an argument." << std::endl;
-                  else if (isprint (optopt))
-                    std::cerr << "Unknown option '-" << (char) optopt << "'."
-                        << std::endl;
-                  else
-                    std::cerr << "Unknown option character '\\x" << std::hex
-                        << optopt << "'." << std::endl;
-                  exit(1);
-                default:
-                  abort();
-                  }
+            case 'j':
+              // TODO: copy string
+              fileName = optarg;
+              break;
+            case '?':
+              if (optopt == 'j')
+                std::cerr << "Option '-" << (char) optopt
+                    << "' requires an argument." << std::endl;
+              else if (isprint(optopt))
+                std::cerr << "Unknown option '-" << (char) optopt << "'."
+                    << std::endl;
+              else
+                std::cerr << "Unknown option character '\\x" << std::hex
+                    << optopt << "'." << std::endl;
+              exit(1);
+            default:
+              abort();
               }
-
-            return fileName;
           }
 
-          int
-          TestSuiteImplementation::createFile(const char *path)
-          {
-            return ::open(path, (O_CREAT | O_TRUNC | O_WRONLY), 0644);
-          }
+        return fileName;
+      }
 
-          ssize_t
-          TestSuiteImplementation::writeFile(int fildes, const void *buf,
-              size_t nbyte)
-          {
-            return ::write(fildes, buf, nbyte);
-          }
+      /// \par Description
+      ///
+      /// \details
+      /// Open the file as a new one, truncate if present.
+      /// ___
+      int
+      TestSuiteImplementation::createFile(const char *cpPath)
+      {
+        return ::open(cpPath, (O_CREAT | O_TRUNC | O_WRONLY), 0644);
+      }
 
-          int
-          TestSuiteImplementation::closeFile(int fildes)
-          {
-            return ::close(fildes);
-          }
+      /// \par Description
+      ///
+      /// \details
+      /// Call the system function to write a sequence of bytes to the
+      /// given file.
+      /// ___
+      ssize_t
+      TestSuiteImplementation::writeToFile(int fildes, const void *cpBuf,
+          size_t numBytes)
+      {
+        return ::write(fildes, cpBuf, numBytes);
+      }
 
-          void
-          TestSuiteImplementation::putNewLine(void)
-          {
-            // on Unix, the new line is a single character
-            ::write(1, "\n", 1);
-            return;
-          }
+      /// \par Description
+      ///
+      /// \details
+      /// Call the system function to close the file.
+      /// ___
+      int
+      TestSuiteImplementation::closeFile(int fildes)
+      {
+        return ::close(fildes);
+      }
 
-          ssize_t
-          TestSuiteImplementation::putBytes(const void* cpBuf, size_t nbyte)
-          {
-            // write the byte array in a single, atomic, sequence
-            return ::write(1, cpBuf, nbyte);
-          }
+      /// \par Description
+      ///
+      /// \details
+      /// Call the system function to write the new line to the
+      /// standard output.
+      /// ___
+      void
+      TestSuiteImplementation::putNewLine(void)
+      {
+        // on Unix, the new line is a single character
+        ::write(OUTPUT_DEVICE_FILE_DESCRIPTOR, "\n", 1);
+        return;
+      }
 
-        } // namespace infra
-      } // namespace posix
-    } // namespace synthetic
-  } // namespace arch
+      /// \par Description
+      ///
+      /// \details
+      /// Call the system function to write the sequence of bytes to the
+      /// standard output. The operation is atomic.
+      /// ___
+      ssize_t
+      TestSuiteImplementation::putBytes(const void* cpBuf, size_t numBytes)
+      {
+        return ::write(OUTPUT_DEVICE_FILE_DESCRIPTOR, cpBuf, numBytes);
+      }
+
+    } // namespace infra
+  } // namespace posix
 } // namespace hal
 
 #endif /* defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION) */

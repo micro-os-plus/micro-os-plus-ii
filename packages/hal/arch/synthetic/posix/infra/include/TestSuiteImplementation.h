@@ -12,67 +12,91 @@
 
 namespace hal
 {
-  namespace arch
+  namespace posix
   {
-    namespace synthetic
+    namespace infra
     {
-      namespace posix
+      /// \brief The POSIX implementation for the TestSuite.
+      ///
+      /// \details
+      /// Provide the system support to create/write/close file using
+      /// the POSIX
+      /// calls. Also implement the output device as the standard output.
+      ///
+      /// Since none of these calls need to preserve any status between calls,
+      /// all are implemented as static methods.
+      class TestSuiteImplementation
       {
-        namespace infra
-        {
-          class TestSuiteImplementation
-          {
-          public:
-            /// \brief Search parameters and identify XML file name
-            ///
-            /// \param [in] argc count of arguments.
-            /// \param [in] argv array of pointer to strings.
-            static char*
-            getFileNamePointer(int argc, char* argv[]);
+      public:
+        /// \brief The file descriptor of the output device.
+        static const int OUTPUT_DEVICE_FILE_DESCRIPTOR = 1;
 
-            /// \brief Create a file to be used as output for the XML file.
-            ///
-            /// \param [in] path a string with the file system path
-            static int
-            createFile(const char *path);
+        /// \brief Search parameters and extract the file name to be used
+        /// for the XML output.
+        ///
+        /// \param [in] argc count of arguments.
+        /// \param [in] argv array of pointer to strings.
+        ///
+        /// \return If successful, it returns a pointer to a zero terminating
+        /// string containing
+        /// the file name. It returns `nulptr` if not found.
+        static char*
+        getFileNamePointer(int argc, char* argv[]);
 
-            /// \brief Write an array of bytes to the file.
-            ///
-            /// \param [in] fildes system file descriptor obtained from open()
-            /// \param [in] buf pointer to the array of bytes
-            /// \param [in] nbyte the length of the array of bytes
-            static ssize_t
-            writeFile(int fildes, const void *buf, size_t nbyte);
+        /// \brief Create a file to write the XML output.
+        ///
+        /// \param [in] cpPath a string with the file system path
+        ///
+        /// \return If successful, it returns a non-negative integer,
+        /// termed a file descriptor.  It returns -1 on failure.
+        static int
+        createFile(const char *cpPath);
 
-            /// \brief Close the file used for XML.
-            ///
-            /// \param [in] fildes system file descriptor obtained from open()
-            static int
-            closeFile(int fildes);
+        /// \brief Write an array of bytes to the file.
+        ///
+        /// \param [in] fildes system file descriptor obtained from open()
+        /// \param [in] cpBuf pointer to the array of bytes
+        /// \param [in] numBytes the length of the array of bytes
+        ///
+        /// \return Upon successful completion the number of bytes which
+        /// were written is  returned.  Otherwise, a -1 is returned
+        static ssize_t
+        writeToFile(int fildes, const void *cpBuf, size_t numBytes);
 
-            /// \brief Send a new line to the test output device.
-            static void
-            putNewLine(void);
+        /// \brief Close the XML file.
+        ///
+        /// \param [in] fildes system file descriptor obtained from open()
+        ///
+        /// \return  Upon successful completion, a value of 0 is returned.
+        /// Otherwise, a value of -1 is returned.
+        static int
+        closeFile(int fildes);
 
-            /// \brief Write an array of bytes to the test output device.
-            ///
-            /// \param [in] cpBuf pointer to the array of bytes
-            /// \param [in] nbyte the length of the array of bytes
-            static ssize_t
-            putBytes(const void* cpBuf, size_t nbyte);
+        /// \brief Send a new line to the test output device.
+        static void
+        putNewLine(void);
 
-          };
-        } // namespace infra
-      } // namespace posix
-    } // namespace synthetic
-  } // namespace arch
+        /// \brief Write an array of bytes to the test output device.
+        ///
+        /// \param [in] cpBuf pointer to the array of bytes
+        /// \param [in] numBytes the length of the array of bytes
+        ///
+        /// \return The actual number of bytes written to the output device.
+        static ssize_t
+        putBytes(const void* cpBuf, size_t numBytes);
+
+      };
+    } // namespace infra
+  } // namespace posix
 } // namespace hal
 
 namespace os
 {
   namespace infra
   {
-    typedef hal::arch::synthetic::posix::infra::TestSuiteImplementation TestSuiteImplementation_t;
+    /// \brief Define the generic type to refer to the POSIX implementation
+    /// for the TestSuite.
+    typedef hal::posix::infra::TestSuiteImplementation TestSuiteImplementation_t;
   } // namespace infra
 } // namespace os
 
