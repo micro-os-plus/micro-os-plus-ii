@@ -294,7 +294,7 @@ namespace os
       if (len == 0)
         return 0;
 
-      return os::infra::TestSuiteImplementation_t::writeFile(
+      return os::infra::TestSuiteImplementation_t::writeToFile(
           this->xmlFileDescriptor, pString, len);
     }
 
