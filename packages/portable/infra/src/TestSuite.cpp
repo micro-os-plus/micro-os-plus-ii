@@ -57,7 +57,7 @@ namespace os
       if (this->xmlFileDescriptor != -1)
         {
           // if the file descriptor was opened, close it now
-          os::infra::TestSuiteImplementation::closeFile(
+          os::infra::TestSuiteImplementation_t::closeFile(
               this->xmlFileDescriptor);
         }
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
@@ -74,7 +74,7 @@ namespace os
     TestSuite::parseParameters(int argc, char* argv[])
     {
       char* fileName = nullptr;
-      fileName = os::infra::TestSuiteImplementation::getFileNamePointer(argc,
+      fileName = os::infra::TestSuiteImplementation_t::getFileNamePointer(argc,
           argv);
       // Warning: the pointer is to the argv array, bu this is not fatal, since
       // the array is static.
@@ -82,7 +82,7 @@ namespace os
       if (fileName != nullptr)
         {
           int fd;
-          fd = os::infra::TestSuiteImplementation::createFile(fileName);
+          fd = os::infra::TestSuiteImplementation_t::createFile(fileName);
           if (fd != -1)
             {
               this->xmlFileDescriptor = fd;
@@ -294,7 +294,7 @@ namespace os
       if (len == 0)
         return 0;
 
-      return os::infra::TestSuiteImplementation::writeFile(
+      return os::infra::TestSuiteImplementation_t::writeFile(
           this->xmlFileDescriptor, pString, len);
     }
 
@@ -314,7 +314,7 @@ namespace os
       if (len == 0)
         return 0;
 
-      return os::infra::TestSuiteImplementation::putBytes(pString,
+      return os::infra::TestSuiteImplementation_t::putBytes(pString,
           strlen(pString));
     }
 
@@ -327,13 +327,13 @@ namespace os
     void
     TestSuite::putNewLine(void) const
     {
-      return os::infra::TestSuiteImplementation::putNewLine();
+      return os::infra::TestSuiteImplementation_t::putNewLine();
     }
 
     /// \par Description
     ///
     /// \details
-    /// Convert the integer to ascii and send it to the test
+    /// Convert the integer to ASCII and send it to the test
     /// output device.
     /// ___
     ssize_t
@@ -434,30 +434,6 @@ namespace os
 
   } /* namespace infra */
 } /* namespace os */
-
-// The test main() function.
-// It creates a test class instance and all
-// actions happen within its context, in the run() method.
-
-int
-main(int argc, char* argv[])
-{
-  os::infra::TestSuite testSuite;
-
-  testSuite.parseParameters(argc, argv);
-
-  testSuite.run();
-
-  int retval;
-  retval = testSuite.getExitValue();
-
-  debug.putString("::main() returns ");
-  debug.putDec(retval);
-  debug.putNewLine();
-
-  // return 0 if there are no failed test cases
-  return retval;
-}
 
 #endif /* defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) */
 
