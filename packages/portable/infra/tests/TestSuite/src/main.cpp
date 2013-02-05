@@ -1,35 +1,45 @@
-/*
- *      Copyright (C) 2012-2013 Liviu Ionescu.
- *
- *      This file is part of the uOS++ distribution.
- */
+//
+//      Copyright (C) 2012-2013 Liviu Ionescu.
+//
+//      This file is part of the uOS++ distribution.
+//
 
 #include "portable/core/include/OS.h"
 
 #include "portable/infra/include/TestSuite.h"
 
-namespace os
+
+int
+main(int argc, char* argv[])
 {
-  namespace infra
-  {
+  os::infra::TestSuite t;
 
-    void
-    TestSuite::run(void)
-    {
-      setClassName("os::infra::TestSuite");
+  t.parseParameters(argc, argv);
 
-      start(__FILE__);
+  t.setClassName("os::infra::TestSuite");
 
-      checkAndReport(true, "check true constant");
-      checkAndReport(false, "check false constant");
+  t.start(__FILE__);
 
-      reportPassed("a passed test");
-      reportFailed("a failed test");
+  t.checkAndReport(true, "check true constant");
+  t.checkAndReport(false, "check false constant");
 
-      reportInfo("there should be 2 failed cases and 2 passed cases");
+  t.reportPassed("a passed test");
+  t.reportFailed("a failed test");
 
-      stop(__FILE__);
-    }
+  t.reportInfo("there should be 2 failed cases and 2 passed cases");
 
-  } /* namespace infra */
-} /* namespace os */
+  t.stop(__FILE__);
+
+  int retval;
+  retval = t.getExitValue();
+
+  debug.putString(__PRETTY_FUNCTION__);
+  debug.putString(" returns ");
+  debug.putDec(retval);
+  debug.putNewLine();
+
+  // return 0 if there are no failed test cases
+  return retval;
+}
+
+

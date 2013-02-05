@@ -31,14 +31,6 @@ namespace os
       /// \brief Simple destructor.
       ~TestSuite();
 
-      /// \brief Run the test suite.
-      ///
-      /// This method is the only one that must be implemented by the unit
-      /// test developer, the rest is done automatically by the test suite
-      /// framework.
-      void
-      run(void);
-
       /// \brief Set the name of the tested class.
       ///
       /// \param [in] pName a string containing the class name, usually with
@@ -119,7 +111,8 @@ namespace os
       /// \param [in] lineType a constant to specify the line prefix.
       /// \param [in] pMessage a string containing the line message.
       void
-      outputLine(OutputLineType_t lineType, const char* pMessage = nullptr) const;
+      outputLine(OutputLineType_t lineType,
+          const char* pMessage = nullptr) const;
 
       /// \brief Generate a test case XML element in the configured file.
       ///
@@ -169,10 +162,9 @@ namespace os
       int xmlFileDescriptor;
 
     };
-    // class TestSuite
+  // class TestSuite
 
 #pragma GCC diagnostic pop
-
 
   } // namespace infra
 } // namespace os
