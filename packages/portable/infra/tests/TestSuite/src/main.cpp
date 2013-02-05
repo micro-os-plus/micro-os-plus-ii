@@ -12,26 +12,26 @@
 int
 main(int argc, char* argv[])
 {
-  os::infra::TestSuite t;
+  os::infra::TestSuite ts;
 
-  t.parseParameters(argc, argv);
+  ts.parseParameters(argc, argv);
 
-  t.setClassName("os::infra::TestSuite");
+  ts.setClassName("os::infra::TestSuite");
 
-  t.start(__FILE__);
+  ts.start(__FILE__);
 
-  t.checkAndReport(true, "check true constant");
-  t.checkAndReport(false, "check false constant");
+  ts.checkAndReport(true, "check true constant");
+  ts.checkAndReport(false, "check false constant");
 
-  t.reportPassed("a passed test");
-  t.reportFailed("a failed test");
+  ts.reportPassed("a passed test");
+  ts.reportFailed("a failed test");
 
-  t.reportInfo("there should be 2 failed cases and 2 passed cases");
+  ts.reportInfo("there should be 2 failed cases and 2 passed cases");
 
-  t.stop(__FILE__);
+  ts.stop(__FILE__);
 
   int retval;
-  retval = t.getExitValue();
+  retval = ts.getExitValue();
 
   debug.putString(__PRETTY_FUNCTION__);
   debug.putString(" returns ");
