@@ -1,0 +1,27 @@
+/**
+
+\mainpage The µOS++ SE Documentation
+The <em>µOS++ SE</em> (micro oh es plus plus second edition) project is the second 
+iteration of µOS++, a <a href="http://sourceforge.net/projects/micro-os-plus/">
+SourceForge hosted</a> <b>open source, royalty-free, multi-tasking operating 
+system intended for 16/32/64 bit embedded systems</b>. It is based on a simple 
+preemptive scheduler specifically designed for ARM Cortex M devices and also 
+ported on AVR8/AVR32 devices. Being carefully written in a subset of C++, 
+it is elegant, convenient to use, easy to maintain, yet efficient and with 
+a small footprint.
+
+The authoritative µOS++ reference documents can be found in these 
+Doxygen generated pages, with aditional documents in the
+<a href="http://micro-os-plus.livius.net/wiki/Main_Page">project wiki</a>. 
+The source code itself, publicly available for browsing via the web 
+<a href="http://sourceforge.net/p/micro-os-plus/second/">Git Browse</a> 
+interface is another good source of information. (Additional resources 
+can be found in the SourceForge trackers mentioned in the Support page). 
+The configuration metadata is documented in the 
+<a href="http://xcdl.livius.net/wiki">XCDL wiki</a>.
+
+As most Doxygen based documentations, this site is fully generated from 
+files located in the µOS++ repository only.
+
+
+*/
