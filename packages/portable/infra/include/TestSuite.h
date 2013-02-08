@@ -26,6 +26,8 @@ namespace os
 
     public:
       /// \brief Simple constructor.
+      /// \par Parameters
+      /// None
       TestSuite();
 
       /// \brief Simple destructor.
@@ -35,6 +37,9 @@ namespace os
       ///
       /// \param [in] pName a string containing the class name, usually with
       /// full name space definitions.
+      /// \par Returns
+      /// Nothing
+
       void
       setClassName(const char* pName);
 
@@ -42,6 +47,8 @@ namespace os
       ///
       /// \param [in] pMessage a string identifying the test suite, usually
       /// the compiler `__FILE__` builtin macro definition.
+      /// \par Returns
+      /// Nothing
       void
       start(const char* pMessage) const;
 
@@ -49,24 +56,32 @@ namespace os
       ///
       /// \param [in] expression the boolean condition to be tested.
       /// \param [in] pMessage a string identifying the test case.
+      /// \par Returns
+      /// Nothing
       void
       checkAndReport(bool expression, const char* pMessage);
 
       /// \brief Report a successful test case.
       ///
       /// \param [in] pMessage a string identifying the test case.
+      /// \par Returns
+      /// Nothing
       void
       reportPassed(const char* pMessage);
 
       /// \brief Report a failed test case.
       ///
       /// \param [in] pMessage a string identifying the test case.
+      /// \par Returns
+      /// Nothing
       void
       reportFailed(const char* pMessage);
 
       /// \brief Display an informative line.
       ///
       /// \param [in] pMessage a string with the informative message.
+      /// \par Returns
+      /// Nothing
       void
       reportInfo(const char* pMessage) const;
 
@@ -74,6 +89,8 @@ namespace os
       ///
       /// \param [in] pMessage a string identifying the test suite, usually
       /// the compiler `__FILE__` builtin macro definition.
+      /// \par Returns
+      /// Nothing
       void
       stop(const char* pMessage) const;
 
@@ -84,8 +101,10 @@ namespace os
       void
       parseParameters(int argc, char* argv[]);
 
-      /// \brief Compute the process return value.
+      /// \brief Compute the value to be returned by main().
       ///
+      /// \par Parameters
+      /// None
       /// \retval 0 Test suite succeeded.
       /// \retval 1 Test suite failed.
       int
@@ -110,6 +129,8 @@ namespace os
       ///
       /// \param [in] lineType a constant to specify the line prefix.
       /// \param [in] pMessage a string containing the line message.
+      /// \par Returns
+      /// Nothing
       void
       outputLine(OutputLineType_t lineType,
           const char* pMessage = nullptr) const;
@@ -118,6 +139,8 @@ namespace os
       ///
       /// \param [in] isFailure mark this test case as a failure.
       /// \param [in] pMessage a string containing the test case message.
+      /// \par Returns
+      /// Nothing
       void
       writeToXmlFile(bool isFailure, const char* pMessage);
 
@@ -146,6 +169,10 @@ namespace os
       putNumber(int n) const;
 
       /// \brief Send a new line to the test output device.
+      /// \par Parameters
+      /// None
+      /// \par Returns
+      /// Nothing
       void
       putNewLine(void) const;
 

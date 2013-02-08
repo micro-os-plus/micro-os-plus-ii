@@ -27,31 +27,32 @@ namespace os
     /// has the disadvantage of running the constructors before the
     /// hardware initialisations (for example at low speed).
     ///
-    /// The next option is to arrange to run the initialisations
+    /// The next option is to run the initialisations
     /// during the first static constructor. C++ does guarantee that
-    /// constructors for nonlocal objects in a translation unit are executed
-    /// in the order their definitions occur. Unfortunately no implementation
+    /// *constructors for nonlocal objects in a translation unit are executed
+    /// in the order their definitions occur*. Unfortunately *no implementation
     /// independent guarantees are made about the order of construction
-    /// of nonlocal objects in different compilation units.
+    /// of nonlocal objects in different compilation units* [Stroustrup,
+    /// The C++ Programming Language].
     ///
     /// In real life things are not that bad, and workarounds can most of
     /// the time be imagined.
     ///
     /// For example, with the current versions of GNU GCC and LLVM CLANG,
     /// the linker builds the list of nonlocal objects constructors in the
-    /// order of processing objects, so by enforcing this file as the
-    /// first object, we guarantee more or less that the initialisation
+    /// same order as it processes input object files, so by arranging that
+    /// this file is encountered
+    /// first, we (more or less) guarantee that the initialisation
     /// code is executed before other constructors.
 
     class EarlyInitialisation
     {
     public:
+      /// \brief This constructor will be executed before all others.
       EarlyInitialisation();
     };
 
-    /// \brief The constructor to be executed before all others.
-    ///
-    /// \details
+    /// \par Description
     /// All hardware initialisations must be listed here, in the desired
     /// order.
     EarlyInitialisation::EarlyInitialisation()

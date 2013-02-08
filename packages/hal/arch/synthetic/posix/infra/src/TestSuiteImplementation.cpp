@@ -22,13 +22,9 @@ namespace hal
     {
 
       /// \par Description
-      ///
-      /// \details
       /// Process the command line parameters. If `-j filename` is
       /// encountered, a pointer to the given file name is returned.
-      ///
-      //// If errors occur, the process is abruptly ended.
-      /// ___
+      /// If errors occur, the process is abruptly terminated.
       char*
       TestSuiteImplementation::getFileNamePointer(int argc, char* argv[])
       {
@@ -65,10 +61,7 @@ namespace hal
       }
 
       /// \par Description
-      ///
-      /// \details
       /// Open the file as a new one, truncate if present.
-      /// ___
       int
       TestSuiteImplementation::createFile(const char *cpPath)
       {
@@ -76,11 +69,8 @@ namespace hal
       }
 
       /// \par Description
-      ///
-      /// \details
       /// Call the system function to write a sequence of bytes to the
       /// given file.
-      /// ___
       ssize_t
       TestSuiteImplementation::writeToFile(int fildes, const void *cpBuf,
           size_t numBytes)
@@ -89,10 +79,7 @@ namespace hal
       }
 
       /// \par Description
-      ///
-      /// \details
       /// Call the system function to close the file.
-      /// ___
       int
       TestSuiteImplementation::closeFile(int fildes)
       {
@@ -100,11 +87,8 @@ namespace hal
       }
 
       /// \par Description
-      ///
-      /// \details
       /// Call the system function to write the new line to the
       /// standard output.
-      /// ___
       void
       TestSuiteImplementation::putNewLine(void)
       {
@@ -114,11 +98,8 @@ namespace hal
       }
 
       /// \par Description
-      ///
-      /// \details
       /// Call the system function to write the sequence of bytes to the
       /// standard output. The operation is atomic.
-      /// ___
       ssize_t
       TestSuiteImplementation::putBytes(const void* cpBuf, size_t numBytes)
       {

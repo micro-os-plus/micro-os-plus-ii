@@ -22,7 +22,7 @@
 /// message in the console and a `<testcase>` line in an XML file,
 /// to be used by
 /// continuous integration tools like Jenkins.
-/// ___
+
 #include <string.h>
 
 namespace os
@@ -31,27 +31,21 @@ namespace os
   {
 
     /// \par Description
-    ///
-    /// \details
     /// Create the test suite, clear all fields.
-    /// ___
     TestSuite::TestSuite()
     {
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
 
       this->pClassName = nullptr; // initialise pointer to class name
 
-      this->countPassed = 0;    // initialise count of passed tests
-      this->countFailed = 0;    // initialise count of failed tests
+      this->countPassed = 0; // initialise count of passed tests
+      this->countFailed = 0; // initialise count of failed tests
 
       this->xmlFileDescriptor = -1; // set file descriptor to none
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Cleanup the test suite, eventually close the XML file.
-    /// ___
     TestSuite::~TestSuite()
     {
       if (this->xmlFileDescriptor != -1)
@@ -64,12 +58,9 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Process the command line parameters. If `-j filename` is
     /// encountered, the given file is used to output the XML formated test
     /// suite results.
-    /// ___
     void
     TestSuite::parseParameters(int argc, char* argv[])
     {
@@ -91,8 +82,6 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// The class name is required to identify the current test
     /// suite in an automated test environment.
     ///
@@ -101,7 +90,6 @@ namespace os
     /// ~~~{.cpp}
     /// setClassName("os::infra::TestSuite");
     /// ~~~
-    /// ___
     void
     TestSuite::setClassName(const char* pName)
     {
@@ -110,10 +98,7 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Generate an informative START line on the output device.
-    /// ___
     void
     TestSuite::start(const char* pMessage) const
     {
@@ -127,11 +112,8 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Generate a `PASS` line on the output device. If the XML
     ///  output is configured, the `<testcase>` element will be generated.
-    /// ___
     void
     TestSuite::reportPassed(const char* pMessage)
     {
@@ -142,12 +124,9 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Generate a `FAIL` line on the output device. If the XML
     /// output is configured, the `<testcase>` element will include a
     /// `<failed/>` element.
-    /// ___
     void
     TestSuite::reportFailed(const char* pMessage)
     {
@@ -158,11 +137,8 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Generate a `PASS/FAIL` line on the output device,
     /// based on the given boolean condition.
-    /// ___
     void
     TestSuite::checkAndReport(bool expression, const char* pMessage)
     {
@@ -177,10 +153,7 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Generate an `INFO` line on the output device.
-    /// ___
     void
     TestSuite::reportInfo(const char* pMessage) const
     {
@@ -188,10 +161,7 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Generate an informative `STOP` line on the output device.
-    /// ___
     void
     TestSuite::stop(const char* pMessage) const
     {
@@ -206,11 +176,8 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Prefix the message with a word defining the line type and
     /// send it to the output device.
-    /// ___
     void
     TestSuite::outputLine(OutputLineType_t lineType, const char* pMessage) const
     {
@@ -279,11 +246,8 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Compute the string length and write all the string
     /// characters, excluding the terminating '\0' into the XML file.
-    /// ___
     ssize_t
     TestSuite::writeStringToFile(const char* pString) const
     {
@@ -299,11 +263,8 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Compute the string length and send all the string characters,
     /// excluding the terminating '\0', to the test output device.
-    /// ___
     ssize_t
     TestSuite::putString(const char* pString) const
     {
@@ -319,11 +280,8 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Inform the output device that the current line is
-    /// completed and request to flush all output and pass to the next one.
-    /// ___
+    /// completed and request to flush all output and pass to the next line.
     void
     TestSuite::putNewLine(void) const
     {
@@ -331,11 +289,8 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// Convert the integer to ASCII and send it to the test
     /// output device.
-    /// ___
     ssize_t
     TestSuite::putNumber(int n) const
     {
@@ -373,8 +328,6 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details
     /// The format used for the XML is the one defined in JUnit.
     ///
     /// The JUnit XML looks like this:
@@ -387,8 +340,6 @@ namespace os
     ///   <testcase classname="os::infra::TestSuite" name="a failed test"><failure/></testcase>
     /// </testsuite></testsuites>
     /// ~~~
-    ///
-    /// ___
     void
     TestSuite::writeToXmlFile(bool isFailure, const char* pMessage)
     {
@@ -421,11 +372,11 @@ namespace os
     }
 
     /// \par Description
-    ///
-    /// \details The test suite process shall return 0 if all test cases
-    /// passed, and 1 if at least one failed. This method checks the
-    /// count of failed test cases and returns 0 if none.
-    /// ___
+    /// To be useful when integrated in a test environment, the test suite
+    /// process shall return 0 if all test cases
+    /// passed, and 1 if at least one failed. \n
+    /// This method checks the count of failed test cases
+    ///  and, if 0, it returns 0, otherwise it return 1.
     int
     TestSuite::getExitValue(void) const
     {

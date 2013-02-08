@@ -10,12 +10,15 @@
 #include <stdint.h>
 #include <unistd.h>
 
+#include "portable/infra/include/TestSuiteImplementation.h"
+
 namespace hal
 {
   namespace posix
   {
     namespace infra
     {
+      /// \class TestSuiteImplementation TestSuiteImplementation.h "hal/arch/synthetic/posix/include/TestSuiteImplementation.h"
       /// \brief The POSIX implementation for the TestSuite.
       ///
       /// \details
@@ -25,7 +28,7 @@ namespace hal
       ///
       /// Since none of these calls need to preserve any status between calls,
       /// all are implemented as static methods.
-      class TestSuiteImplementation
+      class TestSuiteImplementation : public os::infra::TestSuiteImplementation
       {
       public:
         /// \brief The file descriptor of the output device.
@@ -73,6 +76,10 @@ namespace hal
         closeFile(int fildes);
 
         /// \brief Send a new line to the test output device.
+        /// \par Parameters
+        /// None
+        /// \par Returns
+        /// Nothing
         static void
         putNewLine(void);
 
