@@ -52,7 +52,7 @@ namespace os
       EarlyInitialisation();
     };
 
-    /// \Details
+    /// \details
     /// All hardware initialisations are performed here, in the desired
     /// order.
     EarlyInitialisation::EarlyInitialisation()
