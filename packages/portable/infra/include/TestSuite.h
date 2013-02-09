@@ -135,7 +135,7 @@ namespace os
               START = 1, INFO, PASS, FAIL, STAT, CLASS, STOP
         };
 
-        /// \brief Generate a test case line on the output device.
+        /// \brief Generate a test case line and send it to the output device.
         ///
         /// \param [in] lineType a constant to specify the line prefix.
         /// \param [in] pMessage a string containing the line message.
@@ -144,7 +144,8 @@ namespace os
         void
         outputLine(OutputLineType_t lineType, const char* pMessage = nullptr);
 
-        /// \brief Generate a test case XML element in the configured file.
+        /// \brief Generate a test case XML element and write it to the
+        /// configured file.
         ///
         /// \param [in] isFailure mark this test case as a failure.
         /// \param [in] pMessage a string containing the test case message.
@@ -171,11 +172,11 @@ namespace os
 
         /// \brief Display a decimal integer to the test output device.
         ///
-        /// \param [in] n an integer number.
+        /// \param [in] number an integer number.
         ///
         /// \return The actual number of bytes written to the output device.
         ssize_t
-        putNumber(int n);
+        putNumber(int number);
 
         /// \brief Send a new line to the test output device.
         /// \par Parameters

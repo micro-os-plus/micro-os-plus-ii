@@ -23,6 +23,7 @@ Package(
                 
             sourceFiles=[
                 'TestSuite.cpp',
+                'TestSuiteImplementation.cpp',
             ],
 
             headerDefinition='OS_INCLUDE_PORTABLE_INFRA_TESTSUITE',

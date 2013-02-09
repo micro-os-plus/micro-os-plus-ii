@@ -302,17 +302,17 @@ namespace os
     /// output device.
     template<class T>
       ssize_t
-      TestSuite<T>::putNumber(int n)
+      TestSuite<T>::putNumber(int number)
       {
         char buf[10];
 
         bool isNegative;
         isNegative = false;
 
-        if (n < 0)
+        if (number < 0)
           {
             isNegative = true;
-            n = -n;
+            number = -number;
           }
 
         int i = sizeof(buf);
@@ -320,9 +320,9 @@ namespace os
 
         for (;;)
           {
-            buf[--i] = ('0' + (n % 10));
-            n = (n / 10);
-            if (n == 0)
+            buf[--i] = ('0' + (number % 10));
+            number = (number / 10);
+            if (number == 0)
               break;
 
             if (i <= 1)
