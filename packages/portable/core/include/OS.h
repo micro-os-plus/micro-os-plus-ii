@@ -7,7 +7,7 @@
 #ifndef OS_PORTABLE_CORE_OS_H_
 #define OS_PORTABLE_CORE_OS_H_
 
-#include <unistd.h>
+#include <stdint.h>
 
 #include "portable/core/include/OS_Defines.h"
 

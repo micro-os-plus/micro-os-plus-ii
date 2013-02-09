@@ -8,11 +8,10 @@
 
 #include "portable/infra/include/TestSuite.h"
 
-
 int
 main(int argc, char* argv[])
 {
-  os::infra::TestSuite ts(argc, argv);
+  os::infra::TestSuite_t ts(argc, argv);
 
   ts.setClassName("os::infra::TestSuite");
 
@@ -39,5 +38,4 @@ main(int argc, char* argv[])
   // return 0 if there are no failed test cases
   return retval;
 }
-
 

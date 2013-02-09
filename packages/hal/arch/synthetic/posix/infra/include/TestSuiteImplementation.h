@@ -106,7 +106,7 @@ namespace hal
         char* m_fileName = nullptr;
 
       };
-      // class TestSuiteImplementation
+    // class TestSuiteImplementation
 
 #pragma GCC diagnostic pop
 

@@ -40,60 +40,64 @@ namespace os
     class TestSuiteImplementation
     {
     public:
-      /// \brief Search parameters and extract the file name to be used
-      /// for the XML output.
+
+      /// \brief Simple constructor.
+      TestSuiteImplementation();
+
+      /// \brief Constructor with process parameters
       ///
       /// \param [in] argc count of arguments.
       /// \param [in] argv array of pointer to strings.
-      ///
-      /// \return If successful, it returns a pointer to a zero terminating
-      /// string containing
-      /// the file name. It returns `nulptr` if not found or if
-      /// the file access methods are not available.
-      static char*
-      getFileNamePointer(int argc, char* argv[]);
+      TestSuiteImplementation(int argc, char* argv[]);
 
-      /// \brief Create a file to write the XML output.
+      /// \brief Destructor.
+      ~TestSuiteImplementation();
+
+      /// \brief Create the XML file.
       ///
-      /// \param [in] cpPath a string with the file path
+      /// \par Parameters
+      ///     None
       ///
       /// \return If successful, it returns a non-negative integer,
-      /// termed a file descriptor, that can be used for write() calls.
-      /// It returns -1 on failure.
-      static int
-      createFile(const char *cpPath);
+      /// termed a file descriptor.  It returns -1 on failure.
+      int
+      createXmlFile(void);
 
-      /// \brief Write an array of bytes to the file.
+      /// \brief Write an array of bytes to the XML file.
       ///
-      /// \param [in] fildes system file descriptor obtained from open()
       /// \param [in] cpBuf pointer to the array of bytes
       /// \param [in] numBytes the length of the array of bytes
       ///
       /// \return Upon successful completion the number of bytes which
       /// were written is  returned.  Otherwise, a -1 is returned
-      static ssize_t
-      writeToFile(int fildes, const void *cpBuf, size_t numBytes);
+      ssize_t
+      writeToXmlFile(const void *cpBuf, size_t numBytes);
 
       /// \brief Close the XML file.
       ///
-      /// \param [in] fildes system file descriptor obtained from open()
+      /// \par Parameters
+      ///    None
       ///
       /// \return  Upon successful completion, a value of 0 is returned.
       /// Otherwise, a value of -1 is returned.
-      static int
-      closeFile(int fildes);
+      int
+      closeXmlFile(void);
 
       /// \brief Send a new line to the test output device.
-      static void
+      /// \par Parameters
+      /// None
+      /// \par Returns
+      /// Nothing
+      void
       putNewLine(void);
 
-      /// \brief Write an array of characters to the test output device.
+      /// \brief Write an array of bytes to the test output device.
       ///
-      /// \param [in] cpBuf pointer to the array of characters
+      /// \param [in] cpBuf pointer to the array of bytes
       /// \param [in] numBytes the length of the array of bytes
       ///
       /// \return The actual number of bytes written to the output device.
-      static ssize_t
+      ssize_t
       putBytes(const void* cpBuf, size_t numBytes);
 
     };
