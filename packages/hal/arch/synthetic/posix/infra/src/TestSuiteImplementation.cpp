@@ -21,7 +21,7 @@ namespace hal
     namespace infra
     {
 
-      /// \par Description
+      /// \details
       /// Process the command line parameters. If `-j filename` is
       /// encountered, a pointer to the given file name is returned.
       /// If errors occur, the process is abruptly terminated.
@@ -60,7 +60,7 @@ namespace hal
         return fileName;
       }
 
-      /// \par Description
+      /// \details
       /// Open the file as a new one, truncate if present.
       int
       TestSuiteImplementation::createFile(const char *cpPath)
@@ -68,7 +68,7 @@ namespace hal
         return ::open(cpPath, (O_CREAT | O_TRUNC | O_WRONLY), 0644);
       }
 
-      /// \par Description
+      /// \details
       /// Call the system function to write a sequence of bytes to the
       /// given file.
       ssize_t
@@ -78,7 +78,7 @@ namespace hal
         return ::write(fildes, cpBuf, numBytes);
       }
 
-      /// \par Description
+      /// \details
       /// Call the system function to close the file.
       int
       TestSuiteImplementation::closeFile(int fildes)
@@ -86,7 +86,7 @@ namespace hal
         return ::close(fildes);
       }
 
-      /// \par Description
+      /// \details
       /// Call the system function to write the new line to the
       /// standard output.
       void
@@ -97,7 +97,7 @@ namespace hal
         return;
       }
 
-      /// \par Description
+      /// \details
       /// Call the system function to write the sequence of bytes to the
       /// standard output. The operation is atomic.
       ssize_t

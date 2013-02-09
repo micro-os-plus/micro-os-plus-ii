@@ -30,7 +30,7 @@ namespace os
   namespace infra
   {
 
-    /// \par Description
+    /// \details
     /// Create the test suite, clear all fields.
     TestSuite::TestSuite()
     {
@@ -44,7 +44,7 @@ namespace os
       this->xmlFileDescriptor = -1; // set file descriptor to none
     }
 
-    /// \par Description
+    /// \details
     /// Cleanup the test suite, eventually close the XML file.
     TestSuite::~TestSuite()
     {
@@ -57,7 +57,7 @@ namespace os
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
     }
 
-    /// \par Description
+    /// \details
     /// Process the command line parameters. If `-j filename` is
     /// encountered, the given file is used to output the XML formated test
     /// suite results.
@@ -81,7 +81,7 @@ namespace os
         }
     }
 
-    /// \par Description
+    /// \details
     /// The class name is required to identify the current test
     /// suite in an automated test environment.
     ///
@@ -97,7 +97,7 @@ namespace os
       outputLine(OutputLineType::CLASS);
     }
 
-    /// \par Description
+    /// \details
     /// Generate an informative START line on the output device.
     void
     TestSuite::start(const char* pMessage) const
@@ -111,7 +111,7 @@ namespace os
         }
     }
 
-    /// \par Description
+    /// \details
     /// Generate a `PASS` line on the output device. If the XML
     ///  output is configured, the `<testcase>` element will be generated.
     void
@@ -123,7 +123,7 @@ namespace os
       ++(this->countPassed); // one more passed test
     }
 
-    /// \par Description
+    /// \details
     /// Generate a `FAIL` line on the output device. If the XML
     /// output is configured, the `<testcase>` element will include a
     /// `<failed/>` element.
@@ -136,7 +136,7 @@ namespace os
       ++(this->countFailed); // one more failed test
     }
 
-    /// \par Description
+    /// \details
     /// Generate a `PASS/FAIL` line on the output device,
     /// based on the given boolean condition.
     void
@@ -152,7 +152,7 @@ namespace os
         }
     }
 
-    /// \par Description
+    /// \details
     /// Generate an `INFO` line on the output device.
     void
     TestSuite::reportInfo(const char* pMessage) const
@@ -160,7 +160,7 @@ namespace os
       outputLine(OutputLineType::INFO, pMessage);
     }
 
-    /// \par Description
+    /// \details
     /// Generate an informative `STOP` line on the output device.
     void
     TestSuite::stop(const char* pMessage) const
@@ -175,7 +175,7 @@ namespace os
         }
     }
 
-    /// \par Description
+    /// \details
     /// Prefix the message with a word defining the line type and
     /// send it to the output device.
     void
@@ -245,7 +245,7 @@ namespace os
       putNewLine();
     }
 
-    /// \par Description
+    /// \details
     /// Compute the string length and write all the string
     /// characters, excluding the terminating '\0' into the XML file.
     ssize_t
@@ -262,7 +262,7 @@ namespace os
           this->xmlFileDescriptor, pString, len);
     }
 
-    /// \par Description
+    /// \details
     /// Compute the string length and send all the string characters,
     /// excluding the terminating '\0', to the test output device.
     ssize_t
@@ -279,7 +279,7 @@ namespace os
           strlen(pString));
     }
 
-    /// \par Description
+    /// \details
     /// Inform the output device that the current line is
     /// completed and request to flush all output and pass to the next line.
     void
@@ -288,7 +288,7 @@ namespace os
       return os::infra::TestSuiteImplementation_t::putNewLine();
     }
 
-    /// \par Description
+    /// \details
     /// Convert the integer to ASCII and send it to the test
     /// output device.
     ssize_t
@@ -327,7 +327,7 @@ namespace os
       return putString(&buf[i]);
     }
 
-    /// \par Description
+    /// \details
     /// The format used for the XML is the one defined in JUnit.
     ///
     /// The JUnit XML looks like this:
@@ -371,7 +371,7 @@ namespace os
         }
     }
 
-    /// \par Description
+    /// \details
     /// To be useful when integrated in a test environment, the test suite
     /// process shall return 0 if all test cases
     /// passed, and 1 if at least one failed. \n

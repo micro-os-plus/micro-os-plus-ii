@@ -52,8 +52,8 @@ namespace os
       EarlyInitialisation();
     };
 
-    /// \par Description
-    /// All hardware initialisations must be listed here, in the desired
+    /// \Details
+    /// All hardware initialisations are performed here, in the desired
     /// order.
     EarlyInitialisation::EarlyInitialisation()
     {

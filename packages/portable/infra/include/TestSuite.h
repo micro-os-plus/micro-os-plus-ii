@@ -27,10 +27,10 @@ namespace os
     public:
       /// \brief Simple constructor.
       /// \par Parameters
-      /// None
+      ///       None
       TestSuite();
 
-      /// \brief Simple destructor.
+      /// \brief Destructor.
       ~TestSuite();
 
       /// \brief Set the name of the tested class.
@@ -38,8 +38,7 @@ namespace os
       /// \param [in] pName a string containing the class name, usually with
       /// full name space definitions.
       /// \par Returns
-      /// Nothing
-
+      ///       Nothing
       void
       setClassName(const char* pName);
 
@@ -48,7 +47,7 @@ namespace os
       /// \param [in] pMessage a string identifying the test suite, usually
       /// the compiler `__FILE__` builtin macro definition.
       /// \par Returns
-      /// Nothing
+      ///       Nothing
       void
       start(const char* pMessage) const;
 
@@ -57,7 +56,7 @@ namespace os
       /// \param [in] expression the boolean condition to be tested.
       /// \param [in] pMessage a string identifying the test case.
       /// \par Returns
-      /// Nothing
+      ///       Nothing
       void
       checkAndReport(bool expression, const char* pMessage);
 
@@ -65,7 +64,7 @@ namespace os
       ///
       /// \param [in] pMessage a string identifying the test case.
       /// \par Returns
-      /// Nothing
+      ///       Nothing
       void
       reportPassed(const char* pMessage);
 
@@ -73,7 +72,7 @@ namespace os
       ///
       /// \param [in] pMessage a string identifying the test case.
       /// \par Returns
-      /// Nothing
+      ///       Nothing
       void
       reportFailed(const char* pMessage);
 
@@ -81,7 +80,7 @@ namespace os
       ///
       /// \param [in] pMessage a string with the informative message.
       /// \par Returns
-      /// Nothing
+      ///       Nothing
       void
       reportInfo(const char* pMessage) const;
 
@@ -90,7 +89,7 @@ namespace os
       /// \param [in] pMessage a string identifying the test suite, usually
       /// the compiler `__FILE__` builtin macro definition.
       /// \par Returns
-      /// Nothing
+      ///       Nothing
       void
       stop(const char* pMessage) const;
 
@@ -118,7 +117,7 @@ namespace os
       /// for each line generated.
       typedef int OutputLineType_t;
 
-      /// \brief Enumeration of line types.
+      /// \brief Enumerate all known line types.
       enum OutputLineType
         : OutputLineType_t
           {
@@ -130,7 +129,7 @@ namespace os
       /// \param [in] lineType a constant to specify the line prefix.
       /// \param [in] pMessage a string containing the line message.
       /// \par Returns
-      /// Nothing
+      ///       Nothing
       void
       outputLine(OutputLineType_t lineType,
           const char* pMessage = nullptr) const;
@@ -140,7 +139,7 @@ namespace os
       /// \param [in] isFailure mark this test case as a failure.
       /// \param [in] pMessage a string containing the test case message.
       /// \par Returns
-      /// Nothing
+      ///       Nothing
       void
       writeToXmlFile(bool isFailure, const char* pMessage);
 
@@ -170,19 +169,19 @@ namespace os
 
       /// \brief Send a new line to the test output device.
       /// \par Parameters
-      /// None
+      ///       None
       /// \par Returns
-      /// Nothing
+      ///       Nothing
       void
       putNewLine(void) const;
 
-      /// \brief A pointer to the class name string.
+      /// \brief The pointer to the class name string.
       const char* pClassName;
 
-      /// \brief The number of passed test cases.
+      /// \brief The accumulated number of passed test cases.
       int countPassed;
 
-      /// \brief The number of failed test cases.
+      /// \brief The accumulated number of failed test cases.
       int countFailed;
 
       /// \brief The file descriptor of the XML output file.
