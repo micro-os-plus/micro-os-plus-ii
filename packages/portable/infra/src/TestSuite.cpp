@@ -8,14 +8,13 @@
 
 #if defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE)
 
-#include "../include/TestSuite.h"
-#include "../include/TestSuiteImplementation.h"
-
 #include "portable/core/include/OS.h"
+
+#include "../include/TestSuite.h"
 
 /// \class os::infra::TestSuite
 ///
-/// This class implements a simple test suite, to be used by µOS++ unit
+/// This class implements a simple test framework, designed for µOS++ unit
 /// tests.
 ///
 /// Functionality is striped to the bare essential: a `PASS/FAIL`
@@ -31,54 +30,41 @@ namespace os
   {
 
     /// \details
-    /// Create the test suite, clear all fields.
+    /// Create the default test suite.
     TestSuite::TestSuite()
+        : m_implementation()
     {
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
 
-      this->pClassName = nullptr; // initialise pointer to class name
+      this->m_pClassName = nullptr; // initialise pointer to class name
 
-      this->countPassed = 0; // initialise count of passed tests
-      this->countFailed = 0; // initialise count of failed tests
+      this->m_countPassed = 0; // initialise count of passed tests
+      this->m_countFailed = 0; // initialise count of failed tests
 
-      this->xmlFileDescriptor = -1; // set file descriptor to none
+      this->m_isXmlOpened = false;
     }
 
     /// \details
-    /// Cleanup the test suite, eventually close the XML file.
+    /// Create a test suite using the process parameters. The parameters
+    /// are only passed to the implementation class.
+    TestSuite::TestSuite(int argc, char* argv[])
+        : m_implementation(argc, argv)
+    {
+      debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+
+      this->m_pClassName = nullptr; // initialise pointer to class name
+
+      this->m_countPassed = 0; // initialise count of passed tests
+      this->m_countFailed = 0; // initialise count of failed tests
+
+      this->m_isXmlOpened = false;
+    }
+
+    /// \details
+    /// Cleanup the test suite.
     TestSuite::~TestSuite()
     {
-      if (this->xmlFileDescriptor != -1)
-        {
-          // if the file descriptor was opened, close it now
-          os::infra::TestSuiteImplementation_t::closeFile(
-              this->xmlFileDescriptor);
-        }
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
-    }
-
-    /// \details
-    /// Process the command line parameters. If `-j filename` is
-    /// encountered, the given file is used to output the XML formated test
-    /// suite results.
-    void
-    TestSuite::parseParameters(int argc, char* argv[])
-    {
-      char* fileName = nullptr;
-      fileName = os::infra::TestSuiteImplementation_t::getFileNamePointer(argc,
-          argv);
-      // Warning: the pointer is to the argv array, bu this is not fatal, since
-      // the array is static.
-
-      if (fileName != nullptr)
-        {
-          int fd;
-          fd = os::infra::TestSuiteImplementation_t::createFile(fileName);
-          if (fd != -1)
-            {
-              this->xmlFileDescriptor = fd;
-            }
-        }
     }
 
     /// \details
@@ -93,21 +79,23 @@ namespace os
     void
     TestSuite::setClassName(const char* pName)
     {
-      this->pClassName = pName;
+      this->m_pClassName = pName;
       outputLine(OutputLineType::CLASS);
     }
 
     /// \details
     /// Generate an informative START line on the output device.
     void
-    TestSuite::start(const char* pMessage) const
+    TestSuite::start(const char* pMessage)
     {
       outputLine(OutputLineType::START, pMessage);
 
-      if (this->xmlFileDescriptor != -1)
+      if (m_implementation.createXmlFile() != -1)
         {
+          m_isXmlOpened = true;
+
           // open the jUnit XML elements
-          writeStringToFile("<testsuites><testsuite>\n");
+          writeStringToXmlFile("<testsuites><testsuite>\n");
         }
     }
 
@@ -120,7 +108,7 @@ namespace os
       outputLine(OutputLineType::PASS, pMessage);
       writeToXmlFile(false, pMessage);
 
-      ++(this->countPassed); // one more passed test
+      ++(this->m_countPassed); // one more passed test
     }
 
     /// \details
@@ -133,7 +121,7 @@ namespace os
       outputLine(OutputLineType::FAIL, pMessage);
       writeToXmlFile(true, pMessage);
 
-      ++(this->countFailed); // one more failed test
+      ++(this->m_countFailed); // one more failed test
     }
 
     /// \details
@@ -155,7 +143,7 @@ namespace os
     /// \details
     /// Generate an `INFO` line on the output device.
     void
-    TestSuite::reportInfo(const char* pMessage) const
+    TestSuite::reportInfo(const char* pMessage)
     {
       outputLine(OutputLineType::INFO, pMessage);
     }
@@ -163,15 +151,18 @@ namespace os
     /// \details
     /// Generate an informative `STOP` line on the output device.
     void
-    TestSuite::stop(const char* pMessage) const
+    TestSuite::stop(const char* pMessage)
     {
       outputLine(OutputLineType::STAT);
       outputLine(OutputLineType::STOP, pMessage);
 
-      if (this->xmlFileDescriptor != -1)
+      if (m_isXmlOpened)
         {
           // close the elements opened at START
-          writeStringToFile("</testsuite></testsuites>\n");
+          writeStringToXmlFile("</testsuite></testsuites>\n");
+
+          m_implementation.closeXmlFile();
+          m_isXmlOpened = false;
         }
     }
 
@@ -179,7 +170,7 @@ namespace os
     /// Prefix the message with a word defining the line type and
     /// send it to the output device.
     void
-    TestSuite::outputLine(OutputLineType_t lineType, const char* pMessage) const
+    TestSuite::outputLine(OutputLineType_t lineType, const char* pMessage)
     {
       const char* pStr;
       switch (lineType)
@@ -228,14 +219,14 @@ namespace os
       else if (lineType == OutputLineType::STAT)
         {
           putString("Failed=");
-          putNumber(this->countFailed);
+          putNumber(this->m_countFailed);
           putString(", Passed=");
-          putNumber(this->countPassed);
+          putNumber(this->m_countPassed);
         }
       else if (lineType == OutputLineType::CLASS)
         {
-          if (pClassName != nullptr)
-            putString(this->pClassName);
+          if (m_pClassName != nullptr)
+            putString(this->m_pClassName);
         }
       else
         {
@@ -249,7 +240,7 @@ namespace os
     /// Compute the string length and write all the string
     /// characters, excluding the terminating '\0' into the XML file.
     ssize_t
-    TestSuite::writeStringToFile(const char* pString) const
+    TestSuite::writeStringToXmlFile(const char* pString)
     {
       if (pString == nullptr)
         return 0;
@@ -258,15 +249,14 @@ namespace os
       if (len == 0)
         return 0;
 
-      return os::infra::TestSuiteImplementation_t::writeToFile(
-          this->xmlFileDescriptor, pString, len);
+      return m_implementation.writeToXmlFile(pString, len);
     }
 
     /// \details
     /// Compute the string length and send all the string characters,
     /// excluding the terminating '\0', to the test output device.
     ssize_t
-    TestSuite::putString(const char* pString) const
+    TestSuite::putString(const char* pString)
     {
       if (pString == nullptr)
         return 0;
@@ -275,24 +265,23 @@ namespace os
       if (len == 0)
         return 0;
 
-      return os::infra::TestSuiteImplementation_t::putBytes(pString,
-          strlen(pString));
+      return m_implementation.putBytes(pString, strlen(pString));
     }
 
     /// \details
     /// Inform the output device that the current line is
     /// completed and request to flush all output and pass to the next line.
     void
-    TestSuite::putNewLine(void) const
+    TestSuite::putNewLine(void)
     {
-      return os::infra::TestSuiteImplementation_t::putNewLine();
+      return m_implementation.putNewLine();
     }
 
     /// \details
     /// Convert the integer to ASCII and send it to the test
     /// output device.
     ssize_t
-    TestSuite::putNumber(int n) const
+    TestSuite::putNumber(int n)
     {
       char buf[10];
 
@@ -343,36 +332,36 @@ namespace os
     void
     TestSuite::writeToXmlFile(bool isFailure, const char* pMessage)
     {
-      if (this->xmlFileDescriptor != -1)
+      if (m_isXmlOpened)
         {
-          writeStringToFile("<testcase");
+          writeStringToXmlFile("<testcase");
 
-          if (this->pClassName)
+          if (this->m_pClassName)
             {
-              writeStringToFile(" classname=\"");
-              writeStringToFile(this->pClassName);
-              writeStringToFile("\"");
+              writeStringToXmlFile(" classname=\"");
+              writeStringToXmlFile(this->m_pClassName);
+              writeStringToXmlFile("\"");
             }
           if (pMessage != nullptr)
             {
-              writeStringToFile(" name=\"");
-              writeStringToFile(pMessage);
-              writeStringToFile("\"");
+              writeStringToXmlFile(" name=\"");
+              writeStringToXmlFile(pMessage);
+              writeStringToXmlFile("\"");
             }
 
           if (isFailure)
             {
-              writeStringToFile("><failure/></testcase>\n");
+              writeStringToXmlFile("><failure/></testcase>\n");
             }
           else
             {
-              writeStringToFile("/>\n");
+              writeStringToXmlFile("/>\n");
             }
         }
     }
 
     /// \details
-    /// To be useful when integrated in a test environment, the test suite
+    /// When integrated in a test environment, the test suite
     /// process shall return 0 if all test cases
     /// passed, and 1 if at least one failed. \n
     /// This method checks the count of failed test cases
@@ -380,7 +369,7 @@ namespace os
     int
     TestSuite::getExitValue(void) const
     {
-      return ((this->countFailed == 0) ? 0 : 1);
+      return ((m_countFailed == 0) ? 0 : 1);
     }
 
   } /* namespace infra */

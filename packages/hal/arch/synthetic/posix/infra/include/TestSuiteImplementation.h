@@ -18,6 +18,10 @@ namespace hal
   {
     namespace infra
     {
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpadded"
+
       /// \class TestSuiteImplementation TestSuiteImplementation.h "hal/arch/synthetic/posix/include/TestSuiteImplementation.h"
       /// \brief The POSIX implementation for the TestSuite.
       ///
@@ -31,56 +35,55 @@ namespace hal
       class TestSuiteImplementation : public os::infra::TestSuiteImplementation
       {
       public:
-        /// \brief The file descriptor of the output device.
-        static const int OUTPUT_DEVICE_FILE_DESCRIPTOR = 1;
 
-        /// \brief Search parameters and extract the file name to be used
-        /// for the XML output.
+        /// \brief Simple constructor.
+        TestSuiteImplementation();
+
+        /// \brief Constructor with process parameters
         ///
         /// \param [in] argc count of arguments.
         /// \param [in] argv array of pointer to strings.
-        ///
-        /// \return If successful, it returns a pointer to a zero terminating
-        /// string containing
-        /// the file name. It returns `nulptr` if not found.
-        static char*
-        getFileNamePointer(int argc, char* argv[]);
+        TestSuiteImplementation(int argc, char* argv[]);
 
-        /// \brief Create a file to write the XML output.
+        /// \brief Destructor.
+        ~TestSuiteImplementation();
+
+        /// \brief Create the XML file.
         ///
-        /// \param [in] cpPath a string with the file system path
+        /// \par Parameters
+        ///     None
         ///
         /// \return If successful, it returns a non-negative integer,
         /// termed a file descriptor.  It returns -1 on failure.
-        static int
-        createFile(const char *cpPath);
+        int
+        createXmlFile(void);
 
-        /// \brief Write an array of bytes to the file.
+        /// \brief Write an array of bytes to the XML file.
         ///
-        /// \param [in] fildes system file descriptor obtained from open()
         /// \param [in] cpBuf pointer to the array of bytes
         /// \param [in] numBytes the length of the array of bytes
         ///
         /// \return Upon successful completion the number of bytes which
         /// were written is  returned.  Otherwise, a -1 is returned
-        static ssize_t
-        writeToFile(int fildes, const void *cpBuf, size_t numBytes);
+        ssize_t
+        writeToXmlFile(const void *cpBuf, size_t numBytes);
 
         /// \brief Close the XML file.
         ///
-        /// \param [in] fildes system file descriptor obtained from open()
+        /// \par Parameters
+        ///    None
         ///
         /// \return  Upon successful completion, a value of 0 is returned.
         /// Otherwise, a value of -1 is returned.
-        static int
-        closeFile(int fildes);
+        int
+        closeXmlFile(void);
 
         /// \brief Send a new line to the test output device.
         /// \par Parameters
         /// None
         /// \par Returns
         /// Nothing
-        static void
+        void
         putNewLine(void);
 
         /// \brief Write an array of bytes to the test output device.
@@ -89,10 +92,24 @@ namespace hal
         /// \param [in] numBytes the length of the array of bytes
         ///
         /// \return The actual number of bytes written to the output device.
-        static ssize_t
+        ssize_t
         putBytes(const void* cpBuf, size_t numBytes);
 
+      private:
+        /// \brief The file descriptor of the output device.
+        static const int OUTPUT_DEVICE_FILE_DESCRIPTOR = 1;
+
+        /// \brief The file descriptor of the XML output file.
+        int m_xmlFileDescriptor;
+
+        /// \brief The
+        char* m_fileName = nullptr;
+
       };
+      // class TestSuiteImplementation
+
+#pragma GCC diagnostic pop
+
     } // namespace infra
   } // namespace posix
 } // namespace hal

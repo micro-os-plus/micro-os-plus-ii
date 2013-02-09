@@ -12,9 +12,7 @@
 int
 main(int argc, char* argv[])
 {
-  os::infra::TestSuite ts;
-
-  ts.parseParameters(argc, argv);
+  os::infra::TestSuite ts(argc, argv);
 
   ts.setClassName("os::infra::TestSuite");
 

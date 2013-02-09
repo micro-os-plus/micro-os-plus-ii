@@ -10,6 +10,8 @@
 #include <stdint.h>
 #include <unistd.h>
 
+#include "portable/infra/include/TestSuiteImplementation.h"
+
 namespace os
 {
   namespace infra
@@ -30,6 +32,12 @@ namespace os
       ///       None
       TestSuite();
 
+      /// \brief Constructor with process parameters
+      ///
+      /// \param [in] argc count of arguments.
+      /// \param [in] argv array of pointer to strings.
+      TestSuite(int argc, char* argv[]);
+
       /// \brief Destructor.
       ~TestSuite();
 
@@ -49,7 +57,7 @@ namespace os
       /// \par Returns
       ///       Nothing
       void
-      start(const char* pMessage) const;
+      start(const char* pMessage);
 
       /// \brief Check condition and report a test case result.
       ///
@@ -82,7 +90,7 @@ namespace os
       /// \par Returns
       ///       Nothing
       void
-      reportInfo(const char* pMessage) const;
+      reportInfo(const char* pMessage);
 
       /// \brief Report the completion of the test suite.
       ///
@@ -91,14 +99,7 @@ namespace os
       /// \par Returns
       ///       Nothing
       void
-      stop(const char* pMessage) const;
-
-      /// \brief Parse command line parameters.
-      ///
-      /// \param [in] argc count of arguments.
-      /// \param [in] argv array of pointer to strings.
-      void
-      parseParameters(int argc, char* argv[]);
+      stop(const char* pMessage);
 
       /// \brief Compute the value to be returned by main().
       ///
@@ -132,7 +133,7 @@ namespace os
       ///       Nothing
       void
       outputLine(OutputLineType_t lineType,
-          const char* pMessage = nullptr) const;
+          const char* pMessage = nullptr);
 
       /// \brief Generate a test case XML element in the configured file.
       ///
@@ -149,7 +150,7 @@ namespace os
       ///
       /// \return The actual number of bytes written to the file.
       ssize_t
-      writeStringToFile(const char* pString) const;
+      writeStringToXmlFile(const char* pString);
 
       /// \brief Display a null terminated string to the test output device.
       ///
@@ -157,7 +158,7 @@ namespace os
       ///
       /// \return The actual number of bytes written to the output device.
       ssize_t
-      putString(const char* pString) const;
+      putString(const char* pString);
 
       /// \brief Display a decimal integer to the test output device.
       ///
@@ -165,7 +166,7 @@ namespace os
       ///
       /// \return The actual number of bytes written to the output device.
       ssize_t
-      putNumber(int n) const;
+      putNumber(int n);
 
       /// \brief Send a new line to the test output device.
       /// \par Parameters
@@ -173,22 +174,25 @@ namespace os
       /// \par Returns
       ///       Nothing
       void
-      putNewLine(void) const;
+      putNewLine(void);
 
       /// \brief The pointer to the class name string.
-      const char* pClassName;
+      const char* m_pClassName;
 
       /// \brief The accumulated number of passed test cases.
-      int countPassed;
+      int m_countPassed;
 
       /// \brief The accumulated number of failed test cases.
-      int countFailed;
+      int m_countFailed;
 
-      /// \brief The file descriptor of the XML output file.
-      int xmlFileDescriptor;
+      /// \brief The boolean status of XML output.
+      bool m_isXmlOpened;
 
+      /// \brief The actual platform implementation.
+      TestSuiteImplementation_t m_implementation;
     };
   // class TestSuite
+
 
 #pragma GCC diagnostic pop
 

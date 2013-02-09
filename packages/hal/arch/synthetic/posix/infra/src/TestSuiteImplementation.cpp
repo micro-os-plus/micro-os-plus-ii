@@ -8,6 +8,8 @@
 
 #if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION)
 
+#include "portable/core/include/OS.h"
+
 #include "../include/TestSuiteImplementation.h"
 
 #include <iostream>
@@ -20,25 +22,35 @@ namespace hal
   {
     namespace infra
     {
+      /// \details
+      /// Initialise the object without XML output.
+      TestSuiteImplementation::TestSuiteImplementation()
+      {
+        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+
+        m_xmlFileDescriptor = -1;
+        m_fileName = nullptr;
+      }
 
       /// \details
       /// Process the command line parameters. If `-j filename` is
-      /// encountered, a pointer to the given file name is returned.
+      /// encountered, a pointer to the given file name is stored in m_fileName.
       /// If errors occur, the process is abruptly terminated.
-      char*
-      TestSuiteImplementation::getFileNamePointer(int argc, char* argv[])
+      TestSuiteImplementation::TestSuiteImplementation(int argc, char* argv[])
       {
+        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+
         opterr = 0;
         int c;
 
-        char* fileName = 0;
+        char* fileName = nullptr;
 
         while ((c = getopt(argc, argv, "j:")) != -1)
           {
             switch (c)
               {
             case 'j':
-              // TODO: copy string
+              // TODO: copy string, do not use the environment variable
               fileName = optarg;
               break;
             case '?':
@@ -57,33 +69,54 @@ namespace hal
               }
           }
 
-        return fileName;
+        m_xmlFileDescriptor = -1;
+        m_fileName = fileName;
+      }
+
+      TestSuiteImplementation::~TestSuiteImplementation()
+      {
+        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
       }
 
       /// \details
       /// Open the file as a new one, truncate if present.
       int
-      TestSuiteImplementation::createFile(const char *cpPath)
+      TestSuiteImplementation::createXmlFile(void)
       {
-        return ::open(cpPath, (O_CREAT | O_TRUNC | O_WRONLY), 0644);
+        this->m_xmlFileDescriptor = ::open(m_fileName,
+            (O_CREAT | O_TRUNC | O_WRONLY), 0644);
+
+        return m_xmlFileDescriptor;
       }
 
       /// \details
       /// Call the system function to write a sequence of bytes to the
-      /// given file.
+      /// XML file.
       ssize_t
-      TestSuiteImplementation::writeToFile(int fildes, const void *cpBuf,
+      TestSuiteImplementation::writeToXmlFile(const void *cpBuf,
           size_t numBytes)
       {
-        return ::write(fildes, cpBuf, numBytes);
+        if (m_xmlFileDescriptor == -1)
+          return -1;
+
+        return ::write(m_xmlFileDescriptor, cpBuf, numBytes);
       }
 
       /// \details
-      /// Call the system function to close the file.
+      /// Call the system function to close the XML file. Then
+      /// invalidate the file descriptor.
       int
-      TestSuiteImplementation::closeFile(int fildes)
+      TestSuiteImplementation::closeXmlFile(void)
       {
-        return ::close(fildes);
+        if (m_xmlFileDescriptor == -1)
+          return -1;
+
+        int ret;
+        ret = ::close(m_xmlFileDescriptor);
+
+        m_xmlFileDescriptor = -1;
+
+        return ret;
       }
 
       /// \details
