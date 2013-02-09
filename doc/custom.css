@@ -1,0 +1,20 @@
+/* Custom definition */
+
+body, table, div, p, dl {
+	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
+	font-size: 10pt;
+	line-height: 17pt;
+}
+
+#projectname {
+	font: 280% Tahoma, Arial,sans-serif;
+	margin: 0px;
+	padding: 2px 0px;
+}
+
+#projectbrief {
+	font: 120% Tahoma, Arial,sans-serif;
+	margin: 0px;
+	padding: 0px;
+	padding-bottom: 2px;
+}
