@@ -23,15 +23,18 @@ namespace hal
 #pragma GCC diagnostic ignored "-Wpadded"
 
       /// \class TestSuiteImplementation TestSuiteImplementation.h "hal/arch/synthetic/posix/include/TestSuiteImplementation.h"
-      /// \brief The POSIX implementation for the TestSuite.
+      /// \brief The POSIX version of the TestSuiteImplementation.
       ///
       /// \details
       /// Provide the system support to create/write/close file using
       /// the POSIX
       /// calls. Also implement the output device as the standard output.
       ///
-      /// Since none of these calls need to preserve any status between calls,
-      /// all are implemented as static methods.
+      /// Since these methods need to preserve status between calls (the
+      /// XML file name and the file descriptor),
+      /// a static implementation is not possible,
+      /// and this a regular object, embedded and constructed inside
+      /// the TestSuite.
       class TestSuiteImplementation : public os::infra::TestSuiteImplementation
       {
       public:
@@ -64,7 +67,7 @@ namespace hal
         /// \param [in] numBytes the length of the array of bytes
         ///
         /// \return Upon successful completion the number of bytes which
-        /// were written is  returned.  Otherwise, a -1 is returned
+        ///     were written is  returned.  Otherwise, a -1 is returned
         ssize_t
         writeToXmlFile(const void *cpBuf, size_t numBytes);
 
@@ -74,15 +77,15 @@ namespace hal
         ///    None
         ///
         /// \return  Upon successful completion, a value of 0 is returned.
-        /// Otherwise, a value of -1 is returned.
+        ///     Otherwise, a value of -1 is returned.
         int
         closeXmlFile(void);
 
         /// \brief Send a new line to the test output device.
         /// \par Parameters
-        /// None
+        ///     None
         /// \par Returns
-        /// Nothing
+        ///     Nothing
         void
         putNewLine(void);
 
@@ -102,8 +105,8 @@ namespace hal
         /// \brief The file descriptor of the XML output file.
         int m_xmlFileDescriptor;
 
-        /// \brief The
-        char* m_fileName = nullptr;
+        /// \brief The pointer to the file path
+        char* m_filePath = nullptr;
 
       };
     // class TestSuiteImplementation

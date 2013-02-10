@@ -43,12 +43,12 @@ namespace os
       {
         debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
 
-        this->m_pClassName = nullptr; // initialise pointer to class name
+        m_pClassName = nullptr; // initialise pointer to class name
 
-        this->m_countPassed = 0; // initialise count of passed tests
-        this->m_countFailed = 0; // initialise count of failed tests
+        m_countPassed = 0; // initialise count of passed tests
+        m_countFailed = 0; // initialise count of failed tests
 
-        this->m_isXmlOpened = false;
+        m_isXmlOpened = false;
       }
 
     /// \details
@@ -60,12 +60,12 @@ namespace os
       {
         debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
 
-        this->m_pClassName = nullptr; // initialise pointer to class name
+        m_pClassName = nullptr; // initialise pointer to class name
 
-        this->m_countPassed = 0; // initialise count of passed tests
-        this->m_countFailed = 0; // initialise count of failed tests
+        m_countPassed = 0; // initialise count of passed tests
+        m_countFailed = 0; // initialise count of failed tests
 
-        this->m_isXmlOpened = false;
+        m_isXmlOpened = false;
       }
 
     /// \details
@@ -89,7 +89,7 @@ namespace os
       void
       TestSuite<T>::setClassName(const char* pName)
       {
-        this->m_pClassName = pName;
+        m_pClassName = pName;
         outputLine(OutputLineType::CLASS);
       }
 
@@ -236,14 +236,14 @@ namespace os
         else if (lineType == OutputLineType::STAT)
           {
             putString("Failed=");
-            putNumber(this->m_countFailed);
+            putNumber(m_countFailed);
             putString(", Passed=");
-            putNumber(this->m_countPassed);
+            putNumber(m_countPassed);
           }
         else if (lineType == OutputLineType::CLASS)
           {
             if (m_pClassName != nullptr)
-              putString(this->m_pClassName);
+              putString(m_pClassName);
           }
         else
           {
@@ -358,10 +358,10 @@ namespace os
           {
             writeStringToXmlFile("<testcase");
 
-            if (this->m_pClassName)
+            if (m_pClassName)
               {
                 writeStringToXmlFile(" classname=\"");
-                writeStringToXmlFile(this->m_pClassName);
+                writeStringToXmlFile(m_pClassName);
                 writeStringToXmlFile("\"");
               }
             if (pMessage != nullptr)

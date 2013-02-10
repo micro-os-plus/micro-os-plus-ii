@@ -24,12 +24,47 @@ namespace os
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpadded"
 
+    /// \example portable/infra/tests/TestSuite/src/main.cpp
+    /// This test exercises all TestSuite methods. It currently runs on
+    /// OS X, as a 64 bit process.
+    ///
+    /// The programm was called with the following arguments:
+    /// ~~~
+    /// $ testsuite -j junit.xml
+    /// ~~~
+    ///
+    /// The output produced by the Release build was:
+    /// ~~~
+    /// CLASS:"os::infra::TestSuite"
+    /// START:"Starting tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infra/tests/TestSuite/src/main.cpp'"
+    /// PASS:"check true constant"
+    /// FAIL:"check false constant"
+    /// PASS:"a passed test"
+    /// FAIL:"a failed test"
+    /// INFO:"there should be 2 failed cases and 2 passed cases"
+    /// STAT:"Failed=2, Passed=2"
+    /// STOP:"Completing tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infra/tests/TestSuite/src/main.cpp'"
+    /// ~~~
+    ///
+    /// The XML output was:
+    /// ~~~
+    /// <testsuites><testsuite>
+    /// <testcase classname="os::infra::TestSuite" name="check true constant"/>
+    /// <testcase classname="os::infra::TestSuite" name="check false constant"><failure/></testcase>
+    /// <testcase classname="os::infra::TestSuite" name="a passed test"/>
+    /// <testcase classname="os::infra::TestSuite" name="a failed test"><failure/></testcase>
+    /// </testsuite></testsuites>
+    /// ~~~
+    /// The process exit value was 1 (failed).
+
+
     /// \class TestSuite TestSuite.h "portable/infra/include/TestSuite.h"
     /// \brief Simple test suite class.
 
     /// \details
-    /// This class implements a simple test framework, designed for µOS++ unit
-    /// tests.
+    /// The TestSuite class implements a light test framework, designed for
+    /// the µOS++ unit tests. The test will generally run on synthetic
+    /// platforms, as regular user processes.
 
     template<class T>
       class TestSuite
@@ -42,7 +77,7 @@ namespace os
         ///       None
         TestSuite();
 
-        /// \brief Constructor with process parameters
+        /// \brief Constructor with main() style parameters
         ///
         /// \param [in] argc count of arguments.
         /// \param [in] argv array of pointer to strings.
@@ -203,6 +238,8 @@ namespace os
       };
     // class TestSuite
 
+    //------------------------------------------------------------------------
+    /// \brief Define a TestSuite type based on the template.
     typedef TestSuite<TestSuiteImplementation_t> TestSuite_t;
 
 #pragma GCC diagnostic pop

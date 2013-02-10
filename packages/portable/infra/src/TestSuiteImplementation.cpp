@@ -33,11 +33,16 @@ namespace os
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
     }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
     TestSuiteImplementation::TestSuiteImplementation(
-        int argc __attribute__((unused)), char* argv[] __attribute__((unused)))
+        int argc, char* argv[])
     {
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
     }
+
+#pragma GCC diagnostic pop
 
     TestSuiteImplementation::~TestSuiteImplementation()
     {

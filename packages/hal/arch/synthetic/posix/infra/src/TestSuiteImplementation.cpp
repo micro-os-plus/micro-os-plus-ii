@@ -29,12 +29,13 @@ namespace hal
         debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
 
         m_xmlFileDescriptor = -1;
-        m_fileName = nullptr;
+        m_filePath = nullptr;
       }
 
       /// \details
       /// Process the command line parameters. If `-j filename` is
-      /// encountered, a pointer to the given file name is stored in m_fileName.
+      /// encountered, a pointer to the given file path is stored in
+      /// m_filePath.
       /// If errors occur, the process is abruptly terminated.
       TestSuiteImplementation::TestSuiteImplementation(int argc, char* argv[])
       {
@@ -43,7 +44,7 @@ namespace hal
         opterr = 0;
         int c;
 
-        char* fileName = nullptr;
+        char* filePath = nullptr;
 
         while ((c = getopt(argc, argv, "j:")) != -1)
           {
@@ -51,7 +52,7 @@ namespace hal
               {
             case 'j':
               // TODO: copy string, do not use the environment variable
-              fileName = optarg;
+              filePath = optarg;
               break;
             case '?':
               if (optopt == 'j')
@@ -70,7 +71,7 @@ namespace hal
           }
 
         m_xmlFileDescriptor = -1;
-        m_fileName = fileName;
+        m_filePath = filePath;
       }
 
       TestSuiteImplementation::~TestSuiteImplementation()
@@ -83,7 +84,7 @@ namespace hal
       int
       TestSuiteImplementation::createXmlFile(void)
       {
-        this->m_xmlFileDescriptor = ::open(m_fileName,
+        m_xmlFileDescriptor = ::open(m_filePath,
             (O_CREAT | O_TRUNC | O_WRONLY), 0644);
 
         return m_xmlFileDescriptor;
@@ -125,7 +126,7 @@ namespace hal
       void
       TestSuiteImplementation::putNewLine(void)
       {
-        // on Unix, the new line is a single character
+        // on POSIX, the new line is a single character
         ::write(OUTPUT_DEVICE_FILE_DESCRIPTOR, "\n", 1);
         return;
       }
