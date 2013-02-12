@@ -6,7 +6,7 @@
 
 #include "portable/core/include/OS_Defines.h"
 
-#if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION)
+#if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION) || defined(__DOXYGEN__)
 
 #include "portable/core/include/OS.h"
 
@@ -14,7 +14,7 @@
 
 #include <iostream>
 #include <fcntl.h>
-#include <errno.h>
+//#include <errno.h>
 
 namespace hal
 {
@@ -33,7 +33,7 @@ namespace hal
       }
 
       /// \details
-      /// Process the command line parameters. If `-j filename` is
+      /// Process the command line parameters. If `-x filename` is
       /// encountered, a pointer to the given file path is stored in
       /// m_filePath.
       /// If errors occur, the process is abruptly terminated.
@@ -46,16 +46,16 @@ namespace hal
 
         char* filePath = nullptr;
 
-        while ((c = getopt(argc, argv, "j:")) != -1)
+        while ((c = getopt(argc, argv, "x:")) != -1)
           {
             switch (c)
               {
-            case 'j':
+            case 'x':
               // TODO: copy string, do not use the environment variable
               filePath = optarg;
               break;
             case '?':
-              if (optopt == 'j')
+              if (optopt == 'x')
                 std::cerr << "Option '-" << (char) optopt
                     << "' requires an argument." << std::endl;
               else if (isprint(optopt))
