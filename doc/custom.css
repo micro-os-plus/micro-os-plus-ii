@@ -7,16 +7,30 @@ body, table, div, p, dl {
 }
 
 #projectname {
-	font: 280% Tahoma, Arial,sans-serif;
+	font-size: 280%;
+	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
 	margin: 0px;
 	padding: 2px 0px;
 }
 
 #projectbrief {
-	font: 120% Tahoma, Arial,sans-serif;
+	font-size: 120%;
+	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
 	margin: 0px;
 	padding: 0px;
-	padding-bottom: 2px;
+	padding-bottom: 3px;
+}
+
+#projectmotto {
+	font-size: 110%;
+	font-family: Georgia, Times New Roman, serif;
+	font-style: italic;
+	margin: 0px;
+	padding-top: 8px;
+	padding-right: 10px;
+	position:absolute;
+ 	top:0;
+ 	right:0;
 }
 
 dl {
