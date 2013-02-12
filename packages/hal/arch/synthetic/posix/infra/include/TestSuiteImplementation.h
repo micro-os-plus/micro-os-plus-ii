@@ -7,10 +7,9 @@
 #ifndef HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION_H_
 #define HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION_H_
 
-#include <stdint.h>
-#include <unistd.h>
+#include "portable/core/include/OS_Defines.h"
 
-#include "portable/infra/include/TestSuiteImplementation.h"
+#if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION) || defined(__DOXYGEN__)
 
 namespace hal
 {
@@ -35,7 +34,7 @@ namespace hal
       /// a static implementation is not possible,
       /// and this a regular object, embedded and constructed inside
       /// the TestSuite.
-      class TestSuiteImplementation : public os::infra::TestSuiteImplementation
+      class TestSuiteImplementation //: public os::infra::TestSuiteImplementation
       {
       public:
 
@@ -67,7 +66,7 @@ namespace hal
         /// \param [in] numBytes the length of the array of bytes
         ///
         /// \return Upon successful completion the number of bytes which
-        ///     were written is  returned.  Otherwise, a -1 is returned
+        ///     were written is  returned.  Otherwise, a -1 is returned.
         ssize_t
         writeToXmlFile(const void *cpBuf, size_t numBytes);
 
@@ -106,7 +105,7 @@ namespace hal
         int m_xmlFileDescriptor;
 
         /// \brief The pointer to the file path
-        char* m_filePath = nullptr;
+        char* m_filePath;
 
       };
     // class TestSuiteImplementation
@@ -117,6 +116,10 @@ namespace hal
   } // namespace posix
 } // namespace hal
 
+#if !defined(__DOXYGEN__)
+
+// Leave Doxygen think that the os::infra sample class is the real one.
+
 namespace os
 {
   namespace infra
@@ -126,5 +129,9 @@ namespace os
     typedef hal::posix::infra::TestSuiteImplementation TestSuiteImplementation_t;
   } // namespace infra
 } // namespace os
+
+#endif /* !defined(__DOXYGEN__) */
+
+#endif /* defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION) */
 
 #endif /* HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION_H_ */
