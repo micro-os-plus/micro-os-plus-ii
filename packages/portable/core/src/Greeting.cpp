@@ -6,7 +6,7 @@
 
 #include "portable/core/include/OS_Defines.h"
 
-#if defined(OS_INCLUDE_GREETING)
+#if defined(OS_INCLUDE_GREETING) || defined(__DOXYGEN__)
 
 #include "../include/Greeting.h"
 

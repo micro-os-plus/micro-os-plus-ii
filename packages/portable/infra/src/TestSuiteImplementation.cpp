@@ -6,7 +6,7 @@
 
 #include "portable/core/include/OS_Defines.h"
 
-#if defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE)
+#if defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) || defined(__DOXYGEN__)
 
 #include "portable/core/include/OS.h"
 
@@ -33,16 +33,11 @@ namespace os
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
     }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-
     TestSuiteImplementation::TestSuiteImplementation(
-        int argc, char* argv[])
+        int argc __attribute__((unused)), char* argv[] __attribute__((unused)))
     {
       debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
     }
-
-#pragma GCC diagnostic pop
 
     TestSuiteImplementation::~TestSuiteImplementation()
     {

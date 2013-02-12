@@ -7,6 +7,10 @@
 #ifndef OS_PORTABLE_INFRA_TESTSUITEIMPLEMENTATION_H_
 #define OS_PORTABLE_INFRA_TESTSUITEIMPLEMENTATION_H_
 
+#include "portable/core/include/OS_Defines.h"
+
+#if defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) || defined(__DOXYGEN__)
+
 namespace os
 {
   namespace infra
@@ -36,6 +40,14 @@ namespace os
     /// available on synthetic platforms
     /// but hosting implementations might also be imagined for
     /// embedded platforms.
+    ///
+    /// The architecture implementation must also define the type name
+    ///  `os::infra::TestSuiteImplementation_t` similar to the below
+    /// definition, but pointing to the actual class, since this is how
+    /// it is referred from the TestSuite method.
+    /// ~~~
+    /// typedef os::infra::TestSuiteImplementation TestSuiteImplementation_t;
+    /// ~~~
 
     class TestSuiteImplementation
     {
@@ -106,38 +118,29 @@ namespace os
   }// namespace infra
 } // namespace os
 
+// This is the place where the actual TestSuiteImplementation is
+// selected, based on various preprocessor definitions.
+
 #if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION)
 
 #include "hal/arch/synthetic/posix/infra/include/TestSuiteImplementation.h"
 
-#else
-
-#error "Missing TestSuiteImplementation.h"
-
-#endif
-
-#if defined(OS_INCLUDE_NEVER)
-
-// For Doxygen, but it seems useless.
+#elif defined(__DOXYGEN__)
 
 namespace os
   {
     namespace infra
       {
-
-/// \brief Define the generic type to refer to the implementation
-/// for the TestSuite.
-///
-/// \details
-/// It newly defined type name must be in the `os::infra` namespace,
-/// since this is how
-/// it is referred from the TestSuite method, but the
-/// class it refers to can have any name from any other namespace.
         typedef os::infra::TestSuiteImplementation TestSuiteImplementation_t;
-
       } // namespace infra
   } // namespace os
 
-#endif
+#else
+
+#error "Missing TestSuiteImplementation.h"
+
+#endif /* architecture selection */
+
+#endif /* defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) */
 
 #endif /* OS_PORTABLE_INFRA_TESTSUITEIMPLEMENTATION_H_ */

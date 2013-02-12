@@ -9,7 +9,7 @@
 
 #include "portable/core/include/OS_Defines.h"
 
-#if defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE)
+#if defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) || defined(__DOXYGEN__)
 
 //#include "portable/core/include/OS.h"
 #include "TestSuiteImplementation.h"
@@ -28,9 +28,9 @@ namespace os
     /// This test exercises all TestSuite methods. It currently runs on
     /// OS X, as a 64 bit process.
     ///
-    /// The programm was called with the following arguments:
+    /// The program was called with the following arguments:
     /// ~~~
-    /// $ testsuite -j junit.xml
+    /// $ testsuite -x junit.xml
     /// ~~~
     ///
     /// The output produced by the Release build was:
