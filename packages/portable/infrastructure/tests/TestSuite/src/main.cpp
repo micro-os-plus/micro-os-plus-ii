@@ -6,7 +6,7 @@
 
 #include "portable/core/include/OS.h"
 
-#include "portable/infra/include/TestSuite.h"
+#include "portable/infrastructure/include/TestSuite.h"
 
 // This test exercises the TestSuite methods.
 

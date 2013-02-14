@@ -4,7 +4,7 @@
 # This file is part of the uOS++ SE distribution.
 
 Package(
-    id='package.os.portable.infra.tests.testsuite',
+    id='package.os.portable.infrastructure.tests.testsuite',
     name='Test TestSuite output',
     description='Test all output methods of the TestSuite class, both for\
 stdout and xml file.',

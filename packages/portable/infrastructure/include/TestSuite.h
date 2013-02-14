@@ -4,12 +4,12 @@
 //      This file is part of the uOS++ distribution.
 //
 
-#ifndef OS_PORTABLE_INFRA_TESTSUITE_H_
-#define OS_PORTABLE_INFRA_TESTSUITE_H_
+#ifndef OS_PORTABLE_INFRASTRUCTURE_TESTSUITE_H_
+#define OS_PORTABLE_INFRASTRUCTURE_TESTSUITE_H_
 
 #include "portable/core/include/OS_Defines.h"
 
-#if defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) || defined(__DOXYGEN__)
 
 //#include "portable/core/include/OS.h"
 #include "TestSuiteImplementation.h"
@@ -24,7 +24,7 @@ namespace os
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpadded"
 
-    /// \example portable/infra/tests/TestSuite/src/main.cpp
+    /// \example portable/infrastructure/tests/TestSuite/src/main.cpp
     /// This test exercises all TestSuite methods. It currently runs on
     /// OS X, as a 64 bit process.
     ///
@@ -36,14 +36,14 @@ namespace os
     /// The output produced by the Release build was:
     /// ~~~
     /// CLASS:"os::infra::TestSuite"
-    /// START:"Starting tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infra/tests/TestSuite/src/main.cpp'"
+    /// START:"Starting tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infrastructure/tests/TestSuite/src/main.cpp'"
     /// PASS:"check true constant"
     /// FAIL:"check false constant"
     /// PASS:"a passed test"
     /// FAIL:"a failed test"
     /// INFO:"there should be 2 failed cases and 2 passed cases"
     /// STAT:"Failed=2, Passed=2"
-    /// STOP:"Completing tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infra/tests/TestSuite/src/main.cpp'"
+    /// STOP:"Completing tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infrastructure/tests/TestSuite/src/main.cpp'"
     /// ~~~
     ///
     /// The XML output was:
@@ -58,7 +58,7 @@ namespace os
     /// The process exit value was 1 (failed).
 
 
-    /// \class TestSuite TestSuite.h "portable/infra/include/TestSuite.h"
+    /// \class TestSuite TestSuite.h "portable/infrastructure/include/TestSuite.h"
     /// \brief Simple test suite class.
 
     /// \details
@@ -247,6 +247,6 @@ namespace os
   } // namespace infra
 } // namespace os
 
-#endif /* defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) */
+#endif /* defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) */
 
-#endif /* #define OS_PORTABLE_INFRA_TESTSUITE_H_ */
+#endif /* #define OS_PORTABLE_INFRASTRUCTURE_TESTSUITE_H_ */

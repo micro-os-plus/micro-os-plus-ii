@@ -11,6 +11,6 @@ Package(
     category='family',   
     
     loadPackages=[
-        'package.os.hal.arch.synthetic.posix.infra',
+        'package.os.hal.arch.synthetic.posix.infrastructure',
     ], 
 )

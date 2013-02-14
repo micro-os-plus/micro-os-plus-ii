@@ -6,7 +6,7 @@
 
 #include "portable/core/include/OS_Defines.h"
 
-#if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION) || defined(__DOXYGEN__)
 
 #include "portable/core/include/OS.h"
 
@@ -144,4 +144,4 @@ namespace hal
   } // namespace posix
 } // namespace hal
 
-#endif /* defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION) */
+#endif /* defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION) */

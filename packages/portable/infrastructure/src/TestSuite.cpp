@@ -6,7 +6,7 @@
 
 #include "portable/core/include/OS_Defines.h"
 
-#if defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) || defined(__DOXYGEN__)
 
 #include "portable/core/include/OS.h"
 
@@ -403,5 +403,5 @@ namespace os
   } /* namespace infra */
 } /* namespace os */
 
-#endif /* defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) */
+#endif /* defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) */
 

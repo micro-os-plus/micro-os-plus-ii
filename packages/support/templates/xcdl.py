@@ -14,7 +14,7 @@ Package(
     loadPackages=[
         'package.os.portable.core',
         'package.os.portable.devices.debug',
-        'package.os.portable.infra',
+        'package.os.portable.infrastructure',
     ],
 )
 

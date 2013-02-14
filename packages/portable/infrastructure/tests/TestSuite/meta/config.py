@@ -7,13 +7,13 @@ RepositoryFolder('../../../../..')
 
 Configuration(
               
-    id='config.os.portable.infra.tests.testsuite',
+    id='config.os.portable.infrastructure.tests.testsuite',
     name='Test TestSuite configuration',
     description='Test the TestSuite class.',
     
     loadPackages=[
         # mandatory test code package
-        'package.os.portable.infra.tests.testsuite',
+        'package.os.portable.infrastructure.tests.testsuite',
         
         # the minimal template
         'package.os.templates.minimal',
@@ -22,14 +22,14 @@ Configuration(
     requires=[
         'setValue("APP_STRING_APPLICATION_NAME", "UnitTest: TestSuite output")',        
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
-        'enable("component.os.hal.arch.synthetic.posix.infra.testsuite")',
+        'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
     ],
                   
     children=[
  
         Configuration(
               
-            id='config.os.portable.infra.tests.testsuite.osx',
+            id='config.os.portable.infrastructure.tests.testsuite.osx',
             name='Test TestSuite on OS X configuration',
             description='Common definitions for Debug/Release build configurations running on OS X',
             
@@ -39,7 +39,7 @@ Configuration(
             ],
                       
             requires=[
-                'enable("component.os.hal.arch.synthetic.posix.infra.testsuite")',
+                'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
             ],
                       
             buildFolder='osx/testsuite',
@@ -49,7 +49,7 @@ Configuration(
             children=[
                             
                 Configuration(
-                    id='config.os.portable.infra.tests.testsuite.osx.x64.llvm.debug',
+                    id='config.os.portable.infrastructure.tests.testsuite.osx.x64.llvm.debug',
                     name='Debug OS X TestSuite configuration with x86_64 LLVM',
                     description='Debug build configuration for TestSuite',
                     
@@ -63,7 +63,7 @@ Configuration(
                 ),
 
                 Configuration(
-                    id='config.os.portable.infra.tests.testsuite.osx.x64.llvm.release',
+                    id='config.os.portable.infrastructure.tests.testsuite.osx.x64.llvm.release',
                     name='Release OS X TestSuite configuration with x86_64 LLVM',
                     description='Release build configuration for TestSuite',
                     

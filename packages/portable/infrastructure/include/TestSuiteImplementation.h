@@ -4,18 +4,18 @@
 //      This file is part of the uOS++ distribution.
 //
 
-#ifndef OS_PORTABLE_INFRA_TESTSUITEIMPLEMENTATION_H_
-#define OS_PORTABLE_INFRA_TESTSUITEIMPLEMENTATION_H_
+#ifndef OS_PORTABLE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_H_
+#define OS_PORTABLE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_H_
 
 #include "portable/core/include/OS_Defines.h"
 
-#if defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) || defined(__DOXYGEN__)
 
 namespace os
 {
   namespace infra
   {
-    /// \class TestSuiteImplementation TestSuiteImplementation.h "portable/infra/include/TestSuiteImplementation.h"
+    /// \class TestSuiteImplementation TestSuiteImplementation.h "portable/infrastructure/include/TestSuiteImplementation.h"
     /// \brief The model for platform specific TestSuiteImplementation.
     ///
     /// \details
@@ -121,9 +121,9 @@ namespace os
 // This is the place where the actual TestSuiteImplementation is
 // selected, based on various preprocessor definitions.
 
-#if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRA_TESTSUITEIMPLEMENTATION)
+#if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION)
 
-#include "hal/arch/synthetic/posix/infra/include/TestSuiteImplementation.h"
+#include "hal/arch/synthetic/posix/infrastructure/include/TestSuiteImplementation.h"
 
 #elif defined(__DOXYGEN__)
 
@@ -141,6 +141,6 @@ namespace os
 
 #endif /* architecture selection */
 
-#endif /* defined(OS_INCLUDE_PORTABLE_INFRA_TESTSUITE) */
+#endif /* defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) */
 
-#endif /* OS_PORTABLE_INFRA_TESTSUITEIMPLEMENTATION_H_ */
+#endif /* OS_PORTABLE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_H_ */
