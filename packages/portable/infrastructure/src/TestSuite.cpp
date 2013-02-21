@@ -76,6 +76,13 @@ namespace os
         debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
       }
 
+    template<class T>
+      void
+      TestSuite<T>::processMainParameters(int argc, char* argv[])
+      {
+        m_implementation.processMainParameters(argc, argv);
+      }
+
     /// \details
     /// The class name is required to identify the current test
     /// suite in an automated test environment.

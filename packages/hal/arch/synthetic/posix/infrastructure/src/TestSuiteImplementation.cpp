@@ -41,6 +41,17 @@ namespace hal
       {
         debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
 
+        processMainParameters(argc, argv);
+      }
+
+      TestSuiteImplementation::~TestSuiteImplementation()
+      {
+        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+      }
+
+      void
+      TestSuiteImplementation::processMainParameters(int argc, char* argv[])
+      {
         opterr = 0;
         int c;
 
@@ -72,11 +83,6 @@ namespace hal
 
         m_xmlFileDescriptor = -1;
         m_filePath = filePath;
-      }
-
-      TestSuiteImplementation::~TestSuiteImplementation()
-      {
-        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
       }
 
       /// \details

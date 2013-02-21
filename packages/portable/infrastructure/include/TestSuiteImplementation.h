@@ -65,6 +65,13 @@ namespace os
       /// \brief Destructor.
       ~TestSuiteImplementation();
 
+      /// \brief Process main() style parameters
+      ///
+      /// \param [in] argc count of arguments.
+      /// \param [in] argv array of pointer to strings.
+      void
+      processMainParameters(int argc, char* argv[]);
+
       /// \brief Create the XML file.
       ///
       /// \par Parameters

@@ -11,7 +11,6 @@
 
 #if defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) || defined(__DOXYGEN__)
 
-//#include "portable/core/include/OS.h"
 #include "TestSuiteImplementation.h"
 
 #include <stdint.h>
@@ -57,7 +56,6 @@ namespace os
     /// ~~~
     /// The process exit value was 1 (failed).
 
-
     /// \class TestSuite TestSuite.h "portable/infrastructure/include/TestSuite.h"
     /// \brief Simple test suite class.
 
@@ -86,6 +84,13 @@ namespace os
         /// \brief Destructor.
         ~TestSuite();
 
+        /// \brief Process main() style parameters
+        ///
+        /// \param [in] argc count of arguments.
+        /// \param [in] argv array of pointer to strings.
+        void
+        processMainParameters(int argc, char* argv[]);
+
         /// \brief Set the name of the tested class.
         ///
         /// \param [in] pName a string containing the class name, usually with
@@ -112,6 +117,12 @@ namespace os
         ///       Nothing
         void
         checkAndReport(bool expression, const char* pMessage);
+
+/// \brief Check expression and report an result identical to the expression.
+/// \details This is one of the few cases when macros are really needed,
+/// to avoid writing the expression twice, first as expression and
+/// then as string.
+#define assertCondition(e) checkAndReport((e), #e)
 
         /// \brief Report a successful test case.
         ///
