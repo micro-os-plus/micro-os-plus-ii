@@ -19,7 +19,7 @@ Configuration(
         'package.os.templates.minimal',
     ],
     
-    requires=[
+    requirements=[
         'setValue("APP_STRING_APPLICATION_NAME", "UnitTest: TestSuite output")',        
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
         'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
@@ -38,7 +38,7 @@ Configuration(
                 'package.os.hal.platforms.synthetic.osx.cl-sjlj',
             ],
                       
-            requires=[
+            requirements=[
                 'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
             ],
                       
@@ -55,7 +55,7 @@ Configuration(
                     
                     buildFolder='$(PARENT)/x64/llvm/Debug',
                     
-                    requires=[
+                    requirements=[
                         'enable("DEBUG")',
                     ],
                       
@@ -69,7 +69,7 @@ Configuration(
                     
                     buildFolder='$(PARENT)/x64/llvm/Release',
                     
-                    requires=[
+                    requirements=[
                         #'enable("DEBUG")',
                     ],
                       

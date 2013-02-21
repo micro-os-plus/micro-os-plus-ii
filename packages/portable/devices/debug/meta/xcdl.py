@@ -12,7 +12,7 @@ Package(
         'Debug.cpp',
     ],
           
-    requires=[
+    requirements=[
         'enable("package.os.portable.core.greeting")',
         'implementationsOf("interface.os.portable.devices.debug") == 1',
     ],

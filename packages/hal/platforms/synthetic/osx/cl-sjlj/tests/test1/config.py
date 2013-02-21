@@ -6,7 +6,7 @@ Configuration(
     name='OS X sjlj test',
     description='Common definitions for debug/release of test1',
     
-    requires=[
+    requirements=[
         'package.os.platforms.synthetic.osx.cl-sjlj',
     ],
     
@@ -33,7 +33,7 @@ Configuration(
             description='Debug build configuration for test1',
             buildFolder='osx/cl-sjlj/test1/Debug',
             
-            requires=[
+            requirements=[
                 'PACK',
             ],
                       

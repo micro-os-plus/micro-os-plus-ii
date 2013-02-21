@@ -16,7 +16,7 @@ Package(
             name='Infrastructure unit tests support',
             description='Support for unit tests',
                   
-            requires=[
+            requirements=[
                 'enable("package.os.portable.core.greeting")',
                 'implementationsOf("interface.os.portable.infrastructure.testsuite") == 1',
             ],

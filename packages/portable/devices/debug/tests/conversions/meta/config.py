@@ -19,7 +19,7 @@ Configuration(
         'package.os.templates.minimal',
     ],
     
-    requires=[
+    requirements=[
         #'setValue("package.os.portable.core.greeting.app.name", "Test Debug conversions")',
         'setValue("APP_STRING_APPLICATION_NAME", "Test Debug conversions")',
         
@@ -52,7 +52,7 @@ Configuration(
                     
                     buildFolder='$(PARENT)/x64/llvm/Debug',
                     
-                    requires=[
+                    requirements=[
                         'enable("DEBUG")',
                     ],
                       
@@ -80,7 +80,7 @@ Configuration(
                     
                     buildFolder='$(PARENT)/x32/llvm/Debug',
                     
-                    requires=[
+                    requirements=[
                         'enable("DEBUG")',
                     ],
                       
@@ -99,7 +99,7 @@ Configuration(
                     
                     buildFolder='$(PARENT)/gcc46/Debug',
                     
-                    requires=[
+                    requirements=[
                         'enable("DEBUG")',
                     ],
                       
@@ -113,7 +113,7 @@ Configuration(
                     
                     buildFolder='$(PARENT)/gcc47/Debug',
                     
-                    requires=[
+                    requirements=[
                         'enable("DEBUG")',
                     ],
                       

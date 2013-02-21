@@ -9,7 +9,7 @@ Package(
     description='All µOS++ Second Edition portable core packages.',
     
         
-    includes=[
+    includeFiles=[
         'greeting.py',
     ],
         
