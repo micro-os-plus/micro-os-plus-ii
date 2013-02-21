@@ -30,8 +30,9 @@ Toolchain(
     compilerDepsOptions='-MMD -MP',
     compilerOutputOptions='-o "$@"',
     compilerInputOptions='"$<"',
-    compilerWarningOptions='-Weverything -Wno-c++98-compat',
+    compilerWarningOptions='-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic',
     compilerMiscOptions='-emit-llvm -std=c++11 -fsigned-char -fmessage-length=0 -c',
+    compilerPreprocessorOptions='-D__MICRO_OS_PLUS_PLUS__',
     compilerDebugOptions='-g',
     compilerOptimisationOptions='-O0',
     
@@ -159,7 +160,8 @@ Toolchain(
     compilerInputOptions='"$<"',
     compilerWarningOptions='-Wall',
     
-    compilerMiscOptions='-fsigned-char -fmessage-length=0 -c',
+    compilerMiscOptions='-std=c++11 -fsigned-char -fmessage-length=0 -c',
+    compilerPreprocessorOptions='-D__MICRO_OS_PLUS_PLUS__',
     compilerDebugOptions='-g3',
     compilerOptimisationOptions='-O0',
     
