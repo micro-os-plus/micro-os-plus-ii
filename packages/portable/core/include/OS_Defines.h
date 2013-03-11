@@ -44,6 +44,11 @@
 #define OS_STRING_GREETING              "uOS++ v" OS_STRING_VERSION ", GCC " __VERSION__
 #endif
 
+// Make sure that this is not defined, to skip unwanted code
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#undef OS_SKIP_NOT_YET_IMPLEMENTED
+#endif
+
 // ----------------------------------------------------------------------------
 
 #endif /* OS_PORTABLE_CORE_OS_DEFINES_H_ */
