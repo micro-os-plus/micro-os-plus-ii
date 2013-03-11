@@ -1,0 +1,14 @@
+The actual C++ Standard Library is based on the LLVM libcxx sources, with
+many customisations to make it suitable for embedded environments.
+
+The official LLVM libcxx site is available from 
+	http://libcxx.llvm.org/
+
+The original files are dual licensed under the MIT and the University of 
+Illinois Open Source Licenses. As per the license requirements, the
+original license text is locally available as 'LLVM libcxx License.txt'.
+
+The live repository can be viewed at:
+	http://llvm.org/viewvc/llvm-project/libcxx/trunk/
+
+The initial version (February 2013) was based on the SVN revision 175266.
