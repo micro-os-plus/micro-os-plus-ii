@@ -1,0 +1,324 @@
+.
+├── input.output.general
+│   └── nothing_to_do.pass.cpp
+├── iostream.format
+│   ├── ext.manip
+│   │   ├── get_money.pass.cpp
+│   │   ├── get_time.pass.cpp
+│   │   ├── put_money.pass.cpp
+│   │   └── put_time.pass.cpp
+│   ├── output.streams
+│   │   ├── ostream
+│   │   │   └── types.pass.cpp --- ostream.cpp OK
+│   │   ├── ostream.assign
+│   │   │   ├── member_swap.pass.cpp --- ostream.cpp OK
+│   │   │   └── move_assign.pass.cpp --- ???
+│   │   ├── ostream.cons
+│   │   │   ├── move.pass.cpp --- ???
+│   │   │   └── streambuf.pass.cpp --- ostream.cpp OK
+│   │   ├── ostream.formatted
+│   │   │   ├── nothing_to_do.pass.cpp --- nothing
+│   │   │   ├── ostream.formatted.reqmts
+│   │   │   │   └── tested_elsewhere.pass.cpp --- nothing
+│   │   │   ├── ostream.inserters
+│   │   │   │   ├── basic_ios.pass.cpp
+│   │   │   │   ├── ios_base.pass.cpp
+│   │   │   │   ├── ostream.pass.cpp
+│   │   │   │   └── streambuf.pass.cpp
+│   │   │   ├── ostream.inserters.arithmetic
+│   │   │   │   ├── bool.pass.cpp --- ostream.cpp OK
+│   │   │   │   ├── double.pass.cpp
+│   │   │   │   ├── float.pass.cpp
+│   │   │   │   ├── int.pass.cpp
+│   │   │   │   ├── long.pass.cpp
+│   │   │   │   ├── long_double.pass.cpp
+│   │   │   │   ├── long_long.pass.cpp
+│   │   │   │   ├── pointer.pass.cpp --- ostream.cpp OK
+│   │   │   │   ├── short.pass.cpp --- ostream.cpp OK
+│   │   │   │   ├── unsigned_int.pass.cpp
+│   │   │   │   ├── unsigned_long.pass.cpp
+│   │   │   │   ├── unsigned_long_long.pass.cpp
+│   │   │   │   └── unsigned_short.pass.cpp --- ostream.cpp OK
+│   │   │   └── ostream.inserters.character
+│   │   │       ├── CharT.pass.cpp --- wide ???
+│   │   │       ├── CharT_pointer.pass.cpp --- wide ???
+│   │   │       ├── char.pass.cpp --- ostream.cpp OK
+│   │   │       ├── char_pointer.pass.cpp --- ostream.cpp OK
+│   │   │       ├── char_to_wide.pass.cpp -- wide ???
+│   │   │       ├── char_to_wide_pointer.pass.cpp --- wide ???
+│   │   │       ├── signed_char.pass.cpp --- ostream.cpp OK
+│   │   │       ├── signed_char_pointer.pass.cpp --- ostream.cpp OK
+│   │   │       ├── unsigned_char.pass.cpp --- ostream.cpp OK
+│   │   │       └── unsigned_char_pointer.pass.cpp --- ostream.cpp OK
+│   │   ├── ostream.manip
+│   │   │   ├── endl.pass.cpp --- ostream.cpp OK
+│   │   │   ├── ends.pass.cpp --- ostream.cpp OK
+│   │   │   └── flush.pass.cpp --- ostream.cpp OK
+│   │   ├── ostream.rvalue
+│   │   │   └── CharT_pointer.pass.cpp
+│   │   ├── ostream.seeks
+│   │   │   ├── seekp.pass.cpp --- ostream.cpp OK
+│   │   │   ├── seekp2.pass.cpp --- ostream.cpp OK
+│   │   │   └── tellp.pass.cpp --- ostream.cpp OK
+│   │   ├── ostream.unformatted
+│   │   │   ├── flush.pass.cpp --- ostream.cpp OK
+│   │   │   ├── put.pass.cpp --- ostream.cpp OK
+│   │   │   └── write.pass.cpp --- ostream.cpp OK
+│   │   ├── ostream_sentry
+│   │   │   ├── construct.pass.cpp --- ostream.cpp OK
+│   │   │   └── destruct.pass.cpp --- ostream.cpp OK
+│   │   └── version.pass.cpp
+│   └── std.manip
+│       ├── resetiosflags.pass.cpp --- ostream.cpp OK ???
+│       ├── setbase.pass.cpp --- ostream.cpp OK ???
+│       ├── setfill.pass.cpp --- ostream.cpp OK ???
+│       ├── setiosflags.pass.cpp --- ostream.cpp OK ???
+│       ├── setprecision.pass.cpp --- ostream.cpp OK ???
+│       ├── setw.pass.cpp --- ostream.cpp OK ???
+│       └── version.pass.cpp --- nothing
+├── iostreams.base
+│   ├── fpos
+│   │   ├── fpos.members
+│   │   │   └── state.pass.cpp --- fpos.cpp --- ok
+│   │   ├── fpos.operations
+│   │   │   ├── addition.pass.cpp --- fpos.cpp --- ok
+│   │   │   ├── ctor_int.pass.cpp --- fpos.cpp --- ok
+│   │   │   ├── difference.pass.cpp --- fpos.cpp --- ok
+│   │   │   ├── eq_int.pass.cpp --- fpos.cpp --- ok
+│   │   │   ├── offset.pass.cpp --- fpos.cpp --- ok
+│   │   │   ├── streamsize.pass.cpp --- fpos.cpp --- ok
+│   │   │   └── subtraction.pass.cpp --- fpos.cpp --- ok
+│   │   └── nothing_to_do.pass.cpp --- nothing
+│   ├── ios
+│   │   ├── basic.ios.cons
+│   │   │   └── ctor_streambuf.pass.cpp --- basic_ios.cpp OK
+│   │   ├── basic.ios.members
+│   │   │   ├── copyfmt.pass.cpp --- ????
+│   │   │   ├── fill.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── fill_char_type.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── imbue.pass.cpp --- ????
+│   │   │   ├── move.pass.cpp --- ????
+│   │   │   ├── narow.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── rdbuf.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── rdbuf_streambuf.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── set_rdbuf.pass.cpp --- ????
+│   │   │   ├── swap.pass.cpp --- ????
+│   │   │   ├── tie.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── tie_ostream.pass.cpp --- ????
+│   │   │   └── widen.pass.cpp --- basic_ios.cpp OK
+│   │   ├── iostate.flags
+│   │   │   ├── bad.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── bool.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── clear.pass.cpp --- basic_ios.cpp OK --- exceptions ???
+│   │   │   ├── eof.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── exceptions.pass.cpp --- basic_ios.cpp OK --- exceptions ???
+│   │   │   ├── exceptions_iostate.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── fail.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── good.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── not.pass.cpp --- basic_ios.cpp OK
+│   │   │   ├── rdstate.pass.cpp --- basic_ios.cpp OK
+│   │   │   └── setstate.pass.cpp --- basic_ios.cpp OK --- exceptions ???
+│   │   └── types.pass.cpp --- basic_ios.cpp OK
+│   ├── ios.base
+│   │   ├── fmtflags.state
+│   │   │   ├── flags.pass.cpp --- ios_base OK
+│   │   │   ├── flags_fmtflags.pass.cpp --- ios_base OK
+│   │   │   ├── precision.pass.cpp --- ios_base OK
+│   │   │   ├── precision_streamsize.pass.cpp --- ios_base OK
+│   │   │   ├── setf_fmtflags.pass.cpp --- ios_base OK
+│   │   │   ├── setf_fmtflags_mask.pass.cpp --- ios_base OK
+│   │   │   ├── unsetf_mask.pass.cpp --- ios_base OK
+│   │   │   ├── width.pass.cpp --- ios_base OK
+│   │   │   └── width_streamsize.pass.cpp --- ios_base OK
+│   │   ├── ios.base.callback
+│   │   │   └── register_callback.pass.cpp --- ???
+│   │   ├── ios.base.cons
+│   │   │   └── dtor.pass.cpp --- ???
+│   │   ├── ios.base.locales
+│   │   │   ├── getloc.pass.cpp --- ???
+│   │   │   └── imbue.pass.cpp --- ???
+│   │   ├── ios.base.storage
+│   │   │   ├── iword.pass.cpp --- ???
+│   │   │   ├── pword.pass.cpp --- ???
+│   │   │   └── xalloc.pass.cpp --- ???
+│   │   ├── ios.members.static
+│   │   │   └── sync_with_stdio.pass.cpp --- ios_base OK
+│   │   ├── ios.types
+│   │   │   ├── ios_Init
+│   │   │   │   └── tested_elsewhere.pass.cpp --- nothing
+│   │   │   ├── ios_failure
+│   │   │   │   ├── ctor_char_pointer_error_code.pass.cpp --- ???
+│   │   │   │   └── ctor_string_error_code.pass.cpp --- ????
+│   │   │   ├── ios_fmtflags
+│   │   │   │   └── fmtflags.pass.cpp --- ios_base OK
+│   │   │   ├── ios_iostate
+│   │   │   │   └── iostate.pass.cpp --- ios_base OK
+│   │   │   ├── ios_openmode
+│   │   │   │   └── openmode.pass.cpp --- ios_base OK
+│   │   │   ├── ios_seekdir
+│   │   │   │   └── seekdir.pass.cpp --- ios_base OK
+│   │   │   └── nothing_to_do.pass.cpp --- nothing
+│   │   └── nothing_to_do.pass.cpp --- nothing
+│   ├── std.ios.manip
+│   │   ├── adjustfield.manip
+│   │   │   ├── internal.pass.cpp --- ios_base OK
+│   │   │   ├── left.pass.cpp --- ios_base OK
+│   │   │   └── right.pass.cpp --- ios_base OK
+│   │   ├── basefield.manip
+│   │   │   ├── dec.pass.cpp --- ios_base OK
+│   │   │   ├── hex.pass.cpp --- ios_base OK
+│   │   │   └── oct.pass.cpp --- ios_base OK
+│   │   ├── error.reporting
+│   │   │   ├── iostream_category.pass.cpp --- ???
+│   │   │   ├── make_error_code.pass.cpp --- ???
+│   │   │   └── make_error_condition.pass.cpp --- ???
+│   │   ├── floatfield.manip
+│   │   │   ├── defaultfloat.pass.cpp --- ios_base OK
+│   │   │   ├── fixed.pass.cpp --- ios_base OK
+│   │   │   ├── hexfloat.pass.cpp --- ios_base OK
+│   │   │   └── scientific.pass.cpp --- ios_base OK
+│   │   ├── fmtflags.manip
+│   │   │   ├── boolalpha.pass.cpp --- ios_base OK
+│   │   │   ├── noboolalpha.pass.cpp --- ios_base OK
+│   │   │   ├── noshowbase.pass.cpp --- ios_base OK
+│   │   │   ├── noshowpoint.pass.cpp --- ios_base OK
+│   │   │   ├── noshowpos.pass.cpp --- ios_base OK
+│   │   │   ├── noskipws.pass.cpp --- ios_base OK
+│   │   │   ├── nounitbuf.pass.cpp --- ios_base OK
+│   │   │   ├── nouppercase.pass.cpp --- ios_base OK
+│   │   │   ├── showbase.pass.cpp --- ios_base OK
+│   │   │   ├── showpoint.pass.cpp --- ios_base OK
+│   │   │   ├── showpos.pass.cpp --- ios_base OK
+│   │   │   ├── skipws.pass.cpp --- ios_base OK
+│   │   │   ├── unitbuf.pass.cpp --- ios_base OK
+│   │   │   └── uppercase.pass.cpp --- ios_base OK
+│   │   └── nothing_to_do.pass.cpp --- nothing
+│   ├── stream.types
+│   │   ├── streamoff.pass.cpp --- ???
+│   │   └── streamsize.pass.cpp --- ios_base OK
+│   └── version.pass.cpp --- nothing
+├── iostreams.requirements
+│   ├── iostream.limits.imbue
+│   │   └── tested_elsewhere.pass.cpp --- nothing
+│   ├── iostreams.limits.pos
+│   │   └── nothing_to_do.pass.cpp --- nothing
+│   ├── iostreams.threadsafety
+│   │   └── nothing_to_do.pass.cpp --- nothing
+│   └── nothing_to_do.pass.cpp --- nothing
+├── nothing_to_do.pass.cpp --- nothing
+├── stream.buffers
+│   ├── streambuf
+│   │   ├── streambuf.cons
+│   │   │   ├── copy.fail.cpp --- compile --- check if protected constructor fails --- can't
+│   │   │   ├── copy.pass.cpp --- streambuf.cpp test_copy_cons --- OK
+│   │   │   ├── default.fail.cpp --- compile --- check if protected constructor fails --- can't
+│   │   │   └── default.pass.cpp --- locale::global() - Not Implemented
+│   │   ├── streambuf.members
+│   │   │   ├── nothing_to_do.pass.cpp --- none
+│   │   │   ├── streambuf.buffer
+│   │   │   │   ├── pubseekoff.pass.cpp --- streambuf.cpp test_pos --- OK
+│   │   │   │   ├── pubseekpos.pass.cpp --- streambuf.cpp test_pos --- OK
+│   │   │   │   ├── pubsetbuf.pass.cpp --- streambuf.cpp test_pos --- OK
+│   │   │   │   └── pubsync.pass.cpp --- streambuf.cpp test_pos --- OK
+│   │   │   ├── streambuf.locales
+│   │   │   │   └── locales.pass.cpp - Not Implemented
+│   │   │   ├── streambuf.pub.get
+│   │   │   │   ├── in_avail.pass.cpp --- streambuf.cpp test_in_avail --- OK
+│   │   │   │   ├── sbumpc.pass.cpp --- streambuf.cpp test_sbumpc --- OK
+│   │   │   │   ├── sgetc.pass.cpp --- streambuf.cpp test_sgetc --- OK
+│   │   │   │   ├── sgetn.pass.cpp --- streambuf.cpp test_sgetn --- OK
+│   │   │   │   └── snextc.pass.cpp --- streambuf.cpp test_snextc --- OK
+│   │   │   ├── streambuf.pub.pback
+│   │   │   │   ├── sputbackc.pass.cpp --- streambuf.cpp test_sputback --- OK
+│   │   │   │   └── sungetc.pass.cpp --- streambuf.cpp test_sungetc --- OK
+│   │   │   └── streambuf.pub.put
+│   │   │       ├── sputc.pass.cpp --- streambuf.cpp test_sputc --- OK
+│   │   │       └── sputn.pass.cpp --- streambuf.cpp test_sputn --- OK
+│   │   ├── streambuf.protected
+│   │   │   ├── nothing_to_do.pass.cpp --- nothing
+│   │   │   ├── streambuf.assign
+│   │   │   │   ├── assign.pass.cpp --- streambuf.cpp --- OK
+│   │   │   │   └── swap.pass.cpp --- streambuf.cpp --- OK
+│   │   │   ├── streambuf.get.area
+│   │   │   │   ├── gbump.pass.cpp --- streambuf.cpp --- OK
+│   │   │   │   └── setg.pass.cpp --- streambuf.cpp --- OK
+│   │   │   └── streambuf.put.area
+│   │   │       ├── pbump.pass.cpp --- streambuf.cpp --- OK
+│   │   │       └── setp.pass.cpp --- streambuf.cpp --- OK
+│   │   ├── streambuf.virtuals
+│   │   │   ├── nothing_to_do.pass.cpp --- nothing
+│   │   │   ├── streambuf.virt.buffer
+│   │   │   │   └── tested_elsewhere.pass.cpp --- nothing
+│   │   │   ├── streambuf.virt.get
+│   │   │   │   ├── showmanyc.pass.cpp --- streambuf.cpp --- OK
+│   │   │   │   ├── uflow.pass.cpp --- streambuf.cpp --- OK
+│   │   │   │   ├── underflow.pass.cpp --- streambuf.cpp --- OK
+│   │   │   │   └── xsgetn.pass.cpp --- streambuf.cpp --- OK
+│   │   │   ├── streambuf.virt.locales
+│   │   │   │   └── nothing_to_do.pass.cpp --- nothing
+│   │   │   ├── streambuf.virt.pback
+│   │   │   │   └── pbackfail.pass.cpp --- streambuf.cpp --- OK
+│   │   │   └── streambuf.virt.put
+│   │   │       ├── overflow.pass.cpp --- streambuf.cpp --- OK
+│   │   │       └── xsputn.pass.cpp --- streambuf.cpp --- OK
+│   │   └── types.pass.cpp --- streambuf.cpp --- OK
+│   ├── streambuf.reqts
+│   │   └── tested_elsewhere.pass.cpp --- nothing
+│   └── version.pass.cpp --- compile --- check if LIBCPP_VERSION is defined
+└── string.streams
+    ├── istringstream
+    │   ├── istringstream.assign
+    │   │   ├── member_swap.pass.cpp
+    │   │   ├── move.pass.cpp
+    │   │   └── nonmember_swap.pass.cpp
+    │   ├── istringstream.cons
+    │   │   ├── default.pass.cpp
+    │   │   ├── move.pass.cpp
+    │   │   └── string.pass.cpp
+    │   ├── istringstream.members
+    │   │   └── str.pass.cpp
+    │   └── types.pass.cpp
+    ├── ostringstream
+    │   ├── ostringstream.assign
+    │   │   ├── member_swap.pass.cpp
+    │   │   ├── move.pass.cpp
+    │   │   └── nonmember_swap.pass.cpp
+    │   ├── ostringstream.cons
+    │   │   ├── default.pass.cpp
+    │   │   ├── move.pass.cpp
+    │   │   └── string.pass.cpp
+    │   ├── ostringstream.members
+    │   │   └── str.pass.cpp
+    │   └── types.pass.cpp
+    ├── stringbuf
+    │   ├── stringbuf.assign
+    │   │   ├── member_swap.pass.cpp
+    │   │   ├── move.pass.cpp
+    │   │   └── nonmember_swap.pass.cpp
+    │   ├── stringbuf.cons
+    │   │   ├── default.pass.cpp
+    │   │   ├── move.pass.cpp
+    │   │   └── string.pass.cpp
+    │   ├── stringbuf.members
+    │   │   └── str.pass.cpp
+    │   ├── stringbuf.virtuals
+    │   │   ├── overflow.pass.cpp
+    │   │   ├── pbackfail.pass.cpp
+    │   │   ├── seekoff.pass.cpp
+    │   │   ├── seekpos.pass.cpp
+    │   │   ├── setbuf.pass.cpp
+    │   │   └── underflow.pass.cpp
+    │   └── types.pass.cpp
+    ├── stringstream
+    │   └── types.pass.cpp
+    ├── stringstream.cons
+    │   ├── default.pass.cpp
+    │   ├── move.pass.cpp
+    │   ├── string.pass.cpp
+    │   └── stringstream.assign
+    │       ├── member_swap.pass.cpp
+    │       ├── move.pass.cpp
+    │       └── nonmember_swap.pass.cpp
+    ├── stringstream.members
+    │   └── str.pass.cpp
+    └── version.pass.cpp
