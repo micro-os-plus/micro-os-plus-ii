@@ -43,12 +43,7 @@ namespace os
       {
         debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
 
-        m_pClassName = nullptr; // initialise pointer to class name
-
-        m_countPassed = 0; // initialise count of passed tests
-        m_countFailed = 0; // initialise count of failed tests
-
-        m_isXmlOpened = false;
+        TestSuite<T>::__init();
       }
 
     /// \details
@@ -60,7 +55,20 @@ namespace os
       {
         debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
 
+        TestSuite<T>::__init();
+      }
+
+    /// \details
+    /// Clear all members, pointers and counters. Intended to be called
+    /// from constructors.
+    template<class T>
+      void
+      TestSuite<T>::__init(void)
+      {
         m_pClassName = nullptr; // initialise pointer to class name
+        m_pMethodName = nullptr; // initialise pointer to method name
+        m_pInputValues = nullptr; // initialise pointer to input values
+        m_pPreconditions = nullptr; // initialise pointer to preconditions
 
         m_countPassed = 0; // initialise count of passed tests
         m_countFailed = 0; // initialise count of failed tests
@@ -98,6 +106,45 @@ namespace os
       {
         m_pClassName = pName;
         outputLine(OutputLineType::CLASS);
+
+        setMethodNameOrPrefix(nullptr);
+      }
+
+    /// \details
+    /// The Method name is used to prefix the test case message and is
+    /// required to uniquely identify the current test
+    /// case in an automated test environment that collects statistics
+    /// based on the message.
+    /// \p
+    /// In practical terms, if you test the same condition multiple times,
+    /// be sure you prefix it with different names, to make the string unique.
+    ///
+    /// \par Example
+    ///
+    /// ~~~{.cpp}
+    /// setMethodName("clear(iostate)");
+    /// ~~~
+    template<class T>
+      void
+      TestSuite<T>::setMethodNameOrPrefix(const char* pName)
+      {
+        m_pMethodName = pName;
+        m_pInputValues = nullptr;
+        m_pPreconditions = nullptr;
+      }
+
+    template<class T>
+      void
+      TestSuite<T>::setInputValues(const char* pStr)
+      {
+        m_pInputValues = pStr;
+      }
+
+    template<class T>
+      void
+      TestSuite<T>::setPreconditions(const char* pStr)
+      {
+        m_pPreconditions = pStr;
       }
 
     /// \details
@@ -124,10 +171,10 @@ namespace os
       void
       TestSuite<T>::reportPassed(const char* pMessage)
       {
-        outputLine(OutputLineType::PASS, pMessage);
-        writeToXmlFile(false, pMessage);
-
+        // increment early, to start the counter from 1
         ++(this->m_countPassed); // one more passed test
+        outputLine(OutputLineType::PASS, pMessage);
+        writeTestCaseToXmlFile(false, pMessage);
       }
 
     /// \details
@@ -138,10 +185,12 @@ namespace os
       void
       TestSuite<T>::reportFailed(const char* pMessage)
       {
-        outputLine(OutputLineType::FAIL, pMessage);
-        writeToXmlFile(true, pMessage);
-
+        // increment early, to start the counter from 1
         ++(this->m_countFailed); // one more failed test
+
+        outputLine(OutputLineType::FAIL, pMessage);
+        writeTestCaseToXmlFile(true, pMessage);
+
       }
 
     /// \details
@@ -227,7 +276,32 @@ namespace os
 
         putString(pStr);
         putString(":");
+        if (lineType == OutputLineType::PASS
+            || lineType == OutputLineType::FAIL)
+          {
+            putNumber(static_cast<int>(getCurrentTestCaseNumber()));
+            putString(",");
+          }
         putString("\"");
+
+        if ((lineType == OutputLineType::PASS
+            || lineType == OutputLineType::FAIL) && (m_pMethodName != nullptr))
+          {
+            putString(m_pMethodName);
+            if (m_pInputValues != nullptr)
+              {
+                putString(" (");
+                putString(m_pInputValues);
+                putString(")");
+              }
+            if (m_pPreconditions != nullptr)
+              {
+                putString(" with ");
+                putString(m_pPreconditions);
+              }
+            putString(" --- ");
+          }
+
         if (lineType == OutputLineType::START)
           {
             putString("Starting tests from '");
@@ -242,10 +316,22 @@ namespace os
           }
         else if (lineType == OutputLineType::STAT)
           {
-            putString("Failed=");
-            putNumber(m_countFailed);
-            putString(", Passed=");
-            putNumber(m_countPassed);
+            if (m_countFailed == 0)
+              {
+                putString("Failed=");
+                putNumber(static_cast<int>(m_countFailed));
+                putString(", PASSED=");
+                putNumber(static_cast<int>(m_countPassed));
+                putString(", ALLES IN ORDNUNG! :-) +++++ :-) +++++ :-) ");
+              }
+            else
+              {
+                putString("FAILED=");
+                putNumber(static_cast<int>(m_countFailed));
+                putString(", Passed=");
+                putNumber(static_cast<int>(m_countPassed));
+                putString(", PROBLEMS?... :-( ----- :-( ----- :-( ");
+              }
           }
         else if (lineType == OutputLineType::CLASS)
           {
@@ -275,6 +361,32 @@ namespace os
           return 0;
 
         return m_implementation.writeToXmlFile(pString, len);
+      }
+
+    /// \details
+    /// Convert the number to ASCII and write it to the XML file.
+    template<class T>
+      ssize_t
+      TestSuite<T>::writeCounterToXmlFile(unsigned int number)
+      {
+        char buf[10];
+
+        int i = sizeof(buf);
+        buf[--i] = '\0';
+
+        for (;;)
+          {
+            buf[--i] = ('0' + (number % 10));
+            number = (number / 10);
+            if (number == 0)
+              break;
+
+            if (i <= 1)
+              break;
+          }
+
+        return writeStringToXmlFile(&buf[i]);
+
       }
 
     /// \details
@@ -359,7 +471,7 @@ namespace os
     /// ~~~
     template<class T>
       void
-      TestSuite<T>::writeToXmlFile(bool isFailure, const char* pMessage)
+      TestSuite<T>::writeTestCaseToXmlFile(bool isFailure, const char* pMessage)
       {
         if (m_isXmlOpened)
           {
@@ -374,6 +486,11 @@ namespace os
             if (pMessage != nullptr)
               {
                 writeStringToXmlFile(" name=\"");
+                if (m_pMethodName != nullptr)
+                  {
+                    writeStringToXmlFile(m_pMethodName);
+                    writeStringToXmlFile(" ");
+                  }
                 writeStringToXmlFile(pMessage);
                 writeStringToXmlFile("\"");
               }

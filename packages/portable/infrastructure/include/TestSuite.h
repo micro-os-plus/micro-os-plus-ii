@@ -100,6 +100,21 @@ namespace os
         void
         setClassName(const char* pName);
 
+        /// \brief Set the name of the tested method.
+        ///
+        /// \param [in] pName a string containing the prefix to be added
+        /// to each test case, usually the name of the method under test.
+        /// \par Returns
+        ///       Nothing
+        void
+        setMethodNameOrPrefix(const char* pName);
+
+        void
+        setInputValues(const char* pStr);
+
+        void
+        setPreconditions(const char* pStr);
+
         /// \brief Report the start of the test suite.
         ///
         /// \param [in] pMessage a string identifying the test suite, usually
@@ -123,6 +138,7 @@ namespace os
 /// to avoid writing the expression twice, first as expression and
 /// then as string.
 #define assertCondition(e) checkAndReport((e), #e)
+#define assertConditionWithDetails(e, s) checkAndReport((e), #e " " s)
 
         /// \brief Report a successful test case.
         ///
@@ -166,6 +182,14 @@ namespace os
         int
         getExitValue(void) const;
 
+        /// \brief Compute how many test cases were performed.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return The number of test cases that were performed.
+        unsigned int
+        getCurrentTestCaseNumber(void) const;
+
       private:
 
         /// \brief Define the type of the line to display.
@@ -198,7 +222,7 @@ namespace os
         /// \par Returns
         ///       Nothing
         void
-        writeToXmlFile(bool isFailure, const char* pMessage);
+        writeTestCaseToXmlFile(bool isFailure, const char* pMessage);
 
         /// \brief Write a null terminated string to the XML file.
         ///
@@ -207,6 +231,14 @@ namespace os
         /// \return The actual number of bytes written to the file.
         ssize_t
         writeStringToXmlFile(const char* pString);
+
+        /// \brief Write an unsigned number to the XML file.
+        ///
+        /// \param [in] number an unsigned number.
+        ///
+        /// \return The actual number of bytes written to the file.
+        ssize_t
+        writeCounterToXmlFile(unsigned int number);
 
         /// \brief Display a null terminated string to the test output device.
         ///
@@ -232,14 +264,47 @@ namespace os
         void
         putNewLine(void);
 
+        /// \brief Get the number of passed test cases.
+        /// \par Parameters
+        ///       None
+        /// \return The accumulated number of passed test cases.
+        unsigned int
+        getCountPassed(void);
+
+        /// \brief Get the number of failed test cases.
+        /// \par Parameters
+        ///       None
+        /// \return The accumulated number of failed test cases.
+        unsigned int
+        getCountFailed(void);
+
+      private:
+
+        /// \brief The accumulated number of passed test cases.
+        unsigned int m_countPassed;
+
+        /// \brief The accumulated number of failed test cases.
+        unsigned int m_countFailed;
+
+        /// \brief Initialise members.
+        /// \par Parameters
+        ///       None
+        /// \par Returns
+        ///       Nothing
+        void
+        __init(void);
+
         /// \brief The pointer to the class name string.
         const char* m_pClassName;
 
-        /// \brief The accumulated number of passed test cases.
-        int m_countPassed;
+        /// \brief The pointer to the method name string.
+        const char* m_pMethodName;
 
-        /// \brief The accumulated number of failed test cases.
-        int m_countFailed;
+        /// \brief The pointer to the input values string.
+        const char* m_pInputValues;
+
+        /// \brief The pointer to the preconditions string.
+        const char* m_pPreconditions;
 
         /// \brief The boolean status of XML output.
         bool m_isXmlOpened;
@@ -248,6 +313,27 @@ namespace os
         T m_implementation;
       };
     // class TestSuite
+
+    template<class T>
+      inline unsigned int
+      TestSuite<T>::getCountPassed(void)
+      {
+        return m_countPassed;
+      }
+
+    template<class T>
+      inline unsigned int
+      TestSuite<T>::getCountFailed(void)
+      {
+        return m_countFailed;
+      }
+
+    template<class T>
+      inline unsigned int
+      TestSuite<T>::getCurrentTestCaseNumber(void) const
+      {
+        return m_countPassed + m_countFailed;
+      }
 
     //------------------------------------------------------------------------
     /// \brief Define a TestSuite type based on the template.
