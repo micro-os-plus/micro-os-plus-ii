@@ -1,6 +1,6 @@
 To build the documentation, change the directory to this location and run 
 
-	doxygen doxygen.cfg
+	doxygen doxygen-html.cfg
 	
 The result is at the same level as the .git folder in
 
