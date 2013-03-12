@@ -28,6 +28,9 @@ namespace os
   {
     // 27.7.3.1 Class template basic_ostream
     // Default for _Traits defined in iosfwd.h
+
+    /// \example portable/language/cpp/tests/src/ostream.cpp
+    /// \example portable/language/cpp/tests/src/ostreamConversions.cpp
     template<class _CharT, class _Traits>
       class _LIBCPP_VISIBLE basic_ostream : virtual public basic_ios<_CharT,
           _Traits>
