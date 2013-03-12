@@ -140,6 +140,7 @@ namespace os
     const ios_base::openmode ios_base::out;
     const ios_base::openmode ios_base::trunc;
 
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
     void
     ios_base::__call_callbacks(event ev __attribute__((unused)))
     {
@@ -151,9 +152,13 @@ namespace os
         }
 #endif
     }
+#endif
 
     // locale
 
+    /// \details
+    /// Sets the new locale for this stream, and then invokes each callback
+    /// with \c imbue_event.
     locale
     ios_base::imbue(const locale& newloc)
     {
@@ -163,10 +168,17 @@ namespace os
       locale& loc_storage = *(locale*) &m_locale;
       locale oldloc = loc_storage;
       loc_storage = newloc;
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
       __call_callbacks(imbue_event);
+#endif
       return oldloc;
     }
 
+    /// \details
+    /// If no locale has been imbued, a copy of the global C++ locale,
+    /// locale(), in effect at the time of construction. Otherwise,
+    /// returns the imbued locale, to be used to perform
+    /// locale-dependent input and output operations.
     locale
     ios_base::getloc() const
     {
@@ -174,7 +186,7 @@ namespace os
       return loc_storage;
     }
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_STD_IOS_BASE_STORAGE)
     // xalloc
 
     int ios_base::ms_xindex = 0;
@@ -244,12 +256,18 @@ namespace os
       }
 #endif
 
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
     // register_callback
 
+    /// \details
+    /// Registers a function as an event callback with an integer parameter to
+    /// be passed to the function when invoked.  Multiple copies of the
+    /// function are allowed.  If there are multiple callbacks, they are
+    /// invoked in the order they were registered.
     void
-    ios_base::register_callback(event_callback fn __attribute__((unused)), int index __attribute__((unused)))
+    ios_base::register_callback(event_callback fn __attribute__((unused)),
+        int index __attribute__((unused)))
     {
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
       size_t req_size = __event_size_ + 1;
       if (req_size > __event_cap_)
         {
@@ -272,15 +290,23 @@ namespace os
       __fn_[__event_size_] = fn;
       __index_[__event_size_] = index;
       ++__event_size_;
-#endif
     }
+#endif
 
+    /// \details
+    /// Destroys an object of class ios_base. Calls each registered
+    /// callback pair (fn, index) (27.5.3.6) as
+    /// <code>(*fn)(erase_event, *this, index)</code>
+    /// at such time that any ios_base member function
+    /// called from within fn has well defined results.
     ios_base::~ios_base()
     {
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
       __call_callbacks(erase_event);
+#endif
       locale& loc_storage = *(locale*) &m_locale;
       loc_storage.~locale();
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_STD_IOS_BASE_STORAGE)
       free(__fn_);
       free(__index_);
       free(__iarray_);
@@ -288,34 +314,90 @@ namespace os
 #endif
     }
 
-#if defined(SHOULD_BE_DELETED)
-    // init
-
     void
-    ios_base::init(void* sb)
+    ios_base::copyfmt(const ios_base& rhs)
     {
-      m_fmtflags = skipws | dec;
-      m_width = 0;
-      m_precision = 6;
-
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-      __fn_ = 0;
-      __index_ = 0;
-      __event_size_ = 0;
-      __event_cap_ = 0;
-      __iarray_ = 0;
-      __iarray_size_ = 0;
-      __iarray_cap_ = 0;
-      __parray_ = 0;
-      __parray_size_ = 0;
-      __parray_cap_ = 0;
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
+      // If we can't acquire the needed resources, throw bad_alloc (can't set badbit)
+      // Don't alter *this until all needed resources are aquired
+      unique_ptr<event_callback, void (*)(void*)> new_callbacks(0, free);
+      unique_ptr<int, void (*)(void*)> new_ints(0, free);
+      unique_ptr<long, void (*)(void*)> new_longs(0, free);
+      unique_ptr<void*, void (*)(void*)> new_pointers(0, free);
+      if (__event_cap_ < rhs.__event_size_)
+        {
+          new_callbacks.reset((event_callback*)malloc(sizeof(event_callback) * rhs.__event_size_));
+#ifndef _LIBCPP_NO_EXCEPTIONS
+          if (!new_callbacks)
+          throw bad_alloc();
+#endif  // _LIBCPP_NO_EXCEPTIONS
+          new_ints.reset((int*)malloc(sizeof(int) * rhs.__event_size_));
+#ifndef _LIBCPP_NO_EXCEPTIONS
+          if (!new_ints)
+          throw bad_alloc();
+#endif  // _LIBCPP_NO_EXCEPTIONS
+        }
 #endif
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-      ::new (&m_locale) locale;
+#if defined(OS_INCLUDE_STD_IOS_BASE_STORAGE)
+      if (__iarray_cap_ < rhs.__iarray_size_)
+        {
+          new_longs.reset((long*)malloc(sizeof(long) * rhs.__iarray_size_));
+#ifndef _LIBCPP_NO_EXCEPTIONS
+          if (!new_longs)
+          throw bad_alloc();
+#endif  // _LIBCPP_NO_EXCEPTIONS
+        }
+      if (__parray_cap_ < rhs.__parray_size_)
+        {
+          new_pointers.reset((void**)malloc(sizeof(void*) * rhs.__parray_size_));
+#ifndef _LIBCPP_NO_EXCEPTIONS
+          if (!new_pointers)
+          throw bad_alloc();
+#endif  // _LIBCPP_NO_EXCEPTIONS
+        }
+#endif
+      // Got everything we need.  Copy everything but __rdstate_, __rdbuf_ and __exceptions_
+      m_fmtflags = rhs.m_fmtflags;
+      m_precision = rhs.m_precision;
+      m_width = rhs.m_width;
+      locale& lhs_loc = *(locale*)&m_locale;
+      locale& rhs_loc = *(locale*)&rhs.m_locale;
+      lhs_loc = rhs_loc;
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
+      if (__event_cap_ < rhs.__event_size_)
+        {
+          free(__fn_);
+          __fn_ = new_callbacks.release();
+          free(__index_);
+          __index_ = new_ints.release();
+          __event_cap_ = rhs.__event_size_;
+        }
+      for (__event_size_ = 0; __event_size_ < rhs.__event_size_; ++__event_size_)
+        {
+          __fn_[__event_size_] = rhs.__fn_[__event_size_];
+          __index_[__event_size_] = rhs.__index_[__event_size_];
+        }
+#endif
+#if defined(OS_INCLUDE_STD_IOS_BASE_STORAGE)
+      if (__iarray_cap_ < rhs.__iarray_size_)
+        {
+          free(__iarray_);
+          __iarray_ = new_longs.release();
+          __iarray_cap_ = rhs.__iarray_size_;
+        }
+      for (__iarray_size_ = 0; __iarray_size_ < rhs.__iarray_size_; ++__iarray_size_)
+      __iarray_[__iarray_size_] = rhs.__iarray_[__iarray_size_];
+      if (__parray_cap_ < rhs.__parray_size_)
+        {
+          free(__parray_);
+          __parray_ = new_pointers.release();
+          __parray_cap_ = rhs.__parray_size_;
+        }
+      for (__parray_size_ = 0; __parray_size_ < rhs.__parray_size_; ++__parray_size_)
+      __parray_[__parray_size_] = rhs.__parray_[__parray_size_];
 #endif
     }
-#endif
 
     void
     ios_base::move(ios_base& rhs)
@@ -330,7 +412,7 @@ namespace os
       ::new (&m_locale) locale(rhs_loc);
 #endif
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
       __fn_ = rhs.__fn_;
       rhs.__fn_ = 0;
       __index_ = rhs.__index_;
@@ -339,6 +421,8 @@ namespace os
       rhs.__event_size_ = 0;
       __event_cap_ = rhs.__event_cap_;
       rhs.__event_cap_ = 0;
+#endif
+#if defined(OS_INCLUDE_STD_IOS_BASE_STORAGE)
       __iarray_ = rhs.__iarray_;
       rhs.__iarray_ = 0;
       __iarray_size_ = rhs.__iarray_size_;
@@ -365,11 +449,13 @@ namespace os
       locale& rhs_loc = *(locale*)&rhs.m_locale;
       _VSTD::swap(lhs_loc, rhs_loc);
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
       _VSTD::swap(__fn_, rhs.__fn_);
       _VSTD::swap(__index_, rhs.__index_);
       _VSTD::swap(__event_size_, rhs.__event_size_);
       _VSTD::swap(__event_cap_, rhs.__event_cap_);
+#endif
+#if defined(OS_INCLUDE_STD_IOS_BASE_STORAGE)
       _VSTD::swap(__iarray_, rhs.__iarray_);
       _VSTD::swap(__iarray_size_, rhs.__iarray_size_);
       _VSTD::swap(__iarray_cap_, rhs.__iarray_cap_);
@@ -379,6 +465,10 @@ namespace os
 #endif
     }
 
+  /// \details
+  /// The synchronization referred to is \e only that between the standard
+  /// C facilities (e.g., stdout) and the standard C++ objects (e.g.,
+  /// cout).  User-declared streams are unaffected.
     bool
     ios_base::sync_with_stdio(bool sync)
     {

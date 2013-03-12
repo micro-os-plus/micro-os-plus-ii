@@ -50,13 +50,15 @@ namespace os
       {
         if (this != &__rhs)
           {
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
             __call_callbacks(erase_event);
+#endif
 
 #if defined(SHOULD_BE_DELETED)
             ios_base::copyfmt(__rhs);
 #endif
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
             // If we can't acquire the needed resources, throw bad_alloc (can't set badbit)
             // Don't alter *this until all needed resources are aquired
             unique_ptr<event_callback, void
@@ -82,6 +84,8 @@ namespace os
                 throw bad_alloc();
 #endif  // _LIBCPP_NO_EXCEPTIONS
               }
+#endif
+#if defined(OS_INCLUDE_STD_IOS_BASE_STORAGE)
             if (__iarray_cap_ < rhs.__iarray_size_)
               {
                 new_longs.reset((long*) malloc(sizeof(long) * rhs.__iarray_size_));
@@ -99,15 +103,20 @@ namespace os
                 throw bad_alloc();
 #endif  // _LIBCPP_NO_EXCEPTIONS
               }
-            // Got everything we need.  Copy everything but __rdstate_, __rdbuf_ and __exceptions_
-            __fmtflags_ = rhs.__fmtflags_;
-            __precision_ = rhs.__precision_;
-            __width_ = rhs.__width_;
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-            locale& lhs_loc = *(locale*) &__loc_;
-            locale& rhs_loc = *(locale*) &rhs.__loc_;
 #endif
+
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+// Got everything we need.  Copy everything but __rdstate_, __rdbuf_ and __exceptions_
+            m_fmtflags = __rhs.m_fmtflags;
+            m_precision = __rhs.m_precision;
+            m_width = __rhs.m_width;
+
+            locale& lhs_loc = *(locale*) &m_locale;
+            locale& rhs_loc = *(locale*) &__rhs.m_locale;
             lhs_loc = rhs_loc;
+#endif
+
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
             if (__event_cap_ < rhs.__event_size_)
               {
                 free(__fn_);
@@ -146,7 +155,9 @@ namespace os
             m_tie = __rhs.m_tie;
             m_fill = __rhs.m_fill;
 
+#if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
             __call_callbacks(copyfmt_event);
+#endif
             exceptions(__rhs.exceptions());
           }
         return *this;
