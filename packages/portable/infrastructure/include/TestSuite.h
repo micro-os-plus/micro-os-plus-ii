@@ -63,8 +63,15 @@ namespace os
     /// The TestSuite class implements a light test framework, designed for
     /// the µOS++ unit tests. The test will generally run on synthetic
     /// platforms, as regular user processes.
+    ///
+    /// When using automated testing frameworks, like Jenkins, it is
+    /// important to generate unique test case descriptions. To help this
+    /// the test condition can be prefixed with the method name, a list
+    /// of input values used to call the method, and a list of preconditions
+    /// used. Currently it is the responsibility of the user to keep
+    /// these strings unique, the framework does not check this condition.
 
-    template<class T>
+    template<class ImplT>
       class TestSuite
       {
 
@@ -109,9 +116,23 @@ namespace os
         void
         setMethodNameOrPrefix(const char* pName);
 
+        /// \brief Define the input values used when calling the tested method.
+        ///
+        /// \param [in] pStr a string containing the relevant values
+        // used when calling the method exercised by the following
+        /// test cases. Cleared by setMethodNameOrPrefix().
+        /// \par Returns
+        ///       Nothing
         void
         setInputValues(const char* pStr);
 
+        /// \brief Define the preconditions used when calling the tested method.
+        ///
+        /// \param [in] pStr a string containing the relevant preconditions
+        // used when calling the method exercised by the following
+        /// test cases. Cleared by setMethodNameOrPrefix().
+        /// \par Returns
+        ///       Nothing
         void
         setPreconditions(const char* pStr);
 
@@ -310,27 +331,27 @@ namespace os
         bool m_isXmlOpened;
 
         /// \brief The actual platform implementation.
-        T m_implementation;
+        ImplT m_implementation;
       };
     // class TestSuite
 
-    template<class T>
+    template<class ImplT>
       inline unsigned int
-      TestSuite<T>::getCountPassed(void)
+      TestSuite<ImplT>::getCountPassed(void)
       {
         return m_countPassed;
       }
 
-    template<class T>
+    template<class ImplT>
       inline unsigned int
-      TestSuite<T>::getCountFailed(void)
+      TestSuite<ImplT>::getCountFailed(void)
       {
         return m_countFailed;
       }
 
-    template<class T>
+    template<class ImplT>
       inline unsigned int
-      TestSuite<T>::getCurrentTestCaseNumber(void) const
+      TestSuite<ImplT>::getCurrentTestCaseNumber(void) const
       {
         return m_countPassed + m_countFailed;
       }
@@ -344,6 +365,5 @@ namespace os
   } // namespace infra
 } // namespace os
 
-#endif /* defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) */
-
-#endif /* #define OS_PORTABLE_INFRASTRUCTURE_TESTSUITE_H_ */
+#endif // defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE)
+#endif // #define OS_PORTABLE_INFRASTRUCTURE_TESTSUITE_H_
