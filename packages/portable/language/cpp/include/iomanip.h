@@ -16,152 +16,295 @@
 
 #include "portable/language/cpp/include/internal/__config.h"
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
 #include "portable/language/cpp/include/ostream.h"
-
-//#include "portable/language/cpp/include/istream"
+#endif
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
+#include "portable/language/cpp/include/istream"
+#endif
 
 namespace os
 {
   namespace std
   {
 
+    /// \addtogroup standardManipulators
+    /// @{
+    /// \brief ios_base flags manipulators.
+    /// \headerfile iomanip.h "portable/language/cpp/include/iomanip.h"
+    /// \details
+    /// The header `iomanip.h` defines several functions that
+    /// support extractors and inserters that alter
+    /// information maintained by class ios_base and
+    /// its derived classes.
+
+    // \name Standard manipulators (27.7.4)
+    /// \name Standard manipulator functions
+    /// @{
+
+    // ------------------------------------------------------------------------
     // resetiosflags
 
-    class __iom_t1
+    /// \brief Support class for resetiosflags().
+    class __iom_resetiosflags
     {
       ios_base::fmtflags m_mask;
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_t1(ios_base::fmtflags __m)
-          : m_mask(__m)
+      __iom_resetiosflags(ios_base::fmtflags mask)
+          : m_mask(mask)
       {
       }
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
       template<class _CharT, class _Traits>
       friend _LIBCPP_INLINE_VISIBILITY
       basic_istream<_CharT, _Traits>&
-      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t1& __x)
-        {
-          __is.unsetf(__x.m_mask);
-          return __is;
-        }
+      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_resetiosflags& __x);
 #endif
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
       template<class _CharT, class _Traits>
         friend _LIBCPP_INLINE_VISIBILITY
         basic_ostream<_CharT, _Traits>&
-        operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t1& __x) {
-        __os.unsetf(__x.m_mask);
-        return __os;
-      }
-  };
+        operator<<(basic_ostream<_CharT, _Traits>& outs,
+            const __iom_resetiosflags& x);
+#endif
+          };
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
+        template<class _CharT, class _Traits>
+        _LIBCPP_INLINE_VISIBILITY
+        basic_istream<_CharT, _Traits>&
+        operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_resetiosflags& __x)
+          {
+            __is.unsetf(__x.m_mask);
+            return __is;
+          }
+#endif
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
+    template<class _CharT, class _Traits>
+      _LIBCPP_INLINE_VISIBILITY
+      basic_ostream<_CharT, _Traits>&
+      operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_resetiosflags& x)
+        {
+          outs.unsetf(x.m_mask);
+          return outs;
+        }
+#endif
+
+      /// \brief Reset ios_base flags.
+      ///
+      /// \param mask A combination of `ios_base::fmtflags`.
+      /// \returns An object of unspecified type such that if `out` is an
+      /// object of type `basic_ostream<charT, traits>` then the
+      /// expression `out << resetiosflags(mask)` behaves as if it called
+      /// `f(out, mask)`, or if `in` is an object of type
+      /// `basic_istream<charT, traits>` then the expression
+      /// `in >> resetiosflags(mask)` behaves as if it called
+      /// `f(in, mask)`, where the function `f` is defined as:
+      /// ~~~
+      /// void f(ios_base& str, ios_base::fmtflags mask) {
+      ///     // reset specified flags
+      ///     str.setf(ios_base::fmtflags(0), mask);
+      /// }
+      /// ~~~
+      ///
+      /// \details
+      /// The expression `out << resetiosflags(mask)` shall
+      /// have type `basic_ostream<charT,traits>&` and value `out`.
+      /// The expression `in >> resetiosflags(mask)` shall have type
+      /// `basic_istream<charT, traits>&` and value `in`.
     inline _LIBCPP_INLINE_VISIBILITY
-    __iom_t1
-    resetiosflags(ios_base::fmtflags __mask)
+    __iom_resetiosflags
+    resetiosflags(ios_base::fmtflags mask)
     {
-      return __iom_t1(__mask);
+      return __iom_resetiosflags(mask);
     }
 
+    // ------------------------------------------------------------------------
     // setiosflags
 
-    class __iom_t2
+    /// \brief Support class for setiosflags().
+    class __iom_setiosflags
     {
       ios_base::fmtflags m_mask;
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_t2(ios_base::fmtflags __m)
-          : m_mask(__m)
+      __iom_setiosflags(ios_base::fmtflags mask)
+          : m_mask(mask)
       {
       }
-
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
       template<class _CharT, class _Traits>
       friend _LIBCPP_INLINE_VISIBILITY
       basic_istream<_CharT, _Traits>&
-      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t2& __x)
-        {
-          __is.setf(__x.m_mask);
-          return __is;
-        }
+      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_setiosflags& __x);
 #endif
-
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
       template<class _CharT, class _Traits>
         friend _LIBCPP_INLINE_VISIBILITY
         basic_ostream<_CharT, _Traits>&
-        operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t2& __x) {
-        __os.setf(__x.m_mask);
-        return __os;
-      }
-  };
+        operator<<(basic_ostream<_CharT, _Traits>& outs,
+            const __iom_setiosflags& __x );
+#endif
+          };
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
+        template<class _CharT, class _Traits>
+        _LIBCPP_INLINE_VISIBILITY
+        basic_istream<_CharT, _Traits>&
+        operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_setiosflags& __x)
+          {
+            __is.setf(__x.m_mask);
+            return __is;
+          }
+#endif
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
+    template<class _CharT, class _Traits>
+      _LIBCPP_INLINE_VISIBILITY
+      basic_ostream<_CharT, _Traits>&
+      operator<<(basic_ostream<_CharT, _Traits>& outs,
+          const __iom_setiosflags& __x) {
+          outs.setf(__x.m_mask);
+          return outs;
+        }
+#endif
+
+      /// \brief Set ios_base flags.
+      /// \param mask A combination of `ios_base::fmtflags`.
+      /// \returns An object of unspecified type such that if out is
+      /// an object of type `basic_ostream<charT, traits>` then
+      /// the expression `out << resetiosflags(mask)` behaves as if
+      /// it called `f(out, mask)`, or if in is an object of type
+      /// `basic_istream<charT, traits>` then the expression
+      /// `in >> resetiosflags(mask)` behaves as if it called
+      /// `f(in, mask)`, where the function `f` is defined as:
+      /// ~~~
+      /// void f(ios_base& str, ios_base::fmtflags mask) {
+      ///     // reset specified flags
+      ///     str.setf(ios_base::fmtflags(0), mask);
+      /// }
+      /// ~~~
+      ///
+      /// \details
+      /// The expression `out << resetiosflags(mask)` shall have
+      /// type `basic_ostream<charT,traits>&` and value `out`.
+      /// The expression `in >> resetiosflags(mask)` shall have
+      /// `type basic_istream<charT, traits>&` and value `in`.
     inline _LIBCPP_INLINE_VISIBILITY
-    __iom_t2
-    setiosflags(ios_base::fmtflags __mask)
+    __iom_setiosflags
+    setiosflags(ios_base::fmtflags mask)
     {
-      return __iom_t2(__mask);
+      return __iom_setiosflags(mask);
     }
 
+    // ------------------------------------------------------------------------
     // setbase
 
-    class __iom_t3
+    /// \brief Support class for setbase().
+    class __iom_setbase
     {
       int m_base;
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_t3(int __b)
+      __iom_setbase(int __b)
           : m_base(__b)
       {
       }
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
       template<class _CharT, class _Traits>
       friend _LIBCPP_INLINE_VISIBILITY
       basic_istream<_CharT, _Traits>&
-      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t3& __x)
-        {
-          __is.setf(__x.m_base == 8 ? ios_base::oct :
-              __x.m_base == 10 ? ios_base::dec :
-              __x.m_base == 16 ? ios_base::hex :
-              ios_base::fmtflags(0), ios_base::basefield);
-          return __is;
-        }
+      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_setbase& __x);
 #endif
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
       template<class _CharT, class _Traits>
         friend _LIBCPP_INLINE_VISIBILITY
         basic_ostream<_CharT, _Traits>&
-        operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t3& __x) {
-        __os.setf(__x.m_base == 8 ? ios_base::oct :
+        operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_setbase& __x );
+#endif
+
+      };
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
+    template<class _CharT, class _Traits>
+    _LIBCPP_INLINE_VISIBILITY
+    basic_istream<_CharT, _Traits>&
+    operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_setbase& __x)
+      {
+        __is.setf(__x.m_base == 8 ? ios_base::oct :
             __x.m_base == 10 ? ios_base::dec :
             __x.m_base == 16 ? ios_base::hex :
             ios_base::fmtflags(0), ios_base::basefield);
-        return __os;
+        return __is;
       }
-  };
+#endif
 
-    inline _LIBCPP_INLINE_VISIBILITY
-    __iom_t3
-    setbase(int __base)
-    {
-      return __iom_t3(__base);
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
+    template<class _CharT, class _Traits>
+      _LIBCPP_INLINE_VISIBILITY
+      basic_ostream<_CharT, _Traits>&
+      operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_setbase& __x) {
+      outs.setf(__x.m_base == 8 ? ios_base::oct :
+          __x.m_base == 10 ? ios_base::dec :
+          __x.m_base == 16 ? ios_base::hex :
+          ios_base::fmtflags(0), ios_base::basefield);
+      return outs;
     }
+#endif
+
+  /// \brief Set ios_base numerical base.
+  /// \param base An integer in [8, 10, 16].
+  /// \returns An object of unspecified type such that
+  /// if `out` is an object of type `basic_ostream<charT, traits>` then
+  /// the expression `out << setbase(base)` behaves as if it
+  /// called `f(out, base)`, or if `in` is an object of type
+  /// `basic_istream<charT, traits>` then the expression
+  /// `in >> setbase(base)` behaves as if it called
+  /// `f(in, base)`, where the function `f` is defined as:
+  /// ~~~
+  /// void f(ios_base& str, int base) {
+  ///   // set basefield
+  ///   str.setf(base == 8 ? ios_base::oct :
+  ///           base == 10 ? ios_base::dec :
+  ///           base == 16 ? ios_base::hex :
+  ///           ios_base::fmtflags(0), ios_base::basefield);
+  /// }
+  /// ~~~
+  ///
+  /// \details
+  /// The expression `out << setbase(base)` shall have type
+  /// `basic_ostream<charT, traits>&` and value `out`.
+  /// The expression `in >> setbase(base)` shall have
+  /// type `basic_istream<charT, traits>&` and value `in`.
+    inline _LIBCPP_INLINE_VISIBILITY
+    __iom_setbase
+    setbase(int base)
+    {
+      return __iom_setbase(base);
+    }
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
 
     // setfill
 
+    /// \brief Support class for setfill().
     template<class _CharT>
-      class __iom_t4
+      class __iom_setfill
       {
         _CharT m_fill;
       public:
         _LIBCPP_INLINE_VISIBILITY
         explicit
-        __iom_t4(_CharT __c)
+        __iom_setfill(_CharT __c)
             : m_fill(__c)
         {
         }
@@ -169,382 +312,504 @@ namespace os
         template<class _Traits>
           friend _LIBCPP_INLINE_VISIBILITY
           basic_ostream<_CharT, _Traits>&
-          operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t4& __x) {
-          __os.fill(__x.m_fill);
-          return __os;
-        }
-    };
+          operator<<(basic_ostream<_CharT, _Traits>& outs,
+              const __iom_setfill& __x) {
+              outs.fill(__x.m_fill);
+              return outs;
+            }
+        };
 
+          /// \brief Set ios_base fill character.
+          /// \param c A character.
+          /// \returns  An object of unspecified type such that
+          /// if out is an object of type basic_ostream<charT, traits>
+          /// and c has type charT then the expression out << setfill(c)
+          /// behaves as if it called f(out, c), where the function
+          /// f is defined as:
+          /// ~~~
+          /// template<class charT, class traits>
+          /// void f(basic_ios<charT,traits>& str, charT c) {
+          ///         // set fill character
+          ///         str.fill(c);
+          /// }
+          ///
+          /// \details
+          /// The expression `out << setfill(c)` shall have type
+          /// `basic_ostream<charT, traits>&` and value `out`.
     template<class _CharT>
       inline _LIBCPP_INLINE_VISIBILITY
-      __iom_t4<_CharT>
-      setfill(_CharT __c)
+      __iom_setfill<_CharT>
+      setfill(_CharT c)
       {
-        return __iom_t4<_CharT>(__c);
+        return __iom_setfill<_CharT>(c);
       }
 
+#endif
+
+    // ------------------------------------------------------------------------
     // setprecision
 
-    class __iom_t5
+    /// \brief Support class for setprecision().
+    class __iom_setprecision
     {
-      int __n_;
+      int m_n;
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_t5(int __n)
-          : __n_(__n)
+      __iom_setprecision(int n)
+          : m_n(n)
       {
       }
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
       template<class _CharT, class _Traits>
       friend _LIBCPP_INLINE_VISIBILITY
       basic_istream<_CharT, _Traits>&
-      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t5& __x)
-        {
-          __is.precision(__x.m_num);
-          return __is;
-        }
+      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_setprecision& __x);
 #endif
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
       template<class _CharT, class _Traits>
         friend _LIBCPP_INLINE_VISIBILITY
         basic_ostream<_CharT, _Traits>&
-        operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t5& __x) {
-        __os.precision(__x.__n_);
-        return __os;
-      }
-  };
+        operator<<(basic_ostream<_CharT, _Traits>& outs,
+            const __iom_setprecision& x);
+#endif
+
+          };
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
+        template<class _CharT, class _Traits>
+        _LIBCPP_INLINE_VISIBILITY
+        basic_istream<_CharT, _Traits>&
+        operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_setprecision& __x)
+          {
+            __is.precision(__x.m_num);
+            return __is;
+          }
+#endif
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
+    template<class _CharT, class _Traits>
+      _LIBCPP_INLINE_VISIBILITY
+      basic_ostream<_CharT, _Traits>&
+      operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_setprecision& x)
+        {
+          outs.precision(x.m_n);
+          return outs;
+        }
+#endif
+
+      /// \brief Set ios_base float precision.
+      /// \param n An integer defining the precision.
+      /// \returns An object of unspecified type such that if `out` is
+      /// an object of type `basic_ostream<charT, traits>` then the
+      /// expression `out << setprecision(n)` behaves as if it
+      /// called `f(out, n)`, or if `in` is an object of type
+      /// `basic_istream<charT, traits>` then the expression
+      /// `in >> setprecision(n)` behaves as if it called
+      /// `f(in, n)`, where the function `f` is defined as:
+      /// ~~~
+      /// void f(ios_base& str, int n) {
+      ///       // set precision
+      ///       str.precision(n);
+      /// }
+      /// ~~~
+      ///
+      /// \details
+      /// The expression `out << setprecision(n)` shall have type
+      /// `basic_ostream<charT, traits>&` and value `out`.
+      /// The expression `in >> setprecision(n)` shall have
+      /// type `basic_istream<charT, traits>&` and value `in`.
 
     inline _LIBCPP_INLINE_VISIBILITY
-    __iom_t5
-    setprecision(int __n)
+    __iom_setprecision
+    setprecision(int n)
     {
-      return __iom_t5(__n);
+      return __iom_setprecision(n);
     }
 
+    // ------------------------------------------------------------------------
     // setw
 
-    class __iom_t6
+    /// \brief Support class for setw().
+    class __iom_setw
     {
-      int m_num;
+      int m_width;
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_t6(int __n)
-          : m_num(__n)
+      __iom_setw(int n)
+          : m_width(n)
       {
       }
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
       template<class _CharT, class _Traits>
       friend _LIBCPP_INLINE_VISIBILITY
       basic_istream<_CharT, _Traits>&
-      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_t6& __x)
-        {
-          __is.width(__x.m_num);
-          return __is;
-        }
+      operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_setw& __x);
 #endif
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
       template<class _CharT, class _Traits>
         friend _LIBCPP_INLINE_VISIBILITY
         basic_ostream<_CharT, _Traits>&
-        operator<<(basic_ostream<_CharT, _Traits>& __os, const __iom_t6& __x) {
-        __os.width(__x.m_num);
-        return __os;
-      }
-  };
-
-    inline _LIBCPP_INLINE_VISIBILITY
-    __iom_t6
-    setw(int __n)
-    {
-      return __iom_t6(__n);
-    }
-
-    // get_money
-
-    template<class _MoneyT>
-      class __iom_t7;
-
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-    template<class _CharT, class _Traits, class _MoneyT>
-    basic_istream<_CharT, _Traits>&
-    operator>>(basic_istream<_CharT, _Traits>& __is,
-        const __iom_t7 <_MoneyT>& __x);
+        operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_setw& x);
 #endif
 
-    template<class _MoneyT>
-    class __iom_t7
-    {
-      _MoneyT& m_money;
-      bool m_intl;
-    public:
+      };
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
+    template<class _CharT, class _Traits>
+    _LIBCPP_INLINE_VISIBILITY
+    basic_istream<_CharT, _Traits>&
+    operator>>(basic_istream<_CharT, _Traits>& __is, const __iom_setw& __x)
+      {
+        __is.width(__x.m_num);
+        return __is;
+      }
+#endif
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
+    template<class _CharT, class _Traits>
       _LIBCPP_INLINE_VISIBILITY
-      __iom_t7(_MoneyT& __mon, bool __intl)
-          : m_money(__mon), m_intl(__intl)
+      basic_ostream<_CharT, _Traits>&
+      operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_setw& x)
+        {
+          outs.width(x.m_width);
+          return outs;
+        }
+#endif
+
+      /// \brief Set ios_base field width.
+      /// \param n An integer defining the width.
+      /// \returns An object of unspecified type such that if out
+      /// is an instance of `basic_ostream<charT, traits>` then the
+      /// expression `out << setw(n)` behaves as if it called
+      /// `f(out, n)`, or if `in` is an object of type
+      /// `basic_istream<charT, traits>` then the expression
+      /// `in >> setw(n)` behaves as if it called `f(in, n)`,
+      /// where the function `f` is defined as:
+      /// ~~~
+      /// void f(ios_base& str, int n) {
+      ///       // set width
+      ///       str.width(n);
+      /// }
+      /// ~~~
+      ///
+      /// \details
+      /// The expression `out << setw(n)` shall have type
+      /// `basic_ostream<charT, traits>&` and value `out`. The
+      /// expression `in >> setw(n)` shall have type
+      /// `basic_istream<charT, traits>&` and value `in`.
+    inline _LIBCPP_INLINE_VISIBILITY
+    __iom_setw
+    setw(int n)
+    {
+      return __iom_setw(n);
+    }
+
+    /// @}
+    // end of \name Standard manipulators (27.7.4)
+
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+
+    /// \name Extended manipulators (27.7.5)
+    /// @{
+
+// ------------------------------------------------------------------------
+// get_money
+
+template<class _MoneyT>
+class __iom_t7;
+
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+template<class _CharT, class _Traits, class _MoneyT>
+basic_istream<_CharT, _Traits>&
+operator>>(basic_istream<_CharT, _Traits>& __is,
+    const __iom_t7 <_MoneyT>& __x);
+#endif
+
+template<class _MoneyT>
+class __iom_t7
+  {
+    _MoneyT& m_money;
+    bool m_intl;
+  public:
+    _LIBCPP_INLINE_VISIBILITY
+    __iom_t7(_MoneyT& __mon, bool __intl)
+    : m_money(__mon), m_intl(__intl)
       {
       }
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-      template<class _CharT, class _Traits, class _Mp>
-      friend basic_istream<_CharT, _Traits>&
-      operator>>(basic_istream<_CharT, _Traits>& __is,
-          const __iom_t7 <_Mp>& __x);
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
+    template<class _CharT, class _Traits, class _Mp>
+    friend basic_istream<_CharT, _Traits>&
+    operator>>(basic_istream<_CharT, _Traits>& __is,
+        const __iom_t7 <_Mp>& __x);
 #endif
-    };
+  };
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-  template<class _CharT, class _Traits, class _MoneyT>
-  basic_istream<_CharT, _Traits>&
-  operator>>(basic_istream<_CharT, _Traits>& __is,
-      const __iom_t7 <_MoneyT>& __x)
-    {
-#ifndef _LIBCPP_NO_EXCEPTIONS
-      try
-        {
-#endif  // _LIBCPP_NO_EXCEPTIONS
-          typename basic_istream<_CharT, _Traits>::sentry __s(__is);
-          if (__s)
-            {
-              typedef istreambuf_iterator<_CharT, _Traits> _Ip;
-              typedef money_get<_CharT, _Ip> _Fp;
-              ios_base::iostate __err = ios_base::goodbit;
-              const _Fp& __mf = use_facet<_Fp>(__is.getloc());
-              __mf.get(_Ip(__is), _Ip(), __x.m_intl, __is, __err, __x.m_money);
-              __is.setstate(__err);
-            }
-#ifndef _LIBCPP_NO_EXCEPTIONS
-        }
-      catch (...)
-        {
-          __is.__set_badbit_and_consider_rethrow();
-        }
-#endif  // _LIBCPP_NO_EXCEPTIONS
-      return __is;
-    }
-#endif
-
-      template<class _MoneyT>
-        inline _LIBCPP_INLINE_VISIBILITY
-        __iom_t7<_MoneyT>
-        get_money(_MoneyT& __mon, bool __intl = false)
-        {
-          return __iom_t7 < _MoneyT > (__mon, __intl);
-        }
-
-      // put_money
-
-      template<class _MoneyT>
-        class __iom_t8;
-
-      template<class _CharT, class _Traits, class _MoneyT>
-        basic_ostream<_CharT, _Traits>&
-        operator<<(basic_ostream<_CharT, _Traits>& __os,
-            const __iom_t8 <_MoneyT>& __x);
-
-      template<class _MoneyT>
-        class __iom_t8
-        {
-          const _MoneyT& m_money;
-          bool m_intl;
-        public:
-          _LIBCPP_INLINE_VISIBILITY
-          __iom_t8(const _MoneyT& __mon, bool __intl)
-              : m_money(__mon), m_intl(__intl)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
+template<class _CharT, class _Traits, class _MoneyT>
+basic_istream<_CharT, _Traits>&
+operator>>(basic_istream<_CharT, _Traits>& __is,
+    const __iom_t7 <_MoneyT>& __x)
+  {
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+    try
+      {
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
+        typename basic_istream<_CharT, _Traits>::sentry __s(__is);
+        if (__s)
           {
+            typedef istreambuf_iterator<_CharT, _Traits> _Ip;
+            typedef money_get<_CharT, _Ip> _Fp;
+            ios_base::iostate __err = ios_base::goodbit;
+            const _Fp& __mf = use_facet<_Fp>(__is.getloc());
+            __mf.get(_Ip(__is), _Ip(), __x.m_intl, __is, __err, __x.m_money);
+            __is.setstate(__err);
           }
-
-          template<class _CharT, class _Traits, class _Mp>
-            friend basic_ostream<_CharT, _Traits>&
-            operator<<(basic_ostream<_CharT, _Traits>& __os,
-                const __iom_t8 <_Mp>& __x);
-        };
-
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-      template<class _CharT, class _Traits, class _MoneyT>
-        basic_ostream<_CharT, _Traits>&
-        operator<<(basic_ostream<_CharT, _Traits>& __os,
-            const __iom_t8 <_MoneyT>& __x)
-        {
-#ifndef _LIBCPP_NO_EXCEPTIONS
-          try
-            {
-#endif  // _LIBCPP_NO_EXCEPTIONS
-          typename basic_ostream<_CharT, _Traits>::sentry __s(__os);
-          if (__s)
-            {
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-              typedef ostreambuf_iterator<_CharT, _Traits> _Op;
-              typedef money_put<_CharT, _Op> _Fp;
-              const _Fp& __mf = use_facet<_Fp>(__os.getloc());
-              if (__mf.put(_Op(__os), __x.m_intl, __os, __os.fill(),
-                  __x.m_money).failed())
-                {
-                  __os.setstate(ios_base::badbit);
-                }
-#endif
-            }
-#ifndef _LIBCPP_NO_EXCEPTIONS
-        }
-      catch (...)
-        {
-          __os.__set_badbit_and_consider_rethrow();
-        }
-#endif  // _LIBCPP_NO_EXCEPTIONS
-          return __os;
-        }
-
-      template<class _MoneyT>
-        inline _LIBCPP_INLINE_VISIBILITY
-        __iom_t8<_MoneyT>
-        put_money(const _MoneyT& __mon, bool __intl = false)
-        {
-          return __iom_t8<_MoneyT>(__mon, __intl);
-        }
-#endif
-
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-      // get_time
-
-      template<class _CharT>
-      class __iom_t9;
-
-      template<class _CharT, class _Traits>
-      basic_istream<_CharT, _Traits>&
-      operator>>(basic_istream<_CharT, _Traits>& __is,
-          const __iom_t9 <_CharT>& __x);
-
-      template<class _CharT>
-      class __iom_t9
-        {
-          tm* m_tm;
-          const _CharT* m_fmt;
-        public:
-          _LIBCPP_INLINE_VISIBILITY
-          __iom_t9(tm* __tm, const _CharT* __fmt)
-          : m_tm(__tm), m_fmt(__fmt)
-            {
-            }
-
-          template<class _Cp, class _Traits>
-          friend basic_istream<_Cp, _Traits>&
-          operator>>(basic_istream<_Cp, _Traits>& __is,
-              const __iom_t9 <_Cp>& __x);
-        };
-
-      template<class _CharT, class _Traits>
-      basic_istream<_CharT, _Traits>&
-      operator>>(basic_istream<_CharT, _Traits>& __is,
-          const __iom_t9 <_CharT>& __x)
-        {
-#ifndef _LIBCPP_NO_EXCEPTIONS
-          try
-            {
-#endif  // _LIBCPP_NO_EXCEPTIONS
-              typename basic_istream<_CharT, _Traits>::sentry __s(__is);
-              if (__s)
-                {
-                  typedef istreambuf_iterator<_CharT, _Traits> _Ip;
-                  typedef time_get<_CharT, _Ip> _Fp;
-                  ios_base::iostate __err = ios_base::goodbit;
-                  const _Fp& __tf = use_facet<_Fp>(__is.getloc());
-                  __tf.get(_Ip(__is), _Ip(), __is, __err, __x.m_tm, __x.m_fmt,
-                      __x.m_fmt + _Traits::length(__x.m_fmt));
-                  __is.setstate(__err);
-                }
-#ifndef _LIBCPP_NO_EXCEPTIONS
-            }
-          catch (...)
-            {
-              __is.__set_badbit_and_consider_rethrow();
-            }
-#endif  // _LIBCPP_NO_EXCEPTIONS
-          return __is;
-        }
-
-      template<class _CharT>
-      inline _LIBCPP_INLINE_VISIBILITY
-      __iom_t9<_CharT>
-      get_time(tm* __tm, const _CharT* __fmt)
-        {
-          return __iom_t9<_CharT>(__tm, __fmt);
-        }
-#endif
-
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-      // put_time
-
-      template<class _CharT>
-        class __iom_t10;
-
-      template<class _CharT, class _Traits>
-        basic_ostream<_CharT, _Traits>&
-        operator<<(basic_ostream<_CharT, _Traits>& __os,
-            const __iom_t10 <_CharT>& __x);
-
-      template<class _CharT>
-        class __iom_t10
-        {
-          const tm* m_tm;
-          const _CharT* m_fmt;
-        public:
-          _LIBCPP_INLINE_VISIBILITY
-          __iom_t10(const tm* __tm, const _CharT* __fmt)
-              : m_tm(__tm), m_fmt(__fmt)
-          {
-          }
-
-          template<class _Cp, class _Traits>
-            friend basic_ostream<_Cp, _Traits>&
-            operator<<(basic_ostream<_Cp, _Traits>& __os,
-                const __iom_t10 <_Cp>& __x);
-        };
-
-      template<class _CharT, class _Traits>
-        basic_ostream<_CharT, _Traits>&
-        operator<<(basic_ostream<_CharT, _Traits>& __os,
-            const __iom_t10 <_CharT>& __x)
-        {
-#ifndef _LIBCPP_NO_EXCEPTIONS
-          try
-            {
-#endif  // _LIBCPP_NO_EXCEPTIONS
-          typename basic_ostream<_CharT, _Traits>::sentry __s(__os);
-          if (__s)
-            {
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-              typedef ostreambuf_iterator<_CharT, _Traits> _Op;
-              typedef time_put<_CharT, _Op> _Fp;
-              const _Fp& __tf = use_facet<_Fp>(__os.getloc());
-              if (__tf.put(_Op(__os), __os, __os.fill(), __x.m_tm, __x.m_fmt,
-                  __x.m_fmt + _Traits::length(__x.m_fmt)).failed())
-                {
-                  __os.setstate(ios_base::badbit);
-                }
-#endif
-            }
-#ifndef _LIBCPP_NO_EXCEPTIONS
-        }
-      catch (...)
-        {
-          __os.__set_badbit_and_consider_rethrow();
-        }
-#endif  // _LIBCPP_NO_EXCEPTIONS
-          return __os;
-        }
-
-      template<class _CharT>
-        inline _LIBCPP_INLINE_VISIBILITY
-        __iom_t10<_CharT>
-        put_time(const tm* __tm, const _CharT* __fmt)
-        {
-          return __iom_t10<_CharT>(__tm, __fmt);
-        }
-#endif
-
-    }
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+      }
+    catch (...)
+      {
+        __is.__set_badbit_and_consider_rethrow();
+      }
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
+    return __is;
   }
+#endif
+
+template<class _MoneyT>
+inline _LIBCPP_INLINE_VISIBILITY
+__iom_t7<_MoneyT>
+get_money(_MoneyT& __mon, bool __intl = false)
+  {
+    return __iom_t7 < _MoneyT > (__mon, __intl);
+  }
+
+// ----------------------------------------------------------------------
+// put_money
+
+template<class _MoneyT>
+class __iom_t8;
+
+template<class _CharT, class _Traits, class _MoneyT>
+basic_ostream<_CharT, _Traits>&
+operator<<(basic_ostream<_CharT, _Traits>& outs,
+    const __iom_t8 <_MoneyT>& __x);
+
+template<class _MoneyT>
+class __iom_t8
+  {
+    const _MoneyT& m_money;
+    bool m_intl;
+  public:
+    _LIBCPP_INLINE_VISIBILITY
+    __iom_t8(const _MoneyT& __mon, bool __intl)
+    : m_money(__mon), m_intl(__intl)
+      {
+      }
+
+    template<class _CharT, class _Traits, class _Mp>
+    friend basic_ostream<_CharT, _Traits>&
+    operator<<(basic_ostream<_CharT, _Traits>& outs,
+        const __iom_t8 <_Mp>& __x);
+  };
+
+template<class _CharT, class _Traits, class _MoneyT>
+basic_ostream<_CharT, _Traits>&
+operator<<(basic_ostream<_CharT, _Traits>& outs,
+    const __iom_t8 <_MoneyT>& __x)
+  {
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+    try
+      {
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
+        typename basic_ostream<_CharT, _Traits>::sentry __s(outs);
+        if (__s)
+          {
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+            typedef ostreambuf_iterator<_CharT, _Traits> _Op;
+            typedef money_put<_CharT, _Op> _Fp;
+            const _Fp& __mf = use_facet<_Fp>(outs.getloc());
+            if (__mf.put(_Op(outs), __x.m_intl, outs, outs.fill(),
+                    __x.m_money).failed())
+              {
+                outs.setstate(ios_base::badbit);
+              }
+#endif
+          }
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+      }
+    catch (...)
+      {
+        outs.__set_badbit_and_consider_rethrow();
+      }
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
+    return outs;
+  }
+
+template<class _MoneyT>
+inline _LIBCPP_INLINE_VISIBILITY
+__iom_t8<_MoneyT>
+put_money(const _MoneyT& __mon, bool __intl = false)
+  {
+    return __iom_t8<_MoneyT>(__mon, __intl);
+  }
+#endif
+
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+
+// ------------------------------------------------------------------------
+// get_time
+
+template<class _CharT>
+class __iom_t9;
+
+template<class _CharT, class _Traits>
+basic_istream<_CharT, _Traits>&
+operator>>(basic_istream<_CharT, _Traits>& __is,
+    const __iom_t9 <_CharT>& __x);
+
+template<class _CharT>
+class __iom_t9
+  {
+    tm* m_tm;
+    const _CharT* m_fmt;
+  public:
+    _LIBCPP_INLINE_VISIBILITY
+    __iom_t9(tm* __tm, const _CharT* __fmt)
+    : m_tm(__tm), m_fmt(__fmt)
+      {
+      }
+
+    template<class _Cp, class _Traits>
+    friend basic_istream<_Cp, _Traits>&
+    operator>>(basic_istream<_Cp, _Traits>& __is,
+        const __iom_t9 <_Cp>& __x);
+  };
+
+template<class _CharT, class _Traits>
+basic_istream<_CharT, _Traits>&
+operator>>(basic_istream<_CharT, _Traits>& __is,
+    const __iom_t9 <_CharT>& __x)
+  {
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+    try
+      {
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
+        typename basic_istream<_CharT, _Traits>::sentry __s(__is);
+        if (__s)
+          {
+            typedef istreambuf_iterator<_CharT, _Traits> _Ip;
+            typedef time_get<_CharT, _Ip> _Fp;
+            ios_base::iostate __err = ios_base::goodbit;
+            const _Fp& __tf = use_facet<_Fp>(__is.getloc());
+            __tf.get(_Ip(__is), _Ip(), __is, __err, __x.m_tm, __x.m_fmt,
+                __x.m_fmt + _Traits::length(__x.m_fmt));
+            __is.setstate(__err);
+          }
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+      }
+    catch (...)
+      {
+        __is.__set_badbit_and_consider_rethrow();
+      }
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
+    return __is;
+  }
+
+template<class _CharT>
+inline _LIBCPP_INLINE_VISIBILITY
+__iom_t9<_CharT>
+get_time(tm* __tm, const _CharT* __fmt)
+  {
+    return __iom_t9<_CharT>(__tm, __fmt);
+  }
+#endif
+
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+
+// ------------------------------------------------------------------------
+// put_time
+
+template<class _CharT>
+class __iom_t10;
+
+template<class _CharT, class _Traits>
+basic_ostream<_CharT, _Traits>&
+operator<<(basic_ostream<_CharT, _Traits>& outs,
+    const __iom_t10 <_CharT>& __x);
+
+template<class _CharT>
+class __iom_t10
+  {
+    const tm* m_tm;
+    const _CharT* m_fmt;
+  public:
+    _LIBCPP_INLINE_VISIBILITY
+    __iom_t10(const tm* __tm, const _CharT* __fmt)
+    : m_tm(__tm), m_fmt(__fmt)
+      {
+      }
+
+    template<class _Cp, class _Traits>
+    friend basic_ostream<_Cp, _Traits>&
+    operator<<(basic_ostream<_Cp, _Traits>& outs,
+        const __iom_t10 <_Cp>& __x);
+  };
+
+template<class _CharT, class _Traits>
+basic_ostream<_CharT, _Traits>&
+operator<<(basic_ostream<_CharT, _Traits>& outs,
+    const __iom_t10 <_CharT>& __x)
+  {
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+    try
+      {
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
+        typename basic_ostream<_CharT, _Traits>::sentry __s(outs);
+        if (__s)
+          {
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+            typedef ostreambuf_iterator<_CharT, _Traits> _Op;
+            typedef time_put<_CharT, _Op> _Fp;
+            const _Fp& __tf = use_facet<_Fp>(outs.getloc());
+            if (__tf.put(_Op(outs), outs, outs.fill(), __x.m_tm, __x.m_fmt,
+                    __x.m_fmt + _Traits::length(__x.m_fmt)).failed())
+              {
+                outs.setstate(ios_base::badbit);
+              }
+#endif
+          }
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+      }
+    catch (...)
+      {
+        outs.__set_badbit_and_consider_rethrow();
+      }
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
+    return outs;
+  }
+
+template<class _CharT>
+inline _LIBCPP_INLINE_VISIBILITY
+__iom_t10<_CharT>
+put_time(const tm* __tm, const _CharT* __fmt)
+  {
+    return __iom_t10<_CharT>(__tm, __fmt);
+  }
+
+/// @}
+// end of \name Extended manipulators (27.7.5)
+
+#endif
+
+/// @}
+}
+}
 
 #endif // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_IOMANIP_H_

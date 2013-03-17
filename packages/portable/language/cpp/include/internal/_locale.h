@@ -250,10 +250,10 @@ namespace os
   locale
   locale::combine(const locale& __other) const
     {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
       if (!_VSTD::has_facet<_Facet>(__other))
       throw runtime_error("locale::combine: locale missing facet");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
       return locale(*this, &const_cast<_Facet&>(_VSTD::use_facet<_Facet>(__other)));
     }
 #endif

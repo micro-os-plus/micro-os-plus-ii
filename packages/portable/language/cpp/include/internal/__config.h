@@ -125,19 +125,23 @@
 
 #endif // _WIN32
 #ifndef _LIBCPP_HIDDEN
-#define _LIBCPP_HIDDEN __attribute__ ((__visibility__("hidden")))
+//#define _LIBCPP_HIDDEN __attribute__ ((__visibility__("hidden")))
+#define _LIBCPP_HIDDEN
 #endif
 
 #ifndef _LIBCPP_VISIBLE
-#define _LIBCPP_VISIBLE __attribute__ ((__visibility__("default")))
+//#define _LIBCPP_VISIBLE __attribute__ ((__visibility__("default")))
+#define _LIBCPP_VISIBLE
 #endif
 
 #ifndef _LIBCPP_INLINE_VISIBILITY
-#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__always_inline__)) __attribute__ ((__visibility__("hidden")))
+//#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__always_inline__)) __attribute__ ((__visibility__("hidden")))
+#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__always_inline__))
 #endif
 
 #ifndef _LIBCPP_EXCEPTION_ABI
-#define _LIBCPP_EXCEPTION_ABI __attribute__ ((__visibility__("default")))
+//#define _LIBCPP_EXCEPTION_ABI __attribute__ ((__visibility__("default")))
+#define _LIBCPP_EXCEPTION_ABI
 #endif
 
 #ifndef _LIBCPP_CANTTHROW
@@ -145,7 +149,8 @@
 #endif
 
 #ifndef _LIBCPP_ALWAYS_INLINE
-#define _LIBCPP_ALWAYS_INLINE  __attribute__ ((__always_inline__)) __attribute__ ((__visibility__("hidden")))
+//#define _LIBCPP_ALWAYS_INLINE  __attribute__ ((__always_inline__)) __attribute__ ((__visibility__("hidden")))
+#define _LIBCPP_ALWAYS_INLINE  __attribute__ ((__always_inline__))
 #endif
 
 #if defined(__clang__)
@@ -434,7 +439,7 @@ template<unsigned>
 #define decltype(x) __typeof__(x)
 #endif
 
-#ifdef _LIBCPP_HAS_NO_CONSTEXPR
+#if 0 //defined(_LIBCPP_HAS_NO_CONSTEXPR)
 #define _LIBCPP_CONSTEXPR
 #else
 #define _LIBCPP_CONSTEXPR constexpr
@@ -450,7 +455,7 @@ template<unsigned>
 #define __has_feature(__x) 0
 #endif
 
-#if __has_feature(cxx_explicit_conversions)
+#if 1 //__has_feature(cxx_explicit_conversions)
 #   define _LIBCPP_EXPLICIT explicit
 #else
 #   define _LIBCPP_EXPLICIT
@@ -508,8 +513,8 @@ template<unsigned>
 // ----------------------------------------------------------------------------
 // µOS++ specifics
 
-#ifndef _LIBCPP_NO_EXCEPTIONS
-#define _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#undef OS_INCLUDE_STD_EXCEPTIONS
 #endif
 
 // Maye removed later

@@ -49,6 +49,9 @@
 #undef OS_SKIP_NOT_YET_IMPLEMENTED
 #endif
 
+// Temporary, must be moved to XCDL
+#define OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM        (1)
+
 // ----------------------------------------------------------------------------
 
 #endif /* OS_PORTABLE_CORE_OS_DEFINES_H_ */

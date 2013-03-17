@@ -17,6 +17,7 @@
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
 
 #include "portable/language/cpp/include/internal/__config.h"
+#include "portable/language/cpp/include/iosfwd.h"
 
 namespace os
 {
@@ -29,44 +30,81 @@ namespace os
 #endif
 
     // 27.5.4 Class template fpos
+
+    /// \class fpos _fpos.h "portable/language/cpp/include/internal/_fpos.h"
+    /// \ingroup std_io
+    ///
+    /// \brief  Class representing stream positions.
+    ///
+    /// The standard places no requirements upon the template
+    /// parameter `_StateT`.
+    /// In this implementation `_StateT` must be DefaultConstructible,
+    /// CopyConstructible and Assignable.  The standard only requires
+    /// that `fpos`
+    /// should contain a member of type `_StateT`. In this
+    /// implementation it also
+    /// contains an offset stored as a signed integer.
+    ///
+    /// @tparam  _StateT  Type passed to and returned from `state()`.
+
     template<class _StateT>
       class _LIBCPP_VISIBLE fpos
       {
       public:
         _LIBCPP_INLINE_VISIBILITY
-        fpos(streamoff __off = streamoff());
+        fpos(streamoff off = streamoff());
 
         // 27.5.4.1 Members
         _LIBCPP_INLINE_VISIBILITY
         _StateT
         state() const;
 
+        /// \brief Remember the value of `st`.
+        ///
+        /// \param st State.
+        /// \par Returns
+        /// Nothing.
         _LIBCPP_INLINE_VISIBILITY
         void
-        state(_StateT __st);
+        state(_StateT st);
 
         // 27.5.4.2 fpos requirements
+        /// \brief Convert to streamoff.
         _LIBCPP_INLINE_VISIBILITY
         operator streamoff() const;
 
+        /// \brief Add offset to this position.
+        ///
+        /// \param off Offset.
         _LIBCPP_INLINE_VISIBILITY
         fpos&
-        operator+=(streamoff __off);
+        operator+=(streamoff off);
 
+        /// \brief Add position and offset.
+        ///
+        /// \param off Offset.
         _LIBCPP_INLINE_VISIBILITY
         fpos
-        operator+(streamoff __off) const;
+        operator+(streamoff off) const;
 
+        /// \brief Subtract offset from this position.
+        ///
+        /// \param off Offset.
         _LIBCPP_INLINE_VISIBILITY
         fpos&
-        operator-=(streamoff __off);
+        operator-=(streamoff off);
 
+        /// \brief Subtract offset from position.
+        ///
+        /// \param off Offset.
         _LIBCPP_INLINE_VISIBILITY
         fpos
-        operator-(streamoff __off) const;
+        operator-(streamoff off) const;
 
       private:
+        /// \brief Member to store offset.
         streamoff m_off;
+        /// \brief Member to store state.
         _StateT m_st;
 
       };
@@ -77,8 +115,8 @@ namespace os
 
     template<class _StateT>
       inline _LIBCPP_INLINE_VISIBILITY
-      fpos<_StateT>::fpos(streamoff __off)
-          : m_off(__off), m_st()
+      fpos<_StateT>::fpos(streamoff off)
+          : m_off(off), m_st()
       {
       }
 
@@ -100,47 +138,47 @@ namespace os
     template<class _StateT>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      fpos<_StateT>::state(_StateT __st)
+      fpos<_StateT>::state(_StateT st)
       {
-        m_st = __st;
+        m_st = st;
       }
 
     template<class _StateT>
       inline _LIBCPP_INLINE_VISIBILITY
       fpos<_StateT>&
-      fpos<_StateT>::operator+=(streamoff __off)
+      fpos<_StateT>::operator+=(streamoff off)
       {
-        m_off += __off;
+        m_off += off;
         return *this;
       }
 
     template<class _StateT>
       inline _LIBCPP_INLINE_VISIBILITY
       fpos<_StateT>
-      fpos<_StateT>::operator+(streamoff __off) const
+      fpos<_StateT>::operator+(streamoff off) const
       {
-        fpos __t(*this);
-        __t += __off;
-        return __t;
+        fpos tpos(*this);
+        tpos += off;
+        return tpos;
       }
 
     template<class _StateT>
       inline _LIBCPP_INLINE_VISIBILITY
       fpos<_StateT>&
-      fpos<_StateT>::operator-=(streamoff __off)
+      fpos<_StateT>::operator-=(streamoff off)
       {
-        m_off -= __off;
+        m_off -= off;
         return *this;
       }
 
     template<class _StateT>
       inline _LIBCPP_INLINE_VISIBILITY
       fpos<_StateT>
-      fpos<_StateT>::operator-(streamoff __off) const
+      fpos<_StateT>::operator-(streamoff off) const
       {
-        fpos __t(*this);
-        __t -= __off;
-        return __t;
+        fpos tpos(*this);
+        tpos -= off;
+        return tpos;
       }
 
     // ========================================================================
@@ -148,27 +186,27 @@ namespace os
     template<class _StateT>
       inline _LIBCPP_INLINE_VISIBILITY
       streamoff
-      operator-(const fpos<_StateT>& __x, const fpos<_StateT>& __y)
+      operator-(const fpos<_StateT>& x, const fpos<_StateT>& y)
       {
-        return streamoff(__x) - streamoff(__y);
+        return streamoff(x) - streamoff(y);
       }
 
     // Compare two fpos<> for equality
     template<class _StateT>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
-      operator==(const fpos<_StateT>& __x, const fpos<_StateT>& __y)
+      operator==(const fpos<_StateT>& x, const fpos<_StateT>& y)
       {
-        return streamoff(__x) == streamoff(__y);
+        return streamoff(x) == streamoff(y);
       }
 
     // Compare two fpos<> for non equality
     template<class _StateT>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
-      operator!=(const fpos<_StateT>& __x, const fpos<_StateT>& __y)
+      operator!=(const fpos<_StateT>& x, const fpos<_StateT>& y)
       {
-        return streamoff(__x) != streamoff(__y);
+        return streamoff(x) != streamoff(y);
       }
   // ========================================================================
 

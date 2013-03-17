@@ -21,15 +21,32 @@ namespace os
   namespace std
   {
 
-    // init
+    /// \details
+    /// This is called from the public constructor.  It is not virtual and
+    /// cannot be redefined.
+    ///
+    /// \post
+    /// Member | Postcondition
+    /// -------|----------
+    /// rdbuf() | sb
+    /// tie() | 0
+    /// rdstate() | goodbit if sb is not a null pointer, otherwise badbit.
+    /// exceptions() | goodbit
+    /// flags() | skipws \| dec
+    /// width() | 0
+    /// precision() | 6
+    /// fill() | widen(’ ’);
+    /// getloc() | a copy of the value returned by locale()
+    /// iarray | a null pointer
+    /// parray | a null pointer
     template<class _CharT, class _Traits>
       void
       basic_ios<_CharT, _Traits>::init(
-          basic_streambuf<char_type, traits_type>* __sb)
+          basic_streambuf<_CharT, _Traits>* sb)
       {
         ios_base::__init();
 
-        m_rdbuf = __sb;
+        m_rdbuf = sb;
 
         m_rdstate = m_rdbuf ? goodbit : badbit;
         m_exceptions = goodbit;
@@ -38,24 +55,47 @@ namespace os
         m_fill = traits_type::eof();
       }
 
+    /// \details
+    /// This destructor does nothing.  More specifically, it does not
+    /// destroy the streambuf held by `rdbuf()`.
     template<class _CharT, class _Traits>
       basic_ios<_CharT, _Traits>::~basic_ios()
       {
         ;
       }
 
+    /// \details
+    /// All fields of `rhs` are copied into this object except that `rdbuf()`
+    /// and `rdstate()` remain unchanged.
+    ///
+    /// If `(this == &rhs)` does nothing. Otherwise assigns to the member
+    /// objects of `*this` the corresponding member objects of `rhs` as follows:
+    /// -# calls each registered callback pair `(fn, index)` as
+    /// `(*fn)(erase_event, *this, index);`
+    /// -# assigns to the member objects of `*this` the corresponding
+    /// member objects of `rhs`, except that
+    ///  + `rdstate()`, `rdbuf()`, and `exceptions()` are left unchanged;
+    ///  + the contents of arrays pointed at by `pword` and `iword` are copied,
+    /// not the pointers themselves; and
+    /// if any newly stored pointer values in `*this` point at objects
+    /// stored outside the object `rhs` and those objects are destroyed
+    /// when `rhs` is destroyed, the newly stored pointer values are
+    /// altered to point at newly constructed copies of the objects;
+    /// -# calls each callback pair that was copied from `rhs` as
+    /// `(*fn)(copyfmt_event, *this, index);`
+    /// -# calls `exceptions(rhs.except())`.
     template<class _CharT, class _Traits>
       basic_ios<_CharT, _Traits>&
-      basic_ios<_CharT, _Traits>::copyfmt(const basic_ios& __rhs)
+      basic_ios<_CharT, _Traits>::copyfmt(const basic_ios& rhs)
       {
-        if (this != &__rhs)
+        if (this != &rhs)
           {
 #if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
             __call_callbacks(erase_event);
 #endif
 
 #if defined(SHOULD_BE_DELETED)
-            ios_base::copyfmt(__rhs);
+            ios_base::copyfmt(rhs);
 #endif
 
 #if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
@@ -74,45 +114,45 @@ namespace os
                 new_callbacks.reset(
                     (event_callback*) malloc(
                         sizeof(event_callback) * rhs.__event_size_));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
                 if (!new_callbacks)
                 throw bad_alloc();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
                 new_ints.reset((int*) malloc(sizeof(int) * rhs.__event_size_));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
                 if (!new_ints)
                 throw bad_alloc();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
               }
 #endif
 #if defined(OS_INCLUDE_STD_IOS_BASE_STORAGE)
             if (__iarray_cap_ < rhs.__iarray_size_)
               {
                 new_longs.reset((long*) malloc(sizeof(long) * rhs.__iarray_size_));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
                 if (!new_longs)
                 throw bad_alloc();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
               }
             if (__parray_cap_ < rhs.__parray_size_)
               {
                 new_pointers.reset(
                     (void**) malloc(sizeof(void*) * rhs.__parray_size_));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
                 if (!new_pointers)
                 throw bad_alloc();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
               }
 #endif
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 // Got everything we need.  Copy everything but __rdstate_, __rdbuf_ and __exceptions_
-            m_fmtflags = __rhs.m_fmtflags;
-            m_precision = __rhs.m_precision;
-            m_width = __rhs.m_width;
+            m_fmtflags = rhs.m_fmtflags;
+            m_precision = rhs.m_precision;
+            m_width = rhs.m_width;
 
             locale& lhs_loc = *(locale*) &m_locale;
-            locale& rhs_loc = *(locale*) &__rhs.m_locale;
+            locale& rhs_loc = *(locale*) &rhs.m_locale;
             lhs_loc = rhs_loc;
 #endif
 
@@ -152,17 +192,20 @@ namespace os
 
 #endif
 
-            m_tie = __rhs.m_tie;
-            m_fill = __rhs.m_fill;
+            m_tie = rhs.m_tie;
+            m_fill = rhs.m_fill;
 
 #if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
             __call_callbacks(copyfmt_event);
 #endif
-            exceptions(__rhs.exceptions());
+            exceptions(rhs.exceptions());
           }
         return *this;
       }
 
+    /// \details
+    /// See `ios_base::iostate` for the possible bit values.  Most
+    /// users will not need to pass an argument.
     template<class _CharT, class _Traits>
       void
       basic_ios<_CharT, _Traits>::clear(iostate state)
@@ -175,12 +218,12 @@ namespace os
           {
             m_rdstate = state | badbit;
           }
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
         if (((state | (m_rdbuf ? goodbit : badbit)) & __exceptions_) != 0)
           {
             throw failure("ios_base::clear");
           }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
       }
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
@@ -190,12 +233,12 @@ namespace os
   basic_ios<_CharT, _Traits>::__set_badbit_and_consider_rethrow()
     {
       m_rdstate |= badbit;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
       if (__exceptions_ & badbit)
         {
           throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
     }
 
   template<class _CharT, class _Traits>
@@ -203,12 +246,12 @@ namespace os
   basic_ios<_CharT, _Traits>::__set_failbit_and_consider_rethrow()
     {
       m_rdstate |= failbit;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
       if (__exceptions_ & failbit)
         {
           throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
     }
 
 #endif

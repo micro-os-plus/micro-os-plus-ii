@@ -29,112 +29,270 @@ namespace os
   {
 
     // 27.5.5 Class template basic_ios
-    // default for _Traits is defined in iosfwd.h
+
+    /// \class basic_ios _basic_ios.h "portable/language/cpp/include/internal/_basic_ios.h"
+    /// \ingroup std_io
+    /// \nosubgrouping
+    ///
+    /// \brief Template class basic_ios, virtual base class for
+    /// input and output streams.
+    ///
+    /// \tparam _CharT  Type of character stream.
+    /// \tparam _Traits  Traits for character type, defaults to
+    ///                   char_traits<_CharT> (default defined in iosfwd.h)
+    ///
+    /// \details
+    /// Basically manages all common resources for derived streams, like
+    /// pointer to the associated streambuf, status, exception status
+    /// and the default fill character used for paddings.
+
     template<class _CharT, class _Traits>
       class _LIBCPP_VISIBLE basic_ios : public ios_base
       {
       public:
-        // types:
+
+        /// \name Standard template types
+        /// @{
+        ///
+        /// These types permit a standardised way of
+        /// referring to names of (or names dependent on) the template
+        /// parameters, which are specific to the implementation. Except
+        /// when referring to the template, (in which case the templates
+        /// parameters are required), use these types everywhere
+        /// else instead of usual types.
         typedef _CharT char_type;
         typedef _Traits traits_type;
 
         typedef typename traits_type::int_type int_type;
         typedef typename traits_type::pos_type pos_type;
         typedef typename traits_type::off_type off_type;
+        /// @}
+        // end of \name Standard template types
 
-        _LIBCPP_ALWAYS_INLINE
-        _LIBCPP_EXPLICIT
+        // \name Flags functions (27.5.5.4)
+        /// \name Flags methods
+        /// @{
+
+        /// \brief  Check if the stream status is ok.
+        ///
+        /// \details This is a conversion operator.
+        //_LIBCPP_ALWAYS_INLINE
+        explicit
         operator bool() const;
 
-        _LIBCPP_ALWAYS_INLINE
+        /// \brief  Check if the stream status is not ok.
+        //_LIBCPP_ALWAYS_INLINE
         bool
         operator!() const;
 
-        _LIBCPP_ALWAYS_INLINE
+        /// \brief  Get the error state of the stream buffer.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return  A bit pattern.
+        //_LIBCPP_ALWAYS_INLINE
         iostate
         rdstate() const;
 
+        /// \brief  [Re]set the error state.
+        ///
+        /// \param [in] state  The new state flag(s) to set.
+        /// \par Returns
+        /// Nothing
         void
-        clear(iostate __state = goodbit);
+        clear(iostate state = goodbit);
 
-        _LIBCPP_ALWAYS_INLINE
+        /// \brief  Set additional flags in the error state.
+        ///
+        /// \param [in] state  The additional state flag(s) to set.
+        /// \par Returns
+        /// Nothing
+        //_LIBCPP_ALWAYS_INLINE
         void
-        setstate(iostate __state);
+        setstate(iostate state);
 
-        _LIBCPP_ALWAYS_INLINE
+        /// \brief  Check if no error.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return  True if no error flags are set.
+        //_LIBCPP_ALWAYS_INLINE
         bool
         good() const;
 
-        _LIBCPP_ALWAYS_INLINE
+        /// \brief  Check if `eofbit` is set.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return  True if the `eofbit` is set.
+        //_LIBCPP_ALWAYS_INLINE
         bool
         eof() const;
 
-        _LIBCPP_ALWAYS_INLINE
+        /// \brief  Check if error.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return  True if either the `badbit` or the `failbit` is set.
+        //_LIBCPP_ALWAYS_INLINE
         bool
         fail() const;
 
-        _LIBCPP_ALWAYS_INLINE
+        /// \brief  Check if the `badbit` is set.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return  True if the `badbit` is set.
+        //_LIBCPP_ALWAYS_INLINE
         bool
         bad() const;
 
-        _LIBCPP_ALWAYS_INLINE
+        /// \brief  Get the exceptions throwing flags.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return  The current exceptions mask.
+        //_LIBCPP_ALWAYS_INLINE
         iostate
         exceptions() const;
 
-        _LIBCPP_ALWAYS_INLINE
+        /// \brief  Set the exceptions throwing flags.
+        ///
+        /// \param [in] except  The new exceptions mask.
+        /// \par Returns
+        /// Nothing
+        //_LIBCPP_ALWAYS_INLINE
         void
-        exceptions(iostate __except);
+        exceptions(iostate except);
+
+        /// @}
+        // end of \name Flags functions (27.5.5.4)
 
         // 27.5.5.2 Constructor/destructor:
-        _LIBCPP_INLINE_VISIBILITY
-        explicit
-        basic_ios(basic_streambuf<char_type, traits_type>* __sb);
+        /// \name Constructors/destructor
+        /// @{
 
+        /// \brief  Constructor with initialisation.
+        ///
+        /// \param [in] sb  A pointer to the streambuf to use.
+        //_LIBCPP_INLINE_VISIBILITY
+        explicit
+        basic_ios(basic_streambuf<_CharT, _Traits>* sb);
+
+        /// \brief  Destructor.
         virtual
         ~basic_ios();
 
+        /// @}
+        // end of \name Constructors/destructor
+
         // 27.5.5.3 Members:
-        _LIBCPP_INLINE_VISIBILITY
-        basic_ostream<char_type, traits_type>*
+
+        // \name Member functions (27.5.5.3)
+        /// \name Methods
+        /// @{
+
+        /// \brief  Get the current \e tied stream.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return  A pointer to the tied stream, or NULL if the stream is
+        ///          not tied.
+        //_LIBCPP_INLINE_VISIBILITY
+        basic_ostream<_CharT, _Traits>*
         tie() const;
 
-        _LIBCPP_INLINE_VISIBILITY
-        basic_ostream<char_type, traits_type>*
-        tie(basic_ostream<char_type, traits_type>* __tiestr);
+        /// \brief  Tie this stream to an output stream.
+        ///
+        /// \param [in] tiestr  The output stream.
+        /// \return  The previously tied output stream, or NULL if the stream
+        ///          was not tied.
+        //_LIBCPP_INLINE_VISIBILITY
+        basic_ostream<_CharT, _Traits>*
+        tie(basic_ostream<_CharT, _Traits>* tiestr);
 
-        _LIBCPP_INLINE_VISIBILITY
-        basic_streambuf<char_type, traits_type>*
+        /// \brief  Get the underlying buffer.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return  The current stream buffer.
+        //_LIBCPP_INLINE_VISIBILITY
+        basic_streambuf<_CharT, _Traits>*
         rdbuf() const;
 
-        _LIBCPP_INLINE_VISIBILITY
-        basic_streambuf<char_type, traits_type>*
-        rdbuf(basic_streambuf<char_type, traits_type>* __sb);
+        /// \brief  Set the underlying buffer.
+        ///
+        /// \param [in] sb  The new stream buffer.
+        /// \return  The previous stream buffer.
+        //_LIBCPP_INLINE_VISIBILITY
+        basic_streambuf<_CharT, _Traits>*
+        rdbuf(basic_streambuf<_CharT, _Traits>* sb);
 
-        basic_ios&
-        copyfmt(const basic_ios& __rhs);
-
-        _LIBCPP_INLINE_VISIBILITY
+        /// \brief  Get the *fill* character.
+        ///
+        /// \par Parameters
+        /// None
+        /// \return  The current fill character.
+        //_LIBCPP_INLINE_VISIBILITY
         char_type
         fill() const;
 
-        _LIBCPP_INLINE_VISIBILITY
+        /// \brief  Set a new *fill* character.
+        ///
+        /// \par Parameters
+        /// None
+        /// \param [in] ch  The new character.
+        /// \return  The previous fill character.
+        //_LIBCPP_INLINE_VISIBILITY
         char_type
-        fill(char_type __ch);
+        fill(char_type ch);
 
-        _LIBCPP_INLINE_VISIBILITY
+        // Locales:
+
+        /// \brief  Set a new locale.
+        ///
+        /// \param [in] loc  The new locale.
+        /// \return  The previous locale.
+        //_LIBCPP_INLINE_VISIBILITY
         locale
-        imbue(const locale& __loc);
+        imbue(const locale& loc);
 
+        /// \brief  Squeeze characters.
+        ///
+        /// \param [in] c  The character to narrow.
+        /// \param [in] dfault  The default character.
+        /// \return  The narrowed character.
         _LIBCPP_INLINE_VISIBILITY
         char
-        narrow(char_type __c, char __dfault) const;
+        narrow(char_type c, char dfault) const;
 
 #pragma GCC diagnostic push
 //#pragma GCC diagnostic ignored "-Wattributes"
-        _LIBCPP_INLINE_VISIBILITY
+
+        /// \brief  Widen characters.
+        ///
+        /// \param [in] c  The character to widen.
+        /// \return  The widened character.
+        //_LIBCPP_INLINE_VISIBILITY
         char_type
-        widen(char __c) const;
+        widen(char c) const;
 #pragma GCC diagnostic pop
+
+        /// @}
+        // end of \name Member functions (27.5.5.3)
+
+        /// \name Assign/swap/move methods
+        /// @{
+
+        /// \brief  Copy fields of rhs into this.
+        ///
+        /// \param [in] rhs  The source values for the copies.
+        /// \return  Reference to this object.
+        basic_ios&
+        copyfmt(const basic_ios& rhs);
+
+        /// @}
+        // end of \name Assign/swap/move methods
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
         void
@@ -145,77 +303,131 @@ namespace os
 #endif
 
       protected:
-        _LIBCPP_ALWAYS_INLINE
+
+        // 27.5.5.2 Constructors/destructor (27.5.5.2)
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief  Empty constructor.
+        //_LIBCPP_ALWAYS_INLINE
         basic_ios();
 
-        void
-        init(basic_streambuf<char_type, traits_type>* __sb);
+        /// @}
+        // end of \name Constructors/destructor
 
-        _LIBCPP_INLINE_VISIBILITY
+        /// \name Methods
+        /// @{
+
+        /// \brief  All setup is performed here.
+        ///
+        /// \param [in] sb A pointer to streambuf.
+        /// \par Returns
+        /// \par Returns
+        /// Nothing
         void
-        move(basic_ios& __rhs);
+        init(basic_streambuf<_CharT, _Traits>* sb);
+
+        /// \brief  Set pointer to basic_streambuf.
+        ///
+        /// \param [in] sb A pointer to streambuf.
+        /// \par Returns
+        /// Nothing
+        //_LIBCPP_INLINE_VISIBILITY
+        void
+        set_rdbuf(basic_streambuf<_CharT, _Traits>* sb);
+
+        /// @}
+        // end of \name Methods
+
+        /// \name Assign/swap/move methods
+        /// @{
+
+        /// \brief  Move all members.
+        ///
+        /// \param [in] rhs A reference to the right hand side basic_ios.
+        /// \par Returns
+        /// Nothing
+        //_LIBCPP_INLINE_VISIBILITY
+        void
+        move(basic_ios& rhs);
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-        _LIBCPP_ALWAYS_INLINE
+        /// \return Nothing
+        //_LIBCPP_ALWAYS_INLINE
         void
-        move(basic_ios&& __rhs);
+        move(basic_ios&& rhs);
 #endif
 
-        _LIBCPP_INLINE_VISIBILITY
+        /// \brief  Swap all members.
+        ///
+        /// \param [in,out] rhs A reference to the right hand side basic_ios.
+        /// \par Returns
+        /// Nothing
+        //_LIBCPP_INLINE_VISIBILITY
         void
-        swap(basic_ios& __rhs) _NOEXCEPT;
+        swap(basic_ios& rhs) _NOEXCEPT;
 
-        _LIBCPP_INLINE_VISIBILITY
-        void
-        set_rdbuf(basic_streambuf<char_type, traits_type>* __sb);
+        /// @}
+        // end of \name Assign/swap/move methods
 
+
+        // Data members
       private:
-        basic_ostream<char_type, traits_type>* m_tie;
-        basic_streambuf<char_type, traits_type>* m_rdbuf;
+
+        /// \name Private members
+        /// @{
+
+        /// \brief Pointer to the associated stream buffer.
+        basic_streambuf<_CharT, _Traits>* m_rdbuf;
+
+        /// \brief Pointer to the associated ostream, in case of istream.
+        basic_ostream<_CharT, _Traits>* m_tie;
+
+        /// \brief IO state (values defined in ios_base).
         iostate m_rdstate;
+
+        /// \brief IO state that trigger an exception.
         iostate m_exceptions;
+
+        /// \brief The fill value.
         mutable int_type m_fill;
+
+        /// @}
 
       };
 
+    // ========================================================================
+    // inline methods
+
     // 27.5.5.2 basic_ios constructors
 
+    /// \details
+    /// Construct an object of class `basic_ios`, assigning initial
+    /// values to its member objects by calling `init(sb)`.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_ios<_CharT, _Traits>::basic_ios(
-          basic_streambuf<char_type, traits_type>* __sb)
+          basic_streambuf<_CharT, _Traits>* sb)
       {
-        init(__sb);
+        init(sb);
       }
 
+    /// \details
+    /// Construct an object of class `basic_ios` (27.5.3.7) leaving its
+    /// member objects uninitialised. The object shall be initialised
+    /// by calling `basic_ios::init()` before its first use or before it
+    /// is destroyed, whichever comes first; otherwise the behaviour
+    /// is undefined.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_ios<_CharT, _Traits>::basic_ios()
       {
-        // purposefully does no initialisation ("...leaving its member objects
-        // uninitialized")
+        // purposefully does no initialisation
       }
 
-#if defined(SHOULD_BE_DELETED)
-    template<class _CharT, class _Traits>
-    inline _LIBCPP_INLINE_VISIBILITY
-    void
-    basic_ios<_CharT, _Traits>::init(
-        basic_streambuf<char_type, traits_type>* __sb)
-      {
-#if SHOULD_BE_DELETED
-        ios_base::init(__sb);
-#endif
-        m_rdbuf = __sb;
-
-        m_rdstate = m_rdbuf ? goodbit : badbit;
-        m_exceptions = goodbit;
-
-        m_tie = 0;
-        m_fill = traits_type::eof();
-      }
-#endif
-
+    /// \details
+    /// This allows you to write constructs such as
+    /// `if (!a_stream) ...` and `while (a_stream) ...`
     template<class _CharT, class _Traits>
       inline _LIBCPP_ALWAYS_INLINE
       basic_ios<_CharT, _Traits>::operator bool() const
@@ -223,6 +435,9 @@ namespace os
         return !fail();
       }
 
+    /// \details
+    /// This allows you to write constructs such as
+    /// `if (!a_stream) ...` and `while (a_stream) ...`
     template<class _CharT, class _Traits>
       inline _LIBCPP_ALWAYS_INLINE
       bool
@@ -231,6 +446,9 @@ namespace os
         return fail();
       }
 
+    /// \details
+    /// See `ios_base::iostate` for the possible bit values.  Most
+    /// users will call one of the interpreting wrappers, e.g., `good()`.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       ios_base::iostate
@@ -239,14 +457,18 @@ namespace os
         return m_rdstate;
       }
 
+    /// \details
+    /// See `ios_base::iostate` for the possible bit values.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_ios<_CharT, _Traits>::setstate(iostate __state)
+      basic_ios<_CharT, _Traits>::setstate(iostate state)
       {
-        clear(m_rdstate | __state);
+        clear(m_rdstate | state);
       }
 
+    /// \details
+    /// A wrapper around `rdstate`.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
@@ -255,6 +477,8 @@ namespace os
         return m_rdstate == 0;
       }
 
+    /// \details
+    /// Note that other `iostate` flags may also be set.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
@@ -263,6 +487,9 @@ namespace os
         return m_rdstate & eofbit;
       }
 
+    /// \details
+    /// Checking the `badbit` in `fail()` is historical practice.
+    /// Note that other `iostate` flags may also be set.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
@@ -271,6 +498,8 @@ namespace os
         return m_rdstate & (failbit | badbit);
       }
 
+    /// \details
+    /// Note that other `iostate` flags may also be set.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
@@ -279,6 +508,9 @@ namespace os
         return m_rdstate & badbit;
       }
 
+    /// \details
+    /// This changes nothing in the stream.  See the one-argument version
+    /// of `exceptions(iostate)` for the meaning of the return value.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       ios_base::iostate
@@ -287,16 +519,28 @@ namespace os
         return m_exceptions;
       }
 
+    /// \details
+    /// By default, error flags are set silently.  You can set an
+    /// exceptions mask for each stream; if a bit in the mask becomes set
+    /// in the error flags, then an exception of type
+    /// `ios_base::failure` is thrown.
+    ///
+    /// If the error flag is already set when the exceptions mask is
+    /// added, the exception is immediately thrown.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_ios<_CharT, _Traits>::exceptions(iostate __except)
+      basic_ios<_CharT, _Traits>::exceptions(iostate except)
       {
-        m_exceptions = __except;
+        m_exceptions = except;
         clear(m_rdstate);
       }
 
     // 27.5.5.3 Member functions
+    /// \details
+    /// A stream may be *tied* (or synchronized) to a second output
+    /// stream.  When this stream performs any I/O, the tied stream is
+    /// first flushed.  For example, `std::cin` is tied to `std::cout`.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<_CharT, _Traits>*
@@ -305,17 +549,22 @@ namespace os
         return m_tie;
       }
 
+    /// \details
+    /// This sets up a new tie. If `tiestr` is not null, `tiestr` must not
+    /// be reachable by traversing the linked list of tied stream objects
+    /// starting from `tiestr->tie()`.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<_CharT, _Traits>*
-      basic_ios<_CharT, _Traits>::tie(
-          basic_ostream<char_type, traits_type>* __tiestr)
+      basic_ios<_CharT, _Traits>::tie(basic_ostream<_CharT, _Traits>* tiestr)
       {
-        basic_ostream<char_type, traits_type>* __r = m_tie;
-        m_tie = __tiestr;
-        return __r;
+        basic_ostream<_CharT, _Traits>* r = m_tie;
+        m_tie = tiestr;
+        return r;
       }
 
+    /// \details
+    /// This does not change the state of the stream.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_streambuf<_CharT, _Traits>*
@@ -324,34 +573,73 @@ namespace os
         return m_rdbuf;
       }
 
+    /// \details
+    /// Associate a new buffer with the current stream, and clear the
+    /// error state.
+    ///
+    /// Due to historical accidents which the LWG refuses to correct, the
+    /// I/O library suffers from a design error:  this function is hidden
+    /// in derived classes by overrides of the zero-argument `rdbuf()`,
+    /// which is non-virtual for hysterical reasons.  As a result, you
+    /// must use explicit qualifications to access this function via any
+    /// derived class.  For example:
+    ///
+    /// ~~~
+    /// std::fstream     foo;         // or some other derived type
+    /// std::streambuf*  p = .....;
+    ///
+    /// foo.ios::rdbuf(p);            // ios == basic_ios<char>
+    /// ~~~
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_streambuf<_CharT, _Traits>*
-      basic_ios<_CharT, _Traits>::rdbuf(
-          basic_streambuf<char_type, traits_type>* __sb)
+      basic_ios<_CharT, _Traits>::rdbuf(basic_streambuf<_CharT, _Traits>* sb)
       {
-        basic_streambuf<char_type, traits_type>* __r = rdbuf();
-        m_rdbuf = __sb;
+        basic_streambuf<_CharT, _Traits>* r = rdbuf();
+        m_rdbuf = sb;
         clear();
-        return __r;
+        return r;
       }
 
+    /// \details
+    /// Associate the `basic_streambuf` object pointed to by `sb`
+    /// with this stream without calling `clear()`.
+    template<class _CharT, class _Traits>
+      inline _LIBCPP_INLINE_VISIBILITY
+      void
+      basic_ios<_CharT, _Traits>::set_rdbuf(
+          basic_streambuf<_CharT, _Traits>* sb)
+      {
+        m_rdbuf = sb;
+      }
+
+    /// \details
+    /// Call `ios_base::imbue(loc)`, and if a stream buffer is associated
+    /// with this stream, call that buffer's `pubimbue(loc)`.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       locale
-      basic_ios<_CharT, _Traits>::imbue(const locale& __loc)
+      basic_ios<_CharT, _Traits>::imbue(const locale& loc)
       {
-        locale __r = getloc();
-        ios_base::imbue(__loc);
+        locale r = getloc();
+        ios_base::imbue(loc);
         if (rdbuf())
           {
-            rdbuf()->pubimbue(__loc);
+            rdbuf()->pubimbue(loc);
           }
-        return __r;
+        return r;
       }
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
+    /// \details
+    /// Maps a character of `char_type` to a character of `char`,
+    /// if possible.
+    ///
+    /// Returns the result of
+    /// ~~~
+    ///   use_facet<ctype<_CharT> >(getloc()).narrow(c,dfault)
+    /// ~~~
     template <class _CharT, class _Traits>
     inline _LIBCPP_INLINE_VISIBILITY
     char
@@ -360,6 +648,13 @@ namespace os
         return use_facet<ctype<char_type> >(getloc()).narrow(__c, __dfault);
       }
 
+    /// \details
+    /// Maps a character of `char` to a character of `char_type`.
+    ///
+    /// Returns the result of
+    /// ~~~
+    ///   use_facet<ctype<char_type> >(getloc()).widen(c)
+    /// ~~~
     template <class _CharT, class _Traits>
     inline _LIBCPP_INLINE_VISIBILITY
     _CharT
@@ -375,29 +670,31 @@ namespace os
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       char
-      basic_ios<_CharT, _Traits>::narrow(char_type __c, char __dfault) const
+      basic_ios<_CharT, _Traits>::narrow(char_type c, char dfault) const
       {
         // TODO: extend this test according to locale
-        if (__c == '\xFE')
+        if (c == '\xFE')
           {
-            return __dfault;
+            return dfault;
           }
         else
           {
-            return static_cast<char>(__c);
+            return static_cast<char>(c);
           }
       }
 
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       _CharT
-      basic_ios<_CharT, _Traits>::widen(char __c) const
+      basic_ios<_CharT, _Traits>::widen(char c) const
       {
-        return static_cast<_CharT>(__c);
+        return static_cast<_CharT>(c);
       }
 
 #endif
 
+    /// \details
+    /// It defaults to a space (' ') in the current locale.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       _CharT
@@ -407,58 +704,80 @@ namespace os
           {
             m_fill = widen(' ');
           }
+        // cast required since m_fill is an int_type
         return (_CharT) m_fill;
       }
 
+    /// \details
+    /// The fill character is used to fill out space when P+ characters
+    /// have been requested (e.g., via setw), Q characters are actually
+    /// used, and Q<P.  It defaults to a space (' ') in the current locale.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       _CharT
-      basic_ios<_CharT, _Traits>::fill(char_type __ch)
+      basic_ios<_CharT, _Traits>::fill(char_type ch)
       {
-        char_type __r = (char_type) m_fill;
-        m_fill = __ch;
-        return __r;
+        // cast required since m_fill is an int_type
+        char_type r = (char_type) m_fill;
+        m_fill = ch;
+        return r;
       }
 
+    /// \details
+    /// *this shall have the state that rhs had before the function
+    /// call, except that rdbuf() shall return 0. rhs shall be in a
+    /// valid but unspecified state, except that rhs.rdbuf() shall
+    /// return the same value as it returned before the function call,
+    /// and rhs.tie() shall return 0.
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_ios<_CharT, _Traits>::move(basic_ios& __rhs)
+      basic_ios<_CharT, _Traits>::move(basic_ios& rhs)
       {
-        ios_base::move(__rhs);
+        ios_base::move(rhs);
 
-        m_rdstate = __rhs.m_rdstate;
-        m_exceptions = __rhs.m_exceptions;
+        m_rdstate = rhs.m_rdstate;
+        m_exceptions = rhs.m_exceptions;
         m_rdbuf = 0;
 
-        m_tie = __rhs.m_tie;
-        __rhs.m_tie = 0;
-        m_fill = __rhs.m_fill;
+        m_tie = rhs.m_tie;
+        rhs.m_tie = 0;
+        m_fill = rhs.m_fill;
       }
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
     template<class _CharT, class _Traits>
     inline _LIBCPP_INLINE_VISIBILITY
     void
-    basic_ios<_CharT, _Traits>::move(basic_ios&& __rhs)
+    basic_ios<_CharT, _Traits>::move(basic_ios&& rhs)
       {
-        move(__rhs);
+        move(rhs);
       }
 #endif
 
+    /// \details
+    /// The states of *this and rhs shall be exchanged, except that
+    /// rdbuf() shall return the same value as it returned before
+    /// the function call, and rhs.rdbuf() shall return the same
+    /// value as it returned before the function call.
+    ///
+    /// Use the parent swap() than the
+    /// namespace function for individual fields
     template<class _CharT, class _Traits>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_ios<_CharT, _Traits>::swap(basic_ios& __rhs)
+      basic_ios<_CharT, _Traits>::swap(basic_ios& rhs)
       _NOEXCEPT
       {
-        ios_base::swap(__rhs);
+        // use the parent function
+        ios_base::swap(rhs);
 
-        _VSTD::swap(m_rdstate, __rhs.m_rdstate);
-        _VSTD::swap(m_exceptions, __rhs.m_exceptions);
+        // use the namespace functions for individual fields
+        os::std::swap(m_rdstate, rhs.m_rdstate);
+        os::std::swap(m_exceptions, rhs.m_exceptions);
 
-        _VSTD::swap(m_tie, __rhs.m_tie);
-        _VSTD::swap(m_fill, __rhs.m_fill);
+        os::std::swap(m_tie, rhs.m_tie);
+        os::std::swap(m_fill, rhs.m_fill);
       }
 
   }

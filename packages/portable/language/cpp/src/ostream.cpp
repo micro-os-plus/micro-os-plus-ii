@@ -13,6 +13,7 @@
 
 #include "portable/language/cpp/include/ostream.h"
 #include "portable/language/cpp/include/ostream.cpp.h"
+#include "portable/language/cpp/include/ostream_inserters.cpp.h"
 
 namespace os
 {

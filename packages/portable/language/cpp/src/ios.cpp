@@ -191,12 +191,32 @@ namespace os
 
     int ios_base::ms_xindex = 0;
 
-    int
+    ///
+     /// \details
+     /// This function returns a unique integer every time it is called.  It
+     /// can be used for any purpose, but is primarily intended to be a unique
+     /// index for the iword and pword functions.  The expectation is that an
+     /// application calls xalloc in order to obtain an index in the iword and
+     /// pword arrays that can be used without fear of conflict.
+     ///
+     /// The implementation maintains a static variable that is incremented and
+     /// returned on each invocation.  xalloc is guaranteed to return an index
+     /// that is safe to use in the iword and pword arrays.
+   int
     ios_base::xalloc()
       {
         return ms_xindex++;
       }
 
+   ///
+   /// \details
+   /// The iword function provides access to an array of integers that can be
+   /// used for any purpose.  The array grows as required to hold the
+   /// supplied index.  All integers in the array are initialized to 0.
+   ///
+   /// The implementation reserves several indices.  You should use xalloc to
+   /// obtain an index that is safe to use.  Also note that since the array
+   /// can grow dynamically, it is not safe to hold onto the reference.
     long&
     ios_base::iword(int index)
       {
@@ -226,6 +246,15 @@ namespace os
         return __iarray_[index];
       }
 
+    ///
+    /// \details
+    /// The pword function provides access to an array of pointers that can be
+    /// used for any purpose.  The array grows as required to hold the
+    /// supplied index.  All pointers in the array are initialized to 0.
+    ///
+    /// The implementation reserves several indices.  You should use xalloc to
+    /// obtain an index that is safe to use.  Also note that since the array
+    /// can grow dynamically, it is not safe to hold onto the reference.
     void*&
     ios_base::pword(int index)
       {
@@ -327,15 +356,15 @@ namespace os
       if (__event_cap_ < rhs.__event_size_)
         {
           new_callbacks.reset((event_callback*)malloc(sizeof(event_callback) * rhs.__event_size_));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
           if (!new_callbacks)
           throw bad_alloc();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
           new_ints.reset((int*)malloc(sizeof(int) * rhs.__event_size_));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
           if (!new_ints)
           throw bad_alloc();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
         }
 #endif
 
@@ -343,18 +372,18 @@ namespace os
       if (__iarray_cap_ < rhs.__iarray_size_)
         {
           new_longs.reset((long*)malloc(sizeof(long) * rhs.__iarray_size_));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
           if (!new_longs)
           throw bad_alloc();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
         }
       if (__parray_cap_ < rhs.__parray_size_)
         {
           new_pointers.reset((void**)malloc(sizeof(void*) * rhs.__parray_size_));
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_STD_EXCEPTIONS)
           if (!new_pointers)
           throw bad_alloc();
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_STD_EXCEPTIONS
         }
 #endif
       // Got everything we need.  Copy everything but __rdstate_, __rdbuf_ and __exceptions_

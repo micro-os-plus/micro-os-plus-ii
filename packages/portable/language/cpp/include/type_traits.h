@@ -59,7 +59,7 @@ namespace os
     template<class _Tp, _Tp __v>
       struct _LIBCPP_VISIBLE integral_constant
       {
-        static _LIBCPP_CONSTEXPR const _Tp value = __v;
+        static _LIBCPP_CONSTEXPR _Tp value = __v;
         typedef _Tp value_type;
         typedef integral_constant type;_LIBCPP_INLINE_VISIBILITY
         _LIBCPP_CONSTEXPR
@@ -70,7 +70,7 @@ namespace os
       };
 
     template<class _Tp, _Tp __v>
-      _LIBCPP_CONSTEXPR const _Tp integral_constant<_Tp, __v>::value;
+      _LIBCPP_CONSTEXPR _Tp integral_constant<_Tp, __v>::value;
 
     typedef integral_constant<bool, true> true_type;
     typedef integral_constant<bool, false> false_type;
@@ -468,7 +468,7 @@ namespace    __is_class_imp
         char
         __test(_Tp*);
       template<class _Tp>
-        __two                __test(...);
+        __two                 __test(...);
 template<      class _Tp> _Tp& __source();}
 
 #endif
@@ -938,7 +938,7 @@ template    <class _Tp> struct _LIBCPP_VISIBLE is_enum
         char
         __test(_Tp (*)[1]);
       template<class _Tp>
-        __two                __test(...);
+        __two                 __test(...);
 }      template<class _Tp, bool = is_class<_Tp>::value>
         struct __libcpp_abstract : public integral_constant<bool,
             sizeof(__is_abstract_imp::__test<_Tp>(0)) != 1>
@@ -988,7 +988,7 @@ template    <class _Tp> struct _LIBCPP_VISIBLE is_enum
           typename __one<sizeof(_Dst<_Bp>(declval<_Src<_Dp> >()))>::type
           __test(int);
         template<class _Bp, class _Dp>
-          __two                __test(...);
+          __two                 __test(...);
 }        template<class _Bp, class _Dp>
           struct _LIBCPP_VISIBLE is_base_of : public integral_constant<bool,
               is_class<_Bp>::value
@@ -1228,9 +1228,8 @@ namespace        __is_convertible_imp
       {};
 
 #else  // __has_feature(is_empty)
-template    <class _Tp>
-    struct __is_empty1
-    : public _Tp
+    template<class _Tp>
+      struct __is_empty1 : public _Tp
       {
         double __lx;
       };
@@ -3267,12 +3266,14 @@ template    <class _Tp> struct __libcpp_nothrow_destructor
       {};
 
 #else  // _LIBCPP_HAS_TYPE_TRAITS
-template    <class _Tp> struct _LIBCPP_VISIBLE is_pod
-    : public integral_constant<bool, is_trivially_default_constructible<_Tp>::value &&
-    is_trivially_copy_constructible<_Tp>::value &&
-    is_trivially_copy_assignable<_Tp>::value &&
-    is_trivially_destructible<_Tp>::value>
-      {};
+    template<class _Tp>
+      struct _LIBCPP_VISIBLE is_pod : public integral_constant<bool,
+          is_trivially_default_constructible<_Tp>::value
+              && is_trivially_copy_constructible<_Tp>::value
+              && is_trivially_copy_assignable<_Tp>::value
+              && is_trivially_destructible<_Tp>::value>
+      {
+      };
 
 #endif  // _LIBCPP_HAS_TYPE_TRAITS
     // is_literal_type;

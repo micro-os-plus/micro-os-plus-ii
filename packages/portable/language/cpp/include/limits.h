@@ -45,7 +45,7 @@ namespace os
       protected:
         typedef _Tp type;
 
-        static _LIBCPP_CONSTEXPR const bool is_specialized = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_specialized = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
           return type();
@@ -61,13 +61,13 @@ namespace os
           return type();
         }
 
-        static _LIBCPP_CONSTEXPR const int digits = 0;
-        static _LIBCPP_CONSTEXPR const int digits10 = 0;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = 0;
-        static _LIBCPP_CONSTEXPR const bool is_signed = false;
-        static _LIBCPP_CONSTEXPR const bool is_integer = false;
-        static _LIBCPP_CONSTEXPR const bool is_exact = false;
-        static _LIBCPP_CONSTEXPR const int radix = 0;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR int digits = 0;
+        static _LIBCPP_CONSTEXPR int digits10 = 0;
+        static _LIBCPP_CONSTEXPR int max_digits10 = 0;
+        static _LIBCPP_CONSTEXPR bool is_signed = false;
+        static _LIBCPP_CONSTEXPR bool is_integer = false;
+        static _LIBCPP_CONSTEXPR bool is_exact = false;
+        static _LIBCPP_CONSTEXPR int radix = 0;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return type();
@@ -78,17 +78,16 @@ namespace os
           return type();
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = 0;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 = 0;
-        static _LIBCPP_CONSTEXPR const int max_exponent = 0;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 = 0;
+        static _LIBCPP_CONSTEXPR int min_exponent = 0;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = 0;
+        static _LIBCPP_CONSTEXPR int max_exponent = 0;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = 0;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = false;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN = false;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN = false;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
-            denorm_absent;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_infinity = false;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = false;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN = false;
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm = denorm_absent;
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return type();
@@ -109,26 +108,26 @@ namespace os
           return type();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = false;
-        static _LIBCPP_CONSTEXPR const bool is_bounded = false;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = false;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = false;
+        static _LIBCPP_CONSTEXPR bool is_bounded = false;
+        static _LIBCPP_CONSTEXPR bool is_modulo = false;
 
-        static _LIBCPP_CONSTEXPR const bool traps = false;
-        static _LIBCPP_CONSTEXPR const bool tinyness_before = false;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool traps = false;
+        static _LIBCPP_CONSTEXPR bool tinyness_before = false;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             round_toward_zero;
       };
 
     template<class _Tp, int digits, bool is_signed>
       struct __libcpp_compute_min
       {
-        static _LIBCPP_CONSTEXPR const _Tp value = _Tp(_Tp(1) << digits);
+        static _LIBCPP_CONSTEXPR _Tp value = _Tp(_Tp(1) << digits);
       };
 
     template<class _Tp, int digits>
       struct __libcpp_compute_min<_Tp, digits, false>
       {
-        static _LIBCPP_CONSTEXPR const _Tp value = _Tp(0);
+        static _LIBCPP_CONSTEXPR _Tp value = _Tp(0);
       };
 
     template<class _Tp>
@@ -137,16 +136,16 @@ namespace os
       protected:
         typedef _Tp type;
 
-        static _LIBCPP_CONSTEXPR const bool is_specialized = true;
+        static _LIBCPP_CONSTEXPR bool is_specialized = true;
 
-        static _LIBCPP_CONSTEXPR const bool is_signed = type(-1) < type(0);
-        static _LIBCPP_CONSTEXPR const int digits =
-            static_cast<int>(sizeof(type) * __CHAR_BIT__ - is_signed);
-        static _LIBCPP_CONSTEXPR const int digits10 = digits * 3 / 10;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = 0;
-        static _LIBCPP_CONSTEXPR const type __min = __libcpp_compute_min<type,
-            digits, is_signed>::value;
-        static _LIBCPP_CONSTEXPR const type __max =
+        static _LIBCPP_CONSTEXPR bool is_signed = type(-1) < type(0);
+        static _LIBCPP_CONSTEXPR int digits = static_cast<int>(sizeof(type)
+            * __CHAR_BIT__ - is_signed);
+        static _LIBCPP_CONSTEXPR int digits10 = digits * 3 / 10;
+        static _LIBCPP_CONSTEXPR int max_digits10 = 0;
+        static _LIBCPP_CONSTEXPR type __min = __libcpp_compute_min<type, digits,
+            is_signed>::value;
+        static _LIBCPP_CONSTEXPR type __max =
             is_signed ? type(type(~0) ^ __min) : type(~0);_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
@@ -163,9 +162,9 @@ namespace os
           return min();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_integer = true;
-        static _LIBCPP_CONSTEXPR const bool is_exact = true;
-        static _LIBCPP_CONSTEXPR const int radix = 2;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_integer = true;
+        static _LIBCPP_CONSTEXPR bool is_exact = true;
+        static _LIBCPP_CONSTEXPR int radix = 2;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return type(0);
@@ -176,17 +175,16 @@ namespace os
           return type(0);
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = 0;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 = 0;
-        static _LIBCPP_CONSTEXPR const int max_exponent = 0;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 = 0;
+        static _LIBCPP_CONSTEXPR int min_exponent = 0;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = 0;
+        static _LIBCPP_CONSTEXPR int max_exponent = 0;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = 0;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = false;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN = false;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN = false;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
-            denorm_absent;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_infinity = false;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = false;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN = false;
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm = denorm_absent;
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return type(0);
@@ -207,17 +205,17 @@ namespace os
           return type(0);
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = false;
-        static _LIBCPP_CONSTEXPR const bool is_bounded = true;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = true;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = false;
+        static _LIBCPP_CONSTEXPR bool is_bounded = true;
+        static _LIBCPP_CONSTEXPR bool is_modulo = true;
 
 #if defined(__i386__) || defined(__x86_64__)
-        static _LIBCPP_CONSTEXPR const bool traps = true;
+        static _LIBCPP_CONSTEXPR bool traps = true;
 #else
-        static _LIBCPP_CONSTEXPR const bool traps = false;
+        static _LIBCPP_CONSTEXPR bool traps = false;
 #endif
-        static _LIBCPP_CONSTEXPR const bool tinyness_before = false;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool tinyness_before = false;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             round_toward_zero;
       };
 
@@ -227,14 +225,14 @@ namespace os
       protected:
         typedef bool type;
 
-        static _LIBCPP_CONSTEXPR const bool is_specialized = true;
+        static _LIBCPP_CONSTEXPR bool is_specialized = true;
 
-        static _LIBCPP_CONSTEXPR const bool is_signed = false;
-        static _LIBCPP_CONSTEXPR const int digits = 1;
-        static _LIBCPP_CONSTEXPR const int digits10 = 0;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = 0;
-        static _LIBCPP_CONSTEXPR const type __min = false;
-        static _LIBCPP_CONSTEXPR const type __max = true;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_signed = false;
+        static _LIBCPP_CONSTEXPR int digits = 1;
+        static _LIBCPP_CONSTEXPR int digits10 = 0;
+        static _LIBCPP_CONSTEXPR int max_digits10 = 0;
+        static _LIBCPP_CONSTEXPR type __min = false;
+        static _LIBCPP_CONSTEXPR type __max = true;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
           return __min;
@@ -250,9 +248,9 @@ namespace os
           return min();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_integer = true;
-        static _LIBCPP_CONSTEXPR const bool is_exact = true;
-        static _LIBCPP_CONSTEXPR const int radix = 2;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_integer = true;
+        static _LIBCPP_CONSTEXPR bool is_exact = true;
+        static _LIBCPP_CONSTEXPR int radix = 2;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return type(0);
@@ -263,17 +261,16 @@ namespace os
           return type(0);
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = 0;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 = 0;
-        static _LIBCPP_CONSTEXPR const int max_exponent = 0;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 = 0;
+        static _LIBCPP_CONSTEXPR int min_exponent = 0;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = 0;
+        static _LIBCPP_CONSTEXPR int max_exponent = 0;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = 0;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = false;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN = false;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN = false;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
-            denorm_absent;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_infinity = false;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = false;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN = false;
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm = denorm_absent;
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return type(0);
@@ -294,13 +291,13 @@ namespace os
           return type(0);
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = false;
-        static _LIBCPP_CONSTEXPR const bool is_bounded = true;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = false;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = false;
+        static _LIBCPP_CONSTEXPR bool is_bounded = true;
+        static _LIBCPP_CONSTEXPR bool is_modulo = false;
 
-        static _LIBCPP_CONSTEXPR const bool traps = false;
-        static _LIBCPP_CONSTEXPR const bool tinyness_before = false;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool traps = false;
+        static _LIBCPP_CONSTEXPR bool tinyness_before = false;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             round_toward_zero;
       };
 
@@ -310,12 +307,12 @@ namespace os
       protected:
         typedef float type;
 
-        static _LIBCPP_CONSTEXPR const bool is_specialized = true;
+        static _LIBCPP_CONSTEXPR bool is_specialized = true;
 
-        static _LIBCPP_CONSTEXPR const bool is_signed = true;
-        static _LIBCPP_CONSTEXPR const int digits = __FLT_MANT_DIG__;
-        static _LIBCPP_CONSTEXPR const int digits10 = __FLT_DIG__;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = 2
+        static _LIBCPP_CONSTEXPR bool is_signed = true;
+        static _LIBCPP_CONSTEXPR int digits = __FLT_MANT_DIG__;
+        static _LIBCPP_CONSTEXPR int digits10 = __FLT_DIG__;
+        static _LIBCPP_CONSTEXPR int max_digits10 = 2
             + (digits * 30103) / 100000;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
@@ -332,9 +329,9 @@ namespace os
           return -max();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_integer = false;
-        static _LIBCPP_CONSTEXPR const bool is_exact = false;
-        static _LIBCPP_CONSTEXPR const int radix = __FLT_RADIX__;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_integer = false;
+        static _LIBCPP_CONSTEXPR bool is_exact = false;
+        static _LIBCPP_CONSTEXPR int radix = __FLT_RADIX__;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return __FLT_EPSILON__;
@@ -345,17 +342,16 @@ namespace os
           return 0.5F;
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = __FLT_MIN_EXP__;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 = __FLT_MIN_10_EXP__;
-        static _LIBCPP_CONSTEXPR const int max_exponent = __FLT_MAX_EXP__;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 = __FLT_MAX_10_EXP__;
+        static _LIBCPP_CONSTEXPR int min_exponent = __FLT_MIN_EXP__;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = __FLT_MIN_10_EXP__;
+        static _LIBCPP_CONSTEXPR int max_exponent = __FLT_MAX_EXP__;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = __FLT_MAX_10_EXP__;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = true;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN = true;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN = true;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
-            denorm_present;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_infinity = true;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = true;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN = true;
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm = denorm_present;
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return __builtin_huge_valf();
@@ -376,13 +372,13 @@ namespace os
           return __FLT_DENORM_MIN__;
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = true;
-        static _LIBCPP_CONSTEXPR const bool is_bounded = true;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = false;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = true;
+        static _LIBCPP_CONSTEXPR bool is_bounded = true;
+        static _LIBCPP_CONSTEXPR bool is_modulo = false;
 
-        static _LIBCPP_CONSTEXPR const bool traps = false;
-        static _LIBCPP_CONSTEXPR const bool tinyness_before = false;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool traps = false;
+        static _LIBCPP_CONSTEXPR bool tinyness_before = false;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             round_to_nearest;
       };
 
@@ -392,12 +388,12 @@ namespace os
       protected:
         typedef double type;
 
-        static _LIBCPP_CONSTEXPR const bool is_specialized = true;
+        static _LIBCPP_CONSTEXPR bool is_specialized = true;
 
-        static _LIBCPP_CONSTEXPR const bool is_signed = true;
-        static _LIBCPP_CONSTEXPR const int digits = __DBL_MANT_DIG__;
-        static _LIBCPP_CONSTEXPR const int digits10 = __DBL_DIG__;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = 2
+        static _LIBCPP_CONSTEXPR bool is_signed = true;
+        static _LIBCPP_CONSTEXPR int digits = __DBL_MANT_DIG__;
+        static _LIBCPP_CONSTEXPR int digits10 = __DBL_DIG__;
+        static _LIBCPP_CONSTEXPR int max_digits10 = 2
             + (digits * 30103) / 100000;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
@@ -414,9 +410,9 @@ namespace os
           return -max();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_integer = false;
-        static _LIBCPP_CONSTEXPR const bool is_exact = false;
-        static _LIBCPP_CONSTEXPR const int radix = __FLT_RADIX__;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_integer = false;
+        static _LIBCPP_CONSTEXPR bool is_exact = false;
+        static _LIBCPP_CONSTEXPR int radix = __FLT_RADIX__;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return __DBL_EPSILON__;
@@ -427,17 +423,16 @@ namespace os
           return 0.5;
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = __DBL_MIN_EXP__;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 = __DBL_MIN_10_EXP__;
-        static _LIBCPP_CONSTEXPR const int max_exponent = __DBL_MAX_EXP__;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 = __DBL_MAX_10_EXP__;
+        static _LIBCPP_CONSTEXPR int min_exponent = __DBL_MIN_EXP__;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = __DBL_MIN_10_EXP__;
+        static _LIBCPP_CONSTEXPR int max_exponent = __DBL_MAX_EXP__;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = __DBL_MAX_10_EXP__;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = true;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN = true;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN = true;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
-            denorm_present;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_infinity = true;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = true;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN = true;
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm = denorm_present;
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return __builtin_huge_val();
@@ -458,13 +453,13 @@ namespace os
           return __DBL_DENORM_MIN__;
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = true;
-        static _LIBCPP_CONSTEXPR const bool is_bounded = true;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = false;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = true;
+        static _LIBCPP_CONSTEXPR bool is_bounded = true;
+        static _LIBCPP_CONSTEXPR bool is_modulo = false;
 
-        static _LIBCPP_CONSTEXPR const bool traps = false;
-        static _LIBCPP_CONSTEXPR const bool tinyness_before = false;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool traps = false;
+        static _LIBCPP_CONSTEXPR bool tinyness_before = false;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             round_to_nearest;
       };
 
@@ -474,12 +469,12 @@ namespace os
       protected:
         typedef long double type;
 
-        static _LIBCPP_CONSTEXPR const bool is_specialized = true;
+        static _LIBCPP_CONSTEXPR bool is_specialized = true;
 
-        static _LIBCPP_CONSTEXPR const bool is_signed = true;
-        static _LIBCPP_CONSTEXPR const int digits = __LDBL_MANT_DIG__;
-        static _LIBCPP_CONSTEXPR const int digits10 = __LDBL_DIG__;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = 2
+        static _LIBCPP_CONSTEXPR bool is_signed = true;
+        static _LIBCPP_CONSTEXPR int digits = __LDBL_MANT_DIG__;
+        static _LIBCPP_CONSTEXPR int digits10 = __LDBL_DIG__;
+        static _LIBCPP_CONSTEXPR int max_digits10 = 2
             + (digits * 30103) / 100000;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
@@ -496,9 +491,9 @@ namespace os
           return -max();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_integer = false;
-        static _LIBCPP_CONSTEXPR const bool is_exact = false;
-        static _LIBCPP_CONSTEXPR const int radix = __FLT_RADIX__;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_integer = false;
+        static _LIBCPP_CONSTEXPR bool is_exact = false;
+        static _LIBCPP_CONSTEXPR int radix = __FLT_RADIX__;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return __LDBL_EPSILON__;
@@ -509,17 +504,16 @@ namespace os
           return 0.5;
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = __LDBL_MIN_EXP__;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 = __LDBL_MIN_10_EXP__;
-        static _LIBCPP_CONSTEXPR const int max_exponent = __LDBL_MAX_EXP__;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 = __LDBL_MAX_10_EXP__;
+        static _LIBCPP_CONSTEXPR int min_exponent = __LDBL_MIN_EXP__;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = __LDBL_MIN_10_EXP__;
+        static _LIBCPP_CONSTEXPR int max_exponent = __LDBL_MAX_EXP__;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = __LDBL_MAX_10_EXP__;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = true;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN = true;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN = true;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
-            denorm_present;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_infinity = true;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = true;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN = true;
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm = denorm_present;
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = false;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return __builtin_huge_vall();
@@ -541,16 +535,16 @@ namespace os
         }
 
 #if (defined(__ppc__) || defined(__ppc64__))
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = false;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = false;
 #else
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = true;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = true;
 #endif
-        static _LIBCPP_CONSTEXPR const bool is_bounded = true;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = false;
+        static _LIBCPP_CONSTEXPR bool is_bounded = true;
+        static _LIBCPP_CONSTEXPR bool is_modulo = false;
 
-        static _LIBCPP_CONSTEXPR const bool traps = false;
-        static _LIBCPP_CONSTEXPR const bool tinyness_before = false;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool traps = false;
+        static _LIBCPP_CONSTEXPR bool tinyness_before = false;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             round_to_nearest;
       };
 
@@ -563,8 +557,7 @@ namespace os
         typedef __libcpp_numeric_limits <typename remove_cv<_Tp>::type> __base;
         typedef typename __base::type type;
       public:
-        static _LIBCPP_CONSTEXPR const bool is_specialized =
-            __base::is_specialized;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_specialized = __base::is_specialized;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
           return __base::min();
@@ -580,13 +573,13 @@ namespace os
           return __base::lowest();
         }
 
-        static _LIBCPP_CONSTEXPR const int digits = __base::digits;
-        static _LIBCPP_CONSTEXPR const int digits10 = __base::digits10;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = __base::max_digits10;
-        static _LIBCPP_CONSTEXPR const bool is_signed = __base::is_signed;
-        static _LIBCPP_CONSTEXPR const bool is_integer = __base::is_integer;
-        static _LIBCPP_CONSTEXPR const bool is_exact = __base::is_exact;
-        static _LIBCPP_CONSTEXPR const int radix = __base::radix;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR int digits = __base::digits;
+        static _LIBCPP_CONSTEXPR int digits10 = __base::digits10;
+        static _LIBCPP_CONSTEXPR int max_digits10 = __base::max_digits10;
+        static _LIBCPP_CONSTEXPR bool is_signed = __base::is_signed;
+        static _LIBCPP_CONSTEXPR bool is_integer = __base::is_integer;
+        static _LIBCPP_CONSTEXPR bool is_exact = __base::is_exact;
+        static _LIBCPP_CONSTEXPR int radix = __base::radix;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return __base::epsilon();
@@ -597,22 +590,18 @@ namespace os
           return __base::round_error();
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = __base::min_exponent;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 =
-            __base::min_exponent10;
-        static _LIBCPP_CONSTEXPR const int max_exponent = __base::max_exponent;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 =
-            __base::max_exponent10;
+        static _LIBCPP_CONSTEXPR int min_exponent = __base::min_exponent;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = __base::min_exponent10;
+        static _LIBCPP_CONSTEXPR int max_exponent = __base::max_exponent;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = __base::max_exponent10;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = __base::has_infinity;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN =
-            __base::has_quiet_NaN;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN =
+        static _LIBCPP_CONSTEXPR bool has_infinity = __base::has_infinity;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = __base::has_quiet_NaN;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN =
             __base::has_signaling_NaN;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm =
             __base::has_denorm;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss =
-            __base::has_denorm_loss;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = __base::has_denorm_loss;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return __base::infinity();
@@ -633,63 +622,62 @@ namespace os
           return __base::denorm_min();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = __base::is_iec559;
-        static _LIBCPP_CONSTEXPR const bool is_bounded = __base::is_bounded;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = __base::is_modulo;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = __base::is_iec559;
+        static _LIBCPP_CONSTEXPR bool is_bounded = __base::is_bounded;
+        static _LIBCPP_CONSTEXPR bool is_modulo = __base::is_modulo;
 
-        static _LIBCPP_CONSTEXPR const bool traps = __base::traps;
-        static _LIBCPP_CONSTEXPR const bool tinyness_before =
-            __base::tinyness_before;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool traps = __base::traps;
+        static _LIBCPP_CONSTEXPR bool tinyness_before = __base::tinyness_before;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             __base::round_style;
       };
 
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::is_specialized;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::is_specialized;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<_Tp>::digits;
+      _LIBCPP_CONSTEXPR int numeric_limits<_Tp>::digits;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<_Tp>::digits10;
+      _LIBCPP_CONSTEXPR int numeric_limits<_Tp>::digits10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<_Tp>::max_digits10;
+      _LIBCPP_CONSTEXPR int numeric_limits<_Tp>::max_digits10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::is_signed;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::is_signed;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::is_integer;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::is_integer;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::is_exact;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::is_exact;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<_Tp>::radix;
+      _LIBCPP_CONSTEXPR int numeric_limits<_Tp>::radix;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<_Tp>::min_exponent;
+      _LIBCPP_CONSTEXPR int numeric_limits<_Tp>::min_exponent;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<_Tp>::min_exponent10;
+      _LIBCPP_CONSTEXPR int numeric_limits<_Tp>::min_exponent10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<_Tp>::max_exponent;
+      _LIBCPP_CONSTEXPR int numeric_limits<_Tp>::max_exponent;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<_Tp>::max_exponent10;
+      _LIBCPP_CONSTEXPR int numeric_limits<_Tp>::max_exponent10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::has_infinity;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::has_infinity;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::has_quiet_NaN;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::has_quiet_NaN;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::has_signaling_NaN;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::has_signaling_NaN;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const float_denorm_style numeric_limits<_Tp>::has_denorm;
+      _LIBCPP_CONSTEXPR float_denorm_style numeric_limits<_Tp>::has_denorm;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::has_denorm_loss;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::has_denorm_loss;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::is_iec559;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::is_iec559;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::is_bounded;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::is_bounded;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::is_modulo;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::is_modulo;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::traps;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::traps;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<_Tp>::tinyness_before;
+      _LIBCPP_CONSTEXPR bool numeric_limits<_Tp>::tinyness_before;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const float_round_style numeric_limits<_Tp>::round_style;
+      _LIBCPP_CONSTEXPR float_round_style numeric_limits<_Tp>::round_style;
 
     template<class _Tp>
       class _LIBCPP_VISIBLE numeric_limits<const _Tp> : private numeric_limits<
@@ -698,8 +686,7 @@ namespace os
         typedef numeric_limits<_Tp> __base;
         typedef _Tp type;
       public:
-        static _LIBCPP_CONSTEXPR const bool is_specialized =
-            __base::is_specialized;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_specialized = __base::is_specialized;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
           return __base::min();
@@ -715,13 +702,13 @@ namespace os
           return __base::lowest();
         }
 
-        static _LIBCPP_CONSTEXPR const int digits = __base::digits;
-        static _LIBCPP_CONSTEXPR const int digits10 = __base::digits10;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = __base::max_digits10;
-        static _LIBCPP_CONSTEXPR const bool is_signed = __base::is_signed;
-        static _LIBCPP_CONSTEXPR const bool is_integer = __base::is_integer;
-        static _LIBCPP_CONSTEXPR const bool is_exact = __base::is_exact;
-        static _LIBCPP_CONSTEXPR const int radix = __base::radix;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR int digits = __base::digits;
+        static _LIBCPP_CONSTEXPR int digits10 = __base::digits10;
+        static _LIBCPP_CONSTEXPR int max_digits10 = __base::max_digits10;
+        static _LIBCPP_CONSTEXPR bool is_signed = __base::is_signed;
+        static _LIBCPP_CONSTEXPR bool is_integer = __base::is_integer;
+        static _LIBCPP_CONSTEXPR bool is_exact = __base::is_exact;
+        static _LIBCPP_CONSTEXPR int radix = __base::radix;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return __base::epsilon();
@@ -732,22 +719,18 @@ namespace os
           return __base::round_error();
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = __base::min_exponent;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 =
-            __base::min_exponent10;
-        static _LIBCPP_CONSTEXPR const int max_exponent = __base::max_exponent;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 =
-            __base::max_exponent10;
+        static _LIBCPP_CONSTEXPR int min_exponent = __base::min_exponent;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = __base::min_exponent10;
+        static _LIBCPP_CONSTEXPR int max_exponent = __base::max_exponent;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = __base::max_exponent10;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = __base::has_infinity;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN =
-            __base::has_quiet_NaN;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN =
+        static _LIBCPP_CONSTEXPR bool has_infinity = __base::has_infinity;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = __base::has_quiet_NaN;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN =
             __base::has_signaling_NaN;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm =
             __base::has_denorm;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss =
-            __base::has_denorm_loss;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = __base::has_denorm_loss;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return __base::infinity();
@@ -768,63 +751,62 @@ namespace os
           return __base::denorm_min();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = __base::is_iec559;
-        static _LIBCPP_CONSTEXPR const bool is_bounded = __base::is_bounded;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = __base::is_modulo;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = __base::is_iec559;
+        static _LIBCPP_CONSTEXPR bool is_bounded = __base::is_bounded;
+        static _LIBCPP_CONSTEXPR bool is_modulo = __base::is_modulo;
 
-        static _LIBCPP_CONSTEXPR const bool traps = __base::traps;
-        static _LIBCPP_CONSTEXPR const bool tinyness_before =
-            __base::tinyness_before;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool traps = __base::traps;
+        static _LIBCPP_CONSTEXPR bool tinyness_before = __base::tinyness_before;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             __base::round_style;
       };
 
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::is_specialized;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::is_specialized;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const _Tp>::digits;
+      _LIBCPP_CONSTEXPR int numeric_limits<const _Tp>::digits;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const _Tp>::digits10;
+      _LIBCPP_CONSTEXPR int numeric_limits<const _Tp>::digits10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const _Tp>::max_digits10;
+      _LIBCPP_CONSTEXPR int numeric_limits<const _Tp>::max_digits10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::is_signed;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::is_signed;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::is_integer;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::is_integer;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::is_exact;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::is_exact;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const _Tp>::radix;
+      _LIBCPP_CONSTEXPR int numeric_limits<const _Tp>::radix;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const _Tp>::min_exponent;
+      _LIBCPP_CONSTEXPR int numeric_limits<const _Tp>::min_exponent;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const _Tp>::min_exponent10;
+      _LIBCPP_CONSTEXPR int numeric_limits<const _Tp>::min_exponent10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const _Tp>::max_exponent;
+      _LIBCPP_CONSTEXPR int numeric_limits<const _Tp>::max_exponent;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const _Tp>::max_exponent10;
+      _LIBCPP_CONSTEXPR int numeric_limits<const _Tp>::max_exponent10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::has_infinity;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::has_infinity;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::has_quiet_NaN;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::has_quiet_NaN;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::has_signaling_NaN;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::has_signaling_NaN;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const float_denorm_style numeric_limits<const _Tp>::has_denorm;
+      _LIBCPP_CONSTEXPR float_denorm_style numeric_limits<const _Tp>::has_denorm;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::has_denorm_loss;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::has_denorm_loss;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::is_iec559;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::is_iec559;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::is_bounded;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::is_bounded;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::is_modulo;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::is_modulo;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::traps;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::traps;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const _Tp>::tinyness_before;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const _Tp>::tinyness_before;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const float_round_style numeric_limits<const _Tp>::round_style;
+      _LIBCPP_CONSTEXPR float_round_style numeric_limits<const _Tp>::round_style;
 
     template<class _Tp>
       class _LIBCPP_VISIBLE numeric_limits<volatile _Tp> : private numeric_limits<
@@ -833,8 +815,7 @@ namespace os
         typedef numeric_limits<_Tp> __base;
         typedef _Tp type;
       public:
-        static _LIBCPP_CONSTEXPR const bool is_specialized =
-            __base::is_specialized;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_specialized = __base::is_specialized;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
           return __base::min();
@@ -850,13 +831,13 @@ namespace os
           return __base::lowest();
         }
 
-        static _LIBCPP_CONSTEXPR const int digits = __base::digits;
-        static _LIBCPP_CONSTEXPR const int digits10 = __base::digits10;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = __base::max_digits10;
-        static _LIBCPP_CONSTEXPR const bool is_signed = __base::is_signed;
-        static _LIBCPP_CONSTEXPR const bool is_integer = __base::is_integer;
-        static _LIBCPP_CONSTEXPR const bool is_exact = __base::is_exact;
-        static _LIBCPP_CONSTEXPR const int radix = __base::radix;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR int digits = __base::digits;
+        static _LIBCPP_CONSTEXPR int digits10 = __base::digits10;
+        static _LIBCPP_CONSTEXPR int max_digits10 = __base::max_digits10;
+        static _LIBCPP_CONSTEXPR bool is_signed = __base::is_signed;
+        static _LIBCPP_CONSTEXPR bool is_integer = __base::is_integer;
+        static _LIBCPP_CONSTEXPR bool is_exact = __base::is_exact;
+        static _LIBCPP_CONSTEXPR int radix = __base::radix;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return __base::epsilon();
@@ -867,22 +848,18 @@ namespace os
           return __base::round_error();
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = __base::min_exponent;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 =
-            __base::min_exponent10;
-        static _LIBCPP_CONSTEXPR const int max_exponent = __base::max_exponent;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 =
-            __base::max_exponent10;
+        static _LIBCPP_CONSTEXPR int min_exponent = __base::min_exponent;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = __base::min_exponent10;
+        static _LIBCPP_CONSTEXPR int max_exponent = __base::max_exponent;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = __base::max_exponent10;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = __base::has_infinity;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN =
-            __base::has_quiet_NaN;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN =
+        static _LIBCPP_CONSTEXPR bool has_infinity = __base::has_infinity;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = __base::has_quiet_NaN;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN =
             __base::has_signaling_NaN;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm =
             __base::has_denorm;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss =
-            __base::has_denorm_loss;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = __base::has_denorm_loss;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return __base::infinity();
@@ -903,63 +880,62 @@ namespace os
           return __base::denorm_min();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = __base::is_iec559;
-        static _LIBCPP_CONSTEXPR const bool is_bounded = __base::is_bounded;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = __base::is_modulo;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = __base::is_iec559;
+        static _LIBCPP_CONSTEXPR bool is_bounded = __base::is_bounded;
+        static _LIBCPP_CONSTEXPR bool is_modulo = __base::is_modulo;
 
-        static _LIBCPP_CONSTEXPR const bool traps = __base::traps;
-        static _LIBCPP_CONSTEXPR const bool tinyness_before =
-            __base::tinyness_before;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool traps = __base::traps;
+        static _LIBCPP_CONSTEXPR bool tinyness_before = __base::tinyness_before;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             __base::round_style;
       };
 
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::is_specialized;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::is_specialized;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<volatile _Tp>::digits;
+      _LIBCPP_CONSTEXPR int numeric_limits<volatile _Tp>::digits;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<volatile _Tp>::digits10;
+      _LIBCPP_CONSTEXPR int numeric_limits<volatile _Tp>::digits10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<volatile _Tp>::max_digits10;
+      _LIBCPP_CONSTEXPR int numeric_limits<volatile _Tp>::max_digits10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::is_signed;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::is_signed;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::is_integer;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::is_integer;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::is_exact;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::is_exact;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<volatile _Tp>::radix;
+      _LIBCPP_CONSTEXPR int numeric_limits<volatile _Tp>::radix;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<volatile _Tp>::min_exponent;
+      _LIBCPP_CONSTEXPR int numeric_limits<volatile _Tp>::min_exponent;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<volatile _Tp>::min_exponent10;
+      _LIBCPP_CONSTEXPR int numeric_limits<volatile _Tp>::min_exponent10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<volatile _Tp>::max_exponent;
+      _LIBCPP_CONSTEXPR int numeric_limits<volatile _Tp>::max_exponent;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<volatile _Tp>::max_exponent10;
+      _LIBCPP_CONSTEXPR int numeric_limits<volatile _Tp>::max_exponent10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::has_infinity;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::has_infinity;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::has_quiet_NaN;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::has_quiet_NaN;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::has_signaling_NaN;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::has_signaling_NaN;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const float_denorm_style numeric_limits<volatile _Tp>::has_denorm;
+      _LIBCPP_CONSTEXPR float_denorm_style numeric_limits<volatile _Tp>::has_denorm;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::has_denorm_loss;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::has_denorm_loss;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::is_iec559;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::is_iec559;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::is_bounded;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::is_bounded;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::is_modulo;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::is_modulo;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::traps;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::traps;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<volatile _Tp>::tinyness_before;
+      _LIBCPP_CONSTEXPR bool numeric_limits<volatile _Tp>::tinyness_before;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const float_round_style numeric_limits<volatile _Tp>::round_style;
+      _LIBCPP_CONSTEXPR float_round_style numeric_limits<volatile _Tp>::round_style;
 
     template<class _Tp>
       class _LIBCPP_VISIBLE numeric_limits<const volatile _Tp> : private numeric_limits<
@@ -968,8 +944,7 @@ namespace os
         typedef numeric_limits<_Tp> __base;
         typedef _Tp type;
       public:
-        static _LIBCPP_CONSTEXPR const bool is_specialized =
-            __base::is_specialized;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool is_specialized = __base::is_specialized;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         min() _NOEXCEPT
         {
           return __base::min();
@@ -985,13 +960,13 @@ namespace os
           return __base::lowest();
         }
 
-        static _LIBCPP_CONSTEXPR const int digits = __base::digits;
-        static _LIBCPP_CONSTEXPR const int digits10 = __base::digits10;
-        static _LIBCPP_CONSTEXPR const int max_digits10 = __base::max_digits10;
-        static _LIBCPP_CONSTEXPR const bool is_signed = __base::is_signed;
-        static _LIBCPP_CONSTEXPR const bool is_integer = __base::is_integer;
-        static _LIBCPP_CONSTEXPR const bool is_exact = __base::is_exact;
-        static _LIBCPP_CONSTEXPR const int radix = __base::radix;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR int digits = __base::digits;
+        static _LIBCPP_CONSTEXPR int digits10 = __base::digits10;
+        static _LIBCPP_CONSTEXPR int max_digits10 = __base::max_digits10;
+        static _LIBCPP_CONSTEXPR bool is_signed = __base::is_signed;
+        static _LIBCPP_CONSTEXPR bool is_integer = __base::is_integer;
+        static _LIBCPP_CONSTEXPR bool is_exact = __base::is_exact;
+        static _LIBCPP_CONSTEXPR int radix = __base::radix;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         epsilon() _NOEXCEPT
         {
           return __base::epsilon();
@@ -1002,22 +977,18 @@ namespace os
           return __base::round_error();
         }
 
-        static _LIBCPP_CONSTEXPR const int min_exponent = __base::min_exponent;
-        static _LIBCPP_CONSTEXPR const int min_exponent10 =
-            __base::min_exponent10;
-        static _LIBCPP_CONSTEXPR const int max_exponent = __base::max_exponent;
-        static _LIBCPP_CONSTEXPR const int max_exponent10 =
-            __base::max_exponent10;
+        static _LIBCPP_CONSTEXPR int min_exponent = __base::min_exponent;
+        static _LIBCPP_CONSTEXPR int min_exponent10 = __base::min_exponent10;
+        static _LIBCPP_CONSTEXPR int max_exponent = __base::max_exponent;
+        static _LIBCPP_CONSTEXPR int max_exponent10 = __base::max_exponent10;
 
-        static _LIBCPP_CONSTEXPR const bool has_infinity = __base::has_infinity;
-        static _LIBCPP_CONSTEXPR const bool has_quiet_NaN =
-            __base::has_quiet_NaN;
-        static _LIBCPP_CONSTEXPR const bool has_signaling_NaN =
+        static _LIBCPP_CONSTEXPR bool has_infinity = __base::has_infinity;
+        static _LIBCPP_CONSTEXPR bool has_quiet_NaN = __base::has_quiet_NaN;
+        static _LIBCPP_CONSTEXPR bool has_signaling_NaN =
             __base::has_signaling_NaN;
-        static _LIBCPP_CONSTEXPR const float_denorm_style has_denorm =
+        static _LIBCPP_CONSTEXPR float_denorm_style has_denorm =
             __base::has_denorm;
-        static _LIBCPP_CONSTEXPR const bool has_denorm_loss =
-            __base::has_denorm_loss;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
+        static _LIBCPP_CONSTEXPR bool has_denorm_loss = __base::has_denorm_loss;_LIBCPP_INLINE_VISIBILITY static _LIBCPP_CONSTEXPR type
         infinity() _NOEXCEPT
         {
           return __base::infinity();
@@ -1038,65 +1009,62 @@ namespace os
           return __base::denorm_min();
         }
 
-        static _LIBCPP_CONSTEXPR const bool is_iec559 = __base::is_iec559;
-        static _LIBCPP_CONSTEXPR const bool is_bounded = __base::is_bounded;
-        static _LIBCPP_CONSTEXPR const bool is_modulo = __base::is_modulo;
+        static _LIBCPP_CONSTEXPR bool is_iec559 = __base::is_iec559;
+        static _LIBCPP_CONSTEXPR bool is_bounded = __base::is_bounded;
+        static _LIBCPP_CONSTEXPR bool is_modulo = __base::is_modulo;
 
-        static _LIBCPP_CONSTEXPR const bool traps = __base::traps;
-        static _LIBCPP_CONSTEXPR const bool tinyness_before =
-            __base::tinyness_before;
-        static _LIBCPP_CONSTEXPR const float_round_style round_style =
+        static _LIBCPP_CONSTEXPR bool traps = __base::traps;
+        static _LIBCPP_CONSTEXPR bool tinyness_before = __base::tinyness_before;
+        static _LIBCPP_CONSTEXPR float_round_style round_style =
             __base::round_style;
       };
 
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::is_specialized;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::is_specialized;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const volatile _Tp>::digits;
+      _LIBCPP_CONSTEXPR int numeric_limits<const volatile _Tp>::digits;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const volatile _Tp>::digits10;
+      _LIBCPP_CONSTEXPR int numeric_limits<const volatile _Tp>::digits10;
     template<class _Tp>
-      const int numeric_limits<const volatile _Tp>::max_digits10;
+      _LIBCPP_CONSTEXPR int numeric_limits<const volatile _Tp>::max_digits10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::is_signed;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::is_signed;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::is_integer;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::is_integer;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::is_exact;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::is_exact;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const volatile _Tp>::radix;
+      _LIBCPP_CONSTEXPR int numeric_limits<const volatile _Tp>::radix;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const volatile _Tp>::min_exponent;
+      _LIBCPP_CONSTEXPR int numeric_limits<const volatile _Tp>::min_exponent;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const volatile _Tp>::min_exponent10;
+      _LIBCPP_CONSTEXPR int numeric_limits<const volatile _Tp>::min_exponent10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const volatile _Tp>::max_exponent;
+      _LIBCPP_CONSTEXPR int numeric_limits<const volatile _Tp>::max_exponent;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const int numeric_limits<const volatile _Tp>::max_exponent10;
+      _LIBCPP_CONSTEXPR int numeric_limits<const volatile _Tp>::max_exponent10;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::has_infinity;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::has_infinity;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::has_quiet_NaN;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::has_quiet_NaN;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::has_signaling_NaN;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::has_signaling_NaN;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const float_denorm_style numeric_limits<
-          const volatile _Tp>::has_denorm;
+      _LIBCPP_CONSTEXPR float_denorm_style numeric_limits<const volatile _Tp>::has_denorm;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::has_denorm_loss;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::has_denorm_loss;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::is_iec559;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::is_iec559;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::is_bounded;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::is_bounded;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::is_modulo;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::is_modulo;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::traps;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::traps;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const bool numeric_limits<const volatile _Tp>::tinyness_before;
+      _LIBCPP_CONSTEXPR bool numeric_limits<const volatile _Tp>::tinyness_before;
     template<class _Tp>
-      _LIBCPP_CONSTEXPR const float_round_style numeric_limits<
-          const volatile _Tp>::round_style;
+      _LIBCPP_CONSTEXPR float_round_style numeric_limits<const volatile _Tp>::round_style;
 
   }
 }
