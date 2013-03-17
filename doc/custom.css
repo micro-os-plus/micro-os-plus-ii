@@ -33,9 +33,22 @@ body, table, div, p, dl {
  	right:0;
 }
 
+/* for the template params */
+td.paramname {
+	color: #602020;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
 dl {
 	padding-top: 0px;
 	padding-right: 0px;
 	padding-bottom: 0px;
 	padding-left: 0px;
+}
+
+/* For the grouping headers */
+div.groupHeader {
+	font-size: 105%;
+	margin-left: 0px;
 }
