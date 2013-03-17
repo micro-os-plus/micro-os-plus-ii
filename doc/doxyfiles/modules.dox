@@ -1,0 +1,24 @@
+/**
+
+\defgroup core Core
+
+
+\defgroup std Standard library
+
+    \defgroup std_io I/O
+    \ingroup std
+
+        \defgroup standardManipulators standard manipulators
+        \ingroup std_io
+
+        \addtogroup iosManipulators ios_base manipulators
+        \ingroup std_io
+
+        \addtogroup ostreamInserters ostream inserters
+        \ingroup std_io
+        
+        \addtogroup ostreamManipulators ostream manipulators
+        \ingroup std_io
+        
+
+*/
