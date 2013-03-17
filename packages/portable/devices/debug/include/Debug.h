@@ -21,7 +21,7 @@ namespace os
 
 #if defined(DEBUG)
 
-      // Constructor/Destructor are used only for informative purposes
+      // Constructors/Destructor are used only for informative purposes
       // if DEBUG is enabled.
       Debug();
       ~Debug();
