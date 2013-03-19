@@ -83,6 +83,7 @@ Toolchain(
                     compilerOptimisationOptions='-O0',
                     
                     cpp=Tool(
+                        # 4.6 is too old for -std=c++11
                         standard='-std=c++0x',
                     ),
                     
@@ -160,9 +161,86 @@ Toolchain(
             compilerOptimisationOptions='-Os',
             
             children=[
-                   
-                # TODO: add release definitions
-                   
+
+                Toolchain(
+                          
+                    id='toolchain.osx.release.mp.gcc46',
+                    name='OS X MacPorts Release GCC 4.6',
+                    description='The OS X MacPorts GCC 4.6 toolchain for debug builds',
+                    
+                    category='base',
+
+                    programNameSuffix='-mp-4.6',
+                    
+                    # to keep gdb happy, disable optimisations
+                    compilerOptimisationOptions='-O0',
+                    
+                    cpp=Tool(
+                        # 4.6 is too old for -std=c++11
+                        standard='-std=c++0x',
+                    ),
+                    
+                    children=[
+                        Toolchain(
+                            id='toolchain.osx.release.mp.gcc46.x64',
+                            name='OS X MacPorts Release GCC 4.6 x86_64',
+                            description='The OS X MacPorts GCC 4.6 x86_64 toolchain for release builds',
+                            
+                            category='release',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                            id='toolchain.osx.release.mp.gcc46.x32',
+                            name='OS X MacPorts Release GCC 4.6 i386',
+                            description='The OS X MacPorts GCC 4.6 i386 toolchain for release builds',
+
+                            category='release',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],
+                ),
+
+                Toolchain(
+                          
+                    id='toolchain.osx.release.mp.gcc47',
+                    name='OS X MacPorts Release GCC 4.7',
+                    description='The OS X MacPorts GCC 4.7 toolchain for release builds',
+                    
+                    category='base',
+
+                    programNameSuffix='-mp-4.7',
+                    
+                    # to keep gdb happy, disable optimisations
+                    compilerOptimisationOptions='-O0',
+                    
+                    children=[
+                              
+                        Toolchain(
+                                  
+                            id='toolchain.osx.release.mp.gcc47.x64',
+                            name='OS X MacPorts Release GCC 4.7 x86_64',
+                            description='The OS X MacPorts GCC 4.7 x86_64 toolchain for release builds',
+                            
+                            category='release',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                                  
+                            id='toolchain.osx.release.mp.gcc47.x32',
+                            name='OS X MacPorts Release GCC 4.7 i386',
+                            description='The OS X MacPorts GCC 4.7 i386 toolchain for release builds',
+
+                            category='release',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],
+                ),                      
             ],
         ),
     ],
