@@ -39,9 +39,27 @@
 #define OS_STRING_VERSION               OS_STRING_VERSION_MAJOR "." OS_STRING_VERSION_MINOR "." OS_STRING_VERSION_REVISION
 
 #if defined(__clang__)
+
+#if defined(__x86_64__)
+#define OS_STRING_GREETING              "uOS++ v" OS_STRING_VERSION ", clang " __clang_version__ " x86_64"
+#elif defined(__i386__)
+#define OS_STRING_GREETING              "uOS++ v" OS_STRING_VERSION ", clang " __clang_version__ " i386"
+#else
 #define OS_STRING_GREETING              "uOS++ v" OS_STRING_VERSION ", clang " __clang_version__
+#endif
+
 #elif defined(__GNUC__)
+
+#if defined(__x86_64__)
+#define OS_STRING_GREETING              "uOS++ v" OS_STRING_VERSION ", GCC " __VERSION__ " x86_64"
+#elif defined(__i386__)
+#define OS_STRING_GREETING              "uOS++ v" OS_STRING_VERSION ", GCC " __VERSION__ " i386"
+#else
 #define OS_STRING_GREETING              "uOS++ v" OS_STRING_VERSION ", GCC " __VERSION__
+#endif
+
+#else
+#error "Unsupported compiler"
 #endif
 
 // Make sure that this is not defined, to skip unwanted code
