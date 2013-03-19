@@ -299,7 +299,7 @@ namespace os
         // end of \name Constructors/destructor
 
         // \name Assignment (27.6.3.3.1)
-        /// \name Assignment methods
+        /// \name Assign/swap/move methods
         /// @{
 
         /// \brief Protected assignment operator.
