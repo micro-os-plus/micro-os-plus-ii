@@ -25,6 +25,7 @@ Toolchain(
     compilerWarningOptions='-Wall',
     
     compilerMiscOptions='-fsigned-char -fmessage-length=0 -c',
+    compilerPreprocessorOptions='-D__MICRO_OS_PLUS_PLUS__=1',
     compilerDebugOptions='-g3',
     compilerOptimisationOptions='-O0',
     
