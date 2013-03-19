@@ -86,7 +86,7 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
     template<class _CharT, class _Traits>
-      _LIBCPP_INLINE_VISIBILITY
+      inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<_CharT, _Traits>&
       operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_resetiosflags& x)
         {
@@ -166,7 +166,7 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
     template<class _CharT, class _Traits>
-      _LIBCPP_INLINE_VISIBILITY
+      inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<_CharT, _Traits>&
       operator<<(basic_ostream<_CharT, _Traits>& outs,
           const __iom_setiosflags& __x) {
@@ -250,7 +250,7 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
     template<class _CharT, class _Traits>
-      _LIBCPP_INLINE_VISIBILITY
+      inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<_CharT, _Traits>&
       operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_setbase& __x) {
       outs.setf(__x.m_base == 8 ? ios_base::oct :
@@ -391,7 +391,7 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
     template<class _CharT, class _Traits>
-      _LIBCPP_INLINE_VISIBILITY
+      inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<_CharT, _Traits>&
       operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_setprecision& x)
         {
@@ -473,7 +473,7 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
     template<class _CharT, class _Traits>
-      _LIBCPP_INLINE_VISIBILITY
+      inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<_CharT, _Traits>&
       operator<<(basic_ostream<_CharT, _Traits>& outs, const __iom_setw& x)
         {
