@@ -48,7 +48,8 @@ Configuration(
             artifactFileName='fpos.elf',
             
             children=[
-                            
+                   
+                # LLVM x64         
                 Configuration(
                     id='config.os.portable.language.cpp.tests.fpos.osx.x64.llvm.debug',
                     name='Debug OS X C++ fpos configuration with x86_64 LLVM',
@@ -77,6 +78,7 @@ Configuration(
                     toolchain='toolchain.osx.release.llvm.x64',
                 ),
 
+                # GCC 4.7 x64
                 Configuration(
                     id='config.os.portable.language.cpp.tests.fpos.osx.x64.gcc47.debug',
                     name='Debug OS X C++ fpos configuration with x86_64 GCC 4.7',
@@ -92,6 +94,41 @@ Configuration(
                       
                     toolchain='toolchain.osx.debug.mp.gcc47.x64',                    
                 ),
+                      
+                # GCC 4.7 x32
+                Configuration(
+                    id='config.os.portable.language.cpp.tests.fpos.osx.x32.gcc47.debug',
+                    name='Debug OS X C++ fpos configuration with i386 GCC 4.7',
+                    description='Debug build configuration for fpos.',
+                    
+                    buildConfigurationName='osx_fpos_x32_gcc47_Debug',
+                    
+                    buildFolder='$(PARENT)/x32/gcc47/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.osx.debug.mp.gcc47.x32',                    
+                ),
+                      
+                # GCC 4.6 x32
+                Configuration(
+                    id='config.os.portable.language.cpp.tests.fpos.osx.x32.gcc46.debug',
+                    name='Debug OS X C++ fpos configuration with i386 GCC 4.6',
+                    description='Debug build configuration for fpos.',
+                    
+                    buildConfigurationName='osx_fpos_x32_gcc46_Debug',
+                    
+                    buildFolder='$(PARENT)/x32/gcc46/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.osx.debug.mp.gcc46.x32',                    
+                ),
+
             ],
         ),
     ],
