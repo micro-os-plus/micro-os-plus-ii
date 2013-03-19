@@ -14,4 +14,9 @@ stdout and xml file.',
     sourceFiles=[
         'main.cpp',
     ],
+        
+    includeFiles=[
+        'config.py',
+    ],
+
 )

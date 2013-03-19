@@ -47,11 +47,14 @@ Configuration(
             artifactFileName='testsuite.elf',
             
             children=[
-                            
+                       
+                # LLVM x64     
                 Configuration(
                     id='config.os.portable.infrastructure.tests.testsuite.osx.x64.llvm.debug',
                     name='Debug OS X TestSuite configuration with x86_64 LLVM',
                     description='Debug build configuration for TestSuite',
+                    
+                    buildConfigurationName='osx_testsuite_x64_llvm_Debug',
                     
                     buildFolder='$(PARENT)/x64/llvm/Debug',
                     
@@ -59,7 +62,7 @@ Configuration(
                         'enable("DEBUG")',
                     ],
                       
-                    toolchain='toolchain.osx.x64.llvm.debug',
+                    toolchain='toolchain.osx.debug.llvm.x64',
                 ),
 
                 Configuration(
@@ -67,13 +70,11 @@ Configuration(
                     name='Release OS X TestSuite configuration with x86_64 LLVM',
                     description='Release build configuration for TestSuite',
                     
+                    buildConfigurationName='osx_testsuite_x64_llvm_Release',
+                    
                     buildFolder='$(PARENT)/x64/llvm/Release',
                     
-                    requirements=[
-                        #'enable("DEBUG")',
-                    ],
-                      
-                    toolchain='toolchain.osx.x64.llvm.release',
+                    toolchain='toolchain.osx.release.llvm.x64',
                 ),
 
 
