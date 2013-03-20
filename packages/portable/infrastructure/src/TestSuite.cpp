@@ -66,7 +66,7 @@ namespace os
       TestSuite<ImplT>::__init(void)
       {
         m_pClassName = nullptr; // initialise pointer to class name
-        m_pFunctionName = nullptr; // initialise pointer to method name
+        m_pFunctionName = nullptr; // initialise pointer to member function name
         m_pInputValues = nullptr; // initialise pointer to input values
         m_pPreconditions = nullptr; // initialise pointer to preconditions
 
