@@ -65,7 +65,7 @@ runTestTypes(void)
   // from LLVM input.output/stream.buffers/streambuf/types.pass.cpp
   ts.reportInfo("Test if types are properly expanded");
     {
-      ts.setMethodNameOrPrefix("types");
+      ts.setFunctionNameOrPrefix("types");
 
       ts.assertCondition((os::std::is_same<streambuf::char_type, char>::value));
       ts.assertCondition((os::std::is_same<streambuf::traits_type, char_traits<char> >::value));
@@ -124,7 +124,7 @@ runTestConstructor(void)
   // — all its pointer member objects to null pointers,
   ts.reportInfo("Test if constructor clears pointer members");
     {
-      ts.setMethodNameOrPrefix("basic_streambuf()");
+      ts.setFunctionNameOrPrefix("basic_streambuf()");
 
       TestConstructor<char> t;
     }
@@ -203,7 +203,7 @@ runTestCopyConstructor(void)
   // Postconditions: ...
   ts.reportInfo("Test copy constructor with default pointer members");
     {
-      ts.setMethodNameOrPrefix("basic_streambuf(&)");
+      ts.setFunctionNameOrPrefix("basic_streambuf(&)");
       ts.setPreconditions("default");
 
       TestCopyConstructor<char> t;
@@ -212,7 +212,7 @@ runTestCopyConstructor(void)
 
   ts.reportInfo("Test copy constructor with different pointer members");
     {
-      ts.setMethodNameOrPrefix("basic_streambuf(&)");
+      ts.setFunctionNameOrPrefix("basic_streambuf(&)");
       ts.setPreconditions("different");
 
       char g1, g2, g3, p1, p3;
@@ -254,7 +254,7 @@ runTestPositioning(void)
   // test/input.output/stream.buffers/streambuf/streambuf.cons/pubseekoff.pass.cpp
   ts.reportInfo("Test initial streambuf::pubseekoff()");
     {
-      ts.setMethodNameOrPrefix("pubseekoff()");
+      ts.setFunctionNameOrPrefix("pubseekoff()");
 
       TestPositioning<char> t;
       ts.assertCondition(t.pubseekoff(0, ios_base::beg) == -1);
@@ -265,7 +265,7 @@ runTestPositioning(void)
   // test/input.output/stream.buffers/streambuf/streambuf.cons/pubseekpos.pass.cpp
   ts.reportInfo("Test initial streambuf::pubseekpos()");
     {
-      ts.setMethodNameOrPrefix("pubseekpos()");
+      ts.setFunctionNameOrPrefix("pubseekpos()");
 
       TestPositioning<char> t;
       ts.assertCondition(t.pubseekpos(0, ios_base::app) == -1);
@@ -274,7 +274,7 @@ runTestPositioning(void)
   // inspired from LLVM libcxx
   // test/input.output/stream.buffers/streambuf/streambuf.cons/pubsetbuf.pass.cpp
   ts.reportInfo("Test initial streambuf::pubsetbuf()");
-  ts.setMethodNameOrPrefix("pubsetbuf()");
+  ts.setFunctionNameOrPrefix("pubsetbuf()");
     {
       TestPositioning<char> t;
       ts.assertCondition(t.pubsetbuf(0, 0) == &t);
@@ -284,7 +284,7 @@ runTestPositioning(void)
   // test/input.output/stream.buffers/streambuf/streambuf.cons/pubsync.pass.cpp
   ts.reportInfo("Test initial streambuf::pubsync()");
     {
-      ts.setMethodNameOrPrefix("pubsync()");
+      ts.setFunctionNameOrPrefix("pubsync()");
 
       TestPositioning<char> t;
       ts.assertCondition(t.pubsync() == 0);
@@ -339,7 +339,7 @@ runTestInAvail(void)
 {
   ts.reportInfo("Test streambuf::in_avail()");
     {
-      ts.setMethodNameOrPrefix("in_avail()");
+      ts.setFunctionNameOrPrefix("in_avail()");
 
       TestInAvail<char> t;
       ts.assertCondition(t.in_avail() == 5);
@@ -398,7 +398,7 @@ runTestSbumpc(void)
 {
   ts.reportInfo("Test streambuf::sbumpc()");
     {
-      ts.setMethodNameOrPrefix("sbumpc()");
+      ts.setFunctionNameOrPrefix("sbumpc()");
 
       TestSbumpc t;
       ts.assertCondition(t.uflow_called == 0);
@@ -461,7 +461,7 @@ runTestSgetc(void)
 {
   ts.reportInfo("Test streambuf::sgetc()");
     {
-      ts.setMethodNameOrPrefix("sgetc()");
+      ts.setFunctionNameOrPrefix("sgetc()");
 
       TestSgetc t;
       ts.assertCondition(t.underflow_called == 0);
@@ -517,7 +517,7 @@ runTestSgetn(void)
 {
   ts.reportInfo("Test streambuf::sgetn()");
     {
-      ts.setMethodNameOrPrefix("sgetn()");
+      ts.setFunctionNameOrPrefix("sgetn()");
 
       TestSgetn t;
       ts.assertCondition(t.xsgetn_called == 0);
@@ -574,7 +574,7 @@ runTestSnextc(void)
 {
   ts.reportInfo("Test streambuf::snextc()");
     {
-      ts.setMethodNameOrPrefix("snextc()");
+      ts.setFunctionNameOrPrefix("snextc()");
 
       TestSnextc t;
       ts.assertCondition(t.uflow_called == 0);
@@ -637,7 +637,7 @@ runTestSputback(void)
 {
   ts.reportInfo("Test streambuf::sputbackc()");
     {
-      ts.setMethodNameOrPrefix("sputbackc()");
+      ts.setFunctionNameOrPrefix("sputbackc()");
 
       TestSputback t;
       ts.assertCondition(t.pbackfail_called == 0);
@@ -700,7 +700,7 @@ runTestSungetc(void)
 {
   ts.reportInfo("Test streambuf::sungetc()");
     {
-      ts.setMethodNameOrPrefix("sungetc()");
+      ts.setFunctionNameOrPrefix("sungetc()");
 
       TestSungetc t;
       ts.assertCondition(t.pbackfail_called == 0);
@@ -769,7 +769,7 @@ runTestSputc(void)
 {
   ts.reportInfo("Test streambuf::sputc()");
     {
-      ts.setMethodNameOrPrefix("sputc()");
+      ts.setFunctionNameOrPrefix("sputc()");
       ts.setPreconditions("nosetp");
 
       TestSputc t;
@@ -778,12 +778,12 @@ runTestSputc(void)
       ts.assertCondition(t.overflow_called == 1);
       char out[3] =
         { 0 };
-      ts.setMethodNameOrPrefix("sputc()_setp_A");
+      ts.setFunctionNameOrPrefix("sputc()_setp_A");
       t.setp(out, out + sizeof(out));
       ts.assertCondition(t.sputc('A') == 'A');
       ts.assertCondition(t.overflow_called == 1);
       ts.assertCondition(out[0] == 'A');
-      ts.setMethodNameOrPrefix("sputc()_setp_B");
+      ts.setFunctionNameOrPrefix("sputc()_setp_B");
       ts.assertCondition(t.sputc('B') == 'B');
       ts.assertCondition(t.overflow_called == 1);
       ts.assertCondition(out[0] == 'A');
@@ -832,7 +832,7 @@ runTestSputn(void)
 {
   ts.reportInfo("Test streambuf::sputn()");
     {
-      ts.setMethodNameOrPrefix("sputn()");
+      ts.setFunctionNameOrPrefix("sputn()");
 
       TestSputn t;
       ts.assertCondition(t.xsputn_called == 0);
@@ -901,7 +901,7 @@ runTestAssignOperator(void)
     {
       ts.reportInfo("Test streambuf::operator=() with default members");
         {
-          ts.setMethodNameOrPrefix("operator=()");
+          ts.setFunctionNameOrPrefix("operator=()");
           ts.setPreconditions("default");
 
           TestAssignOperator<char> t;
@@ -919,7 +919,7 @@ runTestAssignOperator(void)
 
       ts.reportInfo("Test streambuf::operator=() with different members");
         {
-          ts.setMethodNameOrPrefix("operator=()");
+          ts.setFunctionNameOrPrefix("operator=()");
           ts.setPreconditions("different");
 
           char g1, g2, g3, p1, p3;
@@ -1034,7 +1034,7 @@ runTestSwap(void)
 {
   ts.reportInfo("Test streambuf::swap() with default members");
     {
-      ts.setMethodNameOrPrefix("swap()");
+      ts.setFunctionNameOrPrefix("swap()");
       ts.setPreconditions("default");
 
       TestSwap<char> t;
@@ -1067,7 +1067,7 @@ runTestSwap(void)
 
   ts.reportInfo("Test streambuf::swap() with different members");
     {
-      ts.setMethodNameOrPrefix("swap()");
+      ts.setFunctionNameOrPrefix("swap()");
       ts.setPreconditions("different");
 
       char g1, g2, g3, p1, p3;
@@ -1177,7 +1177,7 @@ runTestGbump(void)
 {
   ts.reportInfo("Test streambuf::gbump()");
     {
-      ts.setMethodNameOrPrefix("gbump()");
+      ts.setFunctionNameOrPrefix("gbump()");
 
       TestGbump<char> t;
       char in[] = "ABCDE";
@@ -1235,7 +1235,7 @@ runTestSetg(void)
 {
   ts.reportInfo("Test streambuf::setg()");
     {
-      ts.setMethodNameOrPrefix("setg()");
+      ts.setFunctionNameOrPrefix("setg()");
 
       TestSetg<char> t;
       char in[] = "ABC";
@@ -1305,12 +1305,12 @@ runTestPbump(void)
       char in[] = "ABCDE";
       t.setp(in, in + sizeof(in) / sizeof(in[0]));
 
-      ts.setMethodNameOrPrefix("pbump()");
+      ts.setFunctionNameOrPrefix("pbump()");
       ts.setInputValues("2");
 
       t.pbump(2);
 
-      ts.setMethodNameOrPrefix("pbump()");
+      ts.setFunctionNameOrPrefix("pbump()");
       ts.setInputValues("1");
 
       t.pbump(1);
@@ -1367,7 +1367,7 @@ runTestSetp()
 {
   ts.reportInfo("Test streambuf::setp()");
     {
-      ts.setMethodNameOrPrefix("setp()");
+      ts.setFunctionNameOrPrefix("setp()");
 
       TestSetp<char> t;
       char in[] = "ABC";
@@ -1438,7 +1438,7 @@ runTestShowmanyc()
 {
   ts.reportInfo("Test streambuf::showmanyc()");
     {
-      ts.setMethodNameOrPrefix("showmanyc()");
+      ts.setFunctionNameOrPrefix("showmanyc()");
 
       TestShowmanycBase<char> t;
 
@@ -1448,7 +1448,7 @@ runTestShowmanyc()
     }
 
     {
-      ts.setMethodNameOrPrefix("showmanyc()");
+      ts.setFunctionNameOrPrefix("showmanyc()");
       ts.setPreconditions("reference");
 
       TestShowmanycCustom<char> t;
@@ -1456,7 +1456,7 @@ runTestShowmanyc()
 
       ts.assertCondition(t.showmanyc_called == 0);
       // Call it via reference to base class, to check both virtual call
-      // and further call to base class method
+      // and further call to base class member function
       ts.assertCondition(t2.in_avail() == 0);
       ts.assertCondition(t.showmanyc_called == 1);
     }
@@ -1514,7 +1514,7 @@ runTestUflow(void)
 {
   ts.reportInfo("Test streambuf::uflow()");
     {
-      ts.setMethodNameOrPrefix("uflow()");
+      ts.setFunctionNameOrPrefix("uflow()");
 
       TestUflowBase t;
       // This class does not overwrite uflow(), it should use the
@@ -1523,14 +1523,14 @@ runTestUflow(void)
     }
 
     {
-      ts.setMethodNameOrPrefix("uflow()");
+      ts.setFunctionNameOrPrefix("uflow()");
       ts.setPreconditions("reference");
 
       TestUflowCustom t;
       basic_streambuf<char>& t2 = t;
       ts.assertCondition(t.uflow_count == 0);
       // Call it via reference to base class, to check both virtual call
-      // and further call to base class method
+      // and further call to base class member function
       ts.assertCondition(t2.sbumpc() == char_traits<char>::eof());
       ts.assertCondition(t.uflow_count == 1);
     }
@@ -1588,14 +1588,14 @@ runTestUnderflow()
 {
   ts.reportInfo("Test streambuf::underflow()");
     {
-      ts.setMethodNameOrPrefix("underflow()");
+      ts.setFunctionNameOrPrefix("underflow()");
 
       TestUnderflowBase t;
       ts.assertCondition(t.sgetc() == char_traits<char>::eof());
     }
 
     {
-      ts.setMethodNameOrPrefix("underflow()");
+      ts.setFunctionNameOrPrefix("underflow()");
       ts.setPreconditions("reference");
 
       TestUnderflowCustom t;
@@ -1603,7 +1603,7 @@ runTestUnderflow()
 
       ts.assertCondition(t.underflow_count == 0);
       // Call it via reference to base class, to check both virtual call
-      // and further call to base class method
+      // and further call to base class member function
       ts.assertCondition(t2.sgetc() == char_traits<char>::eof());
       ts.assertCondition(t.underflow_count == 1);
     }
@@ -1644,7 +1644,7 @@ runTestXsgetn(void)
 {
   ts.reportInfo("Test streambuf::xsgetn()");
     {
-      ts.setMethodNameOrPrefix("xsgetn()");
+      ts.setFunctionNameOrPrefix("xsgetn()");
 
       TestXsgetn t;
       char input[7] = "123456";
@@ -1709,21 +1709,21 @@ runTestPbackfail(void)
 {
   ts.reportInfo("Test streambuf::pbackfail()");
     {
-      ts.setMethodNameOrPrefix("pbackfail()");
+      ts.setFunctionNameOrPrefix("pbackfail()");
 
       TestPbackfailBase t;
       ts.assertCondition(t.sputbackc('A') == char_traits<char>::eof());
     }
 
     {
-      ts.setMethodNameOrPrefix("pbackfail()");
+      ts.setFunctionNameOrPrefix("pbackfail()");
       ts.setPreconditions("reference");
 
       TestPbackfailCustom t;
       basic_streambuf<char>& t2 = t;
       ts.assertCondition(t.pbackfail_called == 0);
       // Call it via reference to base class, to check both virtual call
-      // and further call to base class method
+      // and further call to base class member function
       ts.assertCondition(t2.sputbackc('A') == char_traits<char>::eof());
       ts.assertCondition(t.pbackfail_called == 1);
     }
@@ -1783,21 +1783,21 @@ runTestOverflow(void)
 {
   ts.reportInfo("Test streambuf::overflow()");
     {
-      ts.setMethodNameOrPrefix("overflow()");
+      ts.setFunctionNameOrPrefix("overflow()");
 
       TestOverflowBase t;
       ts.assertCondition(t.sputc('A') == char_traits<char>::eof());
     }
 
     {
-      ts.setMethodNameOrPrefix("overflow()");
+      ts.setFunctionNameOrPrefix("overflow()");
       ts.setPreconditions("reference");
 
       TestOverflowCustom t;
       basic_streambuf<char>& t2 = t;
       ts.assertCondition(t.overflow_count == 0);
       // Call it via reference to base class, to check both virtual call
-      // and further call to base class method
+      // and further call to base class member function
       ts.assertCondition(t2.sputc('A') == char_traits<char>::eof());
       ts.assertCondition(t.overflow_count == 1);
     }
@@ -1838,7 +1838,7 @@ runTestXsputn()
 {
   ts.reportInfo("Test streambuf::xsputn()");
     {
-      ts.setMethodNameOrPrefix("xsputn()");
+      ts.setFunctionNameOrPrefix("xsputn()");
 
       TestXsputn t;
       char in[] = "123456";

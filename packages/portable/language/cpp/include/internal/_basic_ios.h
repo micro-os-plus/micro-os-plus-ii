@@ -70,7 +70,7 @@ namespace os
         // end of \name Standard template types
 
         // \name Flags functions (27.5.5.4)
-        /// \name Flags methods
+        /// \name Flags member functions
         /// @{
 
         /// \brief  Check if the stream status is ok.
@@ -189,7 +189,7 @@ namespace os
         // 27.5.5.3 Members:
 
         // \name Member functions (27.5.5.3)
-        /// \name Methods
+        /// \name Member functions
         /// @{
 
         /// \brief  Get the current \e tied stream.
@@ -281,7 +281,7 @@ namespace os
         /// @}
         // end of \name Member functions (27.5.5.3)
 
-        /// \name Assign/swap/move methods
+        /// \name Assign/swap/move member functions
         /// @{
 
         /// \brief  Copy fields of rhs into this.
@@ -292,7 +292,7 @@ namespace os
         copyfmt(const basic_ios& rhs);
 
         /// @}
-        // end of \name Assign/swap/move methods
+        // end of \name Assign/swap/move member functions
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
         void
@@ -315,7 +315,7 @@ namespace os
         /// @}
         // end of \name Constructors/destructor
 
-        /// \name Methods
+        /// \name Member functions
         /// @{
 
         /// \brief  All setup is performed here.
@@ -337,9 +337,9 @@ namespace os
         set_rdbuf(basic_streambuf<_CharT, _Traits>* sb);
 
         /// @}
-        // end of \name Methods
+        // end of \name Member functions
 
-        /// \name Assign/swap/move methods
+        /// \name Assign/swap/move member functions
         /// @{
 
         /// \brief  Move all members.
@@ -368,7 +368,7 @@ namespace os
         swap(basic_ios& rhs) _NOEXCEPT;
 
         /// @}
-        // end of \name Assign/swap/move methods
+        // end of \name Assign/swap/move member functions
 
 
         // Data members
@@ -397,7 +397,7 @@ namespace os
       };
 
     // ========================================================================
-    // inline methods
+    // inline member functions
 
     // 27.5.5.2 basic_ios constructors
 

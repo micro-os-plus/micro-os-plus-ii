@@ -68,7 +68,7 @@ runTestTypes()
 {
   ts.reportInfo("Test basic_ios types definitions");
 
-  ts.setMethodNameOrPrefix("types");
+  ts.setFunctionNameOrPrefix("types");
 
   ts.assertCondition((os::std::is_base_of<ios_base, basic_ios<char> >::value));
   ts.assertCondition((os::std::is_same<basic_ios<char>::char_type, char>::value));
@@ -92,7 +92,7 @@ runTestConstructors()
   ts.reportInfo("Test basic_ios initialisations");
 
     {
-      ts.setMethodNameOrPrefix("basic_ios()");
+      ts.setFunctionNameOrPrefix("basic_ios()");
       ts.setInputValues("0");
 
       streambuf* sb = 0;
@@ -110,7 +110,7 @@ runTestConstructors()
 #endif
     }
     {
-      ts.setMethodNameOrPrefix("basic_ios()");
+      ts.setFunctionNameOrPrefix("basic_ios()");
       ts.setInputValues("1");
 
       streambuf* sb = (streambuf*) 1;
@@ -157,7 +157,7 @@ runTestIostateFlags()
   };
 
     {
-      ts.setMethodNameOrPrefix("bad()");
+      ts.setFunctionNameOrPrefix("bad()");
       ts.setPreconditions("ios(0)");
 
       ios ios(0);
@@ -166,7 +166,7 @@ runTestIostateFlags()
       ts.assertConditionWithDetails(ios.bad(), "setstate(ios::eofbit)");
     }
     {
-      ts.setMethodNameOrPrefix("bad()");
+      ts.setFunctionNameOrPrefix("bad()");
       ts.setPreconditions("ios(&)");
 
       testbuf sb;
@@ -180,7 +180,7 @@ runTestIostateFlags()
       ts.assertConditionWithDetails(ios.bad(), "setstate(ios::badbit)");
     }
     {
-      ts.setMethodNameOrPrefix("bool()");
+      ts.setFunctionNameOrPrefix("bool()");
 
       ios ios(0);
       ts.assertConditionWithDetails(static_cast<bool>(ios) == !ios.fail(), "constructor");
@@ -189,7 +189,7 @@ runTestIostateFlags()
     }
   // TODO: add exception case
     {
-      ts.setMethodNameOrPrefix("clear()");
+      ts.setFunctionNameOrPrefix("clear()");
       ts.setPreconditions("ios(&)");
 
       testbuf sb;
@@ -203,7 +203,7 @@ runTestIostateFlags()
       ts.assertCondition(ios.rdstate() == ios::eofbit);
     }
     {
-      ts.setMethodNameOrPrefix("eof()");
+      ts.setFunctionNameOrPrefix("eof()");
       ts.setPreconditions("ios(0)");
 
       ios ios(0);
@@ -212,7 +212,7 @@ runTestIostateFlags()
       ts.assertConditionWithDetails(ios.eof(), "setstate(ios::eofbit)");
     }
     {
-      ts.setMethodNameOrPrefix("eof()");
+      ts.setFunctionNameOrPrefix("eof()");
       ts.setPreconditions("ios(&)");
 
       testbuf sb;
@@ -223,7 +223,7 @@ runTestIostateFlags()
     }
   // TODO: add exception case
     {
-      ts.setMethodNameOrPrefix("exceptions()");
+      ts.setFunctionNameOrPrefix("exceptions()");
       ts.setPreconditions("ios(&)");
 
       testbuf sb;
@@ -235,7 +235,7 @@ runTestIostateFlags()
       ts.assertCondition(ios.exceptions() == ios::badbit);
     }
     {
-      ts.setMethodNameOrPrefix("fail()");
+      ts.setFunctionNameOrPrefix("fail()");
       ts.setPreconditions("ios(0)");
 
       ios ios(0);
@@ -244,7 +244,7 @@ runTestIostateFlags()
       ts.assertConditionWithDetails(ios.fail(), "setstate(ios::eofbit)");
     }
     {
-      ts.setMethodNameOrPrefix("fail()");
+      ts.setFunctionNameOrPrefix("fail()");
       ts.setPreconditions("ios(&)");
 
       testbuf sb;
@@ -258,14 +258,14 @@ runTestIostateFlags()
       ts.assertConditionWithDetails(ios.fail(), "setstate(ios::failbit)");
     }
     {
-      ts.setMethodNameOrPrefix("good()");
+      ts.setFunctionNameOrPrefix("good()");
       ts.setPreconditions("ios(0)");
 
       ios ios(0);
       ts.assertCondition(!ios.good());
     }
     {
-      ts.setMethodNameOrPrefix("good()");
+      ts.setFunctionNameOrPrefix("good()");
       ts.setPreconditions("ios(&)");
 
       testbuf sb;
@@ -275,7 +275,7 @@ runTestIostateFlags()
       ts.assertCondition(!ios.good());
     }
     {
-      ts.setMethodNameOrPrefix("not()");
+      ts.setFunctionNameOrPrefix("not()");
       ts.setPreconditions("ios(0)");
 
       ios ios(0);
@@ -284,7 +284,7 @@ runTestIostateFlags()
       ts.assertConditionWithDetails(!ios == ios.fail(), "setstate(ios::failbit)");
     }
     {
-      ts.setMethodNameOrPrefix("rdstate()");
+      ts.setFunctionNameOrPrefix("rdstate()");
       ts.setPreconditions("ios(0)");
 
       ios ios(0);
@@ -294,7 +294,7 @@ runTestIostateFlags()
     }
   // TODO: add exceptions case
     {
-      ts.setMethodNameOrPrefix("setstate()");
+      ts.setFunctionNameOrPrefix("setstate()");
       ts.setPreconditions("ios(&)");
 
       testbuf sb;
@@ -326,14 +326,14 @@ runTestMembers()
   ts.reportInfo("Test basic_ios members");
 
     {
-      ts.setMethodNameOrPrefix("fill()");
+      ts.setFunctionNameOrPrefix("fill()");
       ts.setPreconditions("ios(0)");
 
       const ios ios(0);
       ts.assertCondition(ios.fill() == ' ');
     }
     {
-      ts.setMethodNameOrPrefix("fill('*')");
+      ts.setFunctionNameOrPrefix("fill('*')");
       ts.setPreconditions("ios(0)");
 
       ios ios(0);
@@ -343,7 +343,7 @@ runTestMembers()
       ts.assertCondition(ios.fill() == '*');
     }
     {
-      ts.setMethodNameOrPrefix("narrow()");
+      ts.setFunctionNameOrPrefix("narrow()");
       ts.setPreconditions("ios(0)");
 
       const ios ios(0);
@@ -351,14 +351,14 @@ runTestMembers()
       ts.assertCondition(ios.narrow('\xFE', '*') == '*');
     }
     {
-      ts.setMethodNameOrPrefix("rdbuf()");
+      ts.setFunctionNameOrPrefix("rdbuf()");
       ts.setPreconditions("ios(0)");
 
       const ios ios(0);
       ts.assertCondition(ios.rdbuf() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("rdbuf()");
+      ts.setFunctionNameOrPrefix("rdbuf()");
       ts.setPreconditions("ios(&)");
 
       streambuf* sb = (streambuf*) 1;
@@ -366,7 +366,7 @@ runTestMembers()
       ts.assertCondition(ios.rdbuf() == sb);
     }
     {
-      ts.setMethodNameOrPrefix("rdbuf(&)");
+      ts.setFunctionNameOrPrefix("rdbuf(&)");
       ts.setPreconditions("streambuf_ios(0)");
 
       ios ios(0);
@@ -378,7 +378,7 @@ runTestMembers()
       ts.assertCondition(ios.rdbuf() == sb);
       ts.assertCondition(ios.good());
 
-      ts.setMethodNameOrPrefix("rdbuf(&)");
+      ts.setFunctionNameOrPrefix("rdbuf(&)");
       ts.setInputValues("0");
       ts.setPreconditions("streambuf_ios(0)");
 
@@ -388,14 +388,14 @@ runTestMembers()
       ts.assertCondition(ios.bad());
     }
     {
-      ts.setMethodNameOrPrefix("tie()");
+      ts.setFunctionNameOrPrefix("tie()");
       ts.setPreconditions("ios(0)");
 
       const basic_ios<char> ios(0);
       ts.assertCondition(ios.tie() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("widen(ch)");
+      ts.setFunctionNameOrPrefix("widen(ch)");
       ts.setPreconditions("ios(0)");
 
       const ios ios(0);

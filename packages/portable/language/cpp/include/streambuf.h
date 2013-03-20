@@ -127,7 +127,7 @@ namespace os
         // end of \name Constructors/destructor
 
         // \name Public locale functions (27.6.3.2.1)
-        /// \name Locale methods
+        /// \name Locale member functions
         /// @{
 
         /// \brief  Public entry point for `imbue()`, to set new `locale`.
@@ -146,7 +146,7 @@ namespace os
         /// @}
 
         // \name Public buffer management and positioning functions (27.6.3.2.2)
-        /// \name Buffer management and positioning methods
+        /// \name Buffer management and positioning member functions
         /// @{
 
         /// \brief  Public entry points for `setbuf()`, to define a buffer.
@@ -190,7 +190,7 @@ namespace os
         /// @}
 
         // \name Public get area functions (27.6.3.2.3)
-        /// \name Get area methods
+        /// \name Get area member functions
         /// @{
 
         /// \brief  Public look ahead into the input stream.
@@ -237,7 +237,7 @@ namespace os
         /// @}
 
         // \name Public putback (27.6.3.2.4)
-        /// \name Putback methods
+        /// \name Putback member functions
         /// @{
 
         /// \brief  Public push one character back into the input stream.
@@ -258,7 +258,7 @@ namespace os
         /// @}
 
         // \name Put area (27.6.3.2.5)
-        /// \name Put area methods
+        /// \name Put area member functions
         /// @{
 
         /// \brief  Public put a single-character to the output stream.
@@ -299,7 +299,7 @@ namespace os
         // end of \name Constructors/destructor
 
         // \name Assignment (27.6.3.3.1)
-        /// \name Assign/swap/move methods
+        /// \name Assign/swap/move member functions
         /// @{
 
         /// \brief Protected assignment operator.
@@ -319,7 +319,7 @@ namespace os
         /// @}
 
         // \name Get area access (27.6.3.3.2)
-        /// \name Get area access methods
+        /// \name Get area access member functions
         /// @{
 
         /// \brief  Protected get the read beginning pointer.
@@ -370,7 +370,7 @@ namespace os
         /// @}
 
         // \name Put area access (27.6.3.3.3)
-        /// \name Put area access methods
+        /// \name Put area access member functions
         /// @{
 
         /// \brief  Protected get the write beginning pointer.
@@ -422,7 +422,7 @@ namespace os
         // 27.6.3.4 virtual functions
 
         // \name Locales (27.6.3.4.1)
-        /// \name Locale methods
+        /// \name Locale member functions
         /// @{
 
         /// \brief  Protected set a new `locale`.
@@ -436,7 +436,7 @@ namespace os
         /// @}
 
         // \name Buffer management and positioning (27.6.3.4.2)
-        /// \name Buffer management and positioning methods
+        /// \name Buffer management and positioning member functions
         /// @{
 
         /// \brief  Protected manipulate the buffer.
@@ -474,7 +474,7 @@ namespace os
         /// @}
 
         // \name Get area (27.6.3.4.3)
-        /// \name Get area methods
+        /// \name Get area member functions
         /// @{
 
         /// \brief  Protected check if any input data available.
@@ -514,7 +514,7 @@ namespace os
         /// @}
 
         // \name Putback (27.6.3.4.4)
-        /// \name Putback methods
+        /// \name Putback member functions
         /// @{
 
         /// \brief  Protected try to back up the input stream.
@@ -527,7 +527,7 @@ namespace os
         /// @}
 
         // \name Put area (27.6.3.4.5)
-        /// \name Put area methods
+        /// \name Put area member functions
         /// @{
 
         /// \brief  Protected put an array of characters to the output stream.
@@ -586,7 +586,7 @@ namespace os
       };
 
     // ------------------------------------------------------------------------
-    // inline methods
+    // inline member functions
 
     /// \details
     /// Call the virtual private `imbue(loc)` and return its value.

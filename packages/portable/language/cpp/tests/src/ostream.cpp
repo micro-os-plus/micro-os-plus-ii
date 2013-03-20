@@ -101,7 +101,7 @@ runTestTypes()
 {
   ts.reportInfo("Test ostream types");
     {
-      ts.setMethodNameOrPrefix("types");
+      ts.setFunctionNameOrPrefix("types");
 
       ts.assertCondition((os::std::is_base_of<basic_ios<char>, basic_ostream<char> >::value));
       ts.assertCondition((os::std::is_same<basic_ostream<char>::char_type, char>::value));
@@ -126,7 +126,7 @@ runTestConstructor()
 
   ts.reportInfo("Test ostream constructor");
     {
-      ts.setMethodNameOrPrefix("basic_ostream<char>(&)");
+      ts.setFunctionNameOrPrefix("basic_ostream<char>(&)");
 
       testbuf<char> sb;
       basic_ostream<char> os(&sb);
@@ -260,7 +260,7 @@ runTestSwap()
 {
   ts.reportInfo("Test ostream swap");
     {
-      ts.setMethodNameOrPrefix("swap<char>()");
+      ts.setFunctionNameOrPrefix("swap<char>()");
 
       testbuf<char> sb1;
       testbuf<char> sb2;
@@ -430,7 +430,7 @@ runTestUnformatted()
   ts.reportInfo("Test ostream unformatted");
 
     {
-      ts.setMethodNameOrPrefix("put()");
+      ts.setFunctionNameOrPrefix("put()");
       ts.setPreconditions("nosbuff");
 
       ostream os((streambuf*) 0);
@@ -439,7 +439,7 @@ runTestUnformatted()
       ts.assertCondition(os.bad());
     }
     {
-      ts.setMethodNameOrPrefix("put()");
+      ts.setFunctionNameOrPrefix("put()");
 
       testbuf_array<char> sb;
       ostream os(&sb);
@@ -453,7 +453,7 @@ runTestUnformatted()
   // TODO: add wide support
 
     {
-      ts.setMethodNameOrPrefix("write()");
+      ts.setFunctionNameOrPrefix("write()");
       ts.setPreconditions("nosbuff");
 
       ostream os((streambuf*) 0);
@@ -463,7 +463,7 @@ runTestUnformatted()
       ts.assertCondition(os.bad());
     }
     {
-      ts.setMethodNameOrPrefix("write()");
+      ts.setFunctionNameOrPrefix("write()");
       ts.setPreconditions("nosbuff");
 
       testbuf_array<char> sb;
@@ -481,7 +481,7 @@ runTestUnformatted()
   // TODO: add wide support
 
     {
-      ts.setMethodNameOrPrefix("flush()");
+      ts.setFunctionNameOrPrefix("flush()");
 
       testbuf_unformatted<char> sb;
       ostream os(&sb);
@@ -511,7 +511,7 @@ runTestManip()
   ts.reportInfo("Test ostream manipulators");
 
     {
-      ts.setMethodNameOrPrefix("endl()");
+      ts.setFunctionNameOrPrefix("endl()");
 
       testbuf_array<char> sb;
       ostream os(&sb);
@@ -527,7 +527,7 @@ runTestManip()
   // TODO: add wchar_t
 
     {
-      ts.setMethodNameOrPrefix("ends()");
+      ts.setFunctionNameOrPrefix("ends()");
 
       testbuf_array<char> sb;
       ostream os(&sb);
@@ -541,7 +541,7 @@ runTestManip()
   // TODO: add wchar_t
 
     {
-      ts.setMethodNameOrPrefix("flush()");
+      ts.setFunctionNameOrPrefix("flush()");
 
       testbuf_array<char> sb;
       ostream os(&sb);
@@ -643,7 +643,7 @@ runTestSeeks()
   ts.reportInfo("Test ostream seeks");
 
     {
-      ts.setMethodNameOrPrefix("seekp(n)");
+      ts.setFunctionNameOrPrefix("seekp(n)");
       ts.setPreconditions("os(0)");
 
       seekpos_called = 0;
@@ -654,7 +654,7 @@ runTestSeeks()
       ts.assertCondition(os.fail());
     }
     {
-      ts.setMethodNameOrPrefix("seekp(n)");
+      ts.setFunctionNameOrPrefix("seekp(n)");
 
       seekpos_called = 0;
 
@@ -669,7 +669,7 @@ runTestSeeks()
     }
 
     {
-      ts.setMethodNameOrPrefix("seekp(n,d)");
+      ts.setFunctionNameOrPrefix("seekp(n,d)");
       ts.setPreconditions("os(0)");
 
       seekoff_called = 0;
@@ -681,7 +681,7 @@ runTestSeeks()
     }
 
     {
-      ts.setMethodNameOrPrefix("seekp(n,d)");
+      ts.setFunctionNameOrPrefix("seekp(n,d)");
 
       seekoff_called = 0;
 
@@ -696,7 +696,7 @@ runTestSeeks()
     }
 
     {
-      ts.setMethodNameOrPrefix("tellp()");
+      ts.setFunctionNameOrPrefix("tellp()");
       ts.setPreconditions("os(0)");
 
       seekoff_called = 0;
@@ -706,7 +706,7 @@ runTestSeeks()
       ts.assertCondition(os.fail());
     }
     {
-      ts.setMethodNameOrPrefix("tellp()");
+      ts.setFunctionNameOrPrefix("tellp()");
 
       seekoff_called = 0;
 
@@ -736,7 +736,7 @@ runTestSentry()
   global_sync_called = 0;
 
     {
-      ts.setMethodNameOrPrefix("sentry");
+      ts.setFunctionNameOrPrefix("sentry");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -746,7 +746,7 @@ runTestSentry()
   ts.assertCondition(global_sync_called == 0);
 
     {
-      ts.setMethodNameOrPrefix("sentry");
+      ts.setFunctionNameOrPrefix("sentry");
 
       testbuf<char> sb;
       ostream os(&sb);
@@ -756,7 +756,7 @@ runTestSentry()
   ts.assertCondition(global_sync_called == 0);
 
     {
-      ts.setMethodNameOrPrefix("sentry");
+      ts.setFunctionNameOrPrefix("sentry");
       ts.setPreconditions("tie()");
 
       testbuf<char> sb;
@@ -773,7 +773,7 @@ runTestSentry()
   global_sync_called = 0;
 
     {
-      ts.setMethodNameOrPrefix("sentry");
+      ts.setFunctionNameOrPrefix("sentry");
       ts.setPreconditions("unitbuf");
 
       testbuf<char> sb;
@@ -805,7 +805,7 @@ runTestStdManip()
   ts.reportInfo("Test ostream std manip");
 
     {
-      ts.setMethodNameOrPrefix("resetiosflags()");
+      ts.setFunctionNameOrPrefix("resetiosflags()");
 
       testbuf<char> sb;
       ostream os(&sb);
@@ -816,7 +816,7 @@ runTestStdManip()
   // TODO: add wide support
 
     {
-      ts.setMethodNameOrPrefix("setbase()");
+      ts.setFunctionNameOrPrefix("setbase()");
 
       testbuf<char> sb;
       ostream os(&sb);
@@ -831,7 +831,7 @@ runTestStdManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("setfill()");
+      ts.setFunctionNameOrPrefix("setfill()");
 
       testbuf<char> sb;
       ostream os(&sb);
@@ -840,7 +840,7 @@ runTestStdManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("setiosflags()");
+      ts.setFunctionNameOrPrefix("setiosflags()");
 
       testbuf<char> sb;
       ostream os(&sb);
@@ -850,7 +850,7 @@ runTestStdManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("setprecision()");
+      ts.setFunctionNameOrPrefix("setprecision()");
 
       testbuf<char> sb;
       ostream os(&sb);
@@ -859,7 +859,7 @@ runTestStdManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("setw()");
+      ts.setFunctionNameOrPrefix("setw()");
 
       testbuf<char> sb;
       ostream os(&sb);
@@ -887,7 +887,7 @@ runTestInsertersCharacter()
   ts.reportInfo("Test ostream inserters character");
 
     {
-      ts.setMethodNameOrPrefix("operator<<(char)");
+      ts.setFunctionNameOrPrefix("operator<<(char)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -897,7 +897,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.fail());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(char)");
+      ts.setFunctionNameOrPrefix("operator<<(char)");
 
       testbuf_array<char> sb;
       ostream os(&sb);
@@ -908,7 +908,7 @@ runTestInsertersCharacter()
       ts.assertCondition(sb.array[1] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(char)");
+      ts.setFunctionNameOrPrefix("operator<<(char)");
       ts.setPreconditions("width(2) right");
 
       testbuf_array<char> sb;
@@ -923,7 +923,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(char)");
+      ts.setFunctionNameOrPrefix("operator<<(char)");
       ts.setPreconditions("width(2) left");
 
       testbuf_array<char> sb;
@@ -939,7 +939,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(char)");
+      ts.setFunctionNameOrPrefix("operator<<(char)");
       ts.setPreconditions("width(5) right");
 
       testbuf_array<char> sb;
@@ -957,7 +957,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(char)");
+      ts.setFunctionNameOrPrefix("operator<<(char)");
       ts.setPreconditions("width(5) left");
 
       testbuf_array<char> sb;
@@ -977,7 +977,7 @@ runTestInsertersCharacter()
     }
 
     {
-      ts.setMethodNameOrPrefix("operator<<(const_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_char*)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -988,7 +988,7 @@ runTestInsertersCharacter()
     }
 
     {
-      ts.setMethodNameOrPrefix("operator<<(const_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_char*)");
       ts.setPreconditions("width(3)");
 
       testbuf_array<char> sb;
@@ -1002,7 +1002,7 @@ runTestInsertersCharacter()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(const_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_char*)");
       ts.setPreconditions("width(5) right");
 
       testbuf_array<char> sb;
@@ -1020,7 +1020,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(const_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_char*)");
       ts.setPreconditions("width(5) left");
 
       testbuf_array<char> sb;
@@ -1042,7 +1042,7 @@ runTestInsertersCharacter()
   // --- signed char
 
     {
-      ts.setMethodNameOrPrefix("operator<<(signed_char)");
+      ts.setFunctionNameOrPrefix("operator<<(signed_char)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -1052,7 +1052,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.fail());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(signed_char)");
+      ts.setFunctionNameOrPrefix("operator<<(signed_char)");
 
       testbuf_array<char> sb;
       ostream os(&sb);
@@ -1063,7 +1063,7 @@ runTestInsertersCharacter()
       ts.assertCondition(sb.array[1] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(signed_char)");
+      ts.setFunctionNameOrPrefix("operator<<(signed_char)");
       ts.setPreconditions("width(5) right");
 
       testbuf_array<char> sb;
@@ -1081,7 +1081,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(signed_char)");
+      ts.setFunctionNameOrPrefix("operator<<(signed_char)");
       ts.setPreconditions("width(5) left");
 
       testbuf_array<char> sb;
@@ -1101,7 +1101,7 @@ runTestInsertersCharacter()
     }
 
     {
-      ts.setMethodNameOrPrefix("operator<<(const_signed_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_signed_char*)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -1112,7 +1112,7 @@ runTestInsertersCharacter()
     }
 
     {
-      ts.setMethodNameOrPrefix("operator<<(const_signed_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_signed_char*)");
       ts.setPreconditions("width(3)");
 
       testbuf_array<char> sb;
@@ -1126,7 +1126,7 @@ runTestInsertersCharacter()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(const_signed_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_signed_char*)");
       ts.setPreconditions("width(5) right");
 
       testbuf_array<char> sb;
@@ -1144,7 +1144,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(const_signed_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_signed_char*)");
       ts.setPreconditions("width(5) left");
 
       testbuf_array<char> sb;
@@ -1166,7 +1166,7 @@ runTestInsertersCharacter()
   // --- unsigned char
 
     {
-      ts.setMethodNameOrPrefix("operator<<(unsigned_char)");
+      ts.setFunctionNameOrPrefix("operator<<(unsigned_char)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -1176,7 +1176,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.fail());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(unsigned_char)");
+      ts.setFunctionNameOrPrefix("operator<<(unsigned_char)");
 
       testbuf_array<char> sb;
       ostream os(&sb);
@@ -1187,7 +1187,7 @@ runTestInsertersCharacter()
       ts.assertCondition(sb.array[1] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(unsigned_char)");
+      ts.setFunctionNameOrPrefix("operator<<(unsigned_char)");
       ts.setPreconditions("width(5) right");
 
       testbuf_array<char> sb;
@@ -1205,7 +1205,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(unsigned_char)");
+      ts.setFunctionNameOrPrefix("operator<<(unsigned_char)");
       ts.setPreconditions("width(5) left");
 
       testbuf_array<char> sb;
@@ -1225,7 +1225,7 @@ runTestInsertersCharacter()
     }
 
     {
-      ts.setMethodNameOrPrefix("operator<<(const_unsigned_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_unsigned_char*)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -1236,7 +1236,7 @@ runTestInsertersCharacter()
     }
 
     {
-      ts.setMethodNameOrPrefix("operator<<(const_unsigned_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_unsigned_char*)");
       ts.setPreconditions("width(3)");
 
       testbuf_array<char> sb;
@@ -1250,7 +1250,7 @@ runTestInsertersCharacter()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(const_unsigned_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_unsigned_char*)");
       ts.setPreconditions("width(5) right");
 
       testbuf_array<char> sb;
@@ -1268,7 +1268,7 @@ runTestInsertersCharacter()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(const_unsigned_char*)");
+      ts.setFunctionNameOrPrefix("operator<<(const_unsigned_char*)");
       ts.setPreconditions("width(5) left");
 
       testbuf_array<char> sb;

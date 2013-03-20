@@ -20,7 +20,7 @@
 // these definitions can be written directly in the .cpp file.
 
 // However please remember that these are only template definitions,
-// to become actual method definitions, the template needs to be
+// to become actual member function definitions, the template needs to be
 // instantiated (see at the end)
 
 namespace os
@@ -30,18 +30,18 @@ namespace os
 
     TestSuiteImplementation::TestSuiteImplementation()
     {
-      debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+      debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
     }
 
     TestSuiteImplementation::TestSuiteImplementation(
         int argc __attribute__((unused)), char* argv[] __attribute__((unused)))
     {
-      debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+      debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
     }
 
     TestSuiteImplementation::~TestSuiteImplementation()
     {
-      debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+      debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
     }
 
   } /* namespace infra */

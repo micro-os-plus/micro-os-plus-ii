@@ -25,8 +25,8 @@ namespace os
     /// It should be seen as a functionally equivalent abstract class
     /// to be used as base class for all actual implementations, just that
     /// inheritance is done at compile time, not at run time, and since
-    /// none of these methods need to preserve any status between calls,
-    /// all are implemented as static methods.
+    /// none of these member functions need to preserve any status between calls,
+    /// all are implemented as static member functions.
     ///
     /// This class should provide support for two output channels:
     /// - the test output device
@@ -36,7 +36,7 @@ namespace os
     /// implemented via the process standard output. On embedded platforms
     /// it can be implemented over hosting/tracing channels.
     ///
-    /// The XML support methods (file create/write/close) are easily
+    /// The XML support member functions (file create/write/close) are easily
     /// available on synthetic platforms
     /// but hosting implementations might also be imagined for
     /// embedded platforms.
@@ -44,7 +44,7 @@ namespace os
     /// The architecture implementation must also define the type name
     ///  `os::infra::TestSuiteImplementation_t` similar to the below
     /// definition, but pointing to the actual class, since this is how
-    /// it is referred from the TestSuite method.
+    /// it is referred from the TestSuite member function.
     /// ~~~
     /// typedef os::infra::TestSuiteImplementation TestSuiteImplementation_t;
     /// ~~~

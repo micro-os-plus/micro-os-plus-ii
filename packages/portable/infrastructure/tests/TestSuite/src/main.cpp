@@ -8,7 +8,7 @@
 
 #include "portable/infrastructure/include/TestSuite.h"
 
-// This test exercises the TestSuite methods.
+// This test exercises the TestSuite member functions.
 
 int
 main(int argc, char* argv[])
@@ -22,15 +22,15 @@ main(int argc, char* argv[])
   // mark the start of the test suite
   ts.start(__FILE__);
 
-  // exercise the method that check a boolean expression
+  // exercise the member function that check a boolean expression
   ts.checkAndReport(true, "check true constant");
   ts.checkAndReport(false, "check false constant");
 
-  // exercise the methods that directly report
+  // exercise the member functions that directly report
   ts.reportPassed("a passed test");
   ts.reportFailed("a failed test");
 
-  // exercise the informative method
+  // exercise the informative member function
   ts.reportInfo("there should be 2 failed cases and 2 passed cases");
 
   // mark the stop of the test suite

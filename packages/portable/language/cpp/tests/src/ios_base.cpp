@@ -68,7 +68,7 @@ runTestStreamsizeTypes()
 {
   ts.reportInfo("Test ios_base streamsize definitions");
     {
-      ts.setMethodNameOrPrefix("streamsize");
+      ts.setFunctionNameOrPrefix("streamsize");
 
       ts.assertCondition((os::std::is_integral<streamsize>::value));
       ts.assertCondition((os::std::is_signed<streamsize>::value));
@@ -88,7 +88,7 @@ runTestFmtflagsDefinitions()
 {
   ts.reportInfo("Test ios_base fmtflags definitions");
     {
-      ts.setMethodNameOrPrefix("fmtflags");
+      ts.setFunctionNameOrPrefix("fmtflags");
 
       // Test if each of these flags is non zero
       ts.assertCondition(ios_base::boolalpha != 0);
@@ -251,7 +251,7 @@ runTestIostateDefinitions()
 {
   ts.reportInfo("Test ios_base iostate definitions");
     {
-      ts.setMethodNameOrPrefix("iostate");
+      ts.setFunctionNameOrPrefix("iostate");
 
       // Test if each of these flags is non zero
       ts.assertCondition(ios_base::badbit != 0);
@@ -279,7 +279,7 @@ runTestOpenmodeDefinitions()
 {
   ts.reportInfo("Test ios_base openmode definitions");
     {
-      ts.setMethodNameOrPrefix("openmode");
+      ts.setFunctionNameOrPrefix("openmode");
 
       // Test if each of these flags is non zero
       ts.assertCondition(ios_base::app != 0);
@@ -325,7 +325,7 @@ runTestSeekdirDefinitions()
 {
   ts.reportInfo("Test ios_base seekdir definitions");
     {
-      ts.setMethodNameOrPrefix("seekdir");
+      ts.setFunctionNameOrPrefix("seekdir");
 
       ts.assertCondition(ios_base::beg != ios_base::cur);
       ts.assertCondition(ios_base::beg != ios_base::end);
@@ -368,7 +368,7 @@ runTestFlags()
     {
       const test t;
 
-      ts.setMethodNameOrPrefix("flags()");
+      ts.setFunctionNameOrPrefix("flags()");
       ts.setPreconditions("init(0)");
       ts.assertCondition(t.flags() == (test::skipws | test::dec));
     }
@@ -377,7 +377,7 @@ runTestFlags()
     {
       test t;
 
-      ts.setMethodNameOrPrefix("flags(fmtflags)");
+      ts.setFunctionNameOrPrefix("flags(fmtflags)");
 
       // check initial values set by constructor
       ts.assertCondition(t.flags() == (test::skipws | test::dec));
@@ -396,7 +396,7 @@ runTestFlags()
     {
       test t;
 
-      ts.setMethodNameOrPrefix("setf(fmtflags)");
+      ts.setFunctionNameOrPrefix("setf(fmtflags)");
 
       // check initial values set by constructor
       ts.assertCondition(t.flags() == (test::skipws | test::dec));
@@ -416,7 +416,7 @@ runTestFlags()
     {
       test t;
 
-      ts.setMethodNameOrPrefix("setf(fmtflags,fmtflags)");
+      ts.setFunctionNameOrPrefix("setf(fmtflags,fmtflags)");
 
       // check initial values set by constructor
       ts.assertCondition(t.flags() == (test::skipws | test::dec));
@@ -436,7 +436,7 @@ runTestFlags()
     {
       test t;
 
-      ts.setMethodNameOrPrefix("unsetf(fmtflags)");
+      ts.setFunctionNameOrPrefix("unsetf(fmtflags)");
 
       // check initial values set by constructor
       ts.assertCondition(t.flags() == (test::skipws | test::dec));
@@ -481,7 +481,7 @@ runTestPrecision()
     {
       const test t;
 
-      ts.setMethodNameOrPrefix("precision()");
+      ts.setFunctionNameOrPrefix("precision()");
       ts.setPreconditions("init(0)");
 
       ts.assertCondition(t.precision() == 6);
@@ -492,7 +492,7 @@ runTestPrecision()
     {
       test t;
 
-      ts.setMethodNameOrPrefix("precision(streamsize)");
+      ts.setFunctionNameOrPrefix("precision(streamsize)");
 
       // check initial values set by constructor
       ts.assertCondition(t.precision() == 6);
@@ -540,7 +540,7 @@ runTestWidth()
     {
       const test t;
 
-      ts.setMethodNameOrPrefix("width()");
+      ts.setFunctionNameOrPrefix("width()");
       ts.setPreconditions("init(0)");
 
       ts.assertCondition(t.width() == 0);
@@ -551,7 +551,7 @@ runTestWidth()
     {
       test t;
 
-      ts.setMethodNameOrPrefix("width(streamsize)");
+      ts.setFunctionNameOrPrefix("width(streamsize)");
 
       // check initial values set by constructor
       ts.assertCondition(t.width() == 0);
@@ -581,7 +581,7 @@ runTestStatic()
 
   ts.reportInfo("Test ios_base width initialisations");
     {
-      ts.setMethodNameOrPrefix("sync_with_stdio(bool)");
+      ts.setFunctionNameOrPrefix("sync_with_stdio(bool)");
 
       // The function returns the old value
       ts.assertCondition( ios_base::sync_with_stdio(false));
@@ -625,7 +625,7 @@ runTestFmtflagsManip()
 
   ts.reportInfo("Test ios_base fmtflags manipulators");
     {
-      ts.setMethodNameOrPrefix("boolalpha()");
+      ts.setFunctionNameOrPrefix("boolalpha()");
 
       testbuf sb;
       ios ios(&sb);
@@ -635,7 +635,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("noboolalpha()");
+      ts.setFunctionNameOrPrefix("noboolalpha()");
 
       testbuf sb;
       ios ios(&sb);
@@ -646,7 +646,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("noshowbase()");
+      ts.setFunctionNameOrPrefix("noshowbase()");
 
       testbuf sb;
       ios ios(&sb);
@@ -657,7 +657,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("noshowpoint()");
+      ts.setFunctionNameOrPrefix("noshowpoint()");
 
       testbuf sb;
       ios ios(&sb);
@@ -668,7 +668,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("noshowpos()");
+      ts.setFunctionNameOrPrefix("noshowpos()");
 
       testbuf sb;
       ios ios(&sb);
@@ -679,7 +679,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("noskipws()");
+      ts.setFunctionNameOrPrefix("noskipws()");
 
       testbuf sb;
       ios ios(&sb);
@@ -690,7 +690,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("nounitbuf()");
+      ts.setFunctionNameOrPrefix("nounitbuf()");
 
       testbuf sb;
       ios ios(&sb);
@@ -701,7 +701,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("nouppercase()");
+      ts.setFunctionNameOrPrefix("nouppercase()");
 
       testbuf sb;
       ios ios(&sb);
@@ -712,7 +712,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("showbase()");
+      ts.setFunctionNameOrPrefix("showbase()");
 
       testbuf sb;
       ios ios(&sb);
@@ -722,7 +722,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("showpoint()");
+      ts.setFunctionNameOrPrefix("showpoint()");
 
       testbuf sb;
       ios ios(&sb);
@@ -732,7 +732,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("showpos()");
+      ts.setFunctionNameOrPrefix("showpos()");
 
       testbuf sb;
       ios ios(&sb);
@@ -742,7 +742,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("skipws()");
+      ts.setFunctionNameOrPrefix("skipws()");
 
       testbuf sb;
       ios ios(&sb);
@@ -752,7 +752,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("unitbuf()");
+      ts.setFunctionNameOrPrefix("unitbuf()");
 
       testbuf sb;
       ios ios(&sb);
@@ -762,7 +762,7 @@ runTestFmtflagsManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("uppercase()");
+      ts.setFunctionNameOrPrefix("uppercase()");
 
       testbuf sb;
       ios ios(&sb);
@@ -792,7 +792,7 @@ runTestAdjustfieldManip()
 
   ts.reportInfo("Test ios_base adjustfield manipulators");
     {
-      ts.setMethodNameOrPrefix("internal()");
+      ts.setFunctionNameOrPrefix("internal()");
 
       testbuf sb;
       ios ios(&sb);
@@ -802,7 +802,7 @@ runTestAdjustfieldManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("left()");
+      ts.setFunctionNameOrPrefix("left()");
 
       testbuf sb;
       ios ios(&sb);
@@ -812,7 +812,7 @@ runTestAdjustfieldManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("right()");
+      ts.setFunctionNameOrPrefix("right()");
 
       testbuf sb;
       ios ios(&sb);
@@ -842,7 +842,7 @@ runTestBasefieldManip()
 
   ts.reportInfo("Test ios_base basefield manipulators");
     {
-      ts.setMethodNameOrPrefix("dec()");
+      ts.setFunctionNameOrPrefix("dec()");
 
       testbuf sb;
       ios ios(&sb);
@@ -852,7 +852,7 @@ runTestBasefieldManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("hex()");
+      ts.setFunctionNameOrPrefix("hex()");
 
       testbuf sb;
       ios ios(&sb);
@@ -862,7 +862,7 @@ runTestBasefieldManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("oct()");
+      ts.setFunctionNameOrPrefix("oct()");
 
       testbuf sb;
       ios ios(&sb);
@@ -893,7 +893,7 @@ runTestFloatfieldManip()
 
   ts.reportInfo("Test ios_base floatfield manipulators");
     {
-      ts.setMethodNameOrPrefix("fixed()");
+      ts.setFunctionNameOrPrefix("fixed()");
 
       testbuf sb;
       ios ios(&sb);
@@ -903,7 +903,7 @@ runTestFloatfieldManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("scientific()");
+      ts.setFunctionNameOrPrefix("scientific()");
 
       testbuf sb;
       ios ios(&sb);
@@ -913,7 +913,7 @@ runTestFloatfieldManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("defaultfloat()");
+      ts.setFunctionNameOrPrefix("defaultfloat()");
 
       testbuf sb;
       ios ios(&sb);
@@ -924,7 +924,7 @@ runTestFloatfieldManip()
     }
 
     {
-      ts.setMethodNameOrPrefix("hexfloat()");
+      ts.setFunctionNameOrPrefix("hexfloat()");
 
       testbuf sb;
       ios ios(&sb);

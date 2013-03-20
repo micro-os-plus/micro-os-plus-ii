@@ -29,7 +29,8 @@ namespace hal
       /// the POSIX
       /// calls. Also implement the output device as the standard output.
       ///
-      /// Since these methods need to preserve status between calls (the
+      /// Since these member functions need to preserve status between
+      /// calls (the
       /// XML file name and the file descriptor),
       /// a static implementation is not possible,
       /// and this a regular object, embedded and constructed inside

@@ -40,7 +40,7 @@ namespace os
 
 #if defined(OS_INCLUDE_LIBCPP_16BIT_OPTIMISATIONS)
 
-        // The next 4 methods are not standard, but were added
+        // The next 4 member functions are not standard, but were added
         // for 16bit platforms, to avoid doing all math as 32bit.
 
         iter_type

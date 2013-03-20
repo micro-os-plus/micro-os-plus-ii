@@ -164,7 +164,7 @@ runTestInsertersBool()
   ts.reportInfo("Test ostream inserters arithmetic bool");
 
     {
-      ts.setMethodNameOrPrefix("operator<<(bool)");
+      ts.setFunctionNameOrPrefix("operator<<(bool)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -174,7 +174,7 @@ runTestInsertersBool()
       ts.assertCondition(os.fail());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(bool)");
+      ts.setFunctionNameOrPrefix("operator<<(bool)");
       ts.setInputValues("false");
 
       testbufCharArray<char> sb;
@@ -187,7 +187,7 @@ runTestInsertersBool()
       ts.assertCondition(sb.array[1] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(bool)");
+      ts.setFunctionNameOrPrefix("operator<<(bool)");
       ts.setInputValues("true");
 
       testbufCharArray<char> sb;
@@ -200,7 +200,7 @@ runTestInsertersBool()
       ts.assertCondition(sb.array[1] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(bool)");
+      ts.setFunctionNameOrPrefix("operator<<(bool)");
       ts.setInputValues("true");
       ts.setPreconditions("width(3) right");
 
@@ -217,7 +217,7 @@ runTestInsertersBool()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(bool)");
+      ts.setFunctionNameOrPrefix("operator<<(bool)");
       ts.setInputValues("true");
       ts.setPreconditions("width(3) left");
 
@@ -235,7 +235,7 @@ runTestInsertersBool()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(bool)");
+      ts.setFunctionNameOrPrefix("operator<<(bool)");
       ts.setInputValues("true");
       ts.setPreconditions("boolalpha()");
 
@@ -253,7 +253,7 @@ runTestInsertersBool()
       ts.assertCondition(sb.array[4] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(bool)");
+      ts.setFunctionNameOrPrefix("operator<<(bool)");
       ts.setInputValues("false");
       ts.setPreconditions("boolalpha()");
 
@@ -272,7 +272,7 @@ runTestInsertersBool()
       ts.assertCondition(sb.array[5] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(bool)");
+      ts.setFunctionNameOrPrefix("operator<<(bool)");
       ts.setInputValues("true");
       ts.setPreconditions("boolalpha() width(5) right");
 
@@ -292,7 +292,7 @@ runTestInsertersBool()
       ts.assertCondition(sb.array[5] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(bool)");
+      ts.setFunctionNameOrPrefix("operator<<(bool)");
       ts.setInputValues("true");
       ts.setPreconditions("boolalpha() width(5) left");
 
@@ -329,7 +329,7 @@ runTestInsertersShort()
   ts.reportInfo("Test ostream inserters arithmetic short");
 
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -339,7 +339,7 @@ runTestInsertersShort()
       ts.assertCondition(os.fail());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("0");
 
       testbufCharArray<char> sb;
@@ -351,7 +351,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[1] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("123");
 
       testbufCharArray<char> sb;
@@ -365,7 +365,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("123");
       ts.setPreconditions("width(5) right");
 
@@ -384,7 +384,7 @@ runTestInsertersShort()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("123");
       ts.setPreconditions("showpos width(5) right");
 
@@ -404,7 +404,7 @@ runTestInsertersShort()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("123");
       ts.setPreconditions("showpos width(5) intern");
 
@@ -425,7 +425,7 @@ runTestInsertersShort()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("123");
       ts.setPreconditions("width(5) left");
 
@@ -445,7 +445,7 @@ runTestInsertersShort()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("-123");
 
       testbufCharArray<char> sb;
@@ -460,7 +460,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[4] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("-123");
       ts.setPreconditions("width(5) right");
 
@@ -478,7 +478,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[5] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("-123");
       ts.setPreconditions("width(5) left");
 
@@ -497,7 +497,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[5] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("-123");
       ts.setPreconditions("width(5) intern");
 
@@ -518,7 +518,7 @@ runTestInsertersShort()
 
   // hex
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("0x19af");
       ts.setPreconditions("hex");
 
@@ -535,7 +535,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[4] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("0x10af");
       ts.setPreconditions("hex width(7) right");
 
@@ -558,7 +558,7 @@ runTestInsertersShort()
     }
 
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("0x10af");
       ts.setPreconditions("hex width(7) left base upper");
 
@@ -582,7 +582,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[7] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("0x123");
       ts.setPreconditions("hex width(5) right");
 
@@ -601,7 +601,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[5] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("-10");
       ts.setPreconditions("hex");
 
@@ -618,7 +618,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[4] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("-10");
       ts.setPreconditions("hex width(5) right");
 
@@ -639,7 +639,7 @@ runTestInsertersShort()
 
   // octal
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("0123");
       ts.setPreconditions("oct");
 
@@ -655,7 +655,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("0123");
       ts.setPreconditions("oct width(5) right");
 
@@ -674,7 +674,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[5] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("0123");
       ts.setPreconditions("oct width(5) left");
 
@@ -694,7 +694,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[5] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(short)");
+      ts.setFunctionNameOrPrefix("operator<<(short)");
       ts.setInputValues("-10");
       ts.setPreconditions("oct");
 
@@ -716,7 +716,7 @@ runTestInsertersShort()
 
   // - temporary, to be deleted after int tests are added
     {
-      ts.setMethodNameOrPrefix("operator<<(int)");
+      ts.setFunctionNameOrPrefix("operator<<(int)");
       ts.setInputValues("123");
 
       testbufCharArray<char> sb;
@@ -730,7 +730,7 @@ runTestInsertersShort()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(uint)");
+      ts.setFunctionNameOrPrefix("operator<<(uint)");
       ts.setInputValues("123");
 
       testbufCharArray<char> sb;
@@ -760,7 +760,7 @@ runTestInsertersUnsignedShort()
   ts.reportInfo("Test ostream inserters arithmetic unsigned short");
 
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -770,7 +770,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(os.fail());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("0");
 
       testbufCharArray<char> sb;
@@ -782,7 +782,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(sb.array[1] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("123");
 
       testbufCharArray<char> sb;
@@ -796,7 +796,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("123");
       ts.setPreconditions("width(5) right");
 
@@ -815,7 +815,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("123");
       ts.setPreconditions("width(5) showpos right");
 
@@ -835,7 +835,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("123");
       ts.setPreconditions("width(5) showpos intern");
 
@@ -856,7 +856,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(os.width() == 0);
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("123");
       ts.setPreconditions("width(5) left");
 
@@ -878,7 +878,7 @@ runTestInsertersUnsignedShort()
 
   // hex
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("0x19af");
       ts.setPreconditions("hex");
 
@@ -895,7 +895,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(sb.array[4] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("0x10af");
       ts.setPreconditions("hex width(7) right");
 
@@ -918,7 +918,7 @@ runTestInsertersUnsignedShort()
     }
 
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("0x10af");
       ts.setPreconditions("hex width(7) left upper");
 
@@ -942,7 +942,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(sb.array[7] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("0x123");
       ts.setPreconditions("hex width(5) right");
 
@@ -963,7 +963,7 @@ runTestInsertersUnsignedShort()
 
   // octal
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("0123");
       ts.setPreconditions("oct");
 
@@ -979,7 +979,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(sb.array[3] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("0123");
       ts.setPreconditions("oct width(5) right");
 
@@ -998,7 +998,7 @@ runTestInsertersUnsignedShort()
       ts.assertCondition(sb.array[5] == sb.getDefaultChar());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(ushort)");
+      ts.setFunctionNameOrPrefix("operator<<(ushort)");
       ts.setInputValues("0123");
       ts.setPreconditions("oct width(5) left");
 
@@ -1034,7 +1034,7 @@ runTestInsertersPointer()
   ts.reportInfo("Test ostream inserters arithmetic pointer");
 
     {
-      ts.setMethodNameOrPrefix("operator<<(void*)");
+      ts.setFunctionNameOrPrefix("operator<<(void*)");
       ts.setPreconditions("os(0)");
 
       ostream os((streambuf*) 0);
@@ -1044,7 +1044,7 @@ runTestInsertersPointer()
       ts.assertCondition(os.fail());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(void*)");
+      ts.setFunctionNameOrPrefix("operator<<(void*)");
       ts.setInputValues("0");
 
       testbufCharArray<char> sb;
@@ -1106,7 +1106,7 @@ runTestInsertersPointer()
       ts.assertCondition(os.good());
     }
     {
-      ts.setMethodNameOrPrefix("operator<<(void*)");
+      ts.setFunctionNameOrPrefix("operator<<(void*)");
       ts.setInputValues("&");
 
       testbufCharArray<char> sb;

@@ -24,7 +24,8 @@ namespace os
 #pragma GCC diagnostic ignored "-Wpadded"
 
     /// \example portable/infrastructure/tests/TestSuite/src/main.cpp
-    /// This test exercises all TestSuite methods. It currently runs on
+    /// This test exercises all TestSuite member functions. It currently
+    /// runs on
     /// OS X, as a 64 bit process.
     ///
     /// The program was called with the following arguments:
@@ -66,8 +67,10 @@ namespace os
     ///
     /// When using automated testing frameworks, like Jenkins, it is
     /// important to generate unique test case descriptions. To help this
-    /// the test condition can be prefixed with the method name, a list
-    /// of input values used to call the method, and a list of preconditions
+    /// the test condition can be prefixed with the member function name,
+    /// a list
+    /// of input values used to call the member function, and a list
+    /// of preconditions
     /// used. Currently it is the responsibility of the user to keep
     /// these strings unique, the framework does not check this condition.
 
@@ -107,30 +110,33 @@ namespace os
         void
         setClassName(const char* pName);
 
-        /// \brief Set the name of the tested method.
+        /// \brief Set the name of the tested member function.
         ///
         /// \param [in] pName a string containing the prefix to be added
-        /// to each test case, usually the name of the method under test.
+        /// to each test case, usually the name of the member function
+        /// under test.
         /// \par Returns
         ///       Nothing
         void
-        setMethodNameOrPrefix(const char* pName);
+        setFunctionNameOrPrefix(const char* pName);
 
-        /// \brief Define the input values used when calling the tested method.
+        /// \brief Define the input values used when calling the tested
+        /// member function.
         ///
         /// \param [in] pStr a string containing the relevant values
-        // used when calling the method exercised by the following
-        /// test cases. Cleared by setMethodNameOrPrefix().
+        // used when calling the member function exercised by the following
+        /// test cases. Cleared by setFunctionNameOrPrefix().
         /// \par Returns
         ///       Nothing
         void
         setInputValues(const char* pStr);
 
-        /// \brief Define the preconditions used when calling the tested method.
+        /// \brief Define the preconditions used when calling the
+        /// tested member function.
         ///
         /// \param [in] pStr a string containing the relevant preconditions
-        // used when calling the method exercised by the following
-        /// test cases. Cleared by setMethodNameOrPrefix().
+        // used when calling the member function exercised by the following
+        /// test cases. Cleared by setFunctionNameOrPrefix().
         /// \par Returns
         ///       Nothing
         void
@@ -318,8 +324,8 @@ namespace os
         /// \brief The pointer to the class name string.
         const char* m_pClassName;
 
-        /// \brief The pointer to the method name string.
-        const char* m_pMethodName;
+        /// \brief The pointer to the member function name string.
+        const char* m_pFunctionName;
 
         /// \brief The pointer to the input values string.
         const char* m_pInputValues;

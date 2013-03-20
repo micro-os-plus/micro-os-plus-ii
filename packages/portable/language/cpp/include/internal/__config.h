@@ -534,10 +534,4 @@ template<unsigned>
 #error "nullptr is mandatory"
 #endif
 
-// temporarily, until new methods will be properly implemented
-#if defined(__clang__)
-//#pragma clang diagnostic ignored "-Wunused-parameter"
-#endif
-
-
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CONFIG_H_

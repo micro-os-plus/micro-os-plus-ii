@@ -26,7 +26,7 @@ namespace hal
       /// Initialise the object without XML output.
       TestSuiteImplementation::TestSuiteImplementation()
       {
-        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
 
         m_xmlFileDescriptor = -1;
         m_filePath = nullptr;
@@ -39,14 +39,14 @@ namespace hal
       /// If errors occur, the process is abruptly terminated.
       TestSuiteImplementation::TestSuiteImplementation(int argc, char* argv[])
       {
-        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
 
         processMainParameters(argc, argv);
       }
 
       TestSuiteImplementation::~TestSuiteImplementation()
       {
-        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
       }
 
       void

@@ -115,7 +115,7 @@ namespace os
 #endif
 
       static void
-      putMethodNameWithAddress(const char* pcStr, const void* pcAddr);
+      putMemberFunctionNameWithAddress(const char* pcStr, const void* pcAddr);
 
       static void
       putConstructor(const char* pcStr, const void* pcAddr);
@@ -259,7 +259,7 @@ namespace os
 #if !defined(DEBUG)
 
     // ----- Inline section ---------------------------------------------------
-    // If DEBUG is disabled, all methods defined in Debug.cpp
+    // If DEBUG is disabled, all member functions defined in Debug.cpp
     // should have an empty equivalent.
 
     inline void
@@ -323,7 +323,7 @@ namespace os
     }
 
     inline void
-    Debug::putMethodNameWithAddress(const char* pcStr __attribute__((unused)), const void* pcAddr __attribute__((unused)))
+    Debug::putMemberFunctionNameWithAddress(const char* pcStr __attribute__((unused)), const void* pcAddr __attribute__((unused)))
     {
       ;
     }

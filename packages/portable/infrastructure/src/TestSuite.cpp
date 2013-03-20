@@ -20,7 +20,7 @@
 // these definitions can be written directly in the .cpp file.
 
 // However please remember that these are only template definitions,
-// to become actual method definitions, the template needs to be
+// to become actual member function definitions, the template needs to be
 // instantiated (see at the end)
 
 namespace os
@@ -41,7 +41,7 @@ namespace os
       TestSuite<ImplT>::TestSuite()
           : m_implementation()
       {
-        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
 
         TestSuite<ImplT>::__init();
       }
@@ -53,7 +53,7 @@ namespace os
       TestSuite<ImplT>::TestSuite(int argc, char* argv[])
           : m_implementation(argc, argv)
       {
-        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
 
         TestSuite<ImplT>::__init();
       }
@@ -66,7 +66,7 @@ namespace os
       TestSuite<ImplT>::__init(void)
       {
         m_pClassName = nullptr; // initialise pointer to class name
-        m_pMethodName = nullptr; // initialise pointer to method name
+        m_pFunctionName = nullptr; // initialise pointer to method name
         m_pInputValues = nullptr; // initialise pointer to input values
         m_pPreconditions = nullptr; // initialise pointer to preconditions
 
@@ -81,7 +81,7 @@ namespace os
     template<class ImplT>
       TestSuite<ImplT>::~TestSuite()
       {
-        debug.putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
       }
 
     template<class ImplT>
@@ -107,11 +107,11 @@ namespace os
         m_pClassName = pName;
         outputLine(OutputLineType::CLASS);
 
-        setMethodNameOrPrefix(nullptr);
+        setFunctionNameOrPrefix(nullptr);
       }
 
     /// \details
-    /// The Method name is used to prefix the test case message and is
+    /// The member function name is used to prefix the test case message and is
     /// required to uniquely identify the current test
     /// case in an automated test environment that collects statistics
     /// based on the message.
@@ -122,13 +122,13 @@ namespace os
     /// \par Example
     ///
     /// ~~~{.cpp}
-    /// setMethodNameOrPrefix("clear(iostate)");
+    /// setFunctionNameOrPrefix("clear(iostate)");
     /// ~~~
     template<class ImplT>
       void
-      TestSuite<ImplT>::setMethodNameOrPrefix(const char* pName)
+      TestSuite<ImplT>::setFunctionNameOrPrefix(const char* pName)
       {
-        m_pMethodName = pName;
+        m_pFunctionName = pName;
         m_pInputValues = nullptr;
         m_pPreconditions = nullptr;
       }
@@ -243,7 +243,7 @@ namespace os
     /// send it to the output device.
     ///
     /// For PASS/FAIL lines, the message is
-    /// prefixed with the method name, input values and preconditions, if
+    /// prefixed with the function name, input values and preconditions, if
     /// defined.
 
   template<class ImplT>
@@ -290,9 +290,9 @@ namespace os
         putString("\"");
 
         if ((lineType == OutputLineType::PASS
-            || lineType == OutputLineType::FAIL) && (m_pMethodName != nullptr))
+            || lineType == OutputLineType::FAIL) && (m_pFunctionName != nullptr))
           {
-            putString(m_pMethodName);
+            putString(m_pFunctionName);
             if (m_pInputValues != nullptr)
               {
                 putString(" (");
@@ -491,9 +491,9 @@ namespace os
             if (pMessage != nullptr)
               {
                 writeStringToXmlFile(" name=\"");
-                if (m_pMethodName != nullptr)
+                if (m_pFunctionName != nullptr)
                   {
-                    writeStringToXmlFile(m_pMethodName);
+                    writeStringToXmlFile(m_pFunctionName);
                     writeStringToXmlFile(" ");
                   }
                 writeStringToXmlFile(pMessage);
@@ -515,7 +515,7 @@ namespace os
     /// When integrated in a test environment, the test suite
     /// process shall return 0 if all test cases
     /// passed, and 1 if at least one failed. \n
-    /// This method checks the count of failed test cases
+    /// This member function checks the count of failed test cases
     ///  and, if 0, it returns 0, otherwise it return 1.
     template<class ImplT>
       int
@@ -526,7 +526,7 @@ namespace os
 
     // ------------------------------------------------------------------------
     // Explicit instantiation of this template. This must come after
-    // the template methods definitions.
+    // the template member functions definitions.
     template class TestSuite<TestSuiteImplementation_t> ;
 
   } /* namespace infra */

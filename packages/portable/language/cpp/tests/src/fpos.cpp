@@ -69,7 +69,7 @@ runTestState()
 {
   ts.reportInfo("Test fpos::state()");
     {
-      ts.setMethodNameOrPrefix("state()");
+      ts.setFunctionNameOrPrefix("state()");
 
       fpos<int> f;
       f.state(3);
@@ -90,7 +90,7 @@ runTestCtor()
 {
   ts.reportInfo("Test fpos::fpos()");
     {
-      ts.setMethodNameOrPrefix("fpos(streamoff)");
+      ts.setFunctionNameOrPrefix("fpos(streamoff)");
 
       P p(5);
       ts.assertCondition(p == P(5));
@@ -113,11 +113,11 @@ runTestAddition()
       P p(5);
       streamoff o(6);
 
-      ts.setMethodNameOrPrefix("operator+()");
+      ts.setFunctionNameOrPrefix("operator+()");
       P q = p + o;
       ts.assertCondition(q == P(11));
 
-      ts.setMethodNameOrPrefix("operator+=()");
+      ts.setFunctionNameOrPrefix("operator+=()");
       p += o;
       ts.assertCondition(p == q);
     }
@@ -139,11 +139,11 @@ runTestSubtraction()
       P p(11);
       streamoff o(6);
 
-      ts.setMethodNameOrPrefix("operator-()");
+      ts.setFunctionNameOrPrefix("operator-()");
       P q = p - o;
       ts.assertCondition(q == P(5));
 
-      ts.setMethodNameOrPrefix("operator-=()");
+      ts.setFunctionNameOrPrefix("operator-=()");
       p -= o;
       ts.assertCondition(p == q);
     }
@@ -165,7 +165,7 @@ runTestDifference()
       P p(11);
       P q(6);
 
-      ts.setMethodNameOrPrefix("operator-()");
+      ts.setFunctionNameOrPrefix("operator-()");
       streamoff o = p - q;
       ts.assertCondition(o == 5);
     }
@@ -187,10 +187,10 @@ runTestEqual()
       P p(5);
       P q(6);
 
-      ts.setMethodNameOrPrefix("operator==()");
+      ts.setFunctionNameOrPrefix("operator==()");
       ts.assertCondition(p == p);
 
-      ts.setMethodNameOrPrefix("operator!=()");
+      ts.setFunctionNameOrPrefix("operator!=()");
       ts.assertCondition(p != q);
     }
 }
@@ -211,7 +211,7 @@ runTestOffset()
       P p(streamoff(7));
       streamoff offset(p);
 
-      ts.setMethodNameOrPrefix("offset()");
+      ts.setFunctionNameOrPrefix("offset()");
       ts.assertCondition(offset == 7);
     }
 }
@@ -232,7 +232,7 @@ runTestStreamsize()
       streamoff o(5);
       streamsize sz(o);
 
-      ts.setMethodNameOrPrefix("streamsize()");
+      ts.setFunctionNameOrPrefix("streamsize()");
       ts.assertCondition(sz == 5);
       streamoff o2(sz);
       ts.assertCondition(o == o2);

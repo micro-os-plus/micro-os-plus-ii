@@ -28,15 +28,15 @@ namespace os
 
     Debug::Debug()
     {
-      putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+      putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
     }
 
     Debug::~Debug()
     {
-      putMethodNameWithAddress(__PRETTY_FUNCTION__, this);
+      putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
     }
 
-    // If DEBUG is disabled, all methods defined here
+    // If DEBUG is disabled, all member functions defined here
     // should have an empty equivalent in the inline section of Debug.h.
 
     void
@@ -199,7 +199,7 @@ namespace os
     }
 
     void
-    Debug::putMethodNameWithAddress(const char* pcStr, const void* pcAddr)
+    Debug::putMemberFunctionNameWithAddress(const char* pcStr, const void* pcAddr)
     {
       putString(pcStr);
       putString(" @0x");
