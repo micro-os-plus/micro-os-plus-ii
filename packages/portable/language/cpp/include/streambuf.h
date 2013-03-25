@@ -32,11 +32,11 @@ namespace os
     ///
     /// \brief  The actual work of input and output (interface).
     ///
-    /// \tparam _CharT  Type of character stream.
-    /// \tparam _Traits Traits for character type, defaults to
-    ///                  char_traits<_CharT>.
+    /// \tparam TChar_T  Type of character stream.
+    /// \tparam TTraits_T Traits for character type, defaults to
+    ///                  char_traits<TChar_T>.
     ///
-    /// The class template `basic_streambuf<_CharT,_Traits>` serves
+    /// The class template `basic_streambuf<TChar_T,TTraits_T>` serves
     /// as an abstract base class for deriving various stream buffers
     /// whose objects each control two sequences:
     /// one for input, and one for output.
@@ -95,7 +95,7 @@ namespace os
     ///      next element to read (to get, or to obtain a character value,
     ///      from the sequence).
 
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       class _LIBCPP_VISIBLE basic_streambuf
       {
       public:
@@ -108,13 +108,12 @@ namespace os
         /// when referring to the template, (in which case the templates
         /// parameters are required), use these types everywhere
         /// else instead of usual types.
-        typedef _CharT char_type;
-        typedef _Traits traits_type;
+        typedef TChar_T char_type;
+        typedef TTraits_T traits_type;
         typedef typename traits_type::int_type int_type;
         typedef typename traits_type::pos_type pos_type;
         typedef typename traits_type::off_type off_type;
         /// @}
-        // end of \name Standard template types
 
         /// \name Constructors/destructor
         /// @{
@@ -124,9 +123,8 @@ namespace os
         ~basic_streambuf();
 
         /// @}
-        // end of \name Constructors/destructor
 
-        // \name Public locale functions (27.6.3.2.1)
+        // Public locale functions (27.6.3.2.1)
         /// \name Locale member functions
         /// @{
 
@@ -182,21 +180,22 @@ namespace os
         /// the stream.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return -1 on failure.
         int
         pubsync();
 
         /// @}
 
-        // \name Public get area functions (27.6.3.2.3)
+        // Public get area functions (27.6.3.2.3)
+
         /// \name Get area member functions
         /// @{
 
         /// \brief  Public look ahead into the input stream.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return  The number of available characters.
         streamsize
         in_avail();
@@ -204,7 +203,7 @@ namespace os
         /// \brief  Public get the next character using `sbumpc()` or `sgetc()`.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return  The next character, or `traits::eof()`.
         int_type
         snextc();
@@ -212,7 +211,7 @@ namespace os
         /// \brief  Public get the next character from the buffer, or `uflow()`.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return  The next character, or `traits::eof()`.
         int_type
         sbumpc();
@@ -220,7 +219,7 @@ namespace os
         /// \brief  Public get the next character from the buffer or `underflow()`.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return  The next character, or `traits::eof()`.
         int_type
         sgetc();
@@ -236,7 +235,8 @@ namespace os
 
         /// @}
 
-        // \name Public putback (27.6.3.2.4)
+        // Public putback (27.6.3.2.4)
+
         /// \name Putback member functions
         /// @{
 
@@ -250,14 +250,15 @@ namespace os
         /// \brief  Public move backwards into the input stream.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return  The previous character, if possible.
         int_type
         sungetc();
 
         /// @}
 
-        // \name Put area (27.6.3.2.5)
+        // Put area (27.6.3.2.5)
+
         /// \name Put area member functions
         /// @{
 
@@ -287,7 +288,7 @@ namespace os
         /// \brief  Base constructor.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         basic_streambuf();
 
         /// \brief Copy constructor.
@@ -296,7 +297,6 @@ namespace os
         basic_streambuf(const basic_streambuf& rhs);
 
         /// @}
-        // end of \name Constructors/destructor
 
         // \name Assignment (27.6.3.3.1)
         /// \name Assign/swap/move member functions
@@ -312,20 +312,21 @@ namespace os
         ///
         /// \param [in,out] rhs Reference to the object to swap members with.
         /// \par Returns
-        /// Nothing
+        ///     Nothing.
         void
         swap(basic_streambuf& rhs);
 
         /// @}
 
-        // \name Get area access (27.6.3.3.2)
+        // Get area access (27.6.3.3.2)
+
         /// \name Get area access member functions
         /// @{
 
         /// \brief  Protected get the read beginning pointer.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return The beginning pointer for the input sequence.
         _LIBCPP_ALWAYS_INLINE
         char_type*
@@ -334,7 +335,7 @@ namespace os
         /// \brief  Protected get the read next pointer.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return The next pointer for the input sequence.
         _LIBCPP_ALWAYS_INLINE
         char_type*
@@ -343,7 +344,7 @@ namespace os
         /// \brief  Protected get the read end pointer.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return The end pointer for the input sequence.
         _LIBCPP_ALWAYS_INLINE
         char_type*
@@ -353,7 +354,7 @@ namespace os
         ///
         /// \param [in]  n  The delta by which to move.
         /// \par Returns
-        /// Nothing.
+        ///     Nothing.
         void
         gbump(int n);
 
@@ -363,20 +364,21 @@ namespace os
         /// \param [in]  gnext  A pointer to the next.
         /// \param [in]  gend  A pointer to the end.
         /// \par Returns
-        /// Nothing.
+        ///     Nothing.
         void
         setg(char_type* gbeg, char_type* gnext, char_type* gend);
 
         /// @}
 
-        // \name Put area access (27.6.3.3.3)
+        // Put area access (27.6.3.3.3)
+
         /// \name Put area access member functions
         /// @{
 
         /// \brief  Protected get the write beginning pointer.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return The beginning pointer for the output sequence.
         _LIBCPP_ALWAYS_INLINE
         char_type*
@@ -385,7 +387,7 @@ namespace os
         /// \brief  Protected get the write next pointer.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return The next pointer for the output sequence.
         _LIBCPP_ALWAYS_INLINE
         char_type*
@@ -394,7 +396,7 @@ namespace os
         /// \brief  Protected get the write end pointer.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return The end pointer for the output sequence.
         _LIBCPP_ALWAYS_INLINE
         char_type*
@@ -404,7 +406,7 @@ namespace os
         ///
         /// \param [in]  n  The delta by which to move.
         /// \par Returns
-        /// Nothing.
+        ///     Nothing.
         void
         pbump(int n);
 
@@ -413,7 +415,7 @@ namespace os
         /// \param [in]  pbeg  A pointer to the beginning.
         /// \param [in]  pend  A pointer to the end.
         /// \par Returns
-        /// Nothing.
+        ///     Nothing.
         void
         setp(char_type* pbeg, char_type* pend);
 
@@ -421,7 +423,8 @@ namespace os
 
         // 27.6.3.4 virtual functions
 
-        // \name Locales (27.6.3.4.1)
+        // Locales (27.6.3.4.1)
+
         /// \name Locale member functions
         /// @{
 
@@ -429,13 +432,14 @@ namespace os
         ///
         /// \param [in]  loc  A new locale.
         /// \par Returns
-        /// Nothing.
+        ///     Nothing.
         virtual void
         imbue(const locale& loc);
 
         /// @}
 
-        // \name Buffer management and positioning (27.6.3.4.2)
+        // Buffer management and positioning (27.6.3.4.2)
+
         /// \name Buffer management and positioning member functions
         /// @{
 
@@ -466,21 +470,22 @@ namespace os
         /// \brief  Protected synchronise (usually flush the output buffer).
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return  -1 on failure.
         virtual int
         sync();
 
         /// @}
 
-        // \name Get area (27.6.3.4.3)
+        // Get area (27.6.3.4.3)
+
         /// \name Get area member functions
         /// @{
 
         /// \brief  Protected check if any input data available.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return  An estimate of the number of characters available in the
         ///          input sequence, or -1.
         virtual streamsize
@@ -490,14 +495,14 @@ namespace os
         ///
         /// \param [in]  s  The address of an array of characters.
         /// \param [in]  n  The maximum number of characters to get.
-        /// \return  The number of characters actually copied .
+        /// \return  The number of characters actually copied.
         virtual streamsize
         xsgetn(char_type* s, streamsize n);
 
         /// \brief  Protected fetch more data from the input stream.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return  The first character from the *pending sequence*.
         virtual int_type
         underflow();
@@ -505,7 +510,7 @@ namespace os
         /// \brief  Protected fetch more data from the input stream.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \return  The first character from the *pending sequence* or
         /// `traits::eof()` to indicate failure.
         virtual int_type
@@ -513,7 +518,8 @@ namespace os
 
         /// @}
 
-        // \name Putback (27.6.3.4.4)
+        // Putback (27.6.3.4.4)
+
         /// \name Putback member functions
         /// @{
 
@@ -526,7 +532,8 @@ namespace os
 
         /// @}
 
-        // \name Put area (27.6.3.4.5)
+        // Put area (27.6.3.4.5)
+
         /// \name Put area member functions
         /// @{
 
@@ -543,7 +550,7 @@ namespace os
         ///
         /// \param [in]  c  An additional character to consume.
         /// \return  `traits::eof()` to indicate failure, something
-        /// else (usually `c`, or not_eof())
+        /// else (usually `c`, or not_eof()).
         virtual int_type
         overflow(int_type c = traits_type::eof());
 
@@ -591,10 +598,10 @@ namespace os
     /// \details
     /// Call the virtual private `imbue(loc)` and return its value.
     /// The effect is to set a new `locale`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       locale
-      basic_streambuf<_CharT, _Traits>::pubimbue(const locale& loc)
+      basic_streambuf<TChar_T, TTraits_T>::pubimbue(const locale& loc)
       {
         imbue(loc);
         locale r = m_locale;
@@ -610,10 +617,10 @@ namespace os
     /// called after `pubimbue()` has been called but before
     /// `pubimbue()` has returned (i.e., from within the call
     /// of `imbue()`) then it returns the previous value.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       locale
-      basic_streambuf<_CharT, _Traits>::getloc() const
+      basic_streambuf<TChar_T, TTraits_T>::getloc() const
       {
         // Simple implementation, always return the member value
         return m_locale;
@@ -622,10 +629,10 @@ namespace os
     /// \details
     /// Call the virtual private `setbuf(s, n)` and return its value.
     /// The effect is usually to set a new buffer.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      basic_streambuf<_CharT, _Traits>*
-      basic_streambuf<_CharT, _Traits>::pubsetbuf(char_type* s, streamsize n)
+      basic_streambuf<TChar_T, TTraits_T>*
+      basic_streambuf<TChar_T, TTraits_T>::pubsetbuf(char_type* s, streamsize n)
       {
         return setbuf(s, n);
       }
@@ -634,10 +641,10 @@ namespace os
     /// Call the virtual private `seekoff(off, way, which)`
     /// and return its value. The effect is usually to change the current
     /// position into the stream.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      typename basic_streambuf<_CharT, _Traits>::pos_type
-      basic_streambuf<_CharT, _Traits>::pubseekoff(off_type off,
+      typename basic_streambuf<TChar_T, TTraits_T>::pos_type
+      basic_streambuf<TChar_T, TTraits_T>::pubseekoff(off_type off,
           ios_base::seekdir way,
           ios_base::openmode which)
         {
@@ -648,10 +655,10 @@ namespace os
       /// Call the virtual private `seekpos(pos, which)`
       /// and return its value. The effect is usually to change the current
       /// position into the stream.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      typename basic_streambuf<_CharT, _Traits>::pos_type
-      basic_streambuf<_CharT, _Traits>::pubseekpos(pos_type pos,
+      typename basic_streambuf<TChar_T, TTraits_T>::pos_type
+      basic_streambuf<TChar_T, TTraits_T>::pubseekpos(pos_type pos,
           ios_base::openmode which)
         {
           return seekpos(pos, which);
@@ -661,10 +668,10 @@ namespace os
       /// Call the virtual private `sync()`
       /// and return its value. The effect is usually to synchronise/flush the
       /// output stream.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       int
-      basic_streambuf<_CharT, _Traits>::pubsync()
+      basic_streambuf<TChar_T, TTraits_T>::pubsync()
       {
         return sync();
       }
@@ -674,10 +681,10 @@ namespace os
     /// return `egptr() - gptr()` (the number of characters available)
     /// Otherwise return `showmanyc()` (27.6.3.4.3) to inspect the
     /// input stream.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       streamsize
-      basic_streambuf<_CharT, _Traits>::in_avail()
+      basic_streambuf<TChar_T, TTraits_T>::in_avail()
       {
         if (m_ninp < m_einp)
           {
@@ -689,10 +696,10 @@ namespace os
     /// \details
     /// Call `sbumpc()`, if it fails,
     /// return traits::eof(). Otherwise, return sgetc().
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::snextc()
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::snextc()
         {
           if (sbumpc() == traits_type::eof())
             {
@@ -707,10 +714,10 @@ namespace os
       /// return `uflow()`. Otherwise, return
       /// `traits::to_int_type(*gptr())` and increment the next
       /// pointer for the input sequence.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::sbumpc()
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::sbumpc()
         {
           if (m_ninp == m_einp)
             {
@@ -724,10 +731,10 @@ namespace os
       /// (no characters in the input buffer),
       /// return `underflow()`. Otherwise, return
       /// `traits::to_int_type(*gptr())`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::sgetc()
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::sgetc()
         {
           if (m_ninp == m_einp)
             {
@@ -740,10 +747,10 @@ namespace os
       /// Call xsgetn(s,n) and return its value.
       /// The effect is usually to fill `s[0]` through
       /// `s[n-1]` with characters from the input sequence, if possible.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       streamsize
-      basic_streambuf<_CharT, _Traits>::sgetn(char_type* s, streamsize n)
+      basic_streambuf<TChar_T, TTraits_T>::sgetn(char_type* s, streamsize n)
       {
         return xsgetn(s, n);
       }
@@ -755,10 +762,10 @@ namespace os
     /// `pbackfail(traits::to_int_type(c))`. Otherwise,
     /// decrement the next pointer for the input sequence
     /// and return `traits::to_int_type(*gptr())`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::sputbackc(char_type c)
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::sputbackc(char_type c)
         {
           if (m_binp == m_ninp || !traits_type::eq(c, m_ninp[-1]))
             {
@@ -774,10 +781,10 @@ namespace os
       /// pointer for the input sequence and return
       /// `traits::to_int_type(*gptr())`. The effect is to *unget*
       /// the last character *gotten*.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::sungetc()
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::sungetc()
         {
           if (m_binp == m_ninp)
             {
@@ -793,10 +800,10 @@ namespace os
       /// Otherwise, store `c` at the next pointer for the
       /// output sequence, increments the pointer, and
       /// return `traits::to_int_type(c)`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::sputc(char_type c)
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::sputc(char_type c)
         {
           if (m_nout == m_eout)
             {
@@ -810,47 +817,47 @@ namespace os
       /// Call `xsputn(s,n)` and return its value.
       /// The effect is usually to write `s[0]` through
       /// `s[n-1]` to the output sequence, if possible.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       streamsize
-      basic_streambuf<_CharT, _Traits>::sputn(const char_type* s, streamsize n)
+      basic_streambuf<TChar_T, TTraits_T>::sputn(const char_type* s, streamsize n)
       {
         return xsputn(s, n);
       }
 
     /// \details
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_ALWAYS_INLINE
-      _CharT*
-      basic_streambuf<_CharT, _Traits>::eback() const
+      TChar_T*
+      basic_streambuf<TChar_T, TTraits_T>::eback() const
       {
         return m_binp;
       }
 
     /// \details
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_ALWAYS_INLINE
-      _CharT*
-      basic_streambuf<_CharT, _Traits>::gptr() const
+      TChar_T*
+      basic_streambuf<TChar_T, TTraits_T>::gptr() const
       {
         return m_ninp;
       }
 
     /// \details
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_ALWAYS_INLINE
-      _CharT*
-      basic_streambuf<_CharT, _Traits>::egptr() const
+      TChar_T*
+      basic_streambuf<TChar_T, TTraits_T>::egptr() const
       {
         return m_einp;
       }
 
     /// \details
     /// Add `n` (signed value) to the next pointer for the input sequence.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_streambuf<_CharT, _Traits>::gbump(int n)
+      basic_streambuf<TChar_T, TTraits_T>::gbump(int n)
       {
         m_ninp += n;
       }
@@ -861,10 +868,10 @@ namespace os
     /// - `gbeg == eback()`
     /// - `gnext == gptr()`
     /// - `gend == egptr()`
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_streambuf<_CharT, _Traits>::setg(char_type* gbeg, char_type* gnext,
+      basic_streambuf<TChar_T, TTraits_T>::setg(char_type* gbeg, char_type* gnext,
           char_type* gend)
       {
         m_binp = gbeg;
@@ -873,38 +880,38 @@ namespace os
       }
 
     /// \details
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_ALWAYS_INLINE
-      _CharT*
-      basic_streambuf<_CharT, _Traits>::pbase() const
+      TChar_T*
+      basic_streambuf<TChar_T, TTraits_T>::pbase() const
       {
         return m_bout;
       }
 
     /// \details
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_ALWAYS_INLINE
-      _CharT*
-      basic_streambuf<_CharT, _Traits>::pptr() const
+      TChar_T*
+      basic_streambuf<TChar_T, TTraits_T>::pptr() const
       {
         return m_nout;
       }
 
     /// \details
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_ALWAYS_INLINE
-      _CharT*
-      basic_streambuf<_CharT, _Traits>::epptr() const
+      TChar_T*
+      basic_streambuf<TChar_T, TTraits_T>::epptr() const
       {
         return m_eout;
       }
 
     /// \details
     /// Adds `n` (signed value) to the next pointer for the output sequence.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_streambuf<_CharT, _Traits>::pbump(int n)
+      basic_streambuf<TChar_T, TTraits_T>::pbump(int n)
       {
         m_nout += n;
       }
@@ -916,10 +923,10 @@ namespace os
     /// - `pbeg == pbase()`
     /// - `pbeg == pptr()` (same as `pbeg`)
     /// - `pend == epptr()`
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_streambuf<_CharT, _Traits>::setp(char_type* pbeg, char_type* pend)
+      basic_streambuf<TChar_T, TTraits_T>::setp(char_type* pbeg, char_type* pend)
       {
         m_bout = m_nout = pbeg;
         m_eout = pend;

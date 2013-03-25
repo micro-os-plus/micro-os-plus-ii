@@ -107,6 +107,9 @@ namespace os
       // construct/copy/destroy:
       locale() _NOEXCEPT;
 
+      void
+      init(void);
+
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
       locale(const locale&) _NOEXCEPT;
       explicit locale(const char*);
@@ -128,9 +131,9 @@ namespace os
       bool operator==(const locale&) const;
       bool operator!=(const locale& __y) const
         { return !(*this == __y);}
-      template <class _CharT, class _Traits, class _Allocator>
-      bool operator()(const basic_string<_CharT, _Traits, _Allocator>&,
-          const basic_string<_CharT, _Traits, _Allocator>&) const;
+      template <class TChar_T, class TTraits_T, class _Allocator>
+      bool operator()(const basic_string<TChar_T, TTraits_T, _Allocator>&,
+          const basic_string<TChar_T, TTraits_T, _Allocator>&) const;
 
       // global locale objects:
       static locale global(const locale&);
@@ -279,7 +282,7 @@ namespace os
 
 #if 0
   // Forward reference, since definition is in locale.h
-  template<class _CharT, class _OutputIterator = ostreambuf_iterator<_CharT> >
+  template<class TChar_T, class _OutputIterator = ostreambuf_iterator<TChar_T> >
     class _LIBCPP_VISIBLE num_put;
 
   //extern template class num_put<char> ;
@@ -299,14 +302,14 @@ namespace os
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
- // template <class _CharT> class collate;
+ // template <class TChar_T> class collate;
 
-  template <class _CharT>
+  template <class TChar_T>
   class _LIBCPP_VISIBLE collate
   : public locale::facet
     {
     public:
-      typedef _CharT char_type;
+      typedef TChar_T char_type;
       typedef basic_string<char_type> string_type;
 
       _LIBCPP_INLINE_VISIBILITY
@@ -344,16 +347,16 @@ namespace os
       virtual long do_hash(const char_type* __lo, const char_type* __hi) const;
     };
 
-  template <class _CharT> locale::id collate<_CharT>::id;
+  template <class TChar_T> locale::id collate<TChar_T>::id;
 
-  template <class _CharT>
-  collate<_CharT>::~collate()
+  template <class TChar_T>
+  collate<TChar_T>::~collate()
     {
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   int
-  collate<_CharT>::do_compare(const char_type* __lo1, const char_type* __hi1,
+  collate<TChar_T>::do_compare(const char_type* __lo1, const char_type* __hi1,
       const char_type* __lo2, const char_type* __hi2) const
     {
       for (; __lo2 != __hi2; ++__lo1, ++__lo2)
@@ -366,9 +369,9 @@ namespace os
       return __lo1 != __hi1;
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   long
-  collate<_CharT>::do_hash(const char_type* __lo, const char_type* __hi) const
+  collate<TChar_T>::do_hash(const char_type* __lo, const char_type* __hi) const
     {
       size_t __h = 0;
       const size_t __sr = __CHAR_BIT__ * sizeof(size_t) - 8;
@@ -387,7 +390,7 @@ namespace os
 
 // template <class CharT> class collate_byname;
 
-  template <class _CharT> class _LIBCPP_VISIBLE collate_byname;
+  template <class TChar_T> class _LIBCPP_VISIBLE collate_byname;
 
   template <>
   class _LIBCPP_VISIBLE collate_byname<char>
@@ -428,12 +431,12 @@ namespace os
       virtual string_type do_transform(const char_type* __lo, const char_type* __hi) const;
     };
 
-  template <class _CharT, class _Traits, class _Allocator>
+  template <class TChar_T, class TTraits_T, class _Allocator>
   bool
-  locale::operator()(const basic_string<_CharT, _Traits, _Allocator>& __x,
-      const basic_string<_CharT, _Traits, _Allocator>& __y) const
+  locale::operator()(const basic_string<TChar_T, TTraits_T, _Allocator>& __x,
+      const basic_string<TChar_T, TTraits_T, _Allocator>& __y) const
     {
-      return _VSTD::use_facet<_VSTD::collate<_CharT> >(*this).compare(
+      return _VSTD::use_facet<_VSTD::collate<TChar_T> >(*this).compare(
           __x.data(), __x.data() + __x.size(),
           __y.data(), __y.data() + __y.size()) < 0;
     }
@@ -518,7 +521,7 @@ namespace os
         {}
     };
 
-  template <class _CharT> class _LIBCPP_VISIBLE ctype;
+  template <class TChar_T> class _LIBCPP_VISIBLE ctype;
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
   template <>
@@ -744,7 +747,7 @@ public ctype_base
 
 // template <class CharT> class ctype_byname;
 
-  template <class _CharT> class _LIBCPP_VISIBLE ctype_byname;
+  template <class TChar_T> class _LIBCPP_VISIBLE ctype_byname;
 
   template <>
   class _LIBCPP_VISIBLE ctype_byname<char>
@@ -790,108 +793,108 @@ public ctype_base
       virtual const char_type* do_narrow(const char_type* __low, const char_type* __high, char __dfault, char* __dest) const;
     };
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  isspace(_CharT __c, const locale& __loc)
+  isspace(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::space, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::space, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  isprint(_CharT __c, const locale& __loc)
+  isprint(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::print, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::print, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  iscntrl(_CharT __c, const locale& __loc)
+  iscntrl(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::cntrl, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::cntrl, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  isupper(_CharT __c, const locale& __loc)
+  isupper(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::upper, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::upper, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  islower(_CharT __c, const locale& __loc)
+  islower(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::lower, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::lower, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  isalpha(_CharT __c, const locale& __loc)
+  isalpha(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::alpha, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::alpha, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  isdigit(_CharT __c, const locale& __loc)
+  isdigit(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::digit, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::digit, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  ispunct(_CharT __c, const locale& __loc)
+  ispunct(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::punct, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::punct, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  isxdigit(_CharT __c, const locale& __loc)
+  isxdigit(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::xdigit, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::xdigit, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  isalnum(_CharT __c, const locale& __loc)
+  isalnum(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::alnum, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::alnum, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
   bool
-  isgraph(_CharT __c, const locale& __loc)
+  isgraph(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).is(ctype_base::graph, __c);
+      return use_facet<ctype<TChar_T> >(__loc).is(ctype_base::graph, __c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
-  _CharT
-  toupper(_CharT __c, const locale& __loc)
+  TChar_T
+  toupper(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).toupper(__c);
+      return use_facet<ctype<TChar_T> >(__loc).toupper(__c);
     }
 
-  template <class _CharT>
+  template <class TChar_T>
   inline _LIBCPP_INLINE_VISIBILITY
-  _CharT
-  tolower(_CharT __c, const locale& __loc)
+  TChar_T
+  tolower(TChar_T __c, const locale& __loc)
     {
-      return use_facet<ctype<_CharT> >(__loc).tolower(__c);
+      return use_facet<ctype<TChar_T> >(__loc).tolower(__c);
     }
 
 // codecvt_base
@@ -907,7 +910,7 @@ public ctype_base
 
 // template <class internT, class externT, class stateT> class codecvt;
 
-  template <class _InternT, class _ExternT, class _StateT> class _LIBCPP_VISIBLE codecvt;
+  template <class _InternT, class _ExternT, class TState_T> class _LIBCPP_VISIBLE codecvt;
 
 // template <> class codecvt<char, char, mbstate_t>
 
@@ -1256,27 +1259,27 @@ public codecvt_base
       virtual int do_max_length() const _NOEXCEPT;
     };
 
-// template <class _InternT, class _ExternT, class _StateT> class codecvt_byname
+// template <class _InternT, class _ExternT, class TState_T> class codecvt_byname
 
-  template <class _InternT, class _ExternT, class _StateT>
+  template <class _InternT, class _ExternT, class TState_T>
   class _LIBCPP_VISIBLE codecvt_byname
-  : public codecvt<_InternT, _ExternT, _StateT>
+  : public codecvt<_InternT, _ExternT, TState_T>
     {
     public:
       _LIBCPP_ALWAYS_INLINE
       explicit codecvt_byname(const char* __nm, size_t __refs = 0)
-      : codecvt<_InternT, _ExternT, _StateT>(__nm, __refs)
+      : codecvt<_InternT, _ExternT, TState_T>(__nm, __refs)
         {}
       _LIBCPP_ALWAYS_INLINE
       explicit codecvt_byname(const string& __nm, size_t __refs = 0)
-      : codecvt<_InternT, _ExternT, _StateT>(__nm.c_str(), __refs)
+      : codecvt<_InternT, _ExternT, TState_T>(__nm.c_str(), __refs)
         {}
     protected:
       ~codecvt_byname();
     };
 
-  template <class _InternT, class _ExternT, class _StateT>
-  codecvt_byname<_InternT, _ExternT, _StateT>::~codecvt_byname()
+  template <class _InternT, class _ExternT, class TState_T>
+  codecvt_byname<_InternT, _ExternT, TState_T>::~codecvt_byname()
     {
     }
 
@@ -1290,18 +1293,18 @@ public codecvt_base
   template <size_t _Np>
   struct __narrow_to_utf8
     {
-      template <class _OutputIterator, class _CharT>
+      template <class _OutputIterator, class TChar_T>
       _OutputIterator
-      operator()(_OutputIterator __s, const _CharT* __wb, const _CharT* __we) const;
+      operator()(_OutputIterator __s, const TChar_T* __wb, const TChar_T* __we) const;
     };
 
   template <>
   struct __narrow_to_utf8<8>
     {
-      template <class _OutputIterator, class _CharT>
+      template <class _OutputIterator, class TChar_T>
       _LIBCPP_ALWAYS_INLINE
       _OutputIterator
-      operator()(_OutputIterator __s, const _CharT* __wb, const _CharT* __we) const
+      operator()(_OutputIterator __s, const TChar_T* __wb, const TChar_T* __we) const
         {
           for (; __wb < __we; ++__wb, ++__s)
           *__s = *__wb;
@@ -1319,10 +1322,10 @@ public codecvt_base
 
       ~__narrow_to_utf8();
 
-      template <class _OutputIterator, class _CharT>
+      template <class _OutputIterator, class TChar_T>
       _LIBCPP_ALWAYS_INLINE
       _OutputIterator
-      operator()(_OutputIterator __s, const _CharT* __wb, const _CharT* __we) const
+      operator()(_OutputIterator __s, const TChar_T* __wb, const TChar_T* __we) const
         {
           result __r = ok;
           mbstate_t __mb;
@@ -1338,7 +1341,7 @@ public codecvt_base
               __throw_runtime_error("locale not supported");
               for (const char* __p = __buf; __p < __bn; ++__p, ++__s)
               *__s = *__p;
-              __wb = (const _CharT*)__wn;
+              __wb = (const TChar_T*)__wn;
             }
           return __s;
         }
@@ -1354,10 +1357,10 @@ public codecvt_base
 
       ~__narrow_to_utf8();
 
-      template <class _OutputIterator, class _CharT>
+      template <class _OutputIterator, class TChar_T>
       _LIBCPP_ALWAYS_INLINE
       _OutputIterator
-      operator()(_OutputIterator __s, const _CharT* __wb, const _CharT* __we) const
+      operator()(_OutputIterator __s, const TChar_T* __wb, const TChar_T* __we) const
         {
           result __r = ok;
           mbstate_t __mb;
@@ -1373,7 +1376,7 @@ public codecvt_base
               __throw_runtime_error("locale not supported");
               for (const char* __p = __buf; __p < __bn; ++__p, ++__s)
               *__s = *__p;
-              __wb = (const _CharT*)__wn;
+              __wb = (const TChar_T*)__wn;
             }
           return __s;
         }
@@ -1473,7 +1476,7 @@ public codecvt_base
 
 // template <class charT> class numpunct
 
-  template <class _CharT> class _LIBCPP_VISIBLE numpunct;
+  template <class TChar_T> class _LIBCPP_VISIBLE numpunct;
 
   template <>
   class _LIBCPP_VISIBLE numpunct<char>

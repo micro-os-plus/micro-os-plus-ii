@@ -39,10 +39,10 @@ namespace os
     /// getloc() | a copy of the value returned by locale()
     /// iarray | a null pointer
     /// parray | a null pointer
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       void
-      basic_ios<_CharT, _Traits>::init(
-          basic_streambuf<_CharT, _Traits>* sb)
+      basic_ios<TChar_T, TTraits_T>::init(
+          basic_streambuf<TChar_T, TTraits_T>* sb)
       {
         ios_base::__init();
 
@@ -58,10 +58,9 @@ namespace os
     /// \details
     /// This destructor does nothing.  More specifically, it does not
     /// destroy the streambuf held by `rdbuf()`.
-    template<class _CharT, class _Traits>
-      basic_ios<_CharT, _Traits>::~basic_ios()
+    template<class TChar_T, class TTraits_T>
+      basic_ios<TChar_T, TTraits_T>::~basic_ios()
       {
-        ;
       }
 
     /// \details
@@ -84,9 +83,9 @@ namespace os
     /// -# calls each callback pair that was copied from `rhs` as
     /// `(*fn)(copyfmt_event, *this, index);`
     /// -# calls `exceptions(rhs.except())`.
-    template<class _CharT, class _Traits>
-      basic_ios<_CharT, _Traits>&
-      basic_ios<_CharT, _Traits>::copyfmt(const basic_ios& rhs)
+    template<class TChar_T, class TTraits_T>
+      basic_ios<TChar_T, TTraits_T>&
+      basic_ios<TChar_T, TTraits_T>::copyfmt(const basic_ios& rhs)
       {
         if (this != &rhs)
           {
@@ -206,9 +205,9 @@ namespace os
     /// \details
     /// See `ios_base::iostate` for the possible bit values.  Most
     /// users will not need to pass an argument.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       void
-      basic_ios<_CharT, _Traits>::clear(iostate state)
+      basic_ios<TChar_T, TTraits_T>::clear(iostate state)
       {
         if (m_rdbuf)
           {
@@ -228,9 +227,9 @@ namespace os
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
-  template<class _CharT, class _Traits>
+  template<class TChar_T, class TTraits_T>
   void
-  basic_ios<_CharT, _Traits>::__set_badbit_and_consider_rethrow()
+  basic_ios<TChar_T, TTraits_T>::__set_badbit_and_consider_rethrow()
     {
       m_rdstate |= badbit;
 #if defined(OS_INCLUDE_STD_EXCEPTIONS)
@@ -241,9 +240,9 @@ namespace os
 #endif  // OS_INCLUDE_STD_EXCEPTIONS
     }
 
-  template<class _CharT, class _Traits>
+  template<class TChar_T, class TTraits_T>
   void
-  basic_ios<_CharT, _Traits>::__set_failbit_and_consider_rethrow()
+  basic_ios<TChar_T, TTraits_T>::__set_failbit_and_consider_rethrow()
     {
       m_rdstate |= failbit;
 #if defined(OS_INCLUDE_STD_EXCEPTIONS)

@@ -64,13 +64,13 @@ namespace os
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
-  template<class _CharT, class _Traits>
-  basic_ostream<_CharT, _Traits>&
-  operator<<(basic_ostream<_CharT, _Traits>& __os, const error_code& __ec);
+  template<class TChar_T, class TTraits_T>
+  basic_ostream<TChar_T, TTraits_T>&
+  operator<<(basic_ostream<TChar_T, TTraits_T>& __os, const error_code& __ec);
 
-  template<class _CharT, class _Traits, class _Yp>
-  basic_ostream<_CharT, _Traits>&
-  operator<<(basic_ostream<_CharT, _Traits>& __os,
+  template<class TChar_T, class TTraits_T, class _Yp>
+  basic_ostream<TChar_T, TTraits_T>&
+  operator<<(basic_ostream<TChar_T, TTraits_T>& __os,
       shared_ptr<_Yp> const& __p);
 
 #endif

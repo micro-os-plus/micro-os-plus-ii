@@ -655,15 +655,15 @@ namespace os
       }
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-    template<class _Tp, class _CharT = char,
-        class _Traits = char_traits<_CharT>, class _Distance = ptrdiff_t>
+    template<class _Tp, class TChar_T = char,
+        class TTraits_T = char_traits<TChar_T>, class _Distance = ptrdiff_t>
       class _LIBCPP_VISIBLE istream_iterator : public iterator<
           input_iterator_tag, _Tp, _Distance, const _Tp*, const _Tp&>
       {
       public:
-        typedef _CharT char_type;
-        typedef _Traits traits_type;
-        typedef basic_istream<_CharT, _Traits> istream_type;
+        typedef TChar_T char_type;
+        typedef TTraits_T traits_type;
+        typedef basic_istream<TChar_T, TTraits_T> istream_type;
       private:
         istream_type* __in_stream_;
         _Tp __value_;
@@ -727,14 +727,14 @@ namespace os
       };
 #endif
 
-    template<class _Tp, class _CharT = char, class _Traits = char_traits<_CharT> >
+    template<class _Tp, class TChar_T = char, class TTraits_T = char_traits<TChar_T> >
       class _LIBCPP_VISIBLE ostream_iterator : public iterator<
           output_iterator_tag, void, void, void, void>
       {
       public:
-        typedef _CharT char_type;
-        typedef _Traits traits_type;
-        typedef basic_ostream<_CharT, _Traits> ostream_type;
+        typedef TChar_T char_type;
+        typedef TTraits_T traits_type;
+        typedef basic_ostream<TChar_T, TTraits_T> ostream_type;
       private:
         ostream_type* __out_stream_;
         const char_type* __delim_;
@@ -747,7 +747,7 @@ namespace os
         }
 
         _LIBCPP_INLINE_VISIBILITY
-        ostream_iterator(ostream_type& __s, const _CharT* __delimiter)
+        ostream_iterator(ostream_type& __s, const TChar_T* __delimiter)
             : __out_stream_(&__s), __delim_(__delimiter)
         {
           ;
@@ -782,17 +782,17 @@ namespace os
       };
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       class _LIBCPP_VISIBLE istreambuf_iterator : public iterator<
-          input_iterator_tag, _CharT, typename _Traits::off_type, _CharT*,
-          _CharT>
+          input_iterator_tag, TChar_T, typename TTraits_T::off_type, TChar_T*,
+          TChar_T>
       {
       public:
-        typedef _CharT char_type;
-        typedef _Traits traits_type;
-        typedef typename _Traits::int_type int_type;
-        typedef basic_streambuf<_CharT, _Traits> streambuf_type;
-        typedef basic_istream<_CharT, _Traits> istream_type;
+        typedef TChar_T char_type;
+        typedef TTraits_T traits_type;
+        typedef typename TTraits_T::int_type int_type;
+        typedef basic_streambuf<TChar_T, TTraits_T> streambuf_type;
+        typedef basic_istream<TChar_T, TTraits_T> istream_type;
       private:
         mutable streambuf_type* __sbuf_;
 
@@ -882,34 +882,34 @@ namespace os
         }
 };
 
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
-      operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
-          const istreambuf_iterator<_CharT, _Traits>& __b)
+      operator==(const istreambuf_iterator<TChar_T, TTraits_T>& __a,
+          const istreambuf_iterator<TChar_T, TTraits_T>& __b)
       {
         return __a.equal(__b);
       }
 
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
-      operator!=(const istreambuf_iterator<_CharT, _Traits>& __a,
-          const istreambuf_iterator<_CharT, _Traits>& __b)
+      operator!=(const istreambuf_iterator<TChar_T, TTraits_T>& __a,
+          const istreambuf_iterator<TChar_T, TTraits_T>& __b)
       {
         return !__a.equal(__b);
       }
 #endif
 
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       class _LIBCPP_VISIBLE ostreambuf_iterator : public iterator<
           output_iterator_tag, void, void, void, void>
       {
       public:
-        typedef _CharT char_type;
-        typedef _Traits traits_type;
-        typedef basic_streambuf<_CharT, _Traits> streambuf_type;
-        typedef basic_ostream<_CharT, _Traits> ostream_type;
+        typedef TChar_T char_type;
+        typedef TTraits_T traits_type;
+        typedef basic_streambuf<TChar_T, TTraits_T> streambuf_type;
+        typedef basic_ostream<TChar_T, TTraits_T> ostream_type;
       private:
         streambuf_type* __sbuf_;
       public:
@@ -928,7 +928,7 @@ namespace os
         }
 
         _LIBCPP_INLINE_VISIBILITY ostreambuf_iterator&
-        operator=(_CharT __c)
+        operator=(TChar_T __c)
         {
           if ((__sbuf_ != 0)
               && traits_type::eq_int_type(__sbuf_->sputc(__c),
@@ -1397,7 +1397,7 @@ namespace os
 #endif
 
       template <class _Up> friend class __wrap_iter;
-      template <class _CharT, class _Traits, class _Alloc> friend class basic_string;
+      template <class TChar_T, class TTraits_T, class _Alloc> friend class basic_string;
       template <class _Tp, class _Alloc> friend class vector;
 
       template <class _Iter1, class _Iter2>

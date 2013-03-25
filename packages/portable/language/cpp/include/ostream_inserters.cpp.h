@@ -26,22 +26,22 @@ namespace os
     /// \addtogroup ostreamInserters
     /// @{
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      operator<<(basic_ostream<_CharT, _Traits>& outs, _CharT c)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      operator<<(basic_ostream<TChar_T, TTraits_T>& outs, TChar_T c)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-        typename basic_ostream<_CharT, _Traits>::sentry se(outs);
+        typename basic_ostream<TChar_T, TTraits_T>::sentry se(outs);
         if (se)
           {
-            typedef ostreambuf_iterator<_CharT, _Traits> _Ip;
+            typedef ostreambuf_iterator<TChar_T, TTraits_T> _Ip;
 
-            const _CharT* pBeg = &c;
-            const _CharT* pEnd = &c + 1;
-            const _CharT* pPad;
+            const TChar_T* pBeg = &c;
+            const TChar_T* pEnd = &c + 1;
+            const TChar_T* pPad;
             if ((outs.flags() & ios_base::adjustfield) == ios_base::left)
               {
                 pPad = pEnd;
@@ -66,23 +66,23 @@ namespace os
         return outs;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      operator<<(basic_ostream<_CharT, _Traits>& outs, char ch)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      operator<<(basic_ostream<TChar_T, TTraits_T>& outs, char ch)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-        typename basic_ostream<_CharT, _Traits>::sentry se(outs);
+        typename basic_ostream<TChar_T, TTraits_T>::sentry se(outs);
         if (se)
           {
-            _CharT c = outs.widen(ch);
-            typedef ostreambuf_iterator<_CharT, _Traits> _Ip;
+            TChar_T c = outs.widen(ch);
+            typedef ostreambuf_iterator<TChar_T, TTraits_T> _Ip;
 
-            const _CharT* pBeg = &c;
-            const _CharT* pEnd = &c + 1;
-            const _CharT* pPad;
+            const TChar_T* pBeg = &c;
+            const TChar_T* pEnd = &c + 1;
+            const TChar_T* pPad;
 
             if ((outs.flags() & ios_base::adjustfield) == ios_base::left)
               {
@@ -108,18 +108,18 @@ namespace os
         return outs;
       }
 
-    template<class _Traits>
-      basic_ostream<char, _Traits>&
-      operator<<(basic_ostream<char, _Traits>& outs, char ch)
+    template<class TTraits_T>
+      basic_ostream<char, TTraits_T>&
+      operator<<(basic_ostream<char, TTraits_T>& outs, char ch)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-        typename basic_ostream<char, _Traits>::sentry se(outs);
+        typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
-            typedef ostreambuf_iterator<char, _Traits> _Ip;
+            typedef ostreambuf_iterator<char, TTraits_T> _Ip;
 
             const char* pBeg = &ch;
             const char* pEnd = &ch + 1;
@@ -149,18 +149,18 @@ namespace os
         return outs;
       }
 
-    template<class _Traits>
-      basic_ostream<char, _Traits>&
-      operator<<(basic_ostream<char, _Traits>& outs, signed char ch)
+    template<class TTraits_T>
+      basic_ostream<char, TTraits_T>&
+      operator<<(basic_ostream<char, TTraits_T>& outs, signed char ch)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-        typename basic_ostream<char, _Traits>::sentry se(outs);
+        typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
-            typedef ostreambuf_iterator<char, _Traits> _Ip;
+            typedef ostreambuf_iterator<char, TTraits_T> _Ip;
 
             const char* pBeg = (char*) &ch;
             const char* pEnd = (char*) &ch + 1;
@@ -191,18 +191,18 @@ namespace os
         return outs;
       }
 
-    template<class _Traits>
-      basic_ostream<char, _Traits>&
-      operator<<(basic_ostream<char, _Traits>& outs, unsigned char ch)
+    template<class TTraits_T>
+      basic_ostream<char, TTraits_T>&
+      operator<<(basic_ostream<char, TTraits_T>& outs, unsigned char ch)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-        typename basic_ostream<char, _Traits>::sentry se(outs);
+        typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
-            typedef ostreambuf_iterator<char, _Traits> _Ip;
+            typedef ostreambuf_iterator<char, TTraits_T> _Ip;
 
             const char* pBeg = (char*) &ch;
             const char* pEnd = (char*) &ch + 1;
@@ -232,23 +232,23 @@ namespace os
         return outs;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      operator<<(basic_ostream<_CharT, _Traits>& outs, const _CharT* str)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      operator<<(basic_ostream<TChar_T, TTraits_T>& outs, const TChar_T* str)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-        typename basic_ostream<_CharT, _Traits>::sentry se(outs);
+        typename basic_ostream<TChar_T, TTraits_T>::sentry se(outs);
         if (se)
           {
-            typedef ostreambuf_iterator<_CharT, _Traits> _Ip;
-            size_t __len = _Traits::length(str);
+            typedef ostreambuf_iterator<TChar_T, TTraits_T> _Ip;
+            size_t __len = TTraits_T::length(str);
 
-            const _CharT* pBeg = str;
-            const _CharT* pEnd = str + __len;
-            const _CharT* pPad;
+            const TChar_T* pBeg = str;
+            const TChar_T* pEnd = str + __len;
+            const TChar_T* pPad;
 
             if ((outs.flags() & ios_base::adjustfield) == ios_base::left)
               {
@@ -276,33 +276,33 @@ namespace os
       }
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-    template<class _CharT, class _Traits>
-    basic_ostream<_CharT, _Traits>&
-    operator<<(basic_ostream<_CharT, _Traits>& os, const char* __strn)
+    template<class TChar_T, class TTraits_T>
+    basic_ostream<TChar_T, TTraits_T>&
+    operator<<(basic_ostream<TChar_T, TTraits_T>& os, const char* __strn)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-            typename basic_ostream<_CharT, _Traits>::sentry se(os);
+            typename basic_ostream<TChar_T, TTraits_T>::sentry se(os);
             if (se)
               {
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-                typedef ostreambuf_iterator<_CharT, _Traits> _Ip;
+                typedef ostreambuf_iterator<TChar_T, TTraits_T> _Ip;
                 size_t __len = char_traits<char>::length(__strn);
                 const int __bs = 100;
-                _CharT __wbb[__bs];
-                _CharT* __wb = __wbb;
-                unique_ptr<_CharT, void
+                TChar_T __wbb[__bs];
+                TChar_T* __wb = __wbb;
+                unique_ptr<TChar_T, void
                 (*)(void*)> __h(0, free);
                 if (__len > __bs)
                   {
-                    __wb = (_CharT*) malloc(__len * sizeof(_CharT));
+                    __wb = (TChar_T*) malloc(__len * sizeof(TChar_T));
                     if (__wb == 0)
                     __throw_bad_alloc();
                     __h.reset(__wb);
                   }
-                for (_CharT* __p = __wb; *__strn != '\0'; ++__strn, ++__p)
+                for (TChar_T* __p = __wb; *__strn != '\0'; ++__strn, ++__p)
                 *__p = os.widen(*__strn);
                 if (__pad_and_output(_Ip(os), __wb,
                         (os.flags() & ios_base::adjustfield) == ios_base::left ?
@@ -325,19 +325,19 @@ namespace os
       }
 #endif
 
-    template<class _Traits>
-      basic_ostream<char, _Traits>&
-      operator<<(basic_ostream<char, _Traits>& outs, const char* str)
+    template<class TTraits_T>
+      basic_ostream<char, TTraits_T>&
+      operator<<(basic_ostream<char, TTraits_T>& outs, const char* str)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-        typename basic_ostream<char, _Traits>::sentry se(outs);
+        typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
-            typedef ostreambuf_iterator<char, _Traits> _Ip;
-            size_t __len = _Traits::length(str);
+            typedef ostreambuf_iterator<char, TTraits_T> _Ip;
+            size_t __len = TTraits_T::length(str);
 
             const char* pBeg = str;
             const char* pEnd = str + __len;
@@ -367,19 +367,19 @@ namespace os
         return outs;
       }
 
-    template<class _Traits>
-      basic_ostream<char, _Traits>&
-      operator<<(basic_ostream<char, _Traits>& outs, const signed char* str)
+    template<class TTraits_T>
+      basic_ostream<char, TTraits_T>&
+      operator<<(basic_ostream<char, TTraits_T>& outs, const signed char* str)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-        typename basic_ostream<char, _Traits>::sentry se(outs);
+        typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
-            typedef ostreambuf_iterator<char, _Traits> _Ip;
-            size_t __len = _Traits::length((const char*) str);
+            typedef ostreambuf_iterator<char, TTraits_T> _Ip;
+            size_t __len = TTraits_T::length((const char*) str);
 
             const char* pBeg = (const char*) (str);
             const char* pEnd = (const char*) (str + __len);
@@ -409,19 +409,19 @@ namespace os
         return outs;
       }
 
-    template<class _Traits>
-      basic_ostream<char, _Traits>&
-      operator<<(basic_ostream<char, _Traits>& outs, const unsigned char* str)
+    template<class TTraits_T>
+      basic_ostream<char, TTraits_T>&
+      operator<<(basic_ostream<char, TTraits_T>& outs, const unsigned char* str)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
           {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-        typename basic_ostream<char, _Traits>::sentry se(outs);
+        typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
-            typedef ostreambuf_iterator<char, _Traits> _Ip;
-            size_t __len = _Traits::length((const char*) str);
+            typedef ostreambuf_iterator<char, TTraits_T> _Ip;
+            size_t __len = TTraits_T::length((const char*) str);
 
             const char* pBeg = (const char*) (str);
             const char* pEnd = (const char*) (str + __len);
@@ -452,19 +452,19 @@ namespace os
       }
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-  template<class _CharT, class _Traits, class _Allocator>
-  basic_ostream<_CharT, _Traits>&
-  operator<<(basic_ostream<_CharT, _Traits>& outs,
-      const basic_string<_CharT, _Traits, _Allocator>& str)
+  template<class TChar_T, class TTraits_T, class _Allocator>
+  basic_ostream<TChar_T, TTraits_T>&
+  operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+      const basic_string<TChar_T, TTraits_T, _Allocator>& str)
     {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
       try
         {
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
-          typename basic_ostream<_CharT, _Traits>::sentry se(outs);
+          typename basic_ostream<TChar_T, TTraits_T>::sentry se(outs);
           if (se)
             {
-              typedef ostreambuf_iterator<_CharT, _Traits> _Ip;
+              typedef ostreambuf_iterator<TChar_T, TTraits_T> _Ip;
               size_t __len = str.size();
               if (__pad_and_output(_Ip(outs), str.data(),
                       (outs.flags() & ios_base::adjustfield) == ios_base::left ?
@@ -486,14 +486,14 @@ namespace os
 #endif
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-  template<class _CharT, class _Traits, size_t _Size>
-  basic_ostream<_CharT, _Traits>&
-  operator<<(basic_ostream<_CharT, _Traits>& outs, const bitset<_Size>& __x)
+  template<class TChar_T, class TTraits_T, size_t _Size>
+  basic_ostream<TChar_T, TTraits_T>&
+  operator<<(basic_ostream<TChar_T, TTraits_T>& outs, const bitset<_Size>& __x)
     {
       return outs
-      << __x.template to_string<_CharT, _Traits>(
-          use_facet < ctype<_CharT> > (outs.getloc()).widen('0'),
-          use_facet < ctype<_CharT> > (outs.getloc()).widen('1'));
+      << __x.template to_string<TChar_T, TTraits_T>(
+          use_facet < ctype<TChar_T> > (outs.getloc()).widen('0'),
+          use_facet < ctype<TChar_T> > (outs.getloc()).widen('1'));
     }
 #endif
 

@@ -29,9 +29,9 @@ namespace os
     ///
     /// If the stream state is still good, then the sentry state becomes
     /// true (*okay*).
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>::sentry::sentry(
-          basic_ostream<_CharT, _Traits>& outs)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>::sentry::sentry(
+          basic_ostream<TChar_T, TTraits_T>& outs)
           : m_ostream(outs), m_ok(false)
       {
         if (outs.good())
@@ -46,8 +46,8 @@ namespace os
     /// If `ios_base::unitbuf` is set in `os.flags()`, and
     /// `std::uncaught_exception()` is true, the sentry destructor calls
     /// `flush()` on the output stream.
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>::sentry::~sentry()
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>::sentry::~sentry()
       {
         if ((m_ostream.rdbuf() != nullptr) && m_ostream.good()
             && (m_ostream.flags() & ios_base::unitbuf)
@@ -75,8 +75,8 @@ namespace os
 
     /// \details
     /// This does very little apart from providing a virtual base dtor.
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>::~basic_ostream()
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>::~basic_ostream()
       {
       }
 
@@ -100,10 +100,10 @@ namespace os
     /// the function sets `failbit` in error state, and if `failbit`
     /// is on in `exceptions()` the caught exception is rethrown.
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(
-          basic_streambuf<_CharT, _Traits>* sb)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(
+          basic_streambuf<TChar_T, TTraits_T>* sb)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -120,8 +120,8 @@ namespace os
 #endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
-                typedef istreambuf_iterator<_CharT, _Traits> _Ip;
-                typedef ostreambuf_iterator<_CharT, _Traits> _Op;
+                typedef istreambuf_iterator<TChar_T, TTraits_T> _Ip;
+                typedef ostreambuf_iterator<TChar_T, TTraits_T> _Op;
                 _Ip ii(sb);
                 _Ip __eof;
                 _Op oi(*this);
@@ -163,9 +163,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(bool n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(bool n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -174,8 +174,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
 
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
 
@@ -194,9 +193,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(short n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(short n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -205,8 +204,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
 
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
 
@@ -239,9 +237,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(unsigned short n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(unsigned short n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -250,8 +248,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
 
 #if !defined(OS_INCLUDE_LIBCPP_16BIT_OPTIMISATIONS)
@@ -280,9 +277,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(int n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(int n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -291,8 +288,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
 
 #if !defined(OS_INCLUDE_LIBCPP_16BIT_OPTIMISATIONS)
@@ -324,9 +320,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(unsigned int n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(unsigned int n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -335,8 +331,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
 
 #if !defined(OS_INCLUDE_LIBCPP_16BIT_OPTIMISATIONS)
@@ -365,9 +360,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(long n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(long n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -376,8 +371,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
             if (fnum.put(*this, *this, this->fill(), n).failed())
               {
@@ -394,9 +388,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(unsigned long n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(unsigned long n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -405,8 +399,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
             if (fnum.put(*this, *this, this->fill(), n).failed())
               {
@@ -423,9 +416,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(long long n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(long long n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -434,8 +427,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
             if (fnum.put(*this, *this, this->fill(), n).failed())
               {
@@ -452,9 +444,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(unsigned long long n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(unsigned long long n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -463,8 +455,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
 
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
             if (fnum.put(*this, *this, this->fill(), n).failed())
@@ -482,9 +473,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(float n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(float n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -493,8 +484,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
             if (fnum.put(*this, *this, this->fill(), static_cast<double>(n)).failed())
               {
@@ -511,9 +501,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(double n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(double n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -522,8 +512,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
             if (fnum.put(*this, *this, this->fill(), n).failed())
               {
@@ -540,9 +529,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(long double n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(long double n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -551,8 +540,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
             if (fnum.put(*this, *this, this->fill(), n).failed())
               {
@@ -569,9 +557,9 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::operator<<(const void* n)
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::operator<<(const void* n)
       {
 #if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
         try
@@ -580,8 +568,7 @@ namespace os
         sentry se(*this);
         if (se)
           {
-            typedef num_put<char_type,
-                ostreambuf_iterator<_CharT, _Traits> > num_put_t;
+            typedef num_put<char_type, ostreambuf_iterator<TChar_T, TTraits_T> > num_put_t;
             const num_put_t& fnum = use_facet<num_put_t>(this->getloc());
             if (fnum.put(*this, *this, this->fill(), n).failed())
               {
@@ -598,11 +585,21 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::put(char_type c)
+    /// \details
+    /// Behaves as an unformatted output function (as described in
+    /// 27.7.3.7, paragraph 1). After constructing a `sentry` object,
+    /// inserts the character `c`, if possible.
+    ///
+    /// Otherwise, calls `setstate(badbit)` (which may throw
+    /// `ios_base::failure` (27.5.5.4)).
+    ///
+    /// \note  This function is not overloaded on `signed char` and
+    ///        `unsigned char`.
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::put(char_type c)
       {
-        basic_streambuf<_CharT, _Traits>* sb;
+        basic_streambuf<TChar_T, TTraits_T>* sb;
         sb = this->rdbuf();
         if (sb != nullptr)
           {
@@ -618,7 +615,7 @@ namespace os
                 // TODO: implement without iterator, with sputc(c)
                 // (beware that streambuf may be 0)
 #else
-                typedef ostreambuf_iterator<_CharT, _Traits> _Op;
+                typedef ostreambuf_iterator<TChar_T, TTraits_T> _Op;
                 _Op oi(*this);
                 *oi = c;
                 if (oi.failed())
@@ -638,11 +635,24 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::write(const char_type* str, streamsize n)
+    /// \details
+    /// Behaves as an unformatted output function (as described in
+    /// 27.7.3.7, paragraph 1). After constructing a `sentry` object,
+    /// obtains characters to insert from successive locations
+    /// of an array whose first element is designated by `str`.
+    /// Characters are inserted until either of the following occurs:
+    /// - `n` characters are inserted;
+    /// - inserting in the output sequence fails (in which case
+    /// the function calls `setstate(badbit)`, which
+    /// may throw `ios_base::failure` (27.5.5.4)).
+    ///
+    /// \note  This function is not overloaded on signed char and
+    ///        unsigned char.
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::write(const char_type* str, streamsize n)
       {
-        basic_streambuf<_CharT, _Traits>* sb;
+        basic_streambuf<TChar_T, TTraits_T>* sb;
         sb = this->rdbuf();
         if (sb != nullptr)
           {
@@ -672,11 +682,20 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::flush()
+    /// \details
+    /// Behaves as an unformatted output function (as described in
+    /// 27.7.3.6.1, paragraph 1). If `rdbuf()` is not a null pointer,
+    /// constructs a `sentry` object. If this object returns `true`
+    /// when converted to a value of type `bool` the function calls
+    /// `rdbuf()->pubsync()`. If that function returns -1 calls
+    /// `setstate(badbit)` (which may throw `ios_base::failure`
+    /// (27.5.5.4)). Otherwise, if the `sentry` object returns
+    /// `false`, does nothing.
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::flush()
       {
-        basic_streambuf<_CharT, _Traits>* sb;
+        basic_streambuf<TChar_T, TTraits_T>* sb;
         sb = this->rdbuf();
         if (sb != nullptr)
           {
@@ -702,11 +721,14 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      typename basic_ostream<_CharT, _Traits>::pos_type
-      basic_ostream<_CharT, _Traits>::tellp()
+    /// \details
+    /// If `fail()` is not false, returns `pos_type(-1)` to indicate
+    /// failure.  Otherwise returns `rdbuf()->pubseekoff(0,cur,out)`.
+    template<class TChar_T, class TTraits_T>
+      typename basic_ostream<TChar_T, TTraits_T>::pos_type
+      basic_ostream<TChar_T, TTraits_T>::tellp()
       {
-        basic_streambuf<_CharT, _Traits>* sb;
+        basic_streambuf<TChar_T, TTraits_T>* sb;
         sb = this->rdbuf();
         // if no streambuf, error
         if (sb == nullptr || this->fail())
@@ -716,11 +738,14 @@ namespace os
         return sb->pubseekoff(0, ios_base::cur, ios_base::out);
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::seekp(pos_type pos)
+    /// \details
+    /// If `fail()` is not true, calls `rdbuf()->pubseekpos(pos)`.  If
+    /// that function fails, sets `failbit`.
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::seekp(pos_type pos)
       {
-        basic_streambuf<_CharT, _Traits>* sb;
+        basic_streambuf<TChar_T, TTraits_T>* sb;
         sb = this->rdbuf();
         // if no streambuf, skip
         if (sb != nullptr && !this->fail())
@@ -731,11 +756,14 @@ namespace os
         return *this;
       }
 
-    template<class _CharT, class _Traits>
-      basic_ostream<_CharT, _Traits>&
-      basic_ostream<_CharT, _Traits>::seekp(off_type off, ios_base::seekdir dir)
+    /// \details
+    /// If `fail()` is not true, calls `rdbuf()->pubseekoff(off,dir)`.
+    /// If that function fails, sets failbit.
+    template<class TChar_T, class TTraits_T>
+      basic_ostream<TChar_T, TTraits_T>&
+      basic_ostream<TChar_T, TTraits_T>::seekp(off_type off, ios_base::seekdir dir)
       {
-        basic_streambuf<_CharT, _Traits>* sb;
+        basic_streambuf<TChar_T, TTraits_T>* sb;
         sb = this->rdbuf();
         // if no streambuf, skip
         if (sb != nullptr && !this->fail())

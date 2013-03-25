@@ -15,7 +15,7 @@
 #include "portable/core/include/OS_Defines.h"
 
 #include "portable/language/cpp/include/internal/__config.h"
-#include "portable/language/cpp/include/iosfwd.h"
+//#include "portable/language/cpp/include/iosfwd.h"
 #include "portable/language/cpp/include/type_traits.h"
 
 #include <stdio.h>
@@ -56,10 +56,10 @@ namespace os
 
     // char_traits
 
-    template<class _CharT>
+    template<class TChar_T>
       struct _LIBCPP_VISIBLE char_traits
       {
-        typedef _CharT char_type;
+        typedef TChar_T char_type;
         typedef int int_type;
         typedef streamoff off_type;
         typedef streampos pos_type;
@@ -135,9 +135,9 @@ namespace os
         }
       };
 
-    template<class _CharT>
+    template<class TChar_T>
       int
-      char_traits<_CharT>::compare(const char_type* __s1, const char_type* __s2,
+      char_traits<TChar_T>::compare(const char_type* __s1, const char_type* __s2,
           size_t __n)
       {
         for (; __n; --__n, ++__s1, ++__s2)
@@ -150,10 +150,10 @@ namespace os
         return 0;
       }
 
-    template<class _CharT>
+    template<class TChar_T>
       inline _LIBCPP_INLINE_VISIBILITY
       size_t
-      char_traits<_CharT>::length(const char_type* __s)
+      char_traits<TChar_T>::length(const char_type* __s)
       {
         size_t __len = 0;
         for (; !eq(*__s, char_type(0)); ++__s)
@@ -161,10 +161,10 @@ namespace os
         return __len;
       }
 
-    template<class _CharT>
+    template<class TChar_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      const _CharT*
-      char_traits<_CharT>::find(const char_type* __s, size_t __n,
+      const TChar_T*
+      char_traits<TChar_T>::find(const char_type* __s, size_t __n,
           const char_type& __a)
       {
         for (; __n; --__n)
@@ -176,9 +176,9 @@ namespace os
         return 0;
       }
 
-    template<class _CharT>
-      _CharT*
-      char_traits<_CharT>::move(char_type* __s1, const char_type* __s2,
+    template<class TChar_T>
+      TChar_T*
+      char_traits<TChar_T>::move(char_type* __s1, const char_type* __s2,
           size_t __n)
       {
         char_type* __r = __s1;
@@ -197,10 +197,10 @@ namespace os
         return __r;
       }
 
-    template<class _CharT>
+    template<class TChar_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      _CharT*
-      char_traits<_CharT>::copy(char_type* __s1, const char_type* __s2,
+      TChar_T*
+      char_traits<TChar_T>::copy(char_type* __s1, const char_type* __s2,
           size_t __n)
       {
         char_type* __r = __s1;
@@ -209,10 +209,10 @@ namespace os
         return __r;
       }
 
-    template<class _CharT>
+    template<class TChar_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      _CharT*
-      char_traits<_CharT>::assign(char_type* __s, size_t __n, char_type __a)
+      TChar_T*
+      char_traits<TChar_T>::assign(char_type* __s, size_t __n, char_type __a)
       {
         char_type* __r = __s;
         for (; __n; --__n, ++__s)

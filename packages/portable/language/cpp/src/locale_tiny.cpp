@@ -23,11 +23,11 @@ namespace os
 
     // ========================================================================
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _LIBCPP_HIDDEN
       _OutputIterator
-      __padAndOutput(_OutputIterator __s, const _CharT* __ob,
-          const _CharT* __op, const _CharT* __oe, ios_base& __iob, _CharT __fl)
+      __padAndOutput(_OutputIterator __s, const TChar_T* __ob,
+          const TChar_T* __op, const TChar_T* __oe, ios_base& __iob, TChar_T __fl)
       {
         streamsize length = __oe - __ob;
         streamsize width = __iob.width();
@@ -76,10 +76,10 @@ namespace os
     // support code, used to avoid calling snprintf()
 
     // inline, since the signed and unsigned versions are different anyway
-    template<class _CharT, class _OutputIterator, class _NumberT>
+    template<class TChar_T, class _OutputIterator, class _NumberT>
       inline _LIBCPP_ALWAYS_INLINE
       _OutputIterator
-      __putGenericDecimal(_OutputIterator __s, ios_base& __iob, _CharT __fl,
+      __putGenericDecimal(_OutputIterator __s, ios_base& __iob, TChar_T __fl,
           _NumberT __v)
       {
         ios_base::fmtflags flags = __iob.flags();
@@ -100,11 +100,11 @@ namespace os
 #pragma GCC diagnostic pop
 
         size_t pos;
-        _CharT buff[sizeof(__v) * 5 / 2 + 1]; // one more for the sign
+        TChar_T buff[sizeof(__v) * 5 / 2 + 1]; // one more for the sign
 
         for (pos = sizeof(buff); pos != 0;)
           {
-            _CharT ch = (__v % 10) + '0';
+            TChar_T ch = (__v % 10) + '0';
             buff[--pos] = ch;
             __v /= 10;
             if (__v == 0)
@@ -127,9 +127,9 @@ namespace os
               }
           }
 
-        const _CharT* pBeg = &buff[pos];
-        const _CharT* pFill;
-        const _CharT* pEnd = &buff[sizeof(buff)];
+        const TChar_T* pBeg = &buff[pos];
+        const TChar_T* pFill;
+        const TChar_T* pEnd = &buff[sizeof(buff)];
 
         if ((flags & (ios_base::left | ios_base::internal)) == 0)
           {
@@ -159,23 +159,23 @@ namespace os
     // not inline, since it can be used both in signed and unsigned
     // instantiations of __putGenericInteger()
 
-    template<class _CharT, class _OutputIterator, class _NumberT>
+    template<class TChar_T, class _OutputIterator, class _NumberT>
       _LIBCPP_HIDDEN
       _OutputIterator
-      __putUnsignedHex(_OutputIterator __s, ios_base& __iob, _CharT __fl,
+      __putUnsignedHex(_OutputIterator __s, ios_base& __iob, TChar_T __fl,
           _NumberT __v)
       {
         ios_base::fmtflags flags = __iob.flags();
 
         size_t pos;
-        _CharT buff[sizeof(__v) * 2 + 2]; // two more for the base
+        TChar_T buff[sizeof(__v) * 2 + 2]; // two more for the base
 
         bool isUpper = flags & ios_base::uppercase;
-        _CharT chLetter = (isUpper ? 'A' : 'a') - 10;
+        TChar_T chLetter = (isUpper ? 'A' : 'a') - 10;
 
         for (pos = sizeof(buff); pos > 2;)
           {
-            _CharT ch = (__v & 0xF);
+            TChar_T ch = (__v & 0xF);
             if (ch < 10)
               {
                 ch += '0';
@@ -196,9 +196,9 @@ namespace os
             buff[--pos] = '0';
           }
 
-        const _CharT* pBeg = &buff[pos];
-        const _CharT* pEnd = &buff[sizeof(buff)];
-        const _CharT* pFill;
+        const TChar_T* pBeg = &buff[pos];
+        const TChar_T* pEnd = &buff[sizeof(buff)];
+        const TChar_T* pFill;
         if ((flags & ios_base::left) != 0)
           {
             // left
@@ -215,29 +215,29 @@ namespace os
     // not inline, since it can be used both in signed and unsigned
     // instantiations of __putGenericInteger()
 
-    template<class _CharT, class _OutputIterator, class _NumberT>
+    template<class TChar_T, class _OutputIterator, class _NumberT>
       _LIBCPP_HIDDEN
       _OutputIterator
-      __putUnsignedOctal(_OutputIterator __s, ios_base& __iob, _CharT __fl,
+      __putUnsignedOctal(_OutputIterator __s, ios_base& __iob, TChar_T __fl,
           _NumberT __v)
       {
         ios_base::fmtflags flags = __iob.flags();
 
         size_t pos;
-        _CharT buff[(sizeof(__v) * 8 + 2) / 3];
+        TChar_T buff[(sizeof(__v) * 8 + 2) / 3];
 
         for (pos = sizeof(buff); pos > 0;)
           {
-            _CharT ch = (__v & 0x7) + '0';
+            TChar_T ch = (__v & 0x7) + '0';
             buff[--pos] = ch;
             __v >>= 3;
             if (__v == 0)
               break;
           }
 
-        const _CharT* pBeg = &buff[pos];
-        const _CharT* pEnd = &buff[sizeof(buff)];
-        const _CharT* pFill;
+        const TChar_T* pBeg = &buff[pos];
+        const TChar_T* pEnd = &buff[sizeof(buff)];
+        const TChar_T* pFill;
         if ((flags & ios_base::left) != 0)
           {
             // left
@@ -253,10 +253,10 @@ namespace os
 
     // inline, since the signed and unsigned versions are different anyway
     // due to __putGenericDecimal()
-    template<class _CharT, class _OutputIterator, class _NumberT>
+    template<class TChar_T, class _OutputIterator, class _NumberT>
       inline _LIBCPP_ALWAYS_INLINE
       _OutputIterator
-      __putGenericInteger(_OutputIterator __s, ios_base& __iob, _CharT __fl,
+      __putGenericInteger(_OutputIterator __s, ios_base& __iob, TChar_T __fl,
           _NumberT __v)
       {
         ios_base::fmtflags flags = __iob.flags();
@@ -282,9 +282,9 @@ namespace os
 
     // ========================================================================
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _OutputIterator
-      num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+      num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
           char_type __fl, bool __v) const
       {
         if ((__iob.flags() & ios_base::boolalpha) == 0)
@@ -298,9 +298,9 @@ namespace os
 
         const char* pStr = ((__v) ? "true" : "false");
 
-        const _CharT* pBeg = pStr;
-        const _CharT* pEnd = pStr + strlen(pStr);
-        const _CharT* pFill;
+        const TChar_T* pBeg = pStr;
+        const TChar_T* pEnd = pStr + strlen(pStr);
+        const TChar_T* pFill;
 
         ios_base::fmtflags flags = __iob.flags();
 
@@ -319,36 +319,36 @@ namespace os
 
 #if defined(OS_INCLUDE_LIBCPP_16BIT_OPTIMISATIONS)
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
     _OutputIterator
-    num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+    num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
         char_type __fl, short __v) const
       {
         // in-place template instantiation
         return __putGenericInteger(__s, __iob, __fl, __v);
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
     _OutputIterator
-    num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+    num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
         char_type __fl, unsigned short __v) const
       {
         // in-place template instantiation
         return __putGenericInteger(__s, __iob, __fl, __v);
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
     _OutputIterator
-    num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+    num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
         char_type __fl, int __v) const
       {
         // in-place template instantiation
         return __putGenericInteger(__s, __iob, __fl, __v);
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
     _OutputIterator
-    num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+    num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
         char_type __fl, unsigned int __v) const
       {
         // in-place template instantiation
@@ -357,77 +357,77 @@ namespace os
 
 #endif
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _OutputIterator
-      num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+      num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
           char_type __fl, long __v) const
       {
         // in-place template instantiation
         return __putGenericInteger(__s, __iob, __fl, __v);
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _OutputIterator
-      num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+      num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
           char_type __fl, unsigned long __v) const
       {
         // in-place template instantiation
         return __putGenericInteger(__s, __iob, __fl, __v);
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _OutputIterator
-      num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+      num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
           char_type __fl, long long __v) const
       {
         // in-place template instantiation
         return __putGenericInteger(__s, __iob, __fl, __v);
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _OutputIterator
-      num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+      num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
           char_type __fl, unsigned long long __v) const
       {
         // in-place template instantiation
         return __putGenericInteger(__s, __iob, __fl, __v);
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _OutputIterator
-      num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+      num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
           char_type __fl, double __v __attribute__((unused))) const
       {
 
-        _CharT buff[] = "(tbd)";
+        TChar_T buff[] = "(tbd)";
 
-        const _CharT* pBeg = &buff[0];
-        const _CharT* pEnd = &buff[sizeof(buff)];
-        const _CharT* pFill = pBeg;
+        const TChar_T* pBeg = &buff[0];
+        const TChar_T* pEnd = &buff[sizeof(buff)];
+        const TChar_T* pFill = pBeg;
 
         return __padAndOutput(__s, pBeg, pFill, pEnd, __iob, __fl);
 
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _OutputIterator
-      num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+      num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
           char_type __fl, long double __v __attribute__((unused))) const
       {
 
-        _CharT buff[] = "(tbd)";
+        TChar_T buff[] = "(tbd)";
 
-        const _CharT* pBeg = &buff[0];
-        const _CharT* pEnd = &buff[sizeof(buff)];
-        const _CharT* pFill = pBeg;
+        const TChar_T* pBeg = &buff[0];
+        const TChar_T* pEnd = &buff[sizeof(buff)];
+        const TChar_T* pFill = pBeg;
 
         return __padAndOutput(__s, pBeg, pFill, pEnd, __iob, __fl);
 
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _OutputIterator
-      num_put<_CharT, _OutputIterator>::put(iter_type __s, ios_base& __iob,
+      num_put<TChar_T, _OutputIterator>::put(iter_type __s, ios_base& __iob,
           char_type __fl, const void* __v) const
       {
         ios_base::fmtflags flags = __iob.flags();
@@ -441,14 +441,14 @@ namespace os
         u.ptr = __v;
 
         size_t pos;
-        _CharT buff[sizeof(__v) * 2 + 2]; // two more for the base
+        TChar_T buff[sizeof(__v) * 2 + 2]; // two more for the base
 
         bool isUpper = flags & ios_base::uppercase;
-        _CharT chLetter = (isUpper ? 'A' : 'a') - 10;
+        TChar_T chLetter = (isUpper ? 'A' : 'a') - 10;
 
         for (pos = sizeof(buff); pos > 2;)
           {
-            _CharT ch = (u.uval & 0xF);
+            TChar_T ch = (u.uval & 0xF);
             if (ch < 10)
               {
                 ch += '0';
@@ -464,9 +464,9 @@ namespace os
         buff[--pos] = isUpper ? 'X' : 'x';
         buff[--pos] = '0';
 
-        const _CharT* pBeg = &buff[pos];
-        const _CharT* pEnd = &buff[sizeof(buff)];
-        const _CharT* pFill;
+        const TChar_T* pBeg = &buff[pos];
+        const TChar_T* pEnd = &buff[sizeof(buff)];
+        const TChar_T* pFill;
         if ((flags & ios_base::left) != 0)
           {
             // left

@@ -30,8 +30,8 @@ namespace os
 
     /// \details
     /// It does nothing, not even deallocate any buffer space.
-    template<class _CharT, class _Traits>
-      basic_streambuf<_CharT, _Traits>::~basic_streambuf()
+    template<class TChar_T, class TTraits_T>
+      basic_streambuf<TChar_T, TTraits_T>::~basic_streambuf()
       {
       }
 
@@ -46,8 +46,8 @@ namespace os
     /// results of calling the locale member functions, and of
     /// members of facets so obtained, can safely be cached
     /// until the next time the member `imbue()` is called.
-    template<class _CharT, class _Traits>
-      basic_streambuf<_CharT, _Traits>::basic_streambuf()
+    template<class TChar_T, class TTraits_T>
+      basic_streambuf<TChar_T, TTraits_T>::basic_streambuf()
           : //
           m_binp(nullptr), //
           m_ninp(nullptr), //
@@ -62,8 +62,8 @@ namespace os
 
     /// \details
     /// Construct an object based on a reference to another object.
-    template<class _CharT, class _Traits>
-      basic_streambuf<_CharT, _Traits>::basic_streambuf(
+    template<class TChar_T, class TTraits_T>
+      basic_streambuf<TChar_T, TTraits_T>::basic_streambuf(
           const basic_streambuf& rhs)
           : //
           m_binp(rhs.m_binp), //
@@ -78,9 +78,9 @@ namespace os
 
     /// \details
     /// Assigns the data members of the object referred by `rhs` to `*this`.
-    template<class _CharT, class _Traits>
-      basic_streambuf<_CharT, _Traits>&
-      basic_streambuf<_CharT, _Traits>::operator=(const basic_streambuf& rhs)
+    template<class TChar_T, class TTraits_T>
+      basic_streambuf<TChar_T, TTraits_T>&
+      basic_streambuf<TChar_T, TTraits_T>::operator=(const basic_streambuf& rhs)
       {
         m_locale = rhs.m_locale;
         m_binp = rhs.m_binp;
@@ -95,9 +95,9 @@ namespace os
 
     /// \details
     /// Swaps the data members of the object referred by `rhs` and `*this`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       void
-      basic_streambuf<_CharT, _Traits>::swap(basic_streambuf& rhs)
+      basic_streambuf<TChar_T, TTraits_T>::swap(basic_streambuf& rhs)
       {
         os::std::swap(m_locale, rhs.m_locale);
 
@@ -119,9 +119,9 @@ namespace os
     /// of facets so obtained.
     ///
     /// \note  The base class version does nothing.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       void
-      basic_streambuf<_CharT, _Traits>::imbue(const locale&)
+      basic_streambuf<TChar_T, TTraits_T>::imbue(const locale&)
       {
       }
 
@@ -131,9 +131,9 @@ namespace os
     /// in this Clause (27.8.2.4, 27.9.1.5).
     ///
     /// \note  The base class version does nothing, returns `this`.
-    template<class _CharT, class _Traits>
-      basic_streambuf<_CharT, _Traits>*
-      basic_streambuf<_CharT, _Traits>::setbuf(
+    template<class TChar_T, class TTraits_T>
+      basic_streambuf<TChar_T, TTraits_T>*
+      basic_streambuf<TChar_T, TTraits_T>::setbuf(
           char_type* s __attribute__((unused)),
           streamsize n __attribute__((unused)))
       {
@@ -151,9 +151,9 @@ namespace os
     /// \note  The base class version does nothing, returns
     /// `pos_type(off_type(-1))`
     /// that represents an invalid stream position.
-    template<class _CharT, class _Traits>
-      typename basic_streambuf<_CharT, _Traits>::pos_type
-      basic_streambuf<_CharT, _Traits>::seekoff(off_type, ios_base::seekdir,
+    template<class TChar_T, class TTraits_T>
+      typename basic_streambuf<TChar_T, TTraits_T>::pos_type
+      basic_streambuf<TChar_T, TTraits_T>::seekoff(off_type, ios_base::seekdir,
           ios_base::openmode)
       {
         return pos_type(off_type(-1));
@@ -169,9 +169,9 @@ namespace os
     /// \note  The base class version does nothing, returns
     /// `pos_type(off_type(-1))`
     /// that represents an invalid stream position.
-    template<class _CharT, class _Traits>
-      typename basic_streambuf<_CharT, _Traits>::pos_type
-      basic_streambuf<_CharT, _Traits>::seekpos(pos_type, ios_base::openmode)
+    template<class TChar_T, class TTraits_T>
+      typename basic_streambuf<TChar_T, TTraits_T>::pos_type
+      basic_streambuf<TChar_T, TTraits_T>::seekpos(pos_type, ios_base::openmode)
       {
         return pos_type(off_type(-1));
       }
@@ -186,9 +186,9 @@ namespace os
     /// including the definition of \a failure.
     ///
     /// \note  The base class version does nothing, returns zero.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       int
-      basic_streambuf<_CharT, _Traits>::sync()
+      basic_streambuf<TChar_T, TTraits_T>::sync()
       {
         return 0;
       }
@@ -206,9 +206,9 @@ namespace os
     /// “es-how-many-see”, not “show-manic”.
     ///
     /// \note  The base class version does nothing, returns zero.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       streamsize
-      basic_streambuf<_CharT, _Traits>::showmanyc()
+      basic_streambuf<TChar_T, TTraits_T>::showmanyc()
       {
         return 0;
       }
@@ -228,9 +228,9 @@ namespace os
     /// provide more efficient ways to implement `xsgetn()`
     /// and `xsputn()` by overriding these definitions
     /// from the base class.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       streamsize
-      basic_streambuf<_CharT, _Traits>::xsgetn(char_type* s, streamsize n)
+      basic_streambuf<TChar_T, TTraits_T>::xsgetn(char_type* s, streamsize n)
       {
         const int_type eof = traits_type::eof();
         int_type c;
@@ -313,9 +313,9 @@ namespace os
     ///
     /// \note  The base class version does nothing,
     /// returns `traits::eof()`.
-    template<class _CharT, class _Traits>
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::underflow()
+    template<class TChar_T, class TTraits_T>
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::underflow()
       {
         return traits_type::eof();
       }
@@ -336,9 +336,9 @@ namespace os
     /// `traits::eof()`. Otherwise, return the value of
     /// `traits::to_int_type(*gptr())` and increment the
     /// value of the next pointer for the input sequence.
-    template<class _CharT, class _Traits>
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::uflow()
+    template<class TChar_T, class TTraits_T>
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::uflow()
       {
         if (underflow() == traits_type::eof())
           {
@@ -373,9 +373,9 @@ namespace os
     ///
     /// \note  The base class version does nothing,
     /// returns `traits::eof()`.
-    template<class _CharT, class _Traits>
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::pbackfail(int_type)
+    template<class TChar_T, class TTraits_T>
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::pbackfail(int_type)
       {
         return traits_type::eof();
       }
@@ -393,9 +393,9 @@ namespace os
     ///
     /// \note It is expected that derived classes provide a
     /// more efficient implementation by overriding this definition.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       streamsize
-      basic_streambuf<_CharT, _Traits>::xsputn(const char_type* s, streamsize n)
+      basic_streambuf<TChar_T, TTraits_T>::xsputn(const char_type* s, streamsize n)
       {
         streamsize i = 0;
         int_type eof = traits_type::eof();
@@ -468,9 +468,9 @@ namespace os
     ///
     /// \note  The base class version does nothing,
     /// returns `traits::eof()`.
-    template<class _CharT, class _Traits>
-      typename basic_streambuf<_CharT, _Traits>::int_type
-      basic_streambuf<_CharT, _Traits>::overflow(int_type)
+    template<class TChar_T, class TTraits_T>
+      typename basic_streambuf<TChar_T, TTraits_T>::int_type
+      basic_streambuf<TChar_T, TTraits_T>::overflow(int_type)
       {
         return traits_type::eof();
       }

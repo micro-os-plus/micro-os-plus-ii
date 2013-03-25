@@ -23,6 +23,12 @@ namespace os
 
     locale::locale() _NOEXCEPT
     {
+      init();
+    }
+
+    void
+    locale::init(void)
+    {
       dummy = 0;
     }
 

@@ -27,7 +27,7 @@ namespace os
     class _LIBCPP_VISIBLE ios_base;
 
     /// struct char_traits.
-    template<class _CharT>
+    template<class TChar_T>
       struct _LIBCPP_VISIBLE char_traits;
 
     /// class allocator.
@@ -35,54 +35,54 @@ namespace os
       class _LIBCPP_VISIBLE allocator;
 
     /// class basic_ios.
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
       class _LIBCPP_VISIBLE basic_ios;
 
     /// class basic_streambuf.
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
       class _LIBCPP_VISIBLE basic_streambuf;
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
     class _LIBCPP_VISIBLE basic_istream;
 #endif
 
     /// class basic_ostream.
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
       class _LIBCPP_VISIBLE basic_ostream;
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
     class _LIBCPP_VISIBLE basic_iostream;
 
-    template<class _CharT, class _Traits = char_traits<_CharT>,
-    class _Allocator = allocator<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
+    class _Allocator = allocator<TChar_T> >
     class _LIBCPP_VISIBLE basic_stringbuf;
-    template<class _CharT, class _Traits = char_traits<_CharT>,
-    class _Allocator = allocator<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
+    class _Allocator = allocator<TChar_T> >
     class _LIBCPP_VISIBLE basic_istringstream;
-    template<class _CharT, class _Traits = char_traits<_CharT>,
-    class _Allocator = allocator<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
+    class _Allocator = allocator<TChar_T> >
     class _LIBCPP_VISIBLE basic_ostringstream;
-    template<class _CharT, class _Traits = char_traits<_CharT>,
-    class _Allocator = allocator<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
+    class _Allocator = allocator<TChar_T> >
     class _LIBCPP_VISIBLE basic_stringstream;
 
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
     class _LIBCPP_VISIBLE basic_filebuf;
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
     class _LIBCPP_VISIBLE basic_ifstream;
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
     class _LIBCPP_VISIBLE basic_ofstream;
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
     class _LIBCPP_VISIBLE basic_fstream;
 
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
     class _LIBCPP_VISIBLE istreambuf_iterator;
 #endif
 
     /// class ostreambuf_iterator.
-    template<class _CharT, class _Traits = char_traits<_CharT> >
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
       class _LIBCPP_VISIBLE ostreambuf_iterator;
 
     /// Base class for @c char streams.
@@ -196,8 +196,8 @@ namespace os
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
-  template<class _CharT, class _Traits = char_traits<_CharT>,
-  class _Allocator = allocator<_CharT> >
+  template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
+  class _Allocator = allocator<TChar_T> >
   class _LIBCPP_VISIBLE basic_string;
 
   typedef basic_string<char, char_traits<char>, allocator<char> > string;

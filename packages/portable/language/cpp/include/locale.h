@@ -27,12 +27,12 @@ namespace os
 
     // This is a tiny version of locale
 
-    template<class _CharT, class _OutputIterator = ostreambuf_iterator<_CharT> >
+    template<class TChar_T, class _OutputIterator = ostreambuf_iterator<TChar_T> >
       class _LIBCPP_VISIBLE num_put
 
       {
       public:
-        typedef _CharT char_type;
+        typedef TChar_T char_type;
         typedef _OutputIterator iter_type;
 
         iter_type
@@ -99,11 +99,11 @@ namespace os
         return static_cast<const _Facet&>(num_put_char_tiny);
       }
 
-    template<class _CharT, class _OutputIterator>
+    template<class TChar_T, class _OutputIterator>
       _LIBCPP_HIDDEN
       _OutputIterator
-      __padAndOutput(_OutputIterator __s, const _CharT* __ob,
-          const _CharT* __op, const _CharT* __oe, ios_base& __iob, _CharT __fl);
+      __padAndOutput(_OutputIterator __s, const TChar_T* __ob,
+          const TChar_T* __op, const TChar_T* __oe, ios_base& __iob, TChar_T __fl);
 
   }
 }

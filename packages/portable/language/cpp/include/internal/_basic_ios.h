@@ -37,16 +37,16 @@ namespace os
     /// \brief Template class basic_ios, virtual base class for
     /// input and output streams.
     ///
-    /// \tparam _CharT  Type of character stream.
-    /// \tparam _Traits  Traits for character type, defaults to
-    ///                   char_traits<_CharT> (default defined in iosfwd.h)
+    /// \tparam TChar_T  Type of character stream.
+    /// \tparam TTraits_T  Traits for character type, defaults to
+    ///                   char_traits<TChar_T> (default defined in iosfwd.h)
     ///
     /// \details
     /// Basically manages all common resources for derived streams, like
     /// pointer to the associated streambuf, status, exception status
     /// and the default fill character used for paddings.
 
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       class _LIBCPP_VISIBLE basic_ios : public ios_base
       {
       public:
@@ -60,14 +60,13 @@ namespace os
         /// when referring to the template, (in which case the templates
         /// parameters are required), use these types everywhere
         /// else instead of usual types.
-        typedef _CharT char_type;
-        typedef _Traits traits_type;
+        typedef TChar_T char_type;
+        typedef TTraits_T traits_type;
 
         typedef typename traits_type::int_type int_type;
         typedef typename traits_type::pos_type pos_type;
         typedef typename traits_type::off_type off_type;
         /// @}
-        // end of \name Standard template types
 
         // \name Flags functions (27.5.5.4)
         /// \name Flags member functions
@@ -88,7 +87,7 @@ namespace os
         /// \brief  Get the error state of the stream buffer.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \return  A bit pattern.
         //_LIBCPP_ALWAYS_INLINE
         iostate
@@ -98,7 +97,7 @@ namespace os
         ///
         /// \param [in] state  The new state flag(s) to set.
         /// \par Returns
-        /// Nothing
+        /// Nothing.
         void
         clear(iostate state = goodbit);
 
@@ -106,7 +105,7 @@ namespace os
         ///
         /// \param [in] state  The additional state flag(s) to set.
         /// \par Returns
-        /// Nothing
+        /// Nothing.
         //_LIBCPP_ALWAYS_INLINE
         void
         setstate(iostate state);
@@ -114,7 +113,7 @@ namespace os
         /// \brief  Check if no error.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \return  True if no error flags are set.
         //_LIBCPP_ALWAYS_INLINE
         bool
@@ -123,7 +122,7 @@ namespace os
         /// \brief  Check if `eofbit` is set.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \return  True if the `eofbit` is set.
         //_LIBCPP_ALWAYS_INLINE
         bool
@@ -132,7 +131,7 @@ namespace os
         /// \brief  Check if error.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \return  True if either the `badbit` or the `failbit` is set.
         //_LIBCPP_ALWAYS_INLINE
         bool
@@ -141,7 +140,7 @@ namespace os
         /// \brief  Check if the `badbit` is set.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \return  True if the `badbit` is set.
         //_LIBCPP_ALWAYS_INLINE
         bool
@@ -150,7 +149,7 @@ namespace os
         /// \brief  Get the exceptions throwing flags.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \return  The current exceptions mask.
         //_LIBCPP_ALWAYS_INLINE
         iostate
@@ -160,13 +159,12 @@ namespace os
         ///
         /// \param [in] except  The new exceptions mask.
         /// \par Returns
-        /// Nothing
+        /// Nothing.
         //_LIBCPP_ALWAYS_INLINE
         void
         exceptions(iostate except);
 
         /// @}
-        // end of \name Flags functions (27.5.5.4)
 
         // 27.5.5.2 Constructor/destructor:
         /// \name Constructors/destructor
@@ -177,14 +175,13 @@ namespace os
         /// \param [in] sb  A pointer to the streambuf to use.
         //_LIBCPP_INLINE_VISIBILITY
         explicit
-        basic_ios(basic_streambuf<_CharT, _Traits>* sb);
+        basic_ios(basic_streambuf<TChar_T, TTraits_T>* sb);
 
         /// \brief  Destructor.
         virtual
         ~basic_ios();
 
         /// @}
-        // end of \name Constructors/destructor
 
         // 27.5.5.3 Members:
 
@@ -195,11 +192,11 @@ namespace os
         /// \brief  Get the current \e tied stream.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \return  A pointer to the tied stream, or NULL if the stream is
         ///          not tied.
         //_LIBCPP_INLINE_VISIBILITY
-        basic_ostream<_CharT, _Traits>*
+        basic_ostream<TChar_T, TTraits_T>*
         tie() const;
 
         /// \brief  Tie this stream to an output stream.
@@ -208,16 +205,16 @@ namespace os
         /// \return  The previously tied output stream, or NULL if the stream
         ///          was not tied.
         //_LIBCPP_INLINE_VISIBILITY
-        basic_ostream<_CharT, _Traits>*
-        tie(basic_ostream<_CharT, _Traits>* tiestr);
+        basic_ostream<TChar_T, TTraits_T>*
+        tie(basic_ostream<TChar_T, TTraits_T>* tiestr);
 
         /// \brief  Get the underlying buffer.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \return  The current stream buffer.
         //_LIBCPP_INLINE_VISIBILITY
-        basic_streambuf<_CharT, _Traits>*
+        basic_streambuf<TChar_T, TTraits_T>*
         rdbuf() const;
 
         /// \brief  Set the underlying buffer.
@@ -225,13 +222,13 @@ namespace os
         /// \param [in] sb  The new stream buffer.
         /// \return  The previous stream buffer.
         //_LIBCPP_INLINE_VISIBILITY
-        basic_streambuf<_CharT, _Traits>*
-        rdbuf(basic_streambuf<_CharT, _Traits>* sb);
+        basic_streambuf<TChar_T, TTraits_T>*
+        rdbuf(basic_streambuf<TChar_T, TTraits_T>* sb);
 
         /// \brief  Get the *fill* character.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \return  The current fill character.
         //_LIBCPP_INLINE_VISIBILITY
         char_type
@@ -240,7 +237,7 @@ namespace os
         /// \brief  Set a new *fill* character.
         ///
         /// \par Parameters
-        /// None
+        /// None.
         /// \param [in] ch  The new character.
         /// \return  The previous fill character.
         //_LIBCPP_INLINE_VISIBILITY
@@ -279,7 +276,6 @@ namespace os
 #pragma GCC diagnostic pop
 
         /// @}
-        // end of \name Member functions (27.5.5.3)
 
         /// \name Assign/swap/move member functions
         /// @{
@@ -292,7 +288,6 @@ namespace os
         copyfmt(const basic_ios& rhs);
 
         /// @}
-        // end of \name Assign/swap/move member functions
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
         void
@@ -313,7 +308,6 @@ namespace os
         basic_ios();
 
         /// @}
-        // end of \name Constructors/destructor
 
         /// \name Member functions
         /// @{
@@ -323,21 +317,20 @@ namespace os
         /// \param [in] sb A pointer to streambuf.
         /// \par Returns
         /// \par Returns
-        /// Nothing
+        /// Nothing.
         void
-        init(basic_streambuf<_CharT, _Traits>* sb);
+        init(basic_streambuf<TChar_T, TTraits_T>* sb);
 
         /// \brief  Set pointer to basic_streambuf.
         ///
         /// \param [in] sb A pointer to streambuf.
         /// \par Returns
-        /// Nothing
+        /// Nothing.
         //_LIBCPP_INLINE_VISIBILITY
         void
-        set_rdbuf(basic_streambuf<_CharT, _Traits>* sb);
+        set_rdbuf(basic_streambuf<TChar_T, TTraits_T>* sb);
 
         /// @}
-        // end of \name Member functions
 
         /// \name Assign/swap/move member functions
         /// @{
@@ -346,7 +339,7 @@ namespace os
         ///
         /// \param [in] rhs A reference to the right hand side basic_ios.
         /// \par Returns
-        /// Nothing
+        /// Nothing.
         //_LIBCPP_INLINE_VISIBILITY
         void
         move(basic_ios& rhs);
@@ -362,14 +355,12 @@ namespace os
         ///
         /// \param [in,out] rhs A reference to the right hand side basic_ios.
         /// \par Returns
-        /// Nothing
+        /// Nothing.
         //_LIBCPP_INLINE_VISIBILITY
         void
         swap(basic_ios& rhs) _NOEXCEPT;
 
         /// @}
-        // end of \name Assign/swap/move member functions
-
 
         // Data members
       private:
@@ -378,10 +369,10 @@ namespace os
         /// @{
 
         /// \brief Pointer to the associated stream buffer.
-        basic_streambuf<_CharT, _Traits>* m_rdbuf;
+        basic_streambuf<TChar_T, TTraits_T>* m_rdbuf;
 
         /// \brief Pointer to the associated ostream, in case of istream.
-        basic_ostream<_CharT, _Traits>* m_tie;
+        basic_ostream<TChar_T, TTraits_T>* m_tie;
 
         /// \brief IO state (values defined in ios_base).
         iostate m_rdstate;
@@ -404,10 +395,10 @@ namespace os
     /// \details
     /// Construct an object of class `basic_ios`, assigning initial
     /// values to its member objects by calling `init(sb)`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      basic_ios<_CharT, _Traits>::basic_ios(
-          basic_streambuf<_CharT, _Traits>* sb)
+      basic_ios<TChar_T, TTraits_T>::basic_ios(
+          basic_streambuf<TChar_T, TTraits_T>* sb)
       {
         init(sb);
       }
@@ -418,9 +409,9 @@ namespace os
     /// by calling `basic_ios::init()` before its first use or before it
     /// is destroyed, whichever comes first; otherwise the behaviour
     /// is undefined.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      basic_ios<_CharT, _Traits>::basic_ios()
+      basic_ios<TChar_T, TTraits_T>::basic_ios()
       {
         // purposefully does no initialisation
       }
@@ -428,9 +419,9 @@ namespace os
     /// \details
     /// This allows you to write constructs such as
     /// `if (!a_stream) ...` and `while (a_stream) ...`
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_ALWAYS_INLINE
-      basic_ios<_CharT, _Traits>::operator bool() const
+      basic_ios<TChar_T, TTraits_T>::operator bool() const
       {
         return !fail();
       }
@@ -438,10 +429,10 @@ namespace os
     /// \details
     /// This allows you to write constructs such as
     /// `if (!a_stream) ...` and `while (a_stream) ...`
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_ALWAYS_INLINE
       bool
-      basic_ios<_CharT, _Traits>::operator!() const
+      basic_ios<TChar_T, TTraits_T>::operator!() const
       {
         return fail();
       }
@@ -449,40 +440,40 @@ namespace os
     /// \details
     /// See `ios_base::iostate` for the possible bit values.  Most
     /// users will call one of the interpreting wrappers, e.g., `good()`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       ios_base::iostate
-      basic_ios<_CharT, _Traits>::rdstate() const
+      basic_ios<TChar_T, TTraits_T>::rdstate() const
       {
         return m_rdstate;
       }
 
     /// \details
     /// See `ios_base::iostate` for the possible bit values.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_ios<_CharT, _Traits>::setstate(iostate state)
+      basic_ios<TChar_T, TTraits_T>::setstate(iostate state)
       {
         clear(m_rdstate | state);
       }
 
     /// \details
     /// A wrapper around `rdstate`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
-      basic_ios<_CharT, _Traits>::good() const
+      basic_ios<TChar_T, TTraits_T>::good() const
       {
         return m_rdstate == 0;
       }
 
     /// \details
     /// Note that other `iostate` flags may also be set.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
-      basic_ios<_CharT, _Traits>::eof() const
+      basic_ios<TChar_T, TTraits_T>::eof() const
       {
         return m_rdstate & eofbit;
       }
@@ -490,20 +481,20 @@ namespace os
     /// \details
     /// Checking the `badbit` in `fail()` is historical practice.
     /// Note that other `iostate` flags may also be set.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
-      basic_ios<_CharT, _Traits>::fail() const
+      basic_ios<TChar_T, TTraits_T>::fail() const
       {
         return m_rdstate & (failbit | badbit);
       }
 
     /// \details
     /// Note that other `iostate` flags may also be set.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       bool
-      basic_ios<_CharT, _Traits>::bad() const
+      basic_ios<TChar_T, TTraits_T>::bad() const
       {
         return m_rdstate & badbit;
       }
@@ -511,10 +502,10 @@ namespace os
     /// \details
     /// This changes nothing in the stream.  See the one-argument version
     /// of `exceptions(iostate)` for the meaning of the return value.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       ios_base::iostate
-      basic_ios<_CharT, _Traits>::exceptions() const
+      basic_ios<TChar_T, TTraits_T>::exceptions() const
       {
         return m_exceptions;
       }
@@ -527,10 +518,10 @@ namespace os
     ///
     /// If the error flag is already set when the exceptions mask is
     /// added, the exception is immediately thrown.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_ios<_CharT, _Traits>::exceptions(iostate except)
+      basic_ios<TChar_T, TTraits_T>::exceptions(iostate except)
       {
         m_exceptions = except;
         clear(m_rdstate);
@@ -541,10 +532,10 @@ namespace os
     /// A stream may be *tied* (or synchronized) to a second output
     /// stream.  When this stream performs any I/O, the tied stream is
     /// first flushed.  For example, `std::cin` is tied to `std::cout`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      basic_ostream<_CharT, _Traits>*
-      basic_ios<_CharT, _Traits>::tie() const
+      basic_ostream<TChar_T, TTraits_T>*
+      basic_ios<TChar_T, TTraits_T>::tie() const
       {
         return m_tie;
       }
@@ -553,22 +544,22 @@ namespace os
     /// This sets up a new tie. If `tiestr` is not null, `tiestr` must not
     /// be reachable by traversing the linked list of tied stream objects
     /// starting from `tiestr->tie()`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      basic_ostream<_CharT, _Traits>*
-      basic_ios<_CharT, _Traits>::tie(basic_ostream<_CharT, _Traits>* tiestr)
+      basic_ostream<TChar_T, TTraits_T>*
+      basic_ios<TChar_T, TTraits_T>::tie(basic_ostream<TChar_T, TTraits_T>* tiestr)
       {
-        basic_ostream<_CharT, _Traits>* r = m_tie;
+        basic_ostream<TChar_T, TTraits_T>* r = m_tie;
         m_tie = tiestr;
         return r;
       }
 
     /// \details
     /// This does not change the state of the stream.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      basic_streambuf<_CharT, _Traits>*
-      basic_ios<_CharT, _Traits>::rdbuf() const
+      basic_streambuf<TChar_T, TTraits_T>*
+      basic_ios<TChar_T, TTraits_T>::rdbuf() const
       {
         return m_rdbuf;
       }
@@ -590,12 +581,12 @@ namespace os
     ///
     /// foo.ios::rdbuf(p);            // ios == basic_ios<char>
     /// ~~~
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      basic_streambuf<_CharT, _Traits>*
-      basic_ios<_CharT, _Traits>::rdbuf(basic_streambuf<_CharT, _Traits>* sb)
+      basic_streambuf<TChar_T, TTraits_T>*
+      basic_ios<TChar_T, TTraits_T>::rdbuf(basic_streambuf<TChar_T, TTraits_T>* sb)
       {
-        basic_streambuf<_CharT, _Traits>* r = rdbuf();
+        basic_streambuf<TChar_T, TTraits_T>* r = rdbuf();
         m_rdbuf = sb;
         clear();
         return r;
@@ -604,11 +595,11 @@ namespace os
     /// \details
     /// Associate the `basic_streambuf` object pointed to by `sb`
     /// with this stream without calling `clear()`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_ios<_CharT, _Traits>::set_rdbuf(
-          basic_streambuf<_CharT, _Traits>* sb)
+      basic_ios<TChar_T, TTraits_T>::set_rdbuf(
+          basic_streambuf<TChar_T, TTraits_T>* sb)
       {
         m_rdbuf = sb;
       }
@@ -616,10 +607,10 @@ namespace os
     /// \details
     /// Call `ios_base::imbue(loc)`, and if a stream buffer is associated
     /// with this stream, call that buffer's `pubimbue(loc)`.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       locale
-      basic_ios<_CharT, _Traits>::imbue(const locale& loc)
+      basic_ios<TChar_T, TTraits_T>::imbue(const locale& loc)
       {
         locale r = getloc();
         ios_base::imbue(loc);
@@ -638,12 +629,12 @@ namespace os
     ///
     /// Returns the result of
     /// ~~~
-    ///   use_facet<ctype<_CharT> >(getloc()).narrow(c,dfault)
+    ///   use_facet<ctype<TChar_T> >(getloc()).narrow(c,dfault)
     /// ~~~
-    template <class _CharT, class _Traits>
+    template <class TChar_T, class TTraits_T>
     inline _LIBCPP_INLINE_VISIBILITY
     char
-    basic_ios<_CharT, _Traits>::narrow(char_type __c, char __dfault) const
+    basic_ios<TChar_T, TTraits_T>::narrow(char_type __c, char __dfault) const
       {
         return use_facet<ctype<char_type> >(getloc()).narrow(__c, __dfault);
       }
@@ -655,10 +646,10 @@ namespace os
     /// ~~~
     ///   use_facet<ctype<char_type> >(getloc()).widen(c)
     /// ~~~
-    template <class _CharT, class _Traits>
+    template <class TChar_T, class TTraits_T>
     inline _LIBCPP_INLINE_VISIBILITY
-    _CharT
-    basic_ios<_CharT, _Traits>::widen(char __c) const
+    TChar_T
+    basic_ios<TChar_T, TTraits_T>::widen(char __c) const
       {
         return use_facet<ctype<char_type> >(getloc()).widen(__c);
       }
@@ -667,10 +658,10 @@ namespace os
 
     // Tiny version, without locales
 
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       char
-      basic_ios<_CharT, _Traits>::narrow(char_type c, char dfault) const
+      basic_ios<TChar_T, TTraits_T>::narrow(char_type c, char dfault) const
       {
         // TODO: extend this test according to locale
         if (c == '\xFE')
@@ -683,39 +674,39 @@ namespace os
           }
       }
 
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      _CharT
-      basic_ios<_CharT, _Traits>::widen(char c) const
+      TChar_T
+      basic_ios<TChar_T, TTraits_T>::widen(char c) const
       {
-        return static_cast<_CharT>(c);
+        return static_cast<TChar_T>(c);
       }
 
 #endif
 
     /// \details
     /// It defaults to a space (' ') in the current locale.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      _CharT
-      basic_ios<_CharT, _Traits>::fill() const
+      TChar_T
+      basic_ios<TChar_T, TTraits_T>::fill() const
       {
         if (traits_type::eq_int_type(traits_type::eof(), m_fill))
           {
             m_fill = widen(' ');
           }
         // cast required since m_fill is an int_type
-        return (_CharT) m_fill;
+        return (TChar_T) m_fill;
       }
 
     /// \details
     /// The fill character is used to fill out space when P+ characters
     /// have been requested (e.g., via setw), Q characters are actually
     /// used, and Q<P.  It defaults to a space (' ') in the current locale.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
-      _CharT
-      basic_ios<_CharT, _Traits>::fill(char_type ch)
+      TChar_T
+      basic_ios<TChar_T, TTraits_T>::fill(char_type ch)
       {
         // cast required since m_fill is an int_type
         char_type r = (char_type) m_fill;
@@ -729,10 +720,10 @@ namespace os
     /// valid but unspecified state, except that rhs.rdbuf() shall
     /// return the same value as it returned before the function call,
     /// and rhs.tie() shall return 0.
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_ios<_CharT, _Traits>::move(basic_ios& rhs)
+      basic_ios<TChar_T, TTraits_T>::move(basic_ios& rhs)
       {
         ios_base::move(rhs);
 
@@ -746,10 +737,10 @@ namespace os
       }
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
     inline _LIBCPP_INLINE_VISIBILITY
     void
-    basic_ios<_CharT, _Traits>::move(basic_ios&& rhs)
+    basic_ios<TChar_T, TTraits_T>::move(basic_ios&& rhs)
       {
         move(rhs);
       }
@@ -763,10 +754,10 @@ namespace os
     ///
     /// Use the parent swap() than the
     /// namespace function for individual fields
-    template<class _CharT, class _Traits>
+    template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_ios<_CharT, _Traits>::swap(basic_ios& rhs)
+      basic_ios<TChar_T, TTraits_T>::swap(basic_ios& rhs)
       _NOEXCEPT
       {
         // use the parent function
