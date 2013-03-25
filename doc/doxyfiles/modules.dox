@@ -3,6 +3,17 @@
 \defgroup core Core
 
 
+\defgroup diag Diagnostics
+The `Trace` object is an output stream intended to display debug 
+related informations
+when executing the Debug versions of the build configurations. 
+The Release build configurations should not use this object.
+
+    \defgroup diag_conv Conversions
+    \ingroup diag
+    Templates used to generate conversion functions for the 
+    trace light functions.
+    
 \defgroup std Standard library
 
     \defgroup std_io I/O
