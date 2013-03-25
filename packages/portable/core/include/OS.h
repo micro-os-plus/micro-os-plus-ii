@@ -11,9 +11,6 @@
 
 #include "portable/core/include/OS_Defines.h"
 
-#include "portable/devices/debug/include/Debug.h"
-
-extern os::device::Debug debug;
-
+#include "portable/diagnostics/include/Trace.h"
 
 #endif /* OS_PORTABLE_CORE_OS_H_ */
