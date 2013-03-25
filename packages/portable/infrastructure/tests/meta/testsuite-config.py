@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2013 Liviu Ionescu.
-# This file is part of the uOS++ SE distribution.
+# This file is part of the µOS++ SE distribution.
+# Copyright (c) 2013 Liviu Ionescu.
 
-RepositoryFolder('../../../../..')
+RepositoryFolder('../../../..')
 
 Configuration(
               
@@ -13,16 +13,24 @@ Configuration(
     
     loadPackages=[
         # mandatory test code package
-        'package.os.portable.infrastructure.tests.testsuite',
+        'package.os.portable.infrastructure.tests',
         
         # the minimal template
         'package.os.templates.minimal',
+        
+        'package.os.portable.language.cpp',
+
     ],
     
     requirements=[
         'setValue("APP_STRING_APPLICATION_NAME", "UnitTest: TestSuite output")',        
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
-        'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
+        
+        # enable component under test
+        'enable("component.os.portable.infrastructure.testsuite")',
+
+        # enable test artefact
+        'enable("component.os.portable.infrastructure.tests.testsuite")',
     ],
                   
     children=[
@@ -35,11 +43,13 @@ Configuration(
             
             loadPackages=[
                 # mandatory platform requirement
-                'package.os.hal.platforms.synthetic.osx.cl-sjlj',
+                #'package.os.hal.platforms.synthetic.osx.cl-sjlj',
+                'package.os.hal.platforms.synthetic.osx',
             ],
                       
             requirements=[
-                'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
+                #'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
+                'enable("package.os.hal.platforms.synthetic.osx")',                
             ],
                       
             buildFolder='osx/testsuite',
