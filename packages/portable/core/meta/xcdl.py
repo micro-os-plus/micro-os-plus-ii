@@ -35,7 +35,7 @@ first place, to run all system initialisation.',
             linkPriority=0,
                     
             sourceFiles=[
-                'EarlyInitialisation.cpp',
+                'EarlyInitialisations.cpp',
             ],
         ),
               
