@@ -14,7 +14,6 @@
 
 #include <iostream>
 #include <fcntl.h>
-//#include <errno.h>
 
 namespace hal
 {
@@ -26,10 +25,24 @@ namespace hal
       /// Initialise the object without XML output.
       TestSuiteImplementation::TestSuiteImplementation()
       {
-        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
+        os::diag::trace.putConstructor();
 
         m_xmlFileDescriptor = -1;
         m_filePath = nullptr;
+      }
+
+      /// \details
+      /// Process the command line parameters using `processMainParameters()`.
+      TestSuiteImplementation::TestSuiteImplementation(int argc, char* argv[])
+      {
+        os::diag::trace.putConstructor();
+
+        processMainParameters(argc, argv);
+      }
+
+      TestSuiteImplementation::~TestSuiteImplementation()
+      {
+        os::diag::trace.putDestructor();
       }
 
       /// \details
@@ -37,18 +50,6 @@ namespace hal
       /// encountered, a pointer to the given file path is stored in
       /// m_filePath.
       /// If errors occur, the process is abruptly terminated.
-      TestSuiteImplementation::TestSuiteImplementation(int argc, char* argv[])
-      {
-        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
-
-        processMainParameters(argc, argv);
-      }
-
-      TestSuiteImplementation::~TestSuiteImplementation()
-      {
-        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
-      }
-
       void
       TestSuiteImplementation::processMainParameters(int argc, char* argv[])
       {
@@ -86,7 +87,7 @@ namespace hal
       }
 
       /// \details
-      /// Open the file as a new one, truncate if present.
+      /// Create the file (open as new), truncate if present.
       int
       TestSuiteImplementation::createXmlFile(void)
       {
