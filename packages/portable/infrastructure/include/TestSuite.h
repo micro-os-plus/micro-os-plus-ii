@@ -23,7 +23,7 @@ namespace os
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpadded"
 
-    /// \example portable/infrastructure/tests/TestSuite/src/main.cpp
+    /// \example portable/infrastructure/tests/src/testsuite.cpp
     /// This test exercises all TestSuite member functions. It currently
     /// runs on
     /// OS X, as a 64 bit process.
@@ -36,14 +36,14 @@ namespace os
     /// The output produced by the Release build was:
     /// ~~~
     /// CLASS:"os::infra::TestSuite"
-    /// START:"Starting tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infrastructure/tests/TestSuite/src/main.cpp'"
+    /// START:"Starting tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infrastructure/tests/src/testsuite.cpp'"
     /// PASS:"check true constant"
     /// FAIL:"check false constant"
     /// PASS:"a passed test"
     /// FAIL:"a failed test"
     /// INFO:"there should be 2 failed cases and 2 passed cases"
     /// STAT:"Failed=2, Passed=2"
-    /// STOP:"Completing tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infrastructure/tests/TestSuite/src/main.cpp'"
+    /// STOP:"Completing tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infrastructure/tests/src/testsuite.cpp'"
     /// ~~~
     ///
     /// The XML output was:
@@ -82,7 +82,7 @@ namespace os
 
         /// \brief Simple constructor.
         /// \par Parameters
-        ///       None
+        ///       None.
         TestSuite();
 
         /// \brief Constructor with main() style parameters
@@ -106,7 +106,7 @@ namespace os
         /// \param [in] pName a string containing the class name, usually with
         /// full name space definitions.
         /// \par Returns
-        ///       Nothing
+        ///       Nothing.
         void
         setClassName(const char* pName);
 
@@ -341,6 +341,8 @@ namespace os
       };
     // class TestSuite
 
+#pragma GCC diagnostic pop
+
     template<class ImplT>
       inline unsigned int
       TestSuite<ImplT>::getCountPassed(void)
@@ -365,8 +367,6 @@ namespace os
     //------------------------------------------------------------------------
     /// \brief Define a TestSuite type based on the template.
     typedef TestSuite<TestSuiteImplementation_t> TestSuite_t;
-
-#pragma GCC diagnostic pop
 
   } // namespace infra
 } // namespace os

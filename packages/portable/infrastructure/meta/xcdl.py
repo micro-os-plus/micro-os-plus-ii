@@ -7,7 +7,6 @@ Package(
     id='package.os.portable.infrastructure',
     name='Infrastructure support',
     description='Support for all infrastructure functionality.',
-    
           
     children=[
               
@@ -16,8 +15,12 @@ Package(
             name='Infrastructure unit tests support',
             description='Support for unit tests',
                   
+            isEnabled=False, 
+
             requirements=[
+                # for the greeting strings
                 'enable("package.os.portable.core.greeting")',
+
                 'implementationsOf("interface.os.portable.infrastructure.testsuite") == 1',
             ],
                 

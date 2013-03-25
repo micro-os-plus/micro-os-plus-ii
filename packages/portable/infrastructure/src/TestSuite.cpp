@@ -41,7 +41,7 @@ namespace os
       TestSuite<ImplT>::TestSuite()
           : m_implementation()
       {
-        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
+        os::diag::trace.putConstructor();
 
         TestSuite<ImplT>::__init();
       }
@@ -53,7 +53,7 @@ namespace os
       TestSuite<ImplT>::TestSuite(int argc, char* argv[])
           : m_implementation(argc, argv)
       {
-        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
+        os::diag::trace.putConstructor();
 
         TestSuite<ImplT>::__init();
       }
@@ -81,7 +81,7 @@ namespace os
     template<class ImplT>
       TestSuite<ImplT>::~TestSuite()
       {
-        debug.putMemberFunctionNameWithAddress(__PRETTY_FUNCTION__, this);
+        os::diag::trace.putDestructor();
       }
 
     template<class ImplT>
