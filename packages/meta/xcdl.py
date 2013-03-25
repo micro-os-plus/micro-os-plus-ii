@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+# This file is part of the µOS++ SE distribution.
+# Copyright (c) 2013 Liviu Ionescu.
+
 Repository(
     id='package.os.root',
     name='The µOS++ SE repository',
@@ -30,4 +33,43 @@ Repository(
         '$(BUILD_DIR)/include',
     ],
     
+    children=[
+        
+        Interface(
+            id='interface.os.arch',
+            name='Active architectures',
+            description='Count of active architectures, used for validation.',
+        ),
+        
+        Interface(
+            id='interface.os.platform',
+            name='Active platforms',
+            description='Count of active platforms, used for validation.',
+        ),
+
+        Interface(
+            id='interface.os.artefact',
+            name='Active artefacts',
+            description='Count of active artefacts, used for validation.',
+        ),
+
+        Option(
+            id='option.os.validation',
+            name='Root validations',
+            description='Check all above counts.',
+            
+            requirements=[
+                          
+                # one and only one architecture shall be enabled
+                'implementationsOf("interface.os.arch") == 1',
+                
+                # one and only one platform shall be enabled
+                'implementationsOf("interface.os.platform") == 1',
+                
+                # one and only one artefact shall be enabled
+                'implementationsOf("interface.os.artefact") == 1',
+                
+            ],
+        ),
+    ],
 )
