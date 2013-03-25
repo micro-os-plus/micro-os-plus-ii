@@ -209,7 +209,7 @@ namespace os
 
     // put constructors and destructors
     void
-    Debug::putConstructor(const char* pcStr, const void* pcAddr)
+    Debug::_putConstructor(const char* pcStr, const void* pcAddr)
     {
       putString(pcStr);
       putString(" @0x");
@@ -230,7 +230,7 @@ namespace os
     }
 
     void
-    Debug::putDestructor(const char* pcStr, const void* pc)
+    Debug::_putDestructor(const char* pcStr, const void* pc)
     {
       putString(pcStr);
       putString(" @0x");

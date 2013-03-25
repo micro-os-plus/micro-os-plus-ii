@@ -118,14 +118,14 @@ namespace os
       putMemberFunctionNameWithAddress(const char* pcStr, const void* pcAddr);
 
       static void
-      putConstructor(const char* pcStr, const void* pcAddr);
+      _putConstructor(const char* pcStr, const void* pcAddr);
 
       static void
       putConstructorWithIndex(const char* pcStr, uint16_t i,
           const void* pcAddr);
 
       static void
-      putDestructor(const char* pcStr, const void* pcAddr);
+      _putDestructor(const char* pcStr, const void* pcAddr);
 
       static void
       flush(void);
