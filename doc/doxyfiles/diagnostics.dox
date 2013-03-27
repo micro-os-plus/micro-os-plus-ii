@@ -1,0 +1,150 @@
+/**
+
+\page diagnostics The diagnostics support
+
+# Overview
+
+The diagnostics support is intended for debug configurations and 
+provides additional information about the internals of the 
+diagnosed application.
+
+# The Trace object
+
+The main diagnostic method is a tracing facility, implemented by the
+<b>Trace</b> object.
+
+The Trace object implements a specific tracing device and
+several conversion and formatting functions to generate the
+tracing messages.
+
+The physical tracing device is platform specific, and can be a serial port,
+a custom I2C port, JTAG semi-hosting, standard output
+on synthetic platforms, etc.
+
+## Object instance
+
+The tracing class is `os::diag::Trace`, and a static instance of this class
+is created during early initialisations as `os::diag::trace`.
+
+## Light vs. ostream
+
+The Trace class has two distinct flavours, the <b>light</b> one with
+basic formatting, and the <b>ostream</b> (output stream) one, with full 
+ostream multi-base (dec/hex/oct) and formatting support.
+
+The light one is always available, while the ostream one is optional.
+
+## Performance issues
+
+The implementation of the light interface is straightforward, with 
+output generated as char arrays and sent directly to the implementation
+functions.
+
+The ostream implementation, although quite optimised and not using
+`sprintf()` for conversions, is slightly heavier and implies an 
+additional buffering layer.
+
+For these reasons, it is recommended that in critical interrupt 
+routines to use only the light interface, to minimise latency.
+
+On the other hand, in regular threads it is recommended to use mainly
+the ostream interface, with its full set of features.
+
+## Using the ostream interface
+
+The ostream interface is the standard C++ interface, implemented in the
+`os::std::basic_ostream` class, and supports all inserters and manipulators,
+so the general behaviour is as expected. 
+
+\par Example
+~~~
+	os::diag::trace << "Baburiba Hey" << os::std::endl
+~~~
+
+\note Please note that the 
+namespace is `os::std` instead of `std`.
+
+## Using the light interface
+
+The light interface is implemented in the `os::diag::TraceBase` class
+and consists of separate simple functions for each type of data to 
+emit on the trace device.
+
+\par Example
+~~~
+	os::diag::trace.putString("Baburiba Hey");
+	os::diag::trace.putNewLine();
+~~~
+
+## Synchronisation issues
+
+The light interface is by design atomic (any string or number will
+be passed in a single call), so if a character is emitted from an
+interrupt routine, exactly when the current thread is emitting a string,
+the single character will not be intermixed within the string, but displayed 
+*after* the string.
+
+On the other hand, the standard ostream class is not thread safe, so
+it should be cared like any other resource shared in common by multiple
+threads, i.e. using synchronisation mechanisms.
+
+The recommended synchronisation mechanism is the scheduler lock/unlock 
+(in terms of synchronisation, the ostream overhead is low, 
+probably not justifying the use of a mutex).
+
+\par Example
+~~~
+	{
+		SchedulerLock cs;
+		os::diag::trace << "Baburiba" << 
+			os::std::dec << 1 << os::std::endl;
+	}
+~~~
+
+## Flushing the output stream
+
+The common behaviour for output streams is to buffer the output and 
+automatically flush it at the end of line.
+
+For the tracing stream, this translates in a delay between the moment 
+when the inserter operators are called and the characters appear
+on the tracing device.
+
+If a more expedite behaviour is needed (for example a continuous 
+stream is generated, without end of lines), then `flush()` must be 
+explicitly called.
+
+\par Example
+~~~
+	os::diag::trace.flush();
+~~~
+
+Normally the characters collected are passed to the physical device
+in an atomic operation (assuming the buffer is large enough, otherwise
+multiple chunks are emitted). In other words, if trace calls are
+emitted on interrupts, the output is mixed only at flush points,
+not inside strings.
+
+\warning The output stream buffering functionality is not available yet, so 
+currently the atomicity
+unit is a single character, and consequently, trace calls emitted on
+interrupts can be mixed at any time.
+
+## Release build configurations
+
+The diagnostics support is intentionally available only on Debug 
+build configurations.
+
+In order to avoid references to the Trace object in Release builds,
+the macro-processor DEBUG definitions should always be checked, both 
+for the light and for the ostream usages.
+
+\par Example
+~~~
+	#if defined(DEBUG)
+		os::diag::trace.putString("Baburiba Hey");
+		os::diag::trace.putNewLine();
+	#endif
+~~~
+
+*/
