@@ -501,28 +501,27 @@ namespace os
             return *this;
           }
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
+        _LIBCPP_INLINE_VISIBILITY
+        back_insert_iterator&
+        operator*()
+        {
+          return *this;
+        }
 
-            _LIBCPP_INLINE_VISIBILITY
-            back_insert_iterator&
-            operator*()
-              {
-                return *this;
-              }
+        _LIBCPP_INLINE_VISIBILITY
+        back_insert_iterator&
+        operator++()
+        {
+          return *this;
+        }
 
-            _LIBCPP_INLINE_VISIBILITY
-            back_insert_iterator&
-            operator++()
-              {
-                return *this;
-              }
-
-            _LIBCPP_INLINE_VISIBILITY
-            back_insert_iterator
-            operator++(int)
-              {
-                return *this;
-              }
-          };
+        _LIBCPP_INLINE_VISIBILITY
+        back_insert_iterator
+        operator++(int)
+        {
+          return *this;
+        }
+      };
 
     template<class _Container>
       inline _LIBCPP_INLINE_VISIBILITY
@@ -567,27 +566,27 @@ namespace os
             return *this;
           }
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-            _LIBCPP_INLINE_VISIBILITY
-            front_insert_iterator&
-            operator*()
-              {
-                return *this;
-              }
+        _LIBCPP_INLINE_VISIBILITY
+        front_insert_iterator&
+        operator*()
+        {
+          return *this;
+        }
 
-            _LIBCPP_INLINE_VISIBILITY
-            front_insert_iterator&
-            operator++()
-              {
-                return *this;
-              }
+        _LIBCPP_INLINE_VISIBILITY
+        front_insert_iterator&
+        operator++()
+        {
+          return *this;
+        }
 
-            _LIBCPP_INLINE_VISIBILITY
-            front_insert_iterator
-            operator++(int)
-              {
-                return *this;
-              }
-          };
+        _LIBCPP_INLINE_VISIBILITY
+        front_insert_iterator
+        operator++(int)
+        {
+          return *this;
+        }
+      };
 
     template<class _Container>
       inline _LIBCPP_INLINE_VISIBILITY
@@ -629,21 +628,21 @@ namespace os
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
         _LIBCPP_INLINE_VISIBILITY insert_iterator&
         operator*()
-          {
-            return *this;
-          }
+        {
+          return *this;
+        }
 
         _LIBCPP_INLINE_VISIBILITY insert_iterator&
         operator++()
-          {
-            return *this;
-          }
+        {
+          return *this;
+        }
 
         _LIBCPP_INLINE_VISIBILITY insert_iterator&
         operator++(int)
-          {
-            return *this;
-          }
+        {
+          return *this;
+        }
       };
 
     template<class _Container>
@@ -656,9 +655,9 @@ namespace os
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
     template<class _Tp, class TChar_T = char,
-        class TTraits_T = char_traits<TChar_T>, class _Distance = ptrdiff_t>
-      class _LIBCPP_VISIBLE istream_iterator : public iterator<
-          input_iterator_tag, _Tp, _Distance, const _Tp*, const _Tp&>
+    class TTraits_T = char_traits<TChar_T>, class _Distance = ptrdiff_t>
+    class _LIBCPP_VISIBLE istream_iterator : public iterator<
+    input_iterator_tag, _Tp, _Distance, const _Tp*, const _Tp&>
       {
       public:
         typedef TChar_T char_type;
@@ -670,64 +669,65 @@ namespace os
       public:
         _LIBCPP_INLINE_VISIBILITY
         istream_iterator()
-            : __in_stream_(0)
-        {
-          ;
-        }
+        : __in_stream_(0)
+          {
+            ;
+          }
 
         _LIBCPP_INLINE_VISIBILITY
         istream_iterator(istream_type& __s)
-            : __in_stream_(&__s)
-        {
-          if (!(*__in_stream_ >> __value_))
+        : __in_stream_(&__s)
+          {
+            if (!(*__in_stream_ >> __value_))
             __in_stream_ = 0;
-        }
+          }
 
         _LIBCPP_INLINE_VISIBILITY const _Tp&
         operator*() const
-        {
-          return __value_;
-        }
+          {
+            return __value_;
+          }
 
         _LIBCPP_INLINE_VISIBILITY const _Tp*
         operator->() const
-        {
-          return &(operator*());
-        }
+          {
+            return &(operator*());
+          }
 
         _LIBCPP_INLINE_VISIBILITY istream_iterator&
         operator++()
-        {
-          if (!(*__in_stream_ >> __value_))
+          {
+            if (!(*__in_stream_ >> __value_))
             __in_stream_ = 0;
-          return *this;
-        }
+            return *this;
+          }
 
         _LIBCPP_INLINE_VISIBILITY istream_iterator
         operator++(int)
-        {
-          istream_iterator __t(*this);
-          ++(*this);
-          return __t;
-        }
+          {
+            istream_iterator __t(*this);
+            ++(*this);
+            return __t;
+          }
 
         friend _LIBCPP_INLINE_VISIBILITY
         bool
         operator==(const istream_iterator& __x, const istream_iterator& __y)
-        {
-          return __x.__in_stream_ == __y.__in_stream_;
-        }
+          {
+            return __x.__in_stream_ == __y.__in_stream_;
+          }
 
         friend _LIBCPP_INLINE_VISIBILITY
         bool
         operator!=(const istream_iterator& __x, const istream_iterator& __y)
-        {
-          return !(__x == __y);
-        }
+          {
+            return !(__x == __y);
+          }
       };
 #endif
 
-    template<class _Tp, class TChar_T = char, class TTraits_T = char_traits<TChar_T> >
+    template<class _Tp, class TChar_T = char, class TTraits_T = char_traits<
+        TChar_T> >
       class _LIBCPP_VISIBLE ostream_iterator : public iterator<
           output_iterator_tag, void, void, void, void>
       {
@@ -783,9 +783,9 @@ namespace os
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
     template<class TChar_T, class TTraits_T>
-      class _LIBCPP_VISIBLE istreambuf_iterator : public iterator<
-          input_iterator_tag, TChar_T, typename TTraits_T::off_type, TChar_T*,
-          TChar_T>
+    class _LIBCPP_VISIBLE istreambuf_iterator : public iterator<
+    input_iterator_tag, TChar_T, typename TTraits_T::off_type, TChar_T*,
+    TChar_T>
       {
       public:
         typedef TChar_T char_type;
@@ -794,62 +794,62 @@ namespace os
         typedef basic_streambuf<TChar_T, TTraits_T> streambuf_type;
         typedef basic_istream<TChar_T, TTraits_T> istream_type;
       private:
-        mutable streambuf_type* __sbuf_;
+        mutable streambuf_type* m_pSbuf;
 
         class __proxy
-        {
-          char_type __keep_;
-          streambuf_type* __sbuf_;_LIBCPP_INLINE_VISIBILITY
-          __proxy(char_type __c, streambuf_type* __s)
-              : __keep_(__c), __sbuf_(__s)
           {
-            ;
-          }
+            char_type __keep_;
+            streambuf_type* m_pSbuf;_LIBCPP_INLINE_VISIBILITY
+            __proxy(char_type __c, streambuf_type* __s)
+            : __keep_(__c), m_pSbuf(__s)
+              {
+                ;
+              }
 
-          friend class istreambuf_iterator;
-        public:
-          _LIBCPP_INLINE_VISIBILITY char_type
-          operator*() const
-          {
-            return __keep_;
-          }
-        };
+            friend class istreambuf_iterator;
+          public:
+            _LIBCPP_INLINE_VISIBILITY char_type
+            operator*() const
+              {
+                return __keep_;
+              }
+          };
 
         _LIBCPP_INLINE_VISIBILITY
         bool
         __test_for_eof() const
-        {
-          if (__sbuf_
-              && traits_type::eq_int_type(__sbuf_->sgetc(), traits_type::eof()))
-            __sbuf_ = 0;
-          return __sbuf_ == 0;
-        }
+          {
+            if (m_pSbuf
+                && traits_type::eq_int_type(m_pSbuf->sgetc(), traits_type::eof()))
+            m_pSbuf = 0;
+            return m_pSbuf == 0;
+          }
 
       public:
         _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR
         istreambuf_iterator() _NOEXCEPT
-            : __sbuf_(0)
-        {
-          ;
-        }
+        : m_pSbuf(0)
+          {
+            ;
+          }
 
         _LIBCPP_INLINE_VISIBILITY
         istreambuf_iterator(istream_type& __s) _NOEXCEPT
-            : __sbuf_(__s.rdbuf())
-        {
-          ;
-        }
+        : m_pSbuf(__s.rdbuf())
+          {
+            ;
+          }
 
         _LIBCPP_INLINE_VISIBILITY
         istreambuf_iterator(streambuf_type* __s) _NOEXCEPT
-            : __sbuf_(__s)
-        {
-          ;
-        }
+        : m_pSbuf(__s)
+          {
+            ;
+          }
 
         _LIBCPP_INLINE_VISIBILITY
         istreambuf_iterator(const __proxy& __p) _NOEXCEPT
-        : __sbuf_(__p.__sbuf_)
+        : m_pSbuf(__p.m_pSbuf)
           {
             ;
           }
@@ -857,7 +857,7 @@ namespace os
         _LIBCPP_INLINE_VISIBILITY
         char_type operator*() const
           {
-            return static_cast<char_type>(__sbuf_->sgetc());
+            return static_cast<char_type>(m_pSbuf->sgetc());
           }
 
         _LIBCPP_INLINE_VISIBILITY char_type* operator->() const
@@ -867,98 +867,182 @@ namespace os
 
         _LIBCPP_INLINE_VISIBILITY istreambuf_iterator& operator++()
           {
-            __sbuf_->sbumpc();
+            m_pSbuf->sbumpc();
             return *this;
           }
 
         _LIBCPP_INLINE_VISIBILITY __proxy operator++(int)
           {
-            return __proxy(__sbuf_->sbumpc(), __sbuf_);
+            return __proxy(m_pSbuf->sbumpc(), m_pSbuf);
           }
 
         _LIBCPP_INLINE_VISIBILITY bool equal(const istreambuf_iterator& __b)const
-        {
-          return __test_for_eof() == __b.__test_for_eof();
-        }
-};
+          {
+            return __test_for_eof() == __b.__test_for_eof();
+          }
+      };
 
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      bool
-      operator==(const istreambuf_iterator<TChar_T, TTraits_T>& __a,
-          const istreambuf_iterator<TChar_T, TTraits_T>& __b)
+    inline _LIBCPP_INLINE_VISIBILITY
+    bool
+    operator==(const istreambuf_iterator<TChar_T, TTraits_T>& __a,
+        const istreambuf_iterator<TChar_T, TTraits_T>& __b)
       {
         return __a.equal(__b);
       }
 
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      bool
-      operator!=(const istreambuf_iterator<TChar_T, TTraits_T>& __a,
-          const istreambuf_iterator<TChar_T, TTraits_T>& __b)
+    inline _LIBCPP_INLINE_VISIBILITY
+    bool
+    operator!=(const istreambuf_iterator<TChar_T, TTraits_T>& __a,
+        const istreambuf_iterator<TChar_T, TTraits_T>& __b)
       {
         return !__a.equal(__b);
       }
 #endif
+
+    /// \class ostreambuf_iterator iterator.h "portable/language/cpp/include/iterator.h"
+    /// \ingroup std_iter
+    /// \nosubgrouping
+    ///
+    /// \brief streambuf output iterator.
+    ///
+    /// \tparam TChar_T  Type of character stream.
+    /// \tparam TTraits_T  Traits for character type, defaults to
+    ///                   char_traits<TChar_T>.
+    ///
+    /// \details
+    /// This is the base class for all streambuf output operators.
 
     template<class TChar_T, class TTraits_T>
       class _LIBCPP_VISIBLE ostreambuf_iterator : public iterator<
           output_iterator_tag, void, void, void, void>
       {
       public:
+        /// \name Standard template types
+        /// @{
+        ///
+        /// These types permit a standardised way of
+        /// referring to names of (or names dependent on) the template
+        /// parameters, which are specific to the implementation. Except
+        /// when referring to the template, (in which case the templates
+        /// parameters are required), use these types everywhere
+        /// else instead of usual types.
         typedef TChar_T char_type;
         typedef TTraits_T traits_type;
         typedef basic_streambuf<TChar_T, TTraits_T> streambuf_type;
         typedef basic_ostream<TChar_T, TTraits_T> ostream_type;
+        /// @}
+
       private:
-        streambuf_type* __sbuf_;
+        /// \name Private member variables
+        /// @{
+
+        /// \brief Pointer to the streambuf or nullptr.
+        streambuf_type* m_pSbuf;
+
+        /// @}
       public:
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief Constructor.
+        ///
+        /// \details
+        /// Initialise the local pointer to the associated ostream buffer.
         _LIBCPP_INLINE_VISIBILITY
-        ostreambuf_iterator(ostream_type& __s) _NOEXCEPT
-            : __sbuf_(__s.rdbuf())
+        ostreambuf_iterator(ostream_type& outs) _NOEXCEPT
+            : m_pSbuf(outs.rdbuf())
         {
-          ;
         }
 
+        /// \brief Constructor.
+        ///
+        /// \details
+        /// Initialise the local pointer to the given streambuf pointer.
         _LIBCPP_INLINE_VISIBILITY
-        ostreambuf_iterator(streambuf_type* __s) _NOEXCEPT
-            : __sbuf_(__s)
+        ostreambuf_iterator(streambuf_type* pSbuf) _NOEXCEPT
+            : m_pSbuf(pSbuf)
         {
-          ;
         }
 
-        _LIBCPP_INLINE_VISIBILITY ostreambuf_iterator&
-        operator=(TChar_T __c)
+        /// @}
+
+        /// \name Operators
+        /// @{
+
+        /// \brief Assignment operator.
+        ///
+        /// \details
+        /// If the streambuf exists, call its `sputc()`.
+        /// In case the call fails, the local pointer is cleared.
+        _LIBCPP_INLINE_VISIBILITY
+        ostreambuf_iterator&
+        operator=(TChar_T c)
         {
-          if ((__sbuf_ != 0)
-              && traits_type::eq_int_type(__sbuf_->sputc(__c),
+          if ((m_pSbuf != 0)
+              && traits_type::eq_int_type(m_pSbuf->sputc(c),
                   traits_type::eof()))
-            __sbuf_ = 0;
+            {
+              // clear pointer to mark failure
+              m_pSbuf = 0;
+            }
           return *this;
         }
 
+        /// \brief Indirection operator.
+        ///
+        /// \details
+        /// Nothing to do.
         _LIBCPP_INLINE_VISIBILITY ostreambuf_iterator&
         operator*()
         {
           return *this;
         }
 
+        /// \brief Pre-increment operator.
+        ///
+        /// \details
+        /// Nothing to do.
         _LIBCPP_INLINE_VISIBILITY ostreambuf_iterator&
         operator++()
         {
           return *this;
         }
 
+        /// \brief Post-increment operator.
         _LIBCPP_INLINE_VISIBILITY ostreambuf_iterator&
+        ///
+        /// \details
+        /// Nothing to do.
         operator++(int)
         {
           return *this;
         }
 
-        _LIBCPP_INLINE_VISIBILITY bool
+        /// @}
+
+        /// \name Member functions
+        /// @{
+
+        /// \brief Check if assignments failed.
+        ///
+        /// \par Parameters
+        ///     None.
+        /// \return
+        ///     True if the pointer is null.
+        ///
+        /// \details
+        /// Normally the pointer is assigned during construction and is
+        /// non-null, meaning the ostream is functional.
+        ///
+        /// In case of an error during assignment, this pointer is cleared
+        /// and so this function will be able to report the failure.
+        _LIBCPP_INLINE_VISIBILITY
+        bool
         failed() const _NOEXCEPT
         {
-          return __sbuf_ == 0;
+          return m_pSbuf == 0;
         }
 
 #if !defined(__APPLE__) || \
@@ -971,6 +1055,8 @@ namespace os
         __pad_and_output(ostreambuf_iterator<_Ch, _Tr> __s, const _Ch* __ob,
             const _Ch* __op, const _Ch* __oe, ios_base& __iob, _Ch __fl);
 #endif
+
+        /// @}
       };
 
     template<class _Iter>
@@ -992,106 +1078,106 @@ namespace os
 
         _LIBCPP_INLINE_VISIBILITY
         move_iterator()
-        : __i()
-          {
-            ;
-          }
+            : __i()
+        {
+          ;
+        }
 
         _LIBCPP_INLINE_VISIBILITY explicit
         move_iterator(_Iter __x)
-        : __i(__x)
-          {
-            ;
-          }
+            : __i(__x)
+        {
+          ;
+        }
 
         template<class _Up>
-        _LIBCPP_INLINE_VISIBILITY
-        move_iterator(const move_iterator<_Up>& __u)
-        : __i(__u.base())
+          _LIBCPP_INLINE_VISIBILITY
+          move_iterator(const move_iterator<_Up>& __u)
+              : __i(__u.base())
           {
             ;
           }
 
         _LIBCPP_INLINE_VISIBILITY _Iter
         base() const
-          {
-            return __i;
-          }
+        {
+          return __i;
+        }
 
         _LIBCPP_INLINE_VISIBILITY reference
         operator*() const
-          {
-            return static_cast<reference>(*__i);
-          }
+        {
+          return static_cast<reference>(*__i);
+        }
 
         _LIBCPP_INLINE_VISIBILITY pointer
         operator->() const
-          {
-            typename iterator_traits<iterator_type>::reference __ref = *__i;
-            return &__ref;
-          }
+        {
+          typename iterator_traits<iterator_type>::reference __ref = *__i;
+          return &__ref;
+        }
 
         _LIBCPP_INLINE_VISIBILITY move_iterator&
         operator++()
-          {
-            ++__i;
-            return *this;
-          }
+        {
+          ++__i;
+          return *this;
+        }
 
         _LIBCPP_INLINE_VISIBILITY move_iterator
         operator++(int)
-          {
-            move_iterator __tmp(*this);
-            ++__i;
-            return __tmp;
-          }
+        {
+          move_iterator __tmp(*this);
+          ++__i;
+          return __tmp;
+        }
 
         _LIBCPP_INLINE_VISIBILITY move_iterator&
         operator--()
-          {
-            --__i;
-            return *this;
-          }
+        {
+          --__i;
+          return *this;
+        }
 
         _LIBCPP_INLINE_VISIBILITY move_iterator
         operator--(int)
-          {
-            move_iterator __tmp(*this);
-            --__i;
-            return __tmp;
-          }
+        {
+          move_iterator __tmp(*this);
+          --__i;
+          return __tmp;
+        }
 
         _LIBCPP_INLINE_VISIBILITY move_iterator
         operator+(difference_type __n) const
-          {
-            return move_iterator(__i + __n);
-          }
+        {
+          return move_iterator(__i + __n);
+        }
 
         _LIBCPP_INLINE_VISIBILITY move_iterator&
         operator+=(difference_type __n)
-          {
-            __i += __n;
-            return *this;
-          }
+        {
+          __i += __n;
+          return *this;
+        }
 
         _LIBCPP_INLINE_VISIBILITY move_iterator
         operator-(difference_type __n) const
-          {
-            return move_iterator(__i - __n);
-          }
+        {
+          return move_iterator(__i - __n);
+        }
 
         _LIBCPP_INLINE_VISIBILITY move_iterator&
         operator-=(difference_type __n)
-          {
-            __i -= __n;
-            return *this;
-          }
+        {
+          __i -= __n;
+          return *this;
+        }
 
         _LIBCPP_INLINE_VISIBILITY reference
         operator[](difference_type __n) const
-          {
-            return static_cast<reference>(__i[__n]);
-          }
+        {
+          return static_cast<reference>(__i[__n]);
+        }
       };
 
     template<class _Iter1, class _Iter2>
@@ -1336,7 +1422,7 @@ namespace os
         __wrap_iter
         operator++(int) _NOEXCEPT
         {
-          __wrap_iter                  __tmp(*this); ++(*this);
+          __wrap_iter                      __tmp(*this); ++(*this);
           return __tmp;
         }
 
@@ -2003,69 +2089,69 @@ namespace os
 #if !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_TRAILING_RETURN)
 
     template<class _Cp>
-      inline _LIBCPP_INLINE_VISIBILITY
-      auto
-      begin(_Cp& __c) -> decltype(__c.begin())
+    inline _LIBCPP_INLINE_VISIBILITY
+    auto
+    begin(_Cp& __c) -> decltype(__c.begin())
       {
         return __c.begin();
       }
 
     template<class _Cp>
-      inline _LIBCPP_INLINE_VISIBILITY
-      auto
-      begin(const _Cp& __c) -> decltype(__c.begin())
+    inline _LIBCPP_INLINE_VISIBILITY
+    auto
+    begin(const _Cp& __c) -> decltype(__c.begin())
       {
         return __c.begin();
       }
 
     template<class _Cp>
-      inline _LIBCPP_INLINE_VISIBILITY
-      auto
-      end(_Cp& __c) -> decltype(__c.end())
+    inline _LIBCPP_INLINE_VISIBILITY
+    auto
+    end(_Cp& __c) -> decltype(__c.end())
       {
         return __c.end();
       }
 
     template<class _Cp>
-      inline _LIBCPP_INLINE_VISIBILITY
-      auto
-      end(const _Cp& __c) -> decltype(__c.end())
+    inline _LIBCPP_INLINE_VISIBILITY
+    auto
+    end(const _Cp& __c) -> decltype(__c.end())
       {
         return __c.end();
       }
 
 #else  // !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_TRAILING_RETURN)
     template<class _Cp>
-    inline _LIBCPP_INLINE_VISIBILITY
-    typename _Cp::iterator
-    begin(_Cp& __c)
-      {
-        return __c.begin();
-      }
+      inline _LIBCPP_INLINE_VISIBILITY
+      typename _Cp::iterator
+      begin(_Cp& __c)
+        {
+          return __c.begin();
+        }
 
     template<class _Cp>
-    inline _LIBCPP_INLINE_VISIBILITY
-    typename _Cp::const_iterator
-    begin(const _Cp& __c)
-      {
-        return __c.begin();
-      }
+      inline _LIBCPP_INLINE_VISIBILITY
+      typename _Cp::const_iterator
+      begin(const _Cp& __c)
+        {
+          return __c.begin();
+        }
 
     template<class _Cp>
-    inline _LIBCPP_INLINE_VISIBILITY
-    typename _Cp::iterator
-    end(_Cp& __c)
-      {
-        return __c.end();
-      }
+      inline _LIBCPP_INLINE_VISIBILITY
+      typename _Cp::iterator
+      end(_Cp& __c)
+        {
+          return __c.end();
+        }
 
     template<class _Cp>
-    inline _LIBCPP_INLINE_VISIBILITY
-    typename _Cp::const_iterator
-    end(const _Cp& __c)
-      {
-        return __c.end();
-      }
+      inline _LIBCPP_INLINE_VISIBILITY
+      typename _Cp::const_iterator
+      end(const _Cp& __c)
+        {
+          return __c.end();
+        }
 
 #endif  // !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_TRAILING_RETURN)
     template<class _Tp, size_t _Np>
