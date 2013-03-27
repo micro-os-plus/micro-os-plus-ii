@@ -20,6 +20,8 @@ namespace os
   namespace infra
   {
 
+    // ========================================================================
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpadded"
 
@@ -74,25 +76,42 @@ namespace os
     /// used. Currently it is the responsibility of the user to keep
     /// these strings unique, the framework does not check this condition.
 
-    template<class ImplT>
-      class TestSuite
+    template<class TImplementation_T>
+      class TestSuiteBase
       {
 
       public:
+        /// \name Standard template types
+        /// @{
+        ///
+        /// These types permit a standardised way of
+        /// referring to names of (or names dependent on) the template
+        /// parameters, which are specific to the implementation. Except
+        /// when referring to the template, (in which case the templates
+        /// parameters are required), use these types everywhere
+        /// else instead of usual types.
+        typedef TImplementation_T Implementation_t;
+
+        /// @}
+
+        /// \name Constructors/destructor
+        /// @{
 
         /// \brief Simple constructor.
         /// \par Parameters
         ///       None.
-        TestSuite();
+        TestSuiteBase();
 
         /// \brief Constructor with main() style parameters
         ///
         /// \param [in] argc count of arguments.
         /// \param [in] argv array of pointer to strings.
-        TestSuite(int argc, char* argv[]);
+        TestSuiteBase(int argc, char* argv[]);
 
         /// \brief Destructor.
-        ~TestSuite();
+        ~TestSuiteBase();
+
+        /// @}
 
         /// \brief Process main() style parameters
         ///
@@ -337,36 +356,70 @@ namespace os
         bool m_isXmlOpened;
 
         /// \brief The actual platform implementation.
-        ImplT m_implementation;
+        TImplementation_T m_implementation;
       };
-    // class TestSuite
+    // class TestSuiteBase
 
 #pragma GCC diagnostic pop
 
-    template<class ImplT>
+    // ------------------------------------------------------------------------
+    // inline member functions
+
+    template<class TImplementation_T>
       inline unsigned int
-      TestSuite<ImplT>::getCountPassed(void)
+      TestSuiteBase<TImplementation_T>::getCountPassed(void)
       {
         return m_countPassed;
       }
 
-    template<class ImplT>
+    template<class TImplementation_T>
       inline unsigned int
-      TestSuite<ImplT>::getCountFailed(void)
+      TestSuiteBase<TImplementation_T>::getCountFailed(void)
       {
         return m_countFailed;
       }
 
-    template<class ImplT>
+    template<class TImplementation_T>
       inline unsigned int
-      TestSuite<ImplT>::getCurrentTestCaseNumber(void) const
+      TestSuiteBase<TImplementation_T>::getCurrentTestCaseNumber(void) const
       {
         return m_countPassed + m_countFailed;
       }
 
-    //------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
     /// \brief Define a TestSuite type based on the template.
-    typedef TestSuite<TestSuiteImplementation_t> TestSuite_t;
+    typedef TestSuiteBase<TestSuiteImplementation_t> TestSuiteBase_t;
+
+    // ========================================================================
+
+    class TestSuite : public TestSuiteBase_t
+    {
+    public:
+      /// \name Constructors/destructor
+      /// @{
+
+      /// \brief Simple constructor.
+      /// \par Parameters
+      ///       None.
+      TestSuite();
+
+      /// \brief Constructor with main() style parameters
+      ///
+      /// \param [in] argc count of arguments.
+      /// \param [in] argv array of pointer to strings.
+      TestSuite(int argc, char* argv[]);
+
+      /// \brief Destructor.
+      ~TestSuite();
+
+      /// @}
+
+
+    };
+
+    typedef TestSuite TestSuite_t;
+
+    // ========================================================================
 
   } // namespace infra
 } // namespace os
