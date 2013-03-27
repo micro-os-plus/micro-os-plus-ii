@@ -18,19 +18,15 @@ namespace os
   {
 
     // ------------------------------------------------------------------------
+    // explicit templates instantiations
 
-    // explicit template instantiation
     template class TraceStreambufBase<TraceImplementation_t> ;
 
-    // ------------------------------------------------------------------------
-
-    // explicit template instantiation
     template class TraceOstreamBase<TraceStreambuf_t, TraceImplementation_t> ;
 
-    // ------------------------------------------------------------------------
+    template class TraceLightBase<TraceImplementation_t> ;
 
-    // explicit template instantiations
-    template class TraceBase<TraceOstreamBase_t, TraceImplementation_t>;
+    template class TraceBase<TraceOstreamBase_t, TraceImplementation_t> ;
     template class TraceBase<TraceLightBase_t, TraceImplementation_t> ;
 
     // ========================================================================
@@ -62,7 +58,6 @@ namespace os
       // use the static object, in case we deal with another instance
       os::diag::trace.putDestructor();
     }
-
 
 #endif // DEBUG
   // ========================================================================

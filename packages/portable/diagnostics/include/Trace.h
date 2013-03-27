@@ -32,6 +32,9 @@ namespace os
     /// \details
     /// The TraceStreambufBase class implements a streambuf class
     /// to be used by the TraceOstreamBase class.
+    ///
+    /// \example portable/diagnostics/tests/src/trace.cpp
+
     template<class TImplementation_T>
       class TraceStreambufBase : public os::std::streambuf
       {
@@ -181,27 +184,56 @@ namespace os
     ///
     /// This class provides no functionality, it is used only as a
     /// light alternative to TraceOstreamBase,
-    class TraceLightBase
-    {
-    public:
-      /// \brief Constructor
-      ///
-      /// \param [in] implementation Unused reference to implementation.
-      TraceLightBase(
-          TraceImplementation_t& implementation __attribute__((unused)));
-    };
+    template<class TImplementation_T>
+      class TraceLightBase
+      {
+      public:
+        /// \name Standard template types
+        /// @{
+        ///
+        /// These types permit a standardised way of
+        /// referring to names of (or names dependent on) the template
+        /// parameters, which are specific to the implementation. Except
+        /// when referring to the template, (in which case the templates
+        /// parameters are required), use these types everywhere
+        /// else instead of usual types.
+        typedef TImplementation_T Implementation_t;
+        /// @}
 
-    typedef TraceLightBase TraceLightBase_t;
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief Constructor
+        ///
+        /// \param [in] implementation Unused reference to implementation.
+        TraceLightBase(
+            Implementation_t& implementation __attribute__((unused)));
+
+        /// @}
+
+      };
+
+    // ------------------------------------------------------------------------
+    // inline definitions
 
     /// \details
     /// The reference implementation is required only for compatibility
     /// with TraceOstreamBase, this class does not use it,
     /// as it has no functionality
-    inline
-    TraceLightBase::TraceLightBase(
-        TraceImplementation_t& implementation __attribute__((unused)))
-    {
-    }
+    template<class TImplementation_T>
+      inline
+      TraceLightBase<TImplementation_T>::TraceLightBase(
+          Implementation_t& implementation __attribute__((unused)))
+      {
+      }
+
+    // ------------------------------------------------------------------------
+
+    // Declare the template instantiation
+    extern template class TraceLightBase<TraceImplementation_t> ;
+
+    typedef TraceLightBase<TraceImplementation_t> TraceLightBase_t;
+
 
     // ========================================================================
 
@@ -239,6 +271,8 @@ namespace os
         /// else instead of usual types.
         typedef TBase_T Base_t;
         typedef TImplementation_T Implementation_t;
+
+        /// @}
 
         /// \name Constructors/destructor
         /// @{
@@ -326,24 +360,21 @@ namespace os
         void
         putString(const unsigned char* pStr);
 
-        /// \brief Put name and address.
+        /// \brief Put unsigned char hex.
         ///
-        /// \param [in] pStr A pointer to string.
-        /// \param [in] addr An address.
+        /// \param [in] n An unsigned number.
         /// \par Returns
         ///     Nothing.
         void
-        putNameAndAddress(const char* pStr, void* addr);
+        putHex(unsigned char n);
 
-#if defined(DEBUG)
-        /// \brief Put constructor.
-#define putConstructor()        putNameAndAddress(__PRETTY_FUNCTION__, this)
-        /// \brief Put destructor.
-#define putDestructor()         putNameAndAddress(__PRETTY_FUNCTION__, this)
-#else
-#define putConstructor()
-#define putDestructor()
-#endif
+        /// \brief Put unsigned short hex.
+        ///
+        /// \param [in] n An unsigned number.
+        /// \par Returns
+        ///     Nothing.
+        void
+        putHex(unsigned short n);
 
         /// \brief Put unsigned int hex.
         ///
@@ -360,6 +391,14 @@ namespace os
         ///     Nothing.
         void
         putHex(unsigned long n);
+
+        /// \brief Put unsigned long long hex.
+        ///
+        /// \param [in] n An unsigned number.
+        /// \par Returns
+        ///     Nothing.
+        void
+        putHex(unsigned long long n);
 
         /// \brief Put pointer.
         ///
@@ -385,7 +424,31 @@ namespace os
         void
         putDec(long n);
 
+        /// \brief Put name and address.
+        ///
+        /// \param [in] pStr A pointer to string.
+        /// \param [in] addr An address.
+        /// \par Returns
+        ///     Nothing.
+        void
+        putNameAndAddress(const char* pStr, void* addr);
+
+#if defined(DEBUG)
+        /// \brief Put constructor.
+#define putConstructor()        putNameAndAddress(__PRETTY_FUNCTION__, this)
+        /// \brief Put destructor.
+#define putDestructor()         putNameAndAddress(__PRETTY_FUNCTION__, this)
+        /// \brief Put member function.
+#define putMemberFunction()     putNameAndAddress(__PRETTY_FUNCTION__, this)
+
+#else
+#define putMemberFunction()
+#endif
+
         /// @}
+
+        Implementation_t&
+        getImplementation(void);
 
       protected:
         /// \name Protected members
@@ -398,15 +461,25 @@ namespace os
 
       };
 
+#pragma GCC diagnostic pop
+
     // ------------------------------------------------------------------------
     // inlines
+
+    template<class TBase_T, class TImplementation_T>
+      inline
+      typename TraceBase<TBase_T, TImplementation_T>::Implementation_t&
+      TraceBase<TBase_T, TImplementation_T>::getImplementation(void)
+      {
+        return m_implementation;
+      }
 
     template<class TBase_T, class TImplementation_T>
       inline
       void
       TraceBase<TBase_T, TImplementation_T>::putChar(const signed char ch)
       {
-        putChar(ch);
+        putChar(static_cast<char>(ch));
       }
 
     template<class TBase_T, class TImplementation_T>
@@ -442,7 +515,6 @@ namespace os
         putString(reinterpret_cast<const char*>(pStr));
       }
 
-#pragma GCC diagnostic pop
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -451,7 +523,7 @@ namespace os
 #endif
 
     // Declare the template instantiation
-    extern template class TraceBase<TraceOstreamBase_t, TraceImplementation_t>;
+    extern template class TraceBase<TraceOstreamBase_t, TraceImplementation_t> ;
     extern template class TraceBase<TraceLightBase_t, TraceImplementation_t> ;
 
 #pragma GCC diagnostic pop

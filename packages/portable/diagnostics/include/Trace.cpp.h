@@ -140,6 +140,14 @@ namespace os
 
     template<class TBase_T, class TImplementation_T>
       void
+      TraceBase<TBase_T, TImplementation_T>::putHex(unsigned char n)
+      {
+        // inline function template
+        __putHex(m_implementation, n);
+      }
+
+    template<class TBase_T, class TImplementation_T>
+      void
       TraceBase<TBase_T, TImplementation_T>::putHex(unsigned int n)
       {
         // inline function template
@@ -148,7 +156,23 @@ namespace os
 
     template<class TBase_T, class TImplementation_T>
       void
+      TraceBase<TBase_T, TImplementation_T>::putHex(unsigned short n)
+      {
+        // inline function template
+        __putHex(m_implementation, n);
+      }
+
+    template<class TBase_T, class TImplementation_T>
+      void
       TraceBase<TBase_T, TImplementation_T>::putHex(unsigned long n)
+      {
+        // inline function template
+        __putHex(m_implementation, n);
+      }
+
+    template<class TBase_T, class TImplementation_T>
+      void
+      TraceBase<TBase_T, TImplementation_T>::putHex(unsigned long long n)
       {
         // inline function template
         __putHex(m_implementation, n);

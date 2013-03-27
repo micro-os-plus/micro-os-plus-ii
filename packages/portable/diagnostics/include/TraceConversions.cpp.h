@@ -22,6 +22,7 @@ namespace os
     // All are instantiated in the TraceBase putX() functions.
 
     /// \ingroup diag_conv
+    /// \relates TraceBase
     ///
     /// \brief Convert a generic unsigned to a hex representation.
     template<class TImplementation_T, typename TNumber_T>
@@ -46,6 +47,7 @@ namespace os
       }
 
     /// \ingroup diag_conv
+    /// \relates TraceBase
     ///
     /// \brief Convert a generic signed to a decimal representation.
     template<class TImplementation_T, typename TNumber_T>
