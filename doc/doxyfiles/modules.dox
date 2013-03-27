@@ -4,8 +4,8 @@
 
 
 \defgroup diag Diagnostics
-The `Trace` object is an output stream intended to display debug 
-related informations
+The `Trace` object is an output stream intended to display  
+diagnostics related informations
 when executing the Debug versions of the build configurations. 
 The Release build configurations should not use this object.
 
@@ -31,5 +31,7 @@ The Release build configurations should not use this object.
         \addtogroup ostreamManipulators ostream manipulators
         \ingroup std_io
         
+    \defgroup std_iter Iterators
+    \ingroup std
 
 */
