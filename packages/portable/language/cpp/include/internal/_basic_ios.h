@@ -45,6 +45,8 @@ namespace os
     /// Basically manages all common resources for derived streams, like
     /// pointer to the associated streambuf, status, exception status
     /// and the default fill character used for paddings.
+    ///
+    /// \example portable/language/cpp/tests/src/basic_ios.cpp
 
     template<class TChar_T, class TTraits_T>
       class _LIBCPP_VISIBLE basic_ios : public ios_base

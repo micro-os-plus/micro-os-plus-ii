@@ -36,6 +36,8 @@ namespace os
     ///
     /// \brief  Class representing stream positions.
     ///
+    /// @tparam  TState_T  Type passed to and returned from `state()`.
+    ///
     /// The standard places no requirements upon the template
     /// parameter `TState_T`.
     /// In this implementation `TState_T` must be DefaultConstructible,
@@ -45,7 +47,7 @@ namespace os
     /// implementation it also
     /// contains an offset stored as a signed integer.
     ///
-    /// @tparam  TState_T  Type passed to and returned from `state()`.
+    /// \example portable/language/cpp/tests/src/fpos.cpp
 
     template<class TState_T>
       class _LIBCPP_VISIBLE fpos

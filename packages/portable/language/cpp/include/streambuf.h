@@ -94,6 +94,8 @@ namespace os
     ///      In this case, `*xnext` shall have a defined value and is the
     ///      next element to read (to get, or to obtain a character value,
     ///      from the sequence).
+    ///
+    /// \example portable/language/cpp/tests/src/streambuf.cpp
 
     template<class TChar_T, class TTraits_T>
       class _LIBCPP_VISIBLE basic_streambuf
