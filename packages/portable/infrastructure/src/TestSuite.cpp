@@ -66,13 +66,14 @@ namespace os
       void
       TestSuiteBase<TImplementation_T>::__init(void)
       {
-        m_pClassName = nullptr; // initialise pointer to class name
-        m_pFunctionName = nullptr; // initialise pointer to member function name
-        m_pInputValues = nullptr; // initialise pointer to input values
-        m_pPreconditions = nullptr; // initialise pointer to preconditions
+        m_pClassName = nullptr;
+        m_pFunctionName = nullptr;
+        m_pInputValues = nullptr;
+        m_pPreconditions = nullptr;
+        m_pStartMessage = nullptr;
 
-        m_countPassed = 0; // initialise count of passed tests
-        m_countFailed = 0; // initialise count of failed tests
+        m_countPassed = 0;
+        m_countFailed = 0;
 
         m_isXmlOpened = false;
       }
@@ -159,6 +160,8 @@ namespace os
       {
         outputLine(OutputLineType::START, pMessage);
 
+        m_pStartMessage = pMessage;
+
         if (m_implementation.createXmlFile() != -1)
           {
             m_isXmlOpened = true;
@@ -228,10 +231,10 @@ namespace os
     /// Generate an informative `STOP` line on the output device.
     template<class TImplementation_T>
       void
-      TestSuiteBase<TImplementation_T>::stop(const char* pMessage)
+      TestSuiteBase<TImplementation_T>::stop(void)
       {
         outputLine(OutputLineType::STAT);
-        outputLine(OutputLineType::STOP, pMessage);
+        outputLine(OutputLineType::STOP, m_pStartMessage);
 
         if (m_isXmlOpened)
           {
@@ -256,11 +259,17 @@ namespace os
       TestSuiteBase<TImplementation_T>::outputLine(OutputLineType_t lineType,
           const char* pMessage)
       {
+        bool doPrint = false;
+        if (getVerbosity() > 0)
+          doPrint = true;
+
         const char* pStr;
         switch (lineType)
           {
         case OutputLineType::START:
           pStr = "START";
+          doPrint = true;
+          putNewLine();
           break;
         case OutputLineType::STOP:
           pStr = "STOP";
@@ -270,12 +279,14 @@ namespace os
           break;
         case OutputLineType::FAIL:
           pStr = "FAIL";
+          doPrint = true;
           break;
         case OutputLineType::INFO:
           pStr = "INFO";
           break;
         case OutputLineType::STAT:
           pStr = "STAT";
+          doPrint = true;
           break;
         case OutputLineType::CLASS:
           pStr = "CLASS";
@@ -285,77 +296,98 @@ namespace os
           break;
           }
 
-        putString(pStr);
-        putString(":");
-        if (lineType == OutputLineType::PASS
-            || lineType == OutputLineType::FAIL)
+        if (doPrint)
           {
-            putNumber(static_cast<int>(getCurrentTestCaseNumber()));
-            putString(",");
-          }
-        putString("\"");
+            putString(pStr);
+            putString(":");
 
-        if ((lineType == OutputLineType::PASS
-            || lineType == OutputLineType::FAIL)
-            && (m_pFunctionName != nullptr))
-          {
-            putString(m_pFunctionName);
-            if (m_pInputValues != nullptr)
+            switch (lineType)
               {
-                putString(" (");
-                putString(m_pInputValues);
-                putString(")");
+            case OutputLineType::START:
+              putString("\"");
+              putString("Starting tests from '");
+              putString(pMessage);
+              putString("'");
+              putString("\"");
+              break;
+
+            case OutputLineType::STOP:
+              putString("\"");
+              putString("Completing tests from '");
+              putString(pMessage);
+              putString("'");
+              putString("\"");
+              break;
+
+            case OutputLineType::PASS:
+            case OutputLineType::FAIL:
+              putNumber(static_cast<int>(getCurrentTestCaseNumber()));
+              putString(",");
+              putString("\"");
+              if (m_pFunctionName != nullptr)
+                {
+                  putString(m_pFunctionName);
+                  if (m_pInputValues != nullptr)
+                    {
+                      putString(" (");
+                      putString(m_pInputValues);
+                      putString(")");
+                    }
+                  if (m_pPreconditions != nullptr)
+                    {
+                      putString(" with ");
+                      putString(m_pPreconditions);
+                    }
+                  putString(" --- ");
+                }
+              putString(pMessage);
+              putString("\"");
+              break;
+
+            case OutputLineType::INFO:
+              putString("\"");
+              putString(pMessage);
+              putString("\"");
+              break;
+
+            case OutputLineType::STAT:
+              if (m_countFailed == 0)
+                {
+                  putString("PASS,\"All ");
+                  putNumber(static_cast<int>(m_countPassed));
+                  putString(" checks passed! :-) ");
+                  putString("\"");
+                }
+              else
+                {
+                  putString("FAIL,\"");
+                  putNumber(static_cast<int>(m_countFailed));
+                  putString(" checks failed, ");
+                  putNumber(static_cast<int>(m_countPassed));
+                  putString(" checks passed. PROBLEMS?");
+                  putString("\"");
+                }
+              break;
+
+            case OutputLineType::CLASS:
+              putString("\"");
+              if (m_pClassName != nullptr)
+                putString(m_pClassName);
+              putString("\"");
+              break;
+
+            default:
+              break;
               }
-            if (m_pPreconditions != nullptr)
-              {
-                putString(" with ");
-                putString(m_pPreconditions);
-              }
-            putString(" --- ");
+
+            putNewLine();
           }
 
-        if (lineType == OutputLineType::START)
+        if (lineType == OutputLineType::STOP)
           {
-            putString("Starting tests from '");
-            putString(pMessage);
-            putString("'");
+            putNewLine();
           }
-        else if (lineType == OutputLineType::STOP)
-          {
-            putString("Completing tests from '");
-            putString(pMessage);
-            putString("'");
-          }
-        else if (lineType == OutputLineType::STAT)
-          {
-            if (m_countFailed == 0)
-              {
-                putString("Failed=");
-                putNumber(static_cast<int>(m_countFailed));
-                putString(", PASSED=");
-                putNumber(static_cast<int>(m_countPassed));
-                putString(", ALLES IN ORDNUNG! :-) +++++ :-) +++++ :-) ");
-              }
-            else
-              {
-                putString("FAILED=");
-                putNumber(static_cast<int>(m_countFailed));
-                putString(", Passed=");
-                putNumber(static_cast<int>(m_countPassed));
-                putString(", PROBLEMS?... :-( ----- :-( ----- :-( ");
-              }
-          }
-        else if (lineType == OutputLineType::CLASS)
-          {
-            if (m_pClassName != nullptr)
-              putString(m_pClassName);
-          }
-        else
-          {
-            putString(pMessage);
-          }
-        putString("\"");
-        putNewLine();
+
       }
 
     /// \details

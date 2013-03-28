@@ -99,7 +99,7 @@ namespace os
 
         /// \brief Simple constructor.
         /// \par Parameters
-        ///       None.
+        ///     None.
         TestSuiteBase();
 
         /// \brief Constructor with main() style parameters
@@ -125,7 +125,7 @@ namespace os
         /// \param [in] pName a string containing the class name, usually with
         /// full name space definitions.
         /// \par Returns
-        ///       Nothing.
+        ///     Nothing.
         void
         setClassName(const char* pName);
 
@@ -135,7 +135,7 @@ namespace os
         /// to each test case, usually the name of the member function
         /// under test.
         /// \par Returns
-        ///       Nothing
+        ///     Nothing.
         void
         setFunctionNameOrPrefix(const char* pName);
 
@@ -146,7 +146,7 @@ namespace os
         // used when calling the member function exercised by the following
         /// test cases. Cleared by setFunctionNameOrPrefix().
         /// \par Returns
-        ///       Nothing
+        ///     Nothing.
         void
         setInputValues(const char* pStr);
 
@@ -154,10 +154,10 @@ namespace os
         /// tested member function.
         ///
         /// \param [in] pStr a string containing the relevant preconditions
-        // used when calling the member function exercised by the following
+        /// used when calling the member function exercised by the following
         /// test cases. Cleared by setFunctionNameOrPrefix().
         /// \par Returns
-        ///       Nothing
+        ///     Nothing.
         void
         setPreconditions(const char* pStr);
 
@@ -166,7 +166,7 @@ namespace os
         /// \param [in] pMessage a string identifying the test suite, usually
         /// the compiler `__FILE__` builtin macro definition.
         /// \par Returns
-        ///       Nothing
+        ///     Nothing.
         void
         start(const char* pMessage);
 
@@ -175,7 +175,7 @@ namespace os
         /// \param [in] expression the boolean condition to be tested.
         /// \param [in] pMessage a string identifying the test case.
         /// \par Returns
-        ///       Nothing
+        ///     Nothing.
         void
         checkAndReport(bool expression, const char* pMessage);
 
@@ -190,7 +190,7 @@ namespace os
         ///
         /// \param [in] pMessage a string identifying the test case.
         /// \par Returns
-        ///       Nothing
+        ///     Nothing.
         void
         reportPassed(const char* pMessage);
 
@@ -198,7 +198,7 @@ namespace os
         ///
         /// \param [in] pMessage a string identifying the test case.
         /// \par Returns
-        ///       Nothing
+        ///     Nothing.
         void
         reportFailed(const char* pMessage);
 
@@ -206,23 +206,23 @@ namespace os
         ///
         /// \param [in] pMessage a string with the informative message.
         /// \par Returns
-        ///       Nothing
+        ///     Nothing.
         void
         reportInfo(const char* pMessage);
 
         /// \brief Report the completion of the test suite.
         ///
-        /// \param [in] pMessage a string identifying the test suite, usually
-        /// the compiler `__FILE__` builtin macro definition.
+        /// \par Parameters
+        ///     None.
         /// \par Returns
-        ///       Nothing
+        ///     Nothing.
         void
-        stop(const char* pMessage);
+        stop(void);
 
         /// \brief Compute the value to be returned by main().
         ///
         /// \par Parameters
-        /// None
+        ///     None.
         /// \retval 0 Test suite succeeded.
         /// \retval 1 Test suite failed.
         int
@@ -231,10 +231,18 @@ namespace os
         /// \brief Compute how many test cases were performed.
         ///
         /// \par Parameters
-        /// None
+        ///     None.
         /// \return The number of test cases that were performed.
         unsigned int
         getCurrentTestCaseNumber(void) const;
+
+        /// \brief Get the verbosity level.
+        ///
+        /// \par Parameters
+        ///     None.
+        /// \return The verbosity level.
+        size_t
+        getVerbosity(void) const;
 
       private:
 
@@ -256,7 +264,7 @@ namespace os
         /// \param [in] lineType a constant to specify the line prefix.
         /// \param [in] pMessage a string containing the line message.
         /// \par Returns
-        ///       Nothing
+        ///     Nothing
         void
         outputLine(OutputLineType_t lineType, const char* pMessage = nullptr);
 
@@ -266,7 +274,7 @@ namespace os
         /// \param [in] isFailure mark this test case as a failure.
         /// \param [in] pMessage a string containing the test case message.
         /// \par Returns
-        ///       Nothing
+        ///     Nothing
         void
         writeTestCaseToXmlFile(bool isFailure, const char* pMessage);
 
@@ -304,22 +312,22 @@ namespace os
 
         /// \brief Send a new line to the test output device.
         /// \par Parameters
-        ///       None
+        ///     None
         /// \par Returns
-        ///       Nothing
+        ///     Nothing
         void
         putNewLine(void);
 
         /// \brief Get the number of passed test cases.
         /// \par Parameters
-        ///       None
+        ///     None
         /// \return The accumulated number of passed test cases.
         unsigned int
         getCountPassed(void);
 
         /// \brief Get the number of failed test cases.
         /// \par Parameters
-        ///       None
+        ///     None
         /// \return The accumulated number of failed test cases.
         unsigned int
         getCountFailed(void);
@@ -334,9 +342,9 @@ namespace os
 
         /// \brief Initialise members.
         /// \par Parameters
-        ///       None
+        ///     None
         /// \par Returns
-        ///       Nothing
+        ///     Nothing
         void
         __init(void);
 
@@ -352,13 +360,15 @@ namespace os
         /// \brief The pointer to the preconditions string.
         const char* m_pPreconditions;
 
+        /// \brief The pointer to the preconditions string.
+        const char* m_pStartMessage;
+
         /// \brief The boolean status of XML output.
         bool m_isXmlOpened;
 
         /// \brief The actual platform implementation.
-        TImplementation_T m_implementation;
+        Implementation_t m_implementation;
       };
-    // class TestSuiteBase
 
 #pragma GCC diagnostic pop
 
@@ -366,24 +376,35 @@ namespace os
     // inline member functions
 
     template<class TImplementation_T>
-      inline unsigned int
+      inline
+      unsigned int
       TestSuiteBase<TImplementation_T>::getCountPassed(void)
       {
         return m_countPassed;
       }
 
     template<class TImplementation_T>
-      inline unsigned int
+      inline
+      unsigned int
       TestSuiteBase<TImplementation_T>::getCountFailed(void)
       {
         return m_countFailed;
       }
 
     template<class TImplementation_T>
-      inline unsigned int
+      inline
+      unsigned int
       TestSuiteBase<TImplementation_T>::getCurrentTestCaseNumber(void) const
       {
         return m_countPassed + m_countFailed;
+      }
+
+    template<class TImplementation_T>
+      inline
+      size_t
+      TestSuiteBase<TImplementation_T>::getVerbosity(void) const
+      {
+        return m_implementation.getVerbosity();
       }
 
     // ------------------------------------------------------------------------
