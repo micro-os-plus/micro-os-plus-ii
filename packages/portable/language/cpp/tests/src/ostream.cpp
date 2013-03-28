@@ -1298,7 +1298,7 @@ main(int argc, char* argv[])
   ts.processMainParameters(argc, argv);
 
   // mark the start of the test suite
-  ts.start(__FILE__);
+  ts.start("portable/language/cpp/tests/src/ostream.cpp");
 
   // identify the class under tests
 #ifdef OS_INCLUDE_STD_CALIBRATION
@@ -1329,7 +1329,7 @@ main(int argc, char* argv[])
   runTestInsertersCharacter();
 
   // mark the stop of the test suite
-  ts.stop(__FILE__);
+  ts.stop();
 
   int retval;
   retval = ts.getExitValue();
