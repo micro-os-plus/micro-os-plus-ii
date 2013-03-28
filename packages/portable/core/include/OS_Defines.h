@@ -67,11 +67,17 @@
 #undef OS_SKIP_NOT_YET_IMPLEMENTED
 #endif
 
+// ----------------------------------------------------------------------------
+
+#if defined(__DOXYGEN__)
+
+#define DEBUG   (1)
+
+#endif // defined(__DOXYGEN__)
+// ----------------------------------------------------------------------------
+
 // Temporary, must be moved to XCDL
 #define OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM        (1)
-#define OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS        (1)
-
-#define OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE_OSTREAM_BASE      (1)
 
 // ----------------------------------------------------------------------------
 
