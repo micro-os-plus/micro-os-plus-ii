@@ -35,7 +35,7 @@ namespace hal
       /// a static implementation is not possible,
       /// and this a regular object, embedded and constructed inside
       /// the TestSuite.
-      class TestSuiteImplementation //: public os::infra::TestSuiteImplementation
+      class TestSuiteImplementation
       {
       public:
 
@@ -61,8 +61,7 @@ namespace hal
         /// \brief Create the XML file.
         ///
         /// \par Parameters
-        ///     None
-        ///
+        ///     None.
         /// \return If successful, it returns a non-negative integer,
         /// termed a file descriptor.  It returns -1 on failure.
         int
@@ -72,7 +71,6 @@ namespace hal
         ///
         /// \param [in] cpBuf pointer to the array of bytes
         /// \param [in] numBytes the length of the array of bytes
-        ///
         /// \return Upon successful completion the number of bytes which
         ///     were written is  returned.  Otherwise, a -1 is returned.
         ssize_t
@@ -81,18 +79,18 @@ namespace hal
         /// \brief Close the XML file.
         ///
         /// \par Parameters
-        ///    None
-        ///
+        ///    None.
         /// \return  Upon successful completion, a value of 0 is returned.
         ///     Otherwise, a value of -1 is returned.
         int
         closeXmlFile(void);
 
         /// \brief Send a new line to the test output device.
+        ///
         /// \par Parameters
-        ///     None
+        ///     None.
         /// \par Returns
-        ///     Nothing
+        ///     Nothing.
         void
         putNewLine(void);
 
@@ -100,10 +98,17 @@ namespace hal
         ///
         /// \param [in] cpBuf pointer to the array of bytes
         /// \param [in] numBytes the length of the array of bytes
-        ///
         /// \return The actual number of bytes written to the output device.
         ssize_t
         putBytes(const void* cpBuf, size_t numBytes);
+
+        /// \brief Get the verbosity level.
+        ///
+        /// \par Parameters
+        ///     None.
+        /// \return The verbosity level.
+        size_t
+        getVerbosity(void) const;
 
       private:
         /// \brief The file descriptor of the output device.
@@ -115,8 +120,17 @@ namespace hal
         /// \brief The pointer to the file path
         char* m_filePath;
 
+        /// \brief The verbosity level, 0 is the lest verbose
+        size_t m_verbosity;
+
       };
-    // class TestSuiteImplementation
+
+      inline
+      size_t
+      TestSuiteImplementation::getVerbosity(void) const
+      {
+        return m_verbosity;
+      }
 
 #pragma GCC diagnostic pop
 

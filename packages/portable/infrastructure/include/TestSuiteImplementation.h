@@ -119,6 +119,14 @@ namespace os
       ssize_t
       putBytes(const void* cpBuf, size_t numBytes);
 
+      /// \brief Get the verbosity level.
+      ///
+      /// \par Parameters
+      ///     None.
+      /// \return The verbosity level.
+      size_t
+      getVerbosity(void) const;
+
     };
   // class TestSuiteImplementation
 

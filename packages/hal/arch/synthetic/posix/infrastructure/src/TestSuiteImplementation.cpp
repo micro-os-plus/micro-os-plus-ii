@@ -31,6 +31,7 @@ namespace hal
 
         m_xmlFileDescriptor = -1;
         m_filePath = nullptr;
+        m_verbosity = 0;
       }
 
       /// \details
@@ -54,7 +55,7 @@ namespace hal
       /// \details
       /// Process the command line parameters. If `-x filename` is
       /// encountered, a pointer to the given file path is stored in
-      /// m_filePath.
+      /// m_filePath. Count all occurrences of `-v` as verbosity level.
       /// If errors occur, the process is abruptly terminated.
       void
       TestSuiteImplementation::processMainParameters(int argc, char* argv[])
@@ -64,7 +65,7 @@ namespace hal
 
         char* filePath = nullptr;
 
-        while ((c = getopt(argc, argv, "x:")) != -1)
+        while ((c = getopt(argc, argv, "vx:")) != -1)
           {
             switch (c)
               {
@@ -72,9 +73,14 @@ namespace hal
               // TODO: copy string, do not use the environment variable
               filePath = optarg;
               break;
+
+            case 'v':
+              m_verbosity++; // count the verbosity level
+              break;
+
             case '?':
               if (optopt == 'x')
-                std::cerr << "Option '-" << (char) optopt
+                std::cerr << "Option '-x"
                     << "' requires an argument." << std::endl;
               else if (isprint(optopt))
                 std::cerr << "Unknown option '-" << (char) optopt << "'."
@@ -82,7 +88,9 @@ namespace hal
               else
                 std::cerr << "Unknown option character '\\x" << std::hex
                     << optopt << "'." << std::endl;
+
               exit(1);
+
             default:
               abort();
               }
