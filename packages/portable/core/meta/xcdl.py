@@ -16,12 +16,16 @@ Package(
     children=[
         Option(
             id='option.os.portable.core.debug',
-            name='The main debug swich',
+            name='The main debug switch',
             description='Should be enabled for the debug output to be active.',
             
             isEnabled=False,
             
             headerDefinition='DEBUG',
+            
+            requirements=[
+                'enable("component.os.portable.diagnostics.trace")',
+            ],
         ),
               
         Option(
