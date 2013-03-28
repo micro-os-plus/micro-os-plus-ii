@@ -6,8 +6,6 @@
 
 #include "portable/core/include/OS_Defines.h"
 
-#include "portable/devices/debug/include/Debug.h"
-
 #include "portable/diagnostics/include/Trace.h"
 #include "portable/core/include/Greeting.h"
 
@@ -66,14 +64,17 @@ namespace os
 
       // TODO: add clock init
 
+#if defined(DEBUG)
       // initialise the trace device
       os::diag::Trace::earlyInitialise();
-
+#endif
     }
   }
 }
 
 // ----------------------------------------------------------------------------
+
+#if defined(DEBUG)
 
 #pragma GCC diagnostic push
 //#pragma GCC diagnostic ignored "-Wunknown-pragmas"
@@ -90,7 +91,11 @@ static os::core::EarlyInitialisations earlyInitialisations;
 
 #pragma GCC diagnostic pop
 
+#endif
+
 // ----------------------------------------------------------------------------
+
+#if defined(DEBUG)
 
 namespace os
 {
@@ -113,7 +118,11 @@ namespace os
   } // namespace diag
 } // namspace os
 
+#endif
+
 // ----------------------------------------------------------------------------
+
+#if defined(DEBUG)
 
 namespace os
 {
@@ -145,13 +154,16 @@ namespace os
       os::diag::trace.putString(os::osGreeting);
       os::diag::trace.putNewLine();
       os::diag::trace.putNewLine();
-
       // TODO: continue with platform and architecture greetings
     }
   }
 }
 
+#endif
+
 // ----------------------------------------------------------------------------
+
+#if defined(DEBUG)
 
 #pragma GCC diagnostic push
 //#pragma GCC diagnostic ignored "-Wunknown-pragmas"
@@ -167,6 +179,8 @@ namespace os
 static os::core::EarlyGreetings earlyGreetings;
 
 #pragma GCC diagnostic pop
+
+#endif
 
 // ----------------------------------------------------------------------------
 

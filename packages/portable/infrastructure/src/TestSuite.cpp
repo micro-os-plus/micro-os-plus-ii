@@ -543,18 +543,24 @@ namespace os
 
     TestSuite::TestSuite()
     {
+#if defined(DEBUG)
       os::diag::trace.putConstructor();
+#endif
     }
 
     TestSuite::TestSuite(int argc, char* argv[])
         : TestSuiteBase_t(argc, argv)
     {
+#if defined(DEBUG)
       os::diag::trace.putConstructor();
+#endif
     }
 
     TestSuite::~TestSuite()
     {
+#if defined(DEBUG)
       os::diag::trace.putDestructor();
+#endif
     }
 
   // ========================================================================

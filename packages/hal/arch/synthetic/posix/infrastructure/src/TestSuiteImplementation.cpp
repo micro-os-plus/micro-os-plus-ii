@@ -25,7 +25,9 @@ namespace hal
       /// Initialise the object without XML output.
       TestSuiteImplementation::TestSuiteImplementation()
       {
+#if defined(DEBUG)
         os::diag::trace.putConstructor();
+#endif
 
         m_xmlFileDescriptor = -1;
         m_filePath = nullptr;
@@ -35,14 +37,18 @@ namespace hal
       /// Process the command line parameters using `processMainParameters()`.
       TestSuiteImplementation::TestSuiteImplementation(int argc, char* argv[])
       {
+#if defined(DEBUG)
         os::diag::trace.putConstructor();
+#endif
 
         processMainParameters(argc, argv);
       }
 
       TestSuiteImplementation::~TestSuiteImplementation()
       {
+#if defined(DEBUG)
         os::diag::trace.putDestructor();
+#endif
       }
 
       /// \details

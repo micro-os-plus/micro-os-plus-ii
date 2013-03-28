@@ -86,22 +86,6 @@ namespace os
 
       };
 
-    // ------------------------------------------------------------------------
-
-#pragma GCC diagnostic push
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wpadded"
-#pragma clang diagnostic ignored "-Wweak-template-vtables"
-#endif
-
-    // Declare the template instantiation
-    extern template class TraceStreambufBase<TraceImplementation_t> ;
-
-#pragma GCC diagnostic pop
-
-    // Define a type to the TraceStreambufBase class
-    typedef TraceStreambufBase<TraceImplementation_t> TraceStreambuf_t;
-
     // ========================================================================
 
     /// \class TraceOstreamBase Trace.h "portable/diagnostics/include/Trace.h"
@@ -157,23 +141,6 @@ namespace os
 
       };
 
-    // ------------------------------------------------------------------------
-
-#pragma GCC diagnostic push
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wpadded"
-#pragma clang diagnostic ignored "-Wweak-template-vtables"
-#endif
-
-    // Declare the template instantiation
-    extern template class TraceOstreamBase<TraceStreambuf_t,
-        TraceImplementation_t> ;
-
-#pragma GCC diagnostic pop
-
-    // Define a type to the TraceOstreamBase class
-    typedef TraceOstreamBase<TraceStreambuf_t, TraceImplementation_t> TraceOstreamBase_t;
-
     // ========================================================================
 
     /// \class TraceLightBase Trace.h "portable/diagnostics/include/Trace.h"
@@ -226,14 +193,6 @@ namespace os
           Implementation_t& implementation __attribute__((unused)))
       {
       }
-
-    // ------------------------------------------------------------------------
-
-    // Declare the template instantiation
-    extern template class TraceLightBase<TraceImplementation_t> ;
-
-    typedef TraceLightBase<TraceImplementation_t> TraceLightBase_t;
-
 
     // ========================================================================
 
@@ -467,8 +426,7 @@ namespace os
     // inlines
 
     template<class TBase_T, class TImplementation_T>
-      inline
-      typename TraceBase<TBase_T, TImplementation_T>::Implementation_t&
+      inline typename TraceBase<TBase_T, TImplementation_T>::Implementation_t&
       TraceBase<TBase_T, TImplementation_T>::getImplementation(void)
       {
         return m_implementation;
@@ -515,6 +473,11 @@ namespace os
         putString(reinterpret_cast<const char*>(pStr));
       }
 
+// ============================================================================
+
+#if defined(DEBUG)
+
+// ----------------------------------------------------------------------------
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -522,19 +485,65 @@ namespace os
 #pragma clang diagnostic ignored "-Wweak-template-vtables"
 #endif
 
-    // Declare the template instantiation
-    extern template class TraceBase<TraceOstreamBase_t, TraceImplementation_t> ;
-    extern template class TraceBase<TraceLightBase_t, TraceImplementation_t> ;
+  // Declare the template instantiation
+  extern template class TraceStreambufBase<TraceImplementation_t>;
+
+#pragma GCC diagnostic pop
+
+  // Define a type to the TraceStreambufBase class
+  typedef TraceStreambufBase<TraceImplementation_t> TraceStreambuf_t;
+
+// ----------------------------------------------------------------------------
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#pragma clang diagnostic ignored "-Wweak-template-vtables"
+#endif
+
+  // Declare the template instantiation
+  extern template class TraceOstreamBase<TraceStreambuf_t,
+  TraceImplementation_t>;
+
+#pragma GCC diagnostic pop
+
+  // Define a type to the TraceOstreamBase class
+  typedef TraceOstreamBase<TraceStreambuf_t, TraceImplementation_t> TraceOstreamBase_t;
+
+// ----------------------------------------------------------------------------
+
+  // Declare the template instantiation
+  extern template class TraceLightBase<TraceImplementation_t>;
+
+  typedef TraceLightBase<TraceImplementation_t> TraceLightBase_t;
+
+// ----------------------------------------------------------------------------
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#pragma clang diagnostic ignored "-Wweak-template-vtables"
+#endif
+
+  // Declare the template instantiation
+  extern template class TraceBase<TraceOstreamBase_t, TraceImplementation_t>;
+  extern template class TraceBase<TraceLightBase_t, TraceImplementation_t>;
 
 #pragma GCC diagnostic pop
 
 #if defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE_OSTREAM_BASE)
-    typedef TraceBase<TraceOstreamBase_t, TraceImplementation_t> TraceBase_t;
+  typedef TraceBase<TraceOstreamBase_t, TraceImplementation_t> TraceBase_t;
 #else
-    typedef TraceBase<TraceLightBase_t, TraceImplementation_t> TraceBase_t;
+  typedef TraceBase<TraceLightBase_t, TraceImplementation_t> TraceBase_t;
 #endif
 
-    // ========================================================================
+// ----------------------------------------------------------------------------
+
+#endif
+
+// ============================================================================
+
+#if defined(DEBUG)
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -542,17 +551,17 @@ namespace os
 //#pragma clang diagnostic ignored "-Wweak-vtables"
 #endif
 
-    /// \class Trace Trace.h "portable/diagnostics/include/Trace.h"
-    /// \ingroup diag
-    /// \nosubgrouping
-    ///
-    /// \brief Diagnostics Trace output class.
-    ///
-    /// Basically a TraceBase with early initialisations.
-    ///
-    /// \warning Do not manually create further instances of this class!
-    /// If you need this for testing, use the base classes.
-    class Trace : public TraceBase_t
+  /// \class Trace Trace.h "portable/diagnostics/include/Trace.h"
+  /// \ingroup diag
+  /// \nosubgrouping
+  ///
+  /// \brief Diagnostics Trace output class.
+  ///
+  /// Basically a TraceBase with early initialisations.
+  ///
+  /// \warning Do not manually create further instances of this class!
+  /// If you need this for testing, use the base classes.
+  class Trace : public TraceBase_t
     {
     public:
 
@@ -575,25 +584,28 @@ namespace os
 
 #pragma GCC diagnostic pop
 
-    /// \details
-    /// Call the implementation early initialisations.
-    inline
-    void
-    Trace::earlyInitialise(void)
+  /// \details
+  /// Call the implementation early initialisations.
+  inline
+  void
+  Trace::earlyInitialise(void)
     {
       Implementation_t::earlyInitialise();
     }
 
-    // ------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
-    // declare the trace object.
-    // it is statically instantiated in EarlyInitialisations.cpp
-    extern Trace trace;
+  // declare the trace object.
+  // it is statically instantiated in EarlyInitialisations.cpp
+  extern Trace trace;
 
-  // ========================================================================
+#endif
 
-  }// namespace diag
-} // namespace os
+// ============================================================================
+
+}
+ // namespace diag
+}// namespace os
 
 #endif // defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE)
 #endif // OS_PORTABLE_DIAGNOSTICS_TRACE_H_
