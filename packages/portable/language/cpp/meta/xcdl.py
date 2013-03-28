@@ -15,7 +15,8 @@ Package(
             id='component.os.portable.language.cpp.streams',
             name='C++ language streams support',
             description='Support for C++ streams.',
-                                  
+            
+            isEnabled=False,                      
             sourceFiles=[
                 'ios.cpp',
                 'streambuf.cpp',
