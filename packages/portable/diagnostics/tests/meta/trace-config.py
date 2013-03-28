@@ -12,7 +12,7 @@ Configuration(
     description='Test the diagnostics trace specific classes.',
     
     loadPackages=[
-        # mandatory test code package;
+        # mandatory test code package
         'package.os.portable.diagnostics.tests',
         
         # the minimal template
