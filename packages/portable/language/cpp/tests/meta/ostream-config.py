@@ -17,17 +17,25 @@ Configuration(
         
         # the minimal template
         'package.os.templates.minimal',
-        
     ],
     
     requirements=[
         'setValue("APP_STRING_APPLICATION_NAME", "UnitTest: C++ ostream")',        
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
+        
+        # enable the test suite code
+        'enable("component.os.portable.infrastructure.testsuite")',
+
+        # enable component under test
+        'enable("component.os.portable.language.cpp.streams")',
+        
+        # enable test artefact
         'enable("component.os.portable.language.cpp.tests.ostream")',
     ],
                   
     children=[
  
+        # configuration specific for platform osx
         Configuration(
               
             id='config.os.portable.language.cpp.tests.ostream.osx',
@@ -36,11 +44,11 @@ Configuration(
             
             loadPackages=[
                 # mandatory platform requirement
-                'package.os.hal.platforms.synthetic.osx.cl-sjlj',
+                'package.os.hal.platforms.synthetic.osx',
             ],
                       
             requirements=[
-                'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
+                'enable("package.os.hal.platforms.synthetic.osx")',
             ],
                       
             buildFolder='osx/ostream',
