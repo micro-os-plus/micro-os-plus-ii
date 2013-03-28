@@ -17,8 +17,6 @@ Configuration(
         
         # the minimal template
         'package.os.templates.minimal',
-        
-        'package.os.portable.language.cpp',
     ],
     
     requirements=[
@@ -27,6 +25,9 @@ Configuration(
         
         'enable("component.os.portable.language.cpp.streams")',
         
+        # enable the test suite code
+        'enable("component.os.portable.infrastructure.testsuite")',
+                
         # enable test artefact
         'enable("component.os.portable.diagnostics.tests.trace")',
     ],
@@ -41,15 +42,13 @@ Configuration(
             
             loadPackages=[
                 # mandatory platform requirement
-                #'package.os.hal.platforms.synthetic.osx.cl-sjlj',
                 'package.os.hal.platforms.synthetic.osx',
             ],
                       
             requirements=[
-                #'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
-                'enable("component.os.portable.infrastructure.testsuite")',
+                # enable the platform    
                 'enable("package.os.hal.platforms.synthetic.osx")',                
-        ],
+            ],
                       
             buildFolder='osx/trace',
             
