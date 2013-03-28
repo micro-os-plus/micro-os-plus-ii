@@ -79,8 +79,10 @@ namespace os
 #pragma GCC diagnostic push
 //#pragma GCC diagnostic ignored "-Wunknown-pragmas"
 //#pragma GCC diagnostic ignored "-Wpragmas"
+#if defined(__clang__)
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
+#endif
 
 /// \brief Single static instance of the EarlyInitialisations class.
 ///
@@ -168,8 +170,10 @@ namespace os
 #pragma GCC diagnostic push
 //#pragma GCC diagnostic ignored "-Wunknown-pragmas"
 //#pragma GCC diagnostic ignored "-Wpragmas"
+#if defined(__clang__)
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
+#endif
 
 /// \brief Single static instance of the EarlyInitialisation class.
 ///
