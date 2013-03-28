@@ -66,8 +66,9 @@ TraceImplementationCharArray::write(const void* pBuf, size_t numBytes)
     }
   else
     {
-      os::diag::trace << "overflow" << os::std::endl;
-
+#if defined(DEBUG)
+      os::diag::trace << "--- overflow ---" << os::std::endl;
+#endif
       return -1;
     }
 }
@@ -576,8 +577,22 @@ runTestHex()
 
       ts.assertCondition(ti.array[0] == ti.getDefaultChar());
 
-#if __SIZEOF_POINTER__ == 8
-      void* ptr = (void*)0x123456789ABCDEF0L;
+#if __SIZEOF_POINTER__ == 4
+      void* ptr = (void*)0x12345678;
+      t.putHex(ptr);
+
+      ts.assertCondition(ti.count == 8);
+      ts.assertCondition(ti.array[0] == '1');
+      ts.assertCondition(ti.array[1] == '2');
+      ts.assertCondition(ti.array[2] == '3');
+      ts.assertCondition(ti.array[3] == '4');
+      ts.assertCondition(ti.array[4] == '5');
+      ts.assertCondition(ti.array[5] == '6');
+      ts.assertCondition(ti.array[6] == '7');
+      ts.assertCondition(ti.array[7] == '8');
+      ts.assertCondition(ti.array[16] == ti.getDefaultChar());
+#elif __SIZEOF_POINTER__ == 8
+      void* ptr = (void*) 0x123456789ABCDEF0L;
       t.putHex(ptr);
 
       ts.assertCondition(ti.count == 16);
@@ -686,7 +701,26 @@ runTestDec()
       ts.reportInfo("long");
       ts.setFunctionNameOrPrefix("putDec(long n)");
 
-#if __SIZEOF_LONG__ == 8
+#if __SIZEOF_LONG__ == 4
+      ts.setInputValues("123456789");
+
+      ts.assertCondition(ti.array[0] == ti.getDefaultChar());
+
+      long sn = 123456789;
+      t.putDec(sn);
+
+      ts.assertCondition(ti.count == 9);
+      ts.assertCondition(ti.array[0] == '1');
+      ts.assertCondition(ti.array[1] == '2');
+      ts.assertCondition(ti.array[2] == '3');
+      ts.assertCondition(ti.array[3] == '4');
+      ts.assertCondition(ti.array[4] == '5');
+      ts.assertCondition(ti.array[5] == '6');
+      ts.assertCondition(ti.array[6] == '7');
+      ts.assertCondition(ti.array[7] == '8');
+      ts.assertCondition(ti.array[8] == '9');
+      ts.assertCondition(ti.array[9] == ti.getDefaultChar());
+#elif __SIZEOF_LONG__ == 8
       ts.setInputValues("1234567890123456789");
 
       ts.assertCondition(ti.array[0] == ti.getDefaultChar());
@@ -727,7 +761,27 @@ runTestDec()
       ts.reportInfo("long");
       ts.setFunctionNameOrPrefix("putDec(long n)");
 
-#if __SIZEOF_LONG__ == 8
+#if __SIZEOF_LONG__ == 4
+      ts.setInputValues("-123456789");
+
+      ts.assertCondition(ti.array[0] == ti.getDefaultChar());
+
+      long sn = -123456789;
+      t.putDec(sn);
+
+      ts.assertCondition(ti.count == 10);
+      ts.assertCondition(ti.array[0] == '-');
+      ts.assertCondition(ti.array[1] == '1');
+      ts.assertCondition(ti.array[2] == '2');
+      ts.assertCondition(ti.array[3] == '3');
+      ts.assertCondition(ti.array[4] == '4');
+      ts.assertCondition(ti.array[5] == '5');
+      ts.assertCondition(ti.array[6] == '6');
+      ts.assertCondition(ti.array[7] == '7');
+      ts.assertCondition(ti.array[8] == '8');
+      ts.assertCondition(ti.array[9] == '9');
+      ts.assertCondition(ti.array[10] == ti.getDefaultChar());
+#elif __SIZEOF_LONG__ == 8
       ts.setInputValues("-1234567890123456789");
 
       ts.assertCondition(ti.array[0] == ti.getDefaultChar());
@@ -773,64 +827,64 @@ runTestNameAndAddress()
 {
   ts.reportInfo("name and address");
 
-  {
-    TraceBaseCharArray_t t;
-    TraceImplementationCharArray_t& ti = t.getImplementation();
+    {
+      TraceBaseCharArray_t t;
+      TraceImplementationCharArray_t& ti = t.getImplementation();
 
-    ts.reportInfo("putNameAndAddress");
-    ts.setFunctionNameOrPrefix("putNameAndAddress()");
+      ts.reportInfo("putNameAndAddress");
+      ts.setFunctionNameOrPrefix("putNameAndAddress()");
 
-    const char* s = "abc";
-    void* ptr = (void*)0x1234;
+      const char* s = "abc";
+      void* ptr = (void*) 0x1234;
 
-    ts.assertCondition(ti.array[0] == ti.getDefaultChar());
+      ts.assertCondition(ti.array[0] == ti.getDefaultChar());
 
-    t.putNameAndAddress(s, ptr);
+      t.putNameAndAddress(s, ptr);
 
 #if __SIZEOF_POINTER__ == 4
-    ts.assertCondition(ti.count == 13);
-    ts.assertCondition(ti.array[0] == 'a');
-    ts.assertCondition(ti.array[1] == 'b');
-    ts.assertCondition(ti.array[2] == 'c');
-    ts.assertCondition(ti.array[3] == ' ');
-    ts.assertCondition(ti.array[4] == '@');
-    ts.assertCondition(ti.array[5] == '0');
-    ts.assertCondition(ti.array[6] == '0');
-    ts.assertCondition(ti.array[7] == '0');
-    ts.assertCondition(ti.array[8] == '0');
-    ts.assertCondition(ti.array[9] == '1');
-    ts.assertCondition(ti.array[10] == '2');
-    ts.assertCondition(ti.array[11] == '3');
-    ts.assertCondition(ti.array[12] == '4');
-    ts.assertCondition(ti.array[13] == ti.getDefaultChar());
+      ts.assertCondition(ti.count == 13);
+      ts.assertCondition(ti.array[0] == 'a');
+      ts.assertCondition(ti.array[1] == 'b');
+      ts.assertCondition(ti.array[2] == 'c');
+      ts.assertCondition(ti.array[3] == ' ');
+      ts.assertCondition(ti.array[4] == '@');
+      ts.assertCondition(ti.array[5] == '0');
+      ts.assertCondition(ti.array[6] == '0');
+      ts.assertCondition(ti.array[7] == '0');
+      ts.assertCondition(ti.array[8] == '0');
+      ts.assertCondition(ti.array[9] == '1');
+      ts.assertCondition(ti.array[10] == '2');
+      ts.assertCondition(ti.array[11] == '3');
+      ts.assertCondition(ti.array[12] == '4');
+      ts.assertCondition(ti.array[13] == ti.getDefaultChar());
 #elif __SIZEOF_POINTER__ == 8
-    ts.assertCondition(ti.count == 17);
-    ts.assertCondition(ti.array[0] == 'a');
-    ts.assertCondition(ti.array[1] == 'b');
-    ts.assertCondition(ti.array[2] == 'c');
-    ts.assertCondition(ti.array[3] == ' ');
-    ts.assertCondition(ti.array[4] == '@');
-    ts.assertCondition(ti.array[5] == '0');
-    ts.assertCondition(ti.array[6] == '0');
-    ts.assertCondition(ti.array[7] == '0');
-    ts.assertCondition(ti.array[8] == '0');
-    ts.assertCondition(ti.array[9] == '0');
-    ts.assertCondition(ti.array[10] == '0');
-    ts.assertCondition(ti.array[11] == '0');
-    ts.assertCondition(ti.array[12] == '0');
-    ts.assertCondition(ti.array[13] == '0');
-    ts.assertCondition(ti.array[14] == '0');
-    ts.assertCondition(ti.array[15] == '0');
-    ts.assertCondition(ti.array[16] == '0');
-    ts.assertCondition(ti.array[17] == '1');
-    ts.assertCondition(ti.array[18] == '2');
-    ts.assertCondition(ti.array[19] == '3');
-    ts.assertCondition(ti.array[20] == '4');
-    ts.assertCondition(ti.array[21] == ti.getDefaultChar());
+      ts.assertCondition(ti.count == 17);
+      ts.assertCondition(ti.array[0] == 'a');
+      ts.assertCondition(ti.array[1] == 'b');
+      ts.assertCondition(ti.array[2] == 'c');
+      ts.assertCondition(ti.array[3] == ' ');
+      ts.assertCondition(ti.array[4] == '@');
+      ts.assertCondition(ti.array[5] == '0');
+      ts.assertCondition(ti.array[6] == '0');
+      ts.assertCondition(ti.array[7] == '0');
+      ts.assertCondition(ti.array[8] == '0');
+      ts.assertCondition(ti.array[9] == '0');
+      ts.assertCondition(ti.array[10] == '0');
+      ts.assertCondition(ti.array[11] == '0');
+      ts.assertCondition(ti.array[12] == '0');
+      ts.assertCondition(ti.array[13] == '0');
+      ts.assertCondition(ti.array[14] == '0');
+      ts.assertCondition(ti.array[15] == '0');
+      ts.assertCondition(ti.array[16] == '0');
+      ts.assertCondition(ti.array[17] == '1');
+      ts.assertCondition(ti.array[18] == '2');
+      ts.assertCondition(ti.array[19] == '3');
+      ts.assertCondition(ti.array[20] == '4');
+      ts.assertCondition(ti.array[21] == ti.getDefaultChar());
 #else
 #error "unsupported sizeof pointer"
 #endif
-  }
+    }
 
 }
 
@@ -843,7 +897,7 @@ main(int argc, char* argv[])
   ts.processMainParameters(argc, argv);
 
   // mark the start of the test suite
-  ts.start(__FILE__);
+  ts.start("portable/diagnostics/tests/src/trace.cpp");
 
   // identify the class unter tests
   ts.setClassName("os::diag::TraceBase");
@@ -861,19 +915,14 @@ main(int argc, char* argv[])
   runTestDec();
 
   // mark the stop of the test suite
-  ts.stop(__FILE__);
+  ts.stop();
 
   int retval;
   retval = ts.getExitValue();
 
-#if defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE_OSTREAM_BASE)
+#if defined(DEBUG)
   os::diag::trace << __PRETTY_FUNCTION__ << " returns " << retval
       << os::std::endl;
-#else
-  os::diag::trace.putString(__PRETTY_FUNCTION__);
-  os::diag::trace.putString(" returns ");
-  os::diag::trace.putDec(retval);
-  os::diag::trace.putNewLine();
 #endif
 
   // return 0 if there are no failed test cases
