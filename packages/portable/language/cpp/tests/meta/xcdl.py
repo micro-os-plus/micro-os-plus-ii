@@ -27,6 +27,11 @@ Package(
             includeFiles=[
                 'streambuf-config.py',
             ],
+                  
+            implements=[
+                'interface.os.artefact',
+            ],
+
         ),
 
         Component(
@@ -43,6 +48,10 @@ Package(
                   
             includeFiles=[
                 'fpos-config.py',
+            ],
+
+            implements=[
+                'interface.os.artefact',
             ],
         ),
 
@@ -61,6 +70,10 @@ Package(
             includeFiles=[
                 'ios_base-config.py',
             ],
+
+            implements=[
+                'interface.os.artefact',
+            ],
         ),
 
         Component(
@@ -77,6 +90,10 @@ Package(
                   
             includeFiles=[
                 'basic_ios-config.py',
+            ],
+
+            implements=[
+                'interface.os.artefact',
             ],
         ),
 
@@ -95,6 +112,10 @@ Package(
             includeFiles=[
                 'ostream-config.py',
             ],
+
+            implements=[
+                'interface.os.artefact',
+            ],
         ),
 
         Component(
@@ -111,6 +132,10 @@ Package(
                   
             includeFiles=[
                 'ostreamConversions-config.py',
+            ],
+
+            implements=[
+                'interface.os.artefact',
             ],
         ),
               
