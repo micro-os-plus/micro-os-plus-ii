@@ -13,7 +13,7 @@ Package(
         Component(
             id='component.os.portable.diagnostics.trace',
             name='Diagnostics trace support',
-            description='Support for trace output',
+            description='Support for trace output.',
                   
             requirements=[
                 # for the greeting strings
@@ -34,6 +34,17 @@ Package(
                     id='interface.os.portable.diagnostics.trace',
                     name='Diagnostics trace output interface',
                     description='Platform implementation for the diagnostics trace output.',
+                ),
+                      
+                Option(
+                    id='option.os.portable.diagnostics.trace.ostream',
+                    name='Diagnostics trace ostream support',
+                    description='Add ostream support to the Trace class.',
+                       
+                    # Disable it if not needed
+                    isEnabled=True,
+                    
+                    headerDefinition='OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE_OSTREAM_BASE',
                 ),
             ],
         ),
