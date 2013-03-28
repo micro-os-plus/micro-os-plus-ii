@@ -238,7 +238,6 @@ Configuration(
                     
                     toolchain='toolchain.osx.release.mp.gcc46.x32',                    
                 ),
-
             ],
         ),
     ],

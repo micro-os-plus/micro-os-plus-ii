@@ -16,18 +16,26 @@ Configuration(
         'package.os.portable.language.cpp.tests',
         
         # the minimal template
-        'package.os.templates.minimal',
-        
+        'package.os.templates.minimal',        
     ],
     
     requirements=[
         'setValue("APP_STRING_APPLICATION_NAME", "UnitTest: C++ ios_base")',        
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
+        
+        # enable the test suite code
+        'enable("component.os.portable.infrastructure.testsuite")',
+
+        # enable component under test
+        'enable("component.os.portable.language.cpp.streams")',
+        
+        # enable test artefact
         'enable("component.os.portable.language.cpp.tests.ios_base")',
     ],
                   
     children=[
  
+        # configuration specific for platform osx
         Configuration(
               
             id='config.os.portable.language.cpp.tests.ios_base.osx',
@@ -36,11 +44,11 @@ Configuration(
             
             loadPackages=[
                 # mandatory platform requirement
-                'package.os.hal.platforms.synthetic.osx.cl-sjlj',
+                'package.os.hal.platforms.synthetic.osx',
             ],
                       
             requirements=[
-                'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
+                'enable("package.os.hal.platforms.synthetic.osx")',
             ],
                       
             buildFolder='osx/ios_base',
@@ -49,7 +57,7 @@ Configuration(
             
             children=[
                  
-                # LLVM x64           
+                # LLVM x64   
                 Configuration(
                     id='config.os.portable.language.cpp.tests.ios_base.osx.x64.llvm.debug',
                     name='Debug OS X C++ ios_base configuration with x86_64 LLVM',
@@ -78,6 +86,35 @@ Configuration(
                     toolchain='toolchain.osx.release.llvm.x64',
                 ),
 
+                # LLVM x32   
+                Configuration(
+                    id='config.os.portable.language.cpp.tests.ios_base.osx.x32.llvm.debug',
+                    name='Debug OS X C++ ios_base configuration with i386 LLVM',
+                    description='Debug build configuration for ios_base.',
+                    
+                    buildConfigurationName='osx_ios_base_x32_llvm_Debug',
+                    
+                    buildFolder='$(PARENT)/x32/llvm/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.osx.debug.llvm.x32',
+                ),
+
+                Configuration(
+                    id='config.os.portable.language.cpp.tests.ios_base.osx.x32.llvm.release',
+                    name='Release OS X C++ ios_base configuration with i386 LLVM',
+                    description='Release build configuration for ios_base.',
+                    
+                    buildConfigurationName='osx_ios_base_x32_llvm_Release',
+                    
+                    buildFolder='$(PARENT)/x32/llvm/Release',
+                                          
+                    toolchain='toolchain.osx.release.llvm.x32',
+                ),
+
                 # GCC 4.7 x64
                 Configuration(
                     id='config.os.portable.language.cpp.tests.ios_base.osx.x64.gcc47.debug',
@@ -94,7 +131,23 @@ Configuration(
                       
                     toolchain='toolchain.osx.debug.mp.gcc47.x64',                    
                 ),
+
+                Configuration(
+                    id='config.os.portable.language.cpp.tests.ios_base.osx.x64.gcc47.release',
+                    name='Release OS X C++ ios_base configuration with x86_64 GCC 4.7',
+                    description='Release build configuration for ios_base.',
+                    
+                    buildConfigurationName='osx_ios_base_x64_gcc47_Release',
+                    
+                    buildFolder='$(PARENT)/x64/gcc47/Release',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
                       
+                    toolchain='toolchain.osx.release.mp.gcc47.x64',                    
+                ),
+
                 # GCC 4.7 x32
                 Configuration(
                     id='config.os.portable.language.cpp.tests.ios_base.osx.x32.gcc47.debug',
@@ -110,6 +163,51 @@ Configuration(
                     ],
                       
                     toolchain='toolchain.osx.debug.mp.gcc47.x32',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.language.cpp.tests.ios_base.osx.x32.gcc47.release',
+                    name='Release OS X C++ ios_base configuration with i386 GCC 4.7',
+                    description='Release build configuration for ios_base.',
+                    
+                    buildConfigurationName='osx_ios_base_x32_gcc47_Release',
+                    
+                    buildFolder='$(PARENT)/x32/gcc47/Release',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.osx.release.mp.gcc47.x32',                    
+                ),
+                  
+                # GCC 4.6 x64   
+                Configuration(
+                    id='config.os.portable.language.cpp.tests.ios_base.osx.x64.gcc46.debug',
+                    name='Debug OS X C++ ios_base configuration with x86_64 GCC 4.6',
+                    description='Debug build configuration for ios_base.',
+                    
+                    buildConfigurationName='osx_ios_base_x64_gcc46_Debug',
+                    
+                    buildFolder='$(PARENT)/x64/gcc46/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.osx.debug.mp.gcc46.x64',                    
+                ),
+                      
+                Configuration(
+                    id='config.os.portable.language.cpp.tests.ios_base.osx.x64.gcc46.release',
+                    name='Release OS X C++ ios_base configuration with x86_64 GCC 4.6',
+                    description='Release build configuration for ios_base.',
+                    
+                    buildConfigurationName='osx_ios_base_x64_gcc46_Release',
+                    
+                    buildFolder='$(PARENT)/x64/gcc46/Release',
+                                          
+                    toolchain='toolchain.osx.release.mp.gcc46.x64',                    
                 ),
 
                 # GCC 4.6 x32
@@ -128,7 +226,18 @@ Configuration(
                       
                     toolchain='toolchain.osx.debug.mp.gcc46.x32',                    
                 ),
-
+                      
+                Configuration(
+                    id='config.os.portable.language.cpp.tests.ios_base.osx.x32.gcc46.release',
+                    name='Release OS X C++ ios_base configuration with i386 GCC 4.6',
+                    description='Release build configuration for ios_base.',
+                    
+                    buildConfigurationName='osx_ios_base_x32_gcc46_Release',
+                    
+                    buildFolder='$(PARENT)/x32/gcc46/Release',
+                    
+                    toolchain='toolchain.osx.release.mp.gcc46.x32',                    
+                ),
             ],
         ),
     ],

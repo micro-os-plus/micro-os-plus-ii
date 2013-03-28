@@ -230,7 +230,12 @@ runTestStreamsize()
   ts.reportInfo("Test streamsize()");
     {
       streamoff o(5);
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#endif
       streamsize sz(o);
+#pragma GCC diagnostic pop
 
       ts.setFunctionNameOrPrefix("streamsize()");
       ts.assertCondition(sz == 5);
@@ -248,7 +253,7 @@ main(int argc, char* argv[])
   ts.processMainParameters(argc, argv);
 
   // mark the start of the test suite
-  ts.start(__FILE__);
+  ts.start("portable/language/cpp/tests/src/fpos.cpp");
 
   // identify the class under tests
 #ifdef OS_INCLUDE_STD_CALIBRATION
@@ -273,15 +278,15 @@ main(int argc, char* argv[])
   runTestStreamsize();
 
   // mark the stop of the test suite
-  ts.stop(__FILE__);
+  ts.stop();
 
   int retval;
   retval = ts.getExitValue();
 
-  debug.putString(__PRETTY_FUNCTION__);
-  debug.putString(" returns ");
-  debug.putDec(retval);
-  debug.putNewLine();
+#if defined(DEBUG)
+  os::diag::trace << __PRETTY_FUNCTION__ << " returns " << os::std::dec
+      << retval << os::std::endl;
+#endif
 
   // return 0 if there are no failed test cases
   return retval;
