@@ -20,7 +20,7 @@ Toolchain(
     compilerOutputOptions='-o "$@"',
     compilerInputOptions='"$<"',
     
-    compilerWarningOptions='-Wall -Wextra',
+    compilerWarningOptions='-Wall -Wextra -Werror',
     compilerMiscOptions='-fsigned-char -fmessage-length=0 -c -ffunction-sections -fdata-sections',
     compilerPreprocessorOptions='-D__MICRO_OS_PLUS_PLUS__=1',
 
@@ -173,7 +173,7 @@ Toolchain(
                     programNameSuffix='-mp-4.6',
                     
                     # to keep gdb happy, disable optimisations
-                    compilerOptimisationOptions='-O0',
+                    compilerOptimisationOptions='-Os',
                     
                     cpp=Tool(
                         # 4.6 is too old for -std=c++11
@@ -214,7 +214,7 @@ Toolchain(
                     programNameSuffix='-mp-4.7',
                     
                     # to keep gdb happy, disable optimisations
-                    compilerOptimisationOptions='-O0',
+                    compilerOptimisationOptions='-Os',
                     
                     children=[
                               
