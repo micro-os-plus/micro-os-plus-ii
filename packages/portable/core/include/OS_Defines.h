@@ -69,13 +69,6 @@
 
 // ----------------------------------------------------------------------------
 
-#if defined(__DOXYGEN__)
-
-#define DEBUG   (1)
-
-#endif // defined(__DOXYGEN__)
-// ----------------------------------------------------------------------------
-
 // Temporary, must be moved to XCDL
 #define OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM        (1)
 
