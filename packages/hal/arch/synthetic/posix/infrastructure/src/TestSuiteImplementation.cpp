@@ -148,7 +148,10 @@ namespace hal
       TestSuiteImplementation::putNewLine(void)
       {
         // on POSIX, the new line is a single character
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
         ::write(OUTPUT_DEVICE_FILE_DESCRIPTOR, "\n", 1);
+#pragma GCC diagnostic pop
         return;
       }
 
