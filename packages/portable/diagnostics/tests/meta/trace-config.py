@@ -34,6 +34,7 @@ Configuration(
                   
     children=[
  
+        # configuration specific for platform osx
         Configuration(
               
             id='config.os.portable.diagnostics.tests.trace.osx',
@@ -240,5 +241,90 @@ Configuration(
 
             ],
         ),
+              
+        # configuration specific for platform GNU/Linux
+        
+        Configuration(
+              
+            id='config.os.portable.diagnostics.tests.trace.linux',
+            name='Test Trace on GNU/Linux configuration',
+            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platforms.synthetic.osx',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platforms.synthetic.osx")',                
+            ],
+                      
+            buildFolder='linux/trace',
+            
+            artifactFileName='trace.elf',
+            
+            children=[
+                       
+                # GCC x64
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.trace.linux.x64.gcc.debug',
+                    name='Debug OS X Trace configuration with x86_64 GCC',
+                    description='Debug build configuration for Trace.',
+                    
+                    buildConfigurationName='linux_trace_x64_gcc_Debug',
+                    
+                    buildFolder='$(PARENT)/x64/gcc/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc.x64',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.trace.linux.x64.gcc.release',
+                    name='Release OS X Trace configuration with x86_64 GCC',
+                    description='Release build configuration for Trace.',
+                    
+                    buildConfigurationName='linux_trace_x64_gcc_Release',
+                    
+                    buildFolder='$(PARENT)/x64/gcc/Release',
+                                          
+                    toolchain='toolchain.linux.release.gcc.x64',                    
+                ),
+
+                # GCC x32
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.trace.linux.x32.gcc.debug',
+                    name='Debug OS X Trace configuration with i386 GCC',
+                    description='Debug build configuration for Trace.',
+                    
+                    buildConfigurationName='linux_trace_x32_gcc_Debug',
+                    
+                    buildFolder='$(PARENT)/x32/gcc/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc.x32',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.trace.linux.x32.gcc.release',
+                    name='Release OS X Trace configuration with i386 GCC',
+                    description='Release build configuration for Trace.',
+                    
+                    buildConfigurationName='linux_trace_x32_gcc_Release',
+                    
+                    buildFolder='$(PARENT)/x32/gcc/Release',
+
+                    toolchain='toolchain.linux.release.gcc.x32',                    
+                ),
+            ],
+        ),
+
     ],
 )
