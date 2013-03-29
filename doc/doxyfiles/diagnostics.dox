@@ -24,7 +24,10 @@ on synthetic platforms, etc.
 ## Object instance
 
 The tracing class is `os::diag::Trace`, and a static instance of this class
-is created during early initialisations as `os::diag::trace`.
+is created during early initialisations as `os::diag::trace`. 
+
+\warning Do not create additional instances of this class! 
+If needed, use the os::diag::TraceBase class.
 
 ## Light vs. ostream
 
@@ -32,7 +35,7 @@ The Trace class has two distinct flavours, the <b>light</b> one with
 basic formatting, and the <b>ostream</b> (output stream) one, with full 
 ostream multi-base (dec/hex/oct) and formatting support.
 
-The light one is always available, while the ostream one is optional.
+The light interface is always available, while the ostream one is optional.
 
 ## Performance issues
 
@@ -47,14 +50,14 @@ additional buffering layer.
 For these reasons, it is recommended that in critical interrupt 
 routines to use only the light interface, to minimise latency.
 
-On the other hand, in regular threads it is recommended to use mainly
+On the other hand, in regular threads it is recommended to use 
 the ostream interface, with its full set of features.
 
 ## Using the ostream interface
 
 The ostream interface is the standard C++ interface, implemented in the
 `os::std::basic_ostream` class, and supports all inserters and manipulators,
-so the general behaviour is as expected. 
+so the standard behaviour is to be expected. 
 
 \par Example
 ~~~
