@@ -140,11 +140,7 @@ Configuration(
                     buildConfigurationName='osx_ios_base_x64_gcc47_Release',
                     
                     buildFolder='$(PARENT)/x64/gcc47/Release',
-                    
-                    requirements=[
-                        'enable("DEBUG")',
-                    ],
-                      
+                                          
                     toolchain='toolchain.osx.release.mp.gcc47.x64',                    
                 ),
 
@@ -174,10 +170,6 @@ Configuration(
                     
                     buildFolder='$(PARENT)/x32/gcc47/Release',
                     
-                    requirements=[
-                        'enable("DEBUG")',
-                    ],
-                      
                     toolchain='toolchain.osx.release.mp.gcc47.x32',                    
                 ),
                   

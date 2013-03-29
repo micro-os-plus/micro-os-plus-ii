@@ -141,10 +141,6 @@ Configuration(
                     
                     buildFolder='$(PARENT)/x64/gcc47/Release',
                     
-                    requirements=[
-                        'enable("DEBUG")',
-                    ],
-                      
                     toolchain='toolchain.osx.release.mp.gcc47.x64',                    
                 ),
 
@@ -174,10 +170,6 @@ Configuration(
                     
                     buildFolder='$(PARENT)/x32/gcc47/Release',
                     
-                    requirements=[
-                        'enable("DEBUG")',
-                    ],
-                      
                     toolchain='toolchain.osx.release.mp.gcc47.x32',                    
                 ),
                   
