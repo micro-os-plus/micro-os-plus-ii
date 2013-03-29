@@ -13,4 +13,5 @@ encoding//packages/portable/language/cpp/tests/meta/ios_base-config.py=utf-8
 encoding//packages/portable/language/cpp/tests/meta/streambuf-config.py=utf-8
 encoding//packages/support/templates/xcdl.py=utf-8
 encoding//packages/support/toolchains/osx-llvm.py=utf-8
+encoding//packages/support/toolchains/osx-mp-gcc.py=utf-8
 encoding//packages/support/toolchains/xcdl.py=utf-8
