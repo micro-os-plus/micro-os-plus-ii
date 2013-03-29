@@ -78,7 +78,7 @@ Toolchain(
                     
                     category='debug',
                     
-                    compilerCpu='-arch x86_64',
+                    compilerCpu='-m64',
                 ),
 
                 Toolchain(
@@ -89,7 +89,7 @@ Toolchain(
 
                     category='debug',
                     
-                    compilerCpu='-arch i386',
+                    compilerCpu='-m32',
                 ),
             ],            
         ),
@@ -114,7 +114,7 @@ Toolchain(
                     
                     category='release',
                     
-                    compilerCpu='-arch x86_64',
+                    compilerCpu='-m64',
                 ),
 
                 Toolchain(
@@ -125,7 +125,7 @@ Toolchain(
 
                     category='release',
                     
-                    compilerCpu='-arch i386',
+                    compilerCpu='-m32',
                 ),
             ],              
         ),
