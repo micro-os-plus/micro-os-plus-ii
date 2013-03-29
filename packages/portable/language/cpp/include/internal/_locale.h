@@ -449,7 +449,7 @@ namespace os
   class _LIBCPP_VISIBLE ctype_base
     {
     public:
-#if defined(__GLIBC__)
+#if 0 //defined(__GLIBC__)
       typedef unsigned short mask;
       static const mask space = _ISspace;
       static const mask print = _ISprint;
