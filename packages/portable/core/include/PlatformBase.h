@@ -6,7 +6,7 @@
 #ifndef OS_PORTABLE_CORE_PLATFORMBASE_H_
 #define OS_PORTABLE_CORE_PLATFORMBASE_H_
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 namespace os
 {

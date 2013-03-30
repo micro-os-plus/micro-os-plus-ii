@@ -3,8 +3,8 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
-#ifndef OS_PORTABLE_CORE_OS_DEFINES_H_
-#define OS_PORTABLE_CORE_OS_DEFINES_H_
+#ifndef OS_PORTABLE_CORE_CONFIGDEFINES_H_
+#define OS_PORTABLE_CORE_CONFIGDEFINES_H_
 
 // ----------------------------------------------------------------------------
 //
@@ -73,4 +73,4 @@
 
 // ----------------------------------------------------------------------------
 
-#endif /* OS_PORTABLE_CORE_OS_DEFINES_H_ */
+#endif /* OS_PORTABLE_CORE_CONFIGDEFINES_H_ */

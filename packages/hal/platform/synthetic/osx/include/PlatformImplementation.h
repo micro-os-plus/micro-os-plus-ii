@@ -6,7 +6,7 @@
 #ifndef HAL_PLATFORM_SYNTHETIC_OSX_PLATFORMIMPLEMENTATION_H_
 #define HAL_PLATFORM_SYNTHETIC_OSX_PLATFORMIMPLEMENTATION_H_
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX) || defined(__DOXYGEN__)
 

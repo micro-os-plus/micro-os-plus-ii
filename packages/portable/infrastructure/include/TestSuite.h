@@ -6,7 +6,7 @@
 #ifndef OS_PORTABLE_INFRASTRUCTURE_TESTSUITE_H_
 #define OS_PORTABLE_INFRASTRUCTURE_TESTSUITE_H_
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) || defined(__DOXYGEN__)
 

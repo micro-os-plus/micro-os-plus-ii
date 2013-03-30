@@ -12,7 +12,7 @@
 #ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STEAMBUF_CPP_H_
 #define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STEAMBUF_CPP_H_
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #include "portable/language/cpp/include/streambuf.h"
 #include "portable/language/cpp/include/internal/_fpos.h"

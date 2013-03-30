@@ -12,7 +12,7 @@
 #ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_FPOS_H_
 #define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_FPOS_H_
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
 

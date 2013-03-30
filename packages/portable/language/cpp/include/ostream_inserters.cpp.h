@@ -12,7 +12,7 @@
 #ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_OSTREAM_INSERTERS_CPP_H_
 #define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_OSTREAM_INSERTERS_CPP_H_
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #include "portable/language/cpp/include/ostream.h"
 #include "portable/language/cpp/include/iterator.h"

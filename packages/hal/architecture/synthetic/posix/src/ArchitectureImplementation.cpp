@@ -3,7 +3,7 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 

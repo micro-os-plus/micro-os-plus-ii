@@ -8,7 +8,7 @@
 
 #include <stdint.h>
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #include "portable/diagnostics/include/Trace.h"
 

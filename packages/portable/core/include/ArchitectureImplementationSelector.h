@@ -6,7 +6,7 @@
 #ifndef OS_PORTABLE_CORE_ARCHITECTUREIMPLEMENTATIONSELECTOR_H_
 #define OS_PORTABLE_CORE_ARCHITECTUREIMPLEMENTATIONSELECTOR_H_
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
 

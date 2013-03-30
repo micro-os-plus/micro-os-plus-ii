@@ -6,7 +6,7 @@
 #ifndef HAL_PLATFORM_SYNTHETIC_LINUX_PLATFORMIMPLEMENTATION_H_
 #define HAL_PLATFORM_SYNTHETIC_LINUX_PLATFORMIMPLEMENTATION_H_
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_LINUX) || defined(__DOXYGEN__)
 

@@ -3,7 +3,7 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #include "../include/PlatformBase.h"
 #include "../include/Architecture.h"

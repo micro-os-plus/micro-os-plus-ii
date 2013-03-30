@@ -10,7 +10,7 @@
 #ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CONFIG_H_
 #define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CONFIG_H_
 
-//#include "portable/core/include/OS_Defines.h"
+//#include "portable/core/include/ConfigDefines.h"
 
 #define _LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER
 

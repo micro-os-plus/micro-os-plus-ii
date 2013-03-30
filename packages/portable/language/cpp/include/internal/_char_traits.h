@@ -12,7 +12,7 @@
 #ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_CHAR_TRAITS_H_
 #define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_CHAR_TRAITS_H_
 
-#include "portable/core/include/OS_Defines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #include "portable/language/cpp/include/internal/__config.h"
 //#include "portable/language/cpp/include/iosfwd.h"

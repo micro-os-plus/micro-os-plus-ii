@@ -33,15 +33,15 @@ main(int argc, char* argv[])
   ts.reportInfo("there should be 2 failed cases and 2 passed cases");
 
   // mark the stop of the test suite
-  ts.stop(__FILE__);
+  ts.stop();
 
   int retval;
   retval = ts.getExitValue();
 
-  debug.putString(__PRETTY_FUNCTION__);
-  debug.putString(" returns ");
-  debug.putDec(retval);
-  debug.putNewLine();
+#if defined(DEBUG)
+  os::diag::trace << __PRETTY_FUNCTION__ << " returns " << retval
+      << os::std::endl;
+#endif
 
   // return 0 if there are no failed test cases
   return retval;
