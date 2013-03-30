@@ -12,7 +12,6 @@
 
 #include "Trace.h"
 #include "TraceConversions.cpp.h"
-#include "TraceImplementation.h"
 
 namespace os
 {

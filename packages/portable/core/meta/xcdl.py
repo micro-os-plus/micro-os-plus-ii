@@ -8,6 +8,9 @@ Package(
     name='The µOS++ SE core package',
     description='All µOS++ Second Edition portable core packages.',
     
+    sourceFiles=[
+        'PlatformBase.cpp',
+    ],
         
     includeFiles=[
         'greeting.py',

@@ -4,8 +4,8 @@
 //      This file is part of the uOS++ distribution.
 //
 
-#ifndef OS_PORTABLE_CORE_INCLUDE_OS_GREETING_H_
-#define OS_PORTABLE_CORE_INCLUDE_OS_GREETING_H_
+#ifndef OS_PORTABLE_CORE_GREETING_H_
+#define OS_PORTABLE_CORE_GREETING_H_
 
 #include "portable/core/include/OS_Defines.h"
 
@@ -46,4 +46,4 @@ namespace os
 
 #endif /* defined(OS_INCLUDE_GREETING) */
 
-#endif /* OS_PORTABLE_CORE_INCLUDE_OS_GREETING_H_ */
+#endif /* OS_PORTABLE_CORE_GREETING_H_ */

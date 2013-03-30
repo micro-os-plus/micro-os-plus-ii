@@ -10,7 +10,7 @@
 
 #if defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE) || defined(__DOXYGEN__)
 
-#include "TraceImplementation.h"
+#include "TraceImplementationSelector.h"
 
 #include "portable/language/cpp/include/ostream.h"
 

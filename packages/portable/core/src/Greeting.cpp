@@ -1,7 +1,6 @@
 //
-//      Copyright (C) 2012-2013 Liviu Ionescu.
-//
-//      This file is part of the uOS++ distribution.
+// This file is part of the µOS++ SE distribution.
+// Copyright (c) 2013 Liviu Ionescu.
 //
 
 #include "portable/core/include/OS_Defines.h"
@@ -17,4 +16,4 @@ namespace os
   const char osGreeting[] = OS_STRING_GREETING;
 }
 
-#endif /* defined(DEBUG) || defined(OS_INCLUDE_GREETING) */
+#endif // defined(OS_INCLUDE_GREETING)

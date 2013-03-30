@@ -17,7 +17,7 @@ namespace os
   namespace diag
   {
 
-    /// \class TraceImplementationSample TraceImplementation.h "portable/diagnostics/include/TraceImplementation.h"
+    /// \class TraceImplementationSample TraceImplementationSample.h "portable/diagnostics/include/TraceImplementationSample.h"
     /// \ingroup diag
     /// \nosubgrouping
     ///

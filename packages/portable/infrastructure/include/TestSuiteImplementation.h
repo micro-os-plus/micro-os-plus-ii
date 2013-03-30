@@ -14,9 +14,9 @@
 // This is the place where the actual TestSuiteImplementation is
 // selected, based on various preprocessor definitions.
 
-#if defined(OS_INCLUDE_HAL_ARCH_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION)
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION)
 
-#include "hal/arch/synthetic/posix/infrastructure/include/TestSuiteImplementation.h"
+#include "hal/architecture/synthetic/posix/infrastructure/include/TestSuiteImplementation.h"
 
 #else
 

@@ -43,13 +43,13 @@ Configuration(
             
             loadPackages=[
                 # mandatory platform requirement
-                #'package.os.hal.platforms.synthetic.osx.cl-sjlj',
-                'package.os.hal.platforms.synthetic.osx',
+                #'package.os.hal.platform.synthetic.osx.cl-sjlj',
+                'package.os.hal.platform.synthetic.osx',
             ],
                       
             requirements=[
-                #'enable("component.os.hal.arch.synthetic.posix.infrastructure.testsuite")',
-                'enable("package.os.hal.platforms.synthetic.osx")',                
+                #'enable("component.os.hal.architecture.synthetic.posix.infrastructure.testsuite")',
+                'enable("package.os.hal.platform.synthetic.osx")',                
             ],
                       
             buildFolder='osx/testsuite',

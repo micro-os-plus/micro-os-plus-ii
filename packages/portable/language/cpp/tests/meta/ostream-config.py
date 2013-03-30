@@ -44,11 +44,11 @@ Configuration(
             
             loadPackages=[
                 # mandatory platform requirement
-                'package.os.hal.platforms.synthetic.osx',
+                'package.os.hal.platform.synthetic.osx',
             ],
                       
             requirements=[
-                'enable("package.os.hal.platforms.synthetic.osx")',
+                'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
             buildFolder='osx/ostream',
@@ -242,11 +242,11 @@ Configuration(
             
             loadPackages=[
                 # mandatory platform requirement
-                'package.os.hal.platforms.synthetic.linux',
+                'package.os.hal.platform.synthetic.linux',
             ],
                       
             requirements=[
-                'enable("package.os.hal.platforms.synthetic.linux")',
+                'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
             buildFolder='linux/ostream',

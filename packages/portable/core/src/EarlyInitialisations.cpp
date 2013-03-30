@@ -1,10 +1,12 @@
 //
-//      Copyright (C) 2012-2013 Liviu Ionescu.
-//
-//      This file is part of the uOS++ distribution.
+// This file is part of the µOS++ SE distribution.
+// Copyright (c) 2013 Liviu Ionescu.
 //
 
 #include "portable/core/include/OS_Defines.h"
+
+#include "portable/core/include/Architecture.h"
+#include "portable/core/include/Platform.h"
 
 #include "portable/diagnostics/include/Trace.h"
 #include "portable/core/include/Greeting.h"
@@ -60,7 +62,8 @@ namespace os
     /// and no trace calls should be issued here.
     EarlyInitialisations::EarlyInitialisations()
     {
-      // WARNING: no trace available yet!
+      // WARNING: no trace available yet, wait for the
+      // Trace object to be initialised later!
 
       // TODO: add clock init
 
@@ -73,8 +76,6 @@ namespace os
 }
 
 // ----------------------------------------------------------------------------
-
-#if defined(DEBUG)
 
 #pragma GCC diagnostic push
 //#pragma GCC diagnostic ignored "-Wunknown-pragmas"
@@ -92,8 +93,6 @@ namespace os
 static os::core::EarlyInitialisations earlyInitialisations;
 
 #pragma GCC diagnostic pop
-
-#endif
 
 // ----------------------------------------------------------------------------
 
@@ -126,6 +125,7 @@ namespace os
 
 #if defined(DEBUG)
 
+
 namespace os
 {
   namespace core
@@ -155,8 +155,11 @@ namespace os
       // continue with OS greeting
       os::diag::trace.putString(os::osGreeting);
       os::diag::trace.putNewLine();
+
+      // than with HAL (platform, that will architecture)
+      os::platform.putGreeting();
+
       os::diag::trace.putNewLine();
-      // TODO: continue with platform and architecture greetings
     }
   }
 }
@@ -188,3 +191,10 @@ static os::core::EarlyGreetings earlyGreetings;
 
 // ----------------------------------------------------------------------------
 
+namespace os
+{
+  hal::arch::ArchitectureImplementation_t architecture;
+  hal::platform::PlatformImplementation_t platform;
+}
+
+// ----------------------------------------------------------------------------
