@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# This file is part of the µOS++ SE distribution.
 # Copyright (c) 2013 Liviu Ionescu.
-# This file is part of the uOS++ SE distribution.
 
 Package(
     id='package.os.portable.language.cpp',

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2013 Liviu Ionescu.
-# This file is part of the uOS++ SE distribution.
+# This file is part of the µOS++ SE distribution.
+# Copyright (c) 2013 Liviu Ionescu.
 
 Package(
     id='package.os.toolchains.base',

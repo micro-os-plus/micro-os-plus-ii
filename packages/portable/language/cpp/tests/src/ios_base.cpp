@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 //
 // This file is part of the µOS++ distribution.
 //

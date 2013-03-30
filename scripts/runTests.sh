@@ -17,6 +17,7 @@ echo "XCDL runTests: started"
 if [ $UNAME == "Linux" ]
 then
 
+time ( \
 (/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_trace_x64_gcc_Debug run) && \
 (/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_trace_x64_gcc_Release run) && \
 (/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_trace_x32_gcc_Debug run) && \
@@ -52,7 +53,8 @@ then
 (/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_streambuf_x32_gcc_Debug run) && \
 (/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_streambuf_x32_gcc_Release run) && \
 \
-false
+false \
+)
 
 elif [ $UNAME == "Darwin" ]
 then
@@ -60,6 +62,7 @@ then
 PATH_GCC46=/opt/local/bin
 PATH_GCC47=/opt/local/bin
 
+time ( \
 (/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x64_llvm_Debug run) && \
 (/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x64_llvm_Release run) && \
 (/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x32_llvm_Debug run) && \
@@ -151,7 +154,8 @@ PATH_GCC47=/opt/local/bin
 (PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x32_gcc46_Debug run) && \
 (PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x32_gcc46_Release run) && \
 \
-false
+false \
+)
 
 fi
 

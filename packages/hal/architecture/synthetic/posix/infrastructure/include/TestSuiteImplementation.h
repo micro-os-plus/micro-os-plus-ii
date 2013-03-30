@@ -1,7 +1,6 @@
 //
-//      Copyright (C) 2012-2013 Liviu Ionescu.
-//
-//      This file is part of the uOS++ distribution.
+// This file is part of the µOS++ SE distribution.
+// Copyright (c) 2013 Liviu Ionescu.
 //
 
 #ifndef HAL_ARCHITECTURE_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_H_

@@ -1,3 +1,8 @@
+//
+// This file is part of the µOS++ SE distribution.
+// Copyright (c) 2013 Liviu Ionescu.
+//
+
 #include "portable/core/include/OS.h"
 
 #include "portable/infrastructure/include/TestSuite.h"
