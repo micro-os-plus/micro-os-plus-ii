@@ -18,9 +18,7 @@ command line tool, without system threading.',
     # platform packages shall load corresponding architecture packages
     loadPackages=[
         'package.os.hal.arch.synthetic.posix',
-        #'package.os.hal.arch.synthetic.osx.debug',
-        
-        'package.os.hal.arch.synthetic.osx',
+        #'package.os.hal.arch.synthetic.osx',
     ],
         
     requirements=[
