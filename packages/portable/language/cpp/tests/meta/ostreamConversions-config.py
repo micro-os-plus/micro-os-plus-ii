@@ -36,7 +36,7 @@ Configuration(
                   
     children=[
  
-        # configuration specific for platform osx
+        # configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.language.cpp.tests.ostreamconv.osx',
@@ -230,6 +230,88 @@ Configuration(
                     buildFolder='$(PARENT)/x32/gcc46/Release',
                     
                     toolchain='toolchain.osx.release.mp.gcc46.x32',                    
+                ),
+            ],
+        ),
+
+        # configuration specific for platform GNU/Linux
+        Configuration(
+              
+            id='config.os.portable.language.cpp.tests.ostreamconv.linux',
+            name='Test C++ ostream conversions on GNU/Linux configuration',
+            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platforms.synthetic.linux',
+            ],
+                      
+            requirements=[
+                'enable("package.os.hal.platforms.synthetic.linux")',
+            ],
+                      
+            buildFolder='linux/ostreamconv',
+            
+            artifactFileName='ostreamConversions.elf',
+            
+            children=[
+                       
+                # GCC x64
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.ostreamconv.linux.x64.gcc.debug',
+                    name='Debug GNU/Linux ostream conversions configuration with x86_64 GCC',
+                    description='Debug build configuration for ostream conversions.',
+                    
+                    buildConfigurationName='linux_ostreamconv_x64_gcc_Debug',
+                    
+                    buildFolder='$(PARENT)/x64/gcc/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc.x64',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.ostreamconv.linux.x64.gcc.release',
+                    name='Release GNU/Linux ostream conversions configuration with x86_64 GCC',
+                    description='Release build configuration for ostream conversions.',
+                    
+                    buildConfigurationName='linux_ostreamconv_x64_gcc_Release',
+                    
+                    buildFolder='$(PARENT)/x64/gcc/Release',
+                                          
+                    toolchain='toolchain.linux.release.gcc.x64',                    
+                ),
+
+                # GCC x32
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.ostreamconv.linux.x32.gcc.debug',
+                    name='Debug GNU/Linux ostream conversions configuration with i386 GCC',
+                    description='Debug build configuration for ostream conversions.',
+                    
+                    buildConfigurationName='linux_ostreamconv_x32_gcc_Debug',
+                    
+                    buildFolder='$(PARENT)/x32/gcc/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc.x32',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.ostreamconv.linux.x32.gcc.release',
+                    name='Release GNU/Linux ostream conversions configuration with i386 GCC',
+                    description='Release build configuration for ostream conversions.',
+                    
+                    buildConfigurationName='linux_ostreamconv_x32_gcc_Release',
+                    
+                    buildFolder='$(PARENT)/x32/gcc/Release',
+
+                    toolchain='toolchain.linux.release.gcc.x32',                    
                 ),
             ],
         ),

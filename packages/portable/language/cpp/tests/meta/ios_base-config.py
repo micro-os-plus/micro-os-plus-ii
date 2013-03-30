@@ -35,7 +35,7 @@ Configuration(
                   
     children=[
  
-        # configuration specific for platform osx
+        # configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.language.cpp.tests.ios_base.osx',
@@ -229,6 +229,88 @@ Configuration(
                     buildFolder='$(PARENT)/x32/gcc46/Release',
                     
                     toolchain='toolchain.osx.release.mp.gcc46.x32',                    
+                ),
+            ],
+        ),
+
+        # configuration specific for platform GNU/Linux
+        Configuration(
+              
+            id='config.os.portable.language.cpp.tests.ios_base.linux',
+            name='Test C++ ios_base on GNU/Linux configuration',
+            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platforms.synthetic.linux',
+            ],
+                      
+            requirements=[
+                'enable("package.os.hal.platforms.synthetic.linux")',
+            ],
+                      
+            buildFolder='linux/ios_base',
+            
+            artifactFileName='ios_base.elf',
+            
+            children=[
+
+                # GCC x64
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.ios_base.linux.x64.gcc.debug',
+                    name='Debug GNU/Linux ios_base configuration with x86_64 GCC',
+                    description='Debug build configuration for ios_base.',
+                    
+                    buildConfigurationName='linux_ios_base_x64_gcc_Debug',
+                    
+                    buildFolder='$(PARENT)/x64/gcc/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc.x64',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.ios_base.linux.x64.gcc.release',
+                    name='Release GNU/Linux ios_base configuration with x86_64 GCC',
+                    description='Release build configuration for ios_base.',
+                    
+                    buildConfigurationName='linux_ios_base_x64_gcc_Release',
+                    
+                    buildFolder='$(PARENT)/x64/gcc/Release',
+                                          
+                    toolchain='toolchain.linux.release.gcc.x64',                    
+                ),
+
+                # GCC x32
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.ios_base.linux.x32.gcc.debug',
+                    name='Debug GNU/Linux ios_base configuration with i386 GCC',
+                    description='Debug build configuration for ios_base.',
+                    
+                    buildConfigurationName='linux_ios_base_x32_gcc_Debug',
+                    
+                    buildFolder='$(PARENT)/x32/gcc/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc.x32',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.ios_base.linux.x32.gcc.release',
+                    name='Release GNU/Linux ios_base configuration with i386 GCC',
+                    description='Release build configuration for ios_base.',
+                    
+                    buildConfigurationName='linux_ios_base_x32_gcc_Release',
+                    
+                    buildFolder='$(PARENT)/x32/gcc/Release',
+
+                    toolchain='toolchain.linux.release.gcc.x32',                    
                 ),
             ],
         ),

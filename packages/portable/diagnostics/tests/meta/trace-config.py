@@ -34,7 +34,7 @@ Configuration(
                   
     children=[
  
-        # configuration specific for platform osx
+        # configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.diagnostics.tests.trace.osx',
@@ -243,7 +243,6 @@ Configuration(
         ),
               
         # configuration specific for platform GNU/Linux
-        
         Configuration(
               
             id='config.os.portable.diagnostics.tests.trace.linux',
@@ -252,12 +251,12 @@ Configuration(
             
             loadPackages=[
                 # mandatory platform requirement
-                'package.os.hal.platforms.synthetic.osx',
+                'package.os.hal.platforms.synthetic.linux',
             ],
                       
             requirements=[
                 # enable the platform    
-                'enable("package.os.hal.platforms.synthetic.osx")',                
+                'enable("package.os.hal.platforms.synthetic.linux")',                
             ],
                       
             buildFolder='linux/trace',

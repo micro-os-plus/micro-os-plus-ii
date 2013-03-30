@@ -35,7 +35,7 @@ Configuration(
                   
     children=[
  
-        # configuration specific for platform osx
+        # configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.language.cpp.tests.basic_ios.osx',
@@ -233,5 +233,87 @@ Configuration(
                 ),
             ],
         ),
+
+        # configuration specific for platform GNU/Linux
+        Configuration(
+              
+            id='config.os.portable.language.cpp.tests.basic_ios.linux',
+            name='Test C++ basic_ios on GNU/Linux configuration',
+            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platforms.synthetic.linux',
+            ],
+                      
+            requirements=[
+                'enable("package.os.hal.platforms.synthetic.linux")',
+            ],
+                      
+            buildFolder='linux/basic_ios',
+            
+            artifactFileName='basic_ios.elf',
+            
+            children=[
+
+                # GCC x64
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.basic_ios.linux.x64.gcc.debug',
+                    name='Debug GNU/Linux basic_ios configuration with x86_64 GCC',
+                    description='Debug build configuration for basic_ios.',
+                    
+                    buildConfigurationName='linux_basic_ios_x64_gcc_Debug',
+                    
+                    buildFolder='$(PARENT)/x64/gcc/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc.x64',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.basic_ios.linux.x64.gcc.release',
+                    name='Release GNU/Linux basic_ios configuration with x86_64 GCC',
+                    description='Release build configuration for basic_ios.',
+                    
+                    buildConfigurationName='linux_basic_ios_x64_gcc_Release',
+                    
+                    buildFolder='$(PARENT)/x64/gcc/Release',
+                                          
+                    toolchain='toolchain.linux.release.gcc.x64',                    
+                ),
+
+                # GCC x32
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.basic_ios.linux.x32.gcc.debug',
+                    name='Debug GNU/Linux basic_ios configuration with i386 GCC',
+                    description='Debug build configuration for basic_ios.',
+                    
+                    buildConfigurationName='linux_basic_ios_x32_gcc_Debug',
+                    
+                    buildFolder='$(PARENT)/x32/gcc/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc.x32',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.basic_ios.linux.x32.gcc.release',
+                    name='Release GNU/Linux basic_ios configuration with i386 GCC',
+                    description='Release build configuration for basic_ios.',
+                    
+                    buildConfigurationName='linux_basic_ios_x32_gcc_Release',
+                    
+                    buildFolder='$(PARENT)/x32/gcc/Release',
+
+                    toolchain='toolchain.linux.release.gcc.x32',                    
+                ),
+            ],
+	),          
     ],
 )
