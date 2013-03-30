@@ -1,0 +1,183 @@
+/**
+
+\page howtotest How to test
+
+If testing software is generally a delicate issue, testing embedded
+software is an even more complicated matter, since images must be 
+written into embedded processor flash and some form of interaction
+with the hardware is needed to validate the software behaviour.
+
+In order to simplify things, one of the early µOS++ design decision was
+to include a POSIX synthetic platform,
+running on OS X and GNU/Linux. In this configuration, each µOS++
+application is executed within the context of a POSIX process, running
+as a command line application.
+
+Each test is compiled in multiple configurations, with various
+toolchains, with 32/64 bit, for Debug or Release.
+
+To run all available set of tests, a script (`runTests.sh`) is available
+in the scripts folder.
+
+\section linuxtest GNU/Linux
+
+Currently all tests are functional on Ubuntu 12.10, using the default 
+GCC 4.7 compiler.
+
+The prerequisites are:
+~~~
+sudo apt-get install git
+sudo apt-get install gcc gcc-multiplib g++ g++-multilib
+sudo apt-get install python
+~~~
+
+To be sure the correct compiler is available, run
+~~~
+g++ --version
+~~~
+
+The result should be something similar to
+~~~
+g++ (Ubuntu/Linaro 4.7.2-2ubuntu1) 4.7.2
+~~~
+
+Once the prerequisites are satisfied, create a dedicated folder for
+the tests, clone the repositories and run the script:
+
+~~~
+mkdir -p work/uOS
+cd work/uOS
+
+git clone http://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
+git clone http://git.code.sf.net/p/xcdl/python xcdl-python
+
+/bin/bash micro-os-plus-se.git/scripts/runTests.sh
+~~~
+
+\note Please note that a second repository is cloned, containing the
+<b>XCDL build tools</b>.
+
+Being based on make, the first time when this script is executed will
+also build the tests. Running it again will only execute the tests.
+
+The result of the tests look like:
+
+~~~
+
+XCDL build started, using toolchain 'Linux Debug GCC i386'...
+
+cd /tmp/uOS/build/linux_streambuf_x32_gcc_Debug
+PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+
+make run
+Running XCDL target: streambuf.elf
+os::diag::Trace::Trace() @0805D160
+
+livius.net / UnitTest: C++ streambuf v1.1.1, Mar 30 2013 23:05:55
+uOS++ v5.1.7630, GCC 4.7.2 i386
+POSIX synthetic, running on x86_64 Linux 3.5.0-17-generic
+
+hal::posix::infra::TestSuiteImplementation::TestSuiteImplementation() @0805D1E0
+os::infra::TestSuite::TestSuite() @0805D1C0
+
+START:"Starting tests from 'portable/language/cpp/tests/src/streambuf.cpp'"
+STAT:PASS,"All 166 checks passed! :-) "
+
+int main(int, char**) returns 0
+os::infra::TestSuite::~TestSuite() @0805D1C0
+hal::posix::infra::TestSuiteImplementation::~TestSuiteImplementation() @0805D1E0
+virtual os::diag::Trace::~Trace() @0805D160
+Finished running target: streambuf.elf
+ 
+XCDL build completed in 155ms.
+
+XCDL metadata processed in 200ms.
+
+XCDL build started, using toolchain 'Linux Release GCC i386'...
+
+cd /tmp/uOS/build/linux_streambuf_x32_gcc_Release
+PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+
+make run
+Running XCDL target: streambuf.elf
+
+START:"Starting tests from 'portable/language/cpp/tests/src/streambuf.cpp'"
+STAT:PASS,"All 166 checks passed! :-) "
+
+Finished running target: streambuf.elf
+ 
+XCDL build completed in 208ms.
+
+~~~
+
+
+\section osxtest OS X
+
+As the main µOS++ development platform, even more tests are available 
+on OS X.
+
+For the tests running on the synthetic POSIX architecture, the following 
+compilers are considered:
+- Apple clang (LLVM 3.2)
+- Mac Ports GCC 4.6.3
+- Mac Ports GCC 4.7.2
+
+With each compiler both the 32 and 64 bit versions are checked, in both the
+Debug and Release configurations, amounting to 12 versions of each test.
+
+The prerequisites are
+- Xcode
+- Command Line Tools (optional package, installed from within Xcode)
+- Mac Ports
+
+In Mac Ports, by default the compilers support only the 64 bit targets.
+
+To support both the 32 and 64 bit targets, the `+universal` option must 
+be used when installing the toolchains:
+~~~
+sudo port install gcc46 +universal
+sudo port install gcc47 +universal
+~~~
+
+The toolchain binaries are available in `/opt/local/bin/` as
+- g++-mp-4.6
+- g++-mp-4.7
+
+The `git` executables are installed via the `Command Line Tools` 
+package provided freely by Apple.
+
+For reference, here is the `git` global configuration that I use:
+~~~
+git config --global user.name "Liviu Ionescu"
+git config --global user.email ilg@livius.net
+
+git config --global core.filemode false
+git config --global core.autocrlf input
+
+git config --global core.whitespace trailing-space,space-before-tab
+
+git config --global core.editor "vi"
+~~~
+(for more details, please check the <a href="http://git-scm.com/docs/git-config">
+git documentation</a>).
+
+The testing procedure is similar to the GNU/Linux one:
+
+~~~
+mkdir -p work/uOS
+cd work/uOS
+
+git clone http://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
+git clone http://git.code.sf.net/p/xcdl/python xcdl-python
+
+/bin/bash micro-os-plus-se.git/scripts/runTests.sh /tmp/uOS/build
+~~~
+
+\note The `runTests.sh` script accepts an optional argument, with the 
+location where the build folders will be created, in this case a 
+temporary folder.
+
+
+
+
+*/

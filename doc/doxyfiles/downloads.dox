@@ -12,10 +12,16 @@ in the µOS++ distribution.
 \section gitrepo Git repository
 The live repository for µOS++ SE is hosted on SourceForge and this is the
 place where you can find the latest version of µOS++.
-\code
+
+~~~
+git clone http://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
+~~~
+
+or
+
+~~~
 git clone git://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
-cd micro-os-plus-se.git
-\endcode
+~~~
 
 \section packarch Packed archives
 From time to time, the µOS++ stable releases will be archived and published 
