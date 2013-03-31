@@ -27,16 +27,16 @@ GCC 4.7 compiler.
 The prerequisites are:
 ~~~
 sudo apt-get install git
-sudo apt-get install gcc gcc-multiplib g++ g++-multilib
+sudo apt-get install gcc gcc-multilib g++ g++-multilib
 sudo apt-get install python
 ~~~
 
-To be sure the correct compiler is available, run
+To be sure the correct compiler is available, run:
 ~~~
 g++ --version
 ~~~
 
-The result should be something similar to
+The result should look like:
 ~~~
 g++ (Ubuntu/Linaro 4.7.2-2ubuntu1) 4.7.2
 ~~~
@@ -49,7 +49,7 @@ mkdir -p work/uOS
 cd work/uOS
 
 git clone http://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
-git clone http://git.code.sf.net/p/xcdl/python xcdl-python
+git clone http://git.code.sf.net/p/xcdl/python xcdl-python.git
 
 /bin/bash micro-os-plus-se.git/scripts/runTests.sh
 ~~~
@@ -57,10 +57,14 @@ git clone http://git.code.sf.net/p/xcdl/python xcdl-python
 \note Please note that a second repository is cloned, containing the
 <b>XCDL build tools</b>.
 
-Being based on make, the first time when this script is executed will
+Being based on `make`, the first time when this script is executed will
 also build the tests. Running it again will only execute the tests.
 
-The result of the tests look like:
+If the machine used to run this test returns `x86_64` for `uname -m`, it is
+assumed to be a 64 bit machine and the 64 bit versions of all tests are
+also executed.
+
+The *Debug* version of a test looks like:
 
 ~~~
 
@@ -71,6 +75,7 @@ PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:
 
 make run
 Running XCDL target: streambuf.elf
+
 os::diag::Trace::Trace() @0805D160
 
 livius.net / UnitTest: C++ streambuf v1.1.1, Mar 30 2013 23:05:55
@@ -90,6 +95,11 @@ virtual os::diag::Trace::~Trace() @0805D160
 Finished running target: streambuf.elf
  
 XCDL build completed in 155ms.
+~~~
+
+The *Release* version of the same test is slightly less verbose:
+
+~~~
 
 XCDL metadata processed in 200ms.
 
@@ -110,13 +120,16 @@ XCDL build completed in 208ms.
 
 ~~~
 
+\note Any failure encountered will break the script, so the completion of
+the script is a guarantee that all tests were built without warnings
+and all assertions tested passed.
 
 \section osxtest OS X
 
 As the main µOS++ development platform, even more tests are available 
 on OS X.
 
-For the tests running on the synthetic POSIX architecture, the following 
+For the tests running on the synthetic POSIX platform, the following 
 compilers are considered:
 - Apple clang (LLVM 3.2)
 - Mac Ports GCC 4.6.3
@@ -130,23 +143,26 @@ The prerequisites are
 - Command Line Tools (optional package, installed from within Xcode)
 - Mac Ports
 
-In Mac Ports, by default the compilers support only the 64 bit targets.
+In the Mac Ports framework, by default, the compilers support 
+only the 64 bit targets.
 
 To support both the 32 and 64 bit targets, the `+universal` option must 
 be used when installing the toolchains:
+
 ~~~
 sudo port install gcc46 +universal
 sudo port install gcc47 +universal
 ~~~
 
-The toolchain binaries are available in `/opt/local/bin/` as
+The toolchain binaries are available in `/opt/local/bin/` as:
 - g++-mp-4.6
 - g++-mp-4.7
 
 The `git` executables are installed via the `Command Line Tools` 
-package provided freely by Apple.
+package provided (freely) by Apple.
 
 For reference, here is the `git` global configuration that I use:
+
 ~~~
 git config --global user.name "Liviu Ionescu"
 git config --global user.email ilg@livius.net
@@ -158,6 +174,7 @@ git config --global core.whitespace trailing-space,space-before-tab
 
 git config --global core.editor "vi"
 ~~~
+
 (for more details, please check the <a href="http://git-scm.com/docs/git-config">
 git documentation</a>).
 
@@ -168,7 +185,7 @@ mkdir -p work/uOS
 cd work/uOS
 
 git clone http://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
-git clone http://git.code.sf.net/p/xcdl/python xcdl-python
+git clone http://git.code.sf.net/p/xcdl/python xcdl-python.git
 
 /bin/bash micro-os-plus-se.git/scripts/runTests.sh /tmp/uOS/build
 ~~~
@@ -177,7 +194,9 @@ git clone http://git.code.sf.net/p/xcdl/python xcdl-python
 location where the build folders will be created, in this case a 
 temporary folder.
 
-
-
+If `/opt/local/bin/g++-mp-4.7` is executable, then the Mac Ports GCC 4.7
+tests are executed. A similar test is performed for Mac Ports GCC 4.6. 
+However be sure that `+universal` was used to build these packages, 
+otherwise the tests will fail.
 
 */
