@@ -6,159 +6,121 @@ UNAME=`uname`
 
 DEST=build
 
+declare -a testNames=( 'trace' 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
+
 # Check for custom destination folder
 if [ $# -gt 0 ]
 then
   DEST=$1
 fi
 
+# this is x86_64 on 64 bit machines
+MACHINE=$(uname -m)
+
+function runTest()
+{
+	[ $# -ge 1 ] || exit 1
+	
+	#echo $1
+	#return
+	
+	if [ $# -ge 2 ]
+	then
+		action=$2
+	else
+		action='run'
+	fi
+	/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=$1 $action
+	[ $? -eq 0 ] || exit $? 
+}
+
+function runTestPair()
+{
+	[ $# -ge 1 ] || exit 1
+
+	runTest $1"_Debug" $2
+	runTest $1"_Release" $2
+}
+
+function runTestArray()
+{
+	[ $# -ge 2 ] || exit 1
+
+	for bc in "${testNames[@]}"
+	do
+		runTestPair $1"_"$bc"_"$2 $3
+	done
+}
+
+
 echo "XCDL runTests: started"
 
 if [ $UNAME == "Linux" ]
 then
 
-time ( \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_trace_x64_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_trace_x64_gcc_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_trace_x32_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_trace_x32_gcc_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ios_base_x64_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ios_base_x64_gcc_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ios_base_x32_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ios_base_x32_gcc_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_fpos_x64_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_fpos_x64_gcc_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_fpos_x32_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_fpos_x32_gcc_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_basic_ios_x64_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_basic_ios_x64_gcc_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_basic_ios_x32_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_basic_ios_x32_gcc_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ostream_x64_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ostream_x64_gcc_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ostream_x32_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ostream_x32_gcc_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ostreamconv_x64_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ostreamconv_x64_gcc_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ostreamconv_x32_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_ostreamconv_x32_gcc_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_streambuf_x64_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_streambuf_x64_gcc_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_streambuf_x32_gcc_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=linux_streambuf_x32_gcc_Release run) && \
-\
-false \
-)
+	time (
+		if [ "$MACHINE" == "x86_64" ]
+		then
+			(PATH=$PATH; runTestArray "linux" "x64_llvm" "run")
+		fi
+		(PATH=$PATH; runTestArray "linux" "x32_llvm" "run")
+	)
 
 elif [ $UNAME == "Darwin" ]
 then
 
-PATH_GCC46=/opt/local/bin
-PATH_GCC47=/opt/local/bin
+	
+	time ( 
+	
+		# clang is always available on OS X
+		if [ "$MACHINE" == "x86_64" ]
+		then
+			(PATH=$PATH; runTestArray "osx" "x64_llvm" "run")
+		fi
+		(PATH=$PATH; runTestArray "osx" "x32_llvm" "run")
 
-time ( \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x64_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x64_llvm_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x32_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x32_llvm_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x64_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x64_gcc47_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x32_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x32_gcc47_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x64_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x64_gcc46_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x32_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_trace_x32_gcc46_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x64_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x64_llvm_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x32_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x32_llvm_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x64_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x64_gcc47_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x32_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x32_gcc47_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x64_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x64_gcc46_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x32_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_fpos_x32_gcc46_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x64_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x64_llvm_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x32_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x32_llvm_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x64_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x64_gcc47_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x32_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x32_gcc47_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x64_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x64_gcc46_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x32_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ios_base_x32_gcc46_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x64_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x64_llvm_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x32_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x32_llvm_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x64_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x64_gcc47_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x32_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x32_gcc47_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x64_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x64_gcc46_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x32_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_basic_ios_x32_gcc46_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x64_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x64_llvm_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x32_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x32_llvm_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x64_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x64_gcc47_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x32_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x32_gcc47_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x64_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x64_gcc46_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x32_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_streambuf_x32_gcc46_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x64_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x64_llvm_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x32_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x32_llvm_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x64_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x64_gcc47_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x32_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x32_gcc47_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x64_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x64_gcc46_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x32_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostream_x32_gcc46_Release run) && \
-\
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x64_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x64_llvm_Release run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x32_llvm_Debug run) && \
-(/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x32_llvm_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x64_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x64_gcc47_Release run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x32_gcc47_Debug run) && \
-(PATH=$PATH_GCC47:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x32_gcc47_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x64_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x64_gcc46_Release run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x32_gcc46_Debug run) && \
-(PATH=$PATH_GCC46:$PATH; /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_config=osx_ostreamconv_x32_gcc46_Release run) && \
-\
-false \
-)
+		PATH_GCC47=/opt/local/bin
+		
+		if [ -x /opt/local/bin/g++-mp-4.7 ]
+		then
+			if [ "$MACHINE" == "x86_64" ]
+			then
+				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x64_gcc47" "run")
+			fi
+			(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32_gcc47" "run")
+		fi
+		
+		PATH_GCC46=/opt/local/bin
+		
+		if [ -x /opt/local/bin/g++-mp-4.6 ]
+		then
+			if [ "$MACHINE" == "x86_64" ]
+			then
+				(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x64_gcc46" "run")
+			fi
+			(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x32_gcc46" "run")
+		fi
+	)
 
 fi
 
 echo
 echo "XCDL runTests: completed, results in $DEST"
+echo
 echo "PWD=`pwd`"
+
+if [ "$MACHINE" == "x86_64" ]
+then
+	echo "64 bit versions included"
+fi
+
+if [ -x /opt/local/bin/g++-mp-4.7 ]
+then
+	echo "g++-mp-4.7 included"
+fi
+
+if [ -x /opt/local/bin/g++-mp-4.6 ]
+then
+	echo "g++-mp-4.6 included"
+fi
+
