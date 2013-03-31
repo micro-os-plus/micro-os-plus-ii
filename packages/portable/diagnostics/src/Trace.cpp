@@ -21,41 +21,42 @@ namespace os
 
 #if defined(DEBUG)
 
-  // ------------------------------------------------------------------------
-  // explicit templates instantiations
+    // ------------------------------------------------------------------------
+    // explicit templates instantiations
 
-  template class TraceStreambufBase<TraceImplementation_t>;
+    template class TraceStreambufBase<TraceImplementation_t> ;
 
-  template class TraceOstreamBase<TraceStreambuf_t, TraceImplementation_t>;
+    template class TraceOstreamBase<TraceStreambuf_t, TraceImplementation_t> ;
 
-  template class TraceLightBase<TraceImplementation_t>;
+    template class TraceLightBase<TraceImplementation_t> ;
 
-  template class TraceBase<TraceOstreamBase_t, TraceImplementation_t>;
-  template class TraceBase<TraceLightBase_t, TraceImplementation_t>;
+    template class TraceBase<TraceOstreamBase_t, TraceImplementation_t> ;
+    template class TraceBase<TraceLightBase_t, TraceImplementation_t> ;
 
-  // ========================================================================
-  // Trace
-  // (intentionally skipped on Release)
+    // ========================================================================
+    // Trace
+    // (intentionally skipped on Release)
 
-  /// \details
-  /// This constructor is called from `EarlyInitialisations.cpp`
-  /// to initialise the tracing output device as early as possible.
-  ///
-  /// The parent ostream was just initialised, so we can use it.
-  Trace::Trace()
+    /// \details
+    /// This constructor is called from `EarlyInitialisations.cpp`
+    /// to initialise the tracing output device as early as possible.
+    ///
+    /// The parent ostream was just initialised, so we can use it.
+    Trace::Trace()
     {
       // This is the earliest time we can display something on the
       // trace device.
 
       // use the static object, in case we deal with another instance
+      os::diag::trace.putNewLine();
       os::diag::trace.putConstructor();
     }
 
-  /// \details
-  /// Unless when used in testing environments,
-  /// this destructor is normally called during the exit sequence
-  /// (probably never in embedded environments).
-  Trace::~Trace()
+    /// \details
+    /// Unless when used in testing environments,
+    /// this destructor is normally called during the exit sequence
+    /// (probably never in embedded environments).
+    Trace::~Trace()
     {
       // use the static object, in case we deal with another instance
       os::diag::trace.putDestructor();
@@ -64,7 +65,7 @@ namespace os
 #endif // DEBUG
 // ============================================================================
 
-}
-  // namespace diag
-} // namespace os
+  }
+// namespace diag
+}// namespace os
 #endif
