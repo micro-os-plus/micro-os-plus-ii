@@ -61,9 +61,9 @@ then
 	time (
 		if [ "$MACHINE" == "x86_64" ]
 		then
-			(PATH=$PATH; runTestArray "linux" "x64_llvm" "run")
+			(PATH=$PATH; runTestArray "linux" "x64_gcc" "run")
 		fi
-		(PATH=$PATH; runTestArray "linux" "x32_llvm" "run")
+		(PATH=$PATH; runTestArray "linux" "x32_gcc" "run")
 	)
 
 elif [ $UNAME == "Darwin" ]
@@ -112,6 +112,8 @@ echo "PWD=`pwd`"
 if [ "$MACHINE" == "x86_64" ]
 then
 	echo "64 bit versions included"
+else
+	echo "32 bit versions only"
 fi
 
 if [ -x /opt/local/bin/g++-mp-4.7 ]
