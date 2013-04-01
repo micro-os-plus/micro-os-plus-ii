@@ -44,9 +44,9 @@ namespace os
     ///  `os::infra::TestSuiteImplementation_t` similar to the below
     /// definition, but pointing to the actual class, since this is how
     /// it is referred from the TestSuite member function.
-    /// ~~~
+    /// \code{.cpp}
     /// typedef os::infra::TestSuiteImplementation TestSuiteImplementation_t;
-    /// ~~~
+    /// \endcode
     class TestSuiteImplementationSample
     {
     public:

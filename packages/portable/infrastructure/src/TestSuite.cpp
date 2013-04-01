@@ -100,9 +100,9 @@ namespace os
     ///
     /// \par Example
     ///
-    /// ~~~{.cpp}
+    /// \code{.cpp}
     /// setClassName("os::infra::TestSuite");
-    /// ~~~
+    /// \endcode
     template<class TImplementation_T>
       void
       TestSuiteBase<TImplementation_T>::setClassName(const char* pName)
@@ -124,9 +124,9 @@ namespace os
     ///
     /// \par Example
     ///
-    /// ~~~{.cpp}
+    /// \code{.cpp}
     /// setFunctionNameOrPrefix("clear(iostate)");
-    /// ~~~
+    /// \endcode
     template<class TImplementation_T>
       void
       TestSuiteBase<TImplementation_T>::setFunctionNameOrPrefix(
@@ -506,14 +506,14 @@ namespace os
     ///
     /// The JUnit XML looks like this:
     ///
-    /// ~~~
+    /// \code{.cpp}
     /// <testsuites><testsuite>
     ///   <testcase classname="os::infra::TestSuite" name="check true constant"/>
     ///   <testcase classname="os::infra::TestSuite" name="check false constant"><failure/></testcase>
     ///   <testcase classname="os::infra::TestSuite" name="a passed test"/>
     ///   <testcase classname="os::infra::TestSuite" name="a failed test"><failure/></testcase>
     /// </testsuite></testsuites>
-    /// ~~~
+    /// \endcode
     template<class TImplementation_T>
       void
       TestSuiteBase<TImplementation_T>::writeTestCaseToXmlFile(bool isFailure,

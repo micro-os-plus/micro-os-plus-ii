@@ -30,12 +30,12 @@ namespace os
     /// OS X, as a 64 bit process.
     ///
     /// The program was called with the following arguments:
-    /// ~~~
+    /// \code{.cpp}
     /// $ testsuite -x junit.xml
-    /// ~~~
+    /// \endcode
     ///
     /// The output produced by the Release build was:
-    /// ~~~
+    /// \code{.cpp}
     /// CLASS:"os::infra::TestSuite"
     /// START:"Starting tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infrastructure/tests/src/testsuite.cpp'"
     /// PASS:"check true constant"
@@ -45,17 +45,17 @@ namespace os
     /// INFO:"there should be 2 failed cases and 2 passed cases"
     /// STAT:"Failed=2, Passed=2"
     /// STOP:"Completing tests from '/Users/ilg/My Files/MacBookPro Projects/uOS/micro-os-plus-se.git/packages/portable/infrastructure/tests/src/testsuite.cpp'"
-    /// ~~~
+    /// \endcode
     ///
     /// The XML output was:
-    /// ~~~
+    /// \code{.cpp}
     /// <testsuites><testsuite>
     /// <testcase classname="os::infra::TestSuite" name="check true constant"/>
     /// <testcase classname="os::infra::TestSuite" name="check false constant"><failure/></testcase>
     /// <testcase classname="os::infra::TestSuite" name="a passed test"/>
     /// <testcase classname="os::infra::TestSuite" name="a failed test"><failure/></testcase>
     /// </testsuite></testsuites>
-    /// ~~~
+    /// \endcode
     /// The process exit value was 1 (failed).
 
     /// \class TestSuite TestSuite.h "portable/infrastructure/include/TestSuite.h"

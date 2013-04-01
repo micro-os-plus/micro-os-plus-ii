@@ -577,12 +577,12 @@ namespace os
     /// must use explicit qualifications to access this function via any
     /// derived class.  For example:
     ///
-    /// ~~~
+    /// \code{.cpp}
     /// std::fstream     foo;         // or some other derived type
     /// std::streambuf*  p = .....;
     ///
     /// foo.ios::rdbuf(p);            // ios == basic_ios<char>
-    /// ~~~
+    /// \endcode
     template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_streambuf<TChar_T, TTraits_T>*
@@ -630,9 +630,9 @@ namespace os
     /// if possible.
     ///
     /// Returns the result of
-    /// ~~~
+    /// \code{.cpp}
     ///   use_facet<ctype<TChar_T> >(getloc()).narrow(c,dfault)
-    /// ~~~
+    /// \endcode
     template <class TChar_T, class TTraits_T>
     inline _LIBCPP_INLINE_VISIBILITY
     char
@@ -645,9 +645,9 @@ namespace os
     /// Maps a character of `char` to a character of `char_type`.
     ///
     /// Returns the result of
-    /// ~~~
+    /// \code{.cpp}
     ///   use_facet<ctype<char_type> >(getloc()).widen(c)
-    /// ~~~
+    /// \endcode
     template <class TChar_T, class TTraits_T>
     inline _LIBCPP_INLINE_VISIBILITY
     TChar_T
