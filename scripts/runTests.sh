@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# run arguments: generate jUnit XML files
+MAKE_ARGS=-Wr,-x,junit.xml
+
 XCDLBUILD="xcdl-python.git/scripts/xcdlBuild.sh"
 REPO="micro-os-plus-se.git/packages"
 UNAME=`uname`
@@ -30,7 +33,7 @@ function runTest()
 	else
 		action='run'
 	fi
-	/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=$1 $action
+	/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=$1 $MAKE_ARGS $action
 	[ $? -eq 0 ] || exit $? 
 }
 
