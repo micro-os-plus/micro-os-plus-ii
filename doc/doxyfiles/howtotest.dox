@@ -1,6 +1,7 @@
 /**
 
 \page howtotest How to test
+\tableofcontents
 
 If testing software is generally a delicate issue, testing embedded
 software is an even more complicated matter, since images must be 
@@ -19,7 +20,8 @@ toolchains, with 32/64 bit, for Debug or Release.
 To run all available tests, a script (`runTests.sh`) is available
 in the `/scripts` folder.
 
-\section linuxtest GNU/Linux
+\section prereq Prerequisites
+\subsection linux GNU/Linux
 
 Currently all tests are periodically checked on the 64 bit version of
 Ubuntu 12.10, using the default 
@@ -27,24 +29,25 @@ GCC 4.7 compiler, but it is expected that any other modern distribution
 will run them as well. 
 
 The prerequisites for running the tests on Ubuntu are:
-~~~
+
+\verbatim
 sudo apt-get install git
 sudo apt-get install gcc gcc-multilib g++ g++-multilib
 sudo apt-get install python
-~~~
+\endverbatim
 
 To check if the correct compiler is available, run:
-~~~
+\verbatim
 g++ --version
-~~~
+\endverbatim
 
 The result should look like:
-~~~
+\verbatim
 g++ (Ubuntu/Linaro 4.7.2-2ubuntu1) 4.7.2
-~~~
+\endverbatim
 
 
-\section osxtest OS X
+\subsection osx OS X
 
 As the main µOS++ development platform, even more tests are available 
 on OS X.
@@ -68,10 +71,10 @@ only the 64 bit targets.
 To support both the 32 and 64 bit targets, the `+universal` option must 
 be used when installing the toolchains:
 
-~~~
+\verbatim
 sudo port install gcc46 +universal
 sudo port install gcc47 +universal
-~~~
+\endverbatim
 
 The toolchain binaries are available in `/opt/local/bin/` as:
 - g++-mp-4.6
@@ -82,7 +85,7 @@ package provided (freely) by Apple.
 
 For reference, here is the `git` global configuration that I use:
 
-~~~
+\verbatim
 git config --global user.name "Liviu Ionescu"
 git config --global user.email ilg@livius.net
 
@@ -92,13 +95,13 @@ git config --global core.autocrlf input
 git config --global core.whitespace trailing-space,space-before-tab
 
 git config --global core.editor "vi"
-~~~
+\endverbatim
 
-(for more details, please check the <a href="http://git-scm.com/docs/git-config">
-git documentation</a>).
+(for more details, please check the
+[git documentation](http://git-scm.com/docs/git-config)).
 
 
-\section runtest Run the tests
+\section run Run the tests
 
 Once the prerequisites are satisfied, create a dedicated folder for
 the tests, clone the repositories and run the script.
@@ -107,7 +110,7 @@ the tests, clone the repositories and run the script.
 a second repository, containing the
 <b>XCDL build tools</b>, is required.
 
-~~~
+\verbatim
 mkdir -p work/uOS
 cd work/uOS
 
@@ -115,17 +118,17 @@ git clone http://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
 git clone http://git.code.sf.net/p/xcdl/python xcdl-python.git
 
 /bin/bash micro-os-plus-se.git/scripts/runTests.sh /tmp/uOS/build
-~~~
+\endverbatim
 or
-~~~
+\verbatim
 /bin/bash micro-os-plus-se.git/scripts/runTests.sh
-~~~
+\endverbatim
 
 \note The `runTests.sh` script accepts an optional argument, defining the 
 location where the build folders will be created, in this case a 
 temporary folder.
 
-\section sampletest Sample output
+\section output Sample output
 
 Being based on `make`, the first time when the `runtests.sh` script 
 is executed, each test will first build the executable from the sources, 
@@ -144,7 +147,7 @@ otherwise the tests will fail to run the 32 bit executables.
 
 The output produced by the *Debug* version of a test looks like:
 
-~~~
+\verbatim
 
 XCDL metadata processed in 30ms.
 
@@ -176,12 +179,12 @@ Finished running target: trace.elf
  
 XCDL build completed in 37ms.
 
-~~~
+\endverbatim
 
 The output produced by the *Release* version of the same test 
 is slightly less verbose:
 
-~~~
+\verbatim
 
 XCDL metadata processed in 24ms.
 
@@ -200,9 +203,9 @@ Finished running target: trace.elf
  
 XCDL build completed in 31ms.
 
-~~~
+\endverbatim
 
-\section xmltest The XML output
+\section xml The XML output
 
 All tests return the FAIL information as the non-zero POSIX exit code,
 so the script will break as soon as one of the tests fails.
@@ -215,6 +218,8 @@ In addition to this PASS/FAIL information, the testing framework
 is also able to generate jUnit XML files for each test, to be used in
 continuous integration environments, like Jenkins.
 
-To activate this, add the option `-x filename` when executing the tests.
+To activate this, the `runTests.sh` script automatically adds
+`-Wr,-x,junit.xml` to run builds, which will be passed by make
+down to the the executable as `-x junit.xml`.
 
 */

@@ -1,6 +1,6 @@
 /**
 
-\page diagnostics The diagnostics support
+\page diagnostics Diagnostics support
 
 # Overview
 
@@ -60,9 +60,9 @@ The ostream interface is the standard C++ interface, implemented in the
 so the standard behaviour is to be expected. 
 
 \par Example
-~~~
+\code
 	os::diag::trace << "Baburiba Hey" << os::std::endl
-~~~
+\endcode
 
 \note Please note that the 
 namespace is `os::std` instead of `std`.
@@ -74,10 +74,10 @@ and consists of separate simple functions for each type of data to
 emit on the trace device.
 
 \par Example
-~~~
+\code
 	os::diag::trace.putString("Baburiba Hey");
 	os::diag::trace.putNewLine();
-~~~
+\endcode
 
 ## Synchronisation issues
 
@@ -96,13 +96,13 @@ The recommended synchronisation mechanism is the scheduler lock/unlock
 probably not justifying the use of a mutex).
 
 \par Example
-~~~
+\code
 	{
 		SchedulerLock cs;
 		os::diag::trace << "Baburiba" << 
 			os::std::dec << 1 << os::std::endl;
 	}
-~~~
+\endcode
 
 ## Flushing the output stream
 
@@ -118,9 +118,10 @@ stream is generated, without end of lines), then `flush()` must be
 explicitly called.
 
 \par Example
-~~~
+\code
 	os::diag::trace.flush();
-~~~
+\endcode
+
 
 Normally the characters collected are passed to the physical device
 in an atomic operation (assuming the buffer is large enough, otherwise
@@ -143,11 +144,12 @@ the macro-processor DEBUG definitions should always be checked, both
 for the light and for the ostream usages.
 
 \par Example
-~~~
+\code
 	#if defined(DEBUG)
 		os::diag::trace.putString("Baburiba Hey");
 		os::diag::trace.putNewLine();
 	#endif
-~~~
+\endcode
+
 
 */

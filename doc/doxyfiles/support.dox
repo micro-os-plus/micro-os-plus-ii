@@ -3,14 +3,14 @@
 \page support Support
 
 Support for the µOS++ project is provided via the SourceForge trackers:
-<ul>
-<li> <a href="http://sourceforge.net/p/micro-os-plus/bugs/">Bugs</a> - for 
-reporting bugs </li>
-<li> <a href="http://sourceforge.net/p/micro-os-plus/featurerequests/">Feature 
-Requests</a> - for requesting new features</li>
-<li> <a href="http://sourceforge.net/p/micro-os-plus/support/">Support</a> - 
+
+- [Bugs](http://sourceforge.net/p/micro-os-plus/bugs/) - for 
+reporting bugs,
+- [Feature Requests](http://sourceforge.net/p/micro-os-plus/featurerequests/) - 
+for requesting new features,
+- [Support](http://sourceforge.net/p/micro-os-plus/support/) - 
 for all other questions regarding µOS++ (installation, usage, etc); 
-please do not post bug reports or feature requests here.</li>
-</ul>
+please do not post bug reports or feature requests here.
+
 
 */

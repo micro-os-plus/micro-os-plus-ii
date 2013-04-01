@@ -1,0 +1,10 @@
+/**
+
+\page uman User Manual
+
+The *User Manual* is divided into several sections:
+
+- \subpage diagnostics - Diagnostics support
+- \subpage testing - The testing framework
+
+*/

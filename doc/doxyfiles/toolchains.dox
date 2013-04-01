@@ -1,0 +1,225 @@
+/**
+
+\page toolchains Supported toolchains
+\tableofcontents
+
+There are multiple toolchains supported for building <b>µOS++ SE</b> 
+applications,
+mainly cross-compilers but also native compilers for synthetic POSIX
+platforms.
+
+\section osx OS X
+
+\subsection osxsynt Synthetic POSIX
+
+The main toolchain for building µOS++ SE synthetic POSIX applications is 
+the default <b>Apple LLVM clang</b>.
+
+Optionally, µOS++ SE tests can be built with GNU GCC 4.6 and GCC 4.7.
+
+\subsubsection clang LLVM clang
+
+The shortcut method for installing `clang` is to download and install 
+the optional package <b>Command Line Tools for Xcode</b> available from
+the [Apple Developper site](https://developer.apple.com/downloads/).
+
+However, the recommended method is to first install <b>Xcode</b>
+from App Store, then to download the <b>Command Line Tools</b>
+additional component in the *Preferences → Downloads → Components* window.
+
+To check if the compiler is available, call the compiler using `--version`:
+
+\verbatim
+$ clang++ --version
+Apple LLVM version 4.2 (clang-425.0.27) (based on LLVM 3.2svn)
+Target: x86_64-apple-darwin12.3.0
+Thread model: posix
+\endverbatim
+
+Installing the <b>Command Line Tools</b> will also install the `git` support.
+
+\verbatim
+$ git --version
+git version 1.7.12.4 (Apple Git-37)
+\endverbatim
+
+For reference, here is the `git` global configuration that I use:
+
+\verbatim
+git config --global user.name "Liviu Ionescu"
+git config --global user.email ilg@livius.net
+
+git config --global core.filemode false
+git config --global core.autocrlf input
+
+git config --global core.whitespace trailing-space,space-before-tab
+
+git config --global core.editor "vi"
+\endverbatim
+
+(for more details about the `git` configuration, please check the
+[git documentation](http://git-scm.com/docs/git-config)).
+
+\subsubsection mpgcc MacPorts GCC
+
+The GNU GCC compilers can be installed on OS X from multiple sources, 
+but the recommended source is from [MacPorts](http://www.macports.org).
+
+First download and install the corresponding `MacPorts-*.pkg` installer
+(more details in the [MacPorts Install](http://www.macports.org/install.php) 
+page.
+
+To install GCC 4.6 and GCC 4.7, run the following commands:
+
+\verbatim
+sudo port install gcc46 +universal
+sudo port install gcc47 +universal
+\endverbatim
+
+\note By default, the modern MacPorts compilers support 
+only 64 bit targets. To support both 32 and 64 bit targets, 
+the <b>`+universal`</b> option must 
+be used when installing the toolchains, otherwise the tests 
+will fail to run the 32 bit executables.
+
+The toolchain binaries are installed in `/opt/local/bin/` as:
+- g++-mp-4.6
+- g++-mp-4.7
+
+To check if the compilers are available, call 
+the compilers using `--version`:
+
+\verbatim
+$ /opt/local/bin/g++-mp-4.7 --version
+g++-mp-4.7 (MacPorts gcc47 4.7.2_2+universal) 4.7.2
+
+$ /opt/local/bin/g++-mp-4.6 --version
+g++-mp-4.6 (MacPorts gcc46 4.6.3_9+universal) 4.6.3
+\endverbatim
+
+One detail to be considered: the PATH setting. When MacPorts is
+installed, the .profile is modified to include the MacPorts path.
+
+\verbatim
+# MacPorts Installer addition on 2012-12-05_at_23:48:38: adding an appropriate PATH variable for use with MacPorts.
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# Finished adapting your PATH environment variable for use with MacPorts.
+\endverbatim
+
+To avoid unwanted interactions between MacPorts and the system
+programs, it is recommended to disable this setting, and to 
+add an explicit alias to update the PATH only when needed:
+
+\verbatim
+alias mp='export PATH=/opt/local/bin:/opt/local/sbin:$PATH'
+\endverbatim
+
+\note The MacPorts toolchains are not mandatory for using µOS++
+and can be ignored for usual embedded developments.
+
+\subsection osxarmcm ARM Cortex-M
+
+There are many ARM toolchains available on OS X, more or less up-to-date.
+
+Until recently the the ARM reference toolchain was 
+<b>Sourcery CodeBench Lite ARM</b>, but more traction it seems to gain
+the <b>GNU Tools for ARM Embedded Processors</b>.
+
+\subsubsection osxlp GNU Tools for ARM Embedded Processors
+
+A relatively new, but very active, toolchain (first release 
+seems to date from end of 2011) 
+the <b>GNU Tools for ARM 
+Embedded Processors</b> is hosted on [launchpad.net]
+(https://launchpad.net/gcc-arm-embedded) and runs on all significant 
+platforms. The current version is based on GCC 4.7.3.
+
+To use this toolchain, download the latest `gcc-arm-none-eabi-*-mac.tar.bz2`
+file, unpack it and copy the resulting folder to /usr/local.
+
+To simplify path management, it is recommended to create a link to the 
+latest release of a certain version, for example:
+
+\verbatim
+cd /usr/local
+sudo ln -s gcc-arm-none-eabi-4_7-2013q1 gcc-arm-none-eabi-4_7
+\endverbatim
+
+\subsubsection osxmentor Sourcery CodeBench Lite ARM
+
+A classical in its class, the ARM reference toolchain 
+<b>Sourcery CodeBench Lite ARM</b>, 
+is available from Mentor for all significant platforms, as a free
+version if their quite expensive development tools.
+Unfortunately Mentor does 
+not provide the OS X binaries, but the toolchain can be built 
+from the source code (for more details see 
+[Toolchain installation on OS X]
+(http://gnuarmeclipse.livius.net/wiki/Toolchain_installation_on_OS_X).
+The latest version that builds for OS X is 2012.03-56, based on GCC 4.6.3.
+
+There are newer Mentor releases, but, as of April 2013, the build procedure
+was not updated and it is unclear if it will be further supported.
+
+\subsection osxavr8 Atmel AVR8
+
+The recommended AVR8 toolchain is [CrossPack for AVR Development]
+(http://www.obdev.at/products/crosspack/index.html) 
+published by [Objective Development](http://www.obdev.at/). The 
+current version is based on GNU GCC 4.6.2.
+
+To use this toolchain, download the latest
+`CrossPack-AVR-*.dmg` version and install it as usual.
+
+The toolchain binaries are installed in `/usr/local/CrossPack-AVR/bin/` as:
+- avr-g++
+- avr-gcc
+
+To check if the compiler is available, call the compiler using `--version`:
+
+\verbatim
+$ /usr/local/CrossPack-AVR/bin/avr-g++ --version
+avr-g++ (GCC) 4.6.2
+\endverbatim
+
+Similarly to MacPorts, the CrossPack installer modifies the
+system settings to add the CrossPack path to the system path.
+
+\verbatim
+$ cat /etc/paths.d/50-at.obdev.CrossPack-AVR 
+/usr/local/CrossPack-AVR/bin
+\endverbatim
+
+It is recommended to disable this setting, and to 
+explicitly update the PATH only when needed: 
+
+\verbatim
+$ sudo rm /etc/paths.d/50-at.obdev.CrossPack-AVR 
+\endverbatim
+
+To check if the compiler is available, call the compiler using `--version`:
+
+\verbatim
+$ $ /usr/local/gcc-arm-none-eabi-4_7/bin/arm-none-eabi-g++ --version
+arm-none-eabi-g++ (GNU Tools for ARM Embedded Processors) 4.7.3 20130312 (release) [ARM/embedded-4_7-branch revision 196615]
+\endverbatim
+
+\section linux GNU/Linux
+
+TBD
+
+\subsection linuxsynt Synthetic POSIX
+
+TBD
+
+\subsection linuxarmcm ARM Cortex-M
+TBD
+
+\subsection linuxavr8 Atmel AVR8
+TBD
+
+\section win Windows
+
+TBD
+
+*/

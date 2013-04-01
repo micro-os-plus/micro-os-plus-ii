@@ -1,6 +1,7 @@
 /**
 
 \page downloads Downloads
+\tableofcontents
 
 As all open source projects, µOS++ is distributed in source code format.
 
@@ -13,21 +14,21 @@ in the µOS++ distribution.
 The live repository for µOS++ SE is hosted on SourceForge and this is the
 place where you can find the latest version of µOS++.
 
-~~~
+\verbatim
 git clone http://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
-~~~
+\endverbatim
 
 or
 
-~~~
+\verbatim
 git clone git://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
-~~~
+\endverbatim
 
 \section packarch Packed archives
 From time to time, the µOS++ stable releases will be archived and published 
 using the
-<a href="http://sourceforge.net/projects/micro-os-plus/files">SourceForge 
-Files</a> distribution system and will thus be available from the various
+[SourceForge Files](http://sourceforge.net/projects/micro-os-plus/files)
+distribution system and will thus be available from the various
 SourceForge mirror servers around the world.
 
 \note Currently there are no packed archives available for µOS++ SE.

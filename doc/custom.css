@@ -52,3 +52,12 @@ div.groupHeader {
 	font-size: 105%;
 	margin-left: 0px;
 }
+
+pre.fragment {
+	font-size: 13px;
+	margin-left: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 6px;
+	padding-top: 6px;
+}
