@@ -7,8 +7,8 @@
 Toolchain(
           
     id='toolchain.linux.gcc.base',
-    name='Linux GCC Base',
-    description='The Linux GCC toolchain base',
+    name='GNU/Linux GCC Base',
+    description='The GNU/Linux GCC toolchain base',
     
     category='base',
     
@@ -33,35 +33,35 @@ Toolchain(
     
     cc=Tool(
         programName='$(PREFIX)gcc$(SUFFIX)',
-        description='Linux GNU GCC',
+        description='GNU/Linux GNU GCC',
         standard='-std=gnu99',
         options='',
     ),
           
     cpp=Tool(
         programName='$(PREFIX)g++$(SUFFIX)',
-        description='Linux GNU G++',
+        description='GNU/Linux GNU G++',
         standard='-std=c++11',
         options='-fno-rtti -fno-exceptions -Wabi',
     ),
           
     asm=Tool(
         programName='$(PREFIX)gcc$(SUFFIX)',
-        description='Linux GNU GCC',
+        description='GNU/Linux GNU GCC',
         options='',
     ),
 
     ld=Tool(
         programName='$(PREFIX)g++$(SUFFIX)',
-        description='Linux GNU G++ Linker',
+        description='GNU/Linux GNU G++ Linker',
     ),
     
     children=[
               
         Toolchain(
             id='toolchain.linux.debug.gcc.base',
-            name='Linux Debug GCC Base',
-            description='The Linux GCC toolchain base for debug builds',
+            name='GNU/Linux Debug GCC Base',
+            description='The GNU/Linux GCC toolchain base for debug builds',
             
             category='base',
             
@@ -73,8 +73,8 @@ Toolchain(
                 Toolchain(
                           
                     id='toolchain.linux.debug.gcc.x64',
-                    name='Linux Debug GCC x86_64',
-                    description='The Linux GCC x86_64 toolchain base for debug builds',
+                    name='GNU/Linux Debug GCC x86_64',
+                    description='The GNU/Linux GCC x86_64 toolchain base for debug builds',
                     
                     category='debug',
                     
@@ -84,8 +84,8 @@ Toolchain(
                 Toolchain(
                           
                     id='toolchain.linux.debug.gcc.x32',
-                    name='Linux Debug GCC i386',
-                    description='The Linux GCC i386 toolchain base for debug builds',
+                    name='GNU/Linux Debug GCC i386',
+                    description='The GNU/Linux GCC i386 toolchain base for debug builds',
 
                     category='debug',
                     
@@ -96,8 +96,8 @@ Toolchain(
 
         Toolchain(
             id='toolchain.linux.release.gcc.base',
-            name='Linux Release GCC Base',
-            description='The Linux GCC toolchain base for release builds',
+            name='GNU/Linux Release GCC Base',
+            description='The GNU/Linux GCC toolchain base for release builds',
             
             category='release',
             
@@ -109,8 +109,8 @@ Toolchain(
                 Toolchain(
                           
                     id='toolchain.linux.release.gcc.x64',
-                    name='Linux Release GCC x86_64',
-                    description='The Linux GCC x86_64 toolchain base for release builds',
+                    name='GNU/Linux Release GCC x86_64',
+                    description='The GNU/Linux GCC x86_64 toolchain base for release builds',
                     
                     category='release',
                     
@@ -120,8 +120,8 @@ Toolchain(
                 Toolchain(
                           
                     id='toolchain.linux.release.gcc.x32',
-                    name='Linux Release GCC i386',
-                    description='The Linux GCC i386 toolchain base for release builds',
+                    name='GNU/Linux Release GCC i386',
+                    description='The GNU/Linux GCC i386 toolchain base for release builds',
 
                     category='release',
                     
