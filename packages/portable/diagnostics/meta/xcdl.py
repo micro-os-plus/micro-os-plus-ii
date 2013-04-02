@@ -42,9 +42,13 @@ Package(
                     description='Add ostream support to the Trace class.',
                        
                     # Disable it if not needed
-                    isEnabled=True,
+                    isEnabled=False,
                     
                     headerDefinition='OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE_OSTREAM_BASE',
+                    
+                    requirements=[
+                        'enable("component.os.portable.language.cpp.streams")',
+                    ],
                 ),
             ],
         ),
