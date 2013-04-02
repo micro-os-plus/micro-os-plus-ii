@@ -32,27 +32,27 @@ Toolchain(
     
     cc=Tool(
         programName='$(PREFIX)gcc$(SUFFIX)',
-        description='MacPorts GNU GCC',
+        description='OS X MacPorts GNU GCC',
         standard='-std=gnu99',
         options='',
     ),
           
     cpp=Tool(
         programName='$(PREFIX)g++$(SUFFIX)',
-        description='MacPorts GNU G++',
+        description='OS X MacPorts GNU G++',
         standard='-std=c++11',
         options='-fno-rtti -fno-exceptions -Wabi',
     ),
           
     asm=Tool(
         programName='$(PREFIX)gcc$(SUFFIX)',
-        description='MacPorts GNU GCC',
+        description='OS X MacPorts GNU GCC',
         options='',
     ),
 
     ld=Tool(
         programName='$(PREFIX)g++$(SUFFIX)',
-        description='MacPorts GNU G++ Linker',
+        description='OS X MacPorts GNU G++ Linker',
     ),
     
     children=[
