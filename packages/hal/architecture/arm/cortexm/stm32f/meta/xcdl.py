@@ -5,13 +5,21 @@
 
 Package(
     id='package.os.hal.architecture.cortexm.stm32f',
-    name='ST ARM Cortex-M STM32F* families',
+    name='ST Micro ARM Cortex-M STM32F* families',
     description='Support for STM32F[124]xx ARM Cortex-M processors.',
     
     category='family',
     
+    isEnabled=False,
+    
     sourceFiles=[
-        'OS_Arch_Implementation.cpp',
-        'OSScheduler_Arch_Implementation.cpp'
+        #'OS_Arch_Implementation.cpp',
+        #'OSScheduler_Arch_Implementation.cpp'
     ],
+        
+    implements=[
+        # mark this is an architecture family
+        'interface.os.architecture.family',
+    ],
+
 )
