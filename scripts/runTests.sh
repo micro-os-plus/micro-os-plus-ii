@@ -9,7 +9,7 @@ UNAME=`uname`
 
 DEST=build
 
-declare -a testNames=( 'trace' 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
+declare -a testNames=( 'minimal' 'trace' 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
 
 # Check for custom destination folder
 if [ $# -gt 0 ]
