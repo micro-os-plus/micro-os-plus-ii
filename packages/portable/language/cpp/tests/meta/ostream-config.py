@@ -16,7 +16,7 @@ Configuration(
         'package.os.portable.language.cpp.tests',
         
         # the minimal template
-        'package.os.templates.minimal',
+        'package.os.template.minimal',
     ],
     
     requirements=[
@@ -28,6 +28,9 @@ Configuration(
 
         # enable component under test
         'enable("component.os.portable.language.cpp.streams")',
+
+        # enable ostream support for Trace
+        'enable("option.os.portable.diagnostics.trace.ostream")',
         
         # enable test artefact
         'enable("component.os.portable.language.cpp.tests.ostream")',

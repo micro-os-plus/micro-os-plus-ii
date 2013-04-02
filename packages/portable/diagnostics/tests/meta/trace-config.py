@@ -16,14 +16,14 @@ Configuration(
         'package.os.portable.diagnostics.tests',
         
         # the minimal template
-        'package.os.templates.minimal',
+        'package.os.template.minimal',
     ],
     
     requirements=[
         'setValue("APP_STRING_APPLICATION_NAME", "Trace")',        
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
         
-        'enable("component.os.portable.language.cpp.streams")',
+        'enable("option.os.portable.diagnostics.trace.ostream")',
         
         # enable the test suite code
         'enable("component.os.portable.infrastructure.testsuite")',
