@@ -13,6 +13,8 @@
 #include "Trace.h"
 #include "TraceConversions.cpp.h"
 
+#include <string.h>
+
 namespace os
 {
   namespace diag
@@ -20,6 +22,8 @@ namespace os
 
     // ========================================================================
     // TraceStreambufBase
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
 
     /// \details
     /// Pass the implementation reference to the base streambuf.
@@ -73,6 +77,8 @@ namespace os
       TraceOstreamBase<TStreambuf_T, TImplementation_T>::~TraceOstreamBase()
       {
       }
+
+#endif
 
     // ========================================================================
     // TraceBase

@@ -24,13 +24,17 @@ namespace os
     // ------------------------------------------------------------------------
     // explicit templates instantiations
 
-    template class TraceStreambufBase<TraceImplementation_t> ;
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
 
+    template class TraceStreambufBase<TraceImplementation_t> ;
     template class TraceOstreamBase<TraceStreambuf_t, TraceImplementation_t> ;
+
+    template class TraceBase<TraceOstreamBase_t, TraceImplementation_t> ;
+
+#endif
 
     template class TraceLightBase<TraceImplementation_t> ;
 
-    template class TraceBase<TraceOstreamBase_t, TraceImplementation_t> ;
     template class TraceBase<TraceLightBase_t, TraceImplementation_t> ;
 
     // ========================================================================

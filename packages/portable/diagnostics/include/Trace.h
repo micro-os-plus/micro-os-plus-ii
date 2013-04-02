@@ -12,6 +12,8 @@
 
 #include "TraceImplementationSelector.h"
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
+
 #include "portable/language/cpp/include/ostream.h"
 
 namespace os
@@ -140,7 +142,15 @@ namespace os
         /// @}
 
       };
+}
+}
 
+#endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)
+
+namespace os
+{
+  namespace diag
+  {
     // ========================================================================
 
     /// \class TraceLightBase Trace.h "portable/diagnostics/include/Trace.h"
@@ -477,6 +487,8 @@ namespace os
 
 #if defined(DEBUG)
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
+
 // ----------------------------------------------------------------------------
 
 #pragma GCC diagnostic push
@@ -510,6 +522,8 @@ namespace os
   // Define a type to the TraceOstreamBase class
   typedef TraceOstreamBase<TraceStreambuf_t, TraceImplementation_t> TraceOstreamBase_t;
 
+#endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)
+
 // ----------------------------------------------------------------------------
 
   // Declare the template instantiation
@@ -526,7 +540,9 @@ namespace os
 #endif
 
   // Declare the template instantiation
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
   extern template class TraceBase<TraceOstreamBase_t, TraceImplementation_t>;
+#endif
   extern template class TraceBase<TraceLightBase_t, TraceImplementation_t>;
 
 #pragma GCC diagnostic pop

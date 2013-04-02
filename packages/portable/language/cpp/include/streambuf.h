@@ -14,6 +14,8 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
+
 #include "portable/language/cpp/include/internal/__config.h"
 #include "portable/language/cpp/include/iosfwd.h"
 #include "portable/language/cpp/include/ios.h"
@@ -954,4 +956,6 @@ namespace os
 }
 }
 
-#endif  /* OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STEAMBUF_H_ */
+#endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)
+
+#endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STEAMBUF_H_
