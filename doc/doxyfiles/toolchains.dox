@@ -8,6 +8,10 @@ applications,
 mainly cross-compilers but also native compilers for synthetic POSIX
 platforms.
 
+
+
+
+
 \section osx OS X
 
 \subsection osxsynt Synthetic POSIX
@@ -117,6 +121,11 @@ alias mp='export PATH=/opt/local/bin:/opt/local/sbin:$PATH'
 \note The MacPorts toolchains are not mandatory for using µOS++
 and can be ignored for usual embedded developments.
 
+
+
+
+
+
 \subsection osxarmcm ARM Cortex-M
 
 There are many ARM toolchains available on OS X, more or less up-to-date.
@@ -145,6 +154,13 @@ cd /usr/local
 sudo ln -s gcc-arm-none-eabi-4_7-2013q1 gcc-arm-none-eabi-4_7
 \endverbatim
 
+To check if the compiler is available, call the compiler using `--version`:
+
+\verbatim
+$ /usr/local/gcc-arm-none-eabi-4_7/bin/arm-none-eabi-g++ --version
+arm-none-eabi-g++ (GNU Tools for ARM Embedded Processors) 4.7.3 20130312 (release) [ARM/embedded-4_7-branch revision 196615]
+\endverbatim
+
 \subsubsection osxmentor Sourcery CodeBench Lite ARM
 
 A classical in its class, the ARM reference toolchain 
@@ -161,9 +177,30 @@ The latest version that builds for OS X is 2012.03-56, based on GCC 4.6.3.
 There are newer Mentor releases, but, as of April 2013, the build procedure
 was not updated and it is unclear if it will be further supported.
 
+
+
+
+
 \subsection osxavr8 Atmel AVR8
 
-The recommended AVR8 toolchain is [CrossPack for AVR Development]
+\subsubsection osxavr8mp MacPorts
+
+The latest AVR8 toolchain (based on GCC 4.7.2) is available from MacPorts.
+
+\verbatim
+sudo port install avr-gcc avr-binutils avr-gdb avr-libc avrdude
+\endverbatim
+
+To check if the compiler is available, call the compiler using `--version`:
+
+\verbatim
+$ /opt/local/bin/avr-g++ --version
+avr-g++ (GCC) 4.7.2
+\endverbatim
+
+\subsubsection osxavr8cp CrossPack
+
+Another AVR8 toolchain is [CrossPack for AVR Development]
 (http://www.obdev.at/products/crosspack/index.html) 
 published by [Objective Development](http://www.obdev.at/). The 
 current version is based on GNU GCC 4.6.2.
@@ -200,9 +237,13 @@ $ sudo rm /etc/paths.d/50-at.obdev.CrossPack-AVR
 To check if the compiler is available, call the compiler using `--version`:
 
 \verbatim
-$ $ /usr/local/gcc-arm-none-eabi-4_7/bin/arm-none-eabi-g++ --version
+$ /usr/local/gcc-arm-none-eabi-4_7/bin/arm-none-eabi-g++ --version
 arm-none-eabi-g++ (GNU Tools for ARM Embedded Processors) 4.7.3 20130312 (release) [ARM/embedded-4_7-branch revision 196615]
 \endverbatim
+
+
+
+
 
 \section linux GNU/Linux
 
@@ -212,11 +253,31 @@ TBD
 
 TBD
 
+\verbatim
+$ g++ --version
+g++ (Ubuntu/Linaro 4.7.2-2ubuntu1) 4.7.2
+\endverbatim
+
+
 \subsection linuxarmcm ARM Cortex-M
 TBD
 
 \subsection linuxavr8 Atmel AVR8
+
 TBD
+
+\verbatim
+sudo apt-get install gcc-avr gdb-avr avrdude
+\endverbatim
+
+\verbatim
+$ avr-g++ --version
+avr-g++ (GCC) 4.7.0
+\endverbatim
+
+
+
+
 
 \section win Windows
 
