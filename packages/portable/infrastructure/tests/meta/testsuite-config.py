@@ -16,7 +16,7 @@ Configuration(
         'package.os.portable.infrastructure.tests',
         
         # the minimal template
-        'package.os.templates.minimal',
+        'package.os.template.minimal',
         
         'package.os.portable.language.cpp',
 
