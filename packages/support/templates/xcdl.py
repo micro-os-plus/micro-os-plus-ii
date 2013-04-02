@@ -5,7 +5,7 @@
 
 Package(
               
-    id='package.os.templates.minimal',
+    id='package.os.template.minimal',
     name='Minimal set of packages',
     description='The smallest set of packages needed to build a configuration.',
     
