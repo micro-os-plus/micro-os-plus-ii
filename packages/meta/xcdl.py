@@ -36,9 +36,15 @@ Repository(
     children=[
         
         Interface(
-            id='interface.os.arch',
+            id='interface.os.architecture',
             name='Active architectures',
             description='Count of active architectures, used for validation.',
+        ),
+        
+        Interface(
+            id='interface.os.architecture.family',
+            name='Active architecture families',
+            description='Count of active architecture families, used for validation.',
         ),
         
         Interface(
@@ -61,7 +67,11 @@ Repository(
             requirements=[
                           
                 # one and only one architecture shall be enabled
-                'implementationsOf("interface.os.arch") == 1',
+                'implementationsOf("interface.os.architecture") == 1',
+
+                # not more than one architecture family shall be enabled
+                # (some architectures have no families)
+                'implementationsOf("interface.os.architecture.family") <= 1',
                 
                 # one and only one platform shall be enabled
                 'implementationsOf("interface.os.platform") == 1',
