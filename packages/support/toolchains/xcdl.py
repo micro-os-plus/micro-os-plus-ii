@@ -25,6 +25,12 @@ Package(
             includeFiles=[
                 'osx-llvm.py',
                 'osx-mp-gcc.py',
+                
+                # ARM toolchains
+                'osx-aep-arm-gcc.py',
+                
+                # AVR8 toolchains
+                'osx-mp-avr8-gcc.py',
             ],
         ),
               
