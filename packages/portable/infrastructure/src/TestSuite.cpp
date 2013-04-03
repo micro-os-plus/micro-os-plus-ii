@@ -599,5 +599,5 @@ namespace os
   } /* namespace infra */
 } /* namespace os */
 
-#endif /* defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) */
+#endif // defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE)
 

@@ -12,4 +12,4 @@
 
 #include "portable/diagnostics/include/Trace.h"
 
-#endif /* OS_PORTABLE_CORE_OS_H_ */
+#endif // OS_PORTABLE_CORE_OS_H_

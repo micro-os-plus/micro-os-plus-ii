@@ -26,16 +26,16 @@
 #define APP_STRING_GREETING     APP_STRING_APPLICATION_MANUFACTURER \
   " / " APP_STRING_APPLICATION_NAME " v" APP_STRING_VERSION ", " __DATE__ " " __TIME__
 
-#endif /* defined(APP_STRING_APPLICATION_NAME) && .. */
+#endif // defined(APP_STRING_APPLICATION_NAME) && ..
 
-#endif /* defined(APP_INTEGER_VERSION_MAJOR) && .. */
+#endif // defined(APP_INTEGER_VERSION_MAJOR) && ..
 
 #if !defined(APP_STRING_GREETING)
 
 // Default greeting message, will be used in OSDeviceDebug.cpp
 #define APP_STRING_GREETING "uOS++ app"
 
-#endif /* !defined(APP_STRING_GREETING) */
+#endif // !defined(APP_STRING_GREETING)
 
 namespace os
 {
@@ -43,6 +43,6 @@ namespace os
   extern const char osGreeting[] __attribute__((weak));
 }
 
-#endif /* defined(OS_INCLUDE_GREETING) */
+#endif // defined(OS_INCLUDE_GREETING)
 
-#endif /* OS_PORTABLE_CORE_GREETING_H_ */
+#endif // OS_PORTABLE_CORE_GREETING_H_

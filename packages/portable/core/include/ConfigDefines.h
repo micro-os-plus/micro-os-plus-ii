@@ -73,4 +73,4 @@
 
 // ----------------------------------------------------------------------------
 
-#endif /* OS_PORTABLE_CORE_CONFIGDEFINES_H_ */
+#endif // OS_PORTABLE_CORE_CONFIGDEFINES_H_

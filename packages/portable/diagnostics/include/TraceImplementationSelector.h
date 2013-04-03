@@ -22,7 +22,7 @@
 
 #error "Missing TraceImplementation.h"
 
-#endif /* architecture selection */
+#endif // architecture selection
 
 #endif // defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE)
 #endif // OS_PORTABLE_DIAGNOSTICS_TRACEIMPLEMENTATION_H_

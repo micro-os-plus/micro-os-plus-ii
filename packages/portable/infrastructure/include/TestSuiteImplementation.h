@@ -21,8 +21,8 @@
 
 #error "Missing TestSuiteImplementation.h"
 
-#endif /* architecture selection */
+#endif // architecture selection
 
-#endif /* defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) */
+#endif // defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE)
 
-#endif /* OS_PORTABLE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_H_ */
+#endif // OS_PORTABLE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_H_
