@@ -24,7 +24,7 @@ Toolchain(
     compilerInputOptions='"$<"',
     compilerWarningOptions='-Wall -Wextra -Werror',
     
-    compilerMiscOptions='-fsigned-char -fmessage-length=0 -c -ffunction-sections -fdata-sections',
+    compilerMiscOptions='-fsigned-char -fsigned-bitfields -fmessage-length=0 -c -ffunction-sections -fdata-sections',
     compilerPreprocessorOptions='-D__MICRO_OS_PLUS_PLUS__=1',
     compilerDebugOptions='-g3',
     compilerOptimisationOptions='-O',
