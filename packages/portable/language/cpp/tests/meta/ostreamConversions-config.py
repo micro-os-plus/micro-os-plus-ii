@@ -57,7 +57,7 @@ Configuration(
                       
             buildFolder='osx/ostreamconv',
             
-            artifactFileName='ostreamConversions.elf',
+            artefactName='ostreamConversions',
             
             children=[
                        
@@ -255,7 +255,7 @@ Configuration(
                       
             buildFolder='linux/ostreamconv',
             
-            artifactFileName='ostreamConversions.elf',
+            artefactName='ostreamConversions',
             
             children=[
                        

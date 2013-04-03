@@ -56,7 +56,7 @@ Configuration(
                       
             buildFolder='osx/ostream',
             
-            artifactFileName='ostream.elf',
+            artefactName='ostream',
             
             children=[
                        
@@ -254,7 +254,7 @@ Configuration(
                       
             buildFolder='linux/ostream',
             
-            artifactFileName='ostream.elf',
+            artefactName='ostream',
             
             children=[
                        

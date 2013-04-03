@@ -9,6 +9,8 @@ Package(
     description='Support for a simple OS X environment, running as a \
 command line tool, without system threading.',
     
+    alias='osx',
+    
     category='synthetic',
 
     isEnabled=False, 
@@ -16,8 +18,6 @@ command line tool, without system threading.',
     sourceFiles=[
         'PlatformImplementation.cpp',
     ],
-
-    headerDefinition='OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX',
 
     # platform packages shall load corresponding architecture packages
     loadPackages=[
@@ -32,4 +32,6 @@ command line tool, without system threading.',
     implements=[
         'interface.os.platform',
     ],
+        
+    headerDefinition='OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX',
 )

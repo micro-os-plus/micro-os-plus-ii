@@ -10,17 +10,17 @@ Package(
     
     category='architecture',
     
-    headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM',
-      
     isEnabled=False,
     
     sourceFiles=[
-        #'ArchitectureImplementation.cpp',
+        'ArchitectureImplementation.cpp',
     ],
     
     implements=[
         # mark this is an architecture
         'interface.os.architecture',
     ],
-    
+
+    headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM',
+          
 )

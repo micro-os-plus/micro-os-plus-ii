@@ -10,7 +10,7 @@
 
 #if defined(OS_INCLUDE_GREETING)
 
-#include "portable/core/include/XCDL_Greeting_Defines.h"
+#include "portable/core/include/XCDL_GreetingDefines.h"
 
 #if defined(APP_INTEGER_VERSION_MAJOR) && defined(APP_INTEGER_VERSION_MINOR) && defined(APP_INTEGER_VERSION_REVISION)
 

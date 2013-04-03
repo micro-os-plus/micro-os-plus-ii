@@ -56,7 +56,7 @@ Configuration(
                       
             buildFolder='osx/fpos',
             
-            artifactFileName='fpos.elf',
+            artefactName='fpos',
             
             children=[
                    
@@ -254,7 +254,7 @@ Configuration(
                       
             buildFolder='linux/fpos',
             
-            artifactFileName='fpos.elf',
+            artefactName='fpos',
             
             children=[
                    

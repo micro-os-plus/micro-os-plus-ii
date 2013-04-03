@@ -53,7 +53,7 @@ Configuration(
                       
             buildFolder='osx/trace',
             
-            artifactFileName='trace.elf',
+            artefactName='trace',
             
             children=[
                        
@@ -261,7 +261,7 @@ Configuration(
                       
             buildFolder='linux/trace',
             
-            artifactFileName='trace.elf',
+            artefactName='trace',
             
             children=[
                        

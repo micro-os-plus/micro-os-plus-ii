@@ -17,7 +17,7 @@
 
 // mainly use the dynamically generated definitions
 
-#include "portable/core/include/XCDL_Build_Defines.h"
+#include "portable/core/include/XCDL_BuildDefines.h"
 
 // ----------------------------------------------------------------------------
 // Operating System versions and greeting definitions

@@ -56,7 +56,7 @@ Configuration(
                       
             buildFolder='osx/basic_ios',
             
-            artifactFileName='basic_ios.elf',
+            artefactName='basic_ios',
             
             children=[
                       
@@ -255,7 +255,7 @@ Configuration(
                       
             buildFolder='linux/basic_ios',
             
-            artifactFileName='basic_ios.elf',
+            artefactName='basic_ios',
             
             children=[
 

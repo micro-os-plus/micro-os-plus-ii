@@ -14,7 +14,10 @@ Package(
             id='component.os.portable.diagnostics.trace',
             name='Diagnostics trace support',
             description='Support for trace output.',
-                  
+            
+            # enabled by DEBUG requirements      
+            isEnabled=False,
+
             requirements=[
                 # for the greeting strings
                 'enable("package.os.portable.core.greeting")',

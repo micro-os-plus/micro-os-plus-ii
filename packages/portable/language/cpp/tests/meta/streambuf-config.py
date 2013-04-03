@@ -57,7 +57,7 @@ Configuration(
                       
             buildFolder='osx/streambuf',
             
-            artifactFileName='streambuf.elf',
+            artefactName='streambuf',
             
             children=[
                    
@@ -255,7 +255,7 @@ Configuration(
                       
             buildFolder='linux/streambuf',
             
-            artifactFileName='streambuf.elf',
+            artefactName='streambuf',
             
             children=[
                    

@@ -28,7 +28,7 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='string',
             defaultValue='Sample Application',
             
-            headerFile='include/portable/core/include/XCDL_Greeting_Defines.h',
+            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_STRING_APPLICATION_NAME',
         ),
 
@@ -40,7 +40,7 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='string',
             defaultValue='livius.net',
 
-            headerFile='include/portable/core/include/XCDL_Greeting_Defines.h',
+            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_STRING_APPLICATION_MANUFACTURER',            
         ),
 
@@ -52,7 +52,7 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='int',
             defaultValue='1',
 
-            headerFile='include/portable/core/include/XCDL_Greeting_Defines.h',
+            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_INTEGER_VERSION_MAJOR',
             
             # This value needs to be stringified, so no parenthesis 

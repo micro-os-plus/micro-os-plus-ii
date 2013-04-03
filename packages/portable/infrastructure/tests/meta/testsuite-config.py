@@ -54,7 +54,7 @@ Configuration(
                       
             buildFolder='osx/testsuite',
             
-            artifactFileName='testsuite.elf',
+            artefactName='testsuite',
             
             children=[
                        

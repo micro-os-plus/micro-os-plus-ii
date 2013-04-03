@@ -4,18 +4,18 @@
 # Copyright (c) 2013 Liviu Ionescu.
 
 Component(
-    id='component.os.hal.architecture.synthetic.posix.diagnostics',
-    name='Synthetic POSIX diagnostics implementation',
+    id='component.os.hal.platform.olimex.stm32h103',
+    name='Olimex STM32-H103 board diagnostics implementation',
     description='Implementation for the diagnostics classes.',
             
     children=[
               
         Component(
-            id='component.os.hal.architecture.synthetic.posix.diagnostics.trace',
-            name='Synthetic POSIX trace implementation',
+            id='component.os.hal.platform.olimex.stm32h103.diagnostics.trace',
+            name='Olimex STM32-H103 board trace implementation',
             description='Implementation to output data from the trace class.',
             
-            headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_DIAGNOSTICS_TRACEIMPLEMENTATION',
+            headerDefinition='OS_INCLUDE_HAL_PLATFORM_OLIMEX_STM32H103_DIAGNOSTICS_TRACEIMPLEMENTATION',
         
             implements=[
                 'interface.os.portable.diagnostics.trace',
@@ -24,7 +24,7 @@ Component(
             sourceFiles=[
                 'TraceImplementation.cpp',
             ],
-            
+                  
             activeIf=[
                 'component.os.portable.diagnostics.trace',
             ],

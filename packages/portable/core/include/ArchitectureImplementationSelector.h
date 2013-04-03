@@ -12,6 +12,10 @@
 
 #include "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
 
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM)
+
+#include "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
+
 #else
 
 #error "Missing ArchitectureImplementation.h"
