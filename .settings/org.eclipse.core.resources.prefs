@@ -21,6 +21,7 @@ encoding//packages/portable/language/cpp/tests/meta/ostream-config.py=utf-8
 encoding//packages/portable/language/cpp/tests/meta/ostreamConversions-config.py=utf-8
 encoding//packages/portable/language/cpp/tests/meta/streambuf-config.py=utf-8
 encoding//packages/portable/language/cpp/tests/meta/xcdl.py=utf-8
+encoding//packages/portable/tests/meta/minimal-stm32h103-config.py=utf-8
 encoding//packages/support/templates/xcdl.py=utf-8
 encoding//packages/support/toolchains/linux-gcc.py=utf-8
 encoding//packages/support/toolchains/osx-llvm.py=utf-8
