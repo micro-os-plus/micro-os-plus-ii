@@ -22,14 +22,15 @@ Toolchain(
     compilerInputOptions='"$<"',
     
     compilerWarningOptions='-Wall -Wextra -Werror',
-    compilerMiscOptions='-fsigned-char -fsigned-bitfields -fmessage-length=0 -c -ffunction-sections -fdata-sections -fno-use-cxa-atexit -fno-threadsafe-statics',
+    compilerMiscOptions='-fsigned-char -fsigned-bitfields -fmessage-length=0 -c -ffunction-sections -fdata-sections -fno-use-cxa-atexit -fno-threadsafe-statics -mlittle-endian',
     compilerPreprocessorOptions='-D__MICRO_OS_PLUS_PLUS__=1',
 
     # These are just explicit defaults, will be usually overwritten
     compilerDebugOptions='-g',
     compilerOptimisationOptions='-O',
     
-    linkerMiscOptions= '-Wl,-Map,map.txt -nostartfiles',
+    linkerMiscOptions= '-Wl,--gc-sections -Wl,-Map,map.txt -Wl,--cref -nostartfiles  -Wl,-T,ldscripts/mem.ld -Wl,-T,ldscripts/sections.ld',
+    #linkerMiscOptions= '-Wl,--gc-sections -Wl,-Map,map.txt -Wl,--cref -v',
     
     cc=Tool(
         programName='arm-none-eabi-gcc',
