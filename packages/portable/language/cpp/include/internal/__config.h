@@ -77,6 +77,19 @@
 #   define _LIBCPP_BIG_ENDIAN    1
 # endif
 #endif // __sun__
+
+#if defined(__BYTE_ORDER__)
+
+# if __BYTE_ORDER__ == 1234
+#   define _LIBCPP_LITTLE_ENDIAN 1
+#   define _LIBCPP_BIG_ENDIAN    0
+# else
+#   define _LIBCPP_LITTLE_ENDIAN 0
+#   define _LIBCPP_BIG_ENDIAN    1
+#endif
+
+#endif
+
 #if !defined(_LIBCPP_LITTLE_ENDIAN) || !defined(_LIBCPP_BIG_ENDIAN)
 # include <endian.h>
 # if __BYTE_ORDER == __LITTLE_ENDIAN
