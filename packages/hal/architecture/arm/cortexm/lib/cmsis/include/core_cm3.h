@@ -154,6 +154,7 @@
 /* IO definitions (access restrictions to peripheral registers) */
 /**
     \defgroup CMSIS_glob_defs CMSIS Global Defines
+    \ingroup Cortex_M3
 
     <strong>IO Type Qualifiers</strong> are used
     \li to specify the access to peripheral variables.
@@ -182,6 +183,7 @@
   - Core MPU Register
  ******************************************************************************/
 /** \defgroup CMSIS_core_register Defines and Type Definitions
+    \ingroup Cortex_M3
     \brief Type definitions and defines for Cortex-M processor based devices.
 */
 
@@ -1252,6 +1254,7 @@ typedef struct
   - Core Register Access Functions
  ******************************************************************************/
 /** \defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
+    \ingroup Cortex_M3
 */
 
 
