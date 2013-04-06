@@ -1,0 +1,7 @@
+/* Memory layout for STM32F103[CRT]4 */
+
+MEMORY
+{
+  FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 16K
+  RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 6K
+}

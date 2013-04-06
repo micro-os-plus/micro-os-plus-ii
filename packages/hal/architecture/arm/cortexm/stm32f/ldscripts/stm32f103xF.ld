@@ -1,0 +1,7 @@
+/* Memory layout for STM32F103[RVZ]F */
+
+MEMORY
+{
+  FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 768K
+  RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 96K
+}
