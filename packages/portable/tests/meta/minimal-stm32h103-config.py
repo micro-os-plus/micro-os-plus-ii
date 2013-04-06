@@ -23,8 +23,14 @@ Configuration(
               
     buildFolder='stm32h103/minimal',
     
-    buildTargetCpuOptions='-mcpu=cortex-m4 -mthumb',
+    buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
     
+    copyFiles=[
+        ('stm32h104_makefile_defs.mk','makefile_defs.mk'),
+        ('stm32h104_makefile_targets.mk','makefile_targets.mk'),
+        ('../../../hal/architecture/arm/cortexm/stm32f/ldscripts/stm32f103xB.ld','ldscripts/mem.ld',),
+        ('../../../hal/architecture/arm/cortexm/ldscripts/sections.ld','ldscripts/sections.ld'),
+    ],
     
     artefactName='minimal',
     
@@ -33,7 +39,7 @@ Configuration(
         # ARM Embedded Processors   
         Configuration(
             id='config.os.portable.tests.minimal.stm32h103.aep.gcc.debug',
-            name='Debug STM32-H103 Minimal configuration with ARM Emb GCC',
+            name='Debug STM32-H103 Minimal configuration with ARM Embedded GCC',
             description='Debug build configuration for Minimal.',
             
             buildConfigurationName='stm32h103_minimal_aep_gcc_Debug',
@@ -49,7 +55,7 @@ Configuration(
 
         Configuration(
             id='config.os.portable.tests.minimal.stm32h103.aep.gcc.release',
-            name='Release STM32-H103 Minimal configuration with ARM Emb GCC',
+            name='Release STM32-H103 Minimal configuration with ARM Embedded GCC',
             description='Release build configuration for Minimal.',
             
             buildConfigurationName='stm32h103_minimal_aep_gcc_Release',
