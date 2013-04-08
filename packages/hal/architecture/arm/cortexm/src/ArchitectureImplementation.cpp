@@ -55,12 +55,11 @@ extern "C"
   __cxa_pure_virtual(void);
 }
 
-// ARM Cortex M
-typedef uint32_t LinkerAlign_t;
+typedef hal::arch::cortexm::LinkerScript::LinkerAlign_t LinkerAlign_t;
+typedef hal::arch::cortexm::LinkerScript LinkerScript_t;
 
-template class os::infra::CStartup<LinkerAlign_t>;
-
-typedef os::infra::CStartup<LinkerAlign_t> CStartup_t;
+template class os::infra::CStartup<LinkerScript_t>;
+typedef os::infra::CStartup<LinkerScript_t> CStartup_t;
 
 #if defined(DEBUG)
 typedef unsigned int ConstantMarker_t;
@@ -69,20 +68,11 @@ static const ConstantMarker_t CONSTANT_MARKER_MAGIC = 0x12345678;
 static volatile ConstantMarker_t constantMarker = CONSTANT_MARKER_MAGIC;
 #endif
 
-template class hal::arch::cortexm::LinkerScript<LinkerAlign_t>;
-typedef hal::arch::cortexm::LinkerScript<LinkerAlign_t> LinkerScript_t;
-
 void
 Reset_Handler()
 {
 
-  CStartup_t::copyInitialisedData(LinkerScript_t::getFlashDataBegin(),
-      LinkerScript_t::getRamDataBegin(), LinkerScript_t::getRamDataEnd());
-
-  CStartup_t::clearBss(LinkerScript_t::getBssBegin(), LinkerScript_t::getBssEnd());
-
-  CStartup_t::callStaticInitialisers(LinkerScript_t::getInitArrayStart(),
-      LinkerScript_t::getInitArrayEnd());
+  CStartup_t::initialiseAndCallStaticConstructors();
 
 #if defined(DEBUG)
   if (constantMarker != CONSTANT_MARKER_MAGIC)
@@ -94,11 +84,10 @@ Reset_Handler()
 
   main();
 
-  CStartup_t::callStaticInitialisers(LinkerScript_t::getFiniArrayStart(),
-      LinkerScript_t::getFiniArrayEnd());
+  CStartup_t::callStaticDestructors();
 
   // TODO: soft reset to restart
-  for(;;)
+  for (;;)
     ;
 }
 
