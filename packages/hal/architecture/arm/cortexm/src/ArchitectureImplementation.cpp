@@ -39,21 +39,6 @@ namespace hal
   }
 }
 
-extern "C"
-{
-
-  int
-  main(void);
-
-  void
-  Reset_Handler();
-
-  void*
-  _sbrk();
-
-  void
-  __cxa_pure_virtual(void);
-}
 
 typedef hal::arch::cortexm::LinkerScript::LinkerAlign_t LinkerAlign_t;
 typedef hal::arch::cortexm::LinkerScript LinkerScript_t;
@@ -68,8 +53,17 @@ static const ConstantMarker_t CONSTANT_MARKER_MAGIC = 0x12345678;
 static volatile ConstantMarker_t constantMarker = CONSTANT_MARKER_MAGIC;
 #endif
 
+extern "C"
+{
+  int
+  main(void);
+
+  void
+  Reset_Handler(void);
+}
+
 void
-Reset_Handler()
+Reset_Handler(void)
 {
 
   CStartup_t::initialiseAndCallStaticConstructors();
@@ -91,16 +85,28 @@ Reset_Handler()
     ;
 }
 
-void*
-_sbrk()
-{
-  return 0;
-}
+// ----------------------------------------------------------------------------
+// Patches to make the code compile.
+// Probably will be further refined.
 
-void
-__cxa_pure_virtual(void)
+extern "C"
 {
+  void*
+  _sbrk();
 
+  void
+  __cxa_pure_virtual(void);
+
+  void*
+  _sbrk()
+  {
+    return 0;
+  }
+
+  void
+  __cxa_pure_virtual(void)
+  {
+  }
 }
 
 void
@@ -108,5 +114,6 @@ operator
 delete(void* p __attribute__((unused)))
 {
 }
+// ----------------------------------------------------------------------------
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
