@@ -29,7 +29,7 @@ Toolchain(
     compilerDebugOptions='-g',
     compilerOptimisationOptions='-O',
     
-    linkerMiscOptions= '-Wl,--gc-sections -Wl,-Map,map.txt -Wl,--cref -nostartfiles  -Wl,-T,ldscripts/mem.ld -Wl,-T,ldscripts/sections.ld',
+    linkerMiscOptions= '-Wl,--gc-sections -Wl,-Map,map.txt -Wl,--cref -nostartfiles  -Wl,-T,ldscripts/mem_layout.ld -Wl,-T,ldscripts/sections.ld',
     #linkerMiscOptions= '-Wl,--gc-sections -Wl,-Map,map.txt -Wl,--cref -v',
     
     cc=Tool(
