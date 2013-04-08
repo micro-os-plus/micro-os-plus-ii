@@ -5,13 +5,15 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
 //#include "portable/core/include/OS.h"
 
 #include "../include/ArchitectureImplementation.h"
 
 #include "portable/infrastructure/include/CStartup.h"
+
+#include "../ldscripts/LinkerScript.h"
 
 #include "portable/language/cpp/include/iterator.h"
 
@@ -53,89 +55,8 @@ extern "C"
   __cxa_pure_virtual(void);
 }
 
-typedef unsigned int LinkerAlign_t;
-
-
-
-
-class LinkerScript
-{
-public:
-  inline __attribute__((always_inline))
-  static LinkerAlign_t*
-  getBssBegin(void)
-  {
-    extern LinkerAlign_t __bss_start__;
-    return &__bss_start__;
-  }
-
-  inline __attribute__((always_inline))
-  static LinkerAlign_t*
-  getBssEnd(void)
-  {
-    extern LinkerAlign_t __bss_end__;
-    return &__bss_end__;
-  }
-
-  inline __attribute__((always_inline))
-  static LinkerAlign_t*
-  getFlashDataBegin(void)
-  {
-    // the initialised data starts at the end of the text section (in flash)
-    extern LinkerAlign_t __etext;
-    return &__etext;
-  }
-
-  inline __attribute__((always_inline))
-  static LinkerAlign_t*
-  getRamDataBegin(void)
-  {
-    extern LinkerAlign_t __data_start__;
-    return &__data_start__;
-  }
-
-  inline __attribute__((always_inline))
-  static LinkerAlign_t*
-  getRamDataEnd(void)
-  {
-    extern LinkerAlign_t __data_end__;
-    return &__data_end__;
-  }
-
-  inline __attribute__((always_inline))
-  static LinkerAlign_t*
-  getInitArrayStart(void)
-  {
-    extern LinkerAlign_t __init_array_start;
-    return &__init_array_start;
-  }
-
-  inline __attribute__((always_inline))
-  static LinkerAlign_t*
-  getInitArrayEnd(void)
-  {
-    extern LinkerAlign_t __init_array_end;
-    return &__init_array_end;
-  }
-
-  inline __attribute__((always_inline))
-  static LinkerAlign_t*
-  getFiniArrayStart(void)
-  {
-    extern LinkerAlign_t __fini_array_start;
-    return &__fini_array_start;
-  }
-
-  inline __attribute__((always_inline))
-  static LinkerAlign_t*
-  getFiniArrayEnd(void)
-  {
-    extern LinkerAlign_t __fini_array_end;
-    return &__fini_array_end;
-  }
-
-
-};
+// ARM Cortex M
+typedef uint32_t LinkerAlign_t;
 
 template class os::infra::CStartup<LinkerAlign_t>;
 
@@ -148,17 +69,20 @@ static const ConstantMarker_t CONSTANT_MARKER_MAGIC = 0x12345678;
 static volatile ConstantMarker_t constantMarker = CONSTANT_MARKER_MAGIC;
 #endif
 
+template class hal::arch::cortexm::LinkerScript<LinkerAlign_t>;
+typedef hal::arch::cortexm::LinkerScript<LinkerAlign_t> LinkerScript_t;
+
 void
 Reset_Handler()
 {
 
-  CStartup_t::copyInitialisedData(LinkerScript::getFlashDataBegin(),
-      LinkerScript::getRamDataBegin(), LinkerScript::getRamDataEnd());
+  CStartup_t::copyInitialisedData(LinkerScript_t::getFlashDataBegin(),
+      LinkerScript_t::getRamDataBegin(), LinkerScript_t::getRamDataEnd());
 
-  CStartup_t::clearBss(LinkerScript::getBssBegin(), LinkerScript::getBssEnd());
+  CStartup_t::clearBss(LinkerScript_t::getBssBegin(), LinkerScript_t::getBssEnd());
 
-  CStartup_t::callStaticInitialisers(LinkerScript::getInitArrayStart(),
-      LinkerScript::getInitArrayEnd());
+  CStartup_t::callStaticInitialisers(LinkerScript_t::getInitArrayStart(),
+      LinkerScript_t::getInitArrayEnd());
 
 #if defined(DEBUG)
   if (constantMarker != CONSTANT_MARKER_MAGIC)
@@ -170,8 +94,8 @@ Reset_Handler()
 
   main();
 
-  CStartup_t::callStaticInitialisers(LinkerScript::getFiniArrayStart(),
-      LinkerScript::getFiniArrayEnd());
+  CStartup_t::callStaticInitialisers(LinkerScript_t::getFiniArrayStart(),
+      LinkerScript_t::getFiniArrayEnd());
 
   // TODO: soft reset to restart
   for(;;)
@@ -196,4 +120,4 @@ delete(void* p __attribute__((unused)))
 {
 }
 
-#endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM)
+#endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
