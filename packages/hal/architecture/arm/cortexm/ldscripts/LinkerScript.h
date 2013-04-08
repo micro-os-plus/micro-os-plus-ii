@@ -3,12 +3,10 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
-#ifndef HAL_ARCHITECTURE_ARM_CORTEXM_LDSCRIPTS_LINKERSCRIPT_H_
-#define HAL_ARCHITECTURE_ARM_CORTEXM_LDSCRIPTS_LINKERSCRIPT_H_
+#ifndef HAL_ARCHITECTURE_ARM_CORTEXM_LDSCRIPT_LINKERSCRIPT_H_
+#define HAL_ARCHITECTURE_ARM_CORTEXM_LDSCRIPT_LINKERSCRIPT_H_
 
 #include "portable/core/include/ConfigDefines.h"
-
-
 
 namespace hal
 {
@@ -17,56 +15,59 @@ namespace hal
     namespace cortexm
     {
 
-      template<typename TLinkAlign_T>
-        class LinkerScript
-        {
-        public:
+      class LinkerScript
+      {
+      public:
 
-          typedef TLinkAlign_T LinkAlign_t;
+        typedef unsigned int LinkerAlign_t;
 
-          static LinkAlign_t*
-          getBssBegin(void);
+        static LinkerAlign_t*
+        getBssBegin(void);
 
-          static LinkAlign_t*
-          getBssEnd(void);
+        static LinkerAlign_t*
+        getBssEnd(void);
 
-          static LinkAlign_t*
-          getFlashDataBegin(void);
+        static LinkerAlign_t*
+        getFlashDataBegin(void);
 
-          static LinkAlign_t*
-          getRamDataBegin(void);
+        static LinkerAlign_t*
+        getRamDataBegin(void);
 
-          static LinkAlign_t*
-          getRamDataEnd(void);
+        static LinkerAlign_t*
+        getRamDataEnd(void);
 
-          static LinkAlign_t*
-          getInitArrayStart(void);
+        static LinkerAlign_t*
+        getInitArrayStart(void);
 
-          static LinkAlign_t*
-          getInitArrayEnd(void);
+        static LinkerAlign_t*
+        getInitArrayEnd(void);
 
-          static LinkAlign_t*
-          getFiniArrayStart(void);
+        static LinkerAlign_t*
+        getFiniArrayStart(void);
 
-          static LinkAlign_t*
-          getFiniArrayEnd(void);
+        static LinkerAlign_t*
+        getFiniArrayEnd(void);
 
-        };
+      };
     }
   }
 }
 
 extern "C"
 {
-  extern int __bss_start__;
-  extern int __bss_end__;
-  extern int __etext;
-  extern int __data_start__;
-  extern int __data_end__;
-  extern int __init_array_start;
-  extern int __init_array_end;
-  extern int __fini_array_start;
-  extern int __fini_array_end;
+  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __bss_start__;
+  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __bss_end__;
+
+  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __etext;
+
+  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __data_start__;
+  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __data_end__;
+
+  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __init_array_start;
+  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __init_array_end;
+
+  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __fini_array_start;
+  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __fini_array_end;
 }
 
 namespace hal
@@ -75,81 +76,72 @@ namespace hal
   {
     namespace cortexm
     {
-      template<typename TLinkAlign_T>
-        inline __attribute__((always_inline))         //
-        typename LinkerScript<TLinkAlign_T>::LinkAlign_t*
-        LinkerScript<TLinkAlign_T>::getBssBegin(void)
-        {
-          return reinterpret_cast<LinkAlign_t*>(&__bss_start__);
-        }
+      inline __attribute__((always_inline))   //
+      LinkerScript::LinkerAlign_t*
+      LinkerScript::getBssBegin(void)
+      {
+        return (&__bss_start__);
+      }
 
-      template<typename TLinkAlign_T>
-        inline __attribute__((always_inline))         //
-        typename LinkerScript<TLinkAlign_T>::LinkAlign_t*
-        LinkerScript<TLinkAlign_T>::getBssEnd(void)
-        {
-          return reinterpret_cast<LinkAlign_t*>(&__bss_end__);
-        }
+      inline __attribute__((always_inline))   //
+      LinkerScript::LinkerAlign_t*
+      LinkerScript::getBssEnd(void)
+      {
+        return (&__bss_end__);
+      }
 
-      template<typename TLinkAlign_T>
-        inline __attribute__((always_inline))         //
-        typename LinkerScript<TLinkAlign_T>::LinkAlign_t*
-        LinkerScript<TLinkAlign_T>::getFlashDataBegin(void)
-        {
-          // the initialised data starts at the end of the text section (in flash)
-          return reinterpret_cast<LinkAlign_t*>(&__etext);
-        }
+      inline __attribute__((always_inline))   //
+      LinkerScript::LinkerAlign_t*
+      LinkerScript::getFlashDataBegin(void)
+      {
+        // the initialised data starts at the end of the text section (in flash)
+        return (&__etext);
+      }
 
-      template<typename TLinkAlign_T>
-        inline __attribute__((always_inline))         //
-        typename LinkerScript<TLinkAlign_T>::LinkAlign_t*
-        LinkerScript<TLinkAlign_T>::getRamDataBegin(void)
-        {
-          return reinterpret_cast<LinkAlign_t*>(&__data_start__);
-        }
+      inline __attribute__((always_inline))   //
+      LinkerScript::LinkerAlign_t*
+      LinkerScript::getRamDataBegin(void)
+      {
+        return (&__data_start__);
+      }
 
-      template<typename TLinkAlign_T>
-        inline __attribute__((always_inline))         //
-        typename LinkerScript<TLinkAlign_T>::LinkAlign_t*
-        LinkerScript<TLinkAlign_T>::getRamDataEnd(void)
-        {
-          return reinterpret_cast<LinkAlign_t*>(&__data_end__);
-        }
+      inline __attribute__((always_inline))   //
+      LinkerScript::LinkerAlign_t*
+      LinkerScript::getRamDataEnd(void)
+      {
+        return (&__data_end__);
+      }
 
-      template<typename TLinkAlign_T>
-        inline __attribute__((always_inline))         //
-        typename LinkerScript<TLinkAlign_T>::LinkAlign_t*
-        LinkerScript<TLinkAlign_T>::getInitArrayStart(void)
-        {
-          return reinterpret_cast<LinkAlign_t*>(&__init_array_start);
-        }
+      inline __attribute__((always_inline))   //
+      LinkerScript::LinkerAlign_t*
+      LinkerScript::getInitArrayStart(void)
+      {
+        return (&__init_array_start);
+      }
 
-      template<typename TLinkAlign_T>
-        inline __attribute__((always_inline))         //
-        typename LinkerScript<TLinkAlign_T>::LinkAlign_t*
-        LinkerScript<TLinkAlign_T>::getInitArrayEnd(void)
-        {
-          return reinterpret_cast<LinkAlign_t*>(&__init_array_end);
-        }
+      inline __attribute__((always_inline))   //
+      LinkerScript::LinkerAlign_t*
+      LinkerScript::getInitArrayEnd(void)
+      {
+        return (&__init_array_end);
+      }
 
-      template<typename TLinkAlign_T>
-        inline __attribute__((always_inline))         //
-        typename LinkerScript<TLinkAlign_T>::LinkAlign_t*
-        LinkerScript<TLinkAlign_T>::getFiniArrayStart(void)
-        {
-          return reinterpret_cast<LinkAlign_t*>(&__fini_array_start);
-        }
+      inline __attribute__((always_inline))   //
+      LinkerScript::LinkerAlign_t*
+      LinkerScript::getFiniArrayStart(void)
+      {
+        return (&__fini_array_start);
+      }
 
-      template<typename TLinkAlign_T>
-        inline __attribute__((always_inline))         //
-        typename LinkerScript<TLinkAlign_T>::LinkAlign_t*
-        LinkerScript<TLinkAlign_T>::getFiniArrayEnd(void)
-        {
-          return reinterpret_cast<LinkAlign_t*>(&__fini_array_end);
-        }
+      inline __attribute__((always_inline))   //
+      LinkerScript::LinkerAlign_t*
+      LinkerScript::getFiniArrayEnd(void)
+      {
+        return (&__fini_array_end);
+      }
 
     }
   }
 }
 
-#endif // HAL_ARCHITECTURE_ARM_CORTEXM_LDSCRIPTS_LINKERSCRIPT_H_
+#endif // HAL_ARCHITECTURE_ARM_CORTEXM_LDSCRIPT_LINKERSCRIPT_H_
