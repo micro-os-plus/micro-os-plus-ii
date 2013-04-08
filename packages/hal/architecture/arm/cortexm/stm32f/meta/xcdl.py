@@ -27,6 +27,54 @@ Package(
         'interface.os.architecture.family',
     ],
         
-    headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_STM32F',
+    headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F',
 
+    children=[
+              
+        Component(
+            id='package.os.hal.architecture.arm.cortexm.stm32f10x',
+            name='ST Micro ARM Cortex-M STM32F10X family',
+            description='Support for STM32F10X ARM Cortex-M processors.',
+            
+            isEnabled=False,
+    
+            headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X',
+
+            children=[
+                      
+                Component(
+                    id='package.os.hal.architecture.arm.cortexm.stm32f10x.md',
+                    name='ST Micro ARM Cortex-M STM32F10X MD family',
+                    description='Support for STM32F10X Medium Density ARM Cortex-M3 processors.',
+                    
+                    isEnabled=False,
+            
+                    requirements=[
+                        'enable("package.os.hal.architecture.arm.cortexm3")',
+                    ],
+                          
+                    headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_MD',
+                           
+                    children=[
+                              
+                        Component(
+                            id='package.os.hal.architecture.arm.cortexm.stm32f103rb',
+                            name='ST Micro ARM Cortex-M STM32F103RB',
+                            description='Support for STM32F10RB ARM Cortex-M3 processors.',
+                            
+                            isEnabled=False,
+                    
+                            headerDefinition='OS_INCLUDE_HAL_MCU_DEVICE_STM32F103RB',
+                            
+                            copyFiles=[
+                                ('../ldscripts/stm32f103xB.ld', 'ldscripts/mem_layout.ld'),
+                            ],       
+                        ),
+                        
+                    ],     
+                ),
+
+            ],
+        ),
+    ],
 )
