@@ -12,56 +12,68 @@ namespace os
 {
   namespace infra
   {
-    template<typename TLinkAlign_T>
+    template<class TLinkerScript_T,
+        typename TLinkerAlign_T = typename TLinkerScript_T::LinkerAlign_t>
       class CStartup
       {
       public:
 
-        typedef TLinkAlign_T LinkAlign_t;
+        typedef TLinkerScript_T LinkerScript_t;
+        typedef TLinkerAlign_T LinkerAlign_t;
 
         static void
-        copyInitialisedData(LinkAlign_t* fromBegin, LinkAlign_t* toBegin, LinkAlign_t* toEnd);
+        copyInitialisedData(LinkerAlign_t* fromBegin, LinkerAlign_t* toBegin,
+            LinkerAlign_t* toEnd);
 
         static void
-        clearBss(LinkAlign_t* bssBegin, LinkAlign_t* bssEnd);
+        clearBss(LinkerAlign_t* bssBegin, LinkerAlign_t* bssEnd);
 
         static void
-        callStaticInitialisers(LinkAlign_t* arrayBegin, LinkAlign_t* arrayEnd);
+        callStaticInitialisers(LinkerAlign_t* arrayBegin,
+            LinkerAlign_t* arrayEnd);
+
+        static void
+        initialiseAndCallStaticConstructors(void);
+
+        static void
+        callStaticDestructors(void);
 
       };
 
-    template<typename TLinkAlign_T>
+    template<class TLinkerScript_T, typename TLinkerAlign_T>
       inline __attribute__((always_inline))
       void
-      CStartup<TLinkAlign_T>::copyInitialisedData(LinkAlign_t* fromBegin, LinkAlign_t* toBegin,
-          LinkAlign_t* toEnd)
+      CStartup<TLinkerScript_T, TLinkerAlign_T>::copyInitialisedData(
+          LinkerAlign_t* fromBegin, LinkerAlign_t* toBegin,
+          LinkerAlign_t* toEnd)
       {
         // Copy the data segment initialisers from flash to RAM
-        LinkAlign_t* pSrc = fromBegin;
-        LinkAlign_t* pDest = toBegin;
+        LinkerAlign_t* pSrc = fromBegin;
+        LinkerAlign_t* pDest = toBegin;
         for (; pDest < toEnd;)
           {
             *(pDest++) = *(pSrc++);
           }
       }
 
-    template<typename TLinkAlign_T>
+    template<class TLinkerScript_T, typename TLinkerAlign_T>
       inline __attribute__((always_inline))
       void
-      CStartup<TLinkAlign_T>::clearBss(LinkAlign_t* bssBegin, LinkAlign_t* bssEnd)
+      CStartup<TLinkerScript_T, TLinkerAlign_T>::clearBss(
+          LinkerAlign_t* bssBegin, LinkerAlign_t* bssEnd)
       {
         // Zero fill the bss segment.
-        LinkAlign_t* pDest = bssBegin;
+        LinkerAlign_t* pDest = bssBegin;
         for (; pDest < bssEnd;)
           {
             *(pDest++) = 0;
           }
       }
 
-    template<typename TLinkAlign_T>
+    template<class TLinkerScript_T, typename TLinkerAlign_T>
       void
-      CStartup<TLinkAlign_T>::callStaticInitialisers(LinkAlign_t* arrayBegin,
-          LinkAlign_t* arrayEnd)
+      CStartup<TLinkerScript_T, TLinkerAlign_T>::callStaticInitialisers(
+          LinkerAlign_t* arrayBegin, LinkerAlign_t* arrayEnd)
       {
         typedef void
         (*pFunc_t)(void);
@@ -73,6 +85,31 @@ namespace os
             (*(*p))();
           }
       }
+
+    template<class TLinkerScript_T, typename TLinkerAlign_T>
+      inline __attribute__((always_inline))
+      void
+      CStartup<TLinkerScript_T, TLinkerAlign_T>::initialiseAndCallStaticConstructors(
+          void)
+      {
+        copyInitialisedData(LinkerScript_t::getFlashDataBegin(),
+            LinkerScript_t::getRamDataBegin(), LinkerScript_t::getRamDataEnd());
+
+        clearBss(LinkerScript_t::getBssBegin(), LinkerScript_t::getBssEnd());
+
+        callStaticInitialisers(LinkerScript_t::getInitArrayStart(),
+            LinkerScript_t::getInitArrayEnd());
+      }
+
+    template<class TLinkerScript_T, typename TLinkerAlign_T>
+      inline __attribute__((always_inline))
+      void
+      CStartup<TLinkerScript_T, TLinkerAlign_T>::callStaticDestructors(void)
+      {
+        callStaticInitialisers(LinkerScript_t::getFiniArrayStart(),
+            LinkerScript_t::getFiniArrayEnd());
+      }
+
   }
 }
 
