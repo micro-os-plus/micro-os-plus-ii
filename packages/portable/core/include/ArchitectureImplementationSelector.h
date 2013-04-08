@@ -12,7 +12,7 @@
 
 #include "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
 
-#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM)
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
 
 #include "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
 

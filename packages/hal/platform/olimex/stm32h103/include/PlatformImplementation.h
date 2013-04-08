@@ -8,7 +8,7 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#if defined(OS_INCLUDE_HAL_PLATFORM_OLIMEX_STM32H103) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103) || defined(__DOXYGEN__)
 
 #include "portable/core/include/PlatformBase.h"
 
@@ -30,6 +30,6 @@ namespace hal
   }
 }
 
-#endif // defined(OS_INCLUDE_HAL_PLATFORM_OLIMEX_STM32H103)
+#endif // defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103)
 
 #endif // HAL_PLATFORM_OLIMEX_STM32H103_PLATFORMIMPLEMENTATION_H_

@@ -19,12 +19,13 @@ based on STM32F103.',
     ],
         
     requirements=[
-        'enable("package.os.hal.architecture.arm.cortexm.stm32f")',
+        #'enable("package.os.hal.architecture.arm.cortexm.stm32f")',
+        'enable("package.os.hal.architecture.arm.cortexm.stm32f103rb")',
     ],
         
     implements=[
         'interface.os.platform',
     ],
 
-    headerDefinition='OS_INCLUDE_HAL_PLATFORM_OLIMEX_STM32H103',
+    headerDefinition='OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103',
 )

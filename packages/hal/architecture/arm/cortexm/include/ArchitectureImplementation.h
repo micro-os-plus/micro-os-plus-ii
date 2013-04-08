@@ -8,7 +8,7 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
 #include "portable/core/include/OS.h"
 
@@ -33,6 +33,6 @@ namespace hal
   }
 }
 
-#endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM)
+#endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
 
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_ARCHITECTUREIMPLEMENTATION_H_
