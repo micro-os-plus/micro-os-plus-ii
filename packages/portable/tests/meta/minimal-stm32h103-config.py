@@ -26,10 +26,8 @@ Configuration(
     buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
     
     copyFiles=[
-        ('stm32h104_makefile_defs.mk','makefile_defs.mk'),
-        ('stm32h104_makefile_targets.mk','makefile_targets.mk'),
-        ('../../../hal/architecture/arm/cortexm/stm32f/ldscripts/stm32f103xB.ld','ldscripts/mem.ld',),
-        ('../../../hal/architecture/arm/cortexm/ldscripts/sections.ld','ldscripts/sections.ld'),
+        ('stm32h103_makefile_defs.mk','makefile_defs.mk'),
+        ('stm32h103_makefile_targets.mk','makefile_targets.mk'),
     ],
     
     artefactName='minimal',

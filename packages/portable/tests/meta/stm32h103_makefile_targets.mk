@@ -1,3 +1,4 @@
+
 minimal.hex: minimal.elf
 	@echo 'Invoking: OS X ARM Embedded GNU Create Flash Image'
 	arm-none-eabi-objcopy -O ihex minimal.elf  "minimal.hex"
