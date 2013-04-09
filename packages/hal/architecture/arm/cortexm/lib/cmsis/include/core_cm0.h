@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     core_cm0.h
+ * @file     cortexm/lib/cmsis/include/core_cm0.h
  * @brief    CMSIS Cortex-M0 Core Peripheral Access Layer Header File
  * @version  V3.01
  * @date     13. March 2012
@@ -31,7 +31,9 @@
 #ifndef __CORE_CM0_H_GENERIC
 #define __CORE_CM0_H_GENERIC
 
-/** \page CMSIS_MISRA_Exceptions  MISRA-C:2004 Compliance Exceptions
+/** \defgroup ARM_CMSIS_CM0_MISRA_Exceptions  MISRA-C:2004 Compliance Exceptions
+   \ingroup ARM_CMSIS_CM0
+
   CMSIS violates the following MISRA-C:2004 rules:
 
    \li Required Rule 8.5, object/function definition in header file.<br>
@@ -48,7 +50,10 @@
 /*******************************************************************************
  *                 CMSIS definitions
  ******************************************************************************/
-/** \ingroup Cortex_M0
+/**
+      \ingroup ARM_CMSIS_CM0
+      \defgroup ARM_CMSIS_CM0_core_definitions CMSIS CM0 Core Definitions
+
   @{
  */
 
@@ -137,10 +142,15 @@
   #endif
 #endif
 
+/*@} end of group ARM_CMSIS_CM0_core_definitions */
+
+
 /* IO definitions (access restrictions to peripheral registers) */
 /**
-    \defgroup CMSIS_glob_defs CMSIS Global Defines
-    \ingroup Cortex_M0
+    \ingroup ARM_CMSIS_CM0
+    \defgroup ARM_CMSIS_CM0_glob_defs CMSIS Global Defines
+
+     @{
 
     <strong>IO Type Qualifiers</strong> are used
     \li to specify the access to peripheral variables.
@@ -154,8 +164,7 @@
 #define     __O     volatile             /*!< Defines 'write only' permissions                */
 #define     __IO    volatile             /*!< Defines 'read / write' permissions              */
 
-/*@} end of group Cortex_M0 */
-
+/*@} end of group ARM_CMSIS_glob_defs */
 
 
 /*******************************************************************************
@@ -166,13 +175,15 @@
   - Core SCB Register
   - Core SysTick Register
  ******************************************************************************/
-/** \defgroup CMSIS_core_register Defines and Type Definitions
-    \ingroup Cortex_M0
+/**
+    \ingroup ARM_CMSIS_CM0
+    \defgroup ARM_CMSIS_CM0_core_register CMSIS Defines and Type Definitions
     \brief Type definitions and defines for Cortex-M processor based devices.
 */
 
-/** \ingroup    CMSIS_core_register
-    \defgroup   CMSIS_CORE  Status and Control Registers
+/**
+    \ingroup    ARM_CMSIS_CM0_core_register
+    \defgroup   ARM_CMSIS_CM0_CORE  Status and Control Registers
     \brief  Core Register type definitions.
   @{
  */
@@ -256,8 +267,9 @@ typedef union
 /*@} end of group CMSIS_CORE */
 
 
-/** \ingroup    CMSIS_core_register
-    \defgroup   CMSIS_NVIC  Nested Vectored Interrupt Controller (NVIC)
+/**
+    \ingroup    ARM_CMSIS_CM0_core_register
+    \defgroup   ARM_CMSIS_CM0_NVIC  Nested Vectored Interrupt Controller (NVIC)
     \brief      Type definitions for the NVIC Registers
   @{
  */
@@ -281,8 +293,9 @@ typedef struct
 /*@} end of group CMSIS_NVIC */
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_SCB     System Control Block (SCB)
+/**
+    \ingroup  ARM_CMSIS_CM0_core_register
+    \defgroup ARM_CMSIS_CM0_SCB     System Control Block (SCB)
     \brief      Type definitions for the System Control Block Registers
   @{
  */
@@ -386,8 +399,9 @@ typedef struct
 /*@} end of group CMSIS_SCB */
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_SysTick     System Tick Timer (SysTick)
+/**
+    \ingroup  ARM_CMSIS_CM0_core_register
+    \defgroup ARM_CMSIS_CM0_SysTick     System Tick Timer (SysTick)
     \brief      Type definitions for the System Timer Registers.
   @{
  */
@@ -436,8 +450,9 @@ typedef struct
 /*@} end of group CMSIS_SysTick */
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_CoreDebug       Core Debug Registers (CoreDebug)
+/**
+    \ingroup  ARM_CMSIS_CM0_core_register
+    \defgroup ARM_CMSIS_CM0_CoreDebug       Core Debug Registers (CoreDebug)
     \brief      Cortex-M0 Core Debug Registers (DCB registers, SHCSR, and DFSR)
                 are only accessible over DAP and not via processor. Therefore
                 they are not covered by the Cortex-M0 header file.
@@ -446,8 +461,9 @@ typedef struct
 /*@} end of group CMSIS_CoreDebug */
 
 
-/** \ingroup    CMSIS_core_register
-    \defgroup   CMSIS_core_base     Core Definitions
+/**
+    \ingroup    ARM_CMSIS_CM0_core_register
+    \defgroup   ARM_CMSIS_CM0_core_base     Core Definitions
     \brief      Definitions for base addresses, unions, and structures.
   @{
  */
@@ -474,15 +490,17 @@ typedef struct
   - Core SysTick Functions
   - Core Register Access Functions
  ******************************************************************************/
-/** \defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
-    \ingroup Cortex_M0
+/**
+    \ingroup ARM_CMSIS_CM0
+    \defgroup ARM_CMSIS_CM0_Core_FunctionInterface CMSIS Functions and Instructions Reference
 */
 
 
 
 /* ##########################   NVIC functions  #################################### */
-/** \ingroup  CMSIS_Core_FunctionInterface
-    \defgroup CMSIS_Core_NVICFunctions NVIC Functions
+/**
+    \ingroup  ARM_CMSIS_CM0_Core_FunctionInterface
+    \defgroup ARM_CMSIS_CM0_Core_NVICFunctions NVIC Functions
     \brief      Functions that manage interrupts and exceptions via the NVIC.
     @{
  */
@@ -618,8 +636,9 @@ __STATIC_INLINE void NVIC_SystemReset(void)
 
 
 /* ##################################    SysTick function  ############################################ */
-/** \ingroup  CMSIS_Core_FunctionInterface
-    \defgroup CMSIS_Core_SysTickFunctions SysTick Functions
+/**
+    \ingroup  ARM_CMSIS_CM0_Core_FunctionInterface
+    \defgroup ARM_CMSIS_CM0_Core_SysTickFunctions SysTick Functions
     \brief      Functions that configure the System.
   @{
  */
@@ -657,8 +676,6 @@ __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 #endif
 
 /*@} end of CMSIS_Core_SysTickFunctions */
-
-
 
 
 #endif /* __CORE_CM0_H_DEPENDANT */

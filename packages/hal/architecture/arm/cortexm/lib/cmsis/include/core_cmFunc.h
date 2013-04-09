@@ -26,8 +26,9 @@
 
 
 /* ###########################  Core Function Access  ########################### */
-/** \ingroup  CMSIS_Core_FunctionInterface
-    \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+/**
+    \ingroup  ARM_CMSIS_Core_FunctionInterface
+    \defgroup ARM_CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
   @{
  */
 

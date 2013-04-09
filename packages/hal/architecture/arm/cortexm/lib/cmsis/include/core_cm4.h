@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     core_cm4.h
+ * @file     cortexm/lib/cmsis/include/core_cm4.h
  * @brief    CMSIS Cortex-M4 Core Peripheral Access Layer Header File
  * @version  V3.01
  * @date     22. March 2012
@@ -31,7 +31,10 @@
 #ifndef __CORE_CM4_H_GENERIC
 #define __CORE_CM4_H_GENERIC
 
-/** \page CMSIS_MISRA_Exceptions  MISRA-C:2004 Compliance Exceptions
+/**
+   \defgroup ARM_CMSIS_CM4_MISRA_Exceptions  MISRA-C:2004 Compliance Exceptions
+   \ingroup ARM_CMSIS_CM4
+
   CMSIS violates the following MISRA-C:2004 rules:
 
    \li Required Rule 8.5, object/function definition in header file.<br>
@@ -48,7 +51,10 @@
 /*******************************************************************************
  *                 CMSIS definitions
  ******************************************************************************/
-/** \ingroup Cortex_M4
+/**
+   \ingroup ARM_CMSIS_CM4
+   \defgroup ARM_CMSIS_CM4_core_definitions CMSIS CM4 Core Definitions
+
   @{
  */
 
@@ -151,9 +157,9 @@
 #endif
 
 #include <stdint.h>                      /* standard types definitions                      */
-#include <core_cmInstr.h>                /* Core Instruction Access                         */
-#include <core_cmFunc.h>                 /* Core Function Access                            */
-#include <core_cm4_simd.h>               /* Compiler specific SIMD Intrinsics               */
+#include "core_cmInstr.h"                /* Core Instruction Access                         */
+#include "core_cmFunc.h"                 /* Core Function Access                            */
+#include "core_cm4_simd.h"               /* Compiler specific SIMD Intrinsics               */
 
 #endif /* __CORE_CM4_H_GENERIC */
 
@@ -190,9 +196,14 @@
   #endif
 #endif
 
+/*@} end of group ARM_CMSIS_CM4_core_definitions */
+
 /* IO definitions (access restrictions to peripheral registers) */
 /**
-    \defgroup CMSIS_glob_defs CMSIS Global Defines
+    \ingroup ARM_CMSIS_CM4
+    \defgroup ARM_CMSIS_CM4_glob_defs CMSIS Global Defines
+
+     @{
 
     <strong>IO Type Qualifiers</strong> are used
     \li to specify the access to peripheral variables.
@@ -206,7 +217,7 @@
 #define     __O     volatile             /*!< Defines 'write only' permissions                */
 #define     __IO    volatile             /*!< Defines 'read / write' permissions              */
 
-/*@} end of group Cortex_M4 */
+/*@} end of group ARM_CMSIS_glob_defs */
 
 
 
@@ -221,12 +232,15 @@
   - Core MPU Register
   - Core FPU Register
  ******************************************************************************/
-/** \defgroup CMSIS_core_register Defines and Type Definitions
+/**
+    \ingroup ARM_CMSIS_CM4
+    \defgroup ARM_CMSIS_CM4_core_register CMSIS Defines and Type Definitions
     \brief Type definitions and defines for Cortex-M processor based devices.
 */
 
-/** \ingroup    CMSIS_core_register
-    \defgroup   CMSIS_CORE  Status and Control Registers
+/**
+    \ingroup    ARM_CMSIS_CM4_core_register
+    \defgroup   ARM_CMSIS_CM4_CORE  Status and Control Registers
     \brief  Core Register type definitions.
   @{
  */
@@ -342,8 +356,9 @@ typedef struct
 /*@} end of group CMSIS_NVIC */
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_SCB     System Control Block (SCB)
+/**
+    \ingroup  ARM_CMSIS_CM4_core_register
+    \defgroup ARM_CMSIS_CM4_SCB     System Control Block (SCB)
     \brief      Type definitions for the System Control Block Registers
   @{
  */
@@ -559,8 +574,9 @@ typedef struct
 /*@} end of group CMSIS_SCB */
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_SCnSCB System Controls not in SCB (SCnSCB)
+/**
+    \ingroup  ARM_CMSIS_CM4_core_register
+    \defgroup ARM_CMSIS_CM4_SCnSCB System Controls not in SCB (SCnSCB)
     \brief      Type definitions for the System Control and ID Register not in the SCB
   @{
  */
@@ -597,8 +613,9 @@ typedef struct
 /*@} end of group CMSIS_SCnotSCB */
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_SysTick     System Tick Timer (SysTick)
+/**
+    \ingroup  ARM_CMSIS_CM4_core_register
+    \defgroup ARM_CMSIS_CM4_SysTick     System Tick Timer (SysTick)
     \brief      Type definitions for the System Timer Registers.
   @{
  */
@@ -647,8 +664,9 @@ typedef struct
 /*@} end of group CMSIS_SysTick */
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_ITM     Instrumentation Trace Macrocell (ITM)
+/**
+    \ingroup  ARM_CMSIS_CM4_core_register
+    \defgroup ARM_CMSIS_CM4_ITM     Instrumentation Trace Macrocell (ITM)
     \brief      Type definitions for the Instrumentation Trace Macrocell (ITM)
   @{
  */
@@ -748,8 +766,9 @@ typedef struct
 /*@}*/ /* end of group CMSIS_ITM */
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_DWT     Data Watchpoint and Trace (DWT)
+/**
+    \ingroup  ARM_CMSIS_CM4_core_register
+    \defgroup ARM_CMSIS_CM4_DWT     Data Watchpoint and Trace (DWT)
     \brief      Type definitions for the Data Watchpoint and Trace (DWT)
   @{
  */
@@ -893,8 +912,9 @@ typedef struct
 /*@}*/ /* end of group CMSIS_DWT */
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_TPI     Trace Port Interface (TPI)
+/**
+    \ingroup  ARM_CMSIS_CM4_core_register
+    \defgroup ARM_CMSIS_CM4_TPI     Trace Port Interface (TPI)
     \brief      Type definitions for the Trace Port Interface (TPI)
   @{
  */
@@ -1047,8 +1067,9 @@ typedef struct
 
 
 #if (__MPU_PRESENT == 1)
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_MPU     Memory Protection Unit (MPU)
+/**
+    \ingroup  ARM_CMSIS_CM4_core_register
+    \defgroup ARM_CMSIS_CM4_MPU     Memory Protection Unit (MPU)
     \brief      Type definitions for the Memory Protection Unit (MPU)
   @{
  */
@@ -1140,8 +1161,9 @@ typedef struct
 
 
 #if (__FPU_PRESENT == 1)
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_FPU     Floating Point Unit (FPU)
+/**
+    \ingroup  ARM_CMSIS_CM4_core_register
+    \defgroup ARM_CMSIS_CM4_FPU     Floating Point Unit (FPU)
     \brief      Type definitions for the Floating Point Unit (FPU)
   @{
  */
@@ -1245,8 +1267,9 @@ typedef struct
 #endif
 
 
-/** \ingroup  CMSIS_core_register
-    \defgroup CMSIS_CoreDebug       Core Debug Registers (CoreDebug)
+/**
+    \ingroup  ARM_CMSIS_CM4_core_register
+    \defgroup ARM_CMSIS_CM4_CoreDebug       Core Debug Registers (CoreDebug)
     \brief      Type definitions for the Core Debug Registers
   @{
  */
@@ -1348,8 +1371,9 @@ typedef struct
 /*@} end of group CMSIS_CoreDebug */
 
 
-/** \ingroup    CMSIS_core_register
-    \defgroup   CMSIS_core_base     Core Definitions
+/**
+    \ingroup    ARM_CMSIS_CM4_core_register
+    \defgroup   ARM_CMSIS_CM4_core_base     Core Definitions
     \brief      Definitions for base addresses, unions, and structures.
   @{
  */
@@ -1395,14 +1419,17 @@ typedef struct
   - Core Debug Functions
   - Core Register Access Functions
  ******************************************************************************/
-/** \defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
+/**
+    \ingroup ARM_CMSIS_CM4
+    \defgroup ARM_CMSIS_CM4_Core_FunctionInterface CMSIS Functions and Instructions Reference
 */
 
 
 
 /* ##########################   NVIC functions  #################################### */
-/** \ingroup  CMSIS_Core_FunctionInterface
-    \defgroup CMSIS_Core_NVICFunctions NVIC Functions
+/**
+    \ingroup  ARM_CMSIS_CM4_Core_FunctionInterface
+    \defgroup ARM_CMSIS_CM4_Core_NVICFunctions NVIC Functions
     \brief      Functions that manage interrupts and exceptions via the NVIC.
     @{
  */
@@ -1636,8 +1663,9 @@ __STATIC_INLINE void NVIC_SystemReset(void)
 
 
 /* ##################################    SysTick function  ############################################ */
-/** \ingroup  CMSIS_Core_FunctionInterface
-    \defgroup CMSIS_Core_SysTickFunctions SysTick Functions
+/**
+    \ingroup  ARM_CMSIS_CM4_Core_FunctionInterface
+    \defgroup ARM_CMSIS_CM4_Core_SysTickFunctions SysTick Functions
     \brief      Functions that configure the System.
   @{
  */
@@ -1679,8 +1707,9 @@ __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 
 
 /* ##################################### Debug In/Output function ########################################### */
-/** \ingroup  CMSIS_Core_FunctionInterface
-    \defgroup CMSIS_core_DebugFunctions ITM Functions
+/**
+    \ingroup  ARM_CMSIS_CM4_Core_FunctionInterface
+    \defgroup ARM_CMSIS_CM4_core_DebugFunctions ITM Functions
     \brief   Functions that access the ITM debug interface.
   @{
  */
