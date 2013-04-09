@@ -13,8 +13,7 @@ Package(
     isEnabled=False,
     
     sourceFiles=[
-        #'OS_Arch_Implementation.cpp',
-        #'OSScheduler_Arch_Implementation.cpp'
+        'InterruptVectors.cpp',
     ],
        
     requirements=[
