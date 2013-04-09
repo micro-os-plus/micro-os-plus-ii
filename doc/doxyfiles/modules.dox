@@ -34,4 +34,46 @@ The Release build configurations should not use this object.
     \defgroup std_iter Iterators
     \ingroup std
 
+\defgroup CMSIS CMSIS
+\brief The [Cortex Microcontroller Software Interface Standard]
+(http://www.arm.com/cmsis) 
+
+CMSIS
+is a vendor-independent hardware abstraction layer for the Cortex-M 
+processor series. The CMSIS enables consistent and simple software 
+interfaces to the processor and the peripherals, simplifying 
+software re-use, reducing the learning curve for new microcontroller 
+developers and reducing the time to market for new devices. 
+
+	\defgroup ARM_CMSIS ARM CMSIS
+	\brief Original CMSIS code from ARM
+    \ingroup CMSIS
+
+		\defgroup ARM_CMSIS_Core_FunctionInterface CMSIS Functions and Instructions Reference
+    	\ingroup ARM_CMSIS
+
+  		\defgroup ARM_CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+    	\ingroup ARM_CMSIS
+		
+		\defgroup ARM_CMSIS_CM0 ARM CMSIS CM0
+		\brief Cortex-M0 CMSIS code from ARM
+    	\ingroup ARM_CMSIS
+
+		\defgroup ARM_CMSIS_CM0P ARM CMSIS CM0+
+		\brief Cortex-M0+ CMSIS code from ARM
+    	\ingroup ARM_CMSIS
+
+		\defgroup ARM_CMSIS_CM3 ARM CMSIS CM3
+		\brief Cortex-M3 CMSIS code from ARM
+    	\ingroup ARM_CMSIS
+
+		\defgroup ARM_CMSIS_CM4 ARM CMSIS CM4
+		\brief Cortex-M4 CMSIS code from ARM
+    	\ingroup ARM_CMSIS
+
+	\defgroup ST_CMSIS ST CMSIS
+	\brief  CMSIS code from ST Micro
+    \ingroup CMSIS
+	
+
 */
