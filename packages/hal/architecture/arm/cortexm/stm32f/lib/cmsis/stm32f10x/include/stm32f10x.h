@@ -15,15 +15,15 @@
   *          is using in the C source code, usually in main.c. This file contains:
   *           - Configuration section that allows to select:
   *              - The device used in the target application
-  *              - To use or not the peripheral’s drivers in application code(i.e. 
-  *                code will be based on direct access to peripheral’s registers 
+  *              - To use or not the peripheralï¿½s drivers in application code(i.e. 
+  *                code will be based on direct access to peripheralï¿½s registers 
   *                rather than drivers API), this option is controlled by 
   *                "#define USE_STDPERIPH_DRIVER"
   *              - To change few application-specific parameters such as the HSE 
   *                crystal frequency
   *           - Data structures and the address mapping for all peripherals
   *           - Peripheral's registers declarations and bits definition
-  *           - Macros to access peripheral’s registers hardware
+  *           - Macros to access peripheralï¿½s registers hardware
   *
   ******************************************************************************
   * @attention
@@ -39,7 +39,7 @@
   ******************************************************************************
   */
 
-/** @addtogroup CMSIS
+/** @addtogroup ST_CMSIS
   * @{
   */
 
@@ -50,6 +50,8 @@
 #ifndef __STM32F10x_H
 #define __STM32F10x_H
 
+#include "portable/core/include/ConfigDefines.h"
+
 #ifdef __cplusplus
  extern "C" {
 #endif 
@@ -57,7 +59,11 @@
 /** @addtogroup Library_configuration_section
   * @{
   */
-  
+
+#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_MD)
+#define STM32F10X_MD
+#endif
+
 /* Uncomment the line below according to the target STM32 device used in your
    application 
   */
@@ -475,7 +481,8 @@ typedef enum IRQn
   * @}
   */
 
-#include "core_cm3.h"
+//#include "../../../../lib/include/core_cm3.h"
+#include "../../core/include/core_cm3.h"
 #include "system_stm32f10x.h"
 #include <stdint.h>
 

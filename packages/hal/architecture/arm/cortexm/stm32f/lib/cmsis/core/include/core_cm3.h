@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     core_cm3.h
+ * @file     stm32f/lib/cmsis/core/include/core_cm3.h
  * @brief    CMSIS Cortex-M3 Core Peripheral Access Layer Header File
  * @version  V1.30
  * @date     30. October 2009
@@ -24,6 +24,7 @@
 #ifndef __CM3_CORE_H__
 #define __CM3_CORE_H__
 
+#if !defined(__DOXYGEN__)
 /** @addtogroup CMSIS_CM3_core_LintCinfiguration CMSIS CM3 Core Lint Configuration
  *
  * List of Lint messages which will be suppressed and not shown:
@@ -67,9 +68,9 @@
 /*lint -e750 */
 /*lint -e528 */
 /*lint -e751 */
+#endif
 
-
-/** @addtogroup CMSIS_CM3_core_definitions CM3 Core Definitions
+/** @addtogroup CMSIS_CM3_core_definitions CMSIS CM3 Core Definitions
   This file defines all structures and symbols for CMSIS core:
     - CMSIS version number
     - Cortex-M core registers and bitfields
@@ -129,6 +130,10 @@
   memory mapped structure for Nested Vectored Interrupt Controller (NVIC)
   @{
  */
+
+/**
+  memory mapped structure for Nested Vectored Interrupt Controller (NVIC)
+ */
 typedef struct
 {
   __IO uint32_t ISER[8];                      /*!< Offset: 0x000  Interrupt Set Enable Register           */
@@ -151,6 +156,10 @@ typedef struct
 /** @addtogroup CMSIS_CM3_SCB CMSIS CM3 SCB
   memory mapped structure for System Control Block (SCB)
   @{
+ */
+
+/**
+ *   memory mapped structure for System Control Block (SCB)
  */
 typedef struct
 {
@@ -362,6 +371,10 @@ typedef struct
   memory mapped structure for SysTick
   @{
  */
+
+/**
+ *   memory mapped structure for SysTick
+ */
 typedef struct
 {
   __IO uint32_t CTRL;                         /*!< Offset: 0x00  SysTick Control and Status Register */
@@ -406,6 +419,10 @@ typedef struct
 /** @addtogroup CMSIS_CM3_ITM CMSIS CM3 ITM
   memory mapped structure for Instrumentation Trace Macrocell (ITM)
   @{
+ */
+
+/*
+ *   memory mapped structure for Instrumentation Trace Macrocell (ITM)
  */
 typedef struct
 {
@@ -500,6 +517,10 @@ typedef struct
   memory mapped structure for Interrupt Type
   @{
  */
+
+/**
+ *   memory mapped structure for Interrupt Type
+ */
 typedef struct
 {
        uint32_t RESERVED0;
@@ -531,6 +552,10 @@ typedef struct
 /** @addtogroup CMSIS_CM3_MPU CMSIS CM3 MPU
   memory mapped structure for Memory Protection Unit (MPU)
   @{
+ */
+
+/**
+ *   memory mapped structure for Memory Protection Unit (MPU)
  */
 typedef struct
 {
@@ -616,6 +641,10 @@ typedef struct
 /** @addtogroup CMSIS_CM3_CoreDebug CMSIS CM3 Core Debug
   memory mapped structure for Core Debug Register
   @{
+ */
+
+/**
+ *   memory mapped structure for Core Debug Register
  */
 typedef struct
 {
@@ -1449,8 +1478,8 @@ extern uint32_t __STREXW(uint32_t value, uint32_t *addr);
   - Core NVIC Functions
   - Core SysTick Functions
   - Core Reset Functions
+  @{
 */
-/*@{*/
 
 /* ##########################   NVIC functions  #################################### */
 
@@ -1736,8 +1765,8 @@ static __INLINE void NVIC_SystemReset(void)
   - Core Debug Receive / Transmit Functions
   - Core Debug Defines
   - Core Debug Variables
+  @{
 */
-/*@{*/
 
 extern volatile int ITM_RxBuffer;                    /*!< variable to receive characters                             */
 #define             ITM_RXBUFFER_EMPTY    0x5AA55AA5 /*!< value identifying ITM_RxBuffer is ready for next character */
