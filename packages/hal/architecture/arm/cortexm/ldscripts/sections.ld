@@ -31,12 +31,17 @@ GROUP(libgcc.a libc.a libm.a libnosys.a)
  *   __StackTop
  *   __stack
  */
-ENTRY(Reset_Handler)
+ 
+/* 
+No longer used, the embedded images entry point is in the interrupts table
+ENTRY(Reset_Handler) 
+*/
 
 SECTIONS
 {
 	.text :
 	{
+		KEEP(*(.core_isr_vector))
 		KEEP(*(.isr_vector))
 		*(.text*)
 
