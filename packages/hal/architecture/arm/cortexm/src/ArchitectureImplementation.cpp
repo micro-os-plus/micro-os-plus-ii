@@ -39,50 +39,54 @@ namespace hal
   }
 }
 
-
-typedef hal::arch::cortexm::LinkerScript::LinkerAlign_t LinkerAlign_t;
 typedef hal::arch::cortexm::LinkerScript LinkerScript_t;
-
 template class os::infra::CStartup<LinkerScript_t>;
-typedef os::infra::CStartup<LinkerScript_t> CStartup_t;
 
-#if defined(DEBUG)
-typedef unsigned int ConstantMarker_t;
+extern int
+main(void);
 
-static const ConstantMarker_t CONSTANT_MARKER_MAGIC = 0x12345678;
-static volatile ConstantMarker_t constantMarker = CONSTANT_MARKER_MAGIC;
-#endif
-
-extern "C"
+namespace hal
 {
-  int
-  main(void);
-
-  void
-  Reset_Handler(void);
-}
-
-void
-Reset_Handler(void)
-{
-
-  CStartup_t::initialiseAndCallStaticConstructors();
-
-#if defined(DEBUG)
-  if (constantMarker != CONSTANT_MARKER_MAGIC)
+  namespace arch
+  {
+    namespace cortexm
     {
-      os::diag::trace.putString("copyInitialisedData() failed");
-      os::diag::trace.putNewLine();
-    }
+      // ----------------------------------------------------------------------
+
+
+      typedef os::infra::CStartup<LinkerScript_t> CStartup_t;
+
+      #if defined(DEBUG)
+      typedef unsigned int ConstantMarker_t;
+
+      static const ConstantMarker_t CONSTANT_MARKER_MAGIC = 0x12345678;
+      static volatile ConstantMarker_t constantMarker = CONSTANT_MARKER_MAGIC;
+      #endif
+
+      void
+      Reset_Handler(void)
+      {
+
+        CStartup_t::initialiseAndCallStaticConstructors();
+
+#if defined(DEBUG)
+        if (constantMarker != CONSTANT_MARKER_MAGIC)
+          {
+            os::diag::trace.putString("copyInitialisedData() failed");
+            os::diag::trace.putNewLine();
+          }
 #endif
 
-  main();
+        main();
 
-  CStartup_t::callStaticDestructors();
+        CStartup_t::callStaticDestructors();
 
-  // TODO: soft reset to restart
-  for (;;)
-    ;
+        // TODO: soft reset to restart
+        for (;;)
+          ;
+      }
+    }
+  }
 }
 
 // ----------------------------------------------------------------------------
