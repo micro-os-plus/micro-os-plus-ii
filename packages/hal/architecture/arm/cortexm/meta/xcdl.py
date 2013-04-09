@@ -12,6 +12,7 @@ Package(
     
     sourceFiles=[
         'ArchitectureImplementation.cpp',
+        'CoreInterruptVectors.cpp',
     ],
     
     copyFiles=[
