@@ -324,8 +324,9 @@ typedef union
 /*@} end of group CMSIS_CORE */
 
 
-/** \ingroup    CMSIS_core_register
-    \defgroup   CMSIS_NVIC  Nested Vectored Interrupt Controller (NVIC)
+/**
+    \ingroup    ARM_CMSIS_CM4_core_register
+    \defgroup   ARM_CMSIS_CM4_NVIC  Nested Vectored Interrupt Controller (NVIC)
     \brief      Type definitions for the NVIC Registers
   @{
  */
