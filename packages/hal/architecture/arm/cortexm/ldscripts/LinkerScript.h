@@ -15,6 +15,8 @@ namespace hal
     namespace cortexm
     {
 
+      typedef uint32_t InterruptVector_t;
+
       class LinkerScript
       {
       public:
@@ -55,19 +57,24 @@ namespace hal
 
 extern "C"
 {
-  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __bss_start__;
-  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __bss_end__;
+  typedef hal::arch::cortexm::LinkerScript::LinkerAlign_t LinkerAlign_t;
 
-  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __etext;
+  extern LinkerAlign_t __bss_start__;
+  extern LinkerAlign_t __bss_end__;
 
-  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __data_start__;
-  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __data_end__;
+  extern LinkerAlign_t __etext;
 
-  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __init_array_start;
-  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __init_array_end;
+  extern LinkerAlign_t __data_start__;
+  extern LinkerAlign_t __data_end__;
 
-  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __fini_array_start;
-  extern hal::arch::cortexm::LinkerScript::LinkerAlign_t __fini_array_end;
+  extern LinkerAlign_t __init_array_start;
+  extern LinkerAlign_t __init_array_end;
+
+  extern LinkerAlign_t __fini_array_start;
+  extern LinkerAlign_t __fini_array_end;
+
+  extern LinkerAlign_t __stack;
+
 }
 
 namespace hal
