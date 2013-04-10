@@ -9,6 +9,7 @@
 
 #include "portable/core/include/OS.h"
 
+// Needed for the reference to __stack
 #include "../ldscripts/LinkerScript.h"
 
 namespace hal
@@ -32,17 +33,10 @@ namespace hal
       extern void
       SysTick_Handler(void);
 
-#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3)
-      extern void
-      MemManage_Handler(void);
-      extern void
-      BusFault_Handler(void);
-      extern void
-      UsageFault_Handler(void);
-      extern void
-      DebugMon_Handler(void);
-#endif
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0P)
 
+      // ----------------------------------------------------------------------
+      /// \brief ARM Cortex-M0/M0+ Core Interrupt vectors
       __attribute__ ((section(".core_isr_vector")))
       InterruptVector_t coreInterruptVectors[] =
         { //
@@ -56,23 +50,68 @@ namespace hal
               // Hard Fault Handler
               reinterpret_cast<InterruptVector_t>(HardFault_Handler),
 
-#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0P)
               // Reserved
               0,
               // Reserved
               0,
               // Reserved
               0,
-#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3)
+              // Reserved
+              0,
+              // Reserved
+              0,
+              // Reserved
+              0,
+              // Reserved
+              0,
+
+              // SVCall Handler
+              reinterpret_cast<InterruptVector_t>(SVC_Handler),
+
+              0, // Reserved
+              // Reserved
+              0,
+
+              // PendSV Handler
+              reinterpret_cast<InterruptVector_t>(PendSV_Handler),
+              // SysTick Handler
+              reinterpret_cast<InterruptVector_t>(SysTick_Handler)
+
+          };
+      // ----------------------------------------------------------------------
+
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M4)
+
+      extern void
+      MemManage_Handler(void);
+      extern void
+      BusFault_Handler(void);
+      extern void
+      UsageFault_Handler(void);
+      extern void
+      DebugMon_Handler(void);
+
+      // ----------------------------------------------------------------------
+      /// \brief ARM Cortex-M3/M4 Core Interrupt vectors
+      __attribute__ ((section(".core_isr_vector")))
+      InterruptVector_t coreInterruptVectors[] =
+        { //
+          // Top of stack
+          reinterpret_cast<InterruptVector_t>(&__stack),
+
+          // Reset Handler
+              reinterpret_cast<InterruptVector_t>(Reset_Handler),
+              // NMI Handler
+              reinterpret_cast<InterruptVector_t>(NMI_Handler),
+              // Hard Fault Handler
+              reinterpret_cast<InterruptVector_t>(HardFault_Handler),
+
               // MPU Fault Handler
               reinterpret_cast<InterruptVector_t>(MemManage_Handler),
               // Bus Fault Handler
               reinterpret_cast<InterruptVector_t>(BusFault_Handler),
               // Usage Fault Handler
               reinterpret_cast<InterruptVector_t>(UsageFault_Handler),
-#else
-#error "Unsupported ARM Cortex-M architecture"
-#endif
 
               // Reserved
               0,
@@ -86,12 +125,8 @@ namespace hal
               // SVCall Handler
               reinterpret_cast<InterruptVector_t>(SVC_Handler),
 
-#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0P)
-              0, // Reserved
-#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3)
               // Debug Monitor Handler
               reinterpret_cast<InterruptVector_t>(DebugMon_Handler),
-#endif
 
               // Reserved
               0,
@@ -102,8 +137,14 @@ namespace hal
               reinterpret_cast<InterruptVector_t>(SysTick_Handler)
 
           };
+
       // ----------------------------------------------------------------------
 
+#else
+#error "Unsupported ARM Cortex-M architecture"
+#endif
+
+      /// \brief Default interrupt handler
       void
       defaultInterruptHandler(void)
       {
@@ -140,7 +181,7 @@ namespace hal
       {
       }
 
-#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3)
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M4)
 
 // Unfortunately '#pragma weak' is not C++ friendly, so we need
 // to manually mangle the function names.
