@@ -26,6 +26,7 @@ namespace hal
 
       typedef hal::arch::cortexm::InterruptVector_t InterruptVector_t;
 
+      /// \brief STM32Fx specific interrupt vectors
       __attribute__ ((section(".isr_vector")))
       InterruptVector_t interruptVectors[] =
         { //
