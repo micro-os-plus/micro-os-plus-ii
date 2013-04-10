@@ -4,7 +4,7 @@
 
 The *User Manual* is divided into several sections:
 
-- \subpage diagnostics - Diagnostics support
-- \subpage testing - The testing framework
+- \subpage diagnostics - Additional support for debug configurations (mainly tracing support)
+- \subpage testing - A framework for running unit tests on POSIX platforms
 
 */
