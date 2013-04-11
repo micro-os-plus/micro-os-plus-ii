@@ -41,7 +41,9 @@ SECTIONS
 {
 	.text :
 	{
-		KEEP(*(.core_isr_vector))
+		KEEP(*(.core_isr_vectors))
+		KEEP(*(.family_isr_vectors))
+		KEEP(*(.device_isr_vectors))
 		KEEP(*(.isr_vector))
 		*(.text*)
 

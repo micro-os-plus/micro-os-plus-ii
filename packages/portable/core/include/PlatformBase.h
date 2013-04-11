@@ -8,6 +8,8 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
+#include "portable/core/include/Architecture.h"
+
 namespace os
 {
   namespace core
@@ -16,13 +18,33 @@ namespace os
     {
     public:
 
+      static void
+      initialiseSystem(void);
+
+      static void
+      resetSystem(void);
+
 #if defined(DEBUG)
-      static
-      void
+      static void
       putGreeting(void);
 #endif
 
     };
+
+    inline __attribute__((always_inline))
+    void
+    PlatformBase::initialiseSystem(void)
+    {
+      os::architecture.initialiseSystem();
+    }
+
+    inline __attribute__((always_inline))
+    void
+    PlatformBase::resetSystem(void)
+    {
+      os::architecture.resetSystem();
+    }
+
   }
 }
 

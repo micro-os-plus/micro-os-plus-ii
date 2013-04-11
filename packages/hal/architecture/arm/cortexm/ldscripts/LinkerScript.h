@@ -8,6 +8,8 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
+#include "portable/core/include/OS.h"
+
 namespace hal
 {
   namespace cortexm

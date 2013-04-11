@@ -10,7 +10,7 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
-#include "portable/core/include/OS.h"
+#include "hal/architecture/arm/cortexm/include/FamilyImplementationSelector.h"
 
 namespace hal
 {
@@ -23,6 +23,12 @@ namespace hal
       /// \brief Deleted constructor.
       ArchitectureImplementation() = default;
 
+      static void
+      initialiseSystem(void);
+
+      static void
+      resetSystem(void);
+
 #if defined(DEBUG)
       /// \brief Put architecture specific greeting on the trace device.
       /// \par Returns
@@ -30,6 +36,21 @@ namespace hal
       putGreeting(void);
 #endif
     };
+
+    inline __attribute__((always_inline))
+    void
+    ArchitectureImplementation::initialiseSystem(void)
+    {
+      hal::cortexm::FamilyImplementation::initialiseSystem();
+    }
+
+    inline __attribute__((always_inline))
+    void
+    ArchitectureImplementation::resetSystem(void)
+    {
+      hal::cortexm::FamilyImplementation::resetSystem();
+    }
+
   }
 
   namespace arch

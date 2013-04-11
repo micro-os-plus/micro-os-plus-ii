@@ -22,7 +22,7 @@ namespace hal
       {
       public:
 
-        // TODO: add more platfrom members
+        // TODO: add more platform members, like initialiseSystem()
       };
     }
 

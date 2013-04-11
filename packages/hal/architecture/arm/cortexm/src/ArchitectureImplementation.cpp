@@ -9,6 +9,8 @@
 
 //#include "portable/core/include/OS.h"
 
+#include "portable/core/include/Platform.h"
+
 #include "../include/ArchitectureImplementation.h"
 
 #include "portable/infrastructure/include/CStartup.h"
@@ -21,7 +23,7 @@ namespace hal
 {
   namespace cortexm
   {
-    // ----------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
 #if defined(DEBUG)
     void
@@ -32,12 +34,12 @@ namespace hal
     }
 #endif
 
-  // ------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
   }
 }
 
 typedef hal::cortexm::LinkerScript LinkerScript;
-template class os::infra::CStartup<LinkerScript>;
+template class os::infra::TCStartup<LinkerScript>;
 
 extern int
 main(void);
@@ -46,9 +48,9 @@ namespace hal
 {
   namespace cortexm
   {
-    // ----------------------------------------------------------------------
+// ------------------------------------------------------------------------
 
-    typedef os::infra::CStartup<LinkerScript> CStartup;
+    typedef os::infra::TCStartup<LinkerScript> CStartup;
 
 #if defined(DEBUG)
     typedef unsigned int constantMarker_t;
@@ -57,28 +59,42 @@ namespace hal
     static volatile constantMarker_t constantMarker = CONSTANT_MARKER_MAGIC;
 #endif
 
-    void
-    Reset_Handler(void)
+    namespace InterruptHandler
     {
+      void
+      Reset(void)
+      {
+        CStartup::initialiseDataAndBss();
 
-      CStartup::initialiseAndCallStaticConstructors();
+        os::platform.initialiseSystem();
+
+        CStartup::callStaticConstructors();
 
 #if defined(DEBUG)
-      if (constantMarker != CONSTANT_MARKER_MAGIC)
-        {
-          os::diag::trace.putString("copyInitialisedData() failed");
-          os::diag::trace.putNewLine();
-        }
+        if (constantMarker != CONSTANT_MARKER_MAGIC)
+          {
+            os::diag::trace.putString("copyInitialisedData() failed");
+            os::diag::trace.putNewLine();
+          }
 #endif
 
-      main();
+        main();
 
-      CStartup::callStaticDestructors();
+        CStartup::callStaticDestructors();
 
-      // TODO: soft reset to restart
-      for (;;)
-        ;
+#if defined(DEBUG)
+        os::diag::trace.putString("looping after main()");
+        os::diag::trace.putNewLine();
+
+        for (;;)
+          ;
+#else
+        os::platform.resetSystem();
+#endif
+      }
     }
+
+  // ------------------------------------------------------------------------
   }
 }
 
@@ -97,12 +113,16 @@ extern "C"
   void*
   _sbrk()
   {
+    // not yet implemented
+    // TODO: allocate space on heap
     return 0;
   }
 
   void
   __cxa_pure_virtual(void)
   {
+    // not yet implemented
+    // TODO: trace message and restart
   }
 }
 
@@ -110,7 +130,9 @@ void
 operator
 delete(void* p __attribute__((unused)))
 {
+  // not yet implemented
 }
+
 // ----------------------------------------------------------------------------
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)

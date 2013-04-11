@@ -31,6 +31,17 @@
 #ifndef __CORE_CM3_H_GENERIC
 #define __CORE_CM3_H_GENERIC
 
+#if !defined(__NVIC_PRIO_BITS)
+
+// This is just to keep Eclipse happy
+#define __NVIC_PRIO_BITS 0
+
+#endif
+
+#if __NVIC_PRIO_BITS == 0
+#warning "missing __NVIC_PRIO_BITS"
+#endif
+
 /**
    \defgroup ARM_CMSIS_CM3_MISRA_Exceptions  MISRA-C:2004 Compliance Exceptions
    \ingroup ARM_CMSIS_CM3

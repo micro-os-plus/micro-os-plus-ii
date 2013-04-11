@@ -10,7 +10,7 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
-#include "portable/core/include/OS.h"
+//#include "portable/core/include/OS.h"
 
 namespace hal
 {
@@ -24,10 +24,9 @@ namespace hal
     /// \nosubgrouping
     ///
     /// \brief ARM Cortex-M architecture interrupt numbers base
+    ///
     /// \details
-    /// Common definitions for all
-    /// Cortex-M
-    ///  architectures.
+    /// Common definitions for all Cortex-M architectures.
     class CoreInterruptNumberBase
     {
     public:
@@ -43,6 +42,7 @@ namespace hal
     /// \nosubgrouping
     ///
     /// \brief ARM Cortex-M0 architecture interrupt numbers
+    ///
     /// \details
     /// Interrupt numbers defined by the Cortex-M0
     /// light architecture.
@@ -78,6 +78,7 @@ namespace hal
     /// \nosubgrouping
     ///
     /// \brief ARM Cortex-M0+ architecture interrupt numbers
+    ///
     /// \details
     /// Interrupt numbers defined by the Cortex-M0+
     /// light architecture (same as those of Cortex-M0).
@@ -93,6 +94,7 @@ namespace hal
     /// \nosubgrouping
     ///
     /// \brief ARM Cortex-M3 architecture interrupt numbers
+    ///
     /// \details
     /// Interrupt numbers defined by the  Cortex-M3
     /// architecture.
@@ -140,6 +142,7 @@ namespace hal
     /// \nosubgrouping
     ///
     /// \brief ARM Cortex-M4 architecture interrupt numbers
+    ///
     /// \details
     /// Interrupt numbers defined by the Cortex-M4
     /// architecture (same as those of Cortex-M3).

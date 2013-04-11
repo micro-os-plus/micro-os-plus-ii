@@ -13,11 +13,10 @@ Package(
     isEnabled=False,
     
     sourceFiles=[
-        'InterruptVectors.cpp',
+        'FamilyImplementation.cpp',
     ],
        
     requirements=[
-        #'enable("package.os.hal.architecture.cortexm")',
         'enable("package.os.hal.architecture.arm.cortexm")',
     ],
  
@@ -36,6 +35,10 @@ Package(
             description='Support for STM32F10X ARM Cortex-M processors.',
             
             isEnabled=False,
+
+            sourceFiles=[
+                'stm32f10x/InterruptVectors.cpp',
+            ],
     
             headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X',
 
