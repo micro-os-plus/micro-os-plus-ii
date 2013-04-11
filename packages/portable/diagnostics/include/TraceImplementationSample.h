@@ -46,9 +46,9 @@ namespace os
       /// \brief Early initialisation
       ///
       /// \par Parameters
-      /// None.
+      ///       None.
       /// \par Returns
-      /// Nothing.
+      ///       Nothing.
       void
       earlyInitialise(void);
 

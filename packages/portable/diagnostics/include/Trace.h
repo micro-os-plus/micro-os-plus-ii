@@ -23,27 +23,26 @@ namespace os
 
     // ========================================================================
 
-    /// \class TraceStreambufBase Trace.h "portable/diagnostics/include/Trace.h"
+    /// \headerfile Trace.h "portable/diagnostics/include/Trace.h"
     /// \ingroup diag
     /// \nosubgrouping
     ///
     /// \brief Trace streambuf class.
     ///
-    /// \tparam TImplementation_T  Type of the implementation class.
+    /// \tparam Implementation_T  Type of the implementation class.
     ///
     /// \details
-    /// The TraceStreambufBase class implements a streambuf class
-    /// to be used by the TraceOstreamBase class.
+    /// The TTraceStreambufBase class implements a streambuf class
+    /// to be used by the TTraceOstreamBase class.
     ///
     /// \example portable/diagnostics/tests/src/trace.cpp
 
-    template<class TImplementation_T>
-      class TraceStreambufBase : public os::std::streambuf
+    template<class Implementation_T>
+      class TTraceStreambufBase : public os::std::streambuf
       {
       public:
 
         /// \name Standard template types
-        /// @{
         ///
         /// These types permit a standardised way of
         /// referring to names of (or names dependent on) the template
@@ -51,8 +50,11 @@ namespace os
         /// when referring to the template, (in which case the templates
         /// parameters are required), use these types everywhere
         /// else instead of usual types.
-        typedef TImplementation_T Implementation_t;
-        /// @}
+        /// @{
+
+        typedef Implementation_T Implementation;
+
+        /// @} end of name Standard template types
 
         /// \name Constructors/destructor
         /// @{
@@ -60,13 +62,13 @@ namespace os
         /// \brief  Base constructor.
         ///
         /// \param [in] implementation Reference to the implementation class.
-        TraceStreambufBase(Implementation_t& implementation);
+        TTraceStreambufBase(Implementation& implementation);
 
         /// \brief  Base destructor.
         virtual
-        ~TraceStreambufBase();
+        ~TTraceStreambufBase();
 
-        /// @}
+        /// @} end of name Constructors/destructor
 
         /// \brief  Consume data from the buffer and write to the
         ///         output stream.
@@ -82,33 +84,32 @@ namespace os
         /// @{
 
         /// \brief Pointer to the implementation class.
-        Implementation_t& m_implementation;
+        Implementation& m_implementation;
 
-        /// @}
+        /// @} end of name Private members
 
       };
 
     // ========================================================================
 
-    /// \class TraceOstreamBase Trace.h "portable/diagnostics/include/Trace.h"
+    /// \headerfile Trace.h "portable/diagnostics/include/Trace.h"
     /// \ingroup diag
     /// \nosubgrouping
     ///
     /// \brief Trace ostream class.
     ///
-    /// \tparam TStreambuf_T  Type of the streambuf class.
-    /// \tparam TImplementation_T  Type of the implementation class.
+    /// \tparam Streambuf_T  Type of the streambuf class.
+    /// \tparam Implementation_T  Type of the implementation class.
     ///
     /// \details
-    /// The TraceOstreamBase class implements an ostream class
+    /// The TTraceOstreamBase class implements an ostream class
     /// to be used by the Trace class.
-    template<class TStreambuf_T, class TImplementation_T>
-      class TraceOstreamBase : public os::std::ostream
+    template<class Streambuf_T, class Implementation_T>
+      class TTraceOstreamBase : public os::std::ostream
       {
       public:
 
         /// \name Standard template types
-        /// @{
         ///
         /// These types permit a standardised way of
         /// referring to names of (or names dependent on) the template
@@ -116,30 +117,33 @@ namespace os
         /// when referring to the template, (in which case the templates
         /// parameters are required), use these types everywhere
         /// else instead of usual types.
-        typedef TImplementation_T Implementation_t;
-        typedef TStreambuf_T Streambuf_t;
-        /// @}
+        /// @{
+
+        typedef Implementation_T Implementation;
+        typedef Streambuf_T Streambuf;
+
+        /// @} end of name Standard template types
 
         /// \name Constructors/destructor
         /// @{
 
         /// \brief Base constructor.
-        TraceOstreamBase(Implementation_t& implementation);
+        TTraceOstreamBase(Implementation& implementation);
 
         /// \brief Base destructor.
         virtual
-        ~TraceOstreamBase();
+        ~TTraceOstreamBase();
 
-        /// @}
+        /// @}end of name Constructors/destructor
 
       private:
         /// \name Private members
         /// @{
 
         /// \brief Local streambuf object.
-        Streambuf_t m_streambuf;
+        Streambuf m_streambuf;
 
-        /// @}
+        /// @} end of name Private members
 
       };
 }
@@ -153,20 +157,22 @@ namespace os
   {
     // ========================================================================
 
-    /// \class TraceLightBase Trace.h "portable/diagnostics/include/Trace.h"
+    /// \headerfile Trace.h "portable/diagnostics/include/Trace.h"
     /// \ingroup diag
     /// \nosubgrouping
     ///
     /// \brief Trace light base class.
     ///
+    /// \tparam Implementation_T  Type of the implementation class.
+    ///
+    /// \details
     /// This class provides no functionality, it is used only as a
-    /// light alternative to TraceOstreamBase,
-    template<class TImplementation_T>
-      class TraceLightBase
+    /// light alternative to TTraceOstreamBase.
+    template<class Implementation_T>
+      class TTraceLightBase
       {
       public:
         /// \name Standard template types
-        /// @{
         ///
         /// These types permit a standardised way of
         /// referring to names of (or names dependent on) the template
@@ -174,8 +180,11 @@ namespace os
         /// when referring to the template, (in which case the templates
         /// parameters are required), use these types everywhere
         /// else instead of usual types.
-        typedef TImplementation_T Implementation_t;
-        /// @}
+        /// @{
+
+        typedef Implementation_T Implementation;
+
+        /// @} end of name Standard template types
 
         /// \name Constructors/destructor
         /// @{
@@ -183,10 +192,10 @@ namespace os
         /// \brief Constructor
         ///
         /// \param [in] implementation Unused reference to implementation.
-        TraceLightBase(
-            Implementation_t& implementation __attribute__((unused)));
+        TTraceLightBase(
+            Implementation& implementation __attribute__((unused)));
 
-        /// @}
+        /// @} end of name Constructors/destructor
 
       };
 
@@ -195,12 +204,12 @@ namespace os
 
     /// \details
     /// The reference implementation is required only for compatibility
-    /// with TraceOstreamBase, this class does not use it,
+    /// with TTraceOstreamBase, this class does not use it,
     /// as it has no functionality
-    template<class TImplementation_T>
+    template<class Implementation_T>
       inline
-      TraceLightBase<TImplementation_T>::TraceLightBase(
-          Implementation_t& implementation __attribute__((unused)))
+      TTraceLightBase<Implementation_T>::TTraceLightBase(
+          Implementation& implementation __attribute__((unused)))
       {
       }
 
@@ -212,25 +221,24 @@ namespace os
 //#pragma clang diagnostic ignored "-Wweak-vtables"
 #endif
 
-    /// \class TraceBase Trace.h "portable/diagnostics/include/Trace.h"
+    /// \headerfile Trace.h "portable/diagnostics/include/Trace.h"
     /// \ingroup diag
     /// \nosubgrouping
     ///
     /// \brief Trace base class.
     ///
-    /// \tparam TBase_T  Type of the base class.
-    /// \tparam TImplementation_T  Type of the implementation class.
+    /// \tparam Base_T  Type of the base class.
+    /// \tparam Implementation_T  Type of the implementation class.
     ///
     /// \details
     /// This class implements the light versions of the trace output.
     /// All required conversions are available with simple functions,
     /// instead of the (heavier) ostream inserters.
-    template<class TBase_T, class TImplementation_T>
-      class TraceBase : public TBase_T
+    template<class Base_T, class Implementation_T>
+      class TTraceBase : public Base_T
       {
       public:
         /// \name Standard template types
-        /// @{
         ///
         /// These types permit a standardised way of
         /// referring to names of (or names dependent on) the template
@@ -238,31 +246,33 @@ namespace os
         /// when referring to the template, (in which case the templates
         /// parameters are required), use these types everywhere
         /// else instead of usual types.
-        typedef TBase_T Base_t;
-        typedef TImplementation_T Implementation_t;
+        /// @{
 
-        /// @}
+        typedef Base_T Base;
+        typedef Implementation_T Implementation;
+
+        /// @} end of name Standard template types
 
         /// \name Constructors/destructor
         /// @{
 
         /// \brief Base constructor.
-        TraceBase();
+        TTraceBase();
 
         /// \brief Base destructor.
         virtual
-        ~TraceBase();
+        ~TTraceBase();
 
-        /// @}
+        /// @} end of name Constructors/destructor
 
         /// \name Light functions.
-        /// @{
         ///
         /// These functions directly output to the trace device
         /// without passing via the ostream code.
         /// They are intended to time critical situations (like
         /// interrupt code) when the ostream overhead might have
         /// an impact on latency.
+        /// @{
 
         /// \brief Put new line.
         ///
@@ -414,9 +424,9 @@ namespace os
 #define putMemberFunction()
 #endif
 
-        /// @}
+        /// @} end of name Light functions.
 
-        Implementation_t&
+        Implementation&
         getImplementation(void);
 
       protected:
@@ -424,9 +434,9 @@ namespace os
         /// @{
 
         /// \brief Implementation object.
-        Implementation_t m_implementation;
+        Implementation m_implementation;
 
-        /// @}
+        /// @} end of name Protected members
 
       };
 
@@ -435,49 +445,49 @@ namespace os
     // ------------------------------------------------------------------------
     // inlines
 
-    template<class TBase_T, class TImplementation_T>
-      inline typename TraceBase<TBase_T, TImplementation_T>::Implementation_t&
-      TraceBase<TBase_T, TImplementation_T>::getImplementation(void)
+    template<class Base_T, class Implementation_T>
+      inline typename TTraceBase<Base_T, Implementation_T>::Implementation&
+      TTraceBase<Base_T, Implementation_T>::getImplementation(void)
       {
         return m_implementation;
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       inline
       void
-      TraceBase<TBase_T, TImplementation_T>::putChar(const signed char ch)
+      TTraceBase<Base_T, Implementation_T>::putChar(const signed char ch)
       {
         putChar(static_cast<char>(ch));
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       inline
       void
-      TraceBase<TBase_T, TImplementation_T>::putChar(const unsigned char ch)
+      TTraceBase<Base_T, Implementation_T>::putChar(const unsigned char ch)
       {
         putChar(static_cast<char>(ch));
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       inline
       void
-      TraceBase<TBase_T, TImplementation_T>::putString(char* pStr)
+      TTraceBase<Base_T, Implementation_T>::putString(char* pStr)
       {
         putString(const_cast<const char*>(pStr));
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       inline
       void
-      TraceBase<TBase_T, TImplementation_T>::putString(const signed char* pStr)
+      TTraceBase<Base_T, Implementation_T>::putString(const signed char* pStr)
       {
         putString(reinterpret_cast<const char*>(pStr));
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       inline
       void
-      TraceBase<TBase_T, TImplementation_T>::putString(
+      TTraceBase<Base_T, Implementation_T>::putString(
           const unsigned char* pStr)
       {
         putString(reinterpret_cast<const char*>(pStr));
@@ -498,12 +508,12 @@ namespace os
 #endif
 
   // Declare the template instantiation
-  extern template class TraceStreambufBase<TraceImplementation_t>;
+  extern template class TTraceStreambufBase<TraceImplementation>;
 
 #pragma GCC diagnostic pop
 
-  // Define a type to the TraceStreambufBase class
-  typedef TraceStreambufBase<TraceImplementation_t> TraceStreambuf_t;
+  // Define a type to the TTraceStreambufBase class
+  typedef TTraceStreambufBase<TraceImplementation> TraceStreambuf;
 
 // ----------------------------------------------------------------------------
 
@@ -514,22 +524,22 @@ namespace os
 #endif
 
   // Declare the template instantiation
-  extern template class TraceOstreamBase<TraceStreambuf_t,
-  TraceImplementation_t>;
+  extern template class TTraceOstreamBase<TraceStreambuf,
+  TraceImplementation>;
 
 #pragma GCC diagnostic pop
 
-  // Define a type to the TraceOstreamBase class
-  typedef TraceOstreamBase<TraceStreambuf_t, TraceImplementation_t> TraceOstreamBase_t;
+  // Define a type to the TTraceOstreamBase class
+  typedef TTraceOstreamBase<TraceStreambuf, TraceImplementation> TraceOstreamBase;
 
 #endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)
 
 // ----------------------------------------------------------------------------
 
   // Declare the template instantiation
-  extern template class TraceLightBase<TraceImplementation_t>;
+  extern template class TTraceLightBase<TraceImplementation>;
 
-  typedef TraceLightBase<TraceImplementation_t> TraceLightBase_t;
+  typedef TTraceLightBase<TraceImplementation> TraceLightBase;
 
 // ----------------------------------------------------------------------------
 
@@ -541,16 +551,16 @@ namespace os
 
   // Declare the template instantiation
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
-  extern template class TraceBase<TraceOstreamBase_t, TraceImplementation_t>;
+  extern template class TTraceBase<TraceOstreamBase, TraceImplementation>;
 #endif
-  extern template class TraceBase<TraceLightBase_t, TraceImplementation_t>;
+  extern template class TTraceBase<TraceLightBase, TraceImplementation>;
 
 #pragma GCC diagnostic pop
 
 #if defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE_OSTREAM_BASE)
-  typedef TraceBase<TraceOstreamBase_t, TraceImplementation_t> TraceBase_t;
+  typedef TTraceBase<TraceOstreamBase, TraceImplementation> TraceBase;
 #else
-  typedef TraceBase<TraceLightBase_t, TraceImplementation_t> TraceBase_t;
+  typedef TTraceBase<TraceLightBase, TraceImplementation> TraceBase;
 #endif
 
 // ----------------------------------------------------------------------------
@@ -567,17 +577,18 @@ namespace os
 //#pragma clang diagnostic ignored "-Wweak-vtables"
 #endif
 
-  /// \class Trace Trace.h "portable/diagnostics/include/Trace.h"
+  /// \headerfile Trace.h "portable/diagnostics/include/Trace.h"
   /// \ingroup diag
   /// \nosubgrouping
   ///
   /// \brief Diagnostics Trace output class.
   ///
-  /// Basically a TraceBase with early initialisations.
+  /// \details
+  /// Basically a TTraceBase with early initialisations.
   ///
   /// \warning Do not manually create further instances of this class!
   /// If you need this for testing, use the base classes.
-  class Trace : public TraceBase_t
+  class Trace : public TraceBase
     {
     public:
 
@@ -591,11 +602,16 @@ namespace os
       virtual
       ~Trace();
 
-      /// @}
+      /// @} end of name Constructors/destructor
+
+      /// \name Static member functions
+      /// @{
 
       /// \brief Called only once during early initialisations.
       static void
       earlyInitialise(void);
+
+      /// @} end of name Static member functions
     };
 
 #pragma GCC diagnostic pop
@@ -606,7 +622,7 @@ namespace os
   void
   Trace::earlyInitialise(void)
     {
-      Implementation_t::earlyInitialise();
+      Implementation::earlyInitialise();
     }
 
   // --------------------------------------------------------------------------

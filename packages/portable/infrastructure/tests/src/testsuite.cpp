@@ -13,7 +13,7 @@ int
 main(int argc, char* argv[])
 {
   // instantiate the TestSuite, passing the process parameters
-  os::infra::TestSuite_t ts(argc, argv);
+  os::infra::TestSuite ts(argc, argv);
 
   // identify the class unter tests
   ts.setClassName("os::infra::TestSuite");

@@ -112,7 +112,7 @@ namespace os
   {
     /// \brief Define the generic type to refer to the POSIX implementation
     /// for the Trace.
-    typedef hal::posix::diag::TraceImplementation TraceImplementation_t;
+    typedef hal::posix::diag::TraceImplementation TraceImplementation;
   } // namespace diag
 } // namespace os
 

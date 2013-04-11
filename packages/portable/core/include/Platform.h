@@ -12,7 +12,7 @@
 
 namespace os
 {
-  extern hal::platform::PlatformImplementation_t platform;
+  extern hal::platform::PlatformImplementation platform;
 }
 
 #endif // OS_PORTABLE_CORE_PLATFORM_H_

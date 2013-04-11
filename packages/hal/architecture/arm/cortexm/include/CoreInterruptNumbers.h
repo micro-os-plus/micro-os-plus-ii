@@ -16,7 +16,6 @@ namespace hal
 {
   namespace cortexm
   {
-    // deleted constructors temporarily removed until Eclipse formatter is fixed
 
     /// \ingroup arm_cm
     /// @{
@@ -34,9 +33,10 @@ namespace hal
     public:
 
       /// \brief Type of an interrupt number (a signed integer).
-      typedef int InterruptNumber_t;
+      typedef int interruptNumber_t;
 
-      //CoreInterruptNumberBase() = delete;
+      /// \brief Deleted constructor
+      CoreInterruptNumberBase() = delete;
     };
 
     /// \headerfile CoreInterruptNumbers.h "hal/architecture/arm/cortexm/include/CoreInterruptNumbers.h"
@@ -49,25 +49,26 @@ namespace hal
     class CortexM0InterruptNumber : public CoreInterruptNumberBase
     {
     public:
-      //CortexM0InterruptNumber() = delete;
+      /// \brief Deleted constructor
+      CortexM0InterruptNumber() = delete;
 
       /// \name Interrupt numbers
       /// @{
 
       ///  Non Maskable Interrupt
-      static const InterruptNumber_t NonMaskableInt = -14;
+      static const interruptNumber_t NonMaskableInt = -14;
 
       /// HardFault Interrupt
-      static const InterruptNumber_t HardFault = -13;
+      static const interruptNumber_t HardFault = -13;
 
       /// SV Call Interrupt
-      static const InterruptNumber_t SVCall = -5;
+      static const interruptNumber_t SVCall = -5;
 
       /// Pend SV Interrupt
-      static const InterruptNumber_t PendSV = -2;
+      static const interruptNumber_t PendSV = -2;
 
       /// System Tick Interrupt
-      static const InterruptNumber_t SysTick = -1;
+      static const interruptNumber_t SysTick = -1;
 
       /// @} end of name Interrupt numbers
 
@@ -83,7 +84,8 @@ namespace hal
     class CortexM0plusInterruptNumber : public CortexM0InterruptNumber
     {
     public:
-      //CortexM0plusInterruptNumber() = delete;
+      /// \brief Deleted constructor
+      CortexM0plusInterruptNumber() = delete;
 
     };
 
@@ -97,37 +99,38 @@ namespace hal
     class CortexM3InterruptNumber : public CoreInterruptNumberBase
     {
     public:
-      //CortexM3InterruptNumber() = delete;
+      /// \brief Deleted constructor
+      CortexM3InterruptNumber() = delete;
 
       /// \name Interrupt numbers
       /// @{
 
       ///  Non Maskable Interrupt
-      static const InterruptNumber_t NonMaskableInt = -14;
+      static const interruptNumber_t NonMaskableInt = -14;
 
       /// HardFault Interrupt
-      static const InterruptNumber_t HardFault = -13;
+      static const interruptNumber_t HardFault = -13;
 
       /// Memory Management Interrupt
-      static const InterruptNumber_t MemoryManagement = -12;
+      static const interruptNumber_t MemoryManagement = -12;
 
       /// Bus Fault Interrupt
-      static const InterruptNumber_t BusFault = -11;
+      static const interruptNumber_t BusFault = -11;
 
       /// Usage Fault Interrupt
-      static const InterruptNumber_t UsageFault = -10;
+      static const interruptNumber_t UsageFault = -10;
 
       /// SV Call Interrupt
-      static const InterruptNumber_t SVCall = -5;
+      static const interruptNumber_t SVCall = -5;
 
       /// Debug Monitor Interrupt
-      static const InterruptNumber_t DebugMonitor = -4;
+      static const interruptNumber_t DebugMonitor = -4;
 
       /// Pend SV Interrupt
-      static const InterruptNumber_t PendSV = -2;
+      static const interruptNumber_t PendSV = -2;
 
       /// System Tick Interrupt
-      static const InterruptNumber_t SysTick = -1;
+      static const interruptNumber_t SysTick = -1;
 
       /// @} end of name Interrupt numbers
 
@@ -143,7 +146,8 @@ namespace hal
     class CortexM4InterruptNumber : public CortexM3InterruptNumber
     {
     public:
-      //CortexM4InterruptNumber() = delete;
+      /// \brief Deleted constructor
+      CortexM4InterruptNumber() = delete;
 
     };
 
@@ -153,5 +157,4 @@ namespace hal
 }
 
 #endif // OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M
-
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_COREINTERRUPTNUMBERS_H_

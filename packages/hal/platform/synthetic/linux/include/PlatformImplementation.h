@@ -26,7 +26,7 @@ namespace hal
       };
     }
 
-    typedef linux::PlatformImplementation PlatformImplementation_t;
+    typedef linux::PlatformImplementation PlatformImplementation;
   }
 }
 

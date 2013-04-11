@@ -25,10 +25,10 @@ namespace os
     /// \relates TraceBase
     ///
     /// \brief Convert a generic unsigned to a hex representation.
-    template<class TImplementation_T, typename TNumber_T>
+    template<class Implementation_T, typename TNumber_T>
       inline __attribute__((always_inline))
       void
-      __putHex(TImplementation_T& implementation, TNumber_T n)
+      __putHex(Implementation_T& implementation, TNumber_T n)
       {
         size_t pos;
         char buff[sizeof(n) * 2];
@@ -50,10 +50,10 @@ namespace os
     /// \relates TraceBase
     ///
     /// \brief Convert a generic signed to a decimal representation.
-    template<class TImplementation_T, typename TNumber_T>
+    template<class Implementation_T, typename TNumber_T>
       inline __attribute__((always_inline))
       void
-      __putSigned(TImplementation_T& implementation, TNumber_T n)
+      __putSigned(Implementation_T& implementation, TNumber_T n)
       {
         bool isNegative = false;
 

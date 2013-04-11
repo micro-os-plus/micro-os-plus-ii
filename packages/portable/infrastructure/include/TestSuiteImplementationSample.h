@@ -41,11 +41,11 @@ namespace os
     /// embedded platforms.
     ///
     /// The architecture implementation must also define the type name
-    ///  `os::infra::TestSuiteImplementation_t` similar to the below
+    ///  `os::infra::TestSuiteImplementation` similar to the below
     /// definition, but pointing to the actual class, since this is how
     /// it is referred from the TestSuite member function.
     /// \code{.cpp}
-    /// typedef os::infra::TestSuiteImplementation TestSuiteImplementation_t;
+    /// typedef os::infra::TestSuiteImplementation TestSuiteImplementation;
     /// \endcode
     class TestSuiteImplementationSample
     {

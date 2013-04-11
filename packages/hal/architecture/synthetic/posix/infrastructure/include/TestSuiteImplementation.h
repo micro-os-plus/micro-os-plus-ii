@@ -147,7 +147,7 @@ namespace os
   {
     /// \brief Define the generic type to refer to the POSIX implementation
     /// for the TestSuite.
-    typedef hal::posix::infra::TestSuiteImplementation TestSuiteImplementation_t;
+    typedef hal::posix::infra::TestSuiteImplementation TestSuiteImplementation;
   } // namespace infra
 } // namespace os
 

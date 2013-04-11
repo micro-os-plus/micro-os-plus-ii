@@ -14,25 +14,30 @@
 
 namespace hal
 {
-  namespace arch
+  namespace cortexm
   {
-    namespace cortexm
+    /// \brief Cortex-M architecture implementation.
+    class ArchitectureImplementation
     {
-      class ArchitectureImplementation
-      {
-      public:
+    public:
+      /// \brief Deleted constructor.
+      ArchitectureImplementation() = default;
 
 #if defined(DEBUG)
-        static void
-        putGreeting(void);
+      /// \brief Put architecture specific greeting on the trace device.
+      /// \par Returns
+      static void
+      putGreeting(void);
 #endif
-      };
-    }
+    };
+  }
 
-    typedef cortexm::ArchitectureImplementation ArchitectureImplementation_t;
+  namespace arch
+  {
+    /// \brief Generic ArchitectureImplementation, pointing to specific one.
+    typedef hal::cortexm::ArchitectureImplementation ArchitectureImplementation;
   }
 }
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
-
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_ARCHITECTUREIMPLEMENTATION_H_

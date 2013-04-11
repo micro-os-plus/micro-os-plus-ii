@@ -75,7 +75,7 @@ namespace os
     /// used. Currently it is the responsibility of the user to keep
     /// these strings unique, the framework does not check this condition.
 
-    template<class TImplementation_T>
+    template<class Implementation_T>
       class TestSuiteBase
       {
 
@@ -89,7 +89,7 @@ namespace os
         /// when referring to the template, (in which case the templates
         /// parameters are required), use these types everywhere
         /// else instead of usual types.
-        typedef TImplementation_T Implementation_t;
+        typedef Implementation_T Implementation;
 
         /// @}
 
@@ -366,7 +366,7 @@ namespace os
         bool m_isXmlOpened;
 
         /// \brief The actual platform implementation.
-        Implementation_t m_implementation;
+        Implementation m_implementation;
       };
 
 #pragma GCC diagnostic pop
@@ -374,41 +374,41 @@ namespace os
     // ------------------------------------------------------------------------
     // inline member functions
 
-    template<class TImplementation_T>
+    template<class Implementation_T>
       inline
       unsigned int
-      TestSuiteBase<TImplementation_T>::getCountPassed(void)
+      TestSuiteBase<Implementation_T>::getCountPassed(void)
       {
         return m_countPassed;
       }
 
-    template<class TImplementation_T>
+    template<class Implementation_T>
       inline
       unsigned int
-      TestSuiteBase<TImplementation_T>::getCountFailed(void)
+      TestSuiteBase<Implementation_T>::getCountFailed(void)
       {
         return m_countFailed;
       }
 
-    template<class TImplementation_T>
+    template<class Implementation_T>
       inline
       unsigned int
-      TestSuiteBase<TImplementation_T>::getCurrentTestCaseNumber(void) const
+      TestSuiteBase<Implementation_T>::getCurrentTestCaseNumber(void) const
       {
         return m_countPassed + m_countFailed;
       }
 
-    template<class TImplementation_T>
+    template<class Implementation_T>
       inline
       size_t
-      TestSuiteBase<TImplementation_T>::getVerbosity(void) const
+      TestSuiteBase<Implementation_T>::getVerbosity(void) const
       {
         return m_implementation.getVerbosity();
       }
 
     // ------------------------------------------------------------------------
     /// \brief Define a TestSuite type based on the template.
-    typedef TestSuiteBase<TestSuiteImplementation_t> TestSuiteBase_t;
+    typedef TestSuiteBase<TestSuiteImplementation> TestSuiteBase_t;
 
     // ========================================================================
 
@@ -437,7 +437,7 @@ namespace os
 
     };
 
-    typedef TestSuite TestSuite_t;
+    typedef TestSuite TestSuite;
 
     // ========================================================================
 

@@ -19,72 +19,65 @@
 
 namespace hal
 {
-  namespace arch
+  namespace cortexm
   {
-    namespace cortexm
-    {
-      // ----------------------------------------------------------------------
+    // ----------------------------------------------------------------------
 
 #if defined(DEBUG)
-      void
-      ArchitectureImplementation::putGreeting(void)
-      {
-        os::diag::trace.putString("ARM Cortex M");
-        os::diag::trace.putNewLine();
-      }
+    void
+    ArchitectureImplementation::putGreeting(void)
+    {
+      os::diag::trace.putString("ARM Cortex M");
+      os::diag::trace.putNewLine();
+    }
 #endif
 
-    // ------------------------------------------------------------------------
-    }
+  // ------------------------------------------------------------------------
   }
 }
 
-typedef hal::arch::cortexm::LinkerScript LinkerScript_t;
-template class os::infra::CStartup<LinkerScript_t>;
+typedef hal::cortexm::LinkerScript LinkerScript;
+template class os::infra::CStartup<LinkerScript>;
 
 extern int
 main(void);
 
 namespace hal
 {
-  namespace arch
+  namespace cortexm
   {
-    namespace cortexm
-    {
-      // ----------------------------------------------------------------------
+    // ----------------------------------------------------------------------
 
-
-      typedef os::infra::CStartup<LinkerScript_t> CStartup_t;
-
-      #if defined(DEBUG)
-      typedef unsigned int ConstantMarker_t;
-
-      static const ConstantMarker_t CONSTANT_MARKER_MAGIC = 0x12345678;
-      static volatile ConstantMarker_t constantMarker = CONSTANT_MARKER_MAGIC;
-      #endif
-
-      void
-      Reset_Handler(void)
-      {
-
-        CStartup_t::initialiseAndCallStaticConstructors();
+    typedef os::infra::CStartup<LinkerScript> CStartup;
 
 #if defined(DEBUG)
-        if (constantMarker != CONSTANT_MARKER_MAGIC)
-          {
-            os::diag::trace.putString("copyInitialisedData() failed");
-            os::diag::trace.putNewLine();
-          }
+    typedef unsigned int constantMarker_t;
+
+    static const constantMarker_t CONSTANT_MARKER_MAGIC = 0x12345678;
+    static volatile constantMarker_t constantMarker = CONSTANT_MARKER_MAGIC;
 #endif
 
-        main();
+    void
+    Reset_Handler(void)
+    {
 
-        CStartup_t::callStaticDestructors();
+      CStartup::initialiseAndCallStaticConstructors();
 
-        // TODO: soft reset to restart
-        for (;;)
-          ;
-      }
+#if defined(DEBUG)
+      if (constantMarker != CONSTANT_MARKER_MAGIC)
+        {
+          os::diag::trace.putString("copyInitialisedData() failed");
+          os::diag::trace.putNewLine();
+        }
+#endif
+
+      main();
+
+      CStartup::callStaticDestructors();
+
+      // TODO: soft reset to restart
+      for (;;)
+        ;
     }
   }
 }

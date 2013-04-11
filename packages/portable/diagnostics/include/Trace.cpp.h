@@ -27,16 +27,16 @@ namespace os
 
     /// \details
     /// Pass the implementation reference to the base streambuf.
-    template<class TImplementation_T>
-      TraceStreambufBase<TImplementation_T>::TraceStreambufBase(
-          Implementation_t& implementation)
+    template<class Implementation_T>
+      TTraceStreambufBase<Implementation_T>::TTraceStreambufBase(
+          Implementation& implementation)
           : m_implementation(implementation)
       {
         // Do not call putConstructor() since the stream is not yet ready
       }
 
-    template<class TImplementation_T>
-      TraceStreambufBase<TImplementation_T>::~TraceStreambufBase()
+    template<class Implementation_T>
+      TTraceStreambufBase<Implementation_T>::~TTraceStreambufBase()
       {
       }
 
@@ -44,9 +44,9 @@ namespace os
     /// Currently the buffering is not enabled, so only the input
     /// parameter can be considered; if different from `traits::eof()`
     /// it is passed to the implementation `write()`.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       os::std::streambuf::int_type
-      TraceStreambufBase<TImplementation_T>::overflow(int_type c)
+      TTraceStreambufBase<Implementation_T>::overflow(int_type c)
       {
         if (c != traits_type::eof())
           {
@@ -63,9 +63,9 @@ namespace os
     /// implementation
     /// and initialise the parent ostream with the pointer to the local
     /// streambuf.
-    template<class TStreambuf_T, class TImplementation_T>
-      TraceOstreamBase<TStreambuf_T, TImplementation_T>::TraceOstreamBase(
-          Implementation_t& implementation)
+    template<class TStreambuf_T, class Implementation_T>
+      TTraceOstreamBase<TStreambuf_T, Implementation_T>::TTraceOstreamBase(
+          Implementation& implementation)
           : m_streambuf(implementation)
       {
         init(&m_streambuf);
@@ -73,8 +73,8 @@ namespace os
         // however it is recommended not to display anything yet.
       }
 
-    template<class TStreambuf_T, class TImplementation_T>
-      TraceOstreamBase<TStreambuf_T, TImplementation_T>::~TraceOstreamBase()
+    template<class TStreambuf_T, class Implementation_T>
+      TTraceOstreamBase<TStreambuf_T, Implementation_T>::~TTraceOstreamBase()
       {
       }
 
@@ -83,22 +83,22 @@ namespace os
     // ========================================================================
     // TraceBase
 
-    template<class TBase_T, class TImplementation_T>
-      TraceBase<TBase_T, TImplementation_T>::TraceBase()
-          : TBase_T(m_implementation)
+    template<class Base_T, class Implementation_T>
+      TTraceBase<Base_T, Implementation_T>::TTraceBase()
+          : Base_T(m_implementation)
       {
       }
 
-    template<class TBase_T, class TImplementation_T>
-      TraceBase<TBase_T, TImplementation_T>::~TraceBase()
+    template<class Base_T, class Implementation_T>
+      TTraceBase<Base_T, Implementation_T>::~TTraceBase()
       {
       }
 
     /// \details
     /// Output the terminating character and flush the device.
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putNewLine()
+      TTraceBase<Base_T, Implementation_T>::putNewLine()
       {
         m_implementation.write("\n", 1);
         m_implementation.flush();
@@ -106,19 +106,19 @@ namespace os
 
     /// \details
     /// Output single character via the implementation `write()` function.
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       inline
       void
-      TraceBase<TBase_T, TImplementation_T>::putChar(const char ch)
+      TTraceBase<Base_T, Implementation_T>::putChar(const char ch)
       {
         m_implementation.write(&ch, 1);
       }
 
     /// \details
     /// Output the entire string at once.
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putString(const char* pStr)
+      TTraceBase<Base_T, Implementation_T>::putString(const char* pStr)
       {
         // Silently ignore null strings.
         if (pStr == nullptr)
@@ -132,9 +132,9 @@ namespace os
     /// name and the `this` pointer of the current class.
     /// It is used to implement the
     /// `putConstructor()` and `putDestructor()` macros.
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putNameAndAddress(const char* pStr,
+      TTraceBase<Base_T, Implementation_T>::putNameAndAddress(const char* pStr,
           void* addr)
       {
         putString(pStr);
@@ -143,41 +143,41 @@ namespace os
         putNewLine();
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putHex(unsigned char n)
+      TTraceBase<Base_T, Implementation_T>::putHex(unsigned char n)
       {
         // inline function template
         __putHex(m_implementation, n);
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putHex(unsigned int n)
+      TTraceBase<Base_T, Implementation_T>::putHex(unsigned int n)
       {
         // inline function template
         __putHex(m_implementation, n);
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putHex(unsigned short n)
+      TTraceBase<Base_T, Implementation_T>::putHex(unsigned short n)
       {
         // inline function template
         __putHex(m_implementation, n);
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putHex(unsigned long n)
+      TTraceBase<Base_T, Implementation_T>::putHex(unsigned long n)
       {
         // inline function template
         __putHex(m_implementation, n);
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putHex(unsigned long long n)
+      TTraceBase<Base_T, Implementation_T>::putHex(unsigned long long n)
       {
         // inline function template
         __putHex(m_implementation, n);
@@ -185,9 +185,9 @@ namespace os
 
     /// \details
     /// Convert the pointer to a suitable unsigned and output it as hex.
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putHex(void* ptr)
+      TTraceBase<Base_T, Implementation_T>::putHex(void* ptr)
       {
 #if __SIZEOF_POINTER__ == __SIZEOF_INT__
 
@@ -211,17 +211,17 @@ namespace os
         putHex(n);
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putDec(int n)
+      TTraceBase<Base_T, Implementation_T>::putDec(int n)
       {
         // inline function template
         __putSigned(m_implementation, n);
       }
 
-    template<class TBase_T, class TImplementation_T>
+    template<class Base_T, class Implementation_T>
       void
-      TraceBase<TBase_T, TImplementation_T>::putDec(long n)
+      TTraceBase<Base_T, Implementation_T>::putDec(long n)
       {
         // inline function template
         __putSigned(m_implementation, n);

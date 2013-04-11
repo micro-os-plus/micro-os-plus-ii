@@ -13,41 +13,38 @@
 
 namespace hal
 {
-  namespace arch
+  namespace stm32f
   {
-    namespace stm32f
+    // ----------------------------------------------------------------------
+
+    extern void
+    WWDG_IRQHandler(void);
+    extern void
+    PVD_IRQHandler(void);
+
+    typedef hal::cortexm::interruptVector_t interruptVector_t;
+
+    /// \brief STM32Fx specific interrupt vectors
+    __attribute__ ((section(".isr_vector")))
+    interruptVector_t interruptVectors[] =
+      { //
+        reinterpret_cast<interruptVector_t>(WWDG_IRQHandler), // 0:  Watchdog Timer
+            reinterpret_cast<interruptVector_t>(PVD_IRQHandler) // 1:  Real Time Clock
+
+        };
+    // ----------------------------------------------------------------------
+
+    void
+    WWDG_IRQHandler(void)
     {
-      // ----------------------------------------------------------------------
-
-      extern void
-      WWDG_IRQHandler(void);
-      extern void
-      PVD_IRQHandler(void);
-
-      typedef hal::arch::cortexm::InterruptVector_t InterruptVector_t;
-
-      /// \brief STM32Fx specific interrupt vectors
-      __attribute__ ((section(".isr_vector")))
-      InterruptVector_t interruptVectors[] =
-        { //
-          reinterpret_cast<InterruptVector_t>(WWDG_IRQHandler), // 0:  Watchdog Timer
-              reinterpret_cast<InterruptVector_t>(PVD_IRQHandler) // 1:  Real Time Clock
-
-          };
-      // ----------------------------------------------------------------------
-
-      void
-      WWDG_IRQHandler(void)
-      {
-      }
-      void
-      PVD_IRQHandler(void)
-      {
-      }
-
-    // ------------------------------------------------------------------------
-
     }
+    void
+    PVD_IRQHandler(void)
+    {
+    }
+
+  // ------------------------------------------------------------------------
+
   }
 }
 

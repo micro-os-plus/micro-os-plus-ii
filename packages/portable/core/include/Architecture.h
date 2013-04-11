@@ -12,7 +12,7 @@
 
 namespace os
 {
-  extern hal::arch::ArchitectureImplementation_t architecture;
+  extern hal::arch::ArchitectureImplementation architecture;
 }
 
 #endif // OS_PORTABLE_CORE_ARCHITECTURE_H_

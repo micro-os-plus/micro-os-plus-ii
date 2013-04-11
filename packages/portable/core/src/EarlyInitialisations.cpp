@@ -193,8 +193,8 @@ static os::core::EarlyGreetings earlyGreetings;
 
 namespace os
 {
-  hal::arch::ArchitectureImplementation_t architecture;
-  hal::platform::PlatformImplementation_t platform;
+  hal::arch::ArchitectureImplementation architecture;
+  hal::platform::PlatformImplementation platform;
 }
 
 // ----------------------------------------------------------------------------

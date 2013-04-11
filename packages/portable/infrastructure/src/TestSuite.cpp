@@ -41,29 +41,29 @@ namespace os
 
     /// \details
     /// Create the default test suite.
-    template<class TImplementation_T>
-      TestSuiteBase<TImplementation_T>::TestSuiteBase()
+    template<class Implementation_T>
+      TestSuiteBase<Implementation_T>::TestSuiteBase()
           : m_implementation()
       {
-        TestSuiteBase<TImplementation_T>::__init();
+        TestSuiteBase<Implementation_T>::__init();
       }
 
     /// \details
     /// Create a test suite using the process parameters. The parameters
     /// are only passed to the implementation class.
-    template<class TImplementation_T>
-      TestSuiteBase<TImplementation_T>::TestSuiteBase(int argc, char* argv[])
+    template<class Implementation_T>
+      TestSuiteBase<Implementation_T>::TestSuiteBase(int argc, char* argv[])
           : m_implementation(argc, argv)
       {
-        TestSuiteBase<TImplementation_T>::__init();
+        TestSuiteBase<Implementation_T>::__init();
       }
 
     /// \details
     /// Clear all members, pointers and counters. Intended to be called
     /// from constructors.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::__init(void)
+      TestSuiteBase<Implementation_T>::__init(void)
       {
         m_pClassName = nullptr;
         m_pFunctionName = nullptr;
@@ -79,16 +79,16 @@ namespace os
 
     /// \details
     /// Cleanup the test suite.
-    template<class TImplementation_T>
-      TestSuiteBase<TImplementation_T>::~TestSuiteBase()
+    template<class Implementation_T>
+      TestSuiteBase<Implementation_T>::~TestSuiteBase()
       {
       }
 
     // ------------------------------------------------------------------------
 
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::processMainParameters(int argc,
+      TestSuiteBase<Implementation_T>::processMainParameters(int argc,
           char* argv[])
       {
         m_implementation.processMainParameters(argc, argv);
@@ -103,9 +103,9 @@ namespace os
     /// \code{.cpp}
     /// setClassName("os::infra::TestSuite");
     /// \endcode
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::setClassName(const char* pName)
+      TestSuiteBase<Implementation_T>::setClassName(const char* pName)
       {
         m_pClassName = pName;
         outputLine(OutputLineType::CLASS);
@@ -127,9 +127,9 @@ namespace os
     /// \code{.cpp}
     /// setFunctionNameOrPrefix("clear(iostate)");
     /// \endcode
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::setFunctionNameOrPrefix(
+      TestSuiteBase<Implementation_T>::setFunctionNameOrPrefix(
           const char* pName)
       {
         m_pFunctionName = pName;
@@ -137,25 +137,25 @@ namespace os
         m_pPreconditions = nullptr;
       }
 
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::setInputValues(const char* pStr)
+      TestSuiteBase<Implementation_T>::setInputValues(const char* pStr)
       {
         m_pInputValues = pStr;
       }
 
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::setPreconditions(const char* pStr)
+      TestSuiteBase<Implementation_T>::setPreconditions(const char* pStr)
       {
         m_pPreconditions = pStr;
       }
 
     /// \details
     /// Generate an informative START line on the output device.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::start(const char* pMessage)
+      TestSuiteBase<Implementation_T>::start(const char* pMessage)
       {
         outputLine(OutputLineType::START, pMessage);
 
@@ -173,9 +173,9 @@ namespace os
     /// \details
     /// Generate a `PASS` line on the output device. If the XML
     ///  output is configured, the `<testcase>` element will be generated.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::reportPassed(const char* pMessage)
+      TestSuiteBase<Implementation_T>::reportPassed(const char* pMessage)
       {
         // increment early, to start the counter from 1
         ++(this->m_countPassed); // one more passed test
@@ -187,9 +187,9 @@ namespace os
     /// Generate a `FAIL` line on the output device. If the XML
     /// output is configured, the `<testcase>` element will include a
     /// `<failed/>` element.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::reportFailed(const char* pMessage)
+      TestSuiteBase<Implementation_T>::reportFailed(const char* pMessage)
       {
         // increment early, to start the counter from 1
         ++(this->m_countFailed); // one more failed test
@@ -202,9 +202,9 @@ namespace os
     /// \details
     /// Generate a `PASS/FAIL` line on the output device,
     /// based on the given boolean condition.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::checkAndReport(bool expression,
+      TestSuiteBase<Implementation_T>::checkAndReport(bool expression,
           const char* pMessage)
       {
         if (expression)
@@ -219,18 +219,18 @@ namespace os
 
     /// \details
     /// Generate an `INFO` line on the output device.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::reportInfo(const char* pMessage)
+      TestSuiteBase<Implementation_T>::reportInfo(const char* pMessage)
       {
         outputLine(OutputLineType::INFO, pMessage);
       }
 
     /// \details
     /// Generate an informative `STOP` line on the output device.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::stop(void)
+      TestSuiteBase<Implementation_T>::stop(void)
       {
         outputLine(OutputLineType::STAT);
         outputLine(OutputLineType::STOP, m_pStartMessage);
@@ -253,9 +253,9 @@ namespace os
     /// prefixed with the function name, input values and preconditions, if
     /// defined.
 
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::outputLine(OutputLineType_t lineType,
+      TestSuiteBase<Implementation_T>::outputLine(OutputLineType_t lineType,
           const char* pMessage)
       {
         bool doPrint = false;
@@ -392,9 +392,9 @@ namespace os
     /// \details
     /// Compute the string length and write all the string
     /// characters, excluding the terminating '\0' into the XML file.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       ssize_t
-      TestSuiteBase<TImplementation_T>::writeStringToXmlFile(
+      TestSuiteBase<Implementation_T>::writeStringToXmlFile(
           const char* pString)
       {
         if (pString == nullptr)
@@ -409,9 +409,9 @@ namespace os
 
     /// \details
     /// Convert the number to ASCII and write it to the XML file.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       ssize_t
-      TestSuiteBase<TImplementation_T>::writeCounterToXmlFile(
+      TestSuiteBase<Implementation_T>::writeCounterToXmlFile(
           unsigned int number)
       {
         char buf[10];
@@ -437,9 +437,9 @@ namespace os
     /// \details
     /// Compute the string length and send all the string characters,
     /// excluding the terminating '\0', to the test output device.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       ssize_t
-      TestSuiteBase<TImplementation_T>::putString(const char* pString)
+      TestSuiteBase<Implementation_T>::putString(const char* pString)
       {
         if (pString == nullptr)
           return 0;
@@ -454,9 +454,9 @@ namespace os
     /// \details
     /// Inform the output device that the current line is
     /// completed and request to flush all output and pass to the next line.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::putNewLine(void)
+      TestSuiteBase<Implementation_T>::putNewLine(void)
       {
         return m_implementation.putNewLine();
       }
@@ -464,9 +464,9 @@ namespace os
     /// \details
     /// Convert the integer to ASCII and send it to the test
     /// output device.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       ssize_t
-      TestSuiteBase<TImplementation_T>::putNumber(int number)
+      TestSuiteBase<Implementation_T>::putNumber(int number)
       {
         char buf[10];
 
@@ -514,9 +514,9 @@ namespace os
     ///   <testcase classname="os::infra::TestSuite" name="a failed test"><failure/></testcase>
     /// </testsuite></testsuites>
     /// \endcode
-    template<class TImplementation_T>
+    template<class Implementation_T>
       void
-      TestSuiteBase<TImplementation_T>::writeTestCaseToXmlFile(bool isFailure,
+      TestSuiteBase<Implementation_T>::writeTestCaseToXmlFile(bool isFailure,
           const char* pMessage)
       {
         if (m_isXmlOpened)
@@ -558,9 +558,9 @@ namespace os
     /// passed, and 1 if at least one failed. \n
     /// This member function checks the count of failed test cases
     ///  and, if 0, it returns 0, otherwise it return 1.
-    template<class TImplementation_T>
+    template<class Implementation_T>
       int
-      TestSuiteBase<TImplementation_T>::getExitValue(void) const
+      TestSuiteBase<Implementation_T>::getExitValue(void) const
       {
         return ((m_countFailed == 0) ? 0 : 1);
       }
@@ -568,7 +568,7 @@ namespace os
     // ------------------------------------------------------------------------
     // Explicit instantiation of this template. This must come after
     // the template member functions definitions.
-    template class TestSuiteBase<TestSuiteImplementation_t> ;
+    template class TestSuiteBase<TestSuiteImplementation> ;
 
     // ========================================================================
 

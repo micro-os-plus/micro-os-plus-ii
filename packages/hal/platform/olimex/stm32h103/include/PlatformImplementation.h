@@ -26,7 +26,7 @@ namespace hal
       };
     }
 
-    typedef stm32h103::PlatformImplementation PlatformImplementation_t;
+    typedef stm32h103::PlatformImplementation PlatformImplementation;
   }
 }
 

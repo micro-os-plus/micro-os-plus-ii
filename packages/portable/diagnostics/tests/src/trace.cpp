@@ -18,7 +18,7 @@
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-os::infra::TestSuite_t ts;
+os::infra::TestSuite ts;
 
 #pragma GCC diagnostic pop
 
@@ -90,13 +90,13 @@ TraceImplementationCharArray::getDefaultChar(void)
   return '*';
 }
 
-typedef TraceImplementationCharArray TraceImplementationCharArray_t;
+//typedef TraceImplementationCharArray TraceImplementationCharArray;
 
 // ----------------------------------------------------------------------------
 
-template class os::diag::TraceLightBase<TraceImplementationCharArray>;
+template class os::diag::TTraceLightBase<TraceImplementationCharArray>;
 
-typedef os::diag::TraceLightBase<TraceImplementationCharArray> TraceLightBaseCharArray_t;
+typedef os::diag::TTraceLightBase<TraceImplementationCharArray> TraceLightBaseCharArray;
 
 // ----------------------------------------------------------------------------
 
@@ -105,13 +105,13 @@ typedef os::diag::TraceLightBase<TraceImplementationCharArray> TraceLightBaseCha
 #pragma clang diagnostic ignored "-Wweak-template-vtables"
 #endif
 
-template class os::diag::TraceBase<TraceLightBaseCharArray_t,
+template class os::diag::TTraceBase<TraceLightBaseCharArray,
     TraceImplementationCharArray>;
 
 #pragma GCC diagnostic pop
 
-typedef os::diag::TraceBase<TraceLightBaseCharArray_t,
-    TraceImplementationCharArray> TraceBaseCharArray_t;
+typedef os::diag::TTraceBase<TraceLightBaseCharArray,
+    TraceImplementationCharArray> TraceBaseCharArray;
 
 // ----------------------------------------------------------------------------
 
@@ -125,7 +125,7 @@ runTestCompile()
       // test if the class accepts all these data types
       // (compile time tests, runtime validations below)
 
-      TraceBaseCharArray_t t;
+      TraceBaseCharArray t;
 
       t.putNewLine();
 
@@ -207,8 +207,8 @@ void
 runTestConstructor()
 {
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.setFunctionNameOrPrefix("TraceImplementationCharArray()");
 
@@ -228,8 +228,8 @@ void
 runTestChars()
 {
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.setFunctionNameOrPrefix("putNewLine()");
 
@@ -243,8 +243,8 @@ runTestChars()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.setFunctionNameOrPrefix("putChar(const char)");
 
@@ -259,8 +259,8 @@ runTestChars()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.setFunctionNameOrPrefix("putChar(const signed char)");
 
@@ -275,8 +275,8 @@ runTestChars()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.setFunctionNameOrPrefix("putChar(const unsigned char)");
 
@@ -300,8 +300,8 @@ void
 runTestStrings()
 {
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.setFunctionNameOrPrefix("putString(const char*)");
 
@@ -318,8 +318,8 @@ runTestStrings()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.setFunctionNameOrPrefix("putString(char*)");
 
@@ -335,8 +335,8 @@ runTestStrings()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.setFunctionNameOrPrefix("putString(const signed char*)");
 
@@ -352,8 +352,8 @@ runTestStrings()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.setFunctionNameOrPrefix("putString(const unsigned char*)");
 
@@ -379,8 +379,8 @@ runTestHex()
 {
   ts.reportInfo("hex numbers");
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("char first digits");
       ts.setFunctionNameOrPrefix("putHex(unsigned char)");
@@ -398,8 +398,8 @@ runTestHex()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("char middle digits");
       ts.setFunctionNameOrPrefix("putHex(unsigned char)");
@@ -417,8 +417,8 @@ runTestHex()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("char last digits");
       ts.setFunctionNameOrPrefix("putHex(unsigned char)");
@@ -436,8 +436,8 @@ runTestHex()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("short");
       ts.setFunctionNameOrPrefix("putHex(unsigned short)");
@@ -460,8 +460,8 @@ runTestHex()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("int");
       ts.setFunctionNameOrPrefix("putHex(unsigned int)");
@@ -488,8 +488,8 @@ runTestHex()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("long");
       ts.setFunctionNameOrPrefix("putHex(unsigned long)");
@@ -538,8 +538,8 @@ runTestHex()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("long long");
       ts.setFunctionNameOrPrefix("putHex(unsigned long long)");
@@ -574,8 +574,8 @@ runTestHex()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("void*");
       ts.setFunctionNameOrPrefix("putHex(void*)");
@@ -635,8 +635,8 @@ runTestDec()
   ts.reportInfo("decimal numbers");
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("int");
       ts.setFunctionNameOrPrefix("putDec(int n)");
@@ -667,8 +667,8 @@ runTestDec()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("int");
       ts.setFunctionNameOrPrefix("putDec(int n)");
@@ -700,8 +700,8 @@ runTestDec()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("long");
       ts.setFunctionNameOrPrefix("putDec(long n)");
@@ -760,8 +760,8 @@ runTestDec()
     }
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("long");
       ts.setFunctionNameOrPrefix("putDec(long n)");
@@ -833,8 +833,8 @@ runTestNameAndAddress()
   ts.reportInfo("name and address");
 
     {
-      TraceBaseCharArray_t t;
-      TraceImplementationCharArray_t& ti = t.getImplementation();
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
 
       ts.reportInfo("putNameAndAddress");
       ts.setFunctionNameOrPrefix("putNameAndAddress()");

@@ -29,7 +29,7 @@ namespace hal
       };
     }
 
-    typedef posix::ArchitectureImplementation ArchitectureImplementation_t;
+    typedef posix::ArchitectureImplementation ArchitectureImplementation;
   }
 }
 

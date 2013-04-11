@@ -14,8 +14,6 @@
 
 namespace hal
 {
-  namespace arch
-  {
     namespace cortexm
     {
       // ----------------------------------------------------------------------
@@ -38,46 +36,46 @@ namespace hal
       // ----------------------------------------------------------------------
       /// \brief ARM Cortex-M0/M0+ Core Interrupt vectors
       __attribute__ ((section(".core_isr_vector")))
-      InterruptVector_t coreInterruptVectors[] =
+      interruptVector_t coreInterruptVectors[] =
         { //
           // Top of stack
-          reinterpret_cast<InterruptVector_t>(&__stack),
+          reinterpret_cast<interruptVector_t>(&__stack),
 
           // Reset Handler
-              reinterpret_cast<InterruptVector_t>(Reset_Handler),
-              // NMI Handler
-              reinterpret_cast<InterruptVector_t>(NMI_Handler),
-              // Hard Fault Handler
-              reinterpret_cast<InterruptVector_t>(HardFault_Handler),
+          reinterpret_cast<interruptVector_t>(Reset_Handler),
+          // NMI Handler
+          reinterpret_cast<interruptVector_t>(NMI_Handler),
+          // Hard Fault Handler
+          reinterpret_cast<interruptVector_t>(HardFault_Handler),
 
-              // Reserved
-              0,
-              // Reserved
-              0,
-              // Reserved
-              0,
-              // Reserved
-              0,
-              // Reserved
-              0,
-              // Reserved
-              0,
-              // Reserved
-              0,
+          // Reserved
+          0,
+          // Reserved
+          0,
+          // Reserved
+          0,
+          // Reserved
+          0,
+          // Reserved
+          0,
+          // Reserved
+          0,
+          // Reserved
+          0,
 
-              // SVCall Handler
-              reinterpret_cast<InterruptVector_t>(SVC_Handler),
+          // SVCall Handler
+          reinterpret_cast<interruptVector_t>(SVC_Handler),
 
-              0, // Reserved
-              // Reserved
-              0,
+          0,// Reserved
+          // Reserved
+          0,
 
-              // PendSV Handler
-              reinterpret_cast<InterruptVector_t>(PendSV_Handler),
-              // SysTick Handler
-              reinterpret_cast<InterruptVector_t>(SysTick_Handler)
+          // PendSV Handler
+          reinterpret_cast<interruptVector_t>(PendSV_Handler),
+          // SysTick Handler
+          reinterpret_cast<interruptVector_t>(SysTick_Handler)
 
-          };
+        };
       // ----------------------------------------------------------------------
 
 #elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3) || defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M4)
@@ -94,24 +92,24 @@ namespace hal
       // ----------------------------------------------------------------------
       /// \brief ARM Cortex-M3/M4 Core Interrupt vectors
       __attribute__ ((section(".core_isr_vector")))
-      InterruptVector_t coreInterruptVectors[] =
+      interruptVector_t coreInterruptVectors[] =
         { //
           // Top of stack
-          reinterpret_cast<InterruptVector_t>(&__stack),
+          reinterpret_cast<interruptVector_t>(&__stack),
 
           // Reset Handler
-              reinterpret_cast<InterruptVector_t>(Reset_Handler),
+              reinterpret_cast<interruptVector_t>(Reset_Handler),
               // NMI Handler
-              reinterpret_cast<InterruptVector_t>(NMI_Handler),
+              reinterpret_cast<interruptVector_t>(NMI_Handler),
               // Hard Fault Handler
-              reinterpret_cast<InterruptVector_t>(HardFault_Handler),
+              reinterpret_cast<interruptVector_t>(HardFault_Handler),
 
               // MPU Fault Handler
-              reinterpret_cast<InterruptVector_t>(MemManage_Handler),
+              reinterpret_cast<interruptVector_t>(MemManage_Handler),
               // Bus Fault Handler
-              reinterpret_cast<InterruptVector_t>(BusFault_Handler),
+              reinterpret_cast<interruptVector_t>(BusFault_Handler),
               // Usage Fault Handler
-              reinterpret_cast<InterruptVector_t>(UsageFault_Handler),
+              reinterpret_cast<interruptVector_t>(UsageFault_Handler),
 
               // Reserved
               0,
@@ -123,18 +121,18 @@ namespace hal
               0,
 
               // SVCall Handler
-              reinterpret_cast<InterruptVector_t>(SVC_Handler),
+              reinterpret_cast<interruptVector_t>(SVC_Handler),
 
               // Debug Monitor Handler
-              reinterpret_cast<InterruptVector_t>(DebugMon_Handler),
+              reinterpret_cast<interruptVector_t>(DebugMon_Handler),
 
               // Reserved
               0,
 
               // PendSV Handler
-              reinterpret_cast<InterruptVector_t>(PendSV_Handler),
+              reinterpret_cast<interruptVector_t>(PendSV_Handler),
               // SysTick Handler
-              reinterpret_cast<InterruptVector_t>(SysTick_Handler)
+              reinterpret_cast<interruptVector_t>(SysTick_Handler)
 
           };
 
@@ -187,23 +185,22 @@ namespace hal
 // to manually mangle the function names.
 
 // #pragma weak MemManage_Handler = defaultInterruptHandler
-#pragma weak _ZN3hal4arch7cortexm17MemManage_HandlerEv = _ZN3hal4arch7cortexm23defaultInterruptHandlerEv
+#pragma weak _ZN3hal7cortexm17MemManage_HandlerEv = _ZN3hal7cortexm23defaultInterruptHandlerEv
 
 // #pragma weak BusFault_Handler = defaultInterruptHandler
-#pragma weak _ZN3hal4arch7cortexm16BusFault_HandlerEv = _ZN3hal4arch7cortexm23defaultInterruptHandlerEv
+#pragma weak _ZN3hal7cortexm16BusFault_HandlerEv = _ZN3hal7cortexm23defaultInterruptHandlerEv
 
 // #pragma weak UsageFault_Handler = defaultInterruptHandler
-#pragma weak _ZN3hal4arch7cortexm18UsageFault_HandlerEv = _ZN3hal4arch7cortexm23defaultInterruptHandlerEv
+#pragma weak _ZN3hal7cortexm18UsageFault_HandlerEv = _ZN3hal7cortexm23defaultInterruptHandlerEv
 
 // #pragma weak DebugMon_Handler = defaultInterruptHandler
-#pragma weak _ZN3hal4arch7cortexm16DebugMon_HandlerEv = _ZN3hal4arch7cortexm23defaultInterruptHandlerEv
+#pragma weak _ZN3hal7cortexm16DebugMon_HandlerEv = _ZN3hal7cortexm23defaultInterruptHandlerEv
 
 #endif
 
     // ------------------------------------------------------------------------
 
     }
-  }
 }
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)

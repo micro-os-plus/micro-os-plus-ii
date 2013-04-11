@@ -26,7 +26,7 @@ namespace hal
       };
     }
 
-    typedef osx::PlatformImplementation PlatformImplementation_t;
+    typedef osx::PlatformImplementation PlatformImplementation;
   }
 }
 

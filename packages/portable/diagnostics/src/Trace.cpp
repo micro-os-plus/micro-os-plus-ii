@@ -26,16 +26,16 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
 
-    template class TraceStreambufBase<TraceImplementation_t> ;
-    template class TraceOstreamBase<TraceStreambuf_t, TraceImplementation_t> ;
+    template class TTraceStreambufBase<TraceImplementation> ;
+    template class TTraceOstreamBase<TraceStreambuf, TraceImplementation> ;
 
-    template class TraceBase<TraceOstreamBase_t, TraceImplementation_t> ;
+    template class TTraceBase<TraceOstreamBase, TraceImplementation> ;
 
 #endif
 
-    template class TraceLightBase<TraceImplementation_t> ;
+    template class TTraceLightBase<TraceImplementation> ;
 
-    template class TraceBase<TraceLightBase_t, TraceImplementation_t> ;
+    template class TTraceBase<TraceLightBase, TraceImplementation> ;
 
     // ========================================================================
     // Trace
