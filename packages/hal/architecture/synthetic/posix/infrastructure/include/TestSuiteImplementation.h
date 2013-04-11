@@ -20,7 +20,8 @@ namespace hal
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpadded"
 
-      /// \class TestSuiteImplementation TestSuiteImplementation.h "hal/architecture/synthetic/posix/include/TestSuiteImplementation.h"
+      /// \headerfile TestSuiteImplementation.h "hal/architecture/synthetic/posix/include/TestSuiteImplementation.h"
+      /// \nosubgrouping
       /// \brief The POSIX version of the TestSuiteImplementation.
       ///
       /// \details
@@ -38,22 +39,30 @@ namespace hal
       {
       public:
 
+        /// \name Constructors/destructor
+        /// @{
+
         /// \brief Simple constructor.
         TestSuiteImplementation();
 
         /// \brief Constructor with process parameters
         ///
-        /// \param [in] argc count of arguments.
-        /// \param [in] argv array of pointer to strings.
+        /// \param [in] argc    Count of arguments.
+        /// \param [in] argv    Array of pointer to strings.
         TestSuiteImplementation(int argc, char* argv[]);
 
         /// \brief Destructor.
         ~TestSuiteImplementation();
 
+        /// @} end of name Constructors/destructor
+
+        /// \name Public member functions
+        /// @{
+
         /// \brief Process main() style parameters
         ///
-        /// \param [in] argc count of arguments.
-        /// \param [in] argv array of pointer to strings.
+        /// \param [in] argc    Count of arguments.
+        /// \param [in] argv    Array of pointer to strings.
         void
         processMainParameters(int argc, char* argv[]);
 
@@ -68,8 +77,8 @@ namespace hal
 
         /// \brief Write an array of bytes to the XML file.
         ///
-        /// \param [in] cpBuf pointer to the array of bytes
-        /// \param [in] numBytes the length of the array of bytes
+        /// \param [in] cpBuf           Pointer to the array of bytes
+        /// \param [in] numBytes        The length of the array of bytes
         /// \return Upon successful completion the number of bytes which
         ///     were written is  returned.  Otherwise, a -1 is returned.
         ssize_t
@@ -95,8 +104,8 @@ namespace hal
 
         /// \brief Write an array of bytes to the test output device.
         ///
-        /// \param [in] cpBuf pointer to the array of bytes
-        /// \param [in] numBytes the length of the array of bytes
+        /// \param [in] cpBuf           Pointer to the array of bytes.
+        /// \param [in] numBytes        The length of the array of bytes.
         /// \return The actual number of bytes written to the output device.
         ssize_t
         putBytes(const void* cpBuf, size_t numBytes);
@@ -109,9 +118,19 @@ namespace hal
         size_t
         getVerbosity(void) const;
 
+        /// @} end of Public member functions
+
       private:
+        /// \name Private constants
+        /// @{
+
         /// \brief The file descriptor of the output device.
         static const int OUTPUT_DEVICE_FILE_DESCRIPTOR = 1;
+
+        /// @} end of Private constants
+
+        /// \name Private member variables
+        /// @{
 
         /// \brief The file descriptor of the XML output file.
         int m_xmlFileDescriptor;
@@ -121,6 +140,8 @@ namespace hal
 
         /// \brief The verbosity level, 0 is the lest verbose
         size_t m_verbosity;
+
+        /// @} end of name Private member variables
 
       };
 

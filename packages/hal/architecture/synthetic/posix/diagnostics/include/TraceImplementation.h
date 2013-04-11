@@ -21,7 +21,7 @@ namespace hal
 
       // ======================================================================
 
-      /// \class TraceImplementation TraceImplementation.h "hal/architecture/synthetic/posix/include/TraceImplementation.h"
+      /// \headerfile TraceImplementation.h "hal/architecture/synthetic/posix/include/TraceImplementation.h"
       /// \ingroup diag
       /// \nosubgrouping
       ///
@@ -43,7 +43,7 @@ namespace hal
         /// \brief Simple destructor.
         ~TraceImplementation();
 
-        /// @}
+        /// @} end of name Constructors/destructor
 
         /// \name Early initialisations
         /// @{
@@ -57,15 +57,15 @@ namespace hal
         static void
         earlyInitialise(void);
 
-        /// @}
+        /// @} end of name Early initialisations
 
         /// \name Public member functions
         /// @{
 
         /// \brief Output a byte array.
         ///
-        /// \param pBuf Pointer to byte array.
-        /// \param numBytes Number of bytes.
+        /// \param pBuf         Pointer to byte array.
+        /// \param numBytes     Number of bytes.
         /// \return The number of bytes actually written.
         static ssize_t
         write(const void* pBuf, size_t numBytes);
@@ -73,17 +73,22 @@ namespace hal
         /// \brief Flush content to device.
         ///
         /// \par Parameters
-        /// None.
+        ///     None.
         /// \par Returns
-        /// Nothing.
+        ///     Nothing.
         static void
         flush(void);
 
-        /// @}
+        /// @} end of Public member functions
 
       private:
+        /// \name Private constants
+        /// @{
+
         /// \brief The file descriptor of the output device.
         static const int OUTPUT_DEVICE_FILE_DESCRIPTOR = 1;
+
+        /// @} end of Private constants
 
       };
 

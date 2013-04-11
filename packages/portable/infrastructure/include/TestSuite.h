@@ -24,7 +24,6 @@ namespace os
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpadded"
 
-    /// \example portable/infrastructure/tests/src/testsuite.cpp
     /// This test exercises all TestSuite member functions. It currently
     /// runs on
     /// OS X, as a 64 bit process.
@@ -58,9 +57,10 @@ namespace os
     /// \endcode
     /// The process exit value was 1 (failed).
 
-    /// \class TestSuite TestSuite.h "portable/infrastructure/include/TestSuite.h"
+    /// \headerfile TestSuite.h "portable/infrastructure/include/TestSuite.h"
+    /// \nosubgrouping
     /// \brief Simple test suite class.
-
+    ///
     /// \details
     /// The TestSuite class implements a light test framework, designed for
     /// the µOS++ unit tests. The test will generally run on synthetic
@@ -74,14 +74,15 @@ namespace os
     /// of preconditions
     /// used. Currently it is the responsibility of the user to keep
     /// these strings unique, the framework does not check this condition.
+    ///
+    /// \example portable/infrastructure/tests/src/testsuite.cpp
 
     template<class Implementation_T>
-      class TestSuiteBase
+      class TTestSuiteBase
       {
 
       public:
         /// \name Standard template types
-        /// @{
         ///
         /// These types permit a standardised way of
         /// referring to names of (or names dependent on) the template
@@ -89,9 +90,11 @@ namespace os
         /// when referring to the template, (in which case the templates
         /// parameters are required), use these types everywhere
         /// else instead of usual types.
+        /// @{
+
         typedef Implementation_T Implementation;
 
-        /// @}
+        /// @} end of name Standard template types
 
         /// \name Constructors/destructor
         /// @{
@@ -99,30 +102,33 @@ namespace os
         /// \brief Simple constructor.
         /// \par Parameters
         ///     None.
-        TestSuiteBase();
+        TTestSuiteBase();
 
         /// \brief Constructor with main() style parameters
         ///
-        /// \param [in] argc count of arguments.
-        /// \param [in] argv array of pointer to strings.
-        TestSuiteBase(int argc, char* argv[]);
+        /// \param [in] argc    Count of arguments.
+        /// \param [in] argv    Array of pointer to strings.
+        TTestSuiteBase(int argc, char* argv[]);
 
         /// \brief Destructor.
-        ~TestSuiteBase();
+        ~TTestSuiteBase();
 
-        /// @}
+        /// @} end of name Constructors/destructor
+
+        /// \name Public member functions
+        /// @{
 
         /// \brief Process main() style parameters
         ///
-        /// \param [in] argc count of arguments.
-        /// \param [in] argv array of pointer to strings.
+        /// \param [in] argc    Aount of arguments.
+        /// \param [in] argv    Array of pointer to strings.
         void
         processMainParameters(int argc, char* argv[]);
 
         /// \brief Set the name of the tested class.
         ///
-        /// \param [in] pName a string containing the class name, usually with
-        /// full name space definitions.
+        /// \param [in] pName   A string containing the class name, usually with
+        ///                     full name space definitions.
         /// \par Returns
         ///     Nothing.
         void
@@ -130,9 +136,10 @@ namespace os
 
         /// \brief Set the name of the tested member function.
         ///
-        /// \param [in] pName a string containing the prefix to be added
-        /// to each test case, usually the name of the member function
-        /// under test.
+        /// \param [in] pName   A string containing the prefix to be added
+        ///                     to each test case, usually the name
+        ///                     of the member function
+        ///                     under test.
         /// \par Returns
         ///     Nothing.
         void
@@ -141,9 +148,10 @@ namespace os
         /// \brief Define the input values used when calling the tested
         /// member function.
         ///
-        /// \param [in] pStr a string containing the relevant values
-        // used when calling the member function exercised by the following
-        /// test cases. Cleared by setFunctionNameOrPrefix().
+        /// \param [in] pStr    A string containing the relevant values
+        ///                     used when calling the member function
+        ///                     exercised by the following
+        ///                     test cases. Cleared by setFunctionNameOrPrefix().
         /// \par Returns
         ///     Nothing.
         void
@@ -152,9 +160,10 @@ namespace os
         /// \brief Define the preconditions used when calling the
         /// tested member function.
         ///
-        /// \param [in] pStr a string containing the relevant preconditions
-        /// used when calling the member function exercised by the following
-        /// test cases. Cleared by setFunctionNameOrPrefix().
+        /// \param [in] pStr    A string containing the relevant preconditions
+        ///                     used when calling the member function
+        ///                     exercised by the following
+        ///                     test cases. Cleared by setFunctionNameOrPrefix().
         /// \par Returns
         ///     Nothing.
         void
@@ -162,8 +171,8 @@ namespace os
 
         /// \brief Report the start of the test suite.
         ///
-        /// \param [in] pMessage a string identifying the test suite, usually
-        /// the compiler `__FILE__` builtin macro definition.
+        /// \param [in] pMessage        A string identifying the test suite, usually
+        ///                             the compiler `__FILE__` builtin macro definition.
         /// \par Returns
         ///     Nothing.
         void
@@ -171,8 +180,8 @@ namespace os
 
         /// \brief Check condition and report a test case result.
         ///
-        /// \param [in] expression the boolean condition to be tested.
-        /// \param [in] pMessage a string identifying the test case.
+        /// \param [in] expression      The boolean condition to be tested.
+        /// \param [in] pMessage        A string identifying the test case.
         /// \par Returns
         ///     Nothing.
         void
@@ -187,7 +196,7 @@ namespace os
 
         /// \brief Report a successful test case.
         ///
-        /// \param [in] pMessage a string identifying the test case.
+        /// \param [in] pMessage        A string identifying the test case.
         /// \par Returns
         ///     Nothing.
         void
@@ -203,7 +212,7 @@ namespace os
 
         /// \brief Display an informative line.
         ///
-        /// \param [in] pMessage a string with the informative message.
+        /// \param [in] pMessage        A string with the informative message.
         /// \par Returns
         ///     Nothing.
         void
@@ -243,35 +252,45 @@ namespace os
         size_t
         getVerbosity(void) const;
 
+        /// @} end of name Public member functions
+
       private:
+
+        /// \name Private constants
+        /// @{
 
         /// \brief Define the type of the line to display.
         ///
         /// \details Used as parameter for outputLine() to add a prefix
         /// for each line generated.
-        typedef int OutputLineType_t;
+        typedef int outputLineType_t;
 
         /// \brief Enumerate all known line types.
         enum OutputLineType
-          : OutputLineType_t
+          : outputLineType_t
             {
               START = 1, INFO, PASS, FAIL, STAT, CLASS, STOP
         };
 
+        /// @} end of name Private constants
+
+        /// \name Private member functions
+        /// @{
+
         /// \brief Generate a test case line and send it to the output device.
         ///
-        /// \param [in] lineType a constant to specify the line prefix.
-        /// \param [in] pMessage a string containing the line message.
+        /// \param [in] lineType        A constant to specify the line prefix.
+        /// \param [in] pMessage        A string containing the line message.
         /// \par Returns
         ///     Nothing
         void
-        outputLine(OutputLineType_t lineType, const char* pMessage = nullptr);
+        outputLine(outputLineType_t lineType, const char* pMessage = nullptr);
 
         /// \brief Generate a test case XML element and write it to the
         /// configured file.
         ///
-        /// \param [in] isFailure mark this test case as a failure.
-        /// \param [in] pMessage a string containing the test case message.
+        /// \param [in] isFailure       Mark this test case as a failure.
+        /// \param [in] pMessage        A string containing the test case message.
         /// \par Returns
         ///     Nothing
         void
@@ -279,7 +298,7 @@ namespace os
 
         /// \brief Write a null terminated string to the XML file.
         ///
-        /// \param [in] pString a string.
+        /// \param [in] pString         A string.
         ///
         /// \return The actual number of bytes written to the file.
         ssize_t
@@ -287,7 +306,7 @@ namespace os
 
         /// \brief Write an unsigned number to the XML file.
         ///
-        /// \param [in] number an unsigned number.
+        /// \param [in] number          An unsigned number.
         ///
         /// \return The actual number of bytes written to the file.
         ssize_t
@@ -295,7 +314,7 @@ namespace os
 
         /// \brief Display a null terminated string to the test output device.
         ///
-        /// \param [in] pString a string.
+        /// \param [in] pString         A string.
         ///
         /// \return The actual number of bytes written to the output device.
         ssize_t
@@ -303,7 +322,7 @@ namespace os
 
         /// \brief Display a decimal integer to the test output device.
         ///
-        /// \param [in] number an integer number.
+        /// \param [in] number  An integer number.
         ///
         /// \return The actual number of bytes written to the output device.
         ssize_t
@@ -311,25 +330,27 @@ namespace os
 
         /// \brief Send a new line to the test output device.
         /// \par Parameters
-        ///     None
+        ///     None.
         /// \par Returns
-        ///     Nothing
+        ///     Nothing.
         void
         putNewLine(void);
 
         /// \brief Get the number of passed test cases.
         /// \par Parameters
-        ///     None
+        ///     None.
         /// \return The accumulated number of passed test cases.
         unsigned int
         getCountPassed(void);
 
         /// \brief Get the number of failed test cases.
         /// \par Parameters
-        ///     None
+        ///     None.
         /// \return The accumulated number of failed test cases.
         unsigned int
         getCountFailed(void);
+
+        /// @} end of name Private member functions
 
       private:
 
@@ -377,7 +398,7 @@ namespace os
     template<class Implementation_T>
       inline
       unsigned int
-      TestSuiteBase<Implementation_T>::getCountPassed(void)
+      TTestSuiteBase<Implementation_T>::getCountPassed(void)
       {
         return m_countPassed;
       }
@@ -385,7 +406,7 @@ namespace os
     template<class Implementation_T>
       inline
       unsigned int
-      TestSuiteBase<Implementation_T>::getCountFailed(void)
+      TTestSuiteBase<Implementation_T>::getCountFailed(void)
       {
         return m_countFailed;
       }
@@ -393,7 +414,7 @@ namespace os
     template<class Implementation_T>
       inline
       unsigned int
-      TestSuiteBase<Implementation_T>::getCurrentTestCaseNumber(void) const
+      TTestSuiteBase<Implementation_T>::getCurrentTestCaseNumber(void) const
       {
         return m_countPassed + m_countFailed;
       }
@@ -401,18 +422,18 @@ namespace os
     template<class Implementation_T>
       inline
       size_t
-      TestSuiteBase<Implementation_T>::getVerbosity(void) const
+      TTestSuiteBase<Implementation_T>::getVerbosity(void) const
       {
         return m_implementation.getVerbosity();
       }
 
     // ------------------------------------------------------------------------
     /// \brief Define a TestSuite type based on the template.
-    typedef TestSuiteBase<TestSuiteImplementation> TestSuiteBase_t;
+    typedef TTestSuiteBase<TestSuiteImplementation> TestSuiteBase;
 
     // ========================================================================
 
-    class TestSuite : public TestSuiteBase_t
+    class TestSuite : public TestSuiteBase
     {
     public:
       /// \name Constructors/destructor
@@ -437,7 +458,6 @@ namespace os
 
     };
 
-    typedef TestSuite TestSuite;
 
     // ========================================================================
 

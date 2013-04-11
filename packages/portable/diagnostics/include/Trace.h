@@ -73,7 +73,7 @@ namespace os
         /// \brief  Consume data from the buffer and write to the
         ///         output stream.
         ///
-        /// \param [in]  c  An additional character to consume.
+        /// \param [in]  c      An additional character to consume.
         /// \return  `traits::eof()` to indicate failure, something
         /// else (usually `c`, or not_eof()).
         virtual int_type
@@ -191,7 +191,7 @@ namespace os
 
         /// \brief Constructor
         ///
-        /// \param [in] implementation Unused reference to implementation.
+        /// \param [in] implementation  Unused reference to implementation.
         TTraceLightBase(
             Implementation& implementation __attribute__((unused)));
 
@@ -227,8 +227,8 @@ namespace os
     ///
     /// \brief Trace base class.
     ///
-    /// \tparam Base_T  Type of the base class.
-    /// \tparam Implementation_T  Type of the implementation class.
+    /// \tparam Base_T                  Type of the base class.
+    /// \tparam Implementation_T        Type of the implementation class.
     ///
     /// \details
     /// This class implements the light versions of the trace output.
@@ -285,7 +285,7 @@ namespace os
 
         /// \brief Put character.
         ///
-        /// \param [in] ch A character.
+        /// \param [in] ch      A character.
         /// \par Returns
         ///     Nothing.
         void
@@ -301,7 +301,7 @@ namespace os
 
         /// \brief Put unsigned character.
         ///
-        /// \param [in] ch A character.
+        /// \param [in] ch      A character.
         /// \par Returns
         ///     Nothing.
         void
@@ -309,7 +309,7 @@ namespace os
 
         /// \brief Put string.
         ///
-        /// \param [in] pStr A pointer to string.
+        /// \param [in] pStr    A pointer to string.
         /// \par Returns
         ///     Nothing.
         void
@@ -317,7 +317,7 @@ namespace os
 
         /// \brief Put non const string.
         ///
-        /// \param [in] pStr A pointer to string.
+        /// \param [in] pStr    A pointer to string.
         /// \par Returns
         ///     Nothing.
         void
@@ -325,7 +325,7 @@ namespace os
 
         /// \brief Put signed string.
         ///
-        /// \param [in] pStr A pointer to string.
+        /// \param [in] pStr    A pointer to string.
         /// \par Returns
         ///     Nothing.
         void
@@ -333,7 +333,7 @@ namespace os
 
         /// \brief Put signed string.
         ///
-        /// \param [in] pStr A pointer to string.
+        /// \param [in] pStr    A pointer to string.
         /// \par Returns
         ///     Nothing.
         void
@@ -341,7 +341,7 @@ namespace os
 
         /// \brief Put unsigned char hex.
         ///
-        /// \param [in] n An unsigned number.
+        /// \param [in] n       An unsigned number.
         /// \par Returns
         ///     Nothing.
         void
@@ -349,7 +349,7 @@ namespace os
 
         /// \brief Put unsigned short hex.
         ///
-        /// \param [in] n An unsigned number.
+        /// \param [in] n       An unsigned number.
         /// \par Returns
         ///     Nothing.
         void
@@ -357,7 +357,7 @@ namespace os
 
         /// \brief Put unsigned int hex.
         ///
-        /// \param [in] n An unsigned number.
+        /// \param [in] n       An unsigned number.
         /// \par Returns
         ///     Nothing.
         void
@@ -365,7 +365,7 @@ namespace os
 
         /// \brief Put unsigned long hex.
         ///
-        /// \param [in] n An unsigned number.
+        /// \param [in] n       An unsigned number.
         /// \par Returns
         ///     Nothing.
         void
@@ -373,7 +373,7 @@ namespace os
 
         /// \brief Put unsigned long long hex.
         ///
-        /// \param [in] n An unsigned number.
+        /// \param [in] n       An unsigned number.
         /// \par Returns
         ///     Nothing.
         void
@@ -381,7 +381,7 @@ namespace os
 
         /// \brief Put pointer.
         ///
-        /// \param [in] ptr A generic pointer.
+        /// \param [in] ptr     A generic pointer.
         /// \par Returns
         ///     Nothing.
         void
@@ -389,7 +389,7 @@ namespace os
 
         /// \brief Put int decimal.
         ///
-        /// \param [in] n A number.
+        /// \param [in] n       A number.
         /// \par Returns
         ///     Nothing.
         void
@@ -397,7 +397,7 @@ namespace os
 
         /// \brief Put long decimal.
         ///
-        /// \param [in] n A number.
+        /// \param [in] n       A number.
         /// \par Returns
         ///     Nothing.
         void
@@ -405,8 +405,8 @@ namespace os
 
         /// \brief Put name and address.
         ///
-        /// \param [in] pStr A pointer to string.
-        /// \param [in] addr An address.
+        /// \param [in] pStr    A pointer to string.
+        /// \param [in] addr    An address.
         /// \par Returns
         ///     Nothing.
         void

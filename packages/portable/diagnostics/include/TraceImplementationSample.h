@@ -17,7 +17,7 @@ namespace os
   namespace diag
   {
 
-    /// \class TraceImplementationSample TraceImplementationSample.h "portable/diagnostics/include/TraceImplementationSample.h"
+    /// \headerfile TraceImplementationSample.h "portable/diagnostics/include/TraceImplementationSample.h"
     /// \ingroup diag
     /// \nosubgrouping
     ///
@@ -38,7 +38,7 @@ namespace os
       /// \brief Destructor.
       ~TraceImplementationSample();
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Early initialisations
       /// @{
@@ -52,7 +52,7 @@ namespace os
       void
       earlyInitialise(void);
 
-      /// @}
+      /// @} end of name Early initialisations
 
       /// \name Public member functions
       /// @{
@@ -74,7 +74,7 @@ namespace os
       void
       flush(void);
 
-      /// @}
+      /// @} end of name Public member functions
     };
 
     // ------------------------------------------------------------------------
@@ -100,6 +100,7 @@ namespace os
     TraceImplementationSample::write(const void* pBuf __attribute__((unused)),
         size_t numBytes __attribute__((unused)))
     {
+      return 0;
     }
 
     inline
