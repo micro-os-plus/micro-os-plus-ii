@@ -21,8 +21,8 @@ Toolchain(
     compilerOutputOptions='-o "$@"',
     compilerInputOptions='"$<"',
     
-    compilerWarningOptions='-Wall -Wextra -Werror',
-    compilerMiscOptions='-fsigned-char -fsigned-bitfields -fmessage-length=0 -c -ffunction-sections -fdata-sections -fno-use-cxa-atexit -fno-threadsafe-statics -mlittle-endian',
+    compilerWarningOptions='-Wall -Wextra -Werror -Wabi',
+    compilerMiscOptions='-fsigned-char -fsigned-bitfields -fmessage-length=0 -c -ffunction-sections -fdata-sections   -mlittle-endian',
     compilerPreprocessorOptions='-D__MICRO_OS_PLUS_PLUS__=1',
 
     # These are just explicit defaults, will be usually overwritten
@@ -43,7 +43,7 @@ Toolchain(
         programName='arm-none-eabi-g++',
         description='OS X ARM Embedded GNU G++',
         standard='-std=c++11',
-        options='-fno-rtti -fno-exceptions -Wabi',
+        options='-fno-rtti -fno-exceptions -Wabi -fno-use-cxa-atexit -fno-threadsafe-statics',
     ),
           
     asm=Tool(
