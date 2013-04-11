@@ -63,8 +63,8 @@ namespace os
     /// implementation
     /// and initialise the parent ostream with the pointer to the local
     /// streambuf.
-    template<class TStreambuf_T, class Implementation_T>
-      TTraceOstreamBase<TStreambuf_T, Implementation_T>::TTraceOstreamBase(
+    template<class Streambuf_T, class Implementation_T>
+      TTraceOstreamBase<Streambuf_T, Implementation_T>::TTraceOstreamBase(
           Implementation& implementation)
           : m_streambuf(implementation)
       {
@@ -73,8 +73,8 @@ namespace os
         // however it is recommended not to display anything yet.
       }
 
-    template<class TStreambuf_T, class Implementation_T>
-      TTraceOstreamBase<TStreambuf_T, Implementation_T>::~TTraceOstreamBase()
+    template<class Streambuf_T, class Implementation_T>
+      TTraceOstreamBase<Streambuf_T, Implementation_T>::~TTraceOstreamBase()
       {
       }
 
