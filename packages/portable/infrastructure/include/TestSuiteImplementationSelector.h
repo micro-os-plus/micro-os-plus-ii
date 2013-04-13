@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Selector of one TestSuite implementation.
+
 #ifndef OS_PORTABLE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_H_
 #define OS_PORTABLE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_H_
 
