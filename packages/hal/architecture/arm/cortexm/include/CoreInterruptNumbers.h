@@ -17,7 +17,7 @@ namespace hal
   namespace cortexm
   {
 
-    /// \ingroup arm_cm
+    /// \ingroup arm_cm_irq
     /// @{
 
     /// \headerfile CoreInterruptNumbers.h "hal/architecture/arm/cortexm/include/CoreInterruptNumbers.h"
@@ -27,15 +27,20 @@ namespace hal
     ///
     /// \details
     /// Common definitions for all Cortex-M architectures.
-    class CoreInterruptNumberBase
+    class InterruptNumberBase
     {
     public:
 
       /// \brief Type of an interrupt number (a signed integer).
       typedef int interruptNumber_t;
 
+      /// \name Constructors/destructor
+      /// @{
+
       /// \brief Deleted constructor
-      CoreInterruptNumberBase() = delete;
+      InterruptNumberBase() = delete;
+
+      /// @}
     };
 
     /// \headerfile CoreInterruptNumbers.h "hal/architecture/arm/cortexm/include/CoreInterruptNumbers.h"
@@ -46,11 +51,16 @@ namespace hal
     /// \details
     /// Interrupt numbers defined by the Cortex-M0
     /// light architecture.
-    class CortexM0InterruptNumber : public CoreInterruptNumberBase
+    class CortexM0InterruptNumber : public InterruptNumberBase
     {
     public:
+      /// \name Constructors/destructor
+      /// @{
+
       /// \brief Deleted constructor
       CortexM0InterruptNumber() = delete;
+
+      /// @}
 
       /// \name Interrupt numbers
       /// @{
@@ -62,13 +72,13 @@ namespace hal
       static const interruptNumber_t HardFault = -13;
 
       /// SV Call Interrupt
-      static const interruptNumber_t SVCall = -5;
+      static const interruptNumber_t ServiceCall = -5;
 
       /// Pend SV Interrupt
-      static const interruptNumber_t PendSV = -2;
+      static const interruptNumber_t PendService = -2;
 
       /// System Tick Interrupt
-      static const interruptNumber_t SysTick = -1;
+      static const interruptNumber_t SystemTick = -1;
 
       /// @} end of name Interrupt numbers
 
@@ -85,9 +95,13 @@ namespace hal
     class CortexM0plusInterruptNumber : public CortexM0InterruptNumber
     {
     public:
+      /// \name Constructors/destructor
+      /// @{
+
       /// \brief Deleted constructor
       CortexM0plusInterruptNumber() = delete;
 
+      /// @}
     };
 
     /// \headerfile CoreInterruptNumbers.h "hal/architecture/arm/cortexm/include/CoreInterruptNumbers.h"
@@ -98,11 +112,16 @@ namespace hal
     /// \details
     /// Interrupt numbers defined by the  Cortex-M3
     /// architecture.
-    class CortexM3InterruptNumber : public CoreInterruptNumberBase
+    class CortexM3InterruptNumber : public InterruptNumberBase
     {
     public:
+      /// \name Constructors/destructor
+      /// @{
+
       /// \brief Deleted constructor
       CortexM3InterruptNumber() = delete;
+
+      /// @}
 
       /// \name Interrupt numbers
       /// @{
@@ -123,16 +142,16 @@ namespace hal
       static const interruptNumber_t UsageFault = -10;
 
       /// SV Call Interrupt
-      static const interruptNumber_t SVCall = -5;
+      static const interruptNumber_t ServiceCall = -5;
 
       /// Debug Monitor Interrupt
       static const interruptNumber_t DebugMonitor = -4;
 
       /// Pend SV Interrupt
-      static const interruptNumber_t PendSV = -2;
+      static const interruptNumber_t PendService = -2;
 
       /// System Tick Interrupt
-      static const interruptNumber_t SysTick = -1;
+      static const interruptNumber_t SystemTick = -1;
 
       /// @} end of name Interrupt numbers
 
@@ -149,9 +168,13 @@ namespace hal
     class CortexM4InterruptNumber : public CortexM3InterruptNumber
     {
     public:
+      /// \name Constructors/destructor
+      /// @{
+
       /// \brief Deleted constructor
       CortexM4InterruptNumber() = delete;
 
+      /// @}
     };
 
   /// @} end of ingroup arm_cm
