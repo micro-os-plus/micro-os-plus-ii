@@ -43,14 +43,14 @@ namespace os
       /// \name Early initialisations
       /// @{
 
-      /// \brief Early initialisation
+      /// \brief Early initialisation.
       ///
       /// \par Parameters
       ///       None.
       /// \par Returns
       ///       Nothing.
       void
-      earlyInitialise(void);
+      initialiseEarly(void);
 
       /// @} end of name Early initialisations
 
@@ -92,7 +92,7 @@ namespace os
 
     inline
     void
-    TraceImplementationSample::earlyInitialise(void)
+    TraceImplementationSample::initialiseEarly(void)
     {
     }
 

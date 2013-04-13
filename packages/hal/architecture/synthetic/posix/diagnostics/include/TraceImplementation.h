@@ -48,14 +48,14 @@ namespace hal
         /// \name Early initialisations
         /// @{
 
-        /// \brief Early initialisation
+        /// \brief Early initialisation.
         ///
         /// \par Parameters
         /// None.
         /// \par Returns
         /// Nothing.
         static void
-        earlyInitialise(void);
+        initialiseEarly(void);
 
         /// @} end of name Early initialisations
 
@@ -115,7 +115,7 @@ namespace os
 {
   namespace diag
   {
-    /// \brief Define the generic type to refer to the POSIX implementation
+    /// \brief Define the generic type to refer to the POSIX implementation.
     /// for the Trace.
     typedef hal::posix::diag::TraceImplementation TraceImplementation;
   } // namespace diag

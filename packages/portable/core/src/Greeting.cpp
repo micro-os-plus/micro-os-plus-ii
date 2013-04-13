@@ -7,7 +7,7 @@
 
 #if defined(OS_INCLUDE_GREETING) || defined(__DOXYGEN__)
 
-#include "../include/Greeting.h"
+#include "portable/core/include/Greeting.h"
 
 namespace os
 {

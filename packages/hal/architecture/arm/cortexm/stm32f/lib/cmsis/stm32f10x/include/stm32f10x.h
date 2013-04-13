@@ -481,8 +481,12 @@ typedef enum IRQn
   * @}
   */
 
-//#include "../../../../lib/include/core_cm3.h"
-#include "../../core/include/core_cm3.h"
+#if 1
+#include "hal/architecture/arm/cortexm/lib/cmsis/include/core_cm3.h"
+#else
+#include "hal/architecture/arm/cortexm/stm32f/lib/cmsis/core/include/core_cm3.h"
+#endif
+
 #include "system_stm32f10x.h"
 #include <stdint.h>
 

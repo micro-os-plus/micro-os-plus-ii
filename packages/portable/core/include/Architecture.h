@@ -8,10 +8,13 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
+// Select one of the supported architectures, based on configuration
+// variables.
 #include "portable/core/include/ArchitectureImplementationSelector.h"
 
 namespace os
 {
+  // The object instantiation is in EarlyInitialisations.cpp
   extern hal::arch::ArchitectureImplementation architecture;
 }
 

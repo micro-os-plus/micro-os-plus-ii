@@ -21,7 +21,7 @@ namespace hal
 
       // ======================================================================
 
-      /// \class TraceImplementation TraceImplementation.h "hal/architecture/synthetic/posix/include/TraceImplementation.h"
+      /// \headerfile  TraceImplementation.h "hal/architecture/synthetic/posix/include/TraceImplementation.h"
       /// \ingroup diag
       /// \nosubgrouping
       ///
@@ -48,14 +48,14 @@ namespace hal
         /// \name Early initialisations
         /// @{
 
-        /// \brief Early initialisation
+        /// \brief Early initialisation.
         ///
         /// \par Parameters
         /// None.
         /// \par Returns
         /// Nothing.
         static void
-        earlyInitialise(void);
+        initialiseEarly(void);
 
         /// @}
 
@@ -110,7 +110,7 @@ namespace os
 {
   namespace diag
   {
-    /// \brief Define the generic type to refer to the POSIX implementation
+    /// \brief Define the generic type to refer to the POSIX implementation.
     /// for the Trace.
     typedef hal::stm32h103::diag::TraceImplementation TraceImplementation;
   } // namespace diag

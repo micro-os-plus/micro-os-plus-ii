@@ -11,11 +11,11 @@
 
 #include "portable/core/include/Platform.h"
 
-#include "../include/ArchitectureImplementation.h"
+#include "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
 
 #include "portable/infrastructure/include/CStartup.h"
 
-#include "../ldscripts/LinkerScript.h"
+#include "hal/architecture/arm/cortexm/ldscripts/LinkerScript.h"
 
 #include "portable/language/cpp/include/iterator.h"
 
@@ -61,16 +61,28 @@ namespace hal
 
     namespace InterruptHandler
     {
+
+      /// \ingroup arm_cm3_irq
+      /// \details
+      /// All ARM Cortex-M architectures jump to this the entry point
+      /// via the pointer located in the second word of the interrupt
+      /// table for reset events.
+      ///
+      /// This function starts with the reset settings, i.e. low speed and
+      /// peripherals disabled, and will later initialise the
+      /// hardware for a higher frequency.
       void
       Reset(void)
       {
         CStartup::initialiseDataAndBss();
 
-        os::platform.initialiseSystem();
-
+        // The os::platform::initialiseSystem() will be called
+        // by the first constructor (EarlyInitialisations())
         CStartup::callStaticConstructors();
 
 #if defined(DEBUG)
+        // Trace is available only after first constructors are called,
+        // do not move this from here.
         if (constantMarker != CONSTANT_MARKER_MAGIC)
           {
             os::diag::trace.putString("copyInitialisedData() failed");
@@ -78,19 +90,24 @@ namespace hal
           }
 #endif
 
+        // Everything should be ready, the show can start
         main();
 
+        // Not usual in embedded environments, but if the application
+        // terminates gracefully, run the destructors.
+        // The last destructor (~EarlyInitialisations()) should
+        // call os::platform::resetSystem().
         CStartup::callStaticDestructors();
 
 #if defined(DEBUG)
+
+        // normally should not reach this
         os::diag::trace.putString("looping after main()");
         os::diag::trace.putNewLine();
 
+#endif
         for (;;)
           ;
-#else
-        os::platform.resetSystem();
-#endif
       }
     }
 

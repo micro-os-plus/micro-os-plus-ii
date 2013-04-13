@@ -12,7 +12,6 @@ Package(
     
     sourceFiles=[
         'ArchitectureImplementation.cpp',
-        'CoreInterruptVectors.cpp',
     ],
     
     copyFiles=[
@@ -24,21 +23,6 @@ Package(
     children=[
               
         Component(
-            id='package.os.hal.architecture.arm.cortexm0',
-            name='ARM Cortex-M0 Architecture',
-            description='Support for ARM Cortex-M0 processors.',
-
-            isEnabled=False,
-            implements=[
-                # mark this is an architecture
-                'interface.os.architecture',
-            ],
-
-            headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0',
-            
-        ),
-
-        Component(
             id='package.os.hal.architecture.arm.cortexm0p',
             name='ARM Cortex-M0+ Architecture',
             description='Support for ARM Cortex-M0+ processors.',
@@ -49,22 +33,11 @@ Package(
                 'interface.os.architecture',
             ],
 
-            headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0P',
-            
-        ),
-
-        Component(
-            id='package.os.hal.architecture.arm.cortexm3',
-            name='ARM Cortex-M3 Architecture',
-            description='Support for ARM Cortex-M3 processors.',
-
-            isEnabled=False,
-            implements=[
-                # mark this is an architecture
-                'interface.os.architecture',
+            sourceFiles=[
+                'CM0InterruptVectors.cpp',
             ],
-
-            headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3',
+                  
+            headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0P',
             
         ),
 
@@ -77,6 +50,10 @@ Package(
             implements=[
                 # mark this is an architecture
                 'interface.os.architecture',
+            ],
+
+            sourceFiles=[
+                'CM3InterruptVectors.cpp',
             ],
 
             headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M4',

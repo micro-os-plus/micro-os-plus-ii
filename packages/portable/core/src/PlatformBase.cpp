@@ -5,16 +5,19 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#include "../include/PlatformBase.h"
-#include "../include/Architecture.h"
+#include "portable/core/include/PlatformBase.h"
+#include "portable/core/include/Architecture.h"
 
 namespace os
 {
   namespace core
   {
+    // ------------------------------------------------------------------------
 
 #if defined(DEBUG)
 
+    /// \details
+    /// Call the architecture function.
     void
     PlatformBase::putGreeting(void)
     {
@@ -23,6 +26,7 @@ namespace os
 
 #endif
 
+    // ------------------------------------------------------------------------
   } // namespace core
 } //namespace os
 

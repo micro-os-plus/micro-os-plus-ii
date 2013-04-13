@@ -18,7 +18,7 @@
 
 #else
 
-#error "Missing ArchitectureImplementation.h"
+#error "Missing ArchitectureImplementation.h "
 
 #endif
 

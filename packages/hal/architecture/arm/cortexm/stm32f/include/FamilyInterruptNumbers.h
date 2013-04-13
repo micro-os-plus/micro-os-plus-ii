@@ -10,7 +10,7 @@
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F) || defined(__DOXYGEN__)
 
-#include "portable/core/include/OS.h"
+//#include "portable/core/include/OS.h"
 
 #include "hal/architecture/arm/cortexm/include/CoreInterruptNumbers.h"
 
@@ -18,6 +18,8 @@ namespace hal
 {
   namespace stm32f10x
   {
+    // ========================================================================
+
     /// \ingroup stm32f1x_irq
     /// \headerfile InterruptNumbers.h "hal/architecture/arm/cortexm/include/InterruptNumbers.h"
     /// \nosubgrouping
@@ -36,7 +38,7 @@ namespace hal
       /// \brief Deleted constructor
       InterruptNumberBase() = delete;
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Interrupt numbers
       /// @{
@@ -78,9 +80,12 @@ namespace hal
       /// DMA1 Channel 7 global Interrupt
       static const interruptNumber_t DMA1Channel7 = 17;
 
-      /// @}
+      /// @} end of name Interrupt numbers
 
     };
+
+    // ========================================================================
+
   }
 }
 
@@ -88,11 +93,13 @@ namespace hal
 {
   namespace stm32f10xld
   {
+    // ========================================================================
+
     /// \ingroup stm32f10xld
     /// \headerfile InterruptNumbers.h "hal/architecture/arm/cortexm/include/InterruptNumbers.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F10X_LD family interrupt numbers
+    /// \brief STM32F10X_LD family interrupt numbers.
     class InterruptNumber : public hal::stm32f10x::InterruptNumberBase
     {
     public:
@@ -102,7 +109,7 @@ namespace hal
       /// \brief Deleted constructor
       InterruptNumber() = delete;
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Interrupt numbers
       /// @{
@@ -128,9 +135,12 @@ namespace hal
       static const interruptNumber_t RTCAlarm = 41; ///< RTC Alarm through EXTI Line Interrupt
       static const interruptNumber_t USBWakeUp = 42; ///< USB Device WakeUp from suspend through EXTI Line Interrupt
 
-      /// @}
+      /// @} end of name Interrupt numbers
 
     };
+
+    // ========================================================================
+
   }
 }
 
@@ -138,11 +148,13 @@ namespace hal
 {
   namespace stm32f10xldvl
   {
+    // ========================================================================
+
     /// \ingroup stm32f10xldvl
     /// \headerfile InterruptNumbers.h "hal/architecture/arm/cortexm/include/InterruptNumbers.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F10X_LD_VL family interrupt numbers
+    /// \brief STM32F10X_LD_VL family interrupt numbers.
     class InterruptNumber : public hal::stm32f10x::InterruptNumberBase
     {
     public:
@@ -152,7 +164,7 @@ namespace hal
       /// \brief Deleted constructor
       InterruptNumber() = delete;
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Interrupt numbers
       /// @{
@@ -176,8 +188,12 @@ namespace hal
       static const interruptNumber_t TIM6_DAC = 54; ///< TIM6 and DAC underrun Interrupt
       static const interruptNumber_t TIM7 = 55; ///< TIM7 Interrupt
 
-      /// @}
+      /// @} end of name Interrupt numbers
+
     };
+
+    // ========================================================================
+
   }
 }
 
@@ -185,11 +201,13 @@ namespace hal
 {
   namespace stm32f10xmd
   {
+    // ========================================================================
+
     /// \ingroup stm32f10xmd_irq
     /// \headerfile InterruptNumbers.h "hal/architecture/arm/cortexm/include/InterruptNumbers.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F10X_MD devices interrupt numbers
+    /// \brief STM32F10X_MD devices interrupt numbers.
     class InterruptNumber : public hal::stm32f10x::InterruptNumberBase
     {
     public:
@@ -199,7 +217,7 @@ namespace hal
       /// \brief Deleted constructor
       InterruptNumber() = delete;
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Interrupt numbers
       /// @{
@@ -230,9 +248,12 @@ namespace hal
       static const interruptNumber_t RTCAlarm = 41; ///< RTC Alarm through ExternalLine Line Interrupt
       static const interruptNumber_t USBWakeUp = 42; ///< USB Device WakeUp from suspend through ExternalLine Line Interrupt
 
-      /// @}
+      /// @} end of name Interrupt numbers
 
     };
+
+    // ========================================================================
+
   }
 }
 
@@ -240,11 +261,13 @@ namespace hal
 {
   namespace stm32f10xmdvl
   {
+    // ========================================================================
+
     /// \ingroup stm32f10xmdvl
     /// \headerfile InterruptNumbers.h "hal/architecture/arm/cortexm/include/InterruptNumbers.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F10X_MD_VL family interrupt numbers
+    /// \brief STM32F10X_MD_VL family interrupt numbers.
     class InterruptNumber : public hal::stm32f10x::InterruptNumberBase
     {
     public:
@@ -254,7 +277,7 @@ namespace hal
       /// \brief Deleted constructor
       InterruptNumber() = delete;
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Interrupt numbers
       /// @{
@@ -283,9 +306,12 @@ namespace hal
       static const interruptNumber_t TIM6_DAC = 54; ///< TIM6 and DAC underrun Interrupt
       static const interruptNumber_t TIM7 = 55; ///< TIM7 Interrupt
 
-      /// @}
+      /// @} end of name Interrupt numbers
 
     };
+
+    // ========================================================================
+
   }
 }
 
@@ -293,11 +319,13 @@ namespace hal
 {
   namespace stm32f10xhd
   {
+    // ========================================================================
+
     /// \ingroup stm32f10xhd
     /// \headerfile InterruptNumbers.h "hal/architecture/arm/cortexm/include/InterruptNumbers.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F10X_HD family interrupt numbers
+    /// \brief STM32F10X_HD family interrupt numbers.
     class InterruptNumber : public hal::stm32f10x::InterruptNumberBase
     {
     public:
@@ -307,7 +335,7 @@ namespace hal
       /// \brief Deleted constructor
       InterruptNumber() = delete;
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Interrupt numbers
       /// @{
@@ -355,9 +383,12 @@ namespace hal
       static const interruptNumber_t DMA2_Channel3 = 58; ///< DMA2 Channel 3 global Interrupt
       static const interruptNumber_t DMA2_Channel4_5 = 59; ///< DMA2 Channel 4 and Channel 5 global Interrupt
 
-      /// @}
+      /// @} end of name Interrupt numbers
 
     };
+
+    // ========================================================================
+
   }
 }
 
@@ -365,11 +396,13 @@ namespace hal
 {
   namespace stm32f10xhdvl
   {
+    // ========================================================================
+
     /// \ingroup stm32f10xhdvl
     /// \headerfile InterruptNumbers.h "hal/architecture/arm/cortexm/include/InterruptNumbers.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F10X_HD_VL family interrupt numbers
+    /// \brief STM32F10X_HD_VL family interrupt numbers.
     class InterruptNumber : public hal::stm32f10x::InterruptNumberBase
     {
     public:
@@ -379,7 +412,7 @@ namespace hal
       /// \brief Deleted constructor
       InterruptNumber() = delete;
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Interrupt numbers
       /// @{
@@ -420,9 +453,12 @@ namespace hal
       static const interruptNumber_t DMA2_Channel4_5 = 59; ///< DMA2 Channel 4 and Channel 5 global Interrupt
       static const interruptNumber_t DMA2_Channel5 = 60; ///< DMA2 Channel 5 global Interrupt (DMA2 Channel 5 is mapped at position 60 only if the MISC_REMAP bit in the AFIO_MAPR2 register is set)
 
-      /// @}
+      /// @} end of name Interrupt numbers
 
     };
+
+    // ========================================================================
+
   }
 }
 
@@ -430,11 +466,13 @@ namespace hal
 {
   namespace stm32f10xxl
   {
+    // ========================================================================
+
     /// \ingroup stm32f10xxl
     /// \headerfile InterruptNumbers.h "hal/architecture/arm/cortexm/include/InterruptNumbers.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F10X_XL family interrupt numbers
+    /// \brief STM32F10X_XL family interrupt numbers.
     class InterruptNumber : public hal::stm32f10x::InterruptNumberBase
     {
     public:
@@ -444,7 +482,7 @@ namespace hal
       /// \brief Deleted constructor
       InterruptNumber() = delete;
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Interrupt numbers
       /// @{
@@ -492,9 +530,12 @@ namespace hal
       static const interruptNumber_t DMA2_Channel3 = 58; ///< DMA2 Channel 3 global Interrupt
       static const interruptNumber_t DMA2_Channel4_5 = 59; ///< DMA2 Channel 4 and Channel 5 global Interrupt
 
-      /// @}
+      /// @} end of name Interrupt numbers
 
     };
+
+    // ========================================================================
+
   }
 }
 
@@ -502,21 +543,23 @@ namespace hal
 {
   namespace stm32f10xcl
   {
+    // ========================================================================
+
     /// \ingroup stm32f10xcl
     /// \headerfile InterruptNumbers.h "hal/architecture/arm/cortexm/include/InterruptNumbers.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F10X_CL family interrupt numbers
+    /// \brief STM32F10X_CL family interrupt numbers.
     class InterruptNumber : public hal::stm32f10x::InterruptNumberBase
     {
     public:
       /// \name Constructors/destructor
       /// @{
 
-      /// \brief Deleted constructor
+      /// \brief Deleted constructor.
       InterruptNumber() = delete;
 
-      /// @}
+      /// @} end of name Constructors/destructor
 
       /// \name Interrupt numbers
       /// @{
@@ -565,9 +608,12 @@ namespace hal
       static const interruptNumber_t CAN2_SCE = 66; ///< CAN2 SCE Interrupt
       static const interruptNumber_t OTG_FS = 67; ///< USB OTG FS global Interrupt
 
-      /// @}
+      /// @} end of name Interrupt numbers
 
     };
+
+    // ========================================================================
+
   }
 }
 
@@ -580,63 +626,63 @@ namespace hal
 
     /// \ingroup stm32f
     ///
-    /// \brief Current family interrupt numbers
+    /// \brief Current family interrupt numbers.
     typedef hal::stm32f10xld::InterruptNumber InterruptNumber;
 
 #elif defined(STM32F10X_LD_VL)
 
     /// \ingroup stm32f
     ///
-    /// \brief Current family interrupt numbers
+    /// \brief Current family interrupt numbers.
     typedef hal::stm32f10xldvl::InterruptNumber InterruptNumber;
 
 #elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_MD)
 
     /// \ingroup stm32f
     ///
-    /// \brief Current family interrupt numbers
+    /// \brief Current family interrupt numbers.
     typedef hal::stm32f10xmd::InterruptNumber InterruptNumber;
 
 #elif defined(STM32F10X_MD_VL)
 
   /// \ingroup stm32f
   ///
-  /// \brief Current family interrupt numbers
+  /// \brief Current family interrupt numbers.
   typedef hal::stm32f10xmdvl::InterruptNumber InterruptNumber;
 
 #elif defined(STM32F10X_HD)
 
   /// \ingroup stm32f
   ///
-  /// \brief Current family interrupt numbers
+  /// \brief Current family interrupt numbers.
   typedef hal::stm32f10xhd::InterruptNumber InterruptNumber;
 
 #elif defined(STM32F10X_HD_VL)
 
   /// \ingroup stm32f
   ///
-  /// \brief Current family interrupt numbers
+  /// \brief Current family interrupt numbers.
   typedef hal::stm32f10xhdvl::InterruptNumber InterruptNumber;
 
 #elif defined(STM32F10X_XL)
 
   /// \ingroup stm32f
   ///
-  /// \brief Current family interrupt numbers
+  /// \brief Current family interrupt numbers.
   typedef hal::stm32f10xxl::InterruptNumber InterruptNumber;
 
 #elif defined(STM32F10X_CL)
 
   /// \ingroup stm32f
   ///
-  /// \brief Current family interrupt numbers
+  /// \brief Current family interrupt numbers.
   typedef hal::stm32f10xcl::InterruptNumber InterruptNumber;
 
 #elif defined(__DOXYGEN__)
 
   /// \ingroup stm32f
   ///
-  /// \brief Current family interrupt numbers
+  /// \brief Current family interrupt numbers.
   typedef hal::stm32f1::InterruptNumber InterruptNumber;
 
 #else
@@ -649,4 +695,5 @@ namespace hal
 }
 
 #endif // OS_INCLUDE_HAL_MCU_FAMILY_STM32F
+
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_INTERRUPTNUMBERS_H_

@@ -7,8 +7,8 @@
 
 #if defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE) || defined(__DOXYGEN__)
 
-#include "../include/Trace.h"
-#include "../include/Trace.cpp.h"
+#include "portable/diagnostics/include/Trace.h"
+#include "portable/diagnostics/include/Trace.cpp.h"
 
 #include "portable/core/include/Greeting.h"
 
@@ -64,6 +64,9 @@ namespace os
     {
       // use the static object, in case we deal with another instance
       os::diag::trace.putDestructor();
+
+      os::diag::trace.putString("No more trace messages after this point...");
+      os::diag::trace.putNewLine();
     }
 
 #endif // DEBUG

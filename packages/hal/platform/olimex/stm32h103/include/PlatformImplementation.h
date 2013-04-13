@@ -18,17 +18,29 @@ namespace hal
   {
     namespace stm32h103
     {
+      // ======================================================================
+
+      /// \headerfile PlatformImplementation.h "hal/platform/olimex/stm32h103/include/PlatformImplementation.h"
+      /// \ingroup stm32fh103
+      /// \nosubgrouping
+      ///
+      /// \brief Olimex STM32F-H103 board implementation class.
       class PlatformImplementation : public os::core::PlatformBase
       {
       public:
 
         // TODO: add more platform members, like initialiseSystem()
       };
-    }
+    } // namespace stm32h103
+
+    // ------------------------------------------------------------------------
 
     typedef stm32h103::PlatformImplementation PlatformImplementation;
-  }
-}
+
+    // ========================================================================
+
+  } // namespace platform
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103)
 

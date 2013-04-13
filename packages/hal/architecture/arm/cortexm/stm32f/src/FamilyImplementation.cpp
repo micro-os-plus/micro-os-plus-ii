@@ -17,19 +17,23 @@ namespace hal
   {
     // ------------------------------------------------------------------------
 
+    /// \details
+    /// The generic STM32F initialisation code.
+    /// Currently it is implemented using the CMSIS C routine.
+    /// \todo Implement this in C++
     void
     FamilyImplementation::initialiseSystem(void)
     {
-      // Currently calls the ST library function,
-      // later on will use our own code
       SystemInit();
     }
 
+    /// \details
+    /// The generic STM32F software reset code.
+    /// Currently it is implemented using the CMSIS C routine.
+    /// \todo Implement this in C++
     void
     FamilyImplementation::resetSystem(void)
     {
-      // Currently calls the ST library function,
-      // later on will use our own code
       NVIC_SystemReset();
     }
 

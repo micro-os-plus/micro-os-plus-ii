@@ -9,8 +9,8 @@
 
 #include "portable/core/include/OS.h"
 
-#include "../include/TestSuite.h"
-#include "../include/TestSuiteImplementation.h"
+#include "portable/infrastructure/include/TestSuite.h"
+#include "portable/infrastructure/include/TestSuiteImplementation.h"
 
 #include <string.h>
 

@@ -10,7 +10,7 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 
-#include "portable/core/include/OS.h"
+#include "portable/core/include/ArchitectureBase.h"
 
 namespace hal
 {
@@ -18,20 +18,38 @@ namespace hal
   {
     namespace posix
     {
-      class ArchitectureImplementation
+      // ======================================================================
+
+      /// \headerfile ArchitectureImplementation.h "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
+      /// \ingroup posix
+      /// \nosubgrouping
+      ///
+      /// \brief Generic POSIX architecture implementation class.
+      class ArchitectureImplementation : public os::core::ArchitectureBase
       {
       public:
 
 #if defined(DEBUG)
+        /// \brief Put architecture greeting.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Returns
+        ///    Nothing.
         static void
         putGreeting(void);
 #endif
       };
-    }
+    } // namespace posix
+
+    // ------------------------------------------------------------------------
 
     typedef posix::ArchitectureImplementation ArchitectureImplementation;
-  }
-}
+
+    // ========================================================================
+
+  } // namespace arch
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
 

@@ -327,7 +327,7 @@ typedef union
 /**
     \ingroup    ARM_CMSIS_CM4_core_register
     \defgroup   ARM_CMSIS_CM4_NVIC  Nested Vectored Interrupt Controller (NVIC)
-    \brief      Type definitions for the NVIC Registers
+    \brief      Type definitions for the NVIC Registers.
   @{
  */
 
@@ -360,7 +360,7 @@ typedef struct
 /**
     \ingroup  ARM_CMSIS_CM4_core_register
     \defgroup ARM_CMSIS_CM4_SCB     System Control Block (SCB)
-    \brief      Type definitions for the System Control Block Registers
+    \brief      Type definitions for the System Control Block Registers.
   @{
  */
 
@@ -578,7 +578,7 @@ typedef struct
 /**
     \ingroup  ARM_CMSIS_CM4_core_register
     \defgroup ARM_CMSIS_CM4_SCnSCB System Controls not in SCB (SCnSCB)
-    \brief      Type definitions for the System Control and ID Register not in the SCB
+    \brief      Type definitions for the System Control and ID Register not in the SCB.
   @{
  */
 
@@ -668,7 +668,7 @@ typedef struct
 /**
     \ingroup  ARM_CMSIS_CM4_core_register
     \defgroup ARM_CMSIS_CM4_ITM     Instrumentation Trace Macrocell (ITM)
-    \brief      Type definitions for the Instrumentation Trace Macrocell (ITM)
+    \brief      Type definitions for the Instrumentation Trace Macrocell (ITM).
   @{
  */
 
@@ -770,7 +770,7 @@ typedef struct
 /**
     \ingroup  ARM_CMSIS_CM4_core_register
     \defgroup ARM_CMSIS_CM4_DWT     Data Watchpoint and Trace (DWT)
-    \brief      Type definitions for the Data Watchpoint and Trace (DWT)
+    \brief      Type definitions for the Data Watchpoint and Trace (DWT).
   @{
  */
 
@@ -916,7 +916,7 @@ typedef struct
 /**
     \ingroup  ARM_CMSIS_CM4_core_register
     \defgroup ARM_CMSIS_CM4_TPI     Trace Port Interface (TPI)
-    \brief      Type definitions for the Trace Port Interface (TPI)
+    \brief      Type definitions for the Trace Port Interface (TPI).
   @{
  */
 
@@ -1071,7 +1071,7 @@ typedef struct
 /**
     \ingroup  ARM_CMSIS_CM4_core_register
     \defgroup ARM_CMSIS_CM4_MPU     Memory Protection Unit (MPU)
-    \brief      Type definitions for the Memory Protection Unit (MPU)
+    \brief      Type definitions for the Memory Protection Unit (MPU).
   @{
  */
 
@@ -1165,7 +1165,7 @@ typedef struct
 /**
     \ingroup  ARM_CMSIS_CM4_core_register
     \defgroup ARM_CMSIS_CM4_FPU     Floating Point Unit (FPU)
-    \brief      Type definitions for the Floating Point Unit (FPU)
+    \brief      Type definitions for the Floating Point Unit (FPU).
   @{
  */
 
@@ -1271,7 +1271,7 @@ typedef struct
 /**
     \ingroup  ARM_CMSIS_CM4_core_register
     \defgroup ARM_CMSIS_CM4_CoreDebug       Core Debug Registers (CoreDebug)
-    \brief      Type definitions for the Core Debug Registers
+    \brief      Type definitions for the Core Debug Registers.
   @{
  */
 
@@ -1435,7 +1435,7 @@ typedef struct
     @{
  */
 
-/** \brief  Set Priority Grouping
+/** \brief  Set Priority Grouping.
 
   The function sets the priority grouping field using the required unlock sequence.
   The parameter PriorityGroup is assigned to the field SCB->AIRCR [10:8] PRIGROUP field.
@@ -1459,7 +1459,7 @@ __STATIC_INLINE void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
 }
 
 
-/** \brief  Get Priority Grouping
+/** \brief  Get Priority Grouping.
 
   The function reads the priority grouping field from the NVIC Interrupt Controller.
 
@@ -1471,7 +1471,7 @@ __STATIC_INLINE uint32_t NVIC_GetPriorityGrouping(void)
 }
 
 
-/** \brief  Enable External Interrupt
+/** \brief  Enable External Interrupt.
 
     The function enables a device-specific interrupt in the NVIC interrupt controller.
 
@@ -1496,7 +1496,7 @@ __STATIC_INLINE void NVIC_DisableIRQ(IRQn_Type IRQn)
 }
 
 
-/** \brief  Get Pending Interrupt
+/** \brief  Get Pending Interrupt.
 
     The function reads the pending register in the NVIC and returns the pending bit
     for the specified interrupt.
@@ -1512,7 +1512,7 @@ __STATIC_INLINE uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
 }
 
 
-/** \brief  Set Pending Interrupt
+/** \brief  Set Pending Interrupt.
 
     The function sets the pending bit of an external interrupt.
 
@@ -1524,7 +1524,7 @@ __STATIC_INLINE void NVIC_SetPendingIRQ(IRQn_Type IRQn)
 }
 
 
-/** \brief  Clear Pending Interrupt
+/** \brief  Clear Pending Interrupt.
 
     The function clears the pending bit of an external interrupt.
 
@@ -1536,7 +1536,7 @@ __STATIC_INLINE void NVIC_ClearPendingIRQ(IRQn_Type IRQn)
 }
 
 
-/** \brief  Get Active Interrupt
+/** \brief  Get Active Interrupt.
 
     The function reads the active register in NVIC and returns the active bit.
 
@@ -1551,7 +1551,7 @@ __STATIC_INLINE uint32_t NVIC_GetActive(IRQn_Type IRQn)
 }
 
 
-/** \brief  Set Interrupt Priority
+/** \brief  Set Interrupt Priority.
 
     The function sets the priority of an interrupt.
 
@@ -1569,7 +1569,7 @@ __STATIC_INLINE void NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 }
 
 
-/** \brief  Get Interrupt Priority
+/** \brief  Get Interrupt Priority.
 
     The function reads the priority of an interrupt. The interrupt
     number can be positive to specify an external (device specific)
@@ -1590,7 +1590,7 @@ __STATIC_INLINE uint32_t NVIC_GetPriority(IRQn_Type IRQn)
 }
 
 
-/** \brief  Encode Priority
+/** \brief  Encode Priority.
 
     The function encodes the priority for an interrupt with the given priority group,
     preemptive priority value, and subpriority value.
@@ -1618,7 +1618,7 @@ __STATIC_INLINE uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t P
 }
 
 
-/** \brief  Decode Priority
+/** \brief  Decode Priority.
 
     The function decodes an interrupt priority value with a given priority group to
     preemptive priority value and subpriority value.
@@ -1644,7 +1644,7 @@ __STATIC_INLINE void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
 }
 
 
-/** \brief  System Reset
+/** \brief  System Reset.
 
     The function initiates a system reset request to reset the MCU.
  */
@@ -1673,7 +1673,7 @@ __STATIC_INLINE void NVIC_SystemReset(void)
 
 #if (__Vendor_SysTickConfig == 0)
 
-/** \brief  System Tick Configuration
+/** \brief  System Tick Configuration.
 
     The function initializes the System Timer and its interrupt, and starts the System Tick Timer.
     Counter is in free running mode to generate periodic interrupts.
@@ -1719,7 +1719,7 @@ extern volatile int32_t ITM_RxBuffer;                    /*!< External variable 
 #define                 ITM_RXBUFFER_EMPTY    0x5AA55AA5 /*!< Value identifying \ref ITM_RxBuffer is ready for next character. */
 
 
-/** \brief  ITM Send Character
+/** \brief  ITM Send Character.
 
     The function transmits a character via the ITM channel 0, and
     \li Just returns when no debugger is connected that has booked the output.
@@ -1741,7 +1741,7 @@ __STATIC_INLINE uint32_t ITM_SendChar (uint32_t ch)
 }
 
 
-/** \brief  ITM Receive Character
+/** \brief  ITM Receive Character.
 
     The function inputs a character via the external variable \ref ITM_RxBuffer.
 
@@ -1760,7 +1760,7 @@ __STATIC_INLINE int32_t ITM_ReceiveChar (void) {
 }
 
 
-/** \brief  ITM Check Character
+/** \brief  ITM Check Character.
 
     The function checks whether a character is pending for reading in the variable \ref ITM_RxBuffer.
 

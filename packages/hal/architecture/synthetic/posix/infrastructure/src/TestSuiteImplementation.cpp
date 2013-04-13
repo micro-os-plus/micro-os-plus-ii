@@ -9,7 +9,7 @@
 
 #include "portable/core/include/OS.h"
 
-#include "../include/TestSuiteImplementation.h"
+#include "hal/architecture/synthetic/posix/infrastructure/include/TestSuiteImplementation.h"
 
 #include <iostream>
 #include <fcntl.h>
@@ -20,6 +20,8 @@ namespace hal
   {
     namespace infra
     {
+      // ----------------------------------------------------------------------
+
       /// \details
       /// Initialise the object without XML output.
       TestSuiteImplementation::TestSuiteImplementation()
@@ -162,6 +164,8 @@ namespace hal
       {
         return ::write(OUTPUT_DEVICE_FILE_DESCRIPTOR, cpBuf, numBytes);
       }
+
+      // ----------------------------------------------------------------------
 
     } // namespace infra
   } // namespace posix

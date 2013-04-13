@@ -14,52 +14,121 @@ namespace hal
 {
   namespace cortexm
   {
+    // ========================================================================
 
     typedef uint32_t interruptVector_t;
 
+    /// \headerfile LinkerScript.h "hal/architecture/arm/cortexm/ldscript/LinkerScript.h"
+    /// \ingroup arm_cm
+    /// \nosubgrouping
+    ///
+    /// \brief Cortex-M linker script definitions.
+    ///
+    /// \details
+    /// This class provides a kind of portable access to
+    /// linker script definitions.
     class LinkerScript
     {
     public:
 
       typedef unsigned int linkerAlign_t;
 
-      /// \brief Deleted constructor
+      /// \name Constructors/destructor
+      /// @{
+
+      /// \brief Deleted constructor.
       LinkerScript() = delete;
 
+      /// @} end of name Constructors/destructor
+
+      /// \name Public member functions
+      /// @{
+
+      /// \brief Get BSS begin address in RAM.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Pointer to RAM.
       static linkerAlign_t*
       getBssBegin(void);
 
+      /// \brief Get BSS end address in RAM.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Pointer to RAM.
       static linkerAlign_t*
       getBssEnd(void);
 
+      /// \brief Get initialised data begin address in flash.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Pointer to flash.
       static linkerAlign_t*
       getFlashDataBegin(void);
 
+      /// \brief Get initialised data begin address in ram.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Pointer to ram.
       static linkerAlign_t*
       getRamDataBegin(void);
 
+      /// \brief Get initialised data end address in ram.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Pointer to ram.
       static linkerAlign_t*
       getRamDataEnd(void);
 
+      /// \brief Get init array begin address in flash.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Pointer to flash.
       static linkerAlign_t*
-      getInitArrayStart(void);
+      getInitArrayBegin(void);
 
+      /// \brief Get init array end address in flash.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Pointer to flash.
       static linkerAlign_t*
       getInitArrayEnd(void);
 
+      /// \brief Get fini array begin address in flash.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Pointer to flash.
       static linkerAlign_t*
-      getFiniArrayStart(void);
+      getFiniArrayBegin(void);
 
+      /// \brief Get fini array end address in flash.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Pointer to flash.
       static linkerAlign_t*
       getFiniArrayEnd(void);
 
+      /// @} end of name Public member functions
+
     };
-  }
-}
+  // ========================================================================
+  }// namespace cortexm
+} // namespace hal
 
 extern "C"
 {
+  // local type to shorten definitions.
   typedef hal::cortexm::LinkerScript::linkerAlign_t linkerAlign_t;
+
+  // External references to actual symbols defined in the linker script.
 
   extern linkerAlign_t __bss_start__;
   extern linkerAlign_t __bss_end__;
@@ -83,21 +152,21 @@ namespace hal
 {
   namespace cortexm
   {
-    inline __attribute__((always_inline))     //
+    inline __attribute__((always_inline))      //
     LinkerScript::linkerAlign_t*
     LinkerScript::getBssBegin(void)
     {
       return (&__bss_start__);
     }
 
-    inline __attribute__((always_inline))     //
+    inline __attribute__((always_inline))      //
     LinkerScript::linkerAlign_t*
     LinkerScript::getBssEnd(void)
     {
       return (&__bss_end__);
     }
 
-    inline __attribute__((always_inline))     //
+    inline __attribute__((always_inline))      //
     LinkerScript::linkerAlign_t*
     LinkerScript::getFlashDataBegin(void)
     {
@@ -105,49 +174,49 @@ namespace hal
       return (&__etext);
     }
 
-    inline __attribute__((always_inline))     //
+    inline __attribute__((always_inline))      //
     LinkerScript::linkerAlign_t*
     LinkerScript::getRamDataBegin(void)
     {
       return (&__data_start__);
     }
 
-    inline __attribute__((always_inline))     //
+    inline __attribute__((always_inline))      //
     LinkerScript::linkerAlign_t*
     LinkerScript::getRamDataEnd(void)
     {
       return (&__data_end__);
     }
 
-    inline __attribute__((always_inline))     //
+    inline __attribute__((always_inline))      //
     LinkerScript::linkerAlign_t*
-    LinkerScript::getInitArrayStart(void)
+    LinkerScript::getInitArrayBegin(void)
     {
       return (&__init_array_start);
     }
 
-    inline __attribute__((always_inline))     //
+    inline __attribute__((always_inline))      //
     LinkerScript::linkerAlign_t*
     LinkerScript::getInitArrayEnd(void)
     {
       return (&__init_array_end);
     }
 
-    inline __attribute__((always_inline))     //
+    inline __attribute__((always_inline))      //
     LinkerScript::linkerAlign_t*
-    LinkerScript::getFiniArrayStart(void)
+    LinkerScript::getFiniArrayBegin(void)
     {
       return (&__fini_array_start);
     }
 
-    inline __attribute__((always_inline))     //
+    inline __attribute__((always_inline))      //
     LinkerScript::linkerAlign_t*
     LinkerScript::getFiniArrayEnd(void)
     {
       return (&__fini_array_end);
     }
 
-  }
-}
+  } // namespace cortexm
+} // namespace hal
 
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_LDSCRIPT_LINKERSCRIPT_H_

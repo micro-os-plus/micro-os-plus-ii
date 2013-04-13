@@ -16,6 +16,8 @@ namespace os
   namespace core
   {
 
+    // ========================================================================
+
     /// \brief Special class used to perform early initialisations.
     ///
     /// \details
@@ -53,6 +55,7 @@ namespace os
     public:
       /// \brief This constructor will be executed before all others.
       EarlyInitialisations();
+      ~EarlyInitialisations();
     };
 
     /// \details
@@ -65,21 +68,27 @@ namespace os
       // WARNING: no trace available yet, wait for the
       // Trace object to be initialised later!
 
-      // TODO: add clock init
+      os::platform.initialiseSystem();
 
 #if defined(DEBUG)
       // initialise the trace device
-      os::diag::Trace::earlyInitialise();
+      os::diag::Trace::initialiseEarly();
 #endif
     }
+
+    EarlyInitialisations::~EarlyInitialisations()
+    {
+      os::platform.resetSystem();
+    }
+
+    // ========================================================================
+
   }
 }
 
 // ----------------------------------------------------------------------------
 
 #pragma GCC diagnostic push
-//#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-//#pragma GCC diagnostic ignored "-Wpragmas"
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
@@ -125,7 +134,6 @@ namespace os
 
 #if defined(DEBUG)
 
-
 namespace os
 {
   namespace core
@@ -136,9 +144,12 @@ namespace os
     class EarlyGreetings
     {
     public:
-      /// \brief This constructor will be executed right
+      /// \brief This constructor will be executed right.
       /// after the Trace is constructed.
       EarlyGreetings();
+
+      ~EarlyGreetings();
+
     };
 
     /// \details
@@ -159,6 +170,14 @@ namespace os
       // than with HAL (platform, that will architecture)
       os::platform.putGreeting();
 
+      os::diag::trace.putNewLine();
+    }
+
+    EarlyGreetings::~EarlyGreetings()
+    {
+      // The opposite of early, i.e. late greeting, used for bood bye
+      os::diag::trace.putNewLine();
+      os::diag::trace.putString("Hasta la vista, baby!");
       os::diag::trace.putNewLine();
     }
   }
@@ -193,6 +212,9 @@ static os::core::EarlyGreetings earlyGreetings;
 
 namespace os
 {
+  // The order might be important, first architecture, then platform.
+  // However, most of the implementations will be static, so
+  // it will not matter.
   hal::arch::ArchitectureImplementation architecture;
   hal::platform::PlatformImplementation platform;
 }

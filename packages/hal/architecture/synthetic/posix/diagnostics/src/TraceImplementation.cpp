@@ -7,7 +7,7 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_DIAGNOSTICS_TRACEIMPLEMENTATION) || defined(__DOXYGEN__)
 
-#include "../include/TraceImplementation.h"
+#include "hal/architecture/synthetic/posix/diagnostics/include/TraceImplementation.h"
 
 namespace hal
 {
@@ -34,7 +34,7 @@ namespace hal
       ///
       /// Nothing to do on POSIX, the standard output is already available.
       void
-      TraceImplementation::earlyInitialise(void)
+      TraceImplementation::initialiseEarly(void)
       {
       }
 

@@ -26,24 +26,49 @@ namespace hal
     class FamilyImplementation
     {
     public:
-      /// \brief Deleted constructor
+      /// \name Constructors/destructor
+      /// @{
+
+      /// \brief Deleted constructor.
       FamilyImplementation() = delete;
 
+      /// @} end of name Constructors/destructor
+
+      /// \name Public member functions
+      /// @{
+
+      /// \brief Initialise the hardware.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       static void
       initialiseSystem(void);
 
+      /// \brief Software reset the processor.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       static void
       resetSystem(void);
 
+      /// @} end of Public member functions
+
     };
 
-  }
+  } // namespace stm32f
+
   // --------------------------------------------------------------------------
 
   namespace cortexm
   {
     typedef hal::stm32f::FamilyImplementation FamilyImplementation;
   }
+
+  // ==========================================================================
 }
 
 #endif // OS_INCLUDE_HAL_MCU_FAMILY_STM32F

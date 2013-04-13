@@ -118,7 +118,7 @@ namespace os
         /// \name Public member functions
         /// @{
 
-        /// \brief Process main() style parameters
+        /// \brief Process main() style parameters.
         ///
         /// \param [in] argc    Aount of arguments.
         /// \param [in] argv    Array of pointer to strings.
@@ -145,7 +145,7 @@ namespace os
         void
         setFunctionNameOrPrefix(const char* pName);
 
-        /// \brief Define the input values used when calling the tested
+        /// \brief Define the input values used when calling the tested.
         /// member function.
         ///
         /// \param [in] pStr    A string containing the relevant values

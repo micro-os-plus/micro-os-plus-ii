@@ -17,11 +17,14 @@ namespace hal
     namespace infra
     {
 
+      // ======================================================================
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpadded"
 
       /// \headerfile TestSuiteImplementation.h "hal/architecture/synthetic/posix/include/TestSuiteImplementation.h"
       /// \nosubgrouping
+      /// \ingroup posix
       /// \brief The POSIX version of the TestSuiteImplementation.
       ///
       /// \details
@@ -45,7 +48,7 @@ namespace hal
         /// \brief Simple constructor.
         TestSuiteImplementation();
 
-        /// \brief Constructor with process parameters
+        /// \brief Constructor with process parameters.
         ///
         /// \param [in] argc    Count of arguments.
         /// \param [in] argv    Array of pointer to strings.
@@ -59,7 +62,7 @@ namespace hal
         /// \name Public member functions
         /// @{
 
-        /// \brief Process main() style parameters
+        /// \brief Process main() style parameters.
         ///
         /// \param [in] argc    Count of arguments.
         /// \param [in] argv    Array of pointer to strings.
@@ -135,10 +138,10 @@ namespace hal
         /// \brief The file descriptor of the XML output file.
         int m_xmlFileDescriptor;
 
-        /// \brief The pointer to the file path
+        /// \brief The pointer to the file path.
         char* m_filePath;
 
-        /// \brief The verbosity level, 0 is the lest verbose
+        /// \brief The verbosity level, 0 is the lest verbose.
         size_t m_verbosity;
 
         /// @} end of name Private member variables
@@ -154,6 +157,8 @@ namespace hal
 
 #pragma GCC diagnostic pop
 
+      // ======================================================================
+
     } // namespace infra
   } // namespace posix
 } // namespace hal
@@ -166,7 +171,7 @@ namespace os
 {
   namespace infra
   {
-    /// \brief Define the generic type to refer to the POSIX implementation
+    /// \brief Define the generic type to refer to the POSIX implementation.
     /// for the TestSuite.
     typedef hal::posix::infra::TestSuiteImplementation TestSuiteImplementation;
   } // namespace infra

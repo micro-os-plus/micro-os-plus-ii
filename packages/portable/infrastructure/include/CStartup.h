@@ -106,7 +106,7 @@ namespace os
       void
       TCStartup<LinkerScript_T, linkerAlign_T>::callStaticConstructors(void)
       {
-        callStaticFunctions(LinkerScript::getInitArrayStart(),
+        callStaticFunctions(LinkerScript::getInitArrayBegin(),
             LinkerScript::getInitArrayEnd());
       }
 
@@ -115,7 +115,7 @@ namespace os
       void
       TCStartup<LinkerScript_T, linkerAlign_T>::callStaticDestructors(void)
       {
-        callStaticFunctions(LinkerScript::getFiniArrayStart(),
+        callStaticFunctions(LinkerScript::getFiniArrayBegin(),
             LinkerScript::getFiniArrayEnd());
       }
 

@@ -7,9 +7,9 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 
-//#include "portable/core/include/OS.h"
+#include "portable/core/include/OS.h"
 
-#include "../include/ArchitectureImplementation.h"
+#include "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
 
 #include <sys/utsname.h>
 
@@ -22,6 +22,9 @@ namespace hal
       // ----------------------------------------------------------------------
 
 #if defined(DEBUG)
+      /// \details
+      /// Write a POSIX specific greeting to the Trace device. If `uname()`
+      /// returns a valid response, write detailed response.
       void
       ArchitectureImplementation::putGreeting(void)
       {
@@ -44,8 +47,10 @@ namespace hal
       }
 #endif
 
-    }
-  }
-}
+      // ----------------------------------------------------------------------
+
+    } // namespace posix
+  } // namespace arch
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)

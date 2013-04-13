@@ -18,17 +18,29 @@ namespace hal
   {
     namespace osx
     {
+      // ======================================================================
+
+      /// \headerfile PlatformImplementation.h "hal/platform/synthetic/osx/include/PlatformImplementation.h"
+      /// \ingroup osx
+      /// \nosubgrouping
+      ///
+      /// \brief OS X platform implementation class.
       class PlatformImplementation : public os::core::PlatformBase
       {
       public:
 
-        // TODO: add more platfrom members
+        // TODO: add more platform members
       };
-    }
+    } // namespace osx
+
+    // ------------------------------------------------------------------------
 
     typedef osx::PlatformImplementation PlatformImplementation;
-  }
-}
+
+    // ========================================================================
+
+  } // namespace platform
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX)
 

@@ -279,7 +279,7 @@ typedef union
 
 /** \ingroup    ARM_CMSIS_CM0P_core_register
     \defgroup   ARM_CMSIS_CM0P_NVIC  Nested Vectored Interrupt Controller (NVIC)
-    \brief      Type definitions for the NVIC Registers
+    \brief      Type definitions for the NVIC Registers.
   @{
  */
 
@@ -304,7 +304,7 @@ typedef struct
 
 /** \ingroup  ARM_CMSIS_CM0P_core_register
     \defgroup ARM_CMSIS_CM0P_SCB     System Control Block (SCB)
-    \brief      Type definitions for the System Control Block Registers
+    \brief      Type definitions for the System Control Block Registers.
   @{
  */
 
@@ -470,7 +470,7 @@ typedef struct
 /**
     \ingroup  ARM_CMSIS_CM0P_core_register
     \defgroup ARM_CMSIS_CM0P_MPU     Memory Protection Unit (MPU)
-    \brief      Type definitions for the Memory Protection Unit (MPU)
+    \brief      Type definitions for the Memory Protection Unit (MPU).
   @{
  */
 
@@ -620,7 +620,7 @@ typedef struct
 #define _IP_IDX(IRQn)            (   ((uint32_t)(IRQn)            >>    2)     )
 
 
-/** \brief  Enable External Interrupt
+/** \brief  Enable External Interrupt.
 
     The function enables a device-specific interrupt in the NVIC interrupt controller.
 
@@ -632,7 +632,7 @@ __STATIC_INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
 }
 
 
-/** \brief  Disable External Interrupt
+/** \brief  Disable External Interrupt.
 
     The function disables a device-specific interrupt in the NVIC interrupt controller.
 
@@ -644,7 +644,7 @@ __STATIC_INLINE void NVIC_DisableIRQ(IRQn_Type IRQn)
 }
 
 
-/** \brief  Get Pending Interrupt
+/** \brief  Get Pending Interrupt.
 
     The function reads the pending register in the NVIC and returns the pending bit
     for the specified interrupt.
@@ -660,7 +660,7 @@ __STATIC_INLINE uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
 }
 
 
-/** \brief  Set Pending Interrupt
+/** \brief  Set Pending Interrupt.
 
     The function sets the pending bit of an external interrupt.
 
@@ -672,7 +672,7 @@ __STATIC_INLINE void NVIC_SetPendingIRQ(IRQn_Type IRQn)
 }
 
 
-/** \brief  Clear Pending Interrupt
+/** \brief  Clear Pending Interrupt.
 
     The function clears the pending bit of an external interrupt.
 
@@ -684,7 +684,7 @@ __STATIC_INLINE void NVIC_ClearPendingIRQ(IRQn_Type IRQn)
 }
 
 
-/** \brief  Set Interrupt Priority
+/** \brief  Set Interrupt Priority.
 
     The function sets the priority of an interrupt.
 
@@ -704,7 +704,7 @@ __STATIC_INLINE void NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 }
 
 
-/** \brief  Get Interrupt Priority
+/** \brief  Get Interrupt Priority.
 
     The function reads the priority of an interrupt. The interrupt
     number can be positive to specify an external (device specific)
@@ -725,7 +725,7 @@ __STATIC_INLINE uint32_t NVIC_GetPriority(IRQn_Type IRQn)
 }
 
 
-/** \brief  System Reset
+/** \brief  System Reset.
 
     The function initiates a system reset request to reset the MCU.
  */
@@ -753,7 +753,7 @@ __STATIC_INLINE void NVIC_SystemReset(void)
 
 #if (__Vendor_SysTickConfig == 0)
 
-/** \brief  System Tick Configuration
+/** \brief  System Tick Configuration.
 
     The function initializes the System Timer and its interrupt, and starts the System Tick Timer.
     Counter is in free running mode to generate periodic interrupts.

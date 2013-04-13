@@ -189,7 +189,7 @@ namespace os
         /// \name Constructors/destructor
         /// @{
 
-        /// \brief Constructor
+        /// \brief Constructor.
         ///
         /// \param [in] implementation  Unused reference to implementation.
         TTraceLightBase(
@@ -595,10 +595,10 @@ namespace os
       /// \name Constructors/destructor
       /// @{
 
-      /// \brief Constructor
+      /// \brief Constructor.
       Trace();
 
-      /// \brief Destructor
+      /// \brief Destructor.
       virtual
       ~Trace();
 
@@ -609,7 +609,7 @@ namespace os
 
       /// \brief Called only once during early initialisations.
       static void
-      earlyInitialise(void);
+      initialiseEarly(void);
 
       /// @} end of name Static member functions
     };
@@ -620,9 +620,9 @@ namespace os
   /// Call the implementation early initialisations.
   inline
   void
-  Trace::earlyInitialise(void)
+  Trace::initialiseEarly(void)
     {
-      Implementation::earlyInitialise();
+      Implementation::initialiseEarly();
     }
 
   // --------------------------------------------------------------------------

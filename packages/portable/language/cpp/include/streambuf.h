@@ -159,7 +159,7 @@ namespace os
         basic_streambuf*
         pubsetbuf(char_type* s, streamsize n);
 
-        /// \brief  Public entry point for `seekoff()`, to change
+        /// \brief  Public entry point for `seekoff()`, to change.
         /// the stream position.
         ///
         /// \param [in]  off  Offset.
@@ -170,7 +170,7 @@ namespace os
         pubseekoff(off_type off, ios_base::seekdir way,
             ios_base::openmode which = ios_base::in | ios_base::out);
 
-        /// \brief  Public entry point for `seekpos()`, to change
+        /// \brief  Public entry point for `seekpos()`, to change.
         /// the stream position.
         ///
         /// \param [in]  pos  The new position.
@@ -180,7 +180,7 @@ namespace os
         pubseekpos(pos_type pos,
             ios_base::openmode which = ios_base::in | ios_base::out);
 
-        /// \brief  Public entry point for `sync()`, to synchronise
+        /// \brief  Public entry point for `sync()`, to synchronise.
         /// the stream.
         ///
         /// \par Parameters
@@ -229,7 +229,7 @@ namespace os
         sgetc();
 
         /// \brief  Public entry point for xsgetn(), to get
-        /// an array of characters.
+        ///         an array of characters.
         ///
         /// \param [in]  s  The address of an array of characters.
         /// \param [in]  n  The maximum number of characters to get.

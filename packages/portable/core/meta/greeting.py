@@ -68,7 +68,7 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='int',
             defaultValue='1',
 
-            headerFile='include/portable/core/include/XCDL_Greeting_Defines.h',
+            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_INTEGER_VERSION_MINOR',
 
             # This value needs to be stringified, so no parenthesis 
@@ -84,7 +84,7 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='int',
             defaultValue='1',
 
-            headerFile='include/portable/core/include/XCDL_Greeting_Defines.h',
+            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_INTEGER_VERSION_REVISION',
             
             # This value needs to be stringified, so no parenthesis 
