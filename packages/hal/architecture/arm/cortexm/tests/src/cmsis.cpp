@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief STM32F CMSIS simple test.
+
 #include "portable/core/include/OS.h"
 
 #include "hal/architecture/arm/cortexm/stm32f/stm32f10x/include/InterruptNumbersSelector.h"

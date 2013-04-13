@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Sample implementation for the Trace class.
+
 #ifndef OS_PORTABLE_DIAGNOSTICS_TRACEIMPLEMENTATIONSAMPLE_H_
 #define OS_PORTABLE_DIAGNOSTICS_TRACEIMPLEMENTATIONSAMPLE_H_
 

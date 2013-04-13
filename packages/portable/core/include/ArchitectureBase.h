@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Base declarations for implementations of the architecture classes.
+
 #ifndef OS_PORTABLE_CORE_ARCHITECTUREBASE_H_
 #define OS_PORTABLE_CORE_ARCHITECTUREBASE_H_
 

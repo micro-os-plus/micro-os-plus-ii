@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Configuration defines used to select various components.
+
 #ifndef OS_PORTABLE_CORE_CONFIGDEFINES_H_
 #define OS_PORTABLE_CORE_CONFIGDEFINES_H_
 

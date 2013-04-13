@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Sample implementation for the TestSuite class.
+
 #ifndef OS_PORTABLE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATIONSAMPLE_H_
 #define OS_PORTABLE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATIONSAMPLE_H_
 

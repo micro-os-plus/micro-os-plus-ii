@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief STM32F10X array of interrupt vectors.
+
 #include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X) || defined(__DOXYGEN__)

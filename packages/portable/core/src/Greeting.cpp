@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Definitions of greeting strings.
+
 #include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_GREETING) || defined(__DOXYGEN__)

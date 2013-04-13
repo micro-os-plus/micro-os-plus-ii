@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Conversion functions used in the Trace class.
+
 #ifndef OS_PORTABLE_DIAGNOSTICS_TRACECONVERSIONS_CPP_H_
 #define OS_PORTABLE_DIAGNOSTICS_TRACECONVERSIONS_CPP_H_
 

@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief ARM Cortex-M base for all architecture interrupt numbers.
+
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_COREINTERRUPTNUMBERS_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_COREINTERRUPTNUMBERS_H_
 

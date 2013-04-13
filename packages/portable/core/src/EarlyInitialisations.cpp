@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Special class used to perform early initialisations/late cleanups.
+
 #include "portable/core/include/ConfigDefines.h"
 
 #include "portable/core/include/Architecture.h"

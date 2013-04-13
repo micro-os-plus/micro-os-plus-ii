@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Base definitions for implementations of the platform classes.
+
 #include "portable/core/include/ConfigDefines.h"
 
 #include "portable/core/include/PlatformBase.h"

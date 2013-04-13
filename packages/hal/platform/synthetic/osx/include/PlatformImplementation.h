@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief OS X declarations of the synthetic platform class.
+
 #ifndef HAL_PLATFORM_SYNTHETIC_OSX_PLATFORMIMPLEMENTATION_H_
 #define HAL_PLATFORM_SYNTHETIC_OSX_PLATFORMIMPLEMENTATION_H_
 

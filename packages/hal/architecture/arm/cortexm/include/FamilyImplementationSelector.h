@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief ARM Cortex-M family implementation selector.
+
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_FAMILYIMPLEMENTATIONSELECTOR_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_FAMILYIMPLEMENTATIONSELECTOR_H_
 

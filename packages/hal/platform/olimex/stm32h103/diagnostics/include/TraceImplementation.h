@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Olimex STM32-H103 declarations of the trace implementation class.
+
 #ifndef HAL_PLATFORM_STM32H103_DIAGNOSTICS_TRACEIMPLEMENTATION_H_
 #define HAL_PLATFORM_STM32H103_DIAGNOSTICS_TRACEIMPLEMENTATION_H_
 

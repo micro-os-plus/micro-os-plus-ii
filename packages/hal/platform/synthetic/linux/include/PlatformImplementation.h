@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief GNU/Linux declarations of the synthetic platform class.
+
 #ifndef HAL_PLATFORM_SYNTHETIC_LINUX_PLATFORMIMPLEMENTATION_H_
 #define HAL_PLATFORM_SYNTHETIC_LINUX_PLATFORMIMPLEMENTATION_H_
 

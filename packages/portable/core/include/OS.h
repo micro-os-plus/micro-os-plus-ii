@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief System wide definitions.
+
 #ifndef OS_PORTABLE_CORE_OS_H_
 #define OS_PORTABLE_CORE_OS_H_
 

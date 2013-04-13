@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Selector of one of the architecture classes.
+
 #ifndef OS_PORTABLE_CORE_ARCHITECTUREIMPLEMENTATIONSELECTOR_H_
 #define OS_PORTABLE_CORE_ARCHITECTUREIMPLEMENTATIONSELECTOR_H_
 

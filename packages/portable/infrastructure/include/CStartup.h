@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief C Startup template.
+
 #ifndef OS_PORTABLE_INFRASTRUCTURE_CSTARTUP_H_
 #define OS_PORTABLE_INFRASTRUCTURE_CSTARTUP_H_
 

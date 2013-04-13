@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Template definitions for the Trace class.
+
 #ifndef OS_PORTABLE_DIAGNOSTICS_TRACE_CPP_H_
 #define OS_PORTABLE_DIAGNOSTICS_TRACE_CPP_H_
 

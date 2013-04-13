@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief TestSuite template definitions.
+
 #include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) || defined(__DOXYGEN__)
@@ -10,7 +13,7 @@
 #include "portable/core/include/OS.h"
 
 #include "portable/infrastructure/include/TestSuite.h"
-#include "portable/infrastructure/include/TestSuiteImplementation.h"
+#include "portable/infrastructure/include/TestSuiteImplementationSelector.h"
 
 #include <string.h>
 

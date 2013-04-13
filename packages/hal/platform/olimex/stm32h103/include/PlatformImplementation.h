@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Olimex STM32-H103 declarations of the board class.
+
 #ifndef HAL_PLATFORM_OLIMEX_STM32H103_PLATFORMIMPLEMENTATION_H_
 #define HAL_PLATFORM_OLIMEX_STM32H103_PLATFORMIMPLEMENTATION_H_
 

@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Sample of a platform implementation class.
+
 #ifndef HAL_PLATFORM_XXXXX_PLATFORMIMPLEMENTATION_H_
 #define HAL_PLATFORM_XXXXX_PLATFORMIMPLEMENTATION_H_
 

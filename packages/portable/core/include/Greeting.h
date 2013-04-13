@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Definitions of application greetings.
+
 #ifndef OS_PORTABLE_CORE_GREETING_H_
 #define OS_PORTABLE_CORE_GREETING_H_
 

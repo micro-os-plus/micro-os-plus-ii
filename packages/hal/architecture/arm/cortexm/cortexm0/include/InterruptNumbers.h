@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief ARM Cortex-M0 interrupt numbers.
+
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM0_INTERRUPTNUMBERS_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM0_INTERRUPTNUMBERS_H_
 

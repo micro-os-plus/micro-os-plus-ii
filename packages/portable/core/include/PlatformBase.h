@@ -3,6 +3,9 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+/// \file
+/// \brief Base declarations for implementations of the platform classes.
+
 #ifndef OS_PORTABLE_CORE_PLATFORMBASE_H_
 #define OS_PORTABLE_CORE_PLATFORMBASE_H_
 
