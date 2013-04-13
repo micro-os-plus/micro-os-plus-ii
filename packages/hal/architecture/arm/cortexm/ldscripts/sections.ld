@@ -64,31 +64,6 @@ SECTIONS
  		*(SORT(.dtors.*))
  		*(.dtors)
 
-		*(.rodata*)
-
-		KEEP(*(.eh_frame*))
-	} > FLASH
-
-	.ARM.extab : 
-	{
-		*(.ARM.extab* .gnu.linkonce.armextab.*)
-	} > FLASH
-
-	__exidx_start = .;
-	.ARM.exidx :
-	{
-		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
-	} > FLASH
-	__exidx_end = .;
-
-	__etext = .;
-		
-	.data : AT (__etext)
-	{
-		__data_start__ = .;
-		*(vtable)
-		*(.data*)
-
 		. = ALIGN(4);
 		/* preinit data */
 		PROVIDE_HIDDEN (__preinit_array_start = .);
@@ -110,6 +85,36 @@ SECTIONS
 		KEEP(*(.fini_array))
 		PROVIDE_HIDDEN (__fini_array_end = .);
 
+		*(.rodata*)
+
+		KEEP(*(.eh_frame*))
+	} > FLASH
+
+	.ARM.extab : 
+	{
+		*(.ARM.extab* .gnu.linkonce.armextab.*)
+	} > FLASH
+
+	__exidx_start = .;
+	.ARM.exidx :
+	{
+		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
+	} > FLASH
+	__exidx_end = .;
+
+	__etext = .;
+		
+	/* The initialised data section is stored immediately 
+	at the end of the text section */
+	.data : AT (__etext)
+	{
+		__data_start__ = .;
+		*(vtable)
+		*(.data*)
+
+		. = ALIGN(4);
+		/* init_array/fini_array moved to flash, align preserved */
+		
 		KEEP(*(.jcr*))
 		. = ALIGN(4);
 		/* All data end */
