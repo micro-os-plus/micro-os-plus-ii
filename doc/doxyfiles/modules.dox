@@ -35,18 +35,46 @@ The Release build configurations should not use this object.
     \ingroup std
 
 \defgroup arm_cm ARM Cortex-M
-\brief ARM Cortex-M architecture support
+\brief ARM Cortex-M architecture support.
+
+	\defgroup arm_cm_irq ARM Cortex-M Interrupts
+	\ingroup arm_cm
+	\brief ARM Cortex-M architecture interrupts.
 
 	\defgroup arm_cm0 ARM Cortex-M0
 	\ingroup arm_cm
-	\brief ARM Cortex-M0 architecture support
+	\brief ARM Cortex-M0 architecture support.
+
+		\defgroup arm_cm0_irq ARM Cortex-M0 Interrupts
+		\ingroup arm_cm0
+		\brief ARM Cortex-M0 architecture interrupts.
+
+	\defgroup arm_cm0p ARM Cortex-M0+
+	\ingroup arm_cm
+	\brief ARM Cortex-M0+ architecture support.
+
+		\defgroup arm_cm0p_irq ARM Cortex-M0+ Interrupts
+		\ingroup arm_cm0p
+		\brief ARM Cortex-M0+ architecture interrupts.
 
 	\defgroup arm_cm3 ARM Cortex-M3
 	\ingroup arm_cm
-	\brief ARM Cortex-M3 architecture support
+	\brief ARM Cortex-M3 architecture support.
+
+		\defgroup arm_cm3_irq ARM Cortex-M3 Interrupts
+		\ingroup arm_cm3
+		\brief ARM Cortex-M3 architecture interrupts.
+
+	\defgroup arm_cm4 ARM Cortex-M4
+	\ingroup arm_cm
+	\brief ARM Cortex-M4 architecture support.
+
+		\defgroup arm_cm4_irq ARM Cortex-M4 Interrupts
+		\ingroup arm_cm4
+		\brief ARM Cortex-M4 architecture interrupts.
 
 \defgroup stm32f STM32F family
-\brief ST Micro STM32F family of microcontrollers
+\brief ST Micro STM32F family of microcontrollers.
 
 The STM32F family of microcontrollers from [STMicroelectronics]
 (http://www.st.com/) is the flagship ARM
@@ -60,7 +88,7 @@ Cortex-M 32-bit MCU and consists of several families:
 
 	\defgroup stm32f1x STM32F10X family
 	\ingroup stm32f
-	\brief ST Micro STM32F10X family of microcontrollers
+	\brief ST Micro STM32F10X family of microcontrollers.
 
 The ST Micro STM32F10X family of microcontrollers consists of the following subfamilies:
 - Low-density devices are STM32F101xx, STM32F102xx and STM32F103xx microcontrollers
@@ -87,37 +115,45 @@ The ST Micro STM32F10X family of microcontrollers consists of the following subf
 - Connectivity line devices are STM32F105xx and STM32F107xx microcontrollers
    (\ref stm32f10xcl "STM32F10X_CL").
 
+		\defgroup stm32f10x_irq STM32F10X Interrupts
+		\ingroup stm32f1x
+		\brief ST Micro STM32F10X Interrupt numbers and handlers.
+
 		\defgroup stm32f10xld STM32F10X_LD family
 		\ingroup stm32f1x
-		\brief ST Micro STM32F10X Low Density family of microcontrollers
+		\brief ST Micro STM32F10X Low Density family of microcontrollers.
 
 		\defgroup stm32f10xldvl STM32F10X_LD_VL family
 		\ingroup stm32f1x
-		\brief ST Micro STM32F10X Low Density Value Line family of microcontrollers
+		\brief ST Micro STM32F10X Low Density Value Line family of microcontrollers.
 
 		\defgroup stm32f10xmd STM32F10X_MD family
 		\ingroup stm32f1x
 		\brief ST Micro STM32F10X Medium Density family of microcontrollers
 
+			\defgroup stm32f10xmd_irq STM32F10X_MD Interrupts
+			\ingroup stm32f10xmd
+			\brief ST Micro STM32F10X Medium Density family of microcontrollers.
+
 		\defgroup stm32f10xmdvl STM32F10X_MD_VL family
 		\ingroup stm32f1x
-		\brief ST Micro STM32F10X Medium Density value Line family of microcontrollers
+		\brief ST Micro STM32F10X Medium Density value Line family of microcontrollers.
 
 		\defgroup stm32f10xhd STM32F10X_HD family
 		\ingroup stm32f1x
-		\brief ST Micro STM32F10X High Density family of microcontrollers
+		\brief ST Micro STM32F10X High Density family of microcontrollers.
 
 		\defgroup stm32f10xhdvl STM32F10X_HD_VL family
 		\ingroup stm32f1x
-		\brief ST Micro STM32F10X High Density value line family of microcontrollers
+		\brief ST Micro STM32F10X High Density value line family of microcontrollers.
 
 		\defgroup stm32f10xxl STM32F10X_XL family
 		\ingroup stm32f1x
-		\brief ST Micro STM32F10X XL-Density family of microcontrollers
+		\brief ST Micro STM32F10X XL-Density family of microcontrollers.
 
 		\defgroup stm32f10xcl STM32F10X_CL family
 		\ingroup stm32f1x
-		\brief ST Micro STM32F10X Connectivity Line family of microcontrollers
+		\brief ST Micro STM32F10X Connectivity Line family of microcontrollers.
 
 
 
@@ -125,7 +161,7 @@ The ST Micro STM32F10X family of microcontrollers consists of the following subf
 
 \defgroup CMSIS CMSIS
 \brief The [Cortex Microcontroller Software Interface Standard]
-(http://www.arm.com/cmsis) 
+(http://www.arm.com/cmsis) .
 
 CMSIS
 is a vendor-independent hardware abstraction layer for the Cortex-M 
@@ -135,7 +171,7 @@ software re-use, reducing the learning curve for new microcontroller
 developers and reducing the time to market for new devices. 
 
 	\defgroup ARM_CMSIS ARM CMSIS
-	\brief Original CMSIS code from ARM
+	\brief Original CMSIS code from ARM.
     \ingroup CMSIS
 
 		\defgroup ARM_CMSIS_Core_FunctionInterface CMSIS Functions and Instructions Reference
@@ -145,26 +181,44 @@ developers and reducing the time to market for new devices.
     	\ingroup ARM_CMSIS
 		
 		\defgroup ARM_CMSIS_CM0 ARM CMSIS CM0
-		\brief Cortex-M0 CMSIS code from ARM
+		\brief Cortex-M0 CMSIS code from ARM.
     	\ingroup ARM_CMSIS
 
 		\defgroup ARM_CMSIS_CM0P ARM CMSIS CM0+
-		\brief Cortex-M0+ CMSIS code from ARM
+		\brief Cortex-M0+ CMSIS code from ARM.
     	\ingroup ARM_CMSIS
 
 		\defgroup ARM_CMSIS_CM3 ARM CMSIS CM3
-		\brief Cortex-M3 CMSIS code from ARM
+		\brief Cortex-M3 CMSIS code from ARM.
     	\ingroup ARM_CMSIS
 
 		\defgroup ARM_CMSIS_CM4 ARM CMSIS CM4
-		\brief Cortex-M4 CMSIS code from ARM
+		\brief Cortex-M4 CMSIS code from ARM.
     	\ingroup ARM_CMSIS
 
 	\defgroup ST_CMSIS ST CMSIS
-	\brief  CMSIS code from ST Micro
+	\brief  CMSIS code from ST Micro.
     \ingroup CMSIS
 
 \endif
 	
+\defgroup olimex Olimex boards
+\brief Olimex boards support.
+
+		\defgroup stm32fh103 STM32F-H103
+		\brief Olimex STM32F-H103.
+    	\ingroup olimex
+
+\defgroup posix POSIX synthetic
+\brief Generic POSIX synthetic architecture support.
+
+	\defgroup osx Apple OS X
+	\brief Apple OS X synthetic platform support.
+	\ingroup posix
+		
+	\defgroup linux GNU/Linux
+	\brief GNU/Linux synthetic platform support.
+	\ingroup posix
+
 
 */
