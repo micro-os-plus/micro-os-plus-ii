@@ -10,6 +10,7 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
+#include "portable/core/include/ArchitectureBase.h"
 #include "hal/architecture/arm/cortexm/include/FamilyImplementationSelector.h"
 
 namespace hal
@@ -17,11 +18,16 @@ namespace hal
   namespace cortexm
   {
     /// \brief Cortex-M architecture implementation.
-    class ArchitectureImplementation
+    class ArchitectureImplementation : public os::core::ArchitectureBase
     {
     public:
+      /// \name Constructors/destructor
+      /// @{
+
       /// \brief Deleted constructor.
       ArchitectureImplementation() = default;
+
+      /// @}
 
       static void
       initialiseSystem(void);
