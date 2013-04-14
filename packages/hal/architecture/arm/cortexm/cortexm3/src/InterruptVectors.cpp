@@ -94,7 +94,7 @@ namespace hal
     ///
     /// \details
     /// These are the first interrupt vectors, common to all Cortex-M3
-    /// and Cortex-M4 devices.
+    /// devices.
     ///
     /// The table starts with the initial address of the stack,
     /// immediately followed by the address of the reset handler.

@@ -14,7 +14,6 @@
 
 #include "portable/core/include/Platform.h"
 
-
 namespace hal
 {
   namespace stm32f10xmd
@@ -29,9 +28,9 @@ namespace hal
       /// \name Interrupt handlers
       /// @{
 
-      /// \brief ADC1_2 Handler.
+      /// \brief ADC1_2 Global Handler.
       extern void
-      ADC1_2(void);
+      ADC1_2Global(void);
 
       /// \brief USB_HP_CAN1_TX Handler
       extern void
@@ -51,83 +50,83 @@ namespace hal
 
       /// \brief EXTI9_5 Handler
       extern void
-      EXTI9_5(void);
+      ExternalLines9_5(void);
 
-      /// \brief TIM1_BRK Handler
+      /// \brief Timer1 Break Handler
       extern void
-      TIM1_BRK(void);
+      Timer1Break(void);
 
-      /// \brief TIM1_TRG_COM Handler
+      /// \brief Timer1 Trigger and Commutation Handler
       extern void
-      TIM1_UP(void);
+      Timer1Update(void);
 
       /// \brief  Handler
       extern void
-      TIM1_TRG_COM(void);
+      Timer1TriggerCommutation(void);
 
-      /// \brief TIM1_CC Handler
+      /// \brief Timer1 Capture and Compare Handler
       extern void
-      TIM1_CC(void);
+      Timer1CaptureCompare(void);
 
-      /// \brief TIM2 Handler
+      /// \brief Timer2 Global Handler
       extern void
-      TIM2(void);
+      Timer2Global(void);
 
-      /// \brief TIM3 Handler
+      /// \brief Timer3 Global Handler
       extern void
-      TIM3(void);
+      Timer3Global(void);
 
-      /// \brief TIM4 Handler
+      /// \brief Timer4 Global Handler
       extern void
-      TIM4(void);
+      Timer4Global(void);
 
-      /// \brief I2C1_EV Handler
+      /// \brief I2C1Event Handler
       extern void
-      I2C1_EV(void);
+      I2C1Event(void);
 
-      /// \brief I2C1_ER Handler
+      /// \brief I2C1 Error Handler
       extern void
-      I2C1_ER(void);
+      I2C1Error(void);
 
-      /// \brief I2C2_EV Handler
+      /// \brief I2C2 Event Handler
       extern void
-      I2C2_EV(void);
+      I2C2Event(void);
 
-      /// \brief I2C2_ER Handler
+      /// \brief I2C2 Error Handler
       extern void
-      I2C2_ER(void);
+      I2C2Error(void);
 
-      /// \brief SPI1 Handler
+      /// \brief SPI1 Global Handler
       extern void
-      SPI1(void);
+      SPI1Global(void);
 
-      /// \brief SPI2 Handler
+      /// \brief SPI2 Global Handler
       extern void
-      SPI2(void);
+      SPI2Global(void);
 
-      /// \brief USART1 Handler
+      /// \brief USART1 Global Handler
       extern void
-      USART1(void);
+      USART1Global(void);
 
-      /// \brief USART2 Handler
+      /// \brief USART2 Global Handler
       extern void
-      USART2(void);
+      USART2Global(void);
 
-      /// \brief USART3 Handler
+      /// \brief USART3 Global Handler
       extern void
-      USART3(void);
+      USART3Global(void);
 
-      /// \brief EXTI15_10 Handler
+      /// \brief ExternalLines 15_10 Handler
       extern void
-      EXTI15_10(void);
+      ExternalLines15_10(void);
 
-      /// \brief RTCAlarm Handler
+      /// \brief RTC Alarm Handler
       extern void
-      RTCAlarm(void);
+      RealTimeClockAlarm(void);
 
-      /// \brief USBWakeUp Handler
+      /// \brief USB Device WakeUp Handler
       extern void
-      USBWakeUp(void);
+      USBDeviceWakeUp(void);
 
     /// @} end of name Interrupt handlers
 
@@ -147,7 +146,7 @@ namespace hal
     interruptVector_t interruptVectors[] =
       { //
         // 18: ADC1 and ADC2
-        reinterpret_cast<interruptVector_t>(InterruptHandler::ADC1_2),
+        reinterpret_cast<interruptVector_t>(InterruptHandler::ADC1_2Global),
 
         // 19: USB Device High Priority or CAN1 TX Interrupts
             reinterpret_cast<interruptVector_t>(InterruptHandler::USB_HP_CAN1_TX),
@@ -162,64 +161,64 @@ namespace hal
             reinterpret_cast<interruptVector_t>(InterruptHandler::CAN1_SCE),
 
             // 23: External Line[9:5]
-            reinterpret_cast<interruptVector_t>(InterruptHandler::EXTI9_5),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::ExternalLines9_5),
 
             // 24: TIM1 Break Line0
-            reinterpret_cast<interruptVector_t>(InterruptHandler::TIM1_BRK),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::Timer1Break),
 
             // 25: TIM1 Update
-            reinterpret_cast<interruptVector_t>(InterruptHandler::TIM1_UP),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::Timer1Update),
 
             // 26: TIM1 Trigger and Commutation Interrupt
-            reinterpret_cast<interruptVector_t>(InterruptHandler::TIM1_TRG_COM),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::Timer1TriggerCommutation),
 
             // 27: TIM1 Capture Compare
-            reinterpret_cast<interruptVector_t>(InterruptHandler::TIM1_CC),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::Timer1CaptureCompare),
 
-            // 28: TIM2
-            reinterpret_cast<interruptVector_t>(InterruptHandler::TIM2),
+            // 28: Timer2Global
+            reinterpret_cast<interruptVector_t>(InterruptHandler::Timer2Global),
 
-            // 29: TIM3
-            reinterpret_cast<interruptVector_t>(InterruptHandler::TIM3),
+            // 29: Timer3Global
+            reinterpret_cast<interruptVector_t>(InterruptHandler::Timer3Global),
 
-            // 30: TIM4
-            reinterpret_cast<interruptVector_t>(InterruptHandler::TIM4),
+            // 30: Timer4Global
+            reinterpret_cast<interruptVector_t>(InterruptHandler::Timer4Global),
 
             // 31: I2C1 Event
-            reinterpret_cast<interruptVector_t>(InterruptHandler::I2C1_EV),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::I2C1Event),
 
             // 32: I2C1 Error
-            reinterpret_cast<interruptVector_t>(InterruptHandler::I2C1_ER),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::I2C1Error),
 
             // 33: I2C2 Event
-            reinterpret_cast<interruptVector_t>(InterruptHandler::I2C2_EV),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::I2C2Event),
 
             // 34: I2C2 Error
-            reinterpret_cast<interruptVector_t>(InterruptHandler::I2C2_ER),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::I2C2Error),
 
-            // 35: SPI1
-            reinterpret_cast<interruptVector_t>(InterruptHandler::SPI1),
+            // 35: SPI1Global
+            reinterpret_cast<interruptVector_t>(InterruptHandler::SPI1Global),
 
-            // 36: SPI2
-            reinterpret_cast<interruptVector_t>(InterruptHandler::SPI2),
+            // 36: SPI2Global
+            reinterpret_cast<interruptVector_t>(InterruptHandler::SPI2Global),
 
-            // 37: USART1
-            reinterpret_cast<interruptVector_t>(InterruptHandler::USART1),
+            // 37: USART1Global
+            reinterpret_cast<interruptVector_t>(InterruptHandler::USART1Global),
 
-            // 38: USART2
-            reinterpret_cast<interruptVector_t>(InterruptHandler::USART2),
+            // 38: USART2Global
+            reinterpret_cast<interruptVector_t>(InterruptHandler::USART2Global),
 
-            // 39: USART3
-            reinterpret_cast<interruptVector_t>(InterruptHandler::USART3),
+            // 39: USART3Global
+            reinterpret_cast<interruptVector_t>(InterruptHandler::USART3Global),
 
             // 40: External Line[15:10]
-            reinterpret_cast<interruptVector_t>(InterruptHandler::EXTI15_10),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::ExternalLines15_10),
 
             // 41: RTC Alarm through ExternalLine Line
-            reinterpret_cast<interruptVector_t>(InterruptHandler::RTCAlarm),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::RealTimeClockAlarm),
 
             // 42: USB Device WakeUp from suspend through ExternalLine Line
-            reinterpret_cast<interruptVector_t>(InterruptHandler::USBWakeUp),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::USBDeviceWakeUp),
 
             // 43-49: reserved
             0, 0, 0, 0, 0, 0, 0,
@@ -252,15 +251,15 @@ namespace hal
       }
     } // namespace InterruptHandler
 
-    // ------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
-  } // namespace stm32f10xmd
+  }// namespace stm32f10xmd
 } // namespace hal
 
 // ----------------------------------------------------------------------------
 
-// #pragma weak InterruptHandler::ADC1_2 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler6ADC1_2Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::ADC1_2Global = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12ADC1_2GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::USB_HP_CAN1_TX = InterruptHandler::Default
 #pragma weak _ZN3hal11stm32f10xmd16InterruptHandler14USB_HP_CAN1_TXEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
@@ -275,64 +274,64 @@ namespace hal
 #pragma weak _ZN3hal11stm32f10xmd16InterruptHandler8CAN1_SCEEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::EXTI9_5 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler7EXTI9_5Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler16ExternalLines9_5Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::TIM1_BRK = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler8TIM1_BRKEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::Timer1Break = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler11Timer1BreakEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::TIM1_UP = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler7TIM1_UPEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::Timer1Update = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer1UpdateEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::TIM1_TRG_COM = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12TIM1_TRG_COMEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::Timer1TriggerCommutation = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler24Timer1TriggerCommutationEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::TIM1_CC = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler7TIM1_CCEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::Timer1CaptureCompare = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler20Timer1CaptureCompareEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::TIM2 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler4TIM2Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::Timer2Global = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer2GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::TIM3 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler4TIM3Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::Timer3Global = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer3GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::TIM4 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler4TIM4Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::Timer4Global = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer4GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::I2C1_EV = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler7I2C1_EVEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::I2C1Event = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C1EventEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::I2C1_ER = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler7I2C1_EREv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::I2C1Error = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C1ErrorEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::I2C2_EV = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler7I2C2_EVEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::I2C2Event = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C2EventEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::I2C2_ER = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler7I2C2_EREv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::I2C2Error = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C2ErrorEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::SPI1 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler4SPI1Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::SPI1Global = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler10SPI1GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::SPI2 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler4SPI2Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::SPI2Global = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler10SPI2GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::USART1 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler6USART1Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::USART1Global = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12USART1GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::USART2 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler6USART2Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::USART2Global = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12USART2GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::USART3 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler6USART3Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::USART3Global = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12USART3GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::EXTI15_10 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9EXTI15_10Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::ExternalLines15_10 = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler18ExternalLines15_10Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::RTCAlarm = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler8RTCAlarmEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::RealTimeClockAlarm = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler18RealTimeClockAlarmEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::USBWakeUp = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9USBWakeUpEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::USBDeviceWakeUp = InterruptHandler::Default
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler15USBDeviceWakeUpEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
 
 // ----------------------------------------------------------------------------
 
