@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief Portable declarations of the architecture class.
+/// \brief Portable declarations related to the architecture.
 
 #ifndef OS_PORTABLE_CORE_ARCHITECTURE_H_
 #define OS_PORTABLE_CORE_ARCHITECTURE_H_
@@ -17,7 +17,8 @@
 
 namespace os
 {
-  // The object instantiation is in EarlyInitialisations.cpp
+  /// \brief Declaration of the external instantiation of `architecture`.
+  /// The object instantiation is in `EarlyInitialisations.cpp`.
   extern hal::arch::ArchitectureImplementation architecture;
 }
 

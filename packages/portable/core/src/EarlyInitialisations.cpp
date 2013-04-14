@@ -21,7 +21,8 @@ namespace os
 
     // ========================================================================
 
-    /// \brief Special class used to perform early initialisations.
+    /// \brief Special class used to perform early initialisations and
+    /// late clenups.
     ///
     /// \details
     /// Embedded systems require some specific hardware initialisations
@@ -52,13 +53,30 @@ namespace os
     /// this file is encountered
     /// first, we (more or less) guarantee that the initialisation
     /// code is executed before other constructors.
-
+    ///
+    /// Symmetrically, the destructor of this class should be called
+    /// after all other static destructors, to cleanup the mess and
+    /// reset the platform.
+    ///
+    /// \note Under normal circumstances, embedded applications usually
+    /// do not return from `main()`,
+    /// so the static destructors are not executed; this class
+    /// has a destructor for just in case, to try to recover gracefully
+    /// from possible errors.
     class EarlyInitialisations
     {
     public:
-      /// \brief This constructor will be executed before all others.
+      /// \name Constructors/destructor
+      /// @{
+
+      /// \brief This constructor should be executed before all others.
       EarlyInitialisations();
+
+      /// \brief This destructor should be executed after all others
       ~EarlyInitialisations();
+
+      /// @} end of name Constructors/destructor
+
     };
 
     /// \details
@@ -79,6 +97,9 @@ namespace os
 #endif
     }
 
+    /// \details
+    /// All hardware cleanups and finally the call to reset the
+    /// platform are performed here.
     EarlyInitialisations::~EarlyInitialisations()
     {
       os::platform.resetSystem();
@@ -97,7 +118,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-/// \brief Single static instance of the EarlyInitialisations class.
+/// \brief Single static instance of the `os::core::EarlyInitialisations` class.
 ///
 /// \details
 /// This must be the first static object in this file, to guarantee
@@ -200,11 +221,13 @@ namespace os
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-/// \brief Single static instance of the EarlyInitialisation class.
+/// \brief Single static instance of the `os::core::EarlyInitialisations` class.
 ///
 /// \details
 /// The must be the first static object in this file, to guarantee
-/// that the constructor is called before others.
+/// that the initialisations performed by its constructor are
+/// called before others, and the cleanups performed by its
+/// destructor are performed right at the end.
 static os::core::EarlyGreetings earlyGreetings;
 
 #pragma GCC diagnostic pop
@@ -216,9 +239,13 @@ static os::core::EarlyGreetings earlyGreetings;
 namespace os
 {
   // The order might be important, first architecture, then platform.
-  // However, most of the implementations will be static, so
-  // it will not matter.
+
+  /// \brief The portable `architecture` object. Use it even if
+  /// on most architectures the functions are static.
   hal::arch::ArchitectureImplementation architecture;
+
+  /// \brief The portable `platform` abject. Use it even if
+  /// on most platforms the functions are static.
   hal::platform::PlatformImplementation platform;
 }
 
