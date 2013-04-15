@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//packages/hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/meta/xcdl.py=utf-8
 encoding//packages/hal/architecture/synthetic/posix/diagnostics/meta/xcdl.py=utf-8
 encoding//packages/hal/architecture/synthetic/posix/infrastructure/meta/xcdl.py=utf-8
 encoding//packages/hal/architecture/synthetic/posix/meta/xcdl.py=utf-8

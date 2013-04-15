@@ -1,0 +1,28 @@
+/**
+
+\page jtag Supported JTAG probes
+\tableofcontents
+
+There are multiple JTAG probes supported for debugging <b>µOS++ SE</b> 
+applications, in 
+fact if you already have 
+a functional configuration, probably a manufacturer specific 
+one, accompanied by a custom GDB server, you can continue to use it, 
+but, if you start from scratch, it might be a good idea to use the
+[SEGGER J-Link](http://www.segger.com/jlink.html) 
+which can probably connect to any processor
+you'll ever need. 
+For non-commercial users there is also a more affordable version called 
+[J-Link EDU](http://www.segger.com/j-link-edu.html).
+
+If you have an unusual JTAG probe, you might also consider OpenOCD,
+which is probably the most configurable multi-platform JTAG solution, but be
+prepared to spend some time to tackle with the oddities of 
+its extensive configuration scripts, and to the inherent 
+changes and incompatibilities between versions.
+
+- \ref jtag_osx
+- GNU/Linux
+- Windows
+
+*/

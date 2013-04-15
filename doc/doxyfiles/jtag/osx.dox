@@ -1,0 +1,164 @@
+
+/**
+
+\page jtag_osx OS X
+\tableofcontents
+
+Most major JTAG probes can also be used on OS X, either with manufacturer
+provided software, or with various open source programs.
+
+Amongst them, probably the most stable and professional solution is 
+SEGGER J-Link.
+
+## SEGGER J-Link
+
+Although not as complete as the Windows versions, 
+similarly to the GNU/Linux solution, SEGGER provides
+a binary image with the essential components to use J-Link
+on OS X. Currently only command line applications are available, one 
+flasher utility and one GDB server.
+
+To run <b>J-Link</b> on OS X, you first have to install <b>libusb</b>, 
+preferably 
+from [MacPorts](http://www.macports.com).
+
+\verbatim
+sudo port install libusb
+\endverbatim
+
+Then, from the SEGGER J-Link [download page]
+(http://www.segger.com/jlink-software.html),
+ get the latest image for Mac OS X (currently JLink_MacOSX_V462a.dmg).
+
+Double clink on the downloaded image and copy its content
+into a folder of your choice (for example, for this version 
+I used `$HOME/Developer/JLinkV462a`).
+
+If the scripts complains something like *No such file or directory* and 
+the previous line mentions *usage: dirname path*, than you need to patch 
+the scripts and replace the line
+
+\verbatim
+cd $(dirname $0)
+\endverbatim
+
+with the following sequence:
+
+\verbatim
+pushd . > /dev/null
+SCRIPT_PATH="${BASH_SOURCE[0]}";
+ while([ -h "${SCRIPT_PATH}" ]) do
+   cd "`dirname "${SCRIPT_PATH}"`"
+   SCRIPT_PATH="$(readlink "`basename "${SCRIPT_PATH}"`")";
+ done
+cd "`dirname "${SCRIPT_PATH}"`" > /dev/null
+SCRIPT_PATH="`pwd`";
+popd  > /dev/null
+
+cd "$SCRIPT_PATH"
+\endverbatim
+
+\warning When having to specify the device, be sure you
+use the name exactly as given in 
+the list of 
+[J-Link Supported devices]
+(http://www.segger.com/jlink_supported_devices.html)), 
+with the given case, otherwise the device might not be recognised.
+
+### JLinkExe
+
+JLinkExe is an utility that can be used to program binary images to
+ARM devices. It is intended both to scriptable production environments 
+and to occasional manual flashing.
+
+To start JLinkExe in interactive mode, 
+connect the J-Link probe 
+to an USB port and,
+in Finder, double click on the `JLinkExe.command` script:
+
+\verbatim
+/Users/ilg/Developer/JLinkV462a/JLinkExe.command ; exit;
+ilg-mbp:~ ilg$ /Users/ilg/Developer/JLinkV462a/JLinkExe.command ; exit;
+SEGGER J-Link Commander V4.62a ('?' for help)
+Compiled Feb  6 2013 11:45:20
+DLL version V4.62a, compiled Feb  6 2013 11:45:16
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N: XXXXXXXXX 
+OEM: SEGGER-EDU 
+Feature(s): FlashBP, GDB 
+VTarget = 0.000V
+J-Link>q
+logout
+\endverbatim
+
+
+To program an application image, you need to start JLinkExe 
+and issue several commands, one to
+specify the device, then 
+load the binary file at the desired address, and eventually verify
+if the content was programmed correctly.
+
+\verbatim
+exec device = STM32F103RB
+loadbin /tmp/cmsis.bin,0x08000000
+verifybin /tmp/cmsis.bin,0x08000000
+\endverbatim
+
+\note Currently JLinkExe can read only binary files, so
+if your build procedure generates .elf, you must add
+an additional step to convert
+the .elf into a pure binary file.
+
+A typical JLinkExe session looks like this:
+
+\verbatim
+SEGGER J-Link Commander V4.62a ('?' for help)
+Compiled Feb  6 2013 11:45:20
+DLL version V4.62a, compiled Feb  6 2013 11:45:16
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N: XXXXXXXXX 
+OEM: SEGGER-EDU 
+Feature(s): FlashBP, GDB 
+VTarget = 3.287V
+Info: TotalIRLen = 9, IRPrint = 0x0011
+Info: Found Cortex-M3 r1p1, Little endian.
+Info: TPIU fitted.
+Info: FPUnit: 6 code (BP) slots and 2 literal slots
+Found 2 JTAG devices, Total IRLen = 9:
+ #0 Id: 0x3BA00477, IRLen: 04, IRPrint: 0x1, CoreSight JTAG-DP (ARM)
+ #1 Id: 0x16410041, IRLen: 05, IRPrint: 0x1, STM32 Boundary Scan
+Cortex-M3 identified.
+JTAG speed: 100 kHz
+J-Link>exec device = STM32F103RB
+Info: Device "STM32F103RB" selected (128 KB flash, 20 KB RAM).
+J-Link>loadbin /tmp/cmsis.bin,0x08000000
+Loading binary file... [/tmp/cmsis.bin]
+Writing bin data into target memory @ 0x08000000.
+Info: J-Link: Flash download: Flash programming performed for 1 range (1024 bytes)
+Info: J-Link: Flash download: Total time needed: 1.003s (Prepare: 0.646s, Compare: 0.012s, Erase: 0.067s, Program: 0.183s, Verify: 0.006s, Restore: 0.087s)
+J-Link>verifybin /tmp/cmsis.bin,0x08000000
+Loading binary file /tmp/cmsis.bin
+Reading 984 bytes data from target memory @ 0x08000000.
+Verify successful.
+J-Link>g
+J-Link>q
+logout
+\endverbatim
+
+For automation purposes, JLinkExe can also be started with 
+command scripts:
+
+\verbatim
+JLinkExe.command -CommanderScript CommandFile.jlink
+\endverbatim
+
+
+### JLinkGDBServer
+
+For development environment it is more covenant to start the GDB server
+and then connect to it from Eclipse or your preferred IDE.
+
+
+*/
