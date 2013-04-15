@@ -80,5 +80,16 @@ Toolchain(
             category='release',
             compilerOptimisationOptions='-Os',
         ),
+              
+        Toolchain(
+                  
+            id='toolchain.osx.aep.arm.gcc.release.o0',
+            name='OS X ARM Embedded Release -O0 GCC',
+            description='The OS X ARM Embedded GCC toolchain for release builds',
+            
+            category='release',
+            compilerOptimisationOptions='-O0',
+        ),
+
     ],
 )
