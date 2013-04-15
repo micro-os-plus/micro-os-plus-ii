@@ -46,15 +46,15 @@ namespace hal
 
       /// Window WatchDog Interrupt
       static const interruptNumber_t WindowWatchdog = 0;
-      /// ProgramableVoltageDetector through EXTI Line detection Interrupt
+      /// Programable Voltage Detector through EXTI Line detection Interrupt
       static const interruptNumber_t ProgramableVoltageDetector = 1;
       /// Tamper Interrupt
       static const interruptNumber_t TamperDetection = 2;
-      /// RealTimeClock global Interrupt
+      /// Real Time Clock global Interrupt
       static const interruptNumber_t RealTimeClock = 3;
       /// Flash global Interrupt
       static const interruptNumber_t Flash = 4;
-      /// ResetClockControl global Interrupt
+      /// Reset Clock Control global Interrupt
       static const interruptNumber_t ResetClockControl = 5;
       /// EXTI Line0 Interrupt
       static const interruptNumber_t ExternalLine0 = 6;
