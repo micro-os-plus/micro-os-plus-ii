@@ -90,6 +90,7 @@ namespace hal
     typedef hal::cortexm::interruptVector_t interruptVector_t;
 
     /// \ingroup arm_cm3_irq
+    /// \showinitializer
     /// \brief ARM Cortex-M3/M4 core interrupt vector array.
     ///
     /// \details

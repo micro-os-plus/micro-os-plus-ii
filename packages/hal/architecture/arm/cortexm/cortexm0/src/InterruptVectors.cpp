@@ -74,6 +74,7 @@ namespace hal
     typedef hal::cortexm::interruptVector_t interruptVector_t;
 
     /// \ingroup arm_cm0_irq
+    /// \showinitializer
     /// \brief ARM Cortex-M0/M0+ core interrupt vector array.
     ///
     /// \details
