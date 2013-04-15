@@ -20,8 +20,8 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f10x_gpio.h"
-#include "stm32f10x_rcc.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/include/stm32f10x_gpio.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/include/stm32f10x_rcc.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Driver
   * @{
