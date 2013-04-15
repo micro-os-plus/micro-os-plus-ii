@@ -6,8 +6,8 @@
 
 # configuration specific for Olimex board STM32-H103
 Configuration(
-    id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32h103',
-    name='Test CMSIS on STM32-H103 configuration',
+    id='config.os.hal.architecture.arm.cortexm.tests.swo.stm32h103',
+    name='Test SWO on STM32-H103 configuration',
     description='Common definitions for Debug/Release build configurations running on STM32-H103',
     
     loadPackages=[
@@ -21,26 +21,26 @@ Configuration(
         'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f10x.lib.stm.gpio")',              
     ],
               
-    buildFolder='stm32h103/cmsis',
+    buildFolder='stm32h103/swo',
     
     buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
     
     copyFiles=[
-        ('stm32h103_cmsis_makefile_defs.mk','makefile_defs.mk'),
-        ('stm32h103_cmsis_makefile_targets.mk','makefile_targets.mk'),
+        ('stm32h103_swo_makefile_defs.mk','makefile_defs.mk'),
+        ('stm32h103_swo_makefile_targets.mk','makefile_targets.mk'),
     ],
     
-    artefactName='cmsis',
+    artefactName='swo',
     
     children=[
                
         # ARM Embedded Processors   
         Configuration(
-            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32h103.aep.gcc.debug',
-            name='Debug STM32-H103 CMSIS configuration with ARM Embedded GCC',
-            description='Debug build configuration for CMSIS.',
+            id='config.os.hal.architecture.arm.cortexm.tests.swo.stm32h103.aep.gcc.debug',
+            name='Debug STM32-H103 SWO configuration with ARM Embedded GCC',
+            description='Debug build configuration for SWO.',
             
-            buildConfigurationName='stm32h103_cmsis_aep_gcc_Debug',
+            buildConfigurationName='stm32h103_swo_aep_gcc_Debug',
             
             buildFolder='$(PARENT)/aep/gcc/Debug',
             
@@ -52,11 +52,11 @@ Configuration(
         ),
 
         Configuration(
-            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32h103.aep.gcc.release',
-            name='Release STM32-H103 CMSIS configuration with ARM Embedded GCC',
-            description='Release build configuration for CMSIS.',
+            id='config.os.hal.architecture.arm.cortexm.tests.swo.stm32h103.aep.gcc.release',
+            name='Release STM32-H103 SWO configuration with ARM Embedded GCC',
+            description='Release build configuration for SWO.',
             
-            buildConfigurationName='stm32h103_cmsis_aep_gcc_Release',
+            buildConfigurationName='stm32h103_swo_aep_gcc_Release',
             
             buildFolder='$(PARENT)/aep/gcc/Release',
 

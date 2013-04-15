@@ -10,8 +10,14 @@
 
 #if defined(OS_INCLUDE_HAL_MCU_DEVICE_STM32F103RB)
 #include "hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/include/stm32f10x.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/include/stm32f10x_gpio.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/include/stm32f10x_rcc.h"
 #endif
 #include "hal/architecture/arm/cortexm/stm32f/stm32f10x/include/InterruptNumbersSelector.h"
+
+void
+Delay(__IO uint32_t nCount);
+
 
 int
 main()
@@ -21,6 +27,50 @@ main()
   os::diag::trace.putNewLine();
 #endif
 
+
+  /* At this stage the microcontroller clock setting is already configured,
+   this is done through SystemInit() function which is called from startup
+   file (startup_stm32f10x_xx.s) before to branch to application main.
+   To reconfigure the default setting of SystemInit() function, refer to
+   system_stm32f10x.c file
+   */
+
+  /* GPIOC Periph clock enable */
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /* Configure PC12 in output pushpull mode */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+
+#define DELAY_DURATION  5000000
+
+  while (1)
+    {
+      /* Set PC12 */
+      GPIOC ->BSRR = GPIO_Pin_12;
+
+      Delay(DELAY_DURATION);
+      /* Reset PC12 */GPIOC ->BRR = GPIO_Pin_12;
+
+      Delay(DELAY_DURATION);
+    }
+
   return 0;
+}
+
+/**
+ * @brief  Inserts a delay time.
+ * @param  nCount: specifies the delay time length.
+ * @retval None
+ */
+void
+Delay(__IO uint32_t nCount)
+{
+  for (; nCount != 0; nCount--)
+    ;
 }
 

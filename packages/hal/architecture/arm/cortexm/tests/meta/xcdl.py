@@ -33,6 +33,28 @@ Package(
             ],
 
         ),
+
+        Component(
+            id='component.os.hal.architecture.arm.cortexm.tests.swo',
+            name='Test ARM Cortex-M SWO configuration',
+            description='Test build a SWO application.',
+    
+            category='test',
+    
+            isEnabled=False,
+            sourceFiles=[
+                'swo.cpp',
+            ],
+                  
+            includeFiles=[
+                'swo-config.py',
+            ],
+                  
+            implements=[
+                'interface.os.artefact',
+            ],
+
+        ),
               
     ],
 )
