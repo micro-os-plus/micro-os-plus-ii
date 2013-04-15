@@ -62,7 +62,7 @@
   * @{
   */
 
-#include "../include/stm32f10x.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/include/stm32f10x.h"
 
 /**
   * @}
