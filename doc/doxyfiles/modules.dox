@@ -116,7 +116,7 @@ The ST Micro STM32F10X family of microcontrollers consists of the following subf
 - Connectivity line devices are STM32F105xx and STM32F107xx microcontrollers
    (\ref stm32f10xcl "STM32F10X_CL").
 
-		\defgroup stm32f10x_irq STM32F10X Interrupts
+		\defgroup stm32f10x_irq STM32 F1 Interrupts
 		\ingroup stm32f10x
 		\brief ST Micro STM32F10X Interrupt numbers and handlers.
 
@@ -132,7 +132,7 @@ The ST Micro STM32F10X family of microcontrollers consists of the following subf
 		\ingroup stm32f10x
 		\brief ST Micro STM32F10X Medium Density family of microcontrollers
 
-			\defgroup stm32f10xmd_irq STM32F10X_MD Interrupts
+			\defgroup stm32f10xmd_irq Interrupts
 			\ingroup stm32f10xmd
 			\brief ST Micro STM32F10X Medium Density family of microcontrollers.
 
