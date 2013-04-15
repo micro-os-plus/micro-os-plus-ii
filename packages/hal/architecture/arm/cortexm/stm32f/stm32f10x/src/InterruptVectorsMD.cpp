@@ -141,6 +141,7 @@ namespace hal
     // ------------------------------------------------------------------------
 
     /// \ingroup stm32f10xmd_irq
+    /// \showinitializer
     /// \brief STM32F10X_MD specific interrupt vectors.
     __attribute__ ((section(".device_isr_vectors")))
     interruptVector_t interruptVectors[] =
