@@ -60,7 +60,20 @@ Configuration(
             
             buildFolder='$(PARENT)/aep/gcc/Release',
 
+            toolchain='toolchain.osx.aep.arm.gcc.release',
+        ),
+
+        Configuration(
+            id='config.os.hal.architecture.arm.cortexm.tests.swo.stm32h103.aep.gcc.release0',
+            name='Release -O0 STM32-H103 SWO configuration with ARM Embedded GCC',
+            description='Release build configuration for SWO.',
+            
+            buildConfigurationName='stm32h103_swo_aep_gcc_Release0',
+            
+            buildFolder='$(PARENT)/aep/gcc/Release0',
+
             toolchain='toolchain.osx.aep.arm.gcc.release.o0',
         ),
+
     ],
 )
