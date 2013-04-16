@@ -4,10 +4,10 @@
 //
 
 /// \file
-/// \brief C Startup template.
+/// \brief C++ Startup template.
 
-#ifndef OS_PORTABLE_INFRASTRUCTURE_CSTARTUP_H_
-#define OS_PORTABLE_INFRASTRUCTURE_CSTARTUP_H_
+#ifndef OS_PORTABLE_INFRASTRUCTURE_CPPSTARTUP_H_
+#define OS_PORTABLE_INFRASTRUCTURE_CPPSTARTUP_H_
 
 //#include "portable/core/include/ConfigDefines.h"
 
@@ -17,7 +17,7 @@ namespace os
   {
     template<class LinkerScript_T,
         typename linkerAlign_T = typename LinkerScript_T::linkerAlign_t>
-      class TCStartup
+      class TCppStartup
       {
       public:
 
@@ -32,7 +32,11 @@ namespace os
         clearBss(linkerAlign_t* bssBegin, linkerAlign_t* bssEnd);
 
         static void
-        callStaticFunctions(linkerAlign_t* arrayBegin,
+        callStaticFunctionsAscending(linkerAlign_t* arrayBegin,
+            linkerAlign_t* arrayEnd);
+
+        static void
+        callStaticFunctionsDescending(linkerAlign_t* arrayBegin,
             linkerAlign_t* arrayEnd);
 
         static void
@@ -49,7 +53,7 @@ namespace os
     template<class LinkerScript_T, typename linkerAlign_T>
       inline __attribute__((always_inline))
       void
-      TCStartup<LinkerScript_T, linkerAlign_T>::copyInitialisedData(
+      TCppStartup<LinkerScript_T, linkerAlign_T>::copyInitialisedData(
           linkerAlign_t* fromBegin, linkerAlign_t* toBegin,
           linkerAlign_t* toEnd)
       {
@@ -65,7 +69,7 @@ namespace os
     template<class LinkerScript_T, typename linkerAlign_T>
       inline __attribute__((always_inline))
       void
-      TCStartup<LinkerScript_T, linkerAlign_T>::clearBss(linkerAlign_t* bssBegin,
+      TCppStartup<LinkerScript_T, linkerAlign_T>::clearBss(linkerAlign_t* bssBegin,
           linkerAlign_t* bssEnd)
       {
         // Zero fill the bss segment.
@@ -78,7 +82,7 @@ namespace os
 
     template<class LinkerScript_T, typename linkerAlign_T>
       void
-      TCStartup<LinkerScript_T, linkerAlign_T>::callStaticFunctions(
+      TCppStartup<LinkerScript_T, linkerAlign_T>::callStaticFunctionsAscending(
           linkerAlign_t* arrayBegin, linkerAlign_t* arrayEnd)
       {
         typedef void
@@ -93,9 +97,27 @@ namespace os
       }
 
     template<class LinkerScript_T, typename linkerAlign_T>
+      void
+      TCppStartup<LinkerScript_T, linkerAlign_T>::callStaticFunctionsDescending(
+          linkerAlign_t* arrayBegin, linkerAlign_t* arrayEnd)
+      {
+        typedef void
+        (*pFunc_t)(void);
+
+        int count = arrayEnd - arrayBegin;
+        pFunc_t* p = (pFunc_t*) arrayEnd;
+        for (; count > 0; count--)
+          {
+            --p; // pre-decrement, we started with the address AFTER
+            // call the function through the pointer
+            (*(*p))();
+          }
+      }
+
+    template<class LinkerScript_T, typename linkerAlign_T>
       inline __attribute__((always_inline))
       void
-      TCStartup<LinkerScript_T, linkerAlign_T>::initialiseDataAndBss(
+      TCppStartup<LinkerScript_T, linkerAlign_T>::initialiseDataAndBss(
           void)
       {
         copyInitialisedData(LinkerScript::getFlashDataBegin(),
@@ -107,22 +129,22 @@ namespace os
     template<class LinkerScript_T, typename linkerAlign_T>
       inline __attribute__((always_inline))
       void
-      TCStartup<LinkerScript_T, linkerAlign_T>::callStaticConstructors(void)
+      TCppStartup<LinkerScript_T, linkerAlign_T>::callStaticConstructors(void)
       {
-        callStaticFunctions(LinkerScript::getInitArrayBegin(),
+        callStaticFunctionsAscending(LinkerScript::getInitArrayBegin(),
             LinkerScript::getInitArrayEnd());
       }
 
     template<class LinkerScript_T, typename linkerAlign_T>
       inline __attribute__((always_inline))
       void
-      TCStartup<LinkerScript_T, linkerAlign_T>::callStaticDestructors(void)
+      TCppStartup<LinkerScript_T, linkerAlign_T>::callStaticDestructors(void)
       {
-        callStaticFunctions(LinkerScript::getFiniArrayBegin(),
+        callStaticFunctionsDescending(LinkerScript::getFiniArrayBegin(),
             LinkerScript::getFiniArrayEnd());
       }
 
   }
 }
 
-#endif // OS_PORTABLE_INFRASTRUCTURE_CSTARTUP_H_
+#endif // OS_PORTABLE_INFRASTRUCTURE_CPPSTARTUP_H_

@@ -16,7 +16,7 @@
 
 #include "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
 
-#include "portable/infrastructure/include/CStartup.h"
+#include "portable/infrastructure/include/CppStartup.h"
 
 #include "hal/architecture/arm/cortexm/ldscripts/LinkerScript.h"
 
@@ -42,7 +42,7 @@ namespace hal
 }
 
 typedef hal::cortexm::LinkerScript LinkerScript;
-template class os::infra::TCStartup<LinkerScript>;
+template class os::infra::TCppStartup<LinkerScript>;
 
 extern int
 main(void);
@@ -53,7 +53,7 @@ namespace hal
   {
 // ------------------------------------------------------------------------
 
-    typedef os::infra::TCStartup<LinkerScript> CStartup;
+    typedef os::infra::TCppStartup<LinkerScript> CppStartup;
 
 #if defined(DEBUG)
     typedef unsigned int constantMarker_t;
@@ -77,11 +77,11 @@ namespace hal
       void
       Reset(void)
       {
-        CStartup::initialiseDataAndBss();
+        CppStartup::initialiseDataAndBss();
 
         // The os::platform::initialiseSystem() will be called
         // by the first constructor (EarlyInitialisations())
-        CStartup::callStaticConstructors();
+        CppStartup::callStaticConstructors();
 
 #if defined(DEBUG)
         // Trace is available only after first constructors are called,
@@ -100,7 +100,7 @@ namespace hal
         // terminates gracefully, run the destructors.
         // The last destructor (~EarlyInitialisations()) should
         // call os::platform::resetSystem().
-        CStartup::callStaticDestructors();
+        CppStartup::callStaticDestructors();
 
 #if defined(DEBUG)
 
