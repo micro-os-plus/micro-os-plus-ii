@@ -49,7 +49,7 @@ main()
 
   GPIO_InitTypeDef GPIO_InitStructure;
 
-  /* Configure PC12 in output pushpull mode */
+  /* Configure PC12 in output push/pull mode */
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -71,7 +71,11 @@ main()
 
       Delay(DELAY_DURATION);
 
-      i += ITM_SendChar2((i % 64) + ' ');
+      char ch;
+      ch = i + ' ';
+      int r = ITM_SendChar2(ch);
+
+      i = (i + r) % 64;
     }
 
   return 0;
@@ -110,9 +114,9 @@ init_SWO(uint32_t SWOSpeed, uint32_t CPUSpeed)
   // and continue to run when the core is halted
   // [7:6] = 0x00 TRACE_MODE=00: TRACE pin assignment for Asynchronous Mode
   // [5] = 1 TRACE_ IOEN enabled as above
-  // [2] = 1 DBG_STANDBY:DebugStandbymode
-  // [1] = 1 DBG_STOP:DebugStopmode
-  // [0] = 1 DBG_SLEEP:DebugSleepmode
+  // [2] = 1 DBG_STANDBY DebugStandbymode
+  // [1] = 1 DBG_STO: DebugStopmode
+  // [0] = 1 DBG_SLEEP DebugSleepmode
   DBGMCU ->CR = 0x00000027;
 
   // SWO->SPPR Selected Pin Protocol Register,
@@ -155,7 +159,7 @@ init_SWO(uint32_t SWOSpeed, uint32_t CPUSpeed)
   // The bit TRCEN of the Debug Exception and Monitor Control Register
   // must be enabled before you program or use the ITM.
 
-  // A synchronization packet is a timestamp packet control. It is emitted at
+  // A synchronisation packet is a time stamp packet control. It is emitted at
   // each DWT trigger. For this, the DWT must be configured to trigger the ITM:
   // the bit CYCCNTENA (bit0) of the DWT Control Register must be set. In
   // addition, the bit2 (SYNCENA) of the ITM Trace Control Register must be set.
@@ -168,19 +172,19 @@ init_SWO(uint32_t SWOSpeed, uint32_t CPUSpeed)
   // and SWOENA bits in the Trace Control register (see Trace Control Register
   // – ITM_TCR (0xE0000E80) on page C1-31)
 
-  // ARMv7M: C1.7.1 Synchronization packets should be disabled on asynchronous
+  // ARMv7M: C1.7.1 Synchronisation packets should be disabled on asynchronous
   // TPIU ports. ???
 
   // ITM Trace Control Register
   // [22:16] ATB ID = 1
-  // [9:8] = 0, no prescaller. TSPrescale = Time Stamp Prescaler
-  // [4] SWOENA = 1 Enable SWV behavior (to clock the timestamp counter by the
+  // [9:8] = 0, no prescaler. TSPrescale = Time Stamp Prescaler
+  // [4] SWOENA = 1 Enable SWV behaviour (to clock the time stamp counter by the
   // SWV clock).
   // [3] DWTENA/TXENA = 1 Enable hardware event packet emission to the TPIU from the DWT.
   // [2] SYNCENA = 1 this bit must be to 1 to enable the DWT to generate
-  // synchronization triggers so that the TPIU can then emit the synchronization
+  // synchronisation triggers so that the TPIU can then emit the synchronisation
   // packets.
-  // [1] TSENA = 1 Timestamp Enable
+  // [1] TSENA = 1 Time stamp Enable
   // [0] ITMENA = 1 Global Enable Bit of the ITM
   ITM ->TCR = 0x0001001F;
   //*((volatile unsigned *) 0xE0000E80) = 0x0001000D;
@@ -200,7 +204,7 @@ init_SWO(uint32_t SWOSpeed, uint32_t CPUSpeed)
   // DWT_CTRL
   // Table C1-24 ARMv7-M Architecture Reference manual ARM DDI 0403C page C1-48
   // [31:28] = 4 NUMCOMP Number of comparators available.
-  // [11:10] = b00 SYNCTAP, Disabled. No synchronization packets.
+  // [11:10] = b00 SYNCTAP, Disabled. No synchronisation packets.
   // [9] = 1 CYCTAP, Tap at CYCCNT bit 10
   // [8:5] = 0xF POSTCNT 4-bit post-scalar counter
   // [4:1] = 0xF POSTPRESET Preset (reload) value for POSTCNT
@@ -304,3 +308,4 @@ ITM_SendChar2(uint8_t ch)
     }
   return r;
 }
+
