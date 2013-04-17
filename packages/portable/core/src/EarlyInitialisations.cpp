@@ -18,11 +18,10 @@ namespace os
 {
   namespace core
   {
-
     // ========================================================================
 
     /// \brief Special class used to perform early initialisations and
-    /// late clenups.
+    /// late cleanups.
     ///
     /// \details
     /// Embedded systems require some specific hardware initialisations
@@ -92,8 +91,8 @@ namespace os
       os::platform.initialiseSystem();
 
 #if defined(DEBUG)
-      // initialise the trace device
-      os::diag::Trace::initialiseEarly();
+      // power up (initialise) the trace device
+      os::diag::Trace::powerUp();
 #endif
     }
 
@@ -102,13 +101,17 @@ namespace os
     /// platform are performed here.
     EarlyInitialisations::~EarlyInitialisations()
     {
+#if defined(DEBUG)
+      // power down the trace device
+      os::diag::Trace::powerDown();
+#endif
       os::platform.resetSystem();
     }
 
     // ========================================================================
 
-  }
-}
+  } // namespace core
+} // namespace os
 
 // ----------------------------------------------------------------------------
 
@@ -204,8 +207,8 @@ namespace os
       os::diag::trace.putString("Hasta la vista, baby!");
       os::diag::trace.putNewLine();
     }
-  }
-}
+  } // namespace core
+} // namespace os
 
 #endif
 
@@ -214,8 +217,6 @@ namespace os
 #if defined(DEBUG)
 
 #pragma GCC diagnostic push
-//#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-//#pragma GCC diagnostic ignored "-Wpragmas"
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
@@ -247,6 +248,6 @@ namespace os
   /// \brief The portable `platform` abject. Use it even if
   /// on most platforms the functions are static.
   hal::platform::PlatformImplementation platform;
-}
+} // namespace os
 
 // ----------------------------------------------------------------------------
