@@ -7,7 +7,8 @@ Component(
     id='component.os.hal.platform.olimex.stm32h103',
     name='Olimex STM32-H103 board diagnostics implementation',
     description='Implementation for the diagnostics classes.',
-            
+     
+    isEnabled=False,       
     children=[
               
         Component(

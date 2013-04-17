@@ -48,19 +48,28 @@ namespace hal
 
         /// @}
 
-        /// \name Early initialisations
+        /// \name Hardware initialisations
         /// @{
 
-        /// \brief Early initialisation.
+        /// \brief Power up trace hardware.
         ///
         /// \par Parameters
         /// None.
         /// \par Returns
         /// Nothing.
         static void
-        initialiseEarly(void);
+        powerUp(void);
 
-        /// @}
+        /// \brief Power down trace hardware.
+        ///
+        /// \par Parameters
+        /// None.
+        /// \par Returns
+        /// Nothing.
+        static void
+        powerDown(void);
+
+        /// @} end of name Hardware initialisations
 
         /// \name Public member functions
         /// @{
@@ -82,7 +91,7 @@ namespace hal
         static void
         flush(void);
 
-        /// @}
+        /// @} end of Public member functions
 
       private:
         /// \brief The file descriptor of the output device.

@@ -34,10 +34,15 @@ namespace hal
       /// \details
       /// Called during early start-up, to perform
       /// initialisations required before constructor.
-      ///
-      /// Nothing to do on POSIX, the standard output is already available.
       void
-      TraceImplementation::initialiseEarly(void)
+      TraceImplementation::powerUp(void)
+      {
+      }
+
+      /// \details
+      /// Called during late cleanups.
+      void
+      TraceImplementation::powerDown(void)
       {
       }
 
