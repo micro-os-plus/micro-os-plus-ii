@@ -43,19 +43,28 @@ namespace os
 
       /// @} end of name Constructors/destructor
 
-      /// \name Early initialisations
+      /// \name Hardware initialisations
       /// @{
 
-      /// \brief Early initialisation.
+      /// \brief Power up trace implementation hardware.
       ///
       /// \par Parameters
       ///       None.
       /// \par Returns
       ///       Nothing.
       void
-      initialiseEarly(void);
+      powerUp(void);
 
-      /// @} end of name Early initialisations
+      /// \brief Power down trace implementation hardware.
+      ///
+      /// \par Parameters
+      ///       None.
+      /// \par Returns
+      ///       Nothing.
+      void
+      powerDown(void);
+
+      /// @} end of name Hardware initialisations
 
       /// \name Public member functions
       /// @{
@@ -95,7 +104,7 @@ namespace os
 
     inline
     void
-    TraceImplementationSample::initialiseEarly(void)
+    TraceImplementationSample::powerUp(void)
     {
     }
 

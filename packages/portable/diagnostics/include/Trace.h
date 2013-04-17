@@ -587,7 +587,7 @@ namespace os
   /// \brief Diagnostics Trace output class.
   ///
   /// \details
-  /// Basically a TTraceBase with early initialisations.
+  /// Basically a TTraceBase with hardware power up/down.
   ///
   /// \warning Do not manually create further instances of this class!
   /// If you need this for testing, use the base classes.
@@ -612,7 +612,11 @@ namespace os
 
       /// \brief Called only once during early initialisations.
       static void
-      initialiseEarly(void);
+      powerUp(void);
+
+      /// \brief Called only once during late cleanup.
+      static void
+      powerDown(void);
 
       /// @} end of name Static member functions
     };
@@ -620,12 +624,21 @@ namespace os
 #pragma GCC diagnostic pop
 
   /// \details
-  /// Call the implementation early initialisations.
+  /// Call the implementation power up code.
   inline
   void
-  Trace::initialiseEarly(void)
+  Trace::powerUp(void)
     {
-      Implementation::initialiseEarly();
+      Implementation::powerUp();
+    }
+
+  /// \details
+  /// Call the implementation power down code.
+  inline
+  void
+  Trace::powerDown(void)
+    {
+      Implementation::powerDown();
     }
 
   // --------------------------------------------------------------------------
