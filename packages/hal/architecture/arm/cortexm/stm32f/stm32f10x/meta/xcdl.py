@@ -5,7 +5,7 @@
 
               
 Component(
-    id='package.os.hal.architecture.arm.cortexm.stm32f10x',
+    id='component.os.hal.architecture.arm.cortexm.stm32f10x',
     name='ST Micro ARM Cortex-M3 STM32F10X family',
     description='Support for STM32F10X ARM Cortex-M processors.',
     
@@ -20,7 +20,7 @@ Component(
     children=[
               
         Component(
-            id='package.os.hal.architecture.arm.cortexm.stm32f10x.md',
+            id='component.os.hal.architecture.arm.cortexm.stm32f10x.md',
             name='ST Micro ARM Cortex-M3 STM32F10X MD family',
             description='Support for STM32F10X Medium Density ARM Cortex-M3 processors.',
             
@@ -35,7 +35,7 @@ Component(
             children=[
                       
                 Component(
-                    id='package.os.hal.architecture.arm.cortexm.stm32f103rb',
+                    id='component.os.hal.architecture.arm.cortexm.stm32f103rb',
                     name='ST Micro ARM Cortex-M3 STM32F103RB',
                     description='Support for STM32F10RB ARM Cortex-M3 processors.',
                     
