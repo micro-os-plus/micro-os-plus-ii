@@ -37,7 +37,16 @@ namespace hal
       ///
       /// Nothing to do on POSIX, the standard output is already available.
       void
-      TraceImplementation::initialiseEarly(void)
+      TraceImplementation::powerUp(void)
+      {
+      }
+
+      /// \details
+      /// Called during late cleanups.
+      ///
+      /// Nothing to do on POSIX, the standard output is already available.
+      void
+      TraceImplementation::powerDown(void)
       {
       }
 

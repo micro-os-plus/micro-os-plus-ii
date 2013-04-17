@@ -48,7 +48,7 @@ namespace hal
 
         /// @} end of name Constructors/destructor
 
-        /// \name Early initialisations
+        /// \name Hardware initialisations
         /// @{
 
         /// \brief Early initialisation.
@@ -58,9 +58,18 @@ namespace hal
         /// \par Returns
         /// Nothing.
         static void
-        initialiseEarly(void);
+        powerUp(void);
 
-        /// @} end of name Early initialisations
+        /// \brief Late cleanup.
+        ///
+        /// \par Parameters
+        ///     None.
+        /// \par Returns
+        ///     Nothing.
+        static void
+        powerDown(void);
+
+        /// @} end of name Hardware initialisations
 
         /// \name Public member functions
         /// @{
