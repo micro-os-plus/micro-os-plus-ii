@@ -65,6 +65,10 @@
      * @retval None
      */
      #define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
+
+   void
+   assert_failed(unsigned char*func, int lineno);
+
 #else
 #define assert_param(expr) ((void)0)
 #endif
