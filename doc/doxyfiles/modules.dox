@@ -116,7 +116,11 @@ The ST Micro STM32F10X family of microcontrollers consists of the following subf
 - Connectivity line devices are STM32F105xx and STM32F107xx microcontrollers
    (\ref stm32f10xcl "STM32F10X_CL").
 
-		\defgroup stm32f10x_irq STM32 F1 Interrupts
+		\defgroup stm32f10x_irq Interrupts
+		\ingroup stm32f10x
+		\brief ST Micro STM32F10X Interrupt numbers and handlers.
+
+		\defgroup stm32f10x_diag Diagnostics
 		\ingroup stm32f10x
 		\brief ST Micro STM32F10X Interrupt numbers and handlers.
 
@@ -213,6 +217,10 @@ developers and reducing the time to market for new devices.
 \defgroup posix POSIX synthetic
 \brief Generic POSIX synthetic architecture support.
 
+	\defgroup posix_diag Diagnostics
+	\brief POSIX diagnostics.
+	\ingroup posix
+		
 	\defgroup osx Apple OS X
 	\brief Apple OS X synthetic platform support.
 	\ingroup posix
