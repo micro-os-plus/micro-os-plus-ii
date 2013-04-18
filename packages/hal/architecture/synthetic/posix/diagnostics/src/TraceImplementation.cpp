@@ -23,14 +23,6 @@ namespace hal
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
 
-      TraceImplementation::TraceImplementation()
-      {
-      }
-
-      TraceImplementation::~TraceImplementation()
-      {
-      }
-
       /// \details
       /// Called during early start-up, to perform
       /// initialisations required before constructor.

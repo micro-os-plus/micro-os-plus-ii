@@ -25,7 +25,7 @@ namespace hal
       // ======================================================================
 
       /// \headerfile TraceImplementation.h "hal/architecture/synthetic/posix/include/TraceImplementation.h"
-      /// \ingroup diag
+      /// \ingroup posix_diag
       /// \nosubgrouping
       ///
       /// \brief The POSIX version of the TraceImplementation.
@@ -40,11 +40,11 @@ namespace hal
         /// \name Constructors/destructor
         /// @{
 
-        /// \brief Simple constructor.
-        TraceImplementation();
+        /// \brief Default constructor.
+        TraceImplementation() = default;
 
-        /// \brief Simple destructor.
-        ~TraceImplementation();
+        /// \brief Default destructor.
+        ~TraceImplementation() = default;
 
         /// @} end of name Constructors/destructor
 
