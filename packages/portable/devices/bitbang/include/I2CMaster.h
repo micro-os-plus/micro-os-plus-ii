@@ -80,29 +80,76 @@ namespace os
 
       // ========================================================================
 
-      template<class WatchDog_T, int HoldDuration_T, int SetupDuration_T>
+      /// \headerfile I2CMaster.h "portable/devices/bitbang/include/I2CMaster.h"
+      /// \ingroup dev
+      /// \nosubgrouping
+      ///
+      /// \brief Timer template for I2C master.
+      ///
+      /// \tparam WatchDog_T  Watchdog implementation class.
+      /// \tparam HoldDuration_T  Duration for the hold period.
+      /// \tparam SetupDuration_T  Duration for the setup period.
+      ///
+      /// \details
+      /// The TTimer template implements a simple timer used
+      /// by the I2C master.
+     template<class WatchDog_T, int HoldDuration_T, int SetupDuration_T>
         class TTimer
         {
         public:
           typedef WatchDog_T WatchDog;
 
+          /// \name Constructors/destructor
+          /// @{
+
+          /// \brief Deleted constructor.
           TTimer() = delete;
 
+          /// @} end of name Constructors/destructor
+
+          /// \name Public member functions
+          /// @{
+
+          /// \brief Sleep a number of units.
+          ///
+          /// \param count [in] Number of units to sleep.
+          /// \par Returns
+          ///     Nothing.
           static
           void
           sleep(duration_t count);
 
+          /// \brief Sleep for the hold duration.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \par Returns
+          ///     Nothing.
           static
           void
           sleepHoldDuration(void);
 
+          /// \brief Sleep for the half hold duration.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \par Returns
+          ///     Nothing.
           static
           void
           sleepHalfHoldDuration(void);
 
+          /// \brief Sleep for the setup duration.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \par Returns
+          ///     Nothing.
           static
           void
           sleepSetupDuration(void);
+
+          /// @} end of Public member functions
 
         };
 
@@ -170,13 +217,13 @@ namespace os
           /// else instead of usual types.
           /// @{
 
-          /// \brief Data line object.
+          /// \brief I2C data line object.
           typedef SDA_T SDA;
 
-          /// \brief Clock line object.
+          /// \brief I2C clock line object.
           typedef SCL_T SCL;
 
-          /// \brief Object to perform short delays.
+          /// \brief I2C timer object to perform the short protocol delays.
           typedef Timer_T Timer;
 
           /// @} end of name Standard template types
@@ -187,7 +234,8 @@ namespace os
           /// \brief Mode bit.
           enum Mode
           {
-            Write = 0x0, Read = 0x1
+            Write = 0x0, ///< Identify the transaction as output
+            Read = 0x1 ///< Identify the transaction as input
           };
 
           /// @} end of name Local types.
@@ -195,6 +243,7 @@ namespace os
           /// \name Constructors/destructor
           /// @{
 
+          /// \brief Deleted constructor.
           TMaster() = delete;
 
           /// @} end of name Constructors/destructor
@@ -247,6 +296,11 @@ namespace os
           void
           sendAddress(address_t addr, Mode mode);
 
+          /// \brief Send one byte.
+          ///
+          /// \param [in] b     One byte.
+          /// \par Returns
+          ///    Nothing.
           static
           void
           sendByte(uint8_t b);

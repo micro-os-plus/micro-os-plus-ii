@@ -106,7 +106,7 @@ namespace os
               Timer::sleepSetupDuration();
             }
           // leave the line high
-          SDA::setHigh();
+          //SDA::setHigh();
         }
 
       /// \details
@@ -165,11 +165,12 @@ namespace os
           Timer::sleepHalfHoldDuration();
           SCL::setLow();
 
+          // as soon as SCL goes low, the slave will
+          // release SDA, which will return to high
           Timer::sleepSetupDuration();
 
-          // extra
+          // extra inter-bytes break
           Timer::sleepHoldDuration();
-
           return ret;
         }
 
@@ -182,14 +183,17 @@ namespace os
         void
         TMaster<SDA_T, SCL_T, Timer_T>::sendStop()
         {
-          // be sure SDA is low
+          // be sure SDA starts from low
           SDA::setLow();
-          Timer::sleepSetupDuration();
+          Timer::sleepHoldDuration();
 
           SCL::setHighAndSynchronise();
           Timer::sleepHoldDuration();
           SDA::setHighAndSynchronise();
           Timer::sleepSetupDuration();
+
+          // extra end of transaction break
+          Timer::sleepHoldDuration();
         }
 
       /// \details
