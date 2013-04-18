@@ -62,7 +62,7 @@ namespace hal
       static void
       resetSystem(void);
 
-#if defined(DEBUG)
+#if defined(DEBUG) || defined(__DOXYGEN__)
       /// \brief Put architecture specific greeting on the trace device.
       ///
       /// \par Parameters

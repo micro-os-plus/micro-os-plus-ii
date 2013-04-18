@@ -28,7 +28,7 @@ namespace hal
   {
     // ------------------------------------------------------------------------
 
-#if defined(DEBUG)
+#if defined(DEBUG) || defined(__DOXYGEN__)
     void
     ArchitectureImplementation::putGreeting(void)
     {
@@ -64,7 +64,6 @@ namespace hal
 
     namespace InterruptHandler
     {
-
       /// \ingroup arm_cm3_irq
       /// \details
       /// All ARM Cortex-M architectures jump to this the entry point
@@ -112,11 +111,24 @@ namespace hal
         for (;;)
           ;
       }
-    }
+    } // namespace InterruptHandler
 
   // ------------------------------------------------------------------------
-  }
-}
+  }// namespace cortexm
+} // namespace hal
+
+// ----------------------------------------------------------------------------
+
+/// \brief C alias of the C++ reset handler.
+///
+/// \details
+/// This definition is useful for allowing the debugger to stop
+/// right at the beginning of the program. Since we make extensive use
+/// of namespaces, it would be complicated to enter the long name
+/// into the GDB configuration, and it is easier to use this alias.
+extern "C" void
+_reset(void)
+    __attribute__((alias("_ZN3hal7cortexm16InterruptHandler5ResetEv")));
 
 // ----------------------------------------------------------------------------
 // Patches to make the code compile.
