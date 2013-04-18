@@ -32,19 +32,30 @@ namespace hal
       {
       public:
 
+#if defined(DEBUG) || defined(__DOXYGEN__)
+        /// \brief Put platform specific greeting on the trace device.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        putGreeting(void);
+#endif
+
         // TODO: add more platform members, like initialiseSystem()
       };
+
     } // namespace stm32h103
 
     // ------------------------------------------------------------------------
 
     typedef stm32h103::PlatformImplementation PlatformImplementation;
 
-    // ========================================================================
+  // ========================================================================
 
-  } // namespace platform
+  }// namespace platform
 } // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103)
-
 #endif // HAL_PLATFORM_OLIMEX_STM32H103_PLATFORMIMPLEMENTATION_H_
