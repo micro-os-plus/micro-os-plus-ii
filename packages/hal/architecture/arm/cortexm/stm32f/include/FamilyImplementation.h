@@ -58,6 +58,17 @@ namespace hal
       static void
       resetSystem(void);
 
+#if defined(DEBUG) || defined(__DOXYGEN__)
+      /// \brief Put family specific greeting on the trace device.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      putGreeting(void);
+#endif
+
       /// @} end of Public member functions
 
     };
