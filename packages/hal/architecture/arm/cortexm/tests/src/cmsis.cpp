@@ -47,17 +47,29 @@ main()
   GPIO_Init(GPIOC, &GPIO_InitStructure);
 
 #define DELAY_DURATION  5000000
+#define CYCLES  60
 
-  while (1)
+  for (int i=CYCLES; --i; )
     {
-      /* Set PC12 */
+      // Set PC12 high (turn of led)
       GPIOC ->BSRR = GPIO_Pin_12;
 
       Delay(DELAY_DURATION);
-      /* Reset PC12 */GPIOC ->BRR = GPIO_Pin_12;
+      // Reset PC12 low (turn on led)
+      GPIOC ->BRR = GPIO_Pin_12;
 
       Delay(DELAY_DURATION);
+
+#if defined(DEBUG)
+  os::diag::trace.putChar('*');
+#endif
+
     }
+
+#if defined(DEBUG)
+  os::diag::trace.putString(" done");
+  os::diag::trace.putNewLine();
+#endif
 
   return 0;
 }
