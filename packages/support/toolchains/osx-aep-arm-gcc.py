@@ -67,7 +67,9 @@ Toolchain(
             
             category='debug',
             
-            compilerDebugOptions='-g3',
+            # -g3 crashes gdb
+            #compilerDebugOptions='-g3',
+            compilerDebugOptions='-g',
             compilerOptimisationOptions='-O0',
         ),
 
