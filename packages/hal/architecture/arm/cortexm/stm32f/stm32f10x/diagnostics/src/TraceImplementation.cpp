@@ -30,49 +30,116 @@ namespace hal
       typedef os::bitbang::i2c::duration_t duration_t;
       typedef os::bitbang::i2c::address_t address_t;
 
-      static const duration_t HOLD_DURATION_LOOPS = 1000;
+      static const duration_t HOLD_DURATION_LOOPS = 4;
       static const duration_t SETUP_DURATION_LOOPS = HOLD_DURATION_LOOPS / 2;
       static const address_t I2C_DESTINATION_ADDRESS = 0x28;
 
       // ======================================================================
 
+      /// \ingroup stm32f10x_diag
+      /// \nosubgrouping
+      ///
+      /// \brief Open drain pin template class.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         class TPinOpenDrain
         {
         public:
           typedef WatchDog_T WatchDog;
-          static constexpr int GPIO_Pin = PinNo_T;
+          static constexpr int GPIO_PinNo = PinNo_T;
+          static constexpr int GPIO_PinMask = (1 << GPIO_PinNo);
           static constexpr GPIO_TypeDef* GPIOx = (GPIO_TypeDef*) Port_T;
 
+          /// \name Constructors/destructor
+          /// @{
+
+          /// \brief Deleted constructor.
           TPinOpenDrain() = delete;
 
-          // should leave the pin High
+          /// @} end of name Constructors/destructor
+
+          /// \name Public member functions
+          /// @{
+
+          /// \brief Power up the pin.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \par Returns
+          ///     Nothing.
           static void
           powerUp(void);
 
+          /// \brief Power the the pin.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \par Returns
+          ///     Nothing.
           static void
           powerDown(void);
 
+          /// \brief Set pin level to high.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \par Returns
+          ///     Nothing.
           static void
           setHigh(void);
 
+          /// \brief Set pin level to low.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \par Returns
+          ///     Nothing.
           static void
           setLow(void);
 
+          /// \brief Check if the pin state is low.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \retval True        Pin is low.
+          /// \retval False       Pin is high.
           static bool
           isLow(void);
 
+          /// \brief Check if the pin state is high.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \retval True        Pin is high.
+          /// \retval False       Pin is low.
           static bool
           isHigh(void);
 
+          /// \brief Wait for the pin to get high.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \par Returns
+          ///     Nothing.
           static void
           waitToGetHigh(void);
 
+          /// \brief Release the pin and loop until it gets high.
+          ///
+          /// \par Parameters
+          ///     None.
+          /// \par Returns
+          ///     Nothing.
           static void
           setHighAndSynchronise(void);
 
         };
 
+      // ======================================================================
+
+      /// \details
+      /// Initialise the pin to open drain mode, max speed
+      /// and leave it in high state.
+      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::powerUp(void)
@@ -80,13 +147,18 @@ namespace hal
           GPIO_InitTypeDef GPIO_InitStructure;
 
           /* Configure PC12 in output push/pull mode */
-          GPIO_InitStructure.GPIO_Pin = GPIO_Pin;
+          GPIO_InitStructure.GPIO_Pin = GPIO_PinMask;
           GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
           GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
           GPIO_Init(GPIOx, &GPIO_InitStructure);
 
+          // start pin as high
+          GPIOx->BSRR = GPIO_PinMask;
         }
 
+      /// \details
+      /// Return the pin to high impedance mode.
+      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::powerDown(void)
@@ -94,38 +166,60 @@ namespace hal
           GPIO_DeInit(GPIOx);
         }
 
+      /// \details
+      /// Set the pin to high state. In fact release the pin
+      /// and the bus pull up resistors will make it high.
+      /// \note In case someone else (slave or master) keeps
+      /// the bus low, the effect will be delayed accordingly.
+      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         inline __attribute__((always_inline))
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::setHigh(void)
         {
-          GPIOx->BSRR = GPIO_Pin;
+          GPIOx->BSRR = GPIO_PinMask;
         }
 
+      /// \details
+      /// Set the pin to low state. The effect will be immediate.
+      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         inline __attribute__((always_inline))
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::setLow(void)
         {
-          GPIOx->BRR = GPIO_Pin;
+          GPIOx->BRR = GPIO_PinMask;
         }
 
+      /// \details
+      /// Read the pin state and return true if low.
+      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         inline __attribute__((always_inline))
         bool
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isLow(void)
         {
-          return ((GPIOx->IDR & GPIO_Pin) == 0);
+          return ((GPIOx->IDR & GPIO_PinMask) == 0);
         }
 
+      /// \details
+      /// Read the pin state and return true if high.
+      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         inline __attribute__((always_inline))
         bool
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isHigh(void)
         {
-          return ((GPIOx->IDR & GPIO_Pin) != 0);
+          return ((GPIOx->IDR & GPIO_PinMask) != 0);
         }
 
+      /// \details
+      /// For synchronisation purposes, the slave may keep the
+      /// lines low until ready to continue. The master shall
+      /// wait for this condition.
+      /// To avoid the watch dog to trigger, reset it.
+      /// \warning If used for devices that compile on release
+      /// the implementation should not loop forever.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         inline __attribute__((always_inline))
         void
@@ -137,6 +231,10 @@ namespace hal
             }
         }
 
+      /// \details
+      /// Release the pin state and loop until the pin gets
+      /// high, eventually resetting
+      /// the watch dog.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         inline __attribute__((always_inline))
         void
@@ -146,7 +244,11 @@ namespace hal
           waitToGetHigh();
         }
 
-      class Watchdog
+      // ======================================================================
+
+      /// \ingroup stm32f10x_diag
+      /// \brief Watch dog policy class.
+      class WatchDog
       {
       public:
         static
@@ -154,23 +256,37 @@ namespace hal
         reset(void);
       };
 
+      /// \brief Reset the watch dog device.
       inline  __attribute__((always_inline))
       void
-      Watchdog::reset(void)
+      WatchDog::reset(void)
       {
         IWDG->KR = ((uint16_t)0xAAAA);
       }
 
-      template class TPinOpenDrain<Watchdog, (unsigned int) GPIOC, 7> ;
-      typedef class TPinOpenDrain<Watchdog, (unsigned int) GPIOC, 7> SDA;
+      // ======================================================================
 
-      template class TPinOpenDrain<Watchdog, (unsigned int) GPIOC, 6> ;
-      typedef class TPinOpenDrain<Watchdog, (unsigned int) GPIOC, 6> SCL;
+      /// \ingroup stm32f10x_diag
+      /// @{
+
+      /// \brief SDA template explicit instantiation.
+      template class TPinOpenDrain<WatchDog, (unsigned int) GPIOC, 7> ;
+      /// \brief SDA class type definition.
+      typedef class TPinOpenDrain<WatchDog, (unsigned int) GPIOC, 7> SDA;
+
+      /// \brief SCL template explicit instantiation.
+      template class TPinOpenDrain<WatchDog, (unsigned int) GPIOC, 6> ;
+      /// \brief SCL class type definition.
+      typedef class TPinOpenDrain<WatchDog, (unsigned int) GPIOC, 6> SCL;
+
+      /// @}
+
+      // ----------------------------------------------------------------------
     } // namespace diag
   } // namespace stm32f10x
 } // namespace hal
 
-template class os::bitbang::i2c::TTimer<hal::stm32f10x::diag::Watchdog,
+template class os::bitbang::i2c::TTimer<hal::stm32f10x::diag::WatchDog,
     hal::stm32f10x::diag::HOLD_DURATION_LOOPS,
     hal::stm32f10x::diag::SETUP_DURATION_LOOPS>;
 
@@ -180,7 +296,7 @@ namespace hal
   {
     namespace diag
     {
-      typedef os::bitbang::i2c::TTimer<Watchdog, HOLD_DURATION_LOOPS,
+      typedef os::bitbang::i2c::TTimer<WatchDog, HOLD_DURATION_LOOPS,
           SETUP_DURATION_LOOPS> Timer;
     } // namespace diag
   } // namespace stm32f10x
@@ -203,14 +319,6 @@ namespace hal
       // ======================================================================
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
-
-      TraceImplementation::TraceImplementation()
-      {
-      }
-
-      TraceImplementation::~TraceImplementation()
-      {
-      }
 
       /// \details
       /// Called during early start-up, to perform
@@ -280,9 +388,9 @@ namespace hal
         return count;
       }
 
-      /// details
+      /// \details
       /// If the device is connected, the SDA line is pulled up
-      /// and we can detect his condition. Otherwise a high
+      /// and we can detect this condition. Otherwise a high
       /// pull down resistor keeps the line low.
       bool
       TraceImplementation::isDevicePresent(void)
@@ -305,7 +413,7 @@ void
 assert_failed(unsigned char*func __attribute__((unused)),
     int lineno __attribute__((unused)))
 {
-  // TODO: print string and number
+  // TODO print string and number
 }
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F10X_DIAGNOSTICS_TRACEIMPLEMENTATION)
