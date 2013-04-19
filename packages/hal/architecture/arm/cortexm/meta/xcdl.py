@@ -14,16 +14,25 @@ Package(
         'ArchitectureImplementation.cpp',
     ],
     
-    copyFiles=[
-        ('../ldscripts/sections.ld', 'ldscripts/'),
-    ],
 
     headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M',
     
     children=[
-              
+
         Component(
-            id='package.os.hal.architecture.arm.cortexm0p',
+            id='component.os.hal.architecture.arm.cortexm.ldscript',
+            name='ARM Cortex-M generic linker script',
+            description='The linker script sections.',
+
+            isEnabled=True,
+            copyFiles=[
+                ('../ldscripts/sections.ld', 'ldscripts/'),
+            ],            
+        ),
+            
+        # TODO: move this to a separate folder  
+        Component(
+            id='component.os.hal.architecture.arm.cortexm0p',
             name='ARM Cortex-M0+ Architecture',
             description='Support for ARM Cortex-M0+ processors.',
 
@@ -40,26 +49,6 @@ Package(
             headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0P',
             
         ),
-
-        Component(
-            id='package.os.hal.architecture.arm.cortexm4',
-            name='ARM Cortex-M4 Architecture',
-            description='Support for ARM Cortex-M4 processors.',
-
-            isEnabled=False,
-            implements=[
-                # mark this is an architecture
-                'interface.os.architecture',
-            ],
-
-            sourceFiles=[
-                'CM3InterruptVectors.cpp',
-            ],
-
-            headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M4',
-            
-        ),
-
 
     ],     
 )
