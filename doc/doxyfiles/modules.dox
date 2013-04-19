@@ -45,7 +45,7 @@ The Release build configurations should not use this object.
 	\ingroup arm_cm
 	\brief ARM Cortex-M0 architecture support.
 
-		\defgroup arm_cm0_irq ARM Cortex-M0 Interrupts
+		\defgroup arm_cm0_irq Interrupts
 		\ingroup arm_cm0
 		\brief ARM Cortex-M0 architecture interrupts.
 
@@ -53,7 +53,7 @@ The Release build configurations should not use this object.
 	\ingroup arm_cm
 	\brief ARM Cortex-M0+ architecture support.
 
-		\defgroup arm_cm0p_irq ARM Cortex-M0+ Interrupts
+		\defgroup arm_cm0p_irq Interrupts
 		\ingroup arm_cm0p
 		\brief ARM Cortex-M0+ architecture interrupts.
 
@@ -61,7 +61,7 @@ The Release build configurations should not use this object.
 	\ingroup arm_cm
 	\brief ARM Cortex-M3 architecture support.
 
-		\defgroup arm_cm3_irq ARM Cortex-M3 Interrupts
+		\defgroup arm_cm3_irq Interrupts
 		\ingroup arm_cm3
 		\brief ARM Cortex-M3 architecture interrupts.
 
@@ -69,7 +69,7 @@ The Release build configurations should not use this object.
 	\ingroup arm_cm
 	\brief ARM Cortex-M4 architecture support.
 
-		\defgroup arm_cm4_irq ARM Cortex-M4 Interrupts
+		\defgroup arm_cm4_irq Interrupts
 		\ingroup arm_cm4
 		\brief ARM Cortex-M4 architecture interrupts.
 
