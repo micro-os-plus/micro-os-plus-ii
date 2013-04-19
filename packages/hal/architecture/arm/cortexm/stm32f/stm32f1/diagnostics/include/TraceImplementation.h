@@ -17,7 +17,7 @@
 
 namespace hal
 {
-  namespace stm32f10x
+  namespace stm32f1
   {
     namespace diag
     {
@@ -135,7 +135,7 @@ namespace os
   {
     /// \brief Define the generic type to refer to the POSIX implementation.
     /// for the Trace.
-    typedef hal::stm32f10x::diag::TraceImplementation TraceImplementation;
+    typedef hal::stm32f1::diag::TraceImplementation TraceImplementation;
   } // namespace diag
 } // namespace os
 

@@ -21,7 +21,7 @@
 
 namespace hal
 {
-  namespace stm32f10x
+  namespace stm32f1
   {
     namespace diag
     {
@@ -283,31 +283,31 @@ namespace hal
 
       // ----------------------------------------------------------------------
     } // namespace diag
-  } // namespace stm32f10x
+  } // namespace stm32f1
 } // namespace hal
 
-template class os::bitbang::i2c::TTimer<hal::stm32f10x::diag::WatchDog,
-    hal::stm32f10x::diag::HOLD_DURATION_LOOPS,
-    hal::stm32f10x::diag::SETUP_DURATION_LOOPS>;
+template class os::bitbang::i2c::TTimer<hal::stm32f1::diag::WatchDog,
+    hal::stm32f1::diag::HOLD_DURATION_LOOPS,
+    hal::stm32f1::diag::SETUP_DURATION_LOOPS>;
 
 namespace hal
 {
-  namespace stm32f10x
+  namespace stm32f1
   {
     namespace diag
     {
       typedef os::bitbang::i2c::TTimer<WatchDog, HOLD_DURATION_LOOPS,
           SETUP_DURATION_LOOPS> Timer;
     } // namespace diag
-  } // namespace stm32f10x
+  } // namespace stm32f1
 } // namespace hal
 
-template class os::bitbang::i2c::TMaster<hal::stm32f10x::diag::SDA,
-    hal::stm32f10x::diag::SCL, hal::stm32f10x::diag::Timer>;
+template class os::bitbang::i2c::TMaster<hal::stm32f1::diag::SDA,
+    hal::stm32f1::diag::SCL, hal::stm32f1::diag::Timer>;
 
 namespace hal
 {
-  namespace stm32f10x
+  namespace stm32f1
   {
     namespace diag
     {
@@ -378,11 +378,11 @@ namespace hal
               }
             I2CMaster::sendStop();
 
-            Timer::sleep(hal::stm32f10x::diag::HOLD_DURATION_LOOPS * 10);
+            Timer::sleep(hal::stm32f1::diag::HOLD_DURATION_LOOPS * 10);
             break;
 
             retry: //
-            Timer::sleep((hal::stm32f10x::diag::HOLD_DURATION_LOOPS + 1) * 10);
+            Timer::sleep((hal::stm32f1::diag::HOLD_DURATION_LOOPS + 1) * 10);
           }
         // EI
         return count;
@@ -403,7 +403,7 @@ namespace hal
     // ======================================================================
 
     }// namespace diag
-  } // namespace stm32f10x
+  } // namespace stm32f1
 } // namespace hal
 
 extern "C" void

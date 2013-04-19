@@ -27,7 +27,7 @@ namespace hal
     /// \nosubgrouping
     ///
     /// \brief STM32F10X_MD_VL devices interrupt numbers.
-    class InterruptNumber : public hal::stm32f10x::InterruptNumberBase
+    class InterruptNumber : public hal::stm32f1::InterruptNumberBase
     {
     public:
       /// \name Constructors/destructor

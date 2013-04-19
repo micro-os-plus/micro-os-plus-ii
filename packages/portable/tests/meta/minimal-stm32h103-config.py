@@ -19,6 +19,7 @@ Configuration(
     requirements=[
         # enable the platform    
         'enable("package.os.hal.platform.olimex.stm32h103")',                
+        'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f10x.lib.stm.gpio")',              
     ],
               
     buildFolder='stm32h103/minimal',

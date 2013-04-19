@@ -16,7 +16,7 @@
 
 namespace hal
 {
-  namespace stm32f10x
+  namespace stm32f1
   {
     // ------------------------------------------------------------------------
 
@@ -200,64 +200,64 @@ namespace hal
 
   // --------------------------------------------------------------------------
 
-  }// namespace stm32f10x
+  }// namespace stm32f1
 } // namespace hal
 
 // ----------------------------------------------------------------------------
 
 // #pragma weak InterruptHandler::WindowWatchdog = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler14WindowWatchdogEv = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler14WindowWatchdogEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::PDV = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler26ProgramableVoltageDetectorEv = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler26ProgramableVoltageDetectorEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::TamperDetection = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler15TamperDetectionEv = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler15TamperDetectionEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::RealTimeClock = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler13RealTimeClockEv = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler13RealTimeClockEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::Flash = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler5FlashEv = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler5FlashEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::ResetClockControl = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler17ResetClockControlEv = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler17ResetClockControlEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::ExternalLine0 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler13ExternalLine0Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler13ExternalLine0Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::ExternalLine1 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler13ExternalLine1Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler13ExternalLine1Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::ExternalLine2 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler13ExternalLine2Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler13ExternalLine2Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::ExternalLine3 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler13ExternalLine3Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler13ExternalLine3Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::ExternalLine4 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler13ExternalLine4Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler13ExternalLine4Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::DMA1Channel1 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler12DMA1Channel1Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel1Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::DMA1Channel2 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler12DMA1Channel2Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel2Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::DMA1Channel3 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler12DMA1Channel3Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel3Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::DMA1Channel4 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler12DMA1Channel4Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel4Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::DMA1Channel5 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler12DMA1Channel5Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel5Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::DMA1Channel6 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler12DMA1Channel6Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel6Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::DMA1Channel7 = InterruptHandler::Default
-#pragma weak _ZN3hal9stm32f10x16InterruptHandler12DMA1Channel7Ev = _ZN3hal9stm32f10x16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel7Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // ----------------------------------------------------------------------------
 

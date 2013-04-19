@@ -17,7 +17,7 @@
 
 namespace hal
 {
-  namespace stm32f10x
+  namespace stm32f1
   {
     // ========================================================================
 
@@ -87,7 +87,7 @@ namespace hal
 
   // ========================================================================
 
-  }// namespace stm32f10x
+  }// namespace stm32f1
 } // namespace os
 
 #endif // OS_INCLUDE_HAL_MCU_FAMILY_STM32F1
