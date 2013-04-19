@@ -169,7 +169,7 @@ namespace hal
       /// \details
       /// Set the pin to high state. In fact release the pin
       /// and the bus pull up resistors will make it high.
-      /// \note In case someone else (slave or master) keeps
+      /// \note In case the slave keeps
       /// the bus low, the effect will be delayed accordingly.
       /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>

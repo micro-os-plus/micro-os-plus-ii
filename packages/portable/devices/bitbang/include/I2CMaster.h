@@ -5,6 +5,20 @@
 
 /// \file
 /// \brief Template declarations for the bit banged I2C Master class.
+///
+/// \details The current implementation was intended to be used as
+/// output device for the tracing facility, i.e. to output messages
+/// over I2C to a dedicated device that transfers them on the fly
+/// over USB serial to a computer.
+///
+/// In this configuration the bus topology is minimal, one master and
+/// one slave, so no complex multi-master situations are expected.
+/// However, the minimal level of synchronisation is supported,
+/// the master is prepared to wait for the slave to complete
+/// in situations when
+/// clock stretching is used. Even more, the master will also
+/// wait for the data line to be released, although in this case
+/// the transactions wll probably be compromised anyway.
 
 #ifndef OS_PORTABLE_DEVICES_BITBANG_I2CMASTER_H_
 #define OS_PORTABLE_DEVICES_BITBANG_I2CMASTER_H_

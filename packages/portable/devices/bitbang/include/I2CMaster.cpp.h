@@ -105,16 +105,15 @@ namespace os
 
               Timer::sleepSetupDuration();
             }
-          // leave the line high
-          //SDA::setHigh();
+          // leave SDA as it was set, another set will follow shortly
         }
 
       /// \details
       /// Generate 8 clock pulses and sample the data line to
       /// assemble one byte of data.
       /// Data is received with the Most Significant Bit (MSB) first.
-      /// \warning May wait indefinitely for the other
-      /// master/slaves to release the bus.
+      /// \warning May wait indefinitely for the
+      /// slave to release the bus.
       template<class SDA_T, class SCL_T, class Timer_T>
         uint8_t
         TMaster<SDA_T, SCL_T, Timer_T>::receiveByte(void)
@@ -146,8 +145,8 @@ namespace os
       /// \details
       /// Generate one clock pulse and sample the data line to
       /// determine if the slave acknowledged the transfer.
-      /// \warning May wait indefinitely for the other
-      /// master/slaves to release the bus.
+      /// \warning May wait indefinitely for the
+      /// slave to release the bus.
       template<class SDA_T, class SCL_T, class Timer_T>
         bool
         TMaster<SDA_T, SCL_T, Timer_T>::receiveAck()
@@ -177,8 +176,8 @@ namespace os
       /// \details
       /// Send the stop condition, by setting high the
       /// data line followed by the clock line.
-      /// \warning May wait indefinitely for the other
-      /// master/slaves to release the bus.
+      /// \warning May wait indefinitely for the
+      /// slave to release the bus.
       template<class SDA_T, class SCL_T, class Timer_T>
         void
         TMaster<SDA_T, SCL_T, Timer_T>::sendStop()
@@ -198,7 +197,7 @@ namespace os
 
       /// \details
       /// Detach from the bus, by setting both line high, without
-      /// waiting for the other master/slaves to complete.
+      /// waiting for the slave to complete.
       template<class SDA_T, class SCL_T, class Timer_T>
         void
         TMaster<SDA_T, SCL_T, Timer_T>::cleanup()
