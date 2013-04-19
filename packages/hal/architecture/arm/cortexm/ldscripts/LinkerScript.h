@@ -11,7 +11,7 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#include "portable/core/include/OS.h"
+#include <stdint.h>
 
 namespace hal
 {
@@ -21,7 +21,7 @@ namespace hal
 
     typedef uint32_t interruptVector_t;
 
-    /// \headerfile LinkerScript.h "hal/architecture/arm/cortexm/ldscript/LinkerScript.h"
+    /// \headerfile LinkerScript.h "hal/architecture/arm/cortexm/ldscripts/LinkerScript.h"
     /// \ingroup arm_cm
     /// \nosubgrouping
     ///
