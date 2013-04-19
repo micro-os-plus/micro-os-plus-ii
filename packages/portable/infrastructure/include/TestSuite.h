@@ -62,7 +62,7 @@ namespace os
 
     /// \headerfile TestSuite.h "portable/infrastructure/include/TestSuite.h"
     /// \nosubgrouping
-    /// \brief Simple test suite class.
+    /// \brief Simple test suite template base.
     ///
     /// \details
     /// The TestSuite class implements a light test framework, designed for
@@ -435,6 +435,10 @@ namespace os
     typedef TTestSuiteBase<TestSuiteImplementation> TestSuiteBase;
 
     // ========================================================================
+
+    /// \headerfile TestSuite.h "portable/infrastructure/include/TestSuite.h"
+    /// \nosubgrouping
+    /// \brief Test suite class.
 
     class TestSuite : public TestSuiteBase
     {
