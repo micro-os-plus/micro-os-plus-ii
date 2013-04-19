@@ -21,7 +21,7 @@ prepared to spend some time to tackle with the oddities of
 its extensive configuration scripts, and to the inherent 
 changes and incompatibilities between versions.
 
-- \ref jtag_osx
+- \subpage jtag_osx
 - GNU/Linux
 - Windows
 
