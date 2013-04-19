@@ -27,7 +27,7 @@ Component(
             isEnabled=False,
     
             requirements=[
-                'enable("package.os.hal.architecture.arm.cortexm4")',
+                'enable("component.os.hal.architecture.arm.cortexm4")',
             ],
                   
             headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F40X',

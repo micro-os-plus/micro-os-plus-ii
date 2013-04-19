@@ -9,11 +9,11 @@
 #include "portable/core/include/OS.h"
 
 #if defined(OS_INCLUDE_HAL_MCU_DEVICE_STM32F103RB)
-#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/include/stm32f10x.h"
-#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/include/stm32f10x_gpio.h"
-#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/lib/stm/include/stm32f10x_rcc.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x_gpio.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x_rcc.h"
 #endif
-#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/include/InterruptNumbersSelector.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersSelector.h"
 
 void
 Delay(__IO uint32_t nCount);
@@ -73,6 +73,9 @@ main()
 
       char ch;
       ch = i + ' ';
+      if (i==0)
+        ch='\n';
+
       int r = ITM_SendChar2(ch);
 
       i = (i + r) % 64;

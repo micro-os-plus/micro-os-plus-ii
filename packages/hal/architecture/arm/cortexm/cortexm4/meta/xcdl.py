@@ -4,7 +4,7 @@
 # Copyright (c) 2013 Liviu Ionescu.
 
 Component(
-    id='package.os.hal.architecture.arm.cortexm4',
+    id='component.os.hal.architecture.arm.cortexm4',
     name='ARM Cortex-M4 Architecture',
     description='Support for ARM Cortex-M4 processors.',
 

@@ -11,9 +11,9 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F1) || defined(__DOXYGEN__)
 
-#include "hal/architecture/arm/cortexm/stm32f/stm32f10x/include/InterruptNumbersSelector.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersSelector.h"
 
 #endif
 

@@ -21,7 +21,7 @@ based on STM32F103.',
     requirements=[
         #'enable("package.os.hal.architecture.arm.cortexm.stm32f")',
         'enable("component.os.hal.architecture.arm.cortexm.stm32f103rb")',
-        'enable("component.os.hal.architecture.arm.cortexm.stm32f10x.diagnostics.trace")'
+        'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace")'
     ],
         
     implements=[
