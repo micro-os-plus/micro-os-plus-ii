@@ -17,43 +17,42 @@
 
 namespace hal
 {
-  namespace arch
+  namespace posix
   {
-    namespace posix
-    {
-      // ======================================================================
+    // ======================================================================
 
-      /// \headerfile ArchitectureImplementation.h "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
-      /// \ingroup posix
-      /// \nosubgrouping
-      ///
-      /// \brief Generic POSIX architecture implementation class.
-      class ArchitectureImplementation : public os::core::ArchitectureBase
-      {
-      public:
+    /// \headerfile ArchitectureImplementation.h "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
+    /// \ingroup posix
+    /// \nosubgrouping
+    ///
+    /// \brief Generic POSIX architecture implementation class.
+    class ArchitectureImplementation : public os::core::ArchitectureBase
+    {
+    public:
 
 #if defined(DEBUG)
-        /// \brief Put architecture greeting.
-        ///
-        /// \par Parameters
-        ///    None.
-        /// \par Returns
-        ///    Nothing.
-        static void
-        putGreeting(void);
+      /// \brief Put architecture greeting.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      putGreeting(void);
 #endif
-      };
-    } // namespace posix
+    };
+  } // namespace posix
 
-    // ------------------------------------------------------------------------
+  // ------------------------------------------------------------------------
 
-    typedef posix::ArchitectureImplementation ArchitectureImplementation;
+  namespace arch
+  {
+    typedef hal::posix::ArchitectureImplementation ArchitectureImplementation;
+  }
 
-    // ========================================================================
+// ========================================================================
 
-  } // namespace arch
-} // namespace hal
+}// namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
-
 #endif // HAL_ARCHITECTURE_SYNTHETIC_POSIX_ARCHITECTUREIMPLEMENTATION_H_
