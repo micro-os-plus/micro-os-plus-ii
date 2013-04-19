@@ -45,17 +45,7 @@ cd $(dirname $0)
 with the following sequence:
 
 \verbatim
-pushd . > /dev/null
-SCRIPT_PATH="${BASH_SOURCE[0]}";
- while([ -h "${SCRIPT_PATH}" ]) do
-   cd "`dirname "${SCRIPT_PATH}"`"
-   SCRIPT_PATH="$(readlink "`basename "${SCRIPT_PATH}"`")";
- done
-cd "`dirname "${SCRIPT_PATH}"`" > /dev/null
-SCRIPT_PATH="`pwd`";
-popd  > /dev/null
-
-cd "$SCRIPT_PATH"
+cd "$(dirname "$0")"
 \endverbatim
 
 \warning When having to specify the device, be sure you
