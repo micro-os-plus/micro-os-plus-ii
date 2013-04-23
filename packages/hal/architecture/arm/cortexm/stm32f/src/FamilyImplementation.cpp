@@ -12,7 +12,13 @@
 
 #include "hal/architecture/arm/cortexm/stm32f/include/FamilyImplementation.h"
 
+#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F1)
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x.h"
+#elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
+#else
+#error "Missing family cmsis"
+#endif
 
 namespace hal
 {
