@@ -225,6 +225,7 @@ namespace hal
             0, 0, 0, 0, 0, 0, 0,
 
             // 50: (@0x108) This is for boot in RAM mode
+            // TODO: document why
             0xF108F85F
         //
         };
