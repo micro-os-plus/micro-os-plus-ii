@@ -120,7 +120,7 @@
   * @{
   */
 
-#include "stm32f4xx.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
 
 /**
   * @}

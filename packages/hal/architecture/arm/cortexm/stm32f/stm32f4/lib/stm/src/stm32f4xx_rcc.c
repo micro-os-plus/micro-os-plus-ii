@@ -56,7 +56,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_rcc.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_rcc.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Driver
   * @{

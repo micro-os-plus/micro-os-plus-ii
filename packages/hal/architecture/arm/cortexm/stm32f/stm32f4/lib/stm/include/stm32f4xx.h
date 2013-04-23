@@ -53,10 +53,45 @@
 #ifndef __STM32F4xx_H
 #define __STM32F4xx_H
 
+#include "portable/core/include/ConfigDefines.h"
+
+#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
+
+#define STM32F4XX 1
+
+#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F40XX)
+
+#define STM32F40XX 1
+
+#elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F427X)
+
+#define STM32F427X 1
+
+#endif
+
+#endif
+
 #ifdef __cplusplus
  extern "C" {
 #endif /* __cplusplus */
-  
+
+#if defined(DEBUG)
+   /**
+     * @brief  The assert_param macro is used for function's parameters check.
+     * @param  expr: If expr is false, it calls assert_failed function which reports
+     *         the name of the source file and the source line number of the call
+     *         that failed. If expr is true, it returns no value.
+     * @retval None
+     */
+     #define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
+
+   void
+   assert_failed(unsigned char*func, int lineno);
+
+#else
+#define assert_param(expr) ((void)0)
+#endif
+
 /** @addtogroup Library_configuration_section
   * @{
   */
@@ -258,8 +293,8 @@ typedef enum IRQn
   * @}
   */
 
-#include "core_cm4.h"             /* Cortex-M4 processor and core peripherals */
-#include "system_stm32f4xx.h"
+#include "hal/architecture/arm/cortexm/lib/cmsis/include/core_cm4.h"             /* Cortex-M4 processor and core peripherals */
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/system_stm32f4xx.h"
 #include <stdint.h>
 
 /** @addtogroup Exported_types

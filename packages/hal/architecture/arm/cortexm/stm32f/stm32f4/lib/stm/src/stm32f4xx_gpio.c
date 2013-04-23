@@ -81,8 +81,10 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_gpio.h"
-#include "stm32f4xx_rcc.h"
+#include "portable/core/include/ConfigDefines.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_gpio.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_rcc.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Driver
   * @{
