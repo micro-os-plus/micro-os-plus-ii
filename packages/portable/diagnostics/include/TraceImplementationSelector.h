@@ -21,6 +21,10 @@
 
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/diagnostics/include/TraceImplementation.h"
 
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_DIAGNOSTICS_TRACEIMPLEMENTATION)
+
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/diagnostics/include/TraceImplementation.h"
+
 #elif defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103)
 
 #include "hal/platform/olimex/stm32h103/diagnostics/include/TraceImplementation.h"
