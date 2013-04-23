@@ -37,7 +37,7 @@ The Release build configurations should not use this object.
 \defgroup arm_cm ARM Cortex-M
 \brief ARM Cortex-M architecture support.
 
-	\defgroup arm_cm_irq ARM Cortex-M Interrupts
+	\defgroup arm_cm_irq Interrupts
 	\ingroup arm_cm
 	\brief ARM Cortex-M architecture interrupts.
 
@@ -122,7 +122,7 @@ The ST Micro STM32F10X family of microcontrollers consists of the following subf
 
 		\defgroup stm32f10x_diag Diagnostics
 		\ingroup stm32f10x
-		\brief ST Micro STM32F10X Interrupt numbers and handlers.
+		\brief ST Micro STM32F10X Diagnostics support.
 
 		\defgroup stm32f10xld STM32F10X_LD family
 		\ingroup stm32f10x
@@ -160,7 +160,34 @@ The ST Micro STM32F10X family of microcontrollers consists of the following subf
 		\ingroup stm32f10x
 		\brief ST Micro STM32F10X Connectivity Line family of microcontrollers.
 
+	\defgroup stm32f4 STM32 F4 series
+	\ingroup stm32f
+	\brief ST Micro STM32F4 families of microcontrollers.
 
+		\defgroup stm32f4_irq Interrupts
+		\ingroup stm32f4
+		\brief ST Micro STM32F4 Interrupt numbers and handlers.
+
+		\defgroup stm32f4_diag Diagnostics
+		\ingroup stm32f4
+		\brief ST Micro STM32F4 Diagnostics support.
+
+		\defgroup stm32f40xx STM32F40XX Family
+		\ingroup stm32f4
+		\brief ST Micro STM32F40XX family of microcontrollers.
+		
+			\defgroup stm32f40xx_irq Interrupts
+			\ingroup stm32f40xx
+			\brief ST Micro STM32F40XX Interrupt numbers and handlers.
+	
+		\defgroup stm32f427x STM32F427X Family
+		\ingroup stm32f4
+		\brief ST Micro STM32F427X family of microcontrollers.
+
+			\defgroup stm32f427x_irq Interrupts
+			\ingroup stm32f427x
+			\brief ST Micro STM32F427X Interrupt numbers and handlers.
+	
 
 \if cmsis
 
