@@ -24,6 +24,16 @@
 #ifndef __CORE_CMFUNC_H
 #define __CORE_CMFUNC_H
 
+#include "portable/core/include/ConfigDefines.h"
+
+//#if !defined(__CORTEX_M)
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M4)
+
+#undef __CORTEX_M
+#define __CORTEX_M  (0x04)
+
+#endif
+//#endif
 
 /* ###########################  Core Function Access  ########################### */
 /**
@@ -590,7 +600,7 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_FPSCR(void)
 
     \param [in]    fpscr  Floating Point Status/Control value to set
  */
-__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr __attribute__((unused)))
 {
 #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) );
