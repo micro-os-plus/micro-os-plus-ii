@@ -62,8 +62,8 @@ Toolchain(
         Toolchain(
                   
             id='toolchain.osx.aep.arm.gcc.debug',
-            name='OS X ARM Embedded Debug GCC',
-            description='The OS X ARM Embedded GCC toolchain for debug builds',
+            name='OS X ARM Embedded Debug GCC -O0',
+            description='The OS X ARM Embedded GCC toolchain for debug builds, with all optimisations disabled.',
             
             category='debug',
             
@@ -73,9 +73,21 @@ Toolchain(
 
         Toolchain(
                   
+            id='toolchain.osx.aep.arm.gcc.debug.o',
+            name='OS X ARM Embedded Debug GCC -O',
+            description='The OS X ARM Embedded GCC toolchain for debug builds, with default optimisations.',
+            
+            category='debug',
+            
+            compilerDebugOptions='-g3',
+            compilerOptimisationOptions='-O',
+        ),
+
+        Toolchain(
+                  
             id='toolchain.osx.aep.arm.gcc.release',
-            name='OS X ARM Embedded Release GCC',
-            description='The OS X ARM Embedded GCC toolchain for release builds',
+            name='OS X ARM Embedded Release GCC -Os',
+            description='The OS X ARM Embedded GCC toolchain for release builds, with space optimisations.',
             
             category='release',
             compilerOptimisationOptions='-Os',
@@ -84,8 +96,8 @@ Toolchain(
         Toolchain(
                   
             id='toolchain.osx.aep.arm.gcc.release.o0',
-            name='OS X ARM Embedded Release -O0 GCC',
-            description='The OS X ARM Embedded GCC toolchain for release builds',
+            name='OS X ARM Embedded Release GCC -O0',
+            description='The OS X ARM Embedded GCC toolchain for release builds, with all optimisations disabled.',
             
             category='release',
             compilerOptimisationOptions='-O0',
