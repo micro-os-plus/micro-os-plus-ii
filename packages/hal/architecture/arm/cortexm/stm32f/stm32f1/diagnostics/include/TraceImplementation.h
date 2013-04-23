@@ -122,7 +122,7 @@ namespace hal
     // ======================================================================
 
     }// namespace diag
-  } // namespace posix
+  } // namespace stm32f1
 } // namespace hal
 
 #if !defined(__DOXYGEN__)
