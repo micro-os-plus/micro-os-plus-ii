@@ -9,7 +9,7 @@ Configuration(
               
     id='config.os.hal.architecture.arm.cortexm.tests.cmsis',
     name='ARM Cortex-M CMSIS application configuration',
-    description='Build the ARM Cortex-M CMSIS application.',
+    description='Build the ARM Cortex-M CMSIS test application.',
     
     loadPackages=[
         # mandatory test code package
@@ -29,5 +29,6 @@ Configuration(
                   
     includeFiles=[
         'cmsis-stm32h103-config.py',
+        'cmsis-stm32e407-config.py',
     ],
 )

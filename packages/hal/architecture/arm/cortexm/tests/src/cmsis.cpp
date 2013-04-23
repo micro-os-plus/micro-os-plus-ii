@@ -8,10 +8,14 @@
 
 #include "portable/core/include/OS.h"
 
-#if defined(OS_INCLUDE_HAL_MCU_DEVICE_STM32F103RB)
+#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F1)
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x_gpio.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x_rcc.h"
+#elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_gpio.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_rcc.h"
 #endif
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersSelector.h"
 
@@ -27,6 +31,8 @@ main()
   os::diag::trace.putNewLine();
 #endif
 
+
+#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F1)
 
   /* At this stage the microcontroller clock setting is already configured,
    this is done through SystemInit() function which is called from startup
@@ -51,7 +57,7 @@ main()
 
   for (int i=CYCLES; --i; )
     {
-      // Set PC12 high (turn of led)
+      // Set PC12 high (turn off led)
       GPIOC ->BSRR = GPIO_Pin_12;
 
       Delay(DELAY_DURATION);
@@ -65,6 +71,41 @@ main()
 #endif
 
     }
+#elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
+
+  /* GPIOC Periph clock enable */
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /* Configure PC13 in output push/pull mode */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+
+#define DELAY_DURATION  5000000
+#define CYCLES  60
+
+  for (int i=CYCLES; --i; )
+    {
+      // Set PC12 high (turn off led)
+      GPIOC ->BSRRL = GPIO_Pin_13;
+
+      Delay(DELAY_DURATION);
+      // Reset PC12 low (turn on led)
+      GPIOC ->BSRRH = GPIO_Pin_13;
+
+      Delay(DELAY_DURATION);
+
+#if defined(DEBUG)
+  os::diag::trace.putChar('*');
+#endif
+
+    }
+
+#endif
 
 #if defined(DEBUG)
   os::diag::trace.putString(" done");

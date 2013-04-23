@@ -60,7 +60,7 @@ Configuration(
             
             buildFolder='$(PARENT)/aep/gcc/Release',
 
-            toolchain='toolchain.osx.aep.arm.gcc.release.o0',
+            toolchain='toolchain.osx.aep.arm.gcc.release',
         ),
     ],
 )
