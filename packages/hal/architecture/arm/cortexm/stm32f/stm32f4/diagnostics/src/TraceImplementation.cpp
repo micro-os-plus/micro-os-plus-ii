@@ -30,7 +30,7 @@ namespace hal
       typedef os::bitbang::i2c::duration_t duration_t;
       typedef os::bitbang::i2c::address_t address_t;
 
-      static const duration_t HOLD_DURATION_LOOPS = 4;
+      static const duration_t HOLD_DURATION_LOOPS = 8;
       static const duration_t SETUP_DURATION_LOOPS = HOLD_DURATION_LOOPS / 2;
       static const address_t I2C_DESTINATION_ADDRESS = 0x28;
 
@@ -47,7 +47,10 @@ namespace hal
           typedef WatchDog_T WatchDog;
           static constexpr int GPIO_PinNo = PinNo_T;
           static constexpr int GPIO_PinMask = (1 << GPIO_PinNo);
-          static constexpr GPIO_TypeDef* GPIOx = (GPIO_TypeDef*) Port_T;
+
+          // 0 = GPIOA, 1 = GPIOC, ...
+          static constexpr int GPIO_PortNo = ((Port_T >> 11) & 0xF);
+          static constexpr GPIO_TypeDef* GPIO_Address = (GPIO_TypeDef*) Port_T;
 
           /// \name Constructors/destructor
           /// @{
@@ -144,27 +147,39 @@ namespace hal
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::powerUp(void)
         {
+#if 1
+          RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+#else
+          RCC_APB1PeriphClockCmd(((1 << GPIO_PortNo) << 2), ENABLE);
+#endif
+
           GPIO_InitTypeDef GPIO_InitStructure;
 
           GPIO_InitStructure.GPIO_Pin = GPIO_PinMask;
           GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
           GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
           GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-          GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-          GPIO_Init(GPIOG, &GPIO_InitStructure);
+          GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
+          GPIO_Init(GPIO_Address, &GPIO_InitStructure);
 
           // start pin as high
-          GPIOx->BSRRL = GPIO_PinMask;
+          GPIO_Address->BSRRL = GPIO_PinMask;
         }
 
       /// \details
-      /// Return the pin to high impedance mode.
+      /// Return the pin to high input mode.
       /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::powerDown(void)
         {
-          GPIO_DeInit(GPIOx);
+          GPIO_InitTypeDef GPIO_InitStructure;
+
+          GPIO_InitStructure.GPIO_Pin = GPIO_PinMask;
+          GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+          GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+          GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+          GPIO_Init(GPIO_Address, &GPIO_InitStructure);
         }
 
       /// \details
@@ -178,7 +193,7 @@ namespace hal
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::setHigh(void)
         {
-          GPIOx->BSRRL = GPIO_PinMask;
+          GPIO_Address->BSRRL = GPIO_PinMask;
         }
 
       /// \details
@@ -189,7 +204,7 @@ namespace hal
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::setLow(void)
         {
-          GPIOx->BSRRH = GPIO_PinMask;
+          GPIO_Address->BSRRH = GPIO_PinMask;
         }
 
       /// \details
@@ -200,7 +215,7 @@ namespace hal
         bool
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isLow(void)
         {
-          return ((GPIOx->IDR & GPIO_PinMask) == 0);
+          return ((GPIO_Address->IDR & GPIO_PinMask) == 0);
         }
 
       /// \details
@@ -211,7 +226,7 @@ namespace hal
         bool
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isHigh(void)
         {
-          return ((GPIOx->IDR & GPIO_PinMask) != 0);
+          return ((GPIO_Address->IDR & GPIO_PinMask) != 0);
         }
 
       /// \details
@@ -258,11 +273,11 @@ namespace hal
       };
 
       /// \brief Reset the watch dog device.
-      inline  __attribute__((always_inline))
+      inline __attribute__((always_inline))
       void
       WatchDog::reset(void)
       {
-        IWDG->KR = ((uint16_t)0xAAAA);
+        IWDG ->KR = ((uint16_t) 0xAAAA);
       }
 
       // ======================================================================
@@ -271,19 +286,19 @@ namespace hal
       /// @{
 
       /// \brief SDA template explicit instantiation.
-      template class TPinOpenDrain<WatchDog, (unsigned int) GPIOC, 7> ;
+      template class TPinOpenDrain<WatchDog, (unsigned int) GPIOD, 14> ;
       /// \brief SDA class type definition.
-      typedef class TPinOpenDrain<WatchDog, (unsigned int) GPIOC, 7> SDA;
+      typedef class TPinOpenDrain<WatchDog, (unsigned int) GPIOD, 14> SDA;
 
       /// \brief SCL template explicit instantiation.
-      template class TPinOpenDrain<WatchDog, (unsigned int) GPIOC, 6> ;
+      template class TPinOpenDrain<WatchDog, (unsigned int) GPIOD, 15> ;
       /// \brief SCL class type definition.
-      typedef class TPinOpenDrain<WatchDog, (unsigned int) GPIOC, 6> SCL;
+      typedef class TPinOpenDrain<WatchDog, (unsigned int) GPIOD, 15> SCL;
 
-      /// @}
+    /// @}
 
-      // ----------------------------------------------------------------------
-    } // namespace diag
+    // ----------------------------------------------------------------------
+    }// namespace diag
   } // namespace stm32f4
 } // namespace hal
 
@@ -329,9 +344,6 @@ namespace hal
       void
       TraceImplementation::powerUp(void)
       {
-        // WARNING: must be in sync with I2C pin definitions.
-        RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
-
         I2CMaster::powerUp();
       }
 
@@ -360,7 +372,8 @@ namespace hal
           {
             I2CMaster::sendStart();
 
-            I2CMaster::sendAddress(I2C_DESTINATION_ADDRESS, I2CMaster::Mode::Write);
+            I2CMaster::sendAddress(I2C_DESTINATION_ADDRESS,
+                I2CMaster::Mode::Write);
             if (!I2CMaster::receiveAck())
               {
                 I2CMaster::cleanup();
