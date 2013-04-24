@@ -8,8 +8,14 @@
 /// \file
 /// \brief OS X definitions of the synthetic platform class.
 
-#if defined(OS_INCLUDE_PLATFORM_SYNTHETIC_OSX) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX) || defined(__DOXYGEN__)
 
-// Nothing yet
+namespace hal
+{
+  namespace osx
+  {
+  // Nothing yet
+  }// namespace osx
+} // namespace hal
 
-#endif // defined(OS_INCLUDE_PLATFORM_SYNTHETIC_OSX)
+#endif // defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX)

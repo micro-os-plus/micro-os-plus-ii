@@ -17,8 +17,6 @@
 
 namespace hal
 {
-  namespace platform
-  {
     namespace linux
     {
       // ======================================================================
@@ -34,13 +32,15 @@ namespace hal
 
         // TODO: add more platform members
       };
+      // ========================================================================
+
     } // namespace linux
 
+    namespace platform
+    {
     // ------------------------------------------------------------------------
 
     typedef linux::PlatformImplementation PlatformImplementation;
-
-    // ========================================================================
 
   } // namespace platform
 } // namespace hal

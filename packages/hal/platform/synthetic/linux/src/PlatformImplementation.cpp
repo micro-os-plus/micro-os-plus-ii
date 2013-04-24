@@ -10,6 +10,12 @@
 
 #if defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_LINUX) || defined(__DOXYGEN__)
 
-// Nothing yet
+namespace hal
+{
+    namespace linux
+    {
+      // Nothing yet
+    } // namespace linux
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_LINUX)
