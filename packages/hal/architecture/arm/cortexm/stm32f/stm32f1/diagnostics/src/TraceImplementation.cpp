@@ -47,7 +47,10 @@ namespace hal
           typedef WatchDog_T WatchDog;
           static constexpr int GPIO_PinNo = PinNo_T;
           static constexpr int GPIO_PinMask = (1 << GPIO_PinNo);
-          static constexpr GPIO_TypeDef* GPIOx = (GPIO_TypeDef*) Port_T;
+
+          // 0 = GPIOA, 1 = GPIOC, ...
+          static constexpr int GPIO_PortNo = ((Port_T >> 11) & 0xF);
+          static constexpr GPIO_TypeDef* GPIO_Address = (GPIO_TypeDef*) Port_T;
 
           /// \name Constructors/destructor
           /// @{
@@ -144,26 +147,36 @@ namespace hal
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::powerUp(void)
         {
+          /* GPIOC Periph clock enable */
+          //RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+          RCC_APB2PeriphClockCmd(((1 << GPIO_PortNo) << 2), ENABLE);
+
           GPIO_InitTypeDef GPIO_InitStructure;
 
           /* Configure PC12 in output push/pull mode */
           GPIO_InitStructure.GPIO_Pin = GPIO_PinMask;
           GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
           GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
-          GPIO_Init(GPIOx, &GPIO_InitStructure);
+          GPIO_Init(GPIO_Address, &GPIO_InitStructure);
 
           // start pin as high
-          GPIOx->BSRR = GPIO_PinMask;
+          GPIO_Address->BSRR = GPIO_PinMask;
         }
 
       /// \details
-      /// Return the pin to high impedance mode.
+      /// Return the pin to input mode.
       /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::powerDown(void)
         {
-          GPIO_DeInit(GPIOx);
+          GPIO_InitTypeDef GPIO_InitStructure;
+
+          /* Configure PC12 in output push/pull mode */
+          GPIO_InitStructure.GPIO_Pin = GPIO_PinMask;
+          GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+          GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+          GPIO_Init(GPIO_Address, &GPIO_InitStructure);
         }
 
       /// \details
@@ -177,7 +190,7 @@ namespace hal
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::setHigh(void)
         {
-          GPIOx->BSRR = GPIO_PinMask;
+          GPIO_Address->BSRR = GPIO_PinMask;
         }
 
       /// \details
@@ -188,7 +201,7 @@ namespace hal
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::setLow(void)
         {
-          GPIOx->BRR = GPIO_PinMask;
+          GPIO_Address->BRR = GPIO_PinMask;
         }
 
       /// \details
@@ -199,7 +212,7 @@ namespace hal
         bool
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isLow(void)
         {
-          return ((GPIOx->IDR & GPIO_PinMask) == 0);
+          return ((GPIO_Address->IDR & GPIO_PinMask) == 0);
         }
 
       /// \details
@@ -210,7 +223,7 @@ namespace hal
         bool
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isHigh(void)
         {
-          return ((GPIOx->IDR & GPIO_PinMask) != 0);
+          return ((GPIO_Address->IDR & GPIO_PinMask) != 0);
         }
 
       /// \details
@@ -257,11 +270,11 @@ namespace hal
       };
 
       /// \brief Reset the watch dog device.
-      inline  __attribute__((always_inline))
+      inline __attribute__((always_inline))
       void
       WatchDog::reset(void)
       {
-        IWDG->KR = ((uint16_t)0xAAAA);
+        IWDG->KR = ((uint16_t) 0xAAAA);
       }
 
       // ======================================================================
@@ -279,10 +292,10 @@ namespace hal
       /// \brief SCL class type definition.
       typedef class TPinOpenDrain<WatchDog, (unsigned int) GPIOC, 6> SCL;
 
-      /// @}
+    /// @}
 
-      // ----------------------------------------------------------------------
-    } // namespace diag
+    // ----------------------------------------------------------------------
+    }// namespace diag
   } // namespace stm32f1
 } // namespace hal
 
@@ -328,9 +341,6 @@ namespace hal
       void
       TraceImplementation::powerUp(void)
       {
-        // WARNING: must be in sync with I2C pin definitions.
-        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
-
         I2CMaster::powerUp();
       }
 
@@ -359,7 +369,8 @@ namespace hal
           {
             I2CMaster::sendStart();
 
-            I2CMaster::sendAddress(I2C_DESTINATION_ADDRESS, I2CMaster::Mode::Write);
+            I2CMaster::sendAddress(I2C_DESTINATION_ADDRESS,
+                I2CMaster::Mode::Write);
             if (!I2CMaster::receiveAck())
               {
                 I2CMaster::cleanup();
