@@ -14,30 +14,12 @@
 
 namespace hal
 {
-  namespace platform
+  namespace stm32h103
   {
-    namespace stm32h103
-    {
+  // --------------------------------------------------------------------------
 
-      // ------------------------------------------------------------------------
-
-#if defined(DEBUG) || defined(__DOXYGEN__)
-      void
-      PlatformImplementation::putGreeting(void)
-      {
-        os::diag::trace.putString("Olimex SMT32-H103 header board");
-        os::diag::trace.putNewLine();
-        os::diag::trace.putString("STM32F103RB Cortex-M3");
-        os::diag::trace.putNewLine();
-
-        hal::cortexm::FamilyImplementation::putGreeting();
-      }
-#endif
-
-      // ------------------------------------------------------------------------
-
-    } // namespace stm32h103
-  }// namespace platform
+  // --------------------------------------------------------------------------
+  }// namespace stm32h103
 } // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_LINUX)
