@@ -9,7 +9,8 @@ Component(
     description='Implementation for the diagnostics classes.',
 
     # DISABLED!
-    isEnabled=False,
+    #isEnabled=False,
+    isEnabled=True,
             
     children=[
               
