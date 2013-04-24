@@ -45,6 +45,52 @@ first place, to run all system initialisation.',
                 'EarlyInitialisations.cpp',
             ],
         ),
-              
+
+        Component(
+            id='component.os.portable.core.platform',
+            name='Core platform definitions',
+            description='.',
+            
+            isEnabled=False,
+            
+            children=[
+                Component(
+                    id='component.os.portable.core.platform.greetings',
+                    name='Core platform greeting definitions',
+                    description='Platform greeting strings.',
+
+                    isEnabled=False,
+                    
+                    children=[
+                        Component(
+                            id='component.os.portable.core.platform.greetings.first',
+                            name='Core platform first greeting message',
+                            description='First message to be displayed as the platform greeting.',
+                            
+                            isEnabled=False,
+
+                            valueType='string',
+                            
+                            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
+                            headerDefinition='OS_STRING_PLATFORM_GREETING_FIRST',
+                        ),
+                              
+                        Component(
+                            id='component.os.portable.core.platform.greetings.second',
+                            name='Core platform second greeting message',
+                            description='Second message to be displayed as the platform greeting.',
+                            
+                            isEnabled=False,
+
+                            valueType='string',
+                            
+                            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
+                            headerDefinition='OS_STRING_PLATFORM_GREETING_SECOND',
+                        ),
+
+                    ],
+                ),
+            ],
+        ),
     ],
 )
