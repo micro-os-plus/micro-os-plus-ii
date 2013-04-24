@@ -20,7 +20,11 @@ Package(
     requirements=[
         #'enable("package.os.hal.architecture.arm.cortexm.stm32f")',
         'enable("component.os.hal.architecture.arm.cortexm.stm32f407zg")',
-        'enable("component.os.hal.architecture.arm.cortexm.stm32f4.diagnostics.trace")'
+        #'enable("component.os.hal.architecture.arm.cortexm.stm32f4.diagnostics.trace")',
+        
+        'setValue("OS_STRING_PLATFORM_GREETING_FIRST", "Olimex SMT32-E407 development board")',        
+        'setValue("OS_STRING_PLATFORM_GREETING_SECOND", "STM32F407ZG Cortex-M4")',        
+
     ],
         
     implements=[

@@ -21,7 +21,11 @@ based on STM32F103.',
     requirements=[
         #'enable("package.os.hal.architecture.arm.cortexm.stm32f")',
         'enable("component.os.hal.architecture.arm.cortexm.stm32f103rb")',
-        'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace")'
+        #'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace")',
+        
+        'setValue("OS_STRING_PLATFORM_GREETING_FIRST", "Olimex SMT32-H103 header board")',        
+        'setValue("OS_STRING_PLATFORM_GREETING_SECOND", "STM32F103RB Cortex-M3")',        
+
     ],
         
     implements=[
