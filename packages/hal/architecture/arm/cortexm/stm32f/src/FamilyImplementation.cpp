@@ -88,6 +88,35 @@ namespace hal
       os::diag::trace.putHex(*((uint16_t*)(0x1FFFF7EC)));
       os::diag::trace.putHex(*((uint16_t*)(0x1FFFF7E8)));
       os::diag::trace.putNewLine();
+#elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
+      uint32_t ul = *((uint32_t*)(0xE0042000));
+      uint16_t devid = ul & 0x0FFF;
+      os::diag::trace.putString("STM32");
+      if (devid == 0x0413)
+        {
+          os::diag::trace.putString("F4[01]X");
+        }
+      else if (devid == 0x0419)
+        {
+          os::diag::trace.putString("F4[23]X");
+        }
+      else
+        {
+          os::diag::trace.putString("??");
+        }
+      os::diag::trace.putString(", DEV_ID=");
+      os::diag::trace.putHex(devid);
+      os::diag::trace.putString(", REV_ID=");
+      os::diag::trace.putHex((uint16_t)(ul >> 16));
+      os::diag::trace.putString(", ");
+      os::diag::trace.putDec(*((uint16_t*)(0x1FFF7A22)));
+      os::diag::trace.putString("K Flash");
+      os::diag::trace.putNewLine();
+      os::diag::trace.putString("UID=");
+      os::diag::trace.putHex(*((uint32_t*)(0x1FFF7A18)));
+      os::diag::trace.putHex(*((uint32_t*)(0x1FFF7A14)));
+      os::diag::trace.putHex(*((uint32_t*)(0x1FFF7A10)));
+      os::diag::trace.putNewLine();
 #else
       os::diag::trace.putString("Cortex-M");
       os::diag::trace.putNewLine();
