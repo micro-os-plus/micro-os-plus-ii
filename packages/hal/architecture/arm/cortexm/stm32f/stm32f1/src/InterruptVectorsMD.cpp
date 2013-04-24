@@ -221,12 +221,15 @@ namespace hal
             // 42: USB Device WakeUp from suspend through ExternalLine Line
             reinterpret_cast<interruptVector_t>(InterruptHandler::USBDeviceWakeUp),
 
+#if 0
             // 43-49: reserved
             0, 0, 0, 0, 0, 0, 0,
 
-            // 50: (@0x108) This is for boot in RAM mode
+            // 50: (@0x108) This is for boot in RAM mode, only
+            // for MD family revision 6, which has some problems
             // TODO: document why
             0xF108F85F
+#endif
         //
         };
 
