@@ -8,20 +8,136 @@
 
 #include "portable/core/include/OS.h"
 
+class Led
+{
+public:
+  Led() = delete;
+
+  static void
+  powerUp(void);
+
+  static void
+  powerDown(void);
+
+  static void
+  turnOn(void);
+
+  static void
+  turnOff(void);
+};
+
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F1)
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x_gpio.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x_rcc.h"
+
+#define DELAY_DURATION  2500000
+
+void
+Led::powerUp(void)
+{
+  /* GPIOC Periph clock enable */
+  //RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /* Configure PC12 in output push/pull mode */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+}
+
+void
+Led::powerDown(void)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /* Configure PC12 in input mode */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+
+  // DO NOT disable clock, other devices may still need it
+}
+
+void
+Led::turnOn(void)
+{
+  // Reset PC12 low (turn on led)
+  GPIOC ->BRR = GPIO_Pin_12;
+}
+
+void
+Led::turnOff(void)
+{
+  // Set PC12 high (turn off led)
+  GPIOC ->BSRR = GPIO_Pin_12;
+}
+
 #elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_gpio.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_rcc.h"
+
+#define DELAY_DURATION  5000000
+
+void
+Led::powerUp(void)
+  {
+    /* GPIOC Periph clock enable */
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+
+    GPIO_InitTypeDef GPIO_InitStructure;
+
+    /* Configure PC13 in output push/pull mode */
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
+  }
+
+void
+Led::turnOn(void)
+  {
+    // Reset PC13 low (turn on led)
+    GPIOC ->BSRRH = GPIO_Pin_13;
+  }
+
+void
+Led::turnOff(void)
+  {
+    // Set PC13 high (turn off led)
+    GPIOC ->BSRRL = GPIO_Pin_13;
+  }
+
+void
+Led::powerDown(void)
+  {
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  /* Configure PC13 in output push/pull mode */
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+  }
+
 #endif
+
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersSelector.h"
 
 void
 Delay(__IO uint32_t nCount);
 
+void
+Delay(__IO uint32_t nCount)
+{
+  for (; nCount != 0; nCount--)
+    ;
+}
 
 int
 main()
@@ -31,81 +147,29 @@ main()
   os::diag::trace.putNewLine();
 #endif
 
+  Led::powerUp();
+  Led::turnOn();
 
-#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F1)
-
-  /* At this stage the microcontroller clock setting is already configured,
-   this is done through SystemInit() function which is called from startup
-   file (startup_stm32f10x_xx.s) before to branch to application main.
-   To reconfigure the default setting of SystemInit() function, refer to
-   system_stm32f10x.c file
-   */
-
-  /* GPIOC Periph clock enable */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
-
-  GPIO_InitTypeDef GPIO_InitStructure;
-
-  /* Configure PC12 in output pushpull mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-#define DELAY_DURATION  5000000
 #define CYCLES  60
 
-  for (int i=CYCLES; --i; )
+  for (int i = CYCLES; --i;)
     {
-      // Set PC12 high (turn off led)
-      GPIOC ->BSRR = GPIO_Pin_12;
+
+      Led::turnOn();
 
       Delay(DELAY_DURATION);
-      // Reset PC12 low (turn on led)
-      GPIOC ->BRR = GPIO_Pin_12;
 
-      Delay(DELAY_DURATION);
+      Led::turnOff();
+
+      Delay(DELAY_DURATION/2);
 
 #if defined(DEBUG)
-  os::diag::trace.putChar('*');
-#endif
-
-    }
-#elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
-
-  /* GPIOC Periph clock enable */
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
-
-  GPIO_InitTypeDef GPIO_InitStructure;
-
-  /* Configure PC13 in output push/pull mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-#define DELAY_DURATION  5000000
-#define CYCLES  60
-
-  for (int i=CYCLES; --i; )
-    {
-      // Set PC12 high (turn off led)
-      GPIOC ->BSRRL = GPIO_Pin_13;
-
-      Delay(DELAY_DURATION);
-      // Reset PC12 low (turn on led)
-      GPIOC ->BSRRH = GPIO_Pin_13;
-
-      Delay(DELAY_DURATION);
-
-#if defined(DEBUG)
-  os::diag::trace.putChar('*');
+      os::diag::trace.putChar('*');
 #endif
 
     }
 
-#endif
+  Led::powerDown();
 
 #if defined(DEBUG)
   os::diag::trace.putString(" done");
@@ -115,15 +179,4 @@ main()
   return 0;
 }
 
-/**
- * @brief  Inserts a delay time.
- * @param  nCount: specifies the delay time length.
- * @retval None
- */
-void
-Delay(__IO uint32_t nCount)
-{
-  for (; nCount != 0; nCount--)
-    ;
-}
 
