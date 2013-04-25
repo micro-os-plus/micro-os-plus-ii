@@ -44,7 +44,6 @@ Package(
                     name='Diagnostics trace ostream support',
                     description='Add ostream support to the Trace class.',
                        
-                    # Disable it if not needed
                     isEnabled=False,
                     
                     headerDefinition='OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE_OSTREAM_BASE',
@@ -53,6 +52,78 @@ Package(
                         'enable("component.os.portable.language.cpp.streams")',
                     ],
                 ),
+
+                Component(
+                    id='component.os.portable.diagnostics.trace.i2c',
+                    name='Diagnostics trace i2c support',
+                    description='Redirect the Trace output via bit-banged I2C.',
+                    
+                    # enable it to redirect the output via I2C   
+                    isEnabled=False,
+                    
+                    headerDefinition='OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE_I2C',
+                    
+                    children=[
+                        
+                        Option(
+                            id='component.os.portable.diagnostics.trace.i2c.address',
+                            name='Diagnostics trace i2c destination address',
+                            description='The I2C address of the special converter device (7 bit).',
+                            
+                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
+                            headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DESTINATION_ADDRESS',
+                            valueType='int',
+                            valueFormat='(0x{0:02X})',
+                            defaultValue=0x28,
+                        ),
+                              
+                        Option(
+                            id='component.os.portable.diagnostics.trace.i2c.scl.port',
+                            name='Diagnostics trace i2c SCL port number',
+                            description='The port number of the SCL pin.',
+                            
+                            isEnabled=False,
+                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
+                            headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT',
+                            valueType='int',
+                        ),
+
+                        Option(
+                            id='component.os.portable.diagnostics.trace.i2c.scl.bit',
+                            name='Diagnostics trace i2c SCL bit number',
+                            description='The port number of the SCL pin.',
+                            
+                            isEnabled=False,
+                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
+                            headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT',
+                            valueType='int',
+                        ),
+
+                        Option(
+                            id='component.os.portable.diagnostics.trace.i2c.sda.port',
+                            name='Diagnostics trace i2c SDA port number',
+                            description='The port number of the SDA pin.',
+                            
+                            isEnabled=False,
+                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
+                            headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT',
+                            valueType='int',
+                        ),
+
+                        Option(
+                            id='component.os.portable.diagnostics.trace.i2c.sda.bit',
+                            name='Diagnostics trace i2c SDA bit number',
+                            description='The port number of the SDA pin.',
+                            
+                            isEnabled=False,
+                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
+                            headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT',
+                            valueType='int',
+                        ),
+                        
+                    ],
+                ),
+            
             ],
         ),
     ],
