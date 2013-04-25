@@ -66,6 +66,20 @@ Component(
                         ('../ldscripts/stm32f40xG.ld', 'ldscripts/mem_layout.ld'),
                     ],       
                 ),
+                      
+                Component(
+                    id='component.os.hal.architecture.arm.cortexm.stm32f407vg',
+                    name='ST Micro ARM Cortex-M4 STM32F407VG',
+                    description='Support for STM32F407VG ARM Cortex-M4 processors (1024K Flash).',
+                    
+                    isEnabled=False,
+                    
+                    headerDefinition='OS_INCLUDE_HAL_MCU_DEVICE_STM32F407VG',
+                    
+                    copyFiles=[
+                        ('../ldscripts/stm32f40xG.ld', 'ldscripts/mem_layout.ld'),
+                    ],       
+                ),
                 
             ],     
         ),
