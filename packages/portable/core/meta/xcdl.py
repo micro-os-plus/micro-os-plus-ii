@@ -51,7 +51,7 @@ first place, to run all system initialisation.',
             name='Core platform definitions',
             description='.',
             
-            isEnabled=False,
+            isEnabled=True,
             
             children=[
                 Component(
@@ -59,7 +59,8 @@ first place, to run all system initialisation.',
                     name='Core platform greeting definitions',
                     description='Platform greeting strings.',
 
-                    isEnabled=False,
+                    # must be true, to save an explicit enable before setValue()
+                    isEnabled=True,
                     
                     children=[
                         Component(
