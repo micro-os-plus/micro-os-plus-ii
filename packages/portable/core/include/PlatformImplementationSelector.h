@@ -27,6 +27,10 @@
 
 #include "hal/platform/olimex/stm32e407/include/PlatformImplementation.h"
 
+#elif defined(OS_INCLUDE_HAL_BOARD_STM_STM32F4DISCOVERY)
+
+#include "hal/platform/stm/stm32f4discovery/include/PlatformImplementation.h"
+
 #else
 
 #error "Missing PlatformImplementation.h"
