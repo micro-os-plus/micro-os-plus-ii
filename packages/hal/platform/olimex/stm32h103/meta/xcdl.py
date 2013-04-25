@@ -26,6 +26,17 @@ based on STM32F103.',
         'setValue("OS_STRING_PLATFORM_GREETING_FIRST", "Olimex SMT32-H103 header board")',        
         'setValue("OS_STRING_PLATFORM_GREETING_SECOND", "STM32F103RB Cortex-M3")',        
 
+        'enable("component.os.portable.core.peripheral.activeled")',
+        'setValue("OS_INTEGER_ACTIVELED_PORT", 2)', # port C
+        'setValue("OS_INTEGER_ACTIVELED_BIT", 12)',        
+        'setValue("OS_BOOL_ACTIVELED_ISACTIVELOW", True)',        
+
+        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT", 2)', # port C
+        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT", 6)',        
+
+        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT", 2)', # port C
+        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT", 7)',        
+
     ],
         
     implements=[

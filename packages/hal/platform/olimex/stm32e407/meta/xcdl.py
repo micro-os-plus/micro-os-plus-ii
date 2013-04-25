@@ -18,12 +18,21 @@ Package(
     ],
         
     requirements=[
-        #'enable("package.os.hal.architecture.arm.cortexm.stm32f")',
         'enable("component.os.hal.architecture.arm.cortexm.stm32f407zg")',
-        #'enable("component.os.hal.architecture.arm.cortexm.stm32f4.diagnostics.trace")',
-        
+              
         'setValue("OS_STRING_PLATFORM_GREETING_FIRST", "Olimex SMT32-E407 development board")',        
         'setValue("OS_STRING_PLATFORM_GREETING_SECOND", "STM32F407ZG Cortex-M4")',        
+
+        'enable("component.os.portable.core.peripheral.activeled")',
+        'setValue("OS_INTEGER_ACTIVELED_PORT", 2)', # port C
+        'setValue("OS_INTEGER_ACTIVELED_BIT", 13)',        
+        'setValue("OS_BOOL_ACTIVELED_ISACTIVELOW", True)',        
+
+        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT", 3)', # port D
+        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT", 15)',        
+
+        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT", 3)', # port D
+        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT", 14)',        
 
     ],
         
