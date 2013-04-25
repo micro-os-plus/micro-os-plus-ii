@@ -147,11 +147,7 @@ namespace hal
         void
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::powerUp(void)
         {
-#if 1
-          RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
-#else
-          RCC_APB1PeriphClockCmd(((1 << GPIO_PortNo) << 2), ENABLE);
-#endif
+          RCC_AHB1PeriphClockCmd(((1 << GPIO_PortNo) << 2), ENABLE);
 
           GPIO_InitTypeDef GPIO_InitStructure;
 
