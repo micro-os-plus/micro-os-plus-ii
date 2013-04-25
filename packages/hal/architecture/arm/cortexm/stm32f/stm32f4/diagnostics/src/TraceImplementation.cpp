@@ -16,8 +16,10 @@
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_gpio.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_rcc.h"
 
-#include "portable/devices/bitbang/include/I2CMaster.h"
-#include "portable/devices/bitbang/include/I2CMaster.cpp.h"
+#include "portable/peripheral/bitbang/include/I2CMaster.h"
+#include "portable/peripheral/bitbang/include/I2CMaster.cpp.h"
+
+#include "hal/platform/include/XCDL_TraceI2CDefines.h"
 
 namespace hal
 {
@@ -32,7 +34,13 @@ namespace hal
 
       static const duration_t HOLD_DURATION_LOOPS = 8;
       static const duration_t SETUP_DURATION_LOOPS = HOLD_DURATION_LOOPS / 2;
-      static const address_t I2C_DESTINATION_ADDRESS = 0x28;
+      static const address_t I2C_DESTINATION_ADDRESS = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DESTINATION_ADDRESS;
+
+      static const int SDA_PORT = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT;
+      static const int SDA_BIT = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT;
+
+      static const int SCL_PORT = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT;
+      static const int SCL_BIT = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT;
 
       // ======================================================================
 
@@ -40,17 +48,17 @@ namespace hal
       /// \nosubgrouping
       ///
       /// \brief Open drain pin template class.
-      template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
+      template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         class TPinOpenDrain
         {
         public:
           typedef WatchDog_T WatchDog;
-          static constexpr int GPIO_PinNo = PinNo_T;
-          static constexpr int GPIO_PinMask = (1 << GPIO_PinNo);
+          static constexpr int GPIO_BitNo = Bit_T;
+          static constexpr int GPIO_BitMask = (1 << GPIO_BitNo);
 
           // 0 = GPIOA, 1 = GPIOC, ...
-          static constexpr int GPIO_PortNo = ((Port_T >> 11) & 0xF);
-          static constexpr GPIO_TypeDef* GPIO_Address = (GPIO_TypeDef*) Port_T;
+          static constexpr int GPIO_PortNo = Port_T;
+          static constexpr GPIO_TypeDef* GPIO_Address = (GPIO_TypeDef*) ((GPIOA_BASE + 0x0400*GPIO_PortNo));
 
           /// \name Constructors/destructor
           /// @{
@@ -143,15 +151,15 @@ namespace hal
       /// Initialise the pin to open drain mode, max speed
       /// and leave it in high state.
       /// \todo Implement this in C++.
-      template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
+      template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         void
-        TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::powerUp(void)
+        TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::powerUp(void)
         {
-          RCC_AHB1PeriphClockCmd(((1 << GPIO_PortNo) << 2), ENABLE);
+          RCC_AHB1PeriphClockCmd((RCC_AHB1Periph_GPIOA << GPIO_PortNo), ENABLE);
 
           GPIO_InitTypeDef GPIO_InitStructure;
 
-          GPIO_InitStructure.GPIO_Pin = GPIO_PinMask;
+          GPIO_InitStructure.GPIO_Pin = GPIO_BitMask;
           GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
           GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
           GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
@@ -159,19 +167,19 @@ namespace hal
           GPIO_Init(GPIO_Address, &GPIO_InitStructure);
 
           // start pin as high
-          GPIO_Address->BSRRL = GPIO_PinMask;
+          GPIO_Address->BSRRL = GPIO_BitMask;
         }
 
       /// \details
       /// Return the pin to high input mode.
       /// \todo Implement this in C++.
-      template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
+      template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         void
-        TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::powerDown(void)
+        TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::powerDown(void)
         {
           GPIO_InitTypeDef GPIO_InitStructure;
 
-          GPIO_InitStructure.GPIO_Pin = GPIO_PinMask;
+          GPIO_InitStructure.GPIO_Pin = GPIO_BitMask;
           GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
           GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
           GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
@@ -184,34 +192,34 @@ namespace hal
       /// \note In case the slave keeps
       /// the bus low, the effect will be delayed accordingly.
       /// \todo Implement this in C++.
-      template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
+      template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         inline __attribute__((always_inline))
         void
-        TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::setHigh(void)
+        TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setHigh(void)
         {
-          GPIO_Address->BSRRL = GPIO_PinMask;
+          GPIO_Address->BSRRL = GPIO_BitMask;
         }
 
       /// \details
       /// Set the pin to low state. The effect will be immediate.
       /// \todo Implement this in C++.
-      template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
+      template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         inline __attribute__((always_inline))
         void
-        TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::setLow(void)
+        TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setLow(void)
         {
-          GPIO_Address->BSRRH = GPIO_PinMask;
+          GPIO_Address->BSRRH = GPIO_BitMask;
         }
 
       /// \details
       /// Read the pin state and return true if low.
       /// \todo Implement this in C++.
-      template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
+      template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         inline __attribute__((always_inline))
         bool
-        TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isLow(void)
+        TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::isLow(void)
         {
-          return ((GPIO_Address->IDR & GPIO_PinMask) == 0);
+          return ((GPIO_Address->IDR & GPIO_BitMask) == 0);
         }
 
       /// \details
@@ -222,7 +230,7 @@ namespace hal
         bool
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isHigh(void)
         {
-          return ((GPIO_Address->IDR & GPIO_PinMask) != 0);
+          return ((GPIO_Address->IDR & GPIO_BitMask) != 0);
         }
 
       /// \details
@@ -232,10 +240,10 @@ namespace hal
       /// To avoid the watch dog to trigger, reset it.
       /// \warning If used for devices that compile on release
       /// the implementation should not loop forever.
-      template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
+      template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         inline __attribute__((always_inline))
         void
-        TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::waitToGetHigh(void)
+        TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::waitToGetHigh(void)
         {
           while (isLow())
             {
@@ -247,10 +255,10 @@ namespace hal
       /// Release the pin state and loop until the pin gets
       /// high, eventually resetting
       /// the watch dog.
-      template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
+      template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         inline __attribute__((always_inline))
         void
-        TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::setHighAndSynchronise(void)
+        TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setHighAndSynchronise(void)
         {
           setHigh();
           waitToGetHigh();
@@ -282,14 +290,14 @@ namespace hal
       /// @{
 
       /// \brief SDA template explicit instantiation.
-      template class TPinOpenDrain<WatchDog, (unsigned int) GPIOD, 14> ;
+      template class TPinOpenDrain<WatchDog, SDA_PORT, SDA_BIT> ;
       /// \brief SDA class type definition.
-      typedef class TPinOpenDrain<WatchDog, (unsigned int) GPIOD, 14> SDA;
+      typedef class TPinOpenDrain<WatchDog, SDA_PORT, SDA_BIT> SDA;
 
       /// \brief SCL template explicit instantiation.
-      template class TPinOpenDrain<WatchDog, (unsigned int) GPIOD, 15> ;
+      template class TPinOpenDrain<WatchDog, SCL_PORT, SCL_BIT> ;
       /// \brief SCL class type definition.
-      typedef class TPinOpenDrain<WatchDog, (unsigned int) GPIOD, 15> SCL;
+      typedef class TPinOpenDrain<WatchDog, SCL_PORT, SCL_BIT> SCL;
 
     /// @}
 
