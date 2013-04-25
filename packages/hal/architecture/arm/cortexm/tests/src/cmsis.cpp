@@ -37,7 +37,7 @@ void
 Led::powerUp(void)
 {
   /* GPIOC Periph clock enable */
-  //RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
 
   GPIO_InitTypeDef GPIO_InitStructure;
 
