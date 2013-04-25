@@ -13,6 +13,7 @@ Package(
     
     loadPackages=[
         'package.os.portable.core',
+        'package.os.portable.core.peripheral',
         'package.os.portable.diagnostics',
         'package.os.portable.infrastructure',
         'package.os.portable.language.cpp',
