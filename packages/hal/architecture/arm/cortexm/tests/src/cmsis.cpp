@@ -8,6 +8,10 @@
 
 #include "portable/core/include/OS.h"
 
+#if defined(OS_HAS_ACTIVELED)
+#include "hal/platform/include/XCDL_LedsDefines.h"
+#endif
+
 class Led
 {
 public:
@@ -35,46 +39,46 @@ public:
 
 void
 Led::powerUp(void)
-{
-  /* GPIOC Periph clock enable */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+  {
+    /* GPIOC Periph clock enable */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
 
-  GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitTypeDef GPIO_InitStructure;
 
-  /* Configure PC12 in output push/pull mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
-}
+    /* Configure PC12 in output push/pull mode */
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
+  }
 
 void
 Led::powerDown(void)
-{
-  GPIO_InitTypeDef GPIO_InitStructure;
+  {
+    GPIO_InitTypeDef GPIO_InitStructure;
 
-  /* Configure PC12 in input mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
+    /* Configure PC12 in input mode */
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-  // DO NOT disable clock, other devices may still need it
-}
+    // DO NOT disable clock, other devices may still need it
+  }
 
 void
 Led::turnOn(void)
-{
-  // Reset PC12 low (turn on led)
-  GPIOC ->BRR = GPIO_Pin_12;
-}
+  {
+    // Reset PC12 low (turn on led)
+    GPIOC ->BRR = GPIO_Pin_12;
+  }
 
 void
 Led::turnOff(void)
-{
-  // Set PC12 high (turn off led)
-  GPIOC ->BSRR = GPIO_Pin_12;
-}
+  {
+    // Set PC12 high (turn off led)
+    GPIOC ->BSRR = GPIO_Pin_12;
+  }
 
 #elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
@@ -83,47 +87,62 @@ Led::turnOff(void)
 
 #define DELAY_DURATION  5000000
 
+#define LED_PORT_ADDRESS        (AHB1PERIPH_BASE + 0x0400*OS_INTEGER_ACTIVELED_PORT)
+#define LED_PORT_POINTER        ((GPIO_TypeDef *) LED_PORT_ADDRESS)
+#define LED_GPIO_PIN            ((uint16_t)(1 << OS_INTEGER_ACTIVELED_BIT))
+
 void
 Led::powerUp(void)
-  {
-    /* GPIOC Periph clock enable */
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+{
+  /* GPIO bus clock enable */
+  RCC_AHB1PeriphClockCmd(
+      (RCC_AHB1Periph_GPIOA << OS_INTEGER_ACTIVELED_PORT), ENABLE);
 
-    GPIO_InitTypeDef GPIO_InitStructure;
-
-    /* Configure PC13 in output push/pull mode */
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-    GPIO_Init(GPIOC, &GPIO_InitStructure);
-  }
-
-void
-Led::turnOn(void)
-  {
-    // Reset PC13 low (turn on led)
-    GPIOC ->BSRRH = GPIO_Pin_13;
-  }
-
-void
-Led::turnOff(void)
-  {
-    // Set PC13 high (turn off led)
-    GPIOC ->BSRRL = GPIO_Pin_13;
-  }
-
-void
-Led::powerDown(void)
-  {
   GPIO_InitTypeDef GPIO_InitStructure;
 
   /* Configure PC13 in output push/pull mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+  GPIO_InitStructure.GPIO_Pin = LED_GPIO_PIN;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_Init(LED_PORT_POINTER, &GPIO_InitStructure);
+}
+
+void
+Led::turnOn(void)
+{
+#if OS_BOOL_ACTIVELED_ISACTIVELOW
+  // Reset pin low
+  LED_PORT_POINTER ->BSRRH = LED_GPIO_PIN;
+#else
+  // Set pin high
+  LED_PORT_POINTER ->BSRRL = LED_GPIO_PIN;
+#endif
+}
+
+void
+Led::turnOff(void)
+{
+#if OS_BOOL_ACTIVELED_ISACTIVELOW
+  // Set pin high
+  LED_PORT_POINTER ->BSRRL = LED_GPIO_PIN;
+#else
+  // Reset pin low
+  LED_PORT_POINTER ->BSRRH = LED_GPIO_PIN;
+#endif
+}
+
+void
+Led::powerDown(void)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+
+  // Configure pin in input mode
+  GPIO_InitStructure.GPIO_Pin = LED_GPIO_PIN;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
-  }
+  GPIO_Init(LED_PORT_POINTER, &GPIO_InitStructure);
+}
 
 #endif
 
@@ -161,7 +180,7 @@ main()
 
       Led::turnOff();
 
-      Delay(DELAY_DURATION/2);
+      Delay(DELAY_DURATION / 2);
 
 #if defined(DEBUG)
       os::diag::trace.putChar('*');
@@ -178,5 +197,4 @@ main()
 
   return 0;
 }
-
 
