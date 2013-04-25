@@ -52,7 +52,7 @@ cd "$(dirname "$0")"
 use the name exactly as given in 
 the list of 
 [J-Link Supported devices]
-(http://www.segger.com/jlink_supported_devices.html)), 
+(http://www.segger.com/jlink_supported_devices.html), 
 with the given case, otherwise the device might not be recognised.
 
 ### JLinkExe
