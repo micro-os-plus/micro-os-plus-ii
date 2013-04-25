@@ -17,8 +17,11 @@ Configuration(
               
     requirements=[
         # enable the platform    
-        'enable("package.os.hal.platform.olimex.stm32e407")',  
-        'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f40x.lib.stm.gpio")',              
+        'enable("package.os.hal.platform.olimex.stm32e407")',
+        # we also need gpio  
+        'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f40x.lib.stm.gpio")',        
+        
+        'enable("component.os.portable.diagnostics.trace.i2c")',        
     ],
               
     buildFolder='stm32e407/cmsis',
@@ -26,8 +29,8 @@ Configuration(
     buildTargetCpuOptions='-mcpu=cortex-m4 -mthumb -mfloat-abi=soft',
     
     copyFiles=[
-        ('stm32e407_cmsis_makefile_defs.mk','makefile_defs.mk'),
-        ('stm32e407_cmsis_makefile_targets.mk','makefile_targets.mk'),
+        ('cmsis_makefile_defs.mk','makefile_defs.mk'),
+        ('cmsis_makefile_targets.mk','makefile_targets.mk'),
     ],
     
     artefactName='cmsis',

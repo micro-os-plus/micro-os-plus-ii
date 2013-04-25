@@ -17,8 +17,14 @@ Configuration(
               
     requirements=[
         # enable the platform    
-        'enable("package.os.hal.platform.olimex.stm32h103")',  
-        'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f10x.lib.stm.gpio")',              
+        'enable("package.os.hal.platform.olimex.stm32h103")',
+        
+        # we also need gpio  
+        'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f10x.lib.stm.gpio")',  
+        
+        # and the trace i2c bit-banged implementation
+        'enable("component.os.portable.diagnostics.trace.i2c")',        
+            
     ],
               
     buildFolder='stm32h103/cmsis',
@@ -26,8 +32,8 @@ Configuration(
     buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
     
     copyFiles=[
-        ('stm32h103_cmsis_makefile_defs.mk','makefile_defs.mk'),
-        ('stm32h103_cmsis_makefile_targets.mk','makefile_targets.mk'),
+        ('cmsis_makefile_defs.mk','makefile_defs.mk'),
+        ('cmsis_makefile_targets.mk','makefile_targets.mk'),
     ],
     
     artefactName='cmsis',

@@ -26,8 +26,8 @@ Configuration(
     buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
     
     copyFiles=[
-        ('stm32h103_swo_makefile_defs.mk','makefile_defs.mk'),
-        ('stm32h103_swo_makefile_targets.mk','makefile_targets.mk'),
+        ('swo_makefile_defs.mk','makefile_defs.mk'),
+        ('swo_makefile_targets.mk','makefile_targets.mk'),
     ],
     
     artefactName='swo',

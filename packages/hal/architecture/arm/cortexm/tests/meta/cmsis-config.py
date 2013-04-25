@@ -30,5 +30,7 @@ Configuration(
     includeFiles=[
         'cmsis-stm32h103-config.py',
         'cmsis-stm32e407-config.py',
+        'cmsis-stm32f4discovery-config.py',
     ],
+              
 )
