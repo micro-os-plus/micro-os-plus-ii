@@ -20,6 +20,8 @@ Configuration(
         'enable("package.os.hal.platform.stm.stm32f4discovery")',
         # we also need gpio  
         'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f40x.lib.stm.gpio")',              
+
+        'enable("component.os.portable.diagnostics.trace.i2c")',        
     ],
               
     buildFolder='stm32f4discovery/cmsis',
