@@ -96,6 +96,10 @@ namespace hal
         {
           os::diag::trace.putString("F4[01]X");
         }
+      else if (devid == 0x0411)
+        {
+          os::diag::trace.putString("F4[01]X early");
+        }
       else if (devid == 0x0419)
         {
           os::diag::trace.putString("F4[23]X");
