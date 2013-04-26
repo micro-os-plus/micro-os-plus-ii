@@ -8,7 +8,7 @@ Package(
     name='ST STM32F4DISCOVERY board',
     description='Support for the ST STM32F4DISCOVERY development board, based on STM32F407.',
 
-    alias='stm32e407',
+    alias='stm32f4discovery',
         
     category='board',
     
