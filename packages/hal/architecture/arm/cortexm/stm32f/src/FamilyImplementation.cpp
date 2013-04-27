@@ -50,13 +50,20 @@ namespace hal
     void
     FamilyImplementation::putGreeting(void)
     {
-#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_MD)
+#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F1)
+
       uint32_t ul = *((uint32_t*)(0xE0042000));
       uint16_t devid = ul & 0x0FFF;
       os::diag::trace.putString("STM32");
+
+      // The IDs are from 31.6.1 of RM0008 reference manual
       if (devid == 0x0410)
         {
           os::diag::trace.putString("F1 MD");
+        }
+      else if (devid == 0x0412)
+        {
+          os::diag::trace.putString("F1 LD");
         }
       else if (devid == 0x0414)
         {
@@ -88,7 +95,9 @@ namespace hal
       os::diag::trace.putHex(*((uint16_t*)(0x1FFFF7EC)));
       os::diag::trace.putHex(*((uint16_t*)(0x1FFFF7E8)));
       os::diag::trace.putNewLine();
+
 #elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
+
       uint32_t ul = *((uint32_t*)(0xE0042000));
       uint16_t devid = ul & 0x0FFF;
       os::diag::trace.putString("STM32");
