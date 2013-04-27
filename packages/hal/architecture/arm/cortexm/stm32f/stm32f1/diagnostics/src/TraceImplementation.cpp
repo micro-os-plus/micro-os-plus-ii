@@ -32,7 +32,8 @@ namespace hal
       typedef os::bitbang::i2c::duration_t duration_t;
       typedef os::bitbang::i2c::address_t address_t;
 
-      static const duration_t HOLD_DURATION_LOOPS = 4;
+      static const duration_t HOLD_DURATION_LOOPS =
+          OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DURATION_CLK;
       static const duration_t SETUP_DURATION_LOOPS = HOLD_DURATION_LOOPS / 2;
 
       static const address_t I2C_DESTINATION_ADDRESS =
