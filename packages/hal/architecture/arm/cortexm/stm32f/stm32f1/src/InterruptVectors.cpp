@@ -42,15 +42,15 @@ namespace hal
 
       /// \brief RealTimeClock Handler.
       extern void
-      RealTimeClock(void);
+      RealTimeClockGlobal(void);
 
       /// \brief Flash Handler.
       extern void
-      Flash(void);
+      FlashGlobal(void);
 
       /// \brief ResetClockControl (RCC) Handler.
       extern void
-      ResetClockControl(void);
+      ResetClockControlGlobal(void);
 
       /// \brief External Line0 (EXTI0) Handler.
       extern void
@@ -74,31 +74,31 @@ namespace hal
 
       /// \brief DMA1 Channel1 Handler.
       extern void
-      DMA1Channel1(void);
+      DMA1Channel1Global(void);
 
       /// \brief DMA1 Channel2 Handler.
       extern void
-      DMA1Channel2(void);
+      DMA1Channel2Global(void);
 
       /// \brief DMA1 Channel3 Handler.
       extern void
-      DMA1Channel3(void);
+      DMA1Channel3Global(void);
 
       /// \brief DMA1 Channel4 Handler.
       extern void
-      DMA1Channel4(void);
+      DMA1Channel4Global(void);
 
       /// \brief DMA1 Channel5 Handler.
       extern void
-      DMA1Channel5(void);
+      DMA1Channel5Global(void);
 
       /// \brief DMA1 Channel6 Handler.
       extern void
-      DMA1Channel6(void);
+      DMA1Channel6Global(void);
 
       /// \brief DMA1 Channel7 Handler.
       extern void
-      DMA1Channel7(void);
+      DMA1Channel7Global(void);
 
     /// @} end of name Interrupt handlers
 
@@ -128,13 +128,13 @@ namespace hal
             reinterpret_cast<interruptVector_t>(InterruptHandler::TamperDetection),
 
             // 3: Real Time Clock
-            reinterpret_cast<interruptVector_t>(InterruptHandler::RealTimeClock),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::RealTimeClockGlobal),
 
             // 4: Flash
-            reinterpret_cast<interruptVector_t>(InterruptHandler::Flash),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::FlashGlobal),
 
             // 5: Reset and clock control
-            reinterpret_cast<interruptVector_t>(InterruptHandler::ResetClockControl),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::ResetClockControlGlobal),
 
             // 6: ExternalLine Line0
             reinterpret_cast<interruptVector_t>(InterruptHandler::ExternalLine0),
@@ -152,25 +152,25 @@ namespace hal
             reinterpret_cast<interruptVector_t>(InterruptHandler::ExternalLine4),
 
             // 11: DMA1 Channel1
-            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel1),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel1Global),
 
             // 12: DMA1 Channel2
-            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel2),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel2Global),
 
             // 13: DMA1 Channel3
-            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel3),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel3Global),
 
             // 14: DMA1 Channel4
-            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel4),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel4Global),
 
             // 15: DMA1 Channel5
-            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel5),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel5Global),
 
             // 16: DMA1 Channel6
-            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel6),
+            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel6Global),
 
             // 17: DMA1 Channel7
-            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel7)
+            reinterpret_cast<interruptVector_t>(InterruptHandler::DMA1Channel7Global)
 
         //
         };
@@ -214,14 +214,14 @@ namespace hal
 // #pragma weak InterruptHandler::TamperDetection = InterruptHandler::Default
 #pragma weak _ZN3hal7stm32f116InterruptHandler15TamperDetectionEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::RealTimeClock = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler13RealTimeClockEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::RealTimeClockGlobal = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler19RealTimeClockGlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::Flash = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler5FlashEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::FlashGlobal = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler11FlashGlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::ResetClockControl = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler17ResetClockControlEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::ResetClockControlGlobal = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler23ResetClockControlGlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::ExternalLine0 = InterruptHandler::Default
 #pragma weak _ZN3hal7stm32f116InterruptHandler13ExternalLine0Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
@@ -238,26 +238,26 @@ namespace hal
 // #pragma weak InterruptHandler::ExternalLine4 = InterruptHandler::Default
 #pragma weak _ZN3hal7stm32f116InterruptHandler13ExternalLine4Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::DMA1Channel1 = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel1Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::DMA1Channel1Global = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler18DMA1Channel1GlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::DMA1Channel2 = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel2Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::DMA1Channel2Global = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler18DMA1Channel2GlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::DMA1Channel3 = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel3Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::DMA1Channel3Global = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler18DMA1Channel3GlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::DMA1Channel4 = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel4Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::DMA1Channel4Global = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler18DMA1Channel4GlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::DMA1Channel5 = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel5Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::DMA1Channel5Global = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler18DMA1Channel5GlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::DMA1Channel6 = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel6Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::DMA1Channel6Global = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler18DMA1Channel6GlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
-// #pragma weak InterruptHandler::DMA1Channel7 = InterruptHandler::Default
-#pragma weak _ZN3hal7stm32f116InterruptHandler12DMA1Channel7Ev = _ZN3hal7stm32f116InterruptHandler7DefaultEv
+// #pragma weak InterruptHandler::DMA1Channel7Global = InterruptHandler::Default
+#pragma weak _ZN3hal7stm32f116InterruptHandler18DMA1Channel7GlobalEv = _ZN3hal7stm32f116InterruptHandler7DefaultEv
 
 // ----------------------------------------------------------------------------
 

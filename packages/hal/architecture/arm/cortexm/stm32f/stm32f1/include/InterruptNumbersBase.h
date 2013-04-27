@@ -51,11 +51,11 @@ namespace hal
       /// Tamper Interrupt
       static const interruptNumber_t TamperDetection = 2;
       /// Real Time Clock global Interrupt
-      static const interruptNumber_t RealTimeClock = 3;
+      static const interruptNumber_t RealTimeClockGlobal = 3;
       /// Flash global Interrupt
-      static const interruptNumber_t Flash = 4;
+      static const interruptNumber_t FlashGlobal = 4;
       /// Reset Clock Control global Interrupt
-      static const interruptNumber_t ResetClockControl = 5;
+      static const interruptNumber_t ResetClockControlGlobal = 5;
       /// EXTI Line0 Interrupt
       static const interruptNumber_t ExternalLine0 = 6;
       /// EXTI Line1 Interrupt
@@ -67,19 +67,19 @@ namespace hal
       /// EXTI Line4 Interrupt
       static const interruptNumber_t ExternalLine4 = 10;
       /// DMA1 Channel 1 global Interrupt
-      static const interruptNumber_t DMA1Channel1 = 11;
+      static const interruptNumber_t DMA1Channel1Global = 11;
       /// DMA1 Channel 2 global Interrupt
-      static const interruptNumber_t DMA1Channel2 = 12;
+      static const interruptNumber_t DMA1Channel2Global = 12;
       /// DMA1 Channel 3 global Interrupt
-      static const interruptNumber_t DMA1Channel3 = 13;
+      static const interruptNumber_t DMA1Channel3Global = 13;
       /// DMA1 Channel 4 global Interrupt
-      static const interruptNumber_t DMA1Channel4 = 14;
+      static const interruptNumber_t DMA1Channel4Global = 14;
       /// DMA1 Channel 5 global Interrupt
-      static const interruptNumber_t DMA1Channel5 = 15;
+      static const interruptNumber_t DMA1Channel5Global = 15;
       /// DMA1 Channel 6 global Interrupt
-      static const interruptNumber_t DMA1Channel6 = 16;
+      static const interruptNumber_t DMA1Channel6Global = 16;
       /// DMA1 Channel 7 global Interrupt
-      static const interruptNumber_t DMA1Channel7 = 17;
+      static const interruptNumber_t DMA1Channel7Global = 17;
 
       /// @} end of name Interrupt numbers
 
