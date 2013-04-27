@@ -21,7 +21,7 @@ Configuration(
     
     requirements=[
         'setValue("APP_STRING_APPLICATION_NAME", "CMSIS")',        
-        'setValue("APP_INTEGER_VERSION_REVISION", 1)',
+        'setValue("APP_INTEGER_VERSION_REVISION", 2)',
         
         # enable test artefact
         'enable("component.os.hal.architecture.arm.cortexm.tests.cmsis")',
@@ -29,6 +29,7 @@ Configuration(
                   
     includeFiles=[
         'cmsis-stm32h103-config.py',
+        'cmsis-stm32p107-config.py',
         'cmsis-stm32e407-config.py',
         'cmsis-stm32f4discovery-config.py',
     ],
