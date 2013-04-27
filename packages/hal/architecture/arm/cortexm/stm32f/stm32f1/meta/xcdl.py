@@ -55,5 +55,41 @@ Component(
             ],     
         ),
 
+        Component(
+            id='component.os.hal.architecture.arm.cortexm.stm32f10x.cl',
+            name='ST Micro ARM Cortex-M3 STM32F10X CL family',
+            description='Support for STM32F10X Connectivity Line ARM Cortex-M3 processors.',
+            
+            isEnabled=False,
+    
+            requirements=[
+                'enable("package.os.hal.architecture.arm.cortexm3")',
+            ],
+                  
+            headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_CL',
+                   
+            children=[
+                      
+                Component(
+                    id='component.os.hal.architecture.arm.cortexm.stm32f107vc',
+                    name='ST Micro ARM Cortex-M3 STM32F103VC',
+                    description='Support for STM32F10VC ARM Cortex-M3 processors.',
+                    
+                    isEnabled=False,
+                    
+                    sourceFiles=[
+                        'InterruptVectorsCL.cpp',
+                    ],
+            
+                    headerDefinition='OS_INCLUDE_HAL_MCU_DEVICE_STM32F103VC',
+                    
+                    copyFiles=[
+                        ('../ldscripts/stm32f107xC.ld', 'ldscripts/mem_layout.ld'),
+                    ],       
+                ),
+                
+            ],     
+        ),
+
     ],
 ),
