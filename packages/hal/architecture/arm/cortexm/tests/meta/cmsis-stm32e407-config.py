@@ -42,6 +42,7 @@ Configuration(
             
             requirements=[
                 'enable("DEBUG")',
+                'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DURATION_CLK", 8)',
             ],
               
             toolchain='toolchain.osx.aep.arm.gcc.debug',
