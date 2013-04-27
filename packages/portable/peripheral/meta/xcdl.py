@@ -27,7 +27,6 @@ Package(
                     
                     isEnabled=True,
                     valueType='int',          
-                    headerFile='include/hal/platform/include/XCDL_LedsDefines.h',
                     headerDefinition='OS_INTEGER_ACTIVELED_PORT',
                     
                 ),
@@ -39,7 +38,6 @@ Package(
                     
                     isEnabled=True,
                     valueType='int',            
-                    headerFile='include/hal/platform/include/XCDL_LedsDefines.h',
                     headerDefinition='OS_INTEGER_ACTIVELED_BIT',
                     
                 ),
@@ -53,7 +51,6 @@ Package(
                     isEnabled=True,
                     valueType='bool',
                     defaultValue='True',          
-                    headerFile='include/hal/platform/include/XCDL_LedsDefines.h',
                     headerDefinition='OS_BOOL_ACTIVELED_ISACTIVELOW',
                     
                 ),

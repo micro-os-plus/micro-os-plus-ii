@@ -62,6 +62,8 @@ Package(
                     isEnabled=False,
                     
                     headerDefinition='OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE_I2C',
+
+                    childrenHeaderFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
                     
                     children=[
                         
@@ -70,7 +72,6 @@ Package(
                             name='Diagnostics trace i2c destination address',
                             description='The I2C address of the special converter device (7 bit).',
                             
-                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
                             headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DESTINATION_ADDRESS',
                             valueType='int',
                             valueFormat='(0x{0:02X})',
@@ -82,7 +83,6 @@ Package(
                             name='Diagnostics trace i2c clock duration',
                             description='The duration of the i2c clock pulse.',
                             
-                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
                             headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DURATION_CLK',
                             valueType='int',
                             defaultValue=1,
@@ -94,7 +94,6 @@ Package(
                             description='The port number of the SCL pin.',
                             
                             isEnabled=False,
-                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
                             headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT',
                             valueType='int',
                         ),
@@ -105,7 +104,6 @@ Package(
                             description='The port number of the SCL pin.',
                             
                             isEnabled=False,
-                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
                             headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT',
                             valueType='int',
                         ),
@@ -116,7 +114,6 @@ Package(
                             description='The port number of the SDA pin.',
                             
                             isEnabled=False,
-                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
                             headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT',
                             valueType='int',
                         ),
@@ -127,7 +124,6 @@ Package(
                             description='The port number of the SDA pin.',
                             
                             isEnabled=False,
-                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
                             headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT',
                             valueType='int',
                         ),

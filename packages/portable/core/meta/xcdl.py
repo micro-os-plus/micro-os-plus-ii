@@ -62,6 +62,8 @@ first place, to run all system initialisation.',
                     # must be true, to save an explicit enable before setValue()
                     isEnabled=True,
                     
+                    childrenHeaderFile='include/portable/core/include/XCDL_GreetingDefines.h',
+                    
                     children=[
                         Component(
                             id='component.os.portable.core.platform.greetings.first',
@@ -72,7 +74,6 @@ first place, to run all system initialisation.',
 
                             valueType='string',
                             
-                            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
                             headerDefinition='OS_STRING_PLATFORM_GREETING_FIRST',
                         ),
                               
@@ -85,7 +86,6 @@ first place, to run all system initialisation.',
 
                             valueType='string',
                             
-                            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
                             headerDefinition='OS_STRING_PLATFORM_GREETING_SECOND',
                         ),
 

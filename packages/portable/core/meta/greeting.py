@@ -17,6 +17,7 @@ either by the debug inits, when enabled, or by the application itself.',
     
     # debug will require it
     isEnabled=False,
+    childrenHeaderFile='include/portable/core/include/XCDL_GreetingDefines.h',
           
     children=[
         
@@ -28,7 +29,6 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='string',
             defaultValue='Sample Application',
             
-            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_STRING_APPLICATION_NAME',
         ),
 
@@ -40,7 +40,6 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='string',
             defaultValue='livius.net',
 
-            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_STRING_APPLICATION_MANUFACTURER',            
         ),
 
@@ -52,7 +51,6 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='int',
             defaultValue='1',
 
-            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_INTEGER_VERSION_MAJOR',
             
             # This value needs to be stringified, so no parenthesis 
@@ -68,7 +66,6 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='int',
             defaultValue='1',
 
-            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_INTEGER_VERSION_MINOR',
 
             # This value needs to be stringified, so no parenthesis 
@@ -84,7 +81,6 @@ either by the debug inits, when enabled, or by the application itself.',
             valueType='int',
             defaultValue='1',
 
-            headerFile='include/portable/core/include/XCDL_GreetingDefines.h',
             headerDefinition='APP_INTEGER_VERSION_REVISION',
             
             # This value needs to be stringified, so no parenthesis 

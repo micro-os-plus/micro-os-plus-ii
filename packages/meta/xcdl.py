@@ -21,7 +21,7 @@ Repository(
     
     # The default dynamically generated header file, where all definitions that 
     # call for inclusions must be created.
-    headerFile='include/portable/core/include/XCDL_BuildDefines.h',
+    childrenHeaderFile='include/portable/core/include/XCDL_BuildDefines.h',
     
     # The folders where to search for include files during build
     buildIncludeFolders=[
