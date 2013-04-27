@@ -19,18 +19,14 @@ Configuration(
         # enable the platform    
         'enable("package.os.hal.platform.olimex.stm32h103")',  
         'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f10x.lib.stm.gpio")',              
+
+        # and the trace i2c bit-banged implementation
+        'enable("component.os.portable.diagnostics.trace.i2c")',        
     ],
               
     buildFolder='stm32h103/swo',
     
     buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
-    
-    copyFiles=[
-        ('swo_makefile_defs.mk','makefile_defs.mk'),
-        ('swo_makefile_targets.mk','makefile_targets.mk'),
-    ],
-    
-    artefactName='swo',
     
     children=[
                

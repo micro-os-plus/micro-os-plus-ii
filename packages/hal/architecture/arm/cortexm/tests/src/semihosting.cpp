@@ -4,13 +4,12 @@
 //
 
 /// \file
-/// \brief STM32F CMSIS simple test.
+/// \brief STM32F semi-hosting simple test.
 
 #include "portable/core/include/OS.h"
 
 #include "../include/simpleLed.h"
-
-#include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersSelector.h"
+#include "semihosting/semihosting.h"
 
 int
 main()
@@ -23,7 +22,11 @@ main()
   Led::powerUp();
   Led::turnOn();
 
+
 #define CYCLES  60
+
+  int j;
+  j = 0;
 
   for (int i = CYCLES; --i;)
     {
@@ -39,6 +42,15 @@ main()
 #if defined(DEBUG)
       os::diag::trace.putChar('*');
 #endif
+
+      char ch;
+      ch = j + ' ';
+      if (j==0)
+        ch='\n';
+
+      SH_SendChar(ch);
+
+      j = (j + 1) % 64;
 
     }
 

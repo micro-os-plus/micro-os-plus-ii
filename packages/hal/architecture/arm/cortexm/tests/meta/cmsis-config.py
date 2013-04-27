@@ -32,5 +32,12 @@ Configuration(
         'cmsis-stm32e407-config.py',
         'cmsis-stm32f4discovery-config.py',
     ],
+
+    artefactName='cmsis',
+
+    copyFiles=[
+        ('makefile_defs.mk','makefile_defs.mk'),
+        ('makefile_targets.mk','makefile_targets.mk'),
+    ],
               
 )

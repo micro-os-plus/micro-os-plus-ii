@@ -22,6 +22,7 @@ Package(
             isEnabled=False,
             sourceFiles=[
                 'cmsis.cpp',
+                'simpleLed.cpp',
             ],
                   
             includeFiles=[
@@ -37,17 +38,43 @@ Package(
         Component(
             id='component.os.hal.architecture.arm.cortexm.tests.swo',
             name='Test ARM Cortex-M SWO configuration',
-            description='Test build a SWO application.',
+            description='Test sending characters over SWO.',
     
             category='test',
     
             isEnabled=False,
             sourceFiles=[
                 'swo.cpp',
+                'simpleLed.cpp',
             ],
                   
             includeFiles=[
                 'swo-config.py',
+            ],
+                  
+            implements=[
+                'interface.os.artefact',
+            ],
+
+        ),
+              
+        Component(
+            id='component.os.hal.architecture.arm.cortexm.tests.semihosting',
+            name='Test ARM Cortex-M semihosting configuration',
+            description='Test sending characters over semihosting.',
+    
+            category='test',
+    
+            isEnabled=False,
+            sourceFiles=[
+                'semihosting.cpp',
+                'simpleLed.cpp',
+                'semihosting/sh_cmd.s',
+                'semihosting/semihosting.c',
+            ],
+                  
+            includeFiles=[
+                'semihosting-config.py',
             ],
                   
             implements=[

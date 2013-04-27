@@ -6,8 +6,8 @@
 
 # configuration specific for Olimex board STM32-H103
 Configuration(
-    id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32h103',
-    name='Test CMSIS on STM32-H103 configuration',
+    id='config.os.hal.architecture.arm.cortexm.tests.semihosting.stm32h103',
+    name='Test semihosting on STM32-H103 configuration',
     description='Common definitions for Debug/Release build configurations running on STM32-H103',
     
     loadPackages=[
@@ -27,19 +27,19 @@ Configuration(
             
     ],
               
-    buildFolder='stm32h103/cmsis',
+    buildFolder='stm32h103/semihosting',
     
     buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
-        
+    
     children=[
                
         # ARM Embedded Processors   
         Configuration(
-            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32h103.aep.gcc.debug',
-            name='Debug STM32-H103 CMSIS configuration with ARM Embedded GCC',
+            id='config.os.hal.architecture.arm.cortexm.tests.semihosting.stm32h103.aep.gcc.debug',
+            name='Debug STM32-H103 semihosting configuration with ARM Embedded GCC',
             description='Debug build configuration for CMSIS.',
             
-            buildConfigurationName='stm32h103_cmsis_aep_gcc_Debug',
+            buildConfigurationName='stm32h103_semihosting_aep_gcc_Debug',
             
             buildFolder='$(PARENT)/aep/gcc/Debug',
             
@@ -51,11 +51,11 @@ Configuration(
         ),
 
         Configuration(
-            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32h103.aep.gcc.release',
-            name='Release STM32-H103 CMSIS configuration with ARM Embedded GCC',
+            id='config.os.hal.architecture.arm.cortexm.tests.semihosting.stm32h103.aep.gcc.release',
+            name='Release STM32-H103 semihosting configuration with ARM Embedded GCC',
             description='Release build configuration for CMSIS.',
             
-            buildConfigurationName='stm32h103_cmsis_aep_gcc_Release',
+            buildConfigurationName='stm32h103_semihosting_aep_gcc_Release',
             
             buildFolder='$(PARENT)/aep/gcc/Release',
 

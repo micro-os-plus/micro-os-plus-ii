@@ -7,9 +7,9 @@
 
 Configuration(
               
-    id='config.os.hal.architecture.arm.cortexm.tests.swo',
-    name='ARM Cortex-M SWO application configuration',
-    description='Build the ARM Cortex-M SWO application.',
+    id='config.os.hal.architecture.arm.cortexm.tests.semihosting',
+    name='ARM Cortex-M semihosting application configuration',
+    description='Build the ARM Cortex-M semihosting test application.',
     
     loadPackages=[
         # mandatory test code package
@@ -20,22 +20,22 @@ Configuration(
     ],
     
     requirements=[
-        'setValue("APP_STRING_APPLICATION_NAME", "SWO")',        
+        'setValue("APP_STRING_APPLICATION_NAME", "semi-hosting")',        
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
         
         # enable test artefact
-        'enable("component.os.hal.architecture.arm.cortexm.tests.swo")',
+        'enable("component.os.hal.architecture.arm.cortexm.tests.semihosting")',
     ],
                   
     includeFiles=[
-        'swo-stm32h103-config.py',
+        'semihosting-stm32h103-config.py',
     ],
-              
-    artefactName='swo',
+
+    artefactName='semihosting',
     
     copyFiles=[
         ('makefile_defs.mk','makefile_defs.mk'),
         ('makefile_targets.mk','makefile_targets.mk'),
     ],
-
+              
 )

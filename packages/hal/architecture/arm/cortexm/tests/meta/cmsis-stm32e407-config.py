@@ -28,13 +28,6 @@ Configuration(
     
     buildTargetCpuOptions='-mcpu=cortex-m4 -mthumb -mfloat-abi=soft',
     
-    copyFiles=[
-        ('cmsis_makefile_defs.mk','makefile_defs.mk'),
-        ('cmsis_makefile_targets.mk','makefile_targets.mk'),
-    ],
-    
-    artefactName='cmsis',
-    
     children=[
                
         # ARM Embedded Processors   

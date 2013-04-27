@@ -1,4 +1,0 @@
-CUSTOM_EXECUTABLES += cmsis.hex
-CUSTOM_EXECUTABLES += cmsis.bin
-CUSTOM_EXECUTABLES += cmsis.lst
-CUSTOM_EXECUTABLES += cmsis.siz

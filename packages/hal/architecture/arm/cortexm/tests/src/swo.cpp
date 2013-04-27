@@ -4,19 +4,11 @@
 //
 
 /// \file
-/// \brief STM32F CMSIS simple test.
+/// \brief STM32F SWO simple test.
 
 #include "portable/core/include/OS.h"
 
-#if defined(OS_INCLUDE_HAL_MCU_DEVICE_STM32F103RB)
-#include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x.h"
-#include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x_gpio.h"
-#include "hal/architecture/arm/cortexm/stm32f/stm32f1/lib/stm/include/stm32f10x_rcc.h"
-#endif
-#include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersSelector.h"
-
-void
-Delay(__IO uint32_t nCount);
+#include "../include/simpleLed.h"
 
 void
 init_SWO(uint32_t SWOSpeed, uint32_t CPUSpeed);
@@ -32,69 +24,56 @@ main()
   os::diag::trace.putNewLine();
 #endif
 
+  Led::powerUp();
+  Led::turnOn();
+
 #define SWO_SPEED_BPS   (1000000)
 //#define SWO_SPEED_BPS   (19200)
 
   init_SWO(SWO_SPEED_BPS, 72000000);
 
-  /* At this stage the microcontroller clock setting is already configured,
-   this is done through SystemInit() function which is called from startup
-   file (startup_stm32f10x_xx.s) before to branch to application main.
-   To reconfigure the default setting of SystemInit() function, refer to
-   system_stm32f10x.c file
-   */
+#define CYCLES  60
 
-  /* GPIOC Periph clock enable */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+  int j;
+  j = 0;
 
-  GPIO_InitTypeDef GPIO_InitStructure;
-
-  /* Configure PC12 in output push/pull mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-#define DELAY_DURATION  5000000
-
-  int i;
-  i = 0;
-
-  while (1)
+  for (int i = CYCLES; --i;)
     {
-      // Set PC12
-      GPIOC ->BSRR = GPIO_Pin_12;
+
+      Led::turnOn();
 
       Delay(DELAY_DURATION);
-      // Reset PC12
-      GPIOC ->BRR = GPIO_Pin_12;
 
-      Delay(DELAY_DURATION);
+      Led::turnOff();
+
+      Delay(DELAY_DURATION / 2);
+
+#if defined(DEBUG)
+      os::diag::trace.putChar('*');
+#endif
 
       char ch;
-      ch = i + ' ';
-      if (i==0)
+      ch = j + ' ';
+      if (j==0)
         ch='\n';
 
       int r = ITM_SendChar2(ch);
 
-      i = (i + r) % 64;
+      j = (j + r) % 64;
+
+
     }
+
+  Led::powerDown();
+
+#if defined(DEBUG)
+  os::diag::trace.putString(" done");
+  os::diag::trace.putNewLine();
+#endif
 
   return 0;
 }
 
-/**
- * @brief  Inserts a delay time.
- * @param  nCount: specifies the delay time length.
- * @retval None
- */
-void
-Delay(__IO uint32_t nCount)
-{
-  for (; nCount != 0; nCount--)
-    ;
-}
 
 // CoreSight Components: Technical Reference Manual (DDI0314H)
 
