@@ -79,6 +79,10 @@
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_MD)
 #define STM32F10X_MD
+#elif defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_CL)
+#define STM32F10X_CL
+#else
+#error "Missing controller definition"
 #endif
 
 /* Uncomment the line below according to the target STM32 device used in your
