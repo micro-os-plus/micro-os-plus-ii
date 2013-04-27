@@ -76,6 +76,17 @@ Package(
                             valueFormat='(0x{0:02X})',
                             defaultValue=0x28,
                         ),
+
+                        Option(
+                            id='component.os.portable.diagnostics.trace.i2c.duration.clk',
+                            name='Diagnostics trace i2c clock duration',
+                            description='The duration of the i2c clock pulse.',
+                            
+                            headerFile='include/hal/platform/include/XCDL_TraceI2CDefines.h',
+                            headerDefinition='OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DURATION_CLK',
+                            valueType='int',
+                            defaultValue=1,
+                        ),
                               
                         Option(
                             id='component.os.portable.diagnostics.trace.i2c.scl.port',
