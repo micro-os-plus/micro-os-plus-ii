@@ -22,4 +22,4 @@ namespace hal
   }// namespace stm32h103
 } // namespace hal
 
-#endif // defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_LINUX)
+#endif // defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103)
