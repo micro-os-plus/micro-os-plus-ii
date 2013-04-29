@@ -23,6 +23,10 @@
 
 #include "hal/platform/olimex/stm32h103/include/PlatformImplementation.h"
 
+#elif defined(OS_INCLUDE_HAL_BOARD_OLIMEX_OLIMEXINOSTM32)
+
+#include "hal/platform/olimex/olimexinostm32/include/PlatformImplementation.h"
+
 #elif defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32P107)
 
 #include "hal/platform/olimex/stm32p107/include/PlatformImplementation.h"
