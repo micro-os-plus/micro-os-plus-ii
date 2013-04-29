@@ -45,4 +45,8 @@ Package(
     sourceFiles=[
         'PlatformImplementation.cpp',
     ],
+        
+    copyFiles=[
+        ('../include/PlatformImplementation.h', 'include/hal/platform/include/PlatformImplementation.h'),
+    ],
 )

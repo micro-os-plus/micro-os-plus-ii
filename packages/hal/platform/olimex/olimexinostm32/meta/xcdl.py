@@ -32,7 +32,7 @@ based on STM32F103.',
         'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT", 0)', # port A
         'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT", 0)',        
 
-        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT", 0)', # port 0
+        'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT", 0)', # port A
         'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT", 8)',        
 
     ],
@@ -44,6 +44,11 @@ based on STM32F103.',
     headerDefinition='OS_INCLUDE_HAL_BOARD_OLIMEX_OLIMEXINOSTM32',
     
     sourceFiles=[
-        'PlatformImplementation.cpp',
+        #'PlatformImplementation.cpp',
+    ],
+        
+    copyFiles=[
+        ('../include/PlatformImplementation.h', 'include/hal/platform/include/PlatformImplementation.h'),
+        #('/hal/platform/olimex/olimexinostm32/include/PlatformImplementation.h', 'include/hal/platform/include/PlatformImplementation.h'),
     ],
 )

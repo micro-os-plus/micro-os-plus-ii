@@ -34,4 +34,8 @@ command line tool, without system threading.',
     ],
 
     headerDefinition='OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_LINUX',
+        
+    copyFiles=[
+        ('../include/PlatformImplementation.h', 'include/hal/platform/include/PlatformImplementation.h'),
+    ],
 )

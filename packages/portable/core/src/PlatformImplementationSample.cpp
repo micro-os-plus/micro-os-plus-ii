@@ -4,22 +4,22 @@
 //
 
 /// \file
-/// \brief Olimex STM32-P107 board definitions.
+/// \brief MANUFACTURER BOARD_NAME board definitions.
 
 #include "portable/core/include/ConfigDefines.h"
 
-#if defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32P107) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_HAL_BOARD_MMMM_BBBB) || defined(__DOXYGEN__)
 
-#include "hal/platform/olimex/stm32p107/include/PlatformImplementation.h"
+#include "hal/platform/mmmm/bbbb/include/PlatformImplementation.h"
 
 namespace hal
 {
-  namespace stm32p107
+  namespace bbbb
   {
   // --------------------------------------------------------------------------
 
   // --------------------------------------------------------------------------
-  }// namespace stm32p107
+  }// namespace bbbb
 } // namespace hal
 
-#endif // defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_LINUX)
+#endif // defined(OS_INCLUDE_HAL_BOARD_MMMM_BBBB)
