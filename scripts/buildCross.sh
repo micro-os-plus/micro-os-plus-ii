@@ -63,7 +63,7 @@ function runTestCollection()
 	runTestPair "stm32f4discovery_cmsis_"$1
 }
 
-echo "XCDL runTests: started"
+echo "XCDL buildCross: started"
 
 if [ $UNAME == "Linux" ]
 then
@@ -90,6 +90,6 @@ then
 fi
 
 echo
-echo "XCDL runTests: completed, results in $DEST"
+echo "XCDL buildCross: completed, results in $DEST"
 echo
 echo "PWD=`pwd`"
