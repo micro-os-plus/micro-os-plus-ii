@@ -13,6 +13,7 @@ Component(
 
     sourceFiles=[
         'InterruptVectors.cpp',
+        'FamilyImplementation.cpp',
     ],
           
     requirements=[

@@ -13,6 +13,7 @@ Component(
 
     sourceFiles=[
         'InterruptVectors.cpp',
+        'FamilyImplementation.cpp',
     ],
 
     headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F1',

@@ -15,7 +15,7 @@
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F)
 
-#include "hal/architecture/arm/cortexm/stm32f/include/FamilyImplementation.h"
+#include "hal/architecture/arm/cortexm/stm32f/include/FamilyImplementationSelector.h"
 
 #else
 

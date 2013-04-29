@@ -4,10 +4,10 @@
 //
 
 /// \file
-/// \brief STM32F declarations of family implementation class.
+/// \brief STM32F declarations of family base class.
 
-#ifndef HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_FAMILYIMPLEMENTATION_H_
-#define HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_FAMILYIMPLEMENTATION_H_
+#ifndef HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_FAMILYBASE_H_
+#define HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_FAMILYBASE_H_
 
 #include "portable/core/include/ConfigDefines.h"
 
@@ -22,18 +22,18 @@ namespace hal
     // ------------------------------------------------------------------------
 
     /// \ingroup stm32f
-    /// \headerfile FamilyImplementation.h "hal/architecture/arm/cortexm/stm32f/include/FamilyImplementation.h"
+    /// \headerfile FamilyBase.h "hal/architecture/arm/cortexm/stm32f/include/FamilyBase.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F family implementation.
-    class FamilyImplementation
+    /// \brief STM32F family base.
+    class FamilyBase
     {
     public:
       /// \name Constructors/destructor
       /// @{
 
       /// \brief Deleted constructor.
-      FamilyImplementation() = delete;
+      FamilyBase() = delete;
 
       /// @} end of name Constructors/destructor
 
@@ -73,17 +73,9 @@ namespace hal
 
     };
 
-  } // namespace stm32f
-
-  // --------------------------------------------------------------------------
-
-  namespace cortexm
-  {
-    typedef hal::stm32f::FamilyImplementation FamilyImplementation;
-  }
-
   // ==========================================================================
-}
+  }// namespace stm32f
+}// namespace hal
 
 #endif // OS_INCLUDE_HAL_MCU_FAMILY_STM32F
-#endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_FAMILYIMPLEMENTATION_H_
+#endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_FAMILYBASE_H_
