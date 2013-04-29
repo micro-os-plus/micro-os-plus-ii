@@ -139,7 +139,24 @@ namespace hal
 
   // --------------------------------------------------------------------------
 
-  }
+  } // namespace stm32f
+} // namespace hal
+
+extern "C" void
+assert_failed(unsigned char*func, int lineno);
+
+void
+assert_failed(unsigned char*func __attribute__((unused)),
+    int lineno __attribute__((unused)))
+{
+#if defined(DEBUG) || defined(__DOXYGEN__)
+  os::diag::trace.putString(func);
+  os::diag::trace.putString(" ");
+  os::diag::trace.putDec(lineno);
+  os::diag::trace.putNewLine();
+#endif
+
+  hal::cortexm::FamilyImplementation::resetSystem();
 }
 
 #endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F)
