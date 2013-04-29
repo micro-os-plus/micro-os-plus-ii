@@ -21,9 +21,9 @@ namespace os
     {
       // ======================================================================
 
-      template<class WatchDog_T, int HoldDuration_T, int SetupDuration_T>
+      template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
         void
-        TTimer<WatchDog_T, HoldDuration_T, SetupDuration_T>::sleep(
+        TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleep(
             duration_t count)
         {
           // add one more cycle
@@ -72,7 +72,7 @@ namespace os
           Timer::sleepSetupDuration();
 
           SDA::setLow();
-          Timer::sleepHoldDuration();
+          Timer::sleepClockDuration();
           SCL::setLow();
           Timer::sleepSetupDuration();
         }
@@ -100,7 +100,7 @@ namespace os
               Timer::sleepSetupDuration();
 
               SCL::setHighAndSynchronise();
-              Timer::sleepHoldDuration();
+              Timer::sleepClockDuration();
               SCL::setLow();
 
               Timer::sleepSetupDuration();
@@ -127,14 +127,14 @@ namespace os
               Timer::sleepSetupDuration();
 
               SCL::setHighAndSynchronise();
-              Timer::sleepHalfHoldDuration();
+              Timer::sleepHalfClockDuration();
               b <<= 1;
               // sample at the middle of the hold period
               if (SDA::isHigh())
                 {
                   b |= 1;
                 }
-              Timer::sleepHalfHoldDuration();
+              Timer::sleepHalfClockDuration();
               SCL::setLow();
 
               Timer::sleepSetupDuration();
@@ -158,10 +158,10 @@ namespace os
           Timer::sleepSetupDuration();
 
           SCL::setHighAndSynchronise();
-          Timer::sleepHalfHoldDuration();
+          Timer::sleepHalfClockDuration();
           // sample at the middle of the hold period
           ret = SDA::isLow();
-          Timer::sleepHalfHoldDuration();
+          Timer::sleepHalfClockDuration();
           SCL::setLow();
 
           // as soon as SCL goes low, the slave will
@@ -169,7 +169,7 @@ namespace os
           Timer::sleepSetupDuration();
 
           // extra inter-bytes break
-          Timer::sleepHoldDuration();
+          Timer::sleepClockDuration();
           return ret;
         }
 
@@ -184,15 +184,15 @@ namespace os
         {
           // be sure SDA starts from low
           SDA::setLow();
-          Timer::sleepHoldDuration();
+          Timer::sleepClockDuration();
 
           SCL::setHighAndSynchronise();
-          Timer::sleepHoldDuration();
+          Timer::sleepClockDuration();
           SDA::setHighAndSynchronise();
           Timer::sleepSetupDuration();
 
           // extra end of transaction break
-          Timer::sleepHoldDuration();
+          Timer::sleepClockDuration();
         }
 
       /// \details

@@ -32,15 +32,21 @@ namespace hal
       typedef os::bitbang::i2c::duration_t duration_t;
       typedef os::bitbang::i2c::address_t address_t;
 
-      static const duration_t HOLD_DURATION_LOOPS = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DURATION_CLK;
-      static const duration_t SETUP_DURATION_LOOPS = HOLD_DURATION_LOOPS / 2;
-      static const address_t I2C_DESTINATION_ADDRESS = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DESTINATION_ADDRESS;
+      static const duration_t CLOCK_DURATION_LOOPS =
+          OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DURATION_CLK;
 
-      static const int SDA_PORT = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT;
-      static const int SDA_BIT = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT;
+      static const address_t I2C_DESTINATION_ADDRESS =
+          OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DESTINATION_ADDRESS;
 
-      static const int SCL_PORT = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT;
-      static const int SCL_BIT = OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT;
+      static const int SDA_PORT =
+          OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT;
+      static const int SDA_BIT =
+          OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT;
+
+      static const int SCL_PORT =
+          OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT;
+      static const int SCL_BIT =
+          OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT;
 
       // ======================================================================
 
@@ -58,7 +64,8 @@ namespace hal
 
           // 0 = GPIOA, 1 = GPIOC, ...
           static constexpr int GPIO_PortNo = Port_T;
-          static constexpr GPIO_TypeDef* GPIO_Address = (GPIO_TypeDef*) ((GPIOA_BASE + 0x0400*GPIO_PortNo));
+          static constexpr GPIO_TypeDef* GPIO_Address =
+              (GPIO_TypeDef*) ((GPIOA_BASE + (0x0400 * GPIO_PortNo)));
 
           /// \name Constructors/destructor
           /// @{
@@ -167,7 +174,7 @@ namespace hal
           GPIO_Init(GPIO_Address, &GPIO_InitStructure);
 
           // start pin as high
-          GPIO_Address->BSRRL = GPIO_BitMask;
+          setHigh();
         }
 
       /// \details
@@ -307,8 +314,7 @@ namespace hal
 } // namespace hal
 
 template class os::bitbang::i2c::TTimer<hal::stm32f4::diag::WatchDog,
-    hal::stm32f4::diag::HOLD_DURATION_LOOPS,
-    hal::stm32f4::diag::SETUP_DURATION_LOOPS>;
+    hal::stm32f4::diag::CLOCK_DURATION_LOOPS>;
 
 namespace hal
 {
@@ -316,8 +322,7 @@ namespace hal
   {
     namespace diag
     {
-      typedef os::bitbang::i2c::TTimer<WatchDog, HOLD_DURATION_LOOPS,
-          SETUP_DURATION_LOOPS> Timer;
+      typedef os::bitbang::i2c::TTimer<WatchDog, CLOCK_DURATION_LOOPS> Timer;
     } // namespace diag
   } // namespace stm32f4
 } // namespace hal
@@ -396,11 +401,11 @@ namespace hal
               }
             I2CMaster::sendStop();
 
-            Timer::sleep(hal::stm32f4::diag::HOLD_DURATION_LOOPS * 10);
+            Timer::sleep(hal::stm32f4::diag::CLOCK_DURATION_LOOPS * 10);
             break;
 
             retry: //
-            Timer::sleep((hal::stm32f4::diag::HOLD_DURATION_LOOPS + 1) * 10);
+            Timer::sleep((hal::stm32f4::diag::CLOCK_DURATION_LOOPS + 1) * 10);
           }
         // EI
         return count;
@@ -424,14 +429,5 @@ namespace hal
   } // namespace stm32f4
 } // namespace hal
 
-extern "C" void
-assert_failed(unsigned char*func, int lineno);
-
-void
-assert_failed(unsigned char*func __attribute__((unused)),
-    int lineno __attribute__((unused)))
-{
-  // TODO print string and number
-}
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_DIAGNOSTICS_TRACEIMPLEMENTATION)

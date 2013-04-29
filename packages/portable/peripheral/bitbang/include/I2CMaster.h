@@ -107,7 +107,7 @@ namespace os
       /// \details
       /// The TTimer template implements a simple timer used
       /// by the I2C master.
-     template<class WatchDog_T, int HoldDuration_T, int SetupDuration_T>
+     template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T = ClockDuration_T/2>
         class TTimer
         {
         public:
@@ -133,7 +133,7 @@ namespace os
           void
           sleep(duration_t count);
 
-          /// \brief Sleep for the hold duration.
+          /// \brief Sleep for the clock high duration.
           ///
           /// \par Parameters
           ///     None.
@@ -141,9 +141,9 @@ namespace os
           ///     Nothing.
           static
           void
-          sleepHoldDuration(void);
+          sleepClockDuration(void);
 
-          /// \brief Sleep for the half hold duration.
+          /// \brief Sleep for the half clock high duration.
           ///
           /// \par Parameters
           ///     None.
@@ -151,7 +151,7 @@ namespace os
           ///     Nothing.
           static
           void
-          sleepHalfHoldDuration(void);
+          sleepHalfClockDuration(void);
 
           /// \brief Sleep for the setup duration.
           ///
@@ -169,31 +169,31 @@ namespace os
 
       // ------------------------------------------------------------------------
 
-      template<class WatchDog_T, int HoldDuration_T, int SetupDuration_T>
+      template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
         inline
         void
-        TTimer<WatchDog_T, HoldDuration_T, SetupDuration_T>::sleepHoldDuration(
+        TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleepClockDuration(
             void)
         {
-          sleep(HoldDuration_T);
+          sleep(ClockDuration_T);
         }
 
-      template<class WatchDog_T, int HoldDuration_T, int SetupDuration_T>
+      template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
         inline
         void
-        TTimer<WatchDog_T, HoldDuration_T, SetupDuration_T>::sleepSetupDuration(
+        TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleepSetupDuration(
             void)
         {
           sleep(SetupDuration_T);
         }
 
-      template<class WatchDog_T, int HoldDuration_T, int SetupDuration_T>
+      template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
         inline
         void
-        TTimer<WatchDog_T, HoldDuration_T, SetupDuration_T>::sleepHalfHoldDuration(
+        TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleepHalfClockDuration(
             void)
         {
-          sleep(HoldDuration_T / 2);
+          sleep(ClockDuration_T / 2);
         }
 
       // ========================================================================
