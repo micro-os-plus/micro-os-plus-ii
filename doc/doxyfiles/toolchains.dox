@@ -247,11 +247,20 @@ arm-none-eabi-g++ (GNU Tools for ARM Embedded Processors) 4.7.3 20130312 (releas
 
 \section linux GNU/Linux
 
-TBD
-
 \subsection linuxsynt Synthetic POSIX
 
-TBD
+The main toolchain for building µOS++ SE synthetic POSIX applications is 
+the default <b>GCC</b>, currently version 4.7.
+
+By default, on the 64-bit Ubuntu 12.10, only the 64-bit compiler and 
+libraries are usually installed. In order to also run the 32-bit tests, it 
+is necessary to install the *multilib* libraries:
+
+\verbatim
+sudo apt-get install gcc gcc-multilib g++ g++-multilib
+\endverbatim
+
+To check if the correct compiler is available, run:
 
 \verbatim
 $ g++ --version
@@ -260,7 +269,43 @@ g++ (Ubuntu/Linaro 4.7.2-2ubuntu1) 4.7.2
 
 
 \subsection linuxarmcm ARM Cortex-M
-TBD
+
+There are many ARM toolchains available on GNU/Linux, more or less up-to-date.
+
+Until recently the the ARM reference toolchain was 
+<b>Sourcery CodeBench Lite ARM</b>, but more traction it seems to gain
+the <b>GNU Tools for ARM Embedded Processors</b>.
+
+\subsubsection linuxlp GNU Tools for ARM Embedded Processors
+
+A relatively new, but very active, toolchain (first release 
+seems to date from end of 2011) 
+the <b>GNU Tools for ARM 
+Embedded Processors</b> is hosted on [launchpad.net]
+(https://launchpad.net/gcc-arm-embedded) and runs on all significant 
+platforms. The current version is based on GCC 4.7.3.
+
+To use this toolchain, download the latest `gcc-arm-none-eabi-*-linux.tar.bz2`
+file, unpack it and copy the resulting folder to /usr/local.
+
+To simplify path management, it is recommended to create a link to the 
+latest release of a certain version, for example:
+
+\verbatim
+cd ~/Downloads
+wget https://launchpad.net/gcc-arm-embedded/4.7/4.7-2013-q1-update/+download/gcc-arm-none-eabi-4_7-2013q1-20130313-linux.tar.bz2
+sudo cp gcc-arm-none-eabi-4_7-2013q1-20130313-linux.tar.bz2 /usr/local
+cd /usr/local
+sudo tar xjvf gcc-arm-none-eabi-4_7-2013q1-20130313-linux.tar.bz2
+sudo ln -s gcc-arm-none-eabi-4_7-2013q1 gcc-arm-none-eabi-4_7
+\endverbatim
+
+To check if the compiler is available, call the compiler using `--version`:
+
+\verbatim
+$ /usr/local/gcc-arm-none-eabi-4_7/bin/arm-none-eabi-g++ --version
+arm-none-eabi-g++ (GNU Tools for ARM Embedded Processors) 4.7.3 20130312 (release) [ARM/embedded-4_7-branch revision 196615]
+\endverbatim
 
 \subsection linuxavr8 Atmel AVR8
 
