@@ -74,7 +74,7 @@ then
 		
 		if [ -x "$PATH_ARM/arm-none-eabi-g++" ]
 		then
-			(PATH=$PATH_ARM:$PATH; runTestCollection "aep_gcc" )
+			(PATH=$PATH_ARM:$PATH; runTestCollection "linux_aep_gcc" )
 		fi
 		
 	)
@@ -89,7 +89,7 @@ then
 		
 		if [ -x "$PATH_ARM/arm-none-eabi-g++" ]
 		then
-			(PATH=$PATH_ARM:$PATH; runTestCollection "aep_gcc" )
+			(PATH=$PATH_ARM:$PATH; runTestCollection "osx_aep_gcc" )
 		fi
 			
 	)
