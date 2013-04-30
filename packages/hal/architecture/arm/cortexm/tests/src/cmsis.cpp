@@ -10,7 +10,7 @@
 
 #include "../include/simpleLed.h"
 
-#include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersSelector.h"
+#include "hal/architecture/include/InterruptNumbers.h"
 
 int
 main()

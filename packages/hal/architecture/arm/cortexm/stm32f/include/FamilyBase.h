@@ -26,6 +26,14 @@ namespace hal
     /// \nosubgrouping
     ///
     /// \brief STM32F family base.
+    ///
+    /// \details
+    /// This class can be used as base class for all specific family
+    /// implementations.
+    /// It provides not much functionality, it is given more as a sample
+    /// on how to look the derived class, that must overwrite these
+    /// member functions.
+
     class FamilyBase
     {
     public:
@@ -59,7 +67,7 @@ namespace hal
       resetSystem(void);
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
-      /// \brief Put family specific greeting on the trace device.
+      /// \brief Output family specific greetings on the trace device.
       ///
       /// \par Parameters
       ///    None.
@@ -72,6 +80,46 @@ namespace hal
       /// @} end of Public member functions
 
     };
+
+
+    /// \details
+    /// Place holder for the generic STM32F initialisation code.
+    /// Overwrite it for each family with the actual code.
+    inline __attribute__((always_inline))
+    void
+    FamilyBase::initialiseSystem(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putString("Missing initialiseSystem()");
+      os::diag::trace.putNewLine();
+#endif
+    }
+
+    /// \details
+    /// Place holder for the generic STM32F reset code.
+    /// Overwrite it for each family with the actual code.
+    inline __attribute__((always_inline))
+    void
+    FamilyBase::resetSystem(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putString("Missing resetSystem()");
+      os::diag::trace.putNewLine();
+#endif
+    }
+
+#if defined(DEBUG) || defined(__DOXYGEN__)
+    /// \details
+    /// Place holder for the family greeting code.
+    /// Overwrite it for each family with the actual code.
+    inline __attribute__((always_inline))
+    void
+    FamilyBase::putGreeting(void)
+    {
+      os::diag::trace.putString("STM32F Cortex-M");
+      os::diag::trace.putNewLine();
+    }
+#endif
 
   // ==========================================================================
   }// namespace stm32f

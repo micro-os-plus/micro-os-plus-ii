@@ -50,7 +50,7 @@ namespace hal
 
       // ======================================================================
 
-      /// \ingroup stm32f10x_diag
+      /// \ingroup stm32f1_diag
       /// \nosubgrouping
       ///
       /// \brief Open drain pin template class.
@@ -273,7 +273,7 @@ namespace hal
 
       // ======================================================================
 
-      /// \ingroup stm32f10x_diag
+      /// \ingroup stm32f1_diag
       /// \brief Watch dog policy class.
       class WatchDog
       {
@@ -293,7 +293,7 @@ namespace hal
 
       // ======================================================================
 
-      /// \ingroup stm32f10x_diag
+      /// \ingroup stm32f1_diag
       /// @{
 
       /// \brief SDA template explicit instantiation.

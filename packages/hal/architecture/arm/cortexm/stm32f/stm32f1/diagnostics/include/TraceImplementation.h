@@ -25,7 +25,7 @@ namespace hal
       // ======================================================================
 
       /// \headerfile TraceImplementation.h "hal/architecture/synthetic/posix/include/TraceImplementation.h"
-      /// \ingroup stm32f10x_diag
+      /// \ingroup stm32f1_diag
       /// \nosubgrouping
       ///
       /// \brief The stm32f10x version of the TraceImplementation.

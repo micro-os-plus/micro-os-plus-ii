@@ -13,7 +13,7 @@
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F427X) || defined(__DOXYGEN__)
 
-#include "InterruptNumbersBase.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/InterruptNumbersBase.h"
 
 namespace hal
 {

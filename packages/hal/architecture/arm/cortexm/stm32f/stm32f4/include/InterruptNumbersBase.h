@@ -13,7 +13,7 @@
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4) || defined(__DOXYGEN__)
 
-#include "hal/architecture/arm/cortexm/cortexm3/include/InterruptNumbers.h"
+#include "hal/architecture/arm/cortexm/cortexm4/include/InterruptNumbers.h"
 
 namespace hal
 {
@@ -30,14 +30,14 @@ namespace hal
     /// \details
     /// The STM32F4 family is based on Cortex-M4; so it inherits
     /// all Cortex-M4 interrupt numbers and adds more specific ones.
-    class interruptNumberBase : public hal::cortexm4::InterruptNumber
+    class InterruptNumberBase : public hal::cortexm4::InterruptNumber
     {
     public:
       /// \name Constructors/destructor
       /// @{
 
       /// \brief Deleted constructor
-      interruptNumberBase() = delete;
+      InterruptNumberBase() = delete;
 
       /// @} end of name Constructors/destructor
 

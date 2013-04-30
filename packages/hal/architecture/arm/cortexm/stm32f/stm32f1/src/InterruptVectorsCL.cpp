@@ -22,7 +22,7 @@ namespace hal
 
     namespace InterruptHandler
     {
-      /// \ingroup stm32f10xcl_irq
+      /// \ingroup stm32f1cl_irq
       /// @{
 
       /// \name Interrupt handlers
@@ -128,75 +128,75 @@ namespace hal
       extern void
       OTG_FS_Wakeup(void);
 
-      /// \brief XXX Handler
+      /// \brief TIM5 Global Handler
       extern void
       TIM5Global(void);
 
-      /// \brief XXX Handler
+      /// \brief SPI3 Global Handler
       extern void
       SPI3Global(void);
 
-      /// \brief XXX Handler
+      /// \brief UART4 Global Handler
       extern void
       UART4Global(void);
 
-      /// \brief XXX Handler
+      /// \brief UART5 Global Handler
       extern void
       UART5Global(void);
 
-      /// \brief XXX Handler
+      /// \brief TIM6 Global Handler
       extern void
       TIM6Global(void);
 
-      /// \brief XXX Handler
+      /// \brief TIM7 Global Handler
       extern void
       TIM7Global(void);
 
-      /// \brief XXX Handler
+      /// \brief DMA2 Channel 1 Global Handler
       extern void
       DMA2Channel1(void);
 
-      /// \brief XXX Handler
+      /// \brief DMA2 Channel 2 Global Handler
       extern void
       DMA2Channel2(void);
 
-      /// \brief XXX Handler
+      /// \brief DMA2 Channel 3 Global Handler
       extern void
       DMA2Channel3(void);
 
-      /// \brief XXX Handler
+      /// \brief DMA2 Channel 4 Global Handler
       extern void
       DMA2Channel4(void);
 
-      /// \brief XXX Handler
+      /// \brief DMA2 Channel 5 Global Handler
       extern void
       DMA2Channel5(void);
 
-      /// \brief XXX Handler
+      /// \brief Ethernet Global Handler
       extern void
       ETHGlobal(void);
 
-      /// \brief XXX Handler
+      /// \brief Ethernet Wakeup through ExternalLine line Handler
       extern void
       ETHWakeup(void);
 
-      /// \brief XXX Handler
+      /// \brief CAN2 TX Handler
       extern void
       CAN2_TX(void);
 
-      /// \brief XXX Handler
+      /// \brief CAN2 RX0 Handler
       extern void
       CAN2_RX0(void);
 
-      /// \brief XXX Handler
+      /// \brief CAN2 RX1 Handler
       extern void
       CAN2_RX1(void);
 
-      /// \brief XXX Handler
+      /// \brief CAN2 SCE Handler
       extern void
       CAN2_SCE(void);
 
-      /// \brief XXX Handler
+      /// \brief USB OTG FS Global Handler
       extern void
       OTG_FS(void);
 
@@ -212,7 +212,7 @@ namespace hal
 
     // ------------------------------------------------------------------------
 
-    /// \ingroup stm32f10xcl_irq
+    /// \ingroup stm32f1cl_irq
     /// \showinitializer
     /// \brief STM32F10X_CL specific interrupt vectors.
     __attribute__ ((section(".device_isr_vectors")))
@@ -296,40 +296,40 @@ namespace hal
             // 43-49 Reserved
             0,0,0,0,0,0,0,
 
-            // 50: TIM5 global
+            // 50: TIM5 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::TIM5Global),
 
-            // 51: SPI3 global
+            // 51: SPI3 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::SPI3Global),
 
-            // 52: UART4 global
+            // 52: UART4 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::UART4Global),
 
-            // 53: UART5 global
+            // 53: UART5 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::UART5Global),
 
-            // 54: TIM6 global
+            // 54: TIM6 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::TIM6Global),
 
-            // 55: TIM7 global
+            // 55: TIM7 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::TIM7Global),
 
-            // 56: DMA2 Channel 1 global
+            // 56: DMA2 Channel 1 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::DMA2Channel1),
 
-            // 57: DMA2 Channel 2 global
+            // 57: DMA2 Channel 2 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::DMA2Channel2),
 
-            // 58: DMA2 Channel 3 global
+            // 58: DMA2 Channel 3 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::DMA2Channel3),
 
-            // 59: DMA2 Channel 4 global
+            // 59: DMA2 Channel 4 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::DMA2Channel4),
 
-            // 60: DMA2 Channel 5 global
+            // 60: DMA2 Channel 5 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::DMA2Channel5),
 
-            // 61: Ethernet global
+            // 61: Ethernet Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::ETHGlobal),
 
             // 62: Ethernet Wakeup through ExternalLine line
@@ -347,7 +347,7 @@ namespace hal
             // 66: CAN2 SCE
             reinterpret_cast<interruptVector_t>(InterruptHandler::CAN2_SCE),
 
-            // 67: USB OTG FS global
+            // 67: USB OTG FS Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::OTG_FS),
         //
         };
@@ -356,7 +356,7 @@ namespace hal
 
     namespace InterruptHandler
     {
-      /// \ingroup stm32f10xcl_irq
+      /// \ingroup stm32f1cl_irq
       /// \name Interrupt handlers
       /// \brief Default interrupt handler.
       ///

@@ -31,6 +31,10 @@ Component(
 
             headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION',
                     
+            copyFiles=[
+                ('../include/TestSuiteImplementation.h','include/hal/architecture/infrastructure/include/TestSuiteImplementation.h'),
+            ],
+            
         ),
     ],
 )

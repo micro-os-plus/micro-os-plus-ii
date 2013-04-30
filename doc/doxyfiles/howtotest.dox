@@ -46,6 +46,10 @@ The result should look like:
 g++ (Ubuntu/Linaro 4.7.2-2ubuntu1) 4.7.2
 \endverbatim
 
+It is highly recommendd to also install the cross toolchains (for more 
+details see the 
+\ref toolchains).
+
 
 \subsection osx OS X
 
@@ -79,6 +83,10 @@ sudo port install gcc47 +universal
 The toolchain binaries are available in `/opt/local/bin/` as:
 - g++-mp-4.6
 - g++-mp-4.7
+
+It is highly recommendd to also install the cross toolchains (for more 
+details see the 
+\ref toolchains).
 
 The `git` executables are installed via the `Command Line Tools` 
 package provided (freely) by Apple.
@@ -118,18 +126,15 @@ git clone http://git.code.sf.net/p/xcdl/python xcdl-python.git
 
 /bin/bash micro-os-plus-se.git/scripts/runTests.sh --dest /tmp/uOS/build
 \endverbatim
-or
-\verbatim
-/bin/bash micro-os-plus-se.git/scripts/runTests.sh
-\endverbatim
 
-\note The `runTests.sh` script accepts an optional argument --dest, followed
+The `runTests.sh` script accepts an optional argument --dest, followed
 by the 
 location where the build folders will be created, in this case a 
-temporary folder.
+temporary folder. Without it the build folder will be created
+in the current folder.
 
-If you also installed the cross toolchains (see the 
-\ref toolchains), you can also run the script
+If you followed the previous advices and installed the cross toolchains 
+(see the \ref toolchains), you can also run the script
 to test various builds:
 
 \verbatim

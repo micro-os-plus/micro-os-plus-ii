@@ -13,7 +13,7 @@
 
 #if defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE) || defined(__DOXYGEN__)
 
-#include "TraceImplementationSelector.h"
+#include "hal/architecture/diagnostics/include/TraceImplementation.h"
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
 

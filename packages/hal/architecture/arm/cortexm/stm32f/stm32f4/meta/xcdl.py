@@ -20,8 +20,11 @@ Component(
         'enable("component.os.hal.architecture.arm.cortexm4")',
     ],
                   
-
     headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F4',
+
+    copyFiles=[
+        ('../include/FamilyImplementation.h', 'include/hal/architecture/include/FamilyImplementation.h'),
+    ],
 
     children=[
               
@@ -37,6 +40,10 @@ Component(
             ],
           
             headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F40XX',
+
+            copyFiles=[
+                ('../include/InterruptNumbers40XX.h','include/hal/architecture/include/InterruptNumbers.h'),
+            ],
                    
             children=[
                       

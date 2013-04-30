@@ -13,7 +13,7 @@
 
 #if defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) || defined(__DOXYGEN__)
 
-#include "TestSuiteImplementationSelector.h"
+#include "hal/architecture/infrastructure/include/TestSuiteImplementation.h"
 
 #include <stdint.h>
 

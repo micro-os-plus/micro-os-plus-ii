@@ -22,7 +22,7 @@ namespace hal
 
     namespace InterruptHandler
     {
-      /// \ingroup stm32f10x_irq
+      /// \ingroup stm32f1_irq
       /// @{
 
       /// \name Interrupt handlers
@@ -112,7 +112,7 @@ namespace hal
 
     // ------------------------------------------------------------------------
 
-    /// \ingroup stm32f10x_irq
+    /// \ingroup stm32f1_irq
     /// \showinitializer
     /// \brief STM32F10x specific interrupt vectors.
     __attribute__ ((section(".family_isr_vectors")))
@@ -179,7 +179,7 @@ namespace hal
 
     namespace InterruptHandler
     {
-      /// \ingroup stm32f10x_irq
+      /// \ingroup stm32f1_irq
       /// \name Interrupt handlers
       /// \brief Default interrupt handler.
       ///

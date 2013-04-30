@@ -13,7 +13,7 @@
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_MD) || defined(__DOXYGEN__)
 
-#include "InterruptNumbersBase.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersBase.h"
 
 namespace hal
 {
@@ -21,7 +21,7 @@ namespace hal
   {
     // ========================================================================
 
-    /// \ingroup stm32f10xmd_irq
+    /// \ingroup stm32f1md_irq
     /// \headerfile InterruptNumbersMD.h "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersMD.h"
     /// \nosubgrouping
     ///
@@ -40,7 +40,7 @@ namespace hal
       /// \name Interrupt numbers
       /// @{
 
-      /// ADC1 and ADC2 global Interrupt
+      /// ADC1 and ADC2 Global Interrupt
       static const interruptNumber_t ADC1_2Global = 18;
       /// USB Device High Priority or CAN1 TX Interrupts
       static const interruptNumber_t USB_HP_CAN1_TX = 19;
@@ -60,11 +60,11 @@ namespace hal
       static const interruptNumber_t Timer1TriggerCommutation = 26;
       /// TIM1 Capture Compare Interrupt
       static const interruptNumber_t Timer1CaptureCompare = 27;
-      /// Timer2 global Interrupt
+      /// Timer2 Global Interrupt
       static const interruptNumber_t Timer2Global = 28;
-      /// Timer3 global Interrupt
+      /// Timer3 Global Interrupt
       static const interruptNumber_t Timer3Global = 29;
-      /// Timer4 global Interrupt
+      /// Timer4 Global Interrupt
       static const interruptNumber_t Timer4Global = 30;
       /// I2C1 Event Interrupt
       static const interruptNumber_t I2C1Event = 31;
@@ -74,15 +74,15 @@ namespace hal
       static const interruptNumber_t I2C2Event = 33;
       /// I2C2 Error Interrupt
       static const interruptNumber_t I2C2Error = 34;
-      /// SPI1 global Interrupt
+      /// SPI1 Global Interrupt
       static const interruptNumber_t SPI1Global = 35;
-      /// SPI2 global Interrupt
+      /// SPI2 Global Interrupt
       static const interruptNumber_t SPI2Global = 36;
-      /// USART1 global Interrupt
+      /// USART1 Global Interrupt
       static const interruptNumber_t USART1Global = 37;
-      /// USART2 global Interrupt
+      /// USART2 Global Interrupt
       static const interruptNumber_t USART2Global = 38;
-      /// USART3 global Interrupt
+      /// USART3 Global Interrupt
       static const interruptNumber_t USART3Global = 39;
       /// External Line[15:10] Interrupts
       static const interruptNumber_t ExternalLines15_10 = 40;

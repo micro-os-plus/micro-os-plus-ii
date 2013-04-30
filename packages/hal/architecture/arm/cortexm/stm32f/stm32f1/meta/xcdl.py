@@ -18,6 +18,10 @@ Component(
 
     headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F1',
 
+    copyFiles=[
+        ('../include/FamilyImplementation.h', 'include/hal/architecture/include/FamilyImplementation.h'),
+    ],
+          
     children=[
               
         Component(
@@ -32,7 +36,11 @@ Component(
             ],
                   
             headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_MD',
-                   
+               
+            copyFiles=[
+                ('../include/InterruptNumbersMD.h','include/hal/architecture/include/InterruptNumbers.h'),
+            ],
+                
             children=[
                       
                 Component(
@@ -68,7 +76,11 @@ Component(
             ],
                   
             headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F10X_CL',
-                   
+
+            copyFiles=[
+                ('../include/InterruptNumbersCL.h','include/hal/architecture/include/InterruptNumbers.h'),
+            ],
+                                   
             children=[
                       
                 Component(

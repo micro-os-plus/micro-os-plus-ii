@@ -22,7 +22,7 @@ namespace hal
   {
     // ========================================================================
 
-    /// \ingroup stm32f10xhd_irq
+    /// \ingroup stm32f1hd_irq
     /// \headerfile InterruptNumbersHD.h "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersHD.h"
     /// \nosubgrouping
     ///

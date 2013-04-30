@@ -26,7 +26,12 @@ namespace hal
     /// \nosubgrouping
     ///
     /// \brief STM32F1 family implementation.
-    class FamilyImplementation
+    ///
+    /// \details
+    /// This file must be copied by XCDL to the build folder, and will
+    /// be accessed from `hal/architecture/include/FamilyImplementation.h`.
+
+    class FamilyImplementation : public stm32f::FamilyBase
     {
     public:
       /// \name Constructors/destructor

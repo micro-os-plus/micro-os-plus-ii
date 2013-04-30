@@ -14,9 +14,12 @@ Package(
         'ArchitectureImplementation.cpp',
     ],
     
-
     headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M',
     
+    copyFiles=[
+        ('../include/ArchitectureImplementation.h','include/hal/architecture/include/ArchitectureImplementation.h'),
+    ],
+        
     children=[
 
         Component(

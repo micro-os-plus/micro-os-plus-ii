@@ -22,7 +22,7 @@ namespace hal
   {
     // ========================================================================
 
-    /// \ingroup stm32f10xldvl_irq
+    /// \ingroup stm32f1ldvl_irq
     /// \headerfile InterruptNumbersLDVL.h "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptNumbersLDVL.h"
     /// \nosubgrouping
     ///

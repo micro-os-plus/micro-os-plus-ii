@@ -14,7 +14,7 @@
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
 #include "portable/core/include/PlatformBase.h"
-#include "hal/architecture/arm/cortexm/include/FamilyImplementationSelector.h"
+#include "hal/architecture/include/FamilyImplementation.h"
 #include "portable/core/include/XCDL_GreetingDefines.h"
 
 namespace hal

@@ -81,84 +81,88 @@ Cortex-M 32-bit MCU, the STM32F microcontrollers
  from [STMicroelectronics]
 (http://www.st.com/) consists of several series:
 - STM32 F0 Series of entry-level Cortex-M0 MCU
-- \ref stm32f10x "STM32 F1" Series of mainstream MCUs
+- \ref stm32f1 "STM32 F1" Series of mainstream MCUs
 - STM32 F2 Series of high-performance MCUs
 - STM32 F3 Series of mixed-signal MCUs with DSP and FPU instructions
-- STM32 F4 Series of high-performance MCUs with DSP and FPU instructions
+- \ref stm32f4 "STM32 F4" Series of high-performance MCUs with DSP and FPU instructions
 
 
-	\defgroup stm32f10x STM32 F1 series
+	\defgroup stm32f1 STM32 F1 series
 	\ingroup stm32f
 	\brief ST Micro STM32F10X families of microcontrollers.
 
 The ST Micro STM32F10X family of microcontrollers consists of the following subfamilies:
 - Low-density devices are STM32F101xx, STM32F102xx and STM32F103xx microcontrollers
    where the Flash memory density ranges between 16 and 32 Kbytes
-   (\ref stm32f10xld "STM32F10X_LD").
+   (\ref stm32f1ld "STM32F10X_LD").
 - Low-density value line devices are STM32F100xx microcontrollers where the Flash
    memory density ranges between 16 and 32 Kbytes
-   (\ref stm32f10xldvl "STM32F10X_LD_VL").
+   (\ref stm32f1ldvl "STM32F10X_LD_VL").
 - Medium-density devices are STM32F101xx, STM32F102xx and STM32F103xx microcontrollers
    where the Flash memory density ranges between 64 and 128 Kbytes
-   (\ref stm32f10xmd "STM32F10X_MD").
+   (\ref stm32f1md "STM32F10X_MD").
 - Medium-density value line devices are STM32F100xx microcontrollers where the 
    Flash memory density ranges between 64 and 128 Kbytes
-   (\ref stm32f10xmdvl "STM32F10X_MD_VL").   
+   (\ref stm32f1mdvl "STM32F10X_MD_VL").   
 - High-density devices are STM32F101xx and STM32F103xx microcontrollers where
    the Flash memory density ranges between 256 and 512 Kbytes
-   (\ref stm32f10xhd "STM32F10X_HD").
+   (\ref stm32f1hd "STM32F10X_HD").
 - High-density value line devices are STM32F100xx microcontrollers where the 
    Flash memory density ranges between 256 and 512 Kbytes
-   (\ref stm32f10xhdvl "STM32F10X_HD_VL").   
+   (\ref stm32f1hdvl "STM32F10X_HD_VL").   
 - XL-density devices are STM32F101xx and STM32F103xx microcontrollers where
    the Flash memory density ranges between 512 and 1024 Kbytes
-   (\ref stm32f10xxl "STM32F10X_XL").
+   (\ref stm32f1xl "STM32F10X_XL").
 - Connectivity line devices are STM32F105xx and STM32F107xx microcontrollers
-   (\ref stm32f10xcl "STM32F10X_CL").
+   (\ref stm32f1cl "STM32F10X_CL").
 
-		\defgroup stm32f10x_irq Interrupts
-		\ingroup stm32f10x
+		\defgroup stm32f1_irq Interrupts
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X Interrupt numbers and handlers.
 
-		\defgroup stm32f10x_diag Diagnostics
-		\ingroup stm32f10x
+		\defgroup stm32f1_diag Diagnostics
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X Diagnostics support.
 
-		\defgroup stm32f10xld STM32F10X_LD family
-		\ingroup stm32f10x
+		\defgroup stm32f1ld STM32F10X_LD family
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X Low Density family of microcontrollers.
 
-		\defgroup stm32f10xldvl STM32F10X_LD_VL family
-		\ingroup stm32f10x
+		\defgroup stm32f1ldvl STM32F10X_LD_VL family
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X Low Density Value Line family of microcontrollers.
 
-		\defgroup stm32f10xmd STM32F10X_MD family
-		\ingroup stm32f10x
+		\defgroup stm32f1md STM32F10X_MD family
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X Medium Density family of microcontrollers
 
-			\defgroup stm32f10xmd_irq Interrupts
-			\ingroup stm32f10xmd
-			\brief ST Micro STM32F10X Medium Density family of microcontrollers.
+			\defgroup stm32f1md_irq Interrupts
+			\ingroup stm32f1md
+			\brief ST Micro STM32F10X Medium Density interrupt numbers and handlers.
 
-		\defgroup stm32f10xmdvl STM32F10X_MD_VL family
-		\ingroup stm32f10x
+		\defgroup stm32f1mdvl STM32F10X_MD_VL family
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X Medium Density value Line family of microcontrollers.
 
-		\defgroup stm32f10xhd STM32F10X_HD family
-		\ingroup stm32f10x
+		\defgroup stm32f1hd STM32F10X_HD family
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X High Density family of microcontrollers.
 
-		\defgroup stm32f10xhdvl STM32F10X_HD_VL family
-		\ingroup stm32f10x
+		\defgroup stm32f1hdvl STM32F10X_HD_VL family
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X High Density value line family of microcontrollers.
 
-		\defgroup stm32f10xxl STM32F10X_XL family
-		\ingroup stm32f10x
+		\defgroup stm32f1xl STM32F10X_XL family
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X XL-Density family of microcontrollers.
 
-		\defgroup stm32f10xcl STM32F10X_CL family
-		\ingroup stm32f10x
+		\defgroup stm32f1cl STM32F10X_CL family
+		\ingroup stm32f1
 		\brief ST Micro STM32F10X Connectivity Line family of microcontrollers.
+
+			\defgroup stm32f1cl_irq Interrupts
+			\ingroup stm32f1cl
+			\brief ST Micro STM32F10X Connectivity Line interrupt numbers and handlers.
 
 	\defgroup stm32f4 STM32 F4 series
 	\ingroup stm32f
@@ -237,9 +241,28 @@ developers and reducing the time to market for new devices.
 \defgroup olimex Olimex boards
 \brief Olimex boards support.
 
-		\defgroup stm32fh103 STM32F-H103
-		\brief Olimex STM32F-H103.
+		\defgroup stm32h103 STM32F-H103
+		\brief Olimex STM32-H103 development board.
     	\ingroup olimex
+
+		\defgroup stm32p107 STM32F-P107
+		\brief Olimex STM32-P107 development board.
+    	\ingroup olimex
+
+		\defgroup stm32e407 STM32F-E407
+		\brief Olimex STM32-E407 development board.
+    	\ingroup olimex
+
+		\defgroup olimexinostm32 OLIMEXINO-STM32
+		\brief Olimex OLIMEXINO-STM32 development board.
+    	\ingroup olimex
+
+\defgroup stm STMicro boards
+\brief STMicro boards support.
+
+		\defgroup stm32f4discovery STM32F4DISCOVERY
+		\brief ST STM32F4DISCOVERY development board.
+    	\ingroup stm
 
 \defgroup posix POSIX synthetic
 \brief Generic POSIX synthetic architecture support.

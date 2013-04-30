@@ -11,9 +11,9 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-// Select one of the supported architectures, based on configuration
-// variables.
-#include "portable/core/include/ArchitectureImplementationSelector.h"
+// Include one of the supported architectures,
+// copied to the build folder by the XCDL procedure.
+#include "hal/architecture/include/ArchitectureImplementation.h"
 
 namespace os
 {

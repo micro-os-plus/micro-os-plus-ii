@@ -25,6 +25,10 @@ Component(
                 'TraceImplementation.cpp',
             ],
             
+            copyFiles=[
+                ('../include/TraceImplementation.h','include/hal/architecture/diagnostics/include/TraceImplementation.h'),
+            ],
+                  
             activeIf=[
                 'component.os.portable.diagnostics.trace',
             ],

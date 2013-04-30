@@ -19,8 +19,6 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-//#include "portable/core/include/PlatformImplementationSelector.h"
-
 // Don't search for this file in the source folders, since it is
 // read from the build folder, where the build procedure copies it.
 #include "hal/platform/include/PlatformImplementation.h"

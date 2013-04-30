@@ -22,7 +22,7 @@ namespace hal
 
     namespace InterruptHandler
     {
-      /// \ingroup stm32f10xmd_irq
+      /// \ingroup stm32f1md_irq
       /// @{
 
       /// \name Interrupt handlers
@@ -140,7 +140,7 @@ namespace hal
 
     // ------------------------------------------------------------------------
 
-    /// \ingroup stm32f10xmd_irq
+    /// \ingroup stm32f1md_irq
     /// \showinitializer
     /// \brief STM32F10X_MD specific interrupt vectors.
     __attribute__ ((section(".device_isr_vectors")))
@@ -176,13 +176,13 @@ namespace hal
             // 27: TIM1 Capture Compare
             reinterpret_cast<interruptVector_t>(InterruptHandler::Timer1CaptureCompare),
 
-            // 28: Timer2Global
+            // 28: Timer2 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::Timer2Global),
 
-            // 29: Timer3Global
+            // 29: Timer3 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::Timer3Global),
 
-            // 30: Timer4Global
+            // 30: Timer4 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::Timer4Global),
 
             // 31: I2C1 Event
@@ -200,16 +200,16 @@ namespace hal
             // 35: SPI1Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::SPI1Global),
 
-            // 36: SPI2Global
+            // 36: SPI2 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::SPI2Global),
 
-            // 37: USART1Global
+            // 37: USART1 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::USART1Global),
 
-            // 38: USART2Global
+            // 38: USART2 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::USART2Global),
 
-            // 39: USART3Global
+            // 39: USART3 Global
             reinterpret_cast<interruptVector_t>(InterruptHandler::USART3Global),
 
             // 40: External Line[15:10]
@@ -237,7 +237,7 @@ namespace hal
 
     namespace InterruptHandler
     {
-      /// \ingroup stm32f10xmd_irq
+      /// \ingroup stm32f1md_irq
       /// \name Interrupt handlers
       /// \brief Default interrupt handler.
       ///
