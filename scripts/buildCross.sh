@@ -69,7 +69,14 @@ if [ $UNAME == "Linux" ]
 then
 
 	time (
-		echo "add code"
+	
+		PATH_ARM="/usr/local/gcc-arm-none-eabi-4_7/bin"
+		
+		if [ -x "$PATH_ARM/arm-none-eabi-g++" ]
+		then
+			(PATH=$PATH_ARM:$PATH; runTestCollection "aep_gcc" )
+		fi
+		
 	)
 
 elif [ $UNAME == "Darwin" ]
