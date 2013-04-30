@@ -8,7 +8,7 @@
 
 #include "portable/core/include/OS.h"
 
-#include "../include/simpleled.h"
+#include "../include/simpleLed.h"
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F1)
 
