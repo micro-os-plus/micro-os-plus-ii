@@ -104,9 +104,8 @@ git config --global core.editor "vi"
 \section run Run the tests
 
 Once the prerequisites are satisfied, create a dedicated folder for
-the tests, clone the repositories and run the script.
-
-\note In addition to the µOS++ SE repository,
+the tests, clone the repositories and run the script. 
+In addition to the µOS++ SE repository,
 a second repository, containing the
 <b>XCDL build tools</b>, is required.
 
@@ -117,16 +116,25 @@ cd work/uOS
 git clone http://git.code.sf.net/p/micro-os-plus/second micro-os-plus-se.git
 git clone http://git.code.sf.net/p/xcdl/python xcdl-python.git
 
-/bin/bash micro-os-plus-se.git/scripts/runTests.sh /tmp/uOS/build
+/bin/bash micro-os-plus-se.git/scripts/runTests.sh --dest /tmp/uOS/build
 \endverbatim
 or
 \verbatim
 /bin/bash micro-os-plus-se.git/scripts/runTests.sh
 \endverbatim
 
-\note The `runTests.sh` script accepts an optional argument, defining the 
+\note The `runTests.sh` script accepts an optional argument --dest, followed
+by the 
 location where the build folders will be created, in this case a 
 temporary folder.
+
+If you also installed the cross toolchains (see the 
+\ref toolchains), you can also run the script
+to test various builds:
+
+\verbatim
+/bin/bash micro-os-plus-se.git/scripts/buildCross.sh --dest /tmp/uOS/buildCross
+\endverbatim
 
 \section output Sample output
 
