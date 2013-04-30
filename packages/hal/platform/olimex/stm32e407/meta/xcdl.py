@@ -47,6 +47,6 @@ Package(
     ],
         
     copyFiles=[
-        ('../include/PlatformImplementation.h', 'include/hal/platform/include/PlatformImplementation.h'),
+        ('/hal/architecture/arm/cortexm/include/PlatformImplementationDefault.h', 'include/hal/platform/include/PlatformImplementation.h'),
     ],
 )

@@ -43,10 +43,10 @@ Package(
     headerDefinition='OS_INCLUDE_HAL_BOARD_STM_STM32F4DISCOVERY',
     
     sourceFiles=[
-        'PlatformImplementation.cpp',
+        #'PlatformImplementation.cpp',
     ],
         
     copyFiles=[
-        ('../include/PlatformImplementation.h', 'include/hal/platform/include/PlatformImplementation.h'),
+        ('/hal/architecture/arm/cortexm/include/PlatformImplementationDefault.h', 'include/hal/platform/include/PlatformImplementation.h'),
     ],
 )
