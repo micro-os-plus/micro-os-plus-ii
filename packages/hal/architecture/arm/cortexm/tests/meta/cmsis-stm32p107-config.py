@@ -33,15 +33,15 @@ Configuration(
         
     children=[
                
-        # ARM Embedded Processors   
+        # GNU Tools for ARM Embedded Processors on OS X
         Configuration(
-            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32p107.aep.gcc.debug',
-            name='Debug STM32-P107 CMSIS configuration with ARM Embedded GCC',
+            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32p107.osx.aep.gcc.debug',
+            name='Debug STM32-P107 CMSIS configuration with ARM Embedded GCC on OS X',
             description='Debug build configuration for CMSIS.',
             
-            buildConfigurationName='stm32p107_cmsis_aep_gcc_Debug',
+            buildConfigurationName='stm32p107_cmsis_osx_aep_gcc_Debug',
             
-            buildFolder='$(PARENT)/aep/gcc/Debug',
+            buildFolder='$(PARENT)/osx/aep/gcc/Debug',
             
             requirements=[
                 'enable("DEBUG")',
@@ -52,15 +52,46 @@ Configuration(
         ),
 
         Configuration(
-            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32p107.aep.gcc.release',
-            name='Release STM32-P107 CMSIS configuration with ARM Embedded GCC',
+            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32p107.osx.aep.gcc.release',
+            name='Release STM32-P107 CMSIS configuration with ARM Embedded GCC on OS X',
             description='Release build configuration for CMSIS.',
             
-            buildConfigurationName='stm32p107_cmsis_aep_gcc_Release',
+            buildConfigurationName='stm32p107_cmsis_osx_aep_gcc_Release',
             
-            buildFolder='$(PARENT)/aep/gcc/Release',
+            buildFolder='$(PARENT)/osx/aep/gcc/Release',
 
             toolchain='toolchain.osx.aep.arm.gcc.release',
         ),
+
+        # GNU Tools for ARM Embedded Processors on GNU/Linux
+        Configuration(
+            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32p107.linux.aep.gcc.debug',
+            name='Debug STM32-P107 CMSIS configuration with ARM Embedded GCC on GNU/Linux',
+            description='Debug build configuration for CMSIS.',
+            
+            buildConfigurationName='stm32p107_cmsis_linux_aep_gcc_Debug',
+            
+            buildFolder='$(PARENT)/linux/aep/gcc/Debug',
+            
+            requirements=[
+                'enable("DEBUG")',
+                'setValue("OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DURATION_CLK", 8)',
+            ],
+              
+            toolchain='toolchain.linux.aep.arm.gcc.debug',
+        ),
+
+        Configuration(
+            id='config.os.hal.architecture.arm.cortexm.tests.cmsis.stm32p107.linux.aep.gcc.release',
+            name='Release STM32-P107 CMSIS configuration with ARM Embedded GCC on GNU/Linux',
+            description='Release build configuration for CMSIS.',
+            
+            buildConfigurationName='stm32p107_cmsis_linux_aep_gcc_Release',
+            
+            buildFolder='$(PARENT)/linux/aep/gcc/Release',
+
+            toolchain='toolchain.linux.aep.arm.gcc.release',
+        ),
+
     ],
 )

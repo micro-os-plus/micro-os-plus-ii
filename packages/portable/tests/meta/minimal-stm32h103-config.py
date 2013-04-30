@@ -35,15 +35,15 @@ Configuration(
     
     children=[
                
-        # ARM Embedded Processors   
+        # GNU Tools for ARM Embedded Processors on OS X  
         Configuration(
-            id='config.os.portable.tests.minimal.stm32h103.aep.gcc.debug',
-            name='Debug STM32-H103 Minimal configuration with ARM Embedded GCC',
+            id='config.os.portable.tests.minimal.stm32h103.osx.aep.gcc.debug',
+            name='Debug STM32-H103 Minimal configuration with ARM Embedded GCC on OS X',
             description='Debug build configuration for Minimal.',
             
-            buildConfigurationName='stm32h103_minimal_aep_gcc_Debug',
+            buildConfigurationName='stm32h103_minimal_osx_aep_gcc_Debug',
             
-            buildFolder='$(PARENT)/aep/gcc/Debug',
+            buildFolder='$(PARENT)/osx/aep/gcc/Debug',
             
             requirements=[
                 'enable("DEBUG")',
@@ -53,15 +53,47 @@ Configuration(
         ),
 
         Configuration(
-            id='config.os.portable.tests.minimal.stm32h103.aep.gcc.release',
-            name='Release STM32-H103 Minimal configuration with ARM Embedded GCC',
+            id='config.os.portable.tests.minimal.stm32h103.osx.aep.gcc.release',
+            name='Release STM32-H103 Minimal configuration with ARM Embedded GCC on OS X',
             description='Release build configuration for Minimal.',
             
-            buildConfigurationName='stm32h103_minimal_aep_gcc_Release',
+            buildConfigurationName='stm32h103_minimal_osx_aep_gcc_Release',
             
-            buildFolder='$(PARENT)/aep/gcc/Release',
+            buildFolder='$(PARENT)/osx/aep/gcc/Release',
 
             toolchain='toolchain.osx.aep.arm.gcc.release',
         ),
+              
+              
+        # GNU Tools for ARM Embedded Processors on GNU/Linux 
+        Configuration(
+            id='config.os.portable.tests.minimal.stm32h103.linux.aep.gcc.debug',
+            name='Debug STM32-H103 Minimal configuration with ARM Embedded GCC on GNU/Linux',
+            description='Debug build configuration for Minimal.',
+            
+            buildConfigurationName='stm32h103_minimal_linux_aep_gcc_Debug',
+            
+            buildFolder='$(PARENT)/linux/aep/gcc/Debug',
+            
+            requirements=[
+                'enable("DEBUG")',
+            ],
+              
+            toolchain='toolchain.linux.aep.arm.gcc.debug',
+        ),
+
+        Configuration(
+            id='config.os.portable.tests.minimal.stm32h103.linux.aep.gcc.release',
+            name='Release STM32-H103 Minimal configuration with ARM Embedded GCC on GNU/Linux',
+            description='Release build configuration for Minimal.',
+            
+            buildConfigurationName='stm32h103_minimal_linux_aep_gcc_Release',
+            
+            buildFolder='$(PARENT)/linux/aep/gcc/Release',
+
+            toolchain='toolchain.linux.aep.arm.gcc.release',
+        ),
+              
+
     ],
 )
