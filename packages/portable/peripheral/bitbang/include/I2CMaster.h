@@ -6,7 +6,7 @@
 /// \file
 /// \brief Template declarations for the bit banged I2C Master class.
 ///
-/// \details The current implementation was intended to be used as
+/// \details The current implementation was intended as
 /// output device for the tracing facility, i.e. to output messages
 /// over I2C to a dedicated device that transfers them on the fly
 /// over USB serial to a computer.
@@ -18,7 +18,10 @@
 /// in situations when
 /// clock stretching is used. Even more, the master will also
 /// wait for the data line to be released, although in this case
-/// the transactions wll probably be compromised anyway.
+/// the transactions will probably be compromised anyway.
+///
+/// \todo When the SDA line is controlled by someone else, abort
+/// the transaction and retry it properly.
 
 #ifndef OS_PORTABLE_PERIPHERAL_BITBANG_I2CMASTER_H_
 #define OS_PORTABLE_PERIPHERAL_BITBANG_I2CMASTER_H_
@@ -170,7 +173,7 @@ namespace os
       // ------------------------------------------------------------------------
 
       template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
-        inline
+        inline __attribute__((always_inline))
         void
         TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleepClockDuration(
             void)
@@ -179,7 +182,7 @@ namespace os
         }
 
       template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
-        inline
+        inline __attribute__((always_inline))
         void
         TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleepSetupDuration(
             void)
@@ -188,7 +191,7 @@ namespace os
         }
 
       template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
-        inline
+        inline __attribute__((always_inline))
         void
         TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleepHalfClockDuration(
             void)
