@@ -15,7 +15,7 @@ Component(
     ],
 
     sourceFiles=[
-        'InterruptVectors.cpp',
+        #'InterruptVectors.cpp',
     ],
 
     headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M4',

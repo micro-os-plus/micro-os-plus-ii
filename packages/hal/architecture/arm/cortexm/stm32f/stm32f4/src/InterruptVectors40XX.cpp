@@ -23,6 +23,13 @@
 
 #include "portable/core/include/Platform.h"
 
+// Since weak references can point only to symbols defined in the
+// same compilation unit, we bring all pieces that form the
+// interrupt vectors together here.
+// The order should not be a problem, since each piece goes to a specific
+// linker section.
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/InterruptVectors.cpp.h"
+
 namespace hal
 {
   namespace stm32f40xx

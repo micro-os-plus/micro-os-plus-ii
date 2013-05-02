@@ -6,6 +6,9 @@
 /// \file
 /// \brief ARM Cortex-M0 interrupt vectors.
 
+#ifndef HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM0_INTERRUPTVECTORS_CPP_H_
+#define HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM0_INTERRUPTVECTORS_CPP_H_
+
 #include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0) || defined(__DOXYGEN__)
@@ -16,6 +19,8 @@
 #include "hal/architecture/arm/cortexm/ldscripts/LinkerScript.h"
 
 #include "portable/core/include/Platform.h"
+
+#include "hal/architecture/arm/cortexm/include/DefaultInterruptHandler.cpp.h"
 
 namespace hal
 {
@@ -133,10 +138,6 @@ namespace hal
 
 // ----------------------------------------------------------------------------
 
-#include "hal/architecture/arm/cortexm/include/DefaultInterruptHandler.cpp.h"
-
-// ----------------------------------------------------------------------------
-
 // Unfortunately '#pragma weak' is not C++ friendly, so we need
 // to manually mangle the function names.
 
@@ -158,3 +159,4 @@ namespace hal
 // ----------------------------------------------------------------------------
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M0)
+#endif // HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM0_INTERRUPTVECTORS_CPP_H_

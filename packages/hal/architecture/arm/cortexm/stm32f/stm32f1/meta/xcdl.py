@@ -12,7 +12,7 @@ Component(
     isEnabled=False,
 
     sourceFiles=[
-        'InterruptVectors.cpp',
+        #'InterruptVectors.cpp',
         'FamilyImplementation.cpp',
     ],
 

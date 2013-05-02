@@ -14,6 +14,13 @@
 
 #include "portable/core/include/Platform.h"
 
+// Since weak references can point only to symbols defined in the
+// same compilation unit, we bring all pieces that form the
+// interrupt vectors together here.
+// The order should not be a problem, since each piece goes to a specific
+// linker section.
+#include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/InterruptVectors.cpp.h"
+
 namespace hal
 {
   namespace stm32f10xmd
@@ -233,29 +240,6 @@ namespace hal
         //
         };
 
-    // ------------------------------------------------------------------------
-
-    namespace InterruptHandler
-    {
-      /// \ingroup stm32f1md_irq
-      /// \name Interrupt handlers
-      /// \brief Default interrupt handler.
-      ///
-      /// \details
-      /// All undefined interrupt handlers are routed to this function,
-      /// via weak references, and from here to the architecture Default.
-      __attribute__ ((naked))
-      void
-      Default(void)
-      {
-        // jump to the os::cortexm::defaultInterruptHandler()
-        asm volatile (
-            " b _ZN3hal7cortexm16InterruptHandler7DefaultEv \n"
-            ::
-        );
-      }
-    } // namespace InterruptHandler
-
   // --------------------------------------------------------------------------
 
   }// namespace stm32f10xmd
@@ -264,79 +248,79 @@ namespace hal
 // ----------------------------------------------------------------------------
 
 // #pragma weak InterruptHandler::ADC1_2Global = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12ADC1_2GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12ADC1_2GlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::USB_HP_CAN1_TX = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler14USB_HP_CAN1_TXEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler14USB_HP_CAN1_TXEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::USB_LP_CAN1_RX0 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler15USB_LP_CAN1_RX0Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler15USB_LP_CAN1_RX0Ev = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::CAN1_RX1 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler8CAN1_RX1Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler8CAN1_RX1Ev = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::CAN1_SCE = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler8CAN1_SCEEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler8CAN1_SCEEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::EXTI9_5 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler16ExternalLines9_5Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler16ExternalLines9_5Ev = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::Timer1Break = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler11Timer1BreakEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler11Timer1BreakEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::Timer1Update = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer1UpdateEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer1UpdateEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::Timer1TriggerCommutation = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler24Timer1TriggerCommutationEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler24Timer1TriggerCommutationEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::Timer1CaptureCompare = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler20Timer1CaptureCompareEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler20Timer1CaptureCompareEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::Timer2Global = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer2GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer2GlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::Timer3Global = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer3GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer3GlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::Timer4Global = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer4GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12Timer4GlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::I2C1Event = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C1EventEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C1EventEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::I2C1Error = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C1ErrorEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C1ErrorEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::I2C2Event = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C2EventEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C2EventEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::I2C2Error = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C2ErrorEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler9I2C2ErrorEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::SPI1Global = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler10SPI1GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler10SPI1GlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::SPI2Global = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler10SPI2GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler10SPI2GlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::USART1Global = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12USART1GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12USART1GlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::USART2Global = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12USART2GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12USART2GlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::USART3Global = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12USART3GlobalEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler12USART3GlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::ExternalLines15_10 = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler18ExternalLines15_10Ev = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler18ExternalLines15_10Ev = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::RealTimeClockAlarm = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler18RealTimeClockAlarmEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler18RealTimeClockAlarmEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // #pragma weak InterruptHandler::USBDeviceWakeUp = InterruptHandler::Default
-#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler15USBDeviceWakeUpEv = _ZN3hal11stm32f10xmd16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal11stm32f10xmd16InterruptHandler15USBDeviceWakeUpEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // ----------------------------------------------------------------------------
 
