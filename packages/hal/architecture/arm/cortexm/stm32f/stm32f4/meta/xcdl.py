@@ -23,6 +23,7 @@ Component(
     headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F4',
 
     copyFiles=[
+        ('../ldscripts/sections.ld', 'ldscripts/sections.ld'),
         ('../include/FamilyImplementation.h', 'include/hal/architecture/include/FamilyImplementation.h'),
     ],
 
