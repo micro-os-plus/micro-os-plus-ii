@@ -21,7 +21,7 @@ namespace hal
   {
     // ========================================================================
 
-    /// \ingroup stm32f4_irq
+    /// \ingroup stm32f427x_irq
     /// \headerfile InterruptNumbers427X.h "hal/architecture/arm/cortexm/stm32f/stm32f4/include/InterruptNumbers427X.h"
     /// \nosubgrouping
     ///

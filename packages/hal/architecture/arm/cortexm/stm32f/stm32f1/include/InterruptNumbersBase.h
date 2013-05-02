@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief STM32F10X base class of sub-family interrupt numbers.
+/// \brief STM32F1 base class of sub-family interrupt numbers.
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F1_INTERRUPTNUMBERSBASE_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F1_INTERRUPTNUMBERSBASE_H_

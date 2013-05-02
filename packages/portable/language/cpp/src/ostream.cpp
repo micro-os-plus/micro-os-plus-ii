@@ -7,6 +7,9 @@
 // 'LLVM libcxx Credits.txt'. See 'LLVM libcxx License.txt' for details.
 //
 
+/// \file
+/// \brief Output streams definitions.
+
 #include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)

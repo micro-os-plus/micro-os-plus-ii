@@ -9,6 +9,9 @@
 // References are to ISO/IEC 14882:2011(E) Third edition (2011-09-01).
 //
 
+/// \file
+/// \brief Locale (large) definitions.
+
 #include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)

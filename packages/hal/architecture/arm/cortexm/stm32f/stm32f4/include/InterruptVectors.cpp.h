@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief STM32F4 array of interrupt vectors.
+/// \brief STM32F4 interrupt vectors.
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_INTERRUPTVECTORS_CPP_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_INTERRUPTVECTORS_CPP_H_

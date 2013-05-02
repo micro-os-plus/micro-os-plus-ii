@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief STM32F10X array of interrupt vectors.
+/// \brief STM32F1 interrupt vectors.
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_STM32F1_INTERRUPTVECTORS_CPP_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_STM32F1_INTERRUPTVECTORS_CPP_H_

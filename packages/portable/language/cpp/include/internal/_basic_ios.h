@@ -9,6 +9,9 @@
 // References are to ISO/IEC 14882:2011(E) Third edition (2011-09-01).
 //
 
+/// \file
+/// \brief Bsic I/O streams.
+
 #ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_BASIC_IOS_H_
 #define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_BASIC_IOS_H_
 

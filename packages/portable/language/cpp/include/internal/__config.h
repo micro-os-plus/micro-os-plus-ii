@@ -7,6 +7,9 @@
 // 'LLVM libcxx Credits.txt'. See 'LLVM libcxx License.txt' for details.
 //
 
+/// \file
+/// \brief Library configuration definitions.
+
 #ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CONFIG_H_
 #define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CONFIG_H_
 
