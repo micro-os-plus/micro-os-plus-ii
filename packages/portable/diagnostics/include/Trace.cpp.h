@@ -26,7 +26,8 @@ namespace os
     // ========================================================================
     // TraceStreambufBase
 
-#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
+// Do not enable it for __DOXYGEN__, the dependency graphs are too large
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)
 
     /// \details
     /// Pass the implementation reference to the base streambuf.
