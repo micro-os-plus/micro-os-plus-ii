@@ -92,7 +92,7 @@ namespace hal
 
   } // namespace stm32f10xxl
 
-  namespace stm32f10x
+  namespace cortexm
   {
     typedef  hal::stm32f10xxl::InterruptNumber InterruptNumber;
   }

@@ -54,7 +54,7 @@ namespace hal
 
   }// namespace stm32f40xx
 
-  namespace stm32f4
+  namespace cortexm
   {
     typedef hal::stm32f40xx::InterruptNumber InterruptNumber;
   }
