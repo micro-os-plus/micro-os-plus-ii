@@ -27,9 +27,7 @@ files located in the µOS++ repository only.
 
 Here are direct links to some useful pages:
 - \subpage downloads
-- \subpage howtotest
 - \subpage support
-- \subpage toolchains
 - \subpage jtag
 
 - \ref uman
