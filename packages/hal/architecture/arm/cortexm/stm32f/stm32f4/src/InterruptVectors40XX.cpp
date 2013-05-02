@@ -71,36 +71,6 @@ namespace hal
 
         };
 
-    // ------------------------------------------------------------------------
-
-    namespace InterruptHandler
-    {
-      /// \name Interrupt handlers
-      /// @} end of name Interrupt handlers
-
-      /// \ingroup stm32f40xx_irq
-      /// \brief Default interrupt handler.
-      ///
-      /// \details
-      /// All undefined interrupt handlers are routed to this function,
-      /// via weak references, and from here to the architecture Default().
-      /// This additional indirection is required since weak references
-      /// can point only to symbols defined in the same compilation unit.
-      __attribute__ ((naked))
-      void
-      Default(void)
-      {
-        // jump to the os::cortexm::defaultInterruptHandler()
-        asm volatile (
-            " b _ZN3hal7cortexm16InterruptHandler7DefaultEv \n"
-            ::
-        );
-      }
-
-    /// @} end of name Interrupt handlers
-
-    }// namespace InterruptHandler
-
   // --------------------------------------------------------------------------
 
   }// namespace stm32f40xx
@@ -109,7 +79,7 @@ namespace hal
 // ----------------------------------------------------------------------------
 
 // #pragma weak InterruptHandler::FPUGlobal = InterruptHandler::Default
-#pragma weak _ZN3hal10stm32f40xx16InterruptHandler9FPUGlobalEv = _ZN3hal10stm32f40xx16InterruptHandler7DefaultEv
+#pragma weak _ZN3hal10stm32f40xx16InterruptHandler9FPUGlobalEv = _ZN3hal7cortexm16InterruptHandler7DefaultEv
 
 // ----------------------------------------------------------------------------
 
