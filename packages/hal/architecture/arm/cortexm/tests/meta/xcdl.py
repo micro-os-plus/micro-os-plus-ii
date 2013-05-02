@@ -34,6 +34,29 @@ Package(
             ],
 
         ),
+         
+        Component(
+            id='component.os.hal.architecture.arm.cortexm.tests.gpio',
+            name='Test ARM Cortex-M GPIO configuration',
+            description='Test build a GPIO application.',
+    
+            category='test',
+    
+            isEnabled=False,
+            sourceFiles=[
+                'gpio.cpp',
+                'simpleLed.cpp',
+            ],
+                  
+            includeFiles=[
+                'gpio-config.py',
+            ],
+                  
+            implements=[
+                'interface.os.artefact',
+            ],
+
+        ),
 
         Component(
             id='component.os.hal.architecture.arm.cortexm.tests.swo',
