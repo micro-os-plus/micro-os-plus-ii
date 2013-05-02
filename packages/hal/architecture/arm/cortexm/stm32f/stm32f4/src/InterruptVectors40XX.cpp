@@ -4,7 +4,16 @@
 //
 
 /// \file
-/// \brief STM32F40XX array of interrupt vectors.
+/// \brief STM32F40XX interrupt vectors.
+///
+/// \details
+/// These is the STM32F40XX specific part of the interrupt vectors table,
+/// and is allocated by the linker after family and architecture vectors.
+///
+/// The `interruptVectors` array contains pointers to the interrupt handlers.
+/// By default,
+/// uninitialised pointers are filled in with the address of the local
+/// `Default()` handler, defined as an weak alias.
 
 #include "portable/core/include/ConfigDefines.h"
 
@@ -28,7 +37,7 @@ namespace hal
       /// \name Interrupt handlers
       /// @{
 
-      /// \brief FPU global Handler.
+      /// \brief FPU Global Handler.
       extern void
       FPUGlobal(void);
 
@@ -45,28 +54,31 @@ namespace hal
     // ------------------------------------------------------------------------
 
     /// \ingroup stm32f40xx_irq
-    /// \showinitializer
     /// \brief STM32F40XX specific interrupt vectors.
+    /// \showinitializer
     __attribute__ ((section(".device_isr_vectors")))
     interruptVector_t interruptVectors[] =
       { //
-        // 81: FPU global
+        // 81: FPU Global
         reinterpret_cast<interruptVector_t>(InterruptHandler::FPUGlobal)
 
-        // TODO: do we have to add something to boot in RAM mode
         };
 
     // ------------------------------------------------------------------------
 
     namespace InterruptHandler
     {
-      /// \ingroup stm32f40xx_irq
       /// \name Interrupt handlers
+      /// @} end of name Interrupt handlers
+
+      /// \ingroup stm32f40xx_irq
       /// \brief Default interrupt handler.
       ///
       /// \details
       /// All undefined interrupt handlers are routed to this function,
-      /// via weak references, and from here to the architecture Default.
+      /// via weak references, and from here to the architecture Default().
+      /// This additional indirection is required since weak references
+      /// can point only to symbols defined in the same compilation unit.
       __attribute__ ((naked))
       void
       Default(void)
@@ -77,7 +89,10 @@ namespace hal
             ::
         );
       }
-    } // namespace InterruptHandler
+
+    /// @} end of name Interrupt handlers
+
+    }// namespace InterruptHandler
 
   // --------------------------------------------------------------------------
 
