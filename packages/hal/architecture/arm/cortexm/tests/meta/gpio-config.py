@@ -32,7 +32,7 @@ Configuration(
         #'gpio-olimexinostm32-config.py',
         #'gpio-stm32p107-config.py',
         'gpio-stm32e407-config.py',
-        #'gpio-stm32f4discovery-config.py',
+        'gpio-stm32f4discovery-config.py',
     ],
 
     artefactName='gpio',
