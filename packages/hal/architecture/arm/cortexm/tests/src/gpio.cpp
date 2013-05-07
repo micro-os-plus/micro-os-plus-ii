@@ -45,9 +45,30 @@ main()
   // Dynamic object with constant port and bit definitions
   hal::stm32f4::Gpio pin2(1, 2);
 
+  pin2.configureMode(hal::stm32f4::gpio::Mode::GeneralPurposeOutput);
+
+  __NOP();
+  pin2.configureOutputType(hal::stm32f4::gpio::OutputType::OpenDrain);
+
+  __NOP();
+  pin2.configureOutputSpeed(hal::stm32f4::gpio::OutputSpeed::HighSpeed_100MHz);
+
+  __NOP();
+  pin2.configureOutputSpeed(hal::stm32f4::gpio::OutputSpeed::HighSpeed_100MHz);
+
+  __NOP();
   pin2.setPinHigh();
+  __NOP();
   pin2.setPinLow();
 
+  __NOP();
+  pin2.togglePin();
+
+  __NOP();
+  if (pin2.isPinHigh())
+    {
+      __NOP(); // separator
+    }
   Led::turnOn(); // separator
 
   // Dynamic object with variable input
