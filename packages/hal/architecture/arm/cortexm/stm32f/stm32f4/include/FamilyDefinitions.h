@@ -19,15 +19,6 @@ namespace hal
   {
     // ------------------------------------------------------------------------
 
-    // Register types
-    typedef uint32_t volatile regReadWrite_t;
-    typedef uint32_t const volatile regReadOnly_t;
-    typedef uint32_t volatile regWriteOnly_t;
-    typedef uint32_t regNotAllocated_t;
-
-    typedef uint32_t address_t;
-    typedef uint32_t reg32_t;
-    typedef uint16_t reg16_t;
 
   // --------------------------------------------------------------------------
 
