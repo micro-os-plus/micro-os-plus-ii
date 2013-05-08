@@ -25,6 +25,7 @@ Configuration(
         
         # enable test artefact
         'enable("component.os.hal.architecture.arm.cortexm.tests.gpio")',
+        'enable("option.os.portable.diagnostics.trace.ostream")',
     ],
                   
     includeFiles=[
