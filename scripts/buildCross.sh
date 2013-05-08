@@ -61,6 +61,7 @@ function runTestCollection()
 	runTestPair "stm32p107_cmsis_"$1
 	runTestPair "stm32e407_cmsis_"$1
 	runTestPair "stm32f4discovery_cmsis_"$1
+	runTestPair "stm32f4discovery_gpio_"$1
 }
 
 echo "XCDL buildCross: started"
