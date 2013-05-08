@@ -14,6 +14,7 @@
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4) || defined(__DOXYGEN__)
 
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
+#include "hal/architecture/arm/cortexm/peripheral/include/BitBanding.h"
 
 namespace hal
 {
@@ -24,6 +25,10 @@ namespace hal
       typedef hal::cortexm::portNumber_t portNumber_t;
       typedef hal::cortexm::bitNumber_t bitNumber_t;
       typedef hal::cortexm::index_t index_t;
+
+      typedef hal::cortexm::bitband::bitValue_t bitValue_t;
+      typedef hal::cortexm::reg16_t reg16_t;
+      typedef hal::cortexm::reg32_t reg32_t;
 
       // ----------------------------------------------------------------------
 
@@ -44,7 +49,7 @@ namespace hal
       enum class OutputType
         : outputType_t
           {
-            PushPull = 0, OpenDrain = 1, Output
+            PushPull = 0, OpenDrain = 1
       };
 
       // ----------------------------------------------------------------------
@@ -54,10 +59,7 @@ namespace hal
       enum class OutputSpeed
         : outputSpeed_t
           {
-            Low_2MHz = 0,
-        Medium_25MHz = 1,
-        Fast_50MHz = 2,
-        High_100MHz = 3
+            Low_2MHz = 0, Medium_25MHz = 1, Fast_50MHz = 2, High_100MHz = 3
       } OutputSpeed_t;
 
       static const outputSpeed_t OUTPUT_SPEED_MASK = 0x3U;
@@ -114,6 +116,8 @@ namespace hal
         static const hal::cortexm::address_t MEMORY_BASE = 0x40020000UL;
         static const hal::cortexm::address_t MEMORY_OFFSET = 0x00000400UL;
 
+        // ----- Deleted constructor ------------------------------------------
+
         PortRegisters() = delete;
 
         // ----- Memory map ---------------------------------------------------
@@ -131,65 +135,68 @@ namespace hal
         // ----- Member functions ---------------------------------------------
 
         // 2 bits / pin
-        hal::cortexm::reg32_t
+        reg32_t
         readMode(void);
 
         void
-        writeMode(const hal::cortexm::reg32_t value);
+        writeMode(const reg32_t value);
 
         // 1 bit / pin
-        hal::cortexm::reg16_t
+        reg16_t
         readOutputType(void);
 
         void
-        writeOutputType(const hal::cortexm::reg16_t value);
+        writeOutputType(const reg16_t value);
 
         // 2 bits / pin
-        hal::cortexm::reg32_t
+        reg32_t
         readOutputSpeed(void);
 
         void
-        writeOutputSpeed(const hal::cortexm::reg32_t value);
+        writeOutputSpeed(const reg32_t value);
 
         // 2 bits / pin
-        hal::cortexm::reg32_t
+        reg32_t
         readPullUpPullDown(void);
 
         void
-        writePullUpPullDown(const hal::cortexm::reg32_t value);
+        writePullUpPullDown(const reg32_t value);
 
         // 1 bit / pin
-        hal::cortexm::reg16_t
+        reg16_t
         readInputData(void);
 
         // 1 bit / pin
-        hal::cortexm::reg16_t
+        reg16_t
         readOutputData(void);
 
         void
-        writeOutputData(const hal::cortexm::reg16_t value);
+        writeOutputData(const reg16_t value);
 
+        // 1 bit / pin, high part = reset, low part = set
         void
-        writeSetReset(const hal::cortexm::reg32_t value);
+        writeSetReset(const reg32_t value);
 
-        hal::cortexm::reg32_t
+        // 1 bit / pin + 1 global lock
+        reg32_t
         readConfigurationLock(void);
 
         void
-        writeConfigurationLock(const hal::cortexm::reg32_t value);
+        writeConfigurationLock(const reg32_t value);
 
-        hal::cortexm::reg32_t
+        // 4 bits / pin
+        reg32_t
         readAlternateFunction(index_t index);
 
         void
         writeAlternateFunction(const index_t index,
-            const hal::cortexm::reg32_t value);
+            const reg32_t value);
 
       };
 
       // ----- Inline member function definitions -----------------------------
 
-      hal::cortexm::reg32_t
+      reg32_t
       inline __attribute__((always_inline))
       PortRegisters::readMode(void)
       {
@@ -198,13 +205,13 @@ namespace hal
 
       void
       inline __attribute__((always_inline))
-      PortRegisters::writeMode(const hal::cortexm::reg32_t value)
+      PortRegisters::writeMode(const reg32_t value)
       {
         this->moder = value;
       }
 
       // 1 bit / pin
-      hal::cortexm::reg16_t
+      reg16_t
       inline __attribute__((always_inline))
       PortRegisters::readOutputType(void)
       {
@@ -213,13 +220,13 @@ namespace hal
 
       void
       inline __attribute__((always_inline))
-      PortRegisters::writeOutputType(const hal::cortexm::reg16_t value)
+      PortRegisters::writeOutputType(const reg16_t value)
       {
         this->odr = value;
       }
 
       // 2 bits / pin
-      hal::cortexm::reg32_t
+      reg32_t
       inline __attribute__((always_inline))
       PortRegisters::readOutputSpeed(void)
       {
@@ -228,13 +235,13 @@ namespace hal
 
       void
       inline __attribute__((always_inline))
-      PortRegisters::writeOutputSpeed(const hal::cortexm::reg32_t value)
+      PortRegisters::writeOutputSpeed(const reg32_t value)
       {
         this->ospeedr = value;
       }
 
       // 2 bits / pin
-      hal::cortexm::reg32_t
+      reg32_t
       inline __attribute__((always_inline))
       PortRegisters::readPullUpPullDown(void)
       {
@@ -243,13 +250,13 @@ namespace hal
 
       void
       inline __attribute__((always_inline))
-      PortRegisters::writePullUpPullDown(const hal::cortexm::reg32_t value)
+      PortRegisters::writePullUpPullDown(const reg32_t value)
       {
         this->pupdr = value;
       }
 
       // 1 bit / pin
-      hal::cortexm::reg16_t
+      reg16_t
       inline __attribute__((always_inline))
       PortRegisters::readInputData(void)
       {
@@ -257,7 +264,7 @@ namespace hal
       }
 
       // 1 bit / pin
-      hal::cortexm::reg16_t
+      reg16_t
       inline __attribute__((always_inline))
       PortRegisters::readOutputData(void)
       {
@@ -266,19 +273,19 @@ namespace hal
 
       void
       inline __attribute__((always_inline))
-      PortRegisters::writeOutputData(const hal::cortexm::reg16_t value)
+      PortRegisters::writeOutputData(const reg16_t value)
       {
         this->odr = value;
       }
 
       void
       inline __attribute__((always_inline))
-      PortRegisters::writeSetReset(const hal::cortexm::reg32_t value)
+      PortRegisters::writeSetReset(const reg32_t value)
       {
         this->bssr = value;
       }
 
-      hal::cortexm::reg32_t
+      reg32_t
       inline __attribute__((always_inline))
       PortRegisters::readConfigurationLock(void)
       {
@@ -287,12 +294,12 @@ namespace hal
 
       void
       inline __attribute__((always_inline))
-      PortRegisters::writeConfigurationLock(const hal::cortexm::reg32_t value)
+      PortRegisters::writeConfigurationLock(const reg32_t value)
       {
         this->lckr = value;
       }
 
-      hal::cortexm::reg32_t
+      reg32_t
       inline __attribute__((always_inline))
       PortRegisters::readAlternateFunction(const index_t index)
       {
@@ -302,7 +309,7 @@ namespace hal
       void
       inline __attribute__((always_inline))
       PortRegisters::writeAlternateFunction(const index_t index,
-          const hal::cortexm::reg32_t value)
+          const reg32_t value)
       {
         this->afr[index] = value;
       }
