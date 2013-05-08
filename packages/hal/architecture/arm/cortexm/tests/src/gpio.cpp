@@ -43,7 +43,7 @@ main()
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 
   // Dynamic object with constant port and bit definitions
-  hal::stm32f4::Gpio pin1(XPORT, XBIT);
+  hal::stm32f4::GpioPin pin1(XPORT, XBIT);
 
 #if defined(DEBUG)
   os::diag::trace << os::std::setfill('0');
@@ -154,7 +154,7 @@ main()
   // Dynamic object with variable input
   volatile int xp = XPORT;
   volatile int xb = XBIT;
-  hal::stm32f4::Gpio pin2(xp, xb);
+  hal::stm32f4::GpioPin pin2(xp, xb);
 
   pin2.setPinHigh();
   pin2.setPinLow();
