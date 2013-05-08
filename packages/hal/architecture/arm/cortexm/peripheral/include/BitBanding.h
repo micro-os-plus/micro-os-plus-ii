@@ -24,6 +24,8 @@ namespace hal
 
     namespace bitband
     {
+      typedef uint32_t bitValue_t;
+
       // ----------------------------------------------------------------------
 
       address_t
@@ -40,13 +42,14 @@ namespace hal
         return PERIPHERAL_BITBAND_BASE + bitWordOffset;
       }
 
-      uint32_t
+      bitValue_t
       inline __attribute__((always_inline))
-      getPeripheralBitWord(address_t registerAddress, bitNumber_t bitNumber)
+      getPeripheralBitValue(address_t registerAddress, bitNumber_t bitNumber)
       {
         const address_t bitWordAddress = getPeripheralBitWordAddress(
             registerAddress, bitNumber);
-        address_t* const bitWordPointer =
+
+        volatile address_t* const bitWordPointer =
             reinterpret_cast<uint32_t*>(bitWordAddress);
 
         // return only the least significant bit, all other are 0
@@ -55,8 +58,8 @@ namespace hal
 
       void
       inline __attribute__((always_inline))
-      setPeripheralBitWord(address_t registerAddress, bitNumber_t bitNumber,
-          uint32_t value)
+      setPeripheralBitValue(address_t registerAddress, bitNumber_t bitNumber,
+          bitValue_t value)
       {
         const address_t bitWordAddress = getPeripheralBitWordAddress(
             registerAddress, bitNumber);
@@ -86,14 +89,14 @@ namespace hal
         return PERIPHERAL_BITBAND_BASE + bitWordOffset;
       }
 
-      uint32_t
+      bitValue_t
       inline __attribute__((always_inline))
-      getPeripheralBitWord(void* registerPointer, bitNumber_t bitNumber)
+      getPeripheralBitValue(void* registerPointer, bitNumber_t bitNumber)
       {
         const address_t bitWordAddress = getPeripheralBitWordAddress(
             registerPointer, bitNumber);
 
-        address_t* const bitWordPointer =
+        volatile address_t* const bitWordPointer =
             reinterpret_cast<uint32_t*>(bitWordAddress);
 
         // return only the least significant bit, all other are 0
