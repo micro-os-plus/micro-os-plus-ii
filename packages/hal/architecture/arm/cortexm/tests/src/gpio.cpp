@@ -15,8 +15,15 @@
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Gpio.h"
 
-template class hal::stm32f4::TGpio<1, 2>;
-typedef class hal::stm32f4::TGpio<1, 2> GPIOBp2;
+#if defined(OS_INCLUDE_HAL_BOARD_STM_STM32F4DISCOVERY)
+
+#define XPORT 3
+#define XBIT 13
+
+#endif
+
+template class hal::stm32f4::TGpio<XPORT, XBIT>;
+typedef class hal::stm32f4::TGpio<XPORT, XBIT> XGPIO;
 
 #endif
 
@@ -35,52 +42,131 @@ main()
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 
-  // Template implementation
-  GPIOBp2 pin1;
+  // Dynamic object with constant port and bit definitions
+  hal::stm32f4::Gpio pin1(XPORT, XBIT);
+
+#if defined(DEBUG)
+  os::diag::trace << os::std::setfill('0');
+  os::diag::trace << "MODER=" << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readMode() << os::std::endl;
+#endif
+
+  pin1.configureMode(hal::stm32f4::gpio::Mode::Output);
+
+#if defined(DEBUG)
+  os::diag::trace << "MODER=" << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readMode() << os::std::endl;
+#endif
+
+#if defined(DEBUG)
+  os::diag::trace << "OTYPER=" << os::std::hex << os::std::setw(4)
+      << pin1.getPortRegisters().readOutputType() << os::std::endl;
+#endif
+
+  __NOP();
+  pin1.configureOutputType(hal::stm32f4::gpio::OutputType::OpenDrain);
+
+#if defined(DEBUG)
+  os::diag::trace << "OTYPER=" << os::std::hex << os::std::setw(4)
+      << pin1.getPortRegisters().readOutputType() << os::std::endl;
+#endif
+
+#if defined(DEBUG)
+  os::diag::trace << "OSPEEDER=" << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readOutputSpeed() << os::std::endl;
+#endif
+
+  __NOP();
+  pin1.configureOutputSpeed(hal::stm32f4::gpio::OutputSpeed::High_100MHz);
+
+#if defined(DEBUG)
+  os::diag::trace << "OSPEEDER=" << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readOutputSpeed() << os::std::endl;
+#endif
+
+#if defined(DEBUG)
+  os::diag::trace << "PUPDR=" << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readPullUpPullDown() << os::std::endl;
+#endif
+
+  __NOP();
+  pin1.configurePullUpPullDown(hal::stm32f4::gpio::Resistors::PullUp);
+
+#if defined(DEBUG)
+  os::diag::trace << "PUPDR=" << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readPullUpPullDown() << os::std::endl;
+#endif
+
+#if defined(DEBUG)
+  os::diag::trace << "AFR[0]=" << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readAlternateFunction(0) << " AFR[1]="
+      << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readAlternateFunction(1) << os::std::endl;
+#endif
+
+  __NOP();
+  pin1.configureAlternateFunction(hal::stm32f4::gpio::AlternateFunction::AF1);
+
+#if defined(DEBUG)
+  os::diag::trace << "AFR[0]=" << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readAlternateFunction(0) << " AFR[1]="
+      << os::std::hex << os::std::setw(8)
+      << pin1.getPortRegisters().readAlternateFunction(1) << os::std::endl;
+#endif
+
+#if defined(DEBUG)
+  os::diag::trace << "ODR=" << os::std::hex << os::std::setw(4)
+      << pin1.getPortRegisters().readOutputData() << os::std::endl;
+#endif
+
+  __NOP();
   pin1.setPinHigh();
+
+#if defined(DEBUG)
+  os::diag::trace << "ODR=" << os::std::hex << os::std::setw(4)
+      << pin1.getPortRegisters().readOutputData() << os::std::endl;
+#endif
+
+  __NOP();
   pin1.setPinLow();
 
-  Led::turnOn(); // separator
-
-  // Dynamic object with constant port and bit definitions
-  hal::stm32f4::Gpio pin2(1, 2);
-
-  pin2.configureMode(hal::stm32f4::gpio::Mode::GeneralPurposeOutput);
+#if defined(DEBUG)
+  os::diag::trace << "ODR=" << os::std::hex
+      << pin1.getPortRegisters().readOutputData() << os::std::endl;
+#endif
 
   __NOP();
-  pin2.configureOutputType(hal::stm32f4::gpio::OutputType::OpenDrain);
+  pin1.togglePin();
+
+#if defined(DEBUG)
+  os::diag::trace << "ODR=" << os::std::hex << os::std::setw(4)
+      << pin1.getPortRegisters().readOutputData() << os::std::endl;
+#endif
 
   __NOP();
-  pin2.configureOutputSpeed(hal::stm32f4::gpio::OutputSpeed::HighSpeed_100MHz);
-
-  __NOP();
-  pin2.configureOutputSpeed(hal::stm32f4::gpio::OutputSpeed::HighSpeed_100MHz);
-
-  __NOP();
-  pin2.setPinHigh();
-  __NOP();
-  pin2.setPinLow();
-
-  __NOP();
-  pin2.togglePin();
-
-  __NOP();
-  if (pin2.isPinHigh())
+  if (pin1.isPinHigh())
     {
       __NOP(); // separator
     }
+
   Led::turnOn(); // separator
 
   // Dynamic object with variable input
-  volatile int xp = 1;
-  volatile int xb = 2;
-  hal::stm32f4::Gpio pin3(xp, xb);
+  volatile int xp = XPORT;
+  volatile int xb = XBIT;
+  hal::stm32f4::Gpio pin2(xp, xb);
 
+  pin2.setPinHigh();
+  pin2.setPinLow();
+
+  Led::turnOn(); // separator
+
+  // Template implementation
+  XGPIO pin3;
   pin3.setPinHigh();
   pin3.setPinLow();
 
   Led::turnOn(); // separator
-
 
 #endif
 
@@ -88,10 +174,12 @@ main()
     {
 
       Led::turnOn();
+      pin1.setPinHigh();
 
       Delay(DELAY_DURATION);
 
       Led::turnOff();
+      pin1.setPinLow();
 
       Delay(DELAY_DURATION / 2);
 
