@@ -90,11 +90,12 @@ namespace os
     class _LIBCPP_VISIBLE locale
     {
     public:
-#if 1 //defined(OS_SKIP_NOT_YET_IMPLEMENTED)
       // types:
       class _LIBCPP_VISIBLE facet;
       class _LIBCPP_VISIBLE id;
 
+//#if 1
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
       typedef int category;
       // values assigned here are for exposition only
       static const category none = 0;
