@@ -529,6 +529,10 @@ template<unsigned>
 // ----------------------------------------------------------------------------
 // µOS++ specifics
 
+#if defined(__ARM_EABI__)
+#define _LIBCPP_HAS_NO_LONG_LONG
+#endif
+
 #if defined(OS_INCLUDE_STD_EXCEPTIONS)
 #undef OS_INCLUDE_STD_EXCEPTIONS
 #endif
