@@ -25,48 +25,87 @@ namespace hal
       typedef hal::cortexm::bitNumber_t bitNumber_t;
       typedef hal::cortexm::index_t index_t;
 
-      typedef enum Mode
-        : uint32_t
-          {
-            Input = 0, GeneralPurposeOutput = 1, Alternate = 2, Analog = 3
-      } Mode_t;
+      // ----------------------------------------------------------------------
 
-      static const uint32_t MODE_MASK = 0x3;
+      typedef uint32_t mode_t;
 
-      typedef enum OutputType
-        : uint32_t
+      enum class Mode
+        : mode_t
           {
-            PushPull = 0, OpenDrain = 1
-      } OutputType_t;
+            Input = 0, Output = 1, Alternate = 2, Analog = 3
+      };
 
-      typedef enum OutputSpeed
-        : uint32_t
+      static const mode_t MODE_MASK = 0x3;
+
+      // ----------------------------------------------------------------------
+
+      typedef uint32_t outputType_t;
+
+      enum class OutputType
+        : outputType_t
           {
-            LowSpeed_2MHz = 0,
-        MediumSpeed_25MHz = 1,
-        FastSpeed_50MHz = 2,
-        HighSpeed_100MHz = 3
+            PushPull = 0, OpenDrain = 1, Output
+      };
+
+      // ----------------------------------------------------------------------
+
+      typedef uint32_t outputSpeed_t;
+
+      enum class OutputSpeed
+        : outputSpeed_t
+          {
+            Low_2MHz = 0,
+        Medium_25MHz = 1,
+        Fast_50MHz = 2,
+        High_100MHz = 3
       } OutputSpeed_t;
 
-      static const uint32_t OUTPUT_SPEED_MASK = 0x3;
+      static const outputSpeed_t OUTPUT_SPEED_MASK = 0x3U;
 
-      typedef enum PullUpPullDown
-        : uint32_t
+      // ----------------------------------------------------------------------
+
+      typedef uint32_t resistors_t;
+
+      enum class Resistors
+        : resistors_t
           {
             None = 0, PullUp = 1, PullDown = 2
-      } PullUpPullDown_t;
+      };
 
-      static const uint32_t PULL_UP_PULL_DOWN_MASK = 0x3;
+      static const resistors_t RESISTORS_MASK = 0x3U;
+
+      // ----------------------------------------------------------------------
 
       typedef uint32_t alternateFunction_t;
 
-      static const uint32_t ALTERNATE_FUNCTION_MASK = 0xF;
+      enum class AlternateFunction
+        : alternateFunction_t
+          {
+            AF0 = 0,
+        AF1,
+        AF2,
+        AF3,
+        AF4,
+        AF5,
+        AF6,
+        AF7,
+        AF8,
+        AF9,
+        AF10,
+        AF11,
+        AF12,
+        AF13,
+        AF14,
+        AF15
+      };
+
+      static const alternateFunction_t ALTERNATE_FUNCTION_MASK = 0xFU;
 
       // ======================================================================
 
       // ----- Port memory mapped registers -----------------------------------
 
-      class PortRegisters
+      class __attribute__((packed)) PortRegisters
       {
       public:
         // --------------------------------------------------------------------
@@ -145,6 +184,7 @@ namespace hal
         void
         writeAlternateFunction(const index_t index,
             const hal::cortexm::reg32_t value);
+
       };
 
       // ----- Inline member function definitions -----------------------------
