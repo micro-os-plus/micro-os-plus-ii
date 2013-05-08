@@ -57,7 +57,9 @@ namespace os
     using ::abort;
     using ::atexit;
     using ::exit;
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
     using ::_Exit;
+#endif
     using ::getenv;
     using ::system;
     using ::bsearch;
