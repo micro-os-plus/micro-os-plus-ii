@@ -19,6 +19,7 @@
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)
 
 #include "portable/language/cpp/include/ostream.h"
+#include "portable/language/cpp/include/iomanip.h"
 
 namespace os
 {
