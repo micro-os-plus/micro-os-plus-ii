@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief STM32F4 GPIO high level class.
+/// \brief STM32F4 GPIO high level classes.
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_GPIO_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_GPIO_H_
@@ -28,16 +28,500 @@ namespace hal
     /// \ingroup stm32f4
     /// \nosubgrouping
     ///
-    /// \brief GPIO pin class.
+    /// \brief GPIO pin class template (static version).
     ///
     /// \details
-    /// This class provides full control of a STM32F4 GPIO pin.
+    /// This class template provides full control of a STM32F4 GPIO pin.
+    /// It is intended for most common cases when both the port number
+    /// and the bit number are constants known at compile time.
+    ///
     /// For performance reasons, all member functions are inline and very
     /// simple, performing just the required memory access(es).
     ///
-    /// Due to the compiler optimisations, constructing constant objects is
-    /// as efficient as using constant templates, so it makes no sense to
-    /// maintain both a template version and a classical version.
+    /// Using it is typical for static classes, although a default
+    /// constructor is provided, so you can instantiate it as well.
+    ///
+    /// \code{.cpp}
+    /// template class hal::stm32f4::TGpioPin<XPORT, XBIT>;
+    /// typedef class hal::stm32f4::TGpioPin<XPORT, XBIT> XGPIO;
+    ///
+    /// XGPIO::setPinHigh();
+    /// \endcode
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      class TGpioPin
+      {
+      public:
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief Construct a GPIO pin object.
+        ///
+        /// \par Parameters
+        ///    None.
+        TGpioPin() = default;
+
+        /// @} end of name Constructors/destructor
+
+        // ----- Configuration functions ----------------------------------------
+        /// \name Configuration functions
+        /// @{
+
+        /// \brief Configure the mode bits.
+        ///
+        /// \param [in] value An enumeration value with the mode.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        configureMode(gpio::Mode value);
+
+        /// \brief Retrieve the mode bits.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return An enumeration value with the current pin mode.
+        static gpio::Mode
+        retrieveMode(void);
+
+        /// \brief Configure the output type bits.
+        ///
+        /// \param [in] value An enumeration value with the output type.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        configureOutputType(gpio::OutputType value);
+
+        /// \brief Retrieve the output type bits.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return An enumeration value with the current output type.
+        static gpio::OutputType
+        retrieveOutputType(void);
+
+        /// \brief Configure the output speed bits.
+        ///
+        /// \param [in] value An enumeration value with the output speed.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        configureOutputSpeed(gpio::OutputSpeed value);
+
+        /// \brief Retrieve the output speed bits.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return An enumeration value with the current output speed.
+        static gpio::OutputSpeed
+        retrieveOutputSpeed(void);
+
+        /// \brief Configure the pull-up/pull-down bits.
+        ///
+        /// \param [in] value An enumeration value with the pull-up/pull-down resistors.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        configurePullUpPullDown(gpio::Resistors value);
+
+        /// \brief Retrieve the pull-up/pull-down bits.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return An enumeration value with the current pull-up/pull-down resistors.
+        static gpio::Resistors
+        retrievePullUpPullDown(void);
+
+        /// \brief Configure the alternate function bits.
+        ///
+        /// \param [in] value An enumeration value with the alternate function.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        configureAlternateFunction(gpio::AlternateFunction value);
+
+        /// \brief Retrieve the alternate function bits.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return An enumeration value with the current pull-up/pull-down resistors.
+        static gpio::AlternateFunction
+        retrieveAlternateFunction(void);
+
+        // TODO: add configure lock
+
+        /// @} end of name Configuration functions
+
+        // ----- Pin member functions -------------------------------------------
+        /// \name Pin member functions
+        /// @{
+
+        /// \brief Set the pin level to high.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        setPinHigh(void);
+
+        /// \brief Set the pin level to low.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        setPinLow(void);
+
+        /// \brief Toggle the pin level.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        togglePin(void);
+
+        /// \brief Check if the pin level is high.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return True if the pin level is high.
+        static bool
+        isPinHigh(void);
+
+        /// \brief Check if the pin level is low.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return True if the pin level is low.
+        static bool
+        isPinLow(void);
+
+        /// \brief Read the pin level.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval 1 The pin level is high.
+        /// \retval 0 The pin level is low.
+        static gpio::bitValue_t
+        readPin(void);
+
+        /// @} end of name Pin member functions
+
+      private:
+        /// \name Private members
+        /// @{
+
+        /// \brief The port number, as given when instantiating the template.
+        static const gpio::portNumber_t m_portNumber = Port_T;
+
+        /// \brief The address of the port hardware registers.
+        ///
+        /// \details
+        /// This value is computed based on the
+        /// peripheral base address, the port number and the port offset.
+        /// For convenient access, it is represented as a reference.
+        static constexpr gpio::PortRegisters& m_portRegisters =
+            *reinterpret_cast<gpio::PortRegisters*>(gpio::PortRegisters::MEMORY_BASE
+                + (m_portNumber * gpio::PortRegisters::MEMORY_OFFSET));
+
+        /// \brief The bit number, as given when instantiating the template.
+        static const gpio::bitNumber_t m_bitNumber = Bit_T;
+
+        /// \brief The single bit mask, corresponding to the bit number.
+        ///
+        /// \details
+        /// This value is
+        /// intentionally 16-bit, to trigger an error if m_bitNumber>16.
+        static constexpr gpio::reg16_t m_bitMask = (1 << m_bitNumber);
+
+        /// @} end of name Private members
+      };
+
+    // ------------------------------------------------------------------------
+
+    /// \details
+    /// Use read/modify/write to change the 2 configuration bits.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline void
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::configureMode(gpio::Mode value)
+      {
+        gpio::reg32_t current = m_portRegisters.readMode();
+        current &= ~(gpio::MODE_MASK << (2 * m_bitNumber));
+
+        gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
+        newValue = (newValue & gpio::MODE_MASK) << (2 * m_bitNumber);
+
+        m_portRegisters.writeMode(current | newValue);
+      }
+
+    /// \details
+    /// Read the register and return the 2 configuration bits.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline gpio::Mode
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::retrieveMode(void)
+      {
+        gpio::reg32_t current = m_portRegisters.readMode();
+        current >>= (2 * m_bitNumber);
+
+        return static_cast<gpio::Mode>(current & gpio::MODE_MASK);
+      }
+
+    /// \details
+    /// Use bit-banding to write the single configuration bit.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline void
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::configureOutputType(gpio::OutputType value)
+      {
+        hal::cortexm::address_t otyperAddress =
+            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.otyper);
+
+        gpio::reg32_t newValue;
+        newValue = static_cast<gpio::reg32_t>(value);
+
+        hal::cortexm::bitband::setPeripheralBitValue(otyperAddress, m_bitNumber,
+            newValue);
+      }
+
+    /// \details
+    /// Use bit-banding to read the single configuration bit and return it.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline gpio::OutputType
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::retrieveOutputType(void)
+      {
+        hal::cortexm::address_t otyperAddress =
+            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.otyper);
+
+        return static_cast<gpio::OutputType>(hal::cortexm::bitband::getPeripheralBitValue(
+            otyperAddress, m_bitNumber));
+      }
+
+    /// \details
+    /// Use read/modify/write to change the 2 configuration bits.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline void
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::configureOutputSpeed(gpio::OutputSpeed value)
+      {
+        gpio::reg32_t current = m_portRegisters.readOutputSpeed();
+        current &= ~(gpio::OUTPUT_SPEED_MASK << (2 * m_bitNumber));
+
+        gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
+        newValue = (newValue & gpio::OUTPUT_SPEED_MASK) << (2 * m_bitNumber);
+
+        m_portRegisters.writeOutputSpeed(current | newValue);
+      }
+
+    /// \details
+    /// Read the register and return the 2 configuration bits.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline gpio::OutputSpeed
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::retrieveOutputSpeed(void)
+      {
+        gpio::reg32_t current = m_portRegisters.readOutputSpeed();
+        current >>= (2 * m_bitNumber);
+
+        return static_cast<gpio::OutputSpeed>(current & gpio::OUTPUT_SPEED_MASK);
+      }
+
+    /// \details
+    /// Use read/modify/write to change the 2 configuration bits.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline void
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::configurePullUpPullDown(gpio::Resistors value)
+      {
+        gpio::reg32_t current = m_portRegisters.readPullUpPullDown();
+        current &= ~(gpio::RESISTORS_MASK << (2 * m_bitNumber));
+
+        gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
+        newValue = (newValue & gpio::RESISTORS_MASK) << (2 * m_bitNumber);
+
+        m_portRegisters.writePullUpPullDown(current | newValue);
+      }
+
+    /// \details
+    /// Read the register and return the 2 configuration bits.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline gpio::Resistors
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::retrievePullUpPullDown(void)
+      {
+        gpio::reg32_t current = m_portRegisters.readPullUpPullDown();
+        current >>= (2 * m_bitNumber);
+
+        return static_cast<gpio::Resistors>(current & gpio::RESISTORS_MASK);
+      }
+
+    /// \details
+    /// Use read/modify/write to change the 4 configuration bits.
+    /// The AFR registers are organised as an array of two words.
+    /// Bits corresponding to pins 0-7 are stored in the first word,
+    /// bits corresponding to pins 8-15 in the second word.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline void
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::configureAlternateFunction(
+          gpio::AlternateFunction value)
+      {
+        gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
+
+        gpio::reg32_t current;
+
+        if (m_bitNumber < 8)
+          {
+            current = m_portRegisters.readAlternateFunction(0);
+            current &= ~(gpio::ALTERNATE_FUNCTION_MASK
+                << (4 * (m_bitNumber & 0x7)));
+
+            newValue = (newValue & gpio::ALTERNATE_FUNCTION_MASK)
+                << (4 * (m_bitNumber & 0x7));
+            m_portRegisters.writeAlternateFunction(0, current | newValue);
+          }
+        else
+          {
+            current = m_portRegisters.readAlternateFunction(1);
+            current &= ~(gpio::ALTERNATE_FUNCTION_MASK
+                << (4 * ((m_bitNumber - 8) & 0x7)));
+
+            newValue = (newValue & gpio::ALTERNATE_FUNCTION_MASK)
+                << (4 * ((m_bitNumber - 8) & 0x7));
+            m_portRegisters.writeAlternateFunction(1, current | newValue);
+          }
+      }
+
+    /// \details
+    /// Read the register and return the 4 configuration bits.
+    /// The AFR registers are organised as an array of two words.
+    /// Bits corresponding to pins 0-7 are stored in the first word,
+    /// bits corresponding to pins 8-15 in the second word.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline gpio::AlternateFunction
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::retrieveAlternateFunction(void)
+      {
+        gpio::reg32_t current;
+
+        if (m_bitNumber < 8)
+          {
+            current = m_portRegisters.readAlternateFunction(0);
+            current >>= (4 * (m_bitNumber & 0x7));
+          }
+        else
+          {
+            current = m_portRegisters.readAlternateFunction(1);
+            current >>= (4 * ((m_bitNumber - 8) & 0x7));
+          }
+
+        return static_cast<gpio::AlternateFunction>(current
+            & gpio::ALTERNATE_FUNCTION_MASK);
+      }
+
+    // ------------------------------------------------------------------------
+
+    /// \details
+    /// Use the lower half of the special BSSR register to set the pin high.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline void
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::setPinHigh(void)
+      {
+        m_portRegisters.writeSetReset(static_cast<gpio::reg32_t>(m_bitMask));
+      }
+
+    /// \details
+    /// Use the upper half of the special BSSR register to set the pin low.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline void
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::setPinLow(void)
+      {
+        // write to the upper half
+        m_portRegisters.writeSetReset(
+            static_cast<gpio::reg32_t>(m_bitMask) << 16);
+      }
+
+    /// \details
+    /// Use bit-banding to read the corresponding ODR bit,
+    /// reverse its value and write it back.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline void
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::togglePin(void)
+      {
+        hal::cortexm::address_t odrAddress =
+            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.odr);
+
+        uint32_t oldValue = hal::cortexm::bitband::getPeripheralBitValue(
+            odrAddress, m_bitNumber);
+
+        uint32_t newValue = ~oldValue;
+        hal::cortexm::bitband::setPeripheralBitValue(odrAddress, m_bitNumber,
+            newValue);
+      }
+
+    /// \details
+    /// Use bit-banding to read the corresponding IDR bit and test it.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline bool
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::isPinHigh(void)
+      {
+        hal::cortexm::address_t idrAddress =
+            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
+
+        return (hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
+            m_bitNumber) != 0);
+      }
+
+    /// \details
+    /// Use bit-banding to read the corresponding IDR bit and test it.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline bool
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::isPinLow(void)
+      {
+        hal::cortexm::address_t idrAddress =
+            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
+
+        return (hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
+            m_bitNumber) == 0);
+      }
+
+    /// \details
+    /// Use bit-banding to read the corresponding IDR bit and return it.
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      inline gpio::bitValue_t
+      __attribute__((always_inline))
+      TGpioPin<Port_T, Bit_T>::readPin(void)
+      {
+        hal::cortexm::address_t idrAddress =
+            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
+
+        return hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
+            m_bitNumber);
+      }
+
+    // ========================================================================
+
+    /// \headerfile Gpio.h "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Gpio.h"
+    /// \ingroup stm32f4
+    /// \nosubgrouping
+    ///
+    /// \brief GPIO pin class (full version).
+    ///
+    /// \details
+    /// This class provides full control of a STM32F4 GPIO pin. It is
+    /// intended for the rare cases when the port number or the bit
+    /// number are not known at compile time.
+    ///
+    /// For performance reasons, all member functions are inline and very
+    /// simple, performing just the required memory access(es).
     class GpioPin
     {
     public:
@@ -56,7 +540,6 @@ namespace hal
       // ----- Getters --------------------------------------------------------
       /// \name Getters
       /// @{
-
 
       /// \brief Get a reference to the port registers.
       ///
@@ -307,6 +790,8 @@ namespace hal
       return m_portNumber;
     }
 
+    // ------------------------------------------------------------------------
+
     /// \details
     /// Use read/modify/write to change the 2 configuration bits.
     inline void
@@ -555,51 +1040,6 @@ namespace hal
       return hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
           m_bitNumber);
     }
-
-    // ========================================================================
-
-    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
-      class TGpio
-      {
-      private:
-        static const gpio::portNumber_t m_portNumber = Port_T;
-
-        static constexpr gpio::PortRegisters& m_portRegisters =
-            *reinterpret_cast<gpio::PortRegisters*>(gpio::PortRegisters::MEMORY_BASE
-                + (m_portNumber * gpio::PortRegisters::MEMORY_OFFSET));
-
-        static const gpio::bitNumber_t m_bitNumber = Bit_T;
-
-        // intentionally 16-bit, to trigger error if m_bitNumber>16
-        static constexpr gpio::reg16_t m_bitMask = (1 << m_bitNumber);
-
-      public:
-        TGpio() = default; // = delete;
-
-        static void
-        setPinHigh(void);
-
-        static void
-        setPinLow(void);
-      };
-
-    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
-      inline void
-      __attribute__((always_inline))
-      TGpio<Port_T, Bit_T>::setPinHigh(void)
-      {
-        m_portRegisters.writeSetReset(static_cast<gpio::reg32_t>(m_bitMask));
-      }
-
-    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
-      inline void
-      __attribute__((always_inline))
-      TGpio<Port_T, Bit_T>::setPinLow(void)
-      {
-        // write to the upper half
-        m_portRegisters.writeSetReset(
-            static_cast<gpio::reg32_t>(m_bitMask) << 16);
-      }
 
   // ==========================================================================
   }// namespace stm32f4
