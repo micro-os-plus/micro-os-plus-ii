@@ -22,10 +22,14 @@
 
 #endif
 
-template class hal::stm32f4::TGpio<XPORT, XBIT>;
-typedef class hal::stm32f4::TGpio<XPORT, XBIT> XGPIO;
+template class hal::stm32f4::TGpioPin<XPORT, XBIT>;
+typedef class hal::stm32f4::TGpioPin<XPORT, XBIT> XGPIO;
+
+//typedef class hal::stm32f4::TGpioPort<XPORT> GPIOX;
 
 #endif
+
+hal::stm32f4::GpioPin pinS(XPORT, XBIT);
 
 int
 main()
@@ -48,19 +52,19 @@ main()
 #if defined(DEBUG)
   os::diag::trace << os::std::setfill('0');
   os::diag::trace << "MODER=" << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readMode() << os::std::endl;
+  << pin1.getPortRegisters().readMode() << os::std::endl;
 #endif
 
   pin1.configureMode(hal::stm32f4::gpio::Mode::Output);
 
 #if defined(DEBUG)
   os::diag::trace << "MODER=" << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readMode() << os::std::endl;
+  << pin1.getPortRegisters().readMode() << os::std::endl;
 #endif
 
 #if defined(DEBUG)
   os::diag::trace << "OTYPER=" << os::std::hex << os::std::setw(4)
-      << pin1.getPortRegisters().readOutputType() << os::std::endl;
+  << pin1.getPortRegisters().readOutputType() << os::std::endl;
 #endif
 
   __NOP();
@@ -68,12 +72,12 @@ main()
 
 #if defined(DEBUG)
   os::diag::trace << "OTYPER=" << os::std::hex << os::std::setw(4)
-      << pin1.getPortRegisters().readOutputType() << os::std::endl;
+  << pin1.getPortRegisters().readOutputType() << os::std::endl;
 #endif
 
 #if defined(DEBUG)
   os::diag::trace << "OSPEEDER=" << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readOutputSpeed() << os::std::endl;
+  << pin1.getPortRegisters().readOutputSpeed() << os::std::endl;
 #endif
 
   __NOP();
@@ -81,12 +85,12 @@ main()
 
 #if defined(DEBUG)
   os::diag::trace << "OSPEEDER=" << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readOutputSpeed() << os::std::endl;
+  << pin1.getPortRegisters().readOutputSpeed() << os::std::endl;
 #endif
 
 #if defined(DEBUG)
   os::diag::trace << "PUPDR=" << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readPullUpPullDown() << os::std::endl;
+  << pin1.getPortRegisters().readPullUpPullDown() << os::std::endl;
 #endif
 
   __NOP();
@@ -94,14 +98,14 @@ main()
 
 #if defined(DEBUG)
   os::diag::trace << "PUPDR=" << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readPullUpPullDown() << os::std::endl;
+  << pin1.getPortRegisters().readPullUpPullDown() << os::std::endl;
 #endif
 
 #if defined(DEBUG)
   os::diag::trace << "AFR[0]=" << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readAlternateFunction(0) << " AFR[1]="
-      << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readAlternateFunction(1) << os::std::endl;
+  << pin1.getPortRegisters().readAlternateFunction(0) << " AFR[1]="
+  << os::std::hex << os::std::setw(8)
+  << pin1.getPortRegisters().readAlternateFunction(1) << os::std::endl;
 #endif
 
   __NOP();
@@ -109,14 +113,14 @@ main()
 
 #if defined(DEBUG)
   os::diag::trace << "AFR[0]=" << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readAlternateFunction(0) << " AFR[1]="
-      << os::std::hex << os::std::setw(8)
-      << pin1.getPortRegisters().readAlternateFunction(1) << os::std::endl;
+  << pin1.getPortRegisters().readAlternateFunction(0) << " AFR[1]="
+  << os::std::hex << os::std::setw(8)
+  << pin1.getPortRegisters().readAlternateFunction(1) << os::std::endl;
 #endif
 
 #if defined(DEBUG)
   os::diag::trace << "ODR=" << os::std::hex << os::std::setw(4)
-      << pin1.getPortRegisters().readOutputData() << os::std::endl;
+  << pin1.getPortRegisters().readOutputData() << os::std::endl;
 #endif
 
   __NOP();
@@ -124,7 +128,7 @@ main()
 
 #if defined(DEBUG)
   os::diag::trace << "ODR=" << os::std::hex << os::std::setw(4)
-      << pin1.getPortRegisters().readOutputData() << os::std::endl;
+  << pin1.getPortRegisters().readOutputData() << os::std::endl;
 #endif
 
   __NOP();
@@ -132,7 +136,7 @@ main()
 
 #if defined(DEBUG)
   os::diag::trace << "ODR=" << os::std::hex
-      << pin1.getPortRegisters().readOutputData() << os::std::endl;
+  << pin1.getPortRegisters().readOutputData() << os::std::endl;
 #endif
 
   __NOP();
@@ -140,7 +144,7 @@ main()
 
 #if defined(DEBUG)
   os::diag::trace << "ODR=" << os::std::hex << os::std::setw(4)
-      << pin1.getPortRegisters().readOutputData() << os::std::endl;
+  << pin1.getPortRegisters().readOutputData() << os::std::endl;
 #endif
 
   __NOP();
@@ -161,10 +165,19 @@ main()
 
   Led::turnOn(); // separator
 
+  pinS.setPinHigh();
+  pinS.setPinLow();
+
+  Led::turnOn(); // separator
+
   // Template implementation
+  __NOP();
   XGPIO pin3;
+  __NOP();
   pin3.setPinHigh();
+  __NOP();
   pin3.setPinLow();
+  __NOP();
 
   Led::turnOn(); // separator
 
