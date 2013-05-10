@@ -40,7 +40,7 @@ namespace hal
 
     namespace gpio
     {
-      /// \addtogroup stm32f4
+      /// \addtogroup stm32f4_gpio
       /// @{
 
       // ----------------------------------------------------------------------
@@ -77,7 +77,7 @@ namespace hal
         : outputSpeed_t
           {
             Low_2MHz = 0, Medium_25MHz = 1, Fast_50MHz = 2, High_100MHz = 3
-      } OutputSpeed_t;
+      };
 
       /// \brief Mask to isolate the port output speed bits.
       static const outputSpeed_t OUTPUT_SPEED_MASK = 0x3U;
@@ -125,12 +125,12 @@ namespace hal
       /// \brief Mask to isolate the alternate function bits.
       static const alternateFunction_t ALTERNATE_FUNCTION_MASK = 0xFU;
 
-      /// @} end of addtogroup stm32f4
+      /// @} end of addtogroup stm32f4_gpio
 
       // ======================================================================
 
       /// \headerfile GpioDefinitions.h "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/GpioDefinitions.h"
-      /// \ingroup stm32f4
+      /// \ingroup stm32f4_gpio
       /// \nosubgrouping
       ///
       /// \brief GPIO port memory mapped registers.
