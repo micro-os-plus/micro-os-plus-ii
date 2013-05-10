@@ -13,8 +13,10 @@
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/diagnostics/include/TraceImplementation.h"
 
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
-#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_gpio.h"
+//#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_gpio.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_rcc.h"
+
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Gpio.h"
 
 #include "portable/peripheral/bitbang/include/I2CMaster.h"
 #include "portable/peripheral/bitbang/include/I2CMaster.cpp.h"
@@ -27,7 +29,11 @@ namespace hal
   {
     namespace diag
     {
+
       // ----------------------------------------------------------------------
+
+      /// \addtogroup stm32f4_diag
+      /// @{
 
       typedef os::bitbang::i2c::duration_t duration_t;
       typedef os::bitbang::i2c::address_t address_t;
@@ -38,15 +44,17 @@ namespace hal
       static const address_t I2C_DESTINATION_ADDRESS =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DESTINATION_ADDRESS;
 
-      static const int SDA_PORT =
+      static const gpio::portNumber_t SDA_PORT =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT;
-      static const int SDA_BIT =
+      static const gpio::bitNumber_t SDA_BIT =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT;
 
-      static const int SCL_PORT =
+      static const gpio::portNumber_t SCL_PORT =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT;
-      static const int SCL_BIT =
+      static const gpio::bitNumber_t SCL_BIT =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT;
+
+      /// @} end of addtogroup stm32f4_diag
 
       // ======================================================================
 
@@ -59,13 +67,13 @@ namespace hal
         {
         public:
           typedef WatchDog_T WatchDog;
-          static constexpr int GPIO_BitNo = Bit_T;
-          static constexpr int GPIO_BitMask = (1 << GPIO_BitNo);
+          static constexpr gpio::bitNumber_t GPIO_BitNo = Bit_T;
 
           // 0 = GPIOA, 1 = GPIOC, ...
-          static constexpr int GPIO_PortNo = Port_T;
-          static constexpr GPIO_TypeDef* GPIO_Address =
-              (GPIO_TypeDef*) ((GPIOA_BASE + (0x0400 * GPIO_PortNo)));
+          static constexpr gpio::portNumber_t GPIO_PortNo = Port_T;
+
+          // kind of explicit instantiation
+          typedef class TGpioPin<GPIO_PortNo, GPIO_BitNo> GpioPin;
 
           /// \name Constructors/destructor
           /// @{
@@ -157,21 +165,17 @@ namespace hal
       /// \details
       /// Initialise the pin to open drain mode, max speed
       /// and leave it in high state.
-      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         void
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::powerUp(void)
         {
+          /// \todo Implement this in C++.
           RCC_AHB1PeriphClockCmd((RCC_AHB1Periph_GPIOA << GPIO_PortNo), ENABLE);
 
-          GPIO_InitTypeDef GPIO_InitStructure;
-
-          GPIO_InitStructure.GPIO_Pin = GPIO_BitMask;
-          GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-          GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
-          GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-          GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
-          GPIO_Init(GPIO_Address, &GPIO_InitStructure);
+          GpioPin::configureMode(gpio::Mode::Output);
+          GpioPin::configureOutputType(gpio::OutputType::OpenDrain);
+          GpioPin::configureOutputSpeed(gpio::OutputSpeed::High_100MHz);
+          GpioPin::configurePullUpPullDown(gpio::Resistors::PullDown);
 
           // start pin as high
           setHigh();
@@ -179,18 +183,12 @@ namespace hal
 
       /// \details
       /// Return the pin to high input mode.
-      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         void
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::powerDown(void)
         {
-          GPIO_InitTypeDef GPIO_InitStructure;
-
-          GPIO_InitStructure.GPIO_Pin = GPIO_BitMask;
-          GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
-          GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-          GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-          GPIO_Init(GPIO_Address, &GPIO_InitStructure);
+          GpioPin::configureMode(gpio::Mode::Input);
+          GpioPin::configurePullUpPullDown(gpio::Resistors::None);
         }
 
       /// \details
@@ -198,46 +196,42 @@ namespace hal
       /// and the bus pull up resistors will make it high.
       /// \note In case the slave keeps
       /// the bus low, the effect will be delayed accordingly.
-      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         inline __attribute__((always_inline))
         void
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setHigh(void)
         {
-          GPIO_Address->BSRRL = GPIO_BitMask;
+          GpioPin::setPinHigh();
         }
 
       /// \details
       /// Set the pin to low state. The effect will be immediate.
-      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         inline __attribute__((always_inline))
         void
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setLow(void)
         {
-          GPIO_Address->BSRRH = GPIO_BitMask;
+          GpioPin::setPinLow();
         }
 
       /// \details
       /// Read the pin state and return true if low.
-      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         inline __attribute__((always_inline))
         bool
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::isLow(void)
         {
-          return ((GPIO_Address->IDR & GPIO_BitMask) == 0);
+          return GpioPin::isPinLow();
         }
 
       /// \details
       /// Read the pin state and return true if high.
-      /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
         inline __attribute__((always_inline))
         bool
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isHigh(void)
         {
-          return ((GPIO_Address->IDR & GPIO_BitMask) != 0);
+          return GpioPin::isPinHigh();
         }
 
       /// \details
@@ -292,8 +286,7 @@ namespace hal
       }
 
       // ======================================================================
-
-      /// \ingroup stm32f4_diag
+      /// \addtogroup stm32f4_diag
       /// @{
 
       /// \brief SDA template explicit instantiation.
@@ -306,13 +299,14 @@ namespace hal
       /// \brief SCL class type definition.
       typedef class TPinOpenDrain<WatchDog, SCL_PORT, SCL_BIT> SCL;
 
-    /// @}
+    /// @} end of addtogroup stm32f4_diag
 
     // ----------------------------------------------------------------------
     }// namespace diag
   } // namespace stm32f4
 } // namespace hal
 
+/// \brief TTimer
 template class os::bitbang::i2c::TTimer<hal::stm32f4::diag::WatchDog,
     hal::stm32f4::diag::CLOCK_DURATION_LOOPS>;
 
@@ -322,6 +316,8 @@ namespace hal
   {
     namespace diag
     {
+      /// \ingroup stm32f4_diag
+      /// \brief Timer
       typedef os::bitbang::i2c::TTimer<WatchDog, CLOCK_DURATION_LOOPS> Timer;
     } // namespace diag
   } // namespace stm32f4
@@ -336,9 +332,10 @@ namespace hal
   {
     namespace diag
     {
-
       // ======================================================================
 
+      /// \ingroup stm32f4_diag
+      /// \brief I2CMaster
       typedef class os::bitbang::i2c::TMaster<SDA, SCL, Timer> I2CMaster;
 
       // ======================================================================
@@ -424,10 +421,8 @@ namespace hal
 #endif
 
     // ======================================================================
-
     }// namespace diag
   } // namespace stm32f4
 } // namespace hal
-
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_DIAGNOSTICS_TRACEIMPLEMENTATION)
