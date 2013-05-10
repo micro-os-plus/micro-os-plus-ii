@@ -22,6 +22,7 @@ namespace hal
   {
     namespace gpio
     {
+
       typedef hal::cortexm::portNumber_t portNumber_t;
       typedef hal::cortexm::bitNumber_t bitNumber_t;
       typedef hal::cortexm::index_t index_t;
@@ -29,23 +30,38 @@ namespace hal
       typedef hal::cortexm::bitband::bitValue_t bitValue_t;
       typedef hal::cortexm::reg16_t reg16_t;
       typedef hal::cortexm::reg32_t reg32_t;
+    }
+
+    // Forward declaration, to help find friends.
+    class GpioPin;
+
+    template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+      class TGpioPin;
+
+    namespace gpio
+    {
+      /// \addtogroup stm32f4
+      /// @{
 
       // ----------------------------------------------------------------------
 
       typedef uint32_t mode_t;
 
+      /// \brief Port modes (2 bits/pin).
       enum class Mode
         : mode_t
           {
             Input = 0, Output = 1, Alternate = 2, Analog = 3
       };
 
-      static const mode_t MODE_MASK = 0x3;
+      /// \brief Mask to isolate the port mode bits.
+      static const mode_t MODE_MASK = 0x3U;
 
       // ----------------------------------------------------------------------
 
       typedef uint32_t outputType_t;
 
+      /// \brief Output type (1 bit/pin).
       enum class OutputType
         : outputType_t
           {
@@ -56,30 +72,35 @@ namespace hal
 
       typedef uint32_t outputSpeed_t;
 
+      /// \brief Output Speed (2 bits/pin).
       enum class OutputSpeed
         : outputSpeed_t
           {
             Low_2MHz = 0, Medium_25MHz = 1, Fast_50MHz = 2, High_100MHz = 3
       } OutputSpeed_t;
 
+      /// \brief Mask to isolate the port output speed bits.
       static const outputSpeed_t OUTPUT_SPEED_MASK = 0x3U;
 
       // ----------------------------------------------------------------------
 
       typedef uint32_t resistors_t;
 
+      /// \brief Pull up/Pull down resistors (2 bits/pin).
       enum class Resistors
         : resistors_t
           {
             None = 0, PullUp = 1, PullDown = 2
       };
 
+      /// \brief Mask to isolate the port pull up/pull down bits.
       static const resistors_t RESISTORS_MASK = 0x3U;
 
       // ----------------------------------------------------------------------
 
       typedef uint32_t alternateFunction_t;
 
+      /// \brief Alternate functions (4 bits/pin).
       enum class AlternateFunction
         : alternateFunction_t
           {
@@ -101,43 +122,43 @@ namespace hal
         AF15
       };
 
+      /// \brief Mask to isolate the alternate function bits.
       static const alternateFunction_t ALTERNATE_FUNCTION_MASK = 0xFU;
+
+      /// @} end of addtogroup stm32f4
 
       // ======================================================================
 
-      // ----- Port memory mapped registers -----------------------------------
-
+      /// \headerfile GpioDefinitions.h "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/GpioDefinitions.h"
+      /// \ingroup stm32f4
+      /// \nosubgrouping
+      ///
+      /// \brief GPIO port memory mapped registers.
+      ///
+      /// \warning This class is packed and mapped over a specific port memory
+      ///       area. DO NOT change the members order or add new data members.
       class __attribute__((packed)) PortRegisters
       {
       public:
         // --------------------------------------------------------------------
 
-        //const static address_t MEMORY_BASE = hal::stm32f4::PeripheralAddressMap::GPIO;
-        static const hal::cortexm::address_t MEMORY_BASE = 0x40020000UL;
-        static const hal::cortexm::address_t MEMORY_OFFSET = 0x00000400UL;
+        /// \name Constructors/destructor
+        /// @{
 
-        // ----- Deleted constructor ------------------------------------------
-
+        /// \brief Deleted constructor
         PortRegisters() = delete;
 
-        // ----- Memory map ---------------------------------------------------
+        /// @} end of name Constructors/destructor
 
-        hal::cortexm::regReadWrite_t moder; // 0x0000
-        hal::cortexm::regReadWrite_t otyper; // 0x0004
-        hal::cortexm::regReadWrite_t ospeedr; // 0x0008
-        hal::cortexm::regReadWrite_t pupdr; // 0x000C
-        hal::cortexm::regReadOnly_t idr; // 0x0010
-        hal::cortexm::regReadWrite_t odr; // 0x0014
-        hal::cortexm::regWriteOnly_t bssr; // 0x0018
-        hal::cortexm::regReadWrite_t lckr; // 0x001C
-        hal::cortexm::regReadWrite_t afr[2]; // 0x0020-24
-
-        // ----- Member functions ---------------------------------------------
+        /// \name Public member functions
+        /// @{
 
         // 2 bits / pin
+        /// \brief Read mode register.
         reg32_t
         readMode(void);
 
+        /// \brief Write mode register.
         void
         writeMode(const reg32_t value);
 
@@ -189,8 +210,53 @@ namespace hal
         readAlternateFunction(index_t index);
 
         void
-        writeAlternateFunction(const index_t index,
-            const reg32_t value);
+        writeAlternateFunction(const index_t index, const reg32_t value);
+
+        /// @} end of Public member functions
+
+        /// \name Memory definitions
+        /// @{
+
+        //const static address_t MEMORY_BASE = hal::stm32f4::PeripheralAddressMap::GPIO;
+        /// \brief Base address of the first port.
+        static const hal::cortexm::address_t MEMORY_BASE = 0x40020000UL;
+        /// \brief Offset between successive ports.
+        static const hal::cortexm::address_t MEMORY_OFFSET = 0x00000400UL;
+
+        /// @} end of name Memory definitions
+
+
+      private:
+        // The GpioPin classes need to take the addresses of some registers
+        // for bit-band operations.
+        template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
+          friend class hal::stm32f4::TGpioPin;
+
+        friend class hal::stm32f4::GpioPin;
+
+        /// \name Memory mapped registers
+        /// @{
+
+        /// \brief 0x0000 - Mode register.
+        hal::cortexm::regReadWrite_t moder;
+        /// \brief 0x0004 - Output type register.
+        hal::cortexm::regReadWrite_t otyper;
+        /// \brief 0x0008 - Output speed register.
+        hal::cortexm::regReadWrite_t ospeedr;
+        /// \brief 0x000C - Pull up/pull down register.
+        hal::cortexm::regReadWrite_t pupdr;
+        /// \brief 0x0010 - Input data register.
+        hal::cortexm::regReadOnly_t idr;
+        /// \brief 0x0014 - Output data register.
+        hal::cortexm::regReadWrite_t odr;
+        /// \brief 0x0018 - Bit set/reset register.
+        hal::cortexm::regWriteOnly_t bssr;
+        /// \brief 0x001C - Lock register.
+        hal::cortexm::regReadWrite_t lckr;
+        /// \brief 0x0020-0x0024 - Alternate functions registers.
+        hal::cortexm::regReadWrite_t afr[2];
+
+        /// @} end of name Memory mapped registers
 
       };
 
