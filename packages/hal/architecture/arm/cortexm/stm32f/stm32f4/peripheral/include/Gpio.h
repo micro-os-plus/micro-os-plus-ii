@@ -27,7 +27,7 @@ namespace hal
     // ========================================================================
 
     /// \headerfile Gpio.h "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Gpio.h"
-    /// \ingroup stm32f4
+    /// \ingroup stm32f4_gpio
     /// \nosubgrouping
     ///
     /// \brief GPIO pin class template (static version).
@@ -245,6 +245,7 @@ namespace hal
 
     /// \details
     /// Use read/modify/write to change the 2 configuration bits.
+    /// \warning Non atomic, the caller must use critical sections.
     template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
       inline void
       __attribute__((always_inline))
@@ -256,8 +257,9 @@ namespace hal
         gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
         newValue &= gpio::MODE_MASK;
         newValue <<= (2 * m_bitNumber);
+        newValue |= current;
 
-        m_portRegisters.writeMode(current | newValue);
+        m_portRegisters.writeMode(newValue);
       }
 
     /// \details
@@ -307,6 +309,7 @@ namespace hal
 
     /// \details
     /// Use read/modify/write to change the 2 configuration bits.
+    /// \warning Non atomic, the caller must use critical sections.
     template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
       inline void
       __attribute__((always_inline))
@@ -318,8 +321,9 @@ namespace hal
         gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
         newValue &= gpio::OUTPUT_SPEED_MASK;
         newValue <<= (2 * m_bitNumber);
+        newValue |= current;
 
-        m_portRegisters.writeOutputSpeed(current | newValue);
+        m_portRegisters.writeOutputSpeed(newValue);
       }
 
     /// \details
@@ -338,6 +342,7 @@ namespace hal
 
     /// \details
     /// Use read/modify/write to change the 2 configuration bits.
+    /// \warning Non atomic, the caller must use critical sections.
     template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
       inline void
       __attribute__((always_inline))
@@ -349,8 +354,9 @@ namespace hal
         gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
         newValue &= gpio::RESISTORS_MASK;
         newValue <<= (2 * m_bitNumber);
+        newValue |= current;
 
-        m_portRegisters.writePullUpPullDown(current | newValue);
+        m_portRegisters.writePullUpPullDown(newValue);
       }
 
     /// \details
@@ -372,6 +378,7 @@ namespace hal
     /// The AFR registers are organised as an array of two words.
     /// Bits corresponding to pins 0-7 are stored in the first word,
     /// bits corresponding to pins 8-15 in the second word.
+    /// \warning Non atomic, the caller must use critical sections.
     template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
       inline void
       __attribute__((always_inline))
@@ -390,8 +397,9 @@ namespace hal
 
         newValue &= gpio::ALTERNATE_FUNCTION_MASK;
         newValue <<= (4 * bitNumber);
+        newValue |= current;
 
-        m_portRegisters.writeAlternateFunction(index, current | newValue);
+        m_portRegisters.writeAlternateFunction(index, newValue);
 
       }
 
@@ -444,6 +452,7 @@ namespace hal
     /// \details
     /// Use bit-banding to read the corresponding ODR bit,
     /// reverse its value and write it back.
+    /// \warning Non atomic, the caller must use critical sections.
     template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
       inline void
       __attribute__((always_inline))
@@ -452,8 +461,9 @@ namespace hal
         hal::cortexm::address_t odrAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.odr);
 
-        gpio::bitValue_t oldValue = hal::cortexm::bitband::getPeripheralBitValue(
-            odrAddress, m_bitNumber);
+        gpio::bitValue_t oldValue =
+            hal::cortexm::bitband::getPeripheralBitValue(odrAddress,
+                m_bitNumber);
 
         gpio::bitValue_t newValue = ~oldValue;
         hal::cortexm::bitband::setPeripheralBitValue(odrAddress, m_bitNumber,
@@ -505,7 +515,7 @@ namespace hal
     // ========================================================================
 
     /// \headerfile Gpio.h "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Gpio.h"
-    /// \ingroup stm32f4
+    /// \ingroup stm32f4_gpio
     /// \nosubgrouping
     ///
     /// \brief GPIO pin class (full version).
@@ -789,6 +799,7 @@ namespace hal
 
     /// \details
     /// Use read/modify/write to change the 2 configuration bits.
+    /// \warning Non atomic, the caller must use critical sections.
     inline void
     __attribute__((always_inline))
     GpioPin::configureMode(gpio::Mode value)
@@ -797,9 +808,11 @@ namespace hal
       current &= ~(gpio::MODE_MASK << (2 * m_bitNumber));
 
       gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
-      newValue = (newValue & gpio::MODE_MASK) << (2 * m_bitNumber);
+      newValue &= gpio::MODE_MASK;
+      newValue <<= (2 * m_bitNumber);
+      newValue |= current;
 
-      m_portRegisters.writeMode(current | newValue);
+      m_portRegisters.writeMode(newValue);
     }
 
     /// \details
@@ -810,8 +823,9 @@ namespace hal
     {
       gpio::reg32_t current = m_portRegisters.readMode();
       current >>= (2 * m_bitNumber);
+      current &= gpio::MODE_MASK;
 
-      return static_cast<gpio::Mode>(current & gpio::MODE_MASK);
+      return static_cast<gpio::Mode>(current);
     }
 
     /// \details
@@ -845,6 +859,7 @@ namespace hal
 
     /// \details
     /// Use read/modify/write to change the 2 configuration bits.
+    /// \warning Non atomic, the caller must use critical sections.
     inline void
     __attribute__((always_inline))
     GpioPin::configureOutputSpeed(gpio::OutputSpeed value)
@@ -853,9 +868,11 @@ namespace hal
       current &= ~(gpio::OUTPUT_SPEED_MASK << (2 * m_bitNumber));
 
       gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
-      newValue = (newValue & gpio::OUTPUT_SPEED_MASK) << (2 * m_bitNumber);
+      newValue &= gpio::OUTPUT_SPEED_MASK;
+      newValue <<= (2 * m_bitNumber);
+      newValue |= current;
 
-      m_portRegisters.writeOutputSpeed(current | newValue);
+      m_portRegisters.writeOutputSpeed(newValue);
     }
 
     /// \details
@@ -866,12 +883,14 @@ namespace hal
     {
       gpio::reg32_t current = m_portRegisters.readOutputSpeed();
       current >>= (2 * m_bitNumber);
+      current &= gpio::OUTPUT_SPEED_MASK;
 
-      return static_cast<gpio::OutputSpeed>(current & gpio::OUTPUT_SPEED_MASK);
+      return static_cast<gpio::OutputSpeed>(current);
     }
 
     /// \details
     /// Use read/modify/write to change the 2 configuration bits.
+    /// \warning Non atomic, the caller must use critical sections.
     inline void
     __attribute__((always_inline))
     GpioPin::configurePullUpPullDown(gpio::Resistors value)
@@ -880,9 +899,11 @@ namespace hal
       current &= ~(gpio::RESISTORS_MASK << (2 * m_bitNumber));
 
       gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
-      newValue = (newValue & gpio::RESISTORS_MASK) << (2 * m_bitNumber);
+      newValue &= gpio::RESISTORS_MASK;
+      newValue <<= (2 * m_bitNumber);
+      newValue |= current;
 
-      m_portRegisters.writePullUpPullDown(current | newValue);
+      m_portRegisters.writePullUpPullDown(newValue);
     }
 
     /// \details
@@ -893,8 +914,9 @@ namespace hal
     {
       gpio::reg32_t current = m_portRegisters.readPullUpPullDown();
       current >>= (2 * m_bitNumber);
+      current &= gpio::RESISTORS_MASK;
 
-      return static_cast<gpio::Resistors>(current & gpio::RESISTORS_MASK);
+      return static_cast<gpio::Resistors>(current);
     }
 
     /// \details
@@ -902,6 +924,7 @@ namespace hal
     /// The AFR registers are organised as an array of two words.
     /// Bits corresponding to pins 0-7 are stored in the first word,
     /// bits corresponding to pins 8-15 in the second word.
+    /// \warning Non atomic, the caller must use critical sections.
     inline void
     __attribute__((always_inline))
     GpioPin::configureAlternateFunction(gpio::AlternateFunction value)
@@ -915,19 +938,24 @@ namespace hal
           current = m_portRegisters.readAlternateFunction(0);
           current &= ~(gpio::ALTERNATE_FUNCTION_MASK << (4 * m_bitNumber));
 
-          newValue = (newValue & gpio::ALTERNATE_FUNCTION_MASK)
-              << (4 * m_bitNumber);
-          m_portRegisters.writeAlternateFunction(0, current | newValue);
+          newValue &= gpio::ALTERNATE_FUNCTION_MASK;
+          newValue <<= (4 * m_bitNumber);
+          newValue |= current;
+
+          m_portRegisters.writeAlternateFunction(0, newValue);
         }
       else
         {
-          current = m_portRegisters.readAlternateFunction(1);
-          current &=
-              ~(gpio::ALTERNATE_FUNCTION_MASK << (4 * (m_bitNumber - 8)));
+          gpio::bitNumber_t bitNumber = m_bitNumber - 8;
 
-          newValue = (newValue & gpio::ALTERNATE_FUNCTION_MASK)
-              << (4 * (m_bitNumber - 8));
-          m_portRegisters.writeAlternateFunction(1, current | newValue);
+          current = m_portRegisters.readAlternateFunction(1);
+          current &= ~(gpio::ALTERNATE_FUNCTION_MASK << (4 * bitNumber));
+
+          newValue &= gpio::ALTERNATE_FUNCTION_MASK;
+          newValue <<= (4 * bitNumber);
+          newValue |= current;
+
+          m_portRegisters.writeAlternateFunction(1, newValue);
         }
     }
 
@@ -982,6 +1010,7 @@ namespace hal
     /// \details
     /// Use bit-banding to read the corresponding ODR bit,
     /// reverse its value and write it back.
+    /// \warning Non atomic, the caller must use critical sections.
     inline void
     __attribute__((always_inline))
     GpioPin::togglePin(void)
@@ -989,10 +1018,10 @@ namespace hal
       hal::cortexm::address_t odrAddress =
           reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.odr);
 
-      uint32_t oldValue = hal::cortexm::bitband::getPeripheralBitValue(
+      gpio::bitValue_t oldValue = hal::cortexm::bitband::getPeripheralBitValue(
           odrAddress, m_bitNumber);
 
-      uint32_t newValue = ~oldValue;
+      gpio::bitValue_t newValue = ~oldValue;
       hal::cortexm::bitband::setPeripheralBitValue(odrAddress, m_bitNumber,
           newValue);
     }
