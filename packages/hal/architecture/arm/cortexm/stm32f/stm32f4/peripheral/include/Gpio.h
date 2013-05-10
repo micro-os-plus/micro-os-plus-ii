@@ -5,6 +5,8 @@
 
 /// \file
 /// \brief STM32F4 GPIO high level classes.
+///
+/// \example hal/architecture/arm/cortexm/tests/src/gpio.cpp
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_GPIO_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_GPIO_H_
@@ -47,6 +49,7 @@ namespace hal
     ///
     /// XGPIO::setPinHigh();
     /// \endcode
+
     template<gpio::portNumber_t Port_T, gpio::bitNumber_t Bit_T>
       class TGpioPin
       {
@@ -251,7 +254,8 @@ namespace hal
         current &= ~(gpio::MODE_MASK << (2 * m_bitNumber));
 
         gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
-        newValue = (newValue & gpio::MODE_MASK) << (2 * m_bitNumber);
+        newValue &= gpio::MODE_MASK;
+        newValue <<= (2 * m_bitNumber);
 
         m_portRegisters.writeMode(current | newValue);
       }
@@ -265,8 +269,9 @@ namespace hal
       {
         gpio::reg32_t current = m_portRegisters.readMode();
         current >>= (2 * m_bitNumber);
+        current &= gpio::MODE_MASK;
 
-        return static_cast<gpio::Mode>(current & gpio::MODE_MASK);
+        return static_cast<gpio::Mode>(current);
       }
 
     /// \details
@@ -279,7 +284,7 @@ namespace hal
         hal::cortexm::address_t otyperAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.otyper);
 
-        gpio::reg32_t newValue;
+        gpio::bitValue_t newValue;
         newValue = static_cast<gpio::reg32_t>(value);
 
         hal::cortexm::bitband::setPeripheralBitValue(otyperAddress, m_bitNumber,
@@ -311,7 +316,8 @@ namespace hal
         current &= ~(gpio::OUTPUT_SPEED_MASK << (2 * m_bitNumber));
 
         gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
-        newValue = (newValue & gpio::OUTPUT_SPEED_MASK) << (2 * m_bitNumber);
+        newValue &= gpio::OUTPUT_SPEED_MASK;
+        newValue <<= (2 * m_bitNumber);
 
         m_portRegisters.writeOutputSpeed(current | newValue);
       }
@@ -325,8 +331,9 @@ namespace hal
       {
         gpio::reg32_t current = m_portRegisters.readOutputSpeed();
         current >>= (2 * m_bitNumber);
+        current &= gpio::OUTPUT_SPEED_MASK;
 
-        return static_cast<gpio::OutputSpeed>(current & gpio::OUTPUT_SPEED_MASK);
+        return static_cast<gpio::OutputSpeed>(current);
       }
 
     /// \details
@@ -340,7 +347,8 @@ namespace hal
         current &= ~(gpio::RESISTORS_MASK << (2 * m_bitNumber));
 
         gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
-        newValue = (newValue & gpio::RESISTORS_MASK) << (2 * m_bitNumber);
+        newValue &= gpio::RESISTORS_MASK;
+        newValue <<= (2 * m_bitNumber);
 
         m_portRegisters.writePullUpPullDown(current | newValue);
       }
@@ -354,8 +362,9 @@ namespace hal
       {
         gpio::reg32_t current = m_portRegisters.readPullUpPullDown();
         current >>= (2 * m_bitNumber);
+        current &= gpio::RESISTORS_MASK;
 
-        return static_cast<gpio::Resistors>(current & gpio::RESISTORS_MASK);
+        return static_cast<gpio::Resistors>(current);
       }
 
     /// \details
@@ -371,28 +380,19 @@ namespace hal
       {
         gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
 
-        gpio::reg32_t current;
+        // All computations are done by the compiler, so divisions
+        // are accepted.
+        gpio::index_t index = (m_bitNumber / 8);
+        gpio::bitNumber_t bitNumber = (m_bitNumber % 8);
 
-        if (m_bitNumber < 8)
-          {
-            current = m_portRegisters.readAlternateFunction(0);
-            current &= ~(gpio::ALTERNATE_FUNCTION_MASK
-                << (4 * (m_bitNumber & 0x7)));
+        gpio::reg32_t current = m_portRegisters.readAlternateFunction(index);
+        current &= ~(gpio::ALTERNATE_FUNCTION_MASK << (4 * bitNumber));
 
-            newValue = (newValue & gpio::ALTERNATE_FUNCTION_MASK)
-                << (4 * (m_bitNumber & 0x7));
-            m_portRegisters.writeAlternateFunction(0, current | newValue);
-          }
-        else
-          {
-            current = m_portRegisters.readAlternateFunction(1);
-            current &= ~(gpio::ALTERNATE_FUNCTION_MASK
-                << (4 * ((m_bitNumber - 8) & 0x7)));
+        newValue &= gpio::ALTERNATE_FUNCTION_MASK;
+        newValue <<= (4 * bitNumber);
 
-            newValue = (newValue & gpio::ALTERNATE_FUNCTION_MASK)
-                << (4 * ((m_bitNumber - 8) & 0x7));
-            m_portRegisters.writeAlternateFunction(1, current | newValue);
-          }
+        m_portRegisters.writeAlternateFunction(index, current | newValue);
+
       }
 
     /// \details
@@ -405,21 +405,16 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::retrieveAlternateFunction(void)
       {
-        gpio::reg32_t current;
+        // All computations are done by the compiler, so divisions
+        // are accepted.
+        gpio::index_t const index = (m_bitNumber / 8);
+        gpio::bitNumber_t const bitNumber = (m_bitNumber % 8);
 
-        if (m_bitNumber < 8)
-          {
-            current = m_portRegisters.readAlternateFunction(0);
-            current >>= (4 * (m_bitNumber & 0x7));
-          }
-        else
-          {
-            current = m_portRegisters.readAlternateFunction(1);
-            current >>= (4 * ((m_bitNumber - 8) & 0x7));
-          }
+        gpio::reg32_t current = m_portRegisters.readAlternateFunction(index);
+        current >>= (4 * bitNumber);
+        current &= gpio::ALTERNATE_FUNCTION_MASK;
 
-        return static_cast<gpio::AlternateFunction>(current
-            & gpio::ALTERNATE_FUNCTION_MASK);
+        return static_cast<gpio::AlternateFunction>(current);
       }
 
     // ------------------------------------------------------------------------
@@ -457,10 +452,10 @@ namespace hal
         hal::cortexm::address_t odrAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.odr);
 
-        uint32_t oldValue = hal::cortexm::bitband::getPeripheralBitValue(
+        gpio::bitValue_t oldValue = hal::cortexm::bitband::getPeripheralBitValue(
             odrAddress, m_bitNumber);
 
-        uint32_t newValue = ~oldValue;
+        gpio::bitValue_t newValue = ~oldValue;
         hal::cortexm::bitband::setPeripheralBitValue(odrAddress, m_bitNumber,
             newValue);
       }
@@ -472,7 +467,7 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::isPinHigh(void)
       {
-        hal::cortexm::address_t idrAddress =
+        hal::cortexm::address_t const idrAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
 
         return (hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
@@ -486,7 +481,7 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::isPinLow(void)
       {
-        hal::cortexm::address_t idrAddress =
+        hal::cortexm::address_t const idrAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
 
         return (hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
@@ -500,7 +495,7 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::readPin(void)
       {
-        hal::cortexm::address_t idrAddress =
+        hal::cortexm::address_t const idrAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
 
         return hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
