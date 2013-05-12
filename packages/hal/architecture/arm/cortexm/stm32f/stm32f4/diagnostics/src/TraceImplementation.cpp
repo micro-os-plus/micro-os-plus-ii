@@ -12,16 +12,18 @@
 
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/diagnostics/include/TraceImplementation.h"
 
-#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
-//#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_gpio.h"
-#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_rcc.h"
-
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Gpio.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Iwdg.h"
 
 #include "portable/peripheral/bitbang/include/I2CMaster.h"
 #include "portable/peripheral/bitbang/include/I2CMaster.cpp.h"
 
 #include "hal/platform/include/XCDL_TraceI2CDefines.h"
+
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
+
+// required for gpio clock
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_rcc.h"
 
 namespace hal
 {
@@ -197,8 +199,8 @@ namespace hal
       /// \note In case the slave keeps
       /// the bus low, the effect will be delayed accordingly.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setHigh(void)
         {
           GpioPin::setPinHigh();
@@ -207,8 +209,8 @@ namespace hal
       /// \details
       /// Set the pin to low state. The effect will be immediate.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setLow(void)
         {
           GpioPin::setPinLow();
@@ -217,8 +219,8 @@ namespace hal
       /// \details
       /// Read the pin state and return true if low.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        bool
+        inline bool
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::isLow(void)
         {
           return GpioPin::isPinLow();
@@ -227,8 +229,8 @@ namespace hal
       /// \details
       /// Read the pin state and return true if high.
       template<class WatchDog_T, unsigned int Port_T, int PinNo_T>
-        inline __attribute__((always_inline))
-        bool
+        inline bool
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, PinNo_T>::isHigh(void)
         {
           return GpioPin::isPinHigh();
@@ -242,8 +244,8 @@ namespace hal
       /// \warning If used for devices that compile on release
       /// the implementation should not loop forever.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::waitToGetHigh(void)
         {
           while (isLow())
@@ -257,8 +259,8 @@ namespace hal
       /// high, eventually resetting
       /// the watch dog.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setHighAndSynchronise(void)
         {
           setHigh();
@@ -272,17 +274,17 @@ namespace hal
       class WatchDog
       {
       public:
-        static
-        void
+        static void
         reset(void);
       };
 
       /// \brief Reset the watch dog device.
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       WatchDog::reset(void)
       {
-        IWDG ->KR = ((uint16_t) 0xAAAA);
+        //IWDG ->KR = ((uint16_t) 0xAAAA);
+        Iwdg::reload();
       }
 
       // ======================================================================
