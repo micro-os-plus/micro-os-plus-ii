@@ -163,7 +163,7 @@ namespace hal
     /// \code{.cpp}
     /// hal::stm32f4::Iwdg::reload();
     /// \endcode
-    template<hal::cortexm::address_t A>
+    template<hal::cortexm::address_t A_T>
       class TIwdg
       {
       public:
@@ -242,17 +242,17 @@ namespace hal
         /// This value is the peripheral base address.
         /// For convenient access, it is represented as a reference.
         static constexpr iwdg::Registers& m_registers =
-            *reinterpret_cast<iwdg::Registers*>(A);
+            *reinterpret_cast<iwdg::Registers*>(A_T);
 
         /// @} end of name Private members
       };
 
     // ----- Inline member function definitions -------------------------------
 
-    template<hal::cortexm::address_t A>
+    template<hal::cortexm::address_t A_T>
       inline iwdg::Registers&
       __attribute__((always_inline))
-      TIwdg<A>::getRegisters(void)
+      TIwdg<A_T>::getRegisters(void)
       {
         return m_registers;
       }
@@ -263,10 +263,10 @@ namespace hal
     /// counting down from the reset value of 0xFFF. When it reaches
     /// the end of count value (0x000) a reset signal is generated
     /// (IWDG reset).
-    template<hal::cortexm::address_t A>
+    template<hal::cortexm::address_t A_T>
       inline void
       __attribute__((always_inline))
-      TIwdg<A>::start(void)
+      TIwdg<A_T>::start(void)
       {
         m_registers.writeKey(iwdg::START_KEY);
       }
@@ -275,10 +275,10 @@ namespace hal
     /// Whenever the key value 0xAAAA is written in the IWDG_KR register,
     /// the IWDG_RLR value is reloaded in the counter and the watchdog
     /// reset is prevented.
-    template<hal::cortexm::address_t A>
+    template<hal::cortexm::address_t A_T>
       inline void
       __attribute__((always_inline))
-      TIwdg<A>::reload(void)
+      TIwdg<A_T>::reload(void)
       {
         m_registers.writeKey(iwdg::RELOAD_KEY);
       }
