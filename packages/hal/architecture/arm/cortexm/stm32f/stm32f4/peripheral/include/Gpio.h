@@ -1069,5 +1069,5 @@ namespace hal
   }// namespace stm32f4
 } // namespace os
 
-#endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F40XX)
+#endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_GPIO_H_
