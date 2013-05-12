@@ -16,6 +16,8 @@
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 #include "hal/architecture/arm/cortexm/peripheral/include/BitBanding.h"
 
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/PeripheralMemoryMap.h"
+
 namespace hal
 {
   namespace stm32f4
@@ -217,14 +219,14 @@ namespace hal
         /// \name Memory definitions
         /// @{
 
-        //const static address_t MEMORY_BASE = hal::stm32f4::PeripheralAddressMap::GPIO;
         /// \brief Base address of the first port.
-        static const hal::cortexm::address_t MEMORY_BASE = 0x40020000UL;
+        static const hal::cortexm::address_t MEMORY_BASE =
+            PeripheralMemoryMap::GPIOA_BASE_ADDRESS;
         /// \brief Offset between successive ports.
-        static const hal::cortexm::address_t MEMORY_OFFSET = 0x00000400UL;
+        static const hal::cortexm::address_t MEMORY_OFFSET =
+            PeripheralMemoryMap::GPIO_OFFSET;
 
         /// @} end of name Memory definitions
-
 
       private:
         // The GpioPin classes need to take the addresses of some registers
@@ -262,118 +264,118 @@ namespace hal
 
       // ----- Inline member function definitions -----------------------------
 
-      reg32_t
-      inline __attribute__((always_inline))
+      inline reg32_t
+      __attribute__((always_inline))
       PortRegisters::readMode(void)
       {
         return this->moder;
       }
 
-      void
-      inline __attribute__((always_inline))
+      inline void
+      __attribute__((always_inline))
       PortRegisters::writeMode(const reg32_t value)
       {
         this->moder = value;
       }
 
       // 1 bit / pin
-      reg16_t
-      inline __attribute__((always_inline))
+      inline reg16_t
+      __attribute__((always_inline))
       PortRegisters::readOutputType(void)
       {
         return this->odr;
       }
 
-      void
-      inline __attribute__((always_inline))
+      inline void
+      __attribute__((always_inline))
       PortRegisters::writeOutputType(const reg16_t value)
       {
         this->odr = value;
       }
 
       // 2 bits / pin
-      reg32_t
-      inline __attribute__((always_inline))
+      inline reg32_t
+      __attribute__((always_inline))
       PortRegisters::readOutputSpeed(void)
       {
         return this->ospeedr;
       }
 
-      void
-      inline __attribute__((always_inline))
+      inline void
+      __attribute__((always_inline))
       PortRegisters::writeOutputSpeed(const reg32_t value)
       {
         this->ospeedr = value;
       }
 
       // 2 bits / pin
-      reg32_t
-      inline __attribute__((always_inline))
+      inline reg32_t
+      __attribute__((always_inline))
       PortRegisters::readPullUpPullDown(void)
       {
         return this->pupdr;
       }
 
-      void
-      inline __attribute__((always_inline))
+      inline void
+      __attribute__((always_inline))
       PortRegisters::writePullUpPullDown(const reg32_t value)
       {
         this->pupdr = value;
       }
 
       // 1 bit / pin
-      reg16_t
-      inline __attribute__((always_inline))
+      inline reg16_t
+      __attribute__((always_inline))
       PortRegisters::readInputData(void)
       {
         return this->idr;
       }
 
       // 1 bit / pin
-      reg16_t
-      inline __attribute__((always_inline))
+      inline reg16_t
+      __attribute__((always_inline))
       PortRegisters::readOutputData(void)
       {
         return this->odr;
       }
 
-      void
-      inline __attribute__((always_inline))
+      inline void
+      __attribute__((always_inline))
       PortRegisters::writeOutputData(const reg16_t value)
       {
         this->odr = value;
       }
 
-      void
-      inline __attribute__((always_inline))
+      inline void
+      __attribute__((always_inline))
       PortRegisters::writeSetReset(const reg32_t value)
       {
         this->bssr = value;
       }
 
-      reg32_t
-      inline __attribute__((always_inline))
+      inline reg32_t
+      __attribute__((always_inline))
       PortRegisters::readConfigurationLock(void)
       {
         return this->lckr;
       }
 
-      void
-      inline __attribute__((always_inline))
+      inline void
+      __attribute__((always_inline))
       PortRegisters::writeConfigurationLock(const reg32_t value)
       {
         this->lckr = value;
       }
 
-      reg32_t
-      inline __attribute__((always_inline))
+      inline reg32_t
+      __attribute__((always_inline))
       PortRegisters::readAlternateFunction(const index_t index)
       {
         return this->afr[index];
       }
 
-      void
-      inline __attribute__((always_inline))
+      inline void
+      __attribute__((always_inline))
       PortRegisters::writeAlternateFunction(const index_t index,
           const reg32_t value)
       {
@@ -385,5 +387,5 @@ namespace hal
   } // namespace stm32f4
 } // namespace os
 
-#endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F40XX)
+#endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_GPIODEFINITIONS_H_
