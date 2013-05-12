@@ -13,6 +13,8 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
+#include <stdint.h>
+
 namespace hal
 {
   namespace cortexm
