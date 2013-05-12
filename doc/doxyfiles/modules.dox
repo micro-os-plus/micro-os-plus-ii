@@ -89,7 +89,7 @@ Cortex-M 32-bit MCU, the STM32F microcontrollers
 
 	\defgroup stm32f1 STM32 F1 series
 	\ingroup stm32f
-	\brief ST Micro STM32F10X families of microcontrollers.
+	\brief STM32F10X families of microcontrollers.
 
 The ST Micro STM32F10X family of microcontrollers consists of the following subfamilies:
 - Low-density devices are STM32F101xx, STM32F102xx and STM32F103xx microcontrollers
@@ -118,84 +118,87 @@ The ST Micro STM32F10X family of microcontrollers consists of the following subf
 
 		\defgroup stm32f1_irq Interrupts
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X Interrupt numbers and handlers.
+		\brief STM32F10X Interrupt numbers and handlers.
 
 		\defgroup stm32f1_diag Diagnostics
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X Diagnostics support.
+		\brief STM32F10X Diagnostics support.
 
 		\defgroup stm32f1ld STM32F10X_LD family
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X Low Density family of microcontrollers.
+		\brief STM32F10X Low Density family of microcontrollers.
 
 		\defgroup stm32f1ldvl STM32F10X_LD_VL family
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X Low Density Value Line family of microcontrollers.
+		\brief STM32F10X Low Density Value Line family of microcontrollers.
 
 		\defgroup stm32f1md STM32F10X_MD family
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X Medium Density family of microcontrollers
+		\brief STM32F10X Medium Density family of microcontrollers
 
 			\defgroup stm32f1md_irq Interrupts
 			\ingroup stm32f1md
-			\brief ST Micro STM32F10X Medium Density interrupt numbers and handlers.
+			\brief STM32F10X Medium Density interrupt numbers and handlers.
 
 		\defgroup stm32f1mdvl STM32F10X_MD_VL family
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X Medium Density value Line family of microcontrollers.
+		\brief STM32F10X Medium Density value Line family of microcontrollers.
 
 		\defgroup stm32f1hd STM32F10X_HD family
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X High Density family of microcontrollers.
+		\brief STM32F10X High Density family of microcontrollers.
 
 		\defgroup stm32f1hdvl STM32F10X_HD_VL family
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X High Density value line family of microcontrollers.
+		\brief STM32F10X High Density value line family of microcontrollers.
 
 		\defgroup stm32f1xl STM32F10X_XL family
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X XL-Density family of microcontrollers.
+		\brief STM32F10X XL-Density family of microcontrollers.
 
 		\defgroup stm32f1cl STM32F10X_CL family
 		\ingroup stm32f1
-		\brief ST Micro STM32F10X Connectivity Line family of microcontrollers.
+		\brief STM32F10X Connectivity Line family of microcontrollers.
 
 			\defgroup stm32f1cl_irq Interrupts
 			\ingroup stm32f1cl
-			\brief ST Micro STM32F10X Connectivity Line interrupt numbers and handlers.
+			\brief STM32F10X Connectivity Line interrupt numbers and handlers.
 
 	\defgroup stm32f4 STM32 F4 series
 	\ingroup stm32f
-	\brief ST Micro STM32F4 families of microcontrollers.
+	\brief STM32F4 families of microcontrollers.
 
 		\defgroup stm32f4_irq Interrupts
 		\ingroup stm32f4
-		\brief ST Micro STM32F4 Interrupt numbers and handlers.
+		\brief STM32F4 Interrupt numbers and handlers.
 
 		\defgroup stm32f4_diag Diagnostics
 		\ingroup stm32f4
-		\brief ST Micro STM32F4 Diagnostics support.
+		\brief STM32F4 Diagnostics support.
 
 		\defgroup stm32f40xx STM32F40XX Family
 		\ingroup stm32f4
-		\brief ST Micro STM32F40XX family of microcontrollers.
+		\brief STM32F40XX family of microcontrollers.
 		
 			\defgroup stm32f40xx_irq Interrupts
 			\ingroup stm32f40xx
-			\brief ST Micro STM32F40XX Interrupt numbers and handlers.
+			\brief STM32F40XX Interrupt numbers and handlers.
 	
 		\defgroup stm32f427x STM32F427X Family
 		\ingroup stm32f4
-		\brief ST Micro STM32F427X family of microcontrollers.
+		\brief STM32F427X family of microcontrollers.
 
 			\defgroup stm32f427x_irq Interrupts
 			\ingroup stm32f427x
-			\brief ST Micro STM32F427X Interrupt numbers and handlers.
+			\brief STM32F427X Interrupt numbers and handlers.
 
 		\defgroup stm32f4_gpio GPIO
 		\ingroup stm32f4
-		\brief ST Micro STM32F4 GPIO implementation.
+		\brief STM32F4 GPIO implementation.
 	
+		\defgroup stm32f4_iwdg IWDG
+		\ingroup stm32f4
+		\brief STM32F4 IWDG implementation.
 
 \if cmsis
 
