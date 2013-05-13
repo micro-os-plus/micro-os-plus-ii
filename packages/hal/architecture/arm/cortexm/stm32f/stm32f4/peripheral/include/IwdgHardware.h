@@ -93,26 +93,50 @@ namespace hal
         /// @{
 
         /// \brief Write the key register.
+        ///
+        /// \param [in] value A 16-bit value.
+        /// \par Returns
+        ///    Nothing.
         void
         writeKey(const reg16_t value);
 
         /// \brief Read the prescaler register.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return A 3-bit value.
         reg16_t
         readPrescaler(void);
 
         /// \brief Write the prescaler register.
+        ///
+        /// \param [in] value A 3-bit value.
+        /// \par Returns
+        ///    Nothing.
         void
         writePrescaler(const reg16_t value);
 
         /// \brief Read the reload register.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return A 12-bit value.
         reg16_t
         readReload(void);
 
         /// \brief Write the reload register.
+        ///
+        /// \param [in] value A 12-bit value.
+        /// \par Returns
+        ///    Nothing.
         void
         writeReload(const reg16_t value);
 
         /// \brief Read the status register.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \return A 2-bit value.
         reg16_t
         readStatus(void);
 
