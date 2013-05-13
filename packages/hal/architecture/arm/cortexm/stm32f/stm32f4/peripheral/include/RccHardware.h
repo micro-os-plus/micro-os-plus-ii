@@ -14,7 +14,7 @@
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4) || defined(__DOXYGEN__)
 
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
-#include "hal/architecture/arm/cortexm/peripheral/include/BitBanding.h"
+#include "hal/architecture/arm/cortexm/peripheral/include/BitBand.h"
 
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/PeripheralMemoryMap.h"
 

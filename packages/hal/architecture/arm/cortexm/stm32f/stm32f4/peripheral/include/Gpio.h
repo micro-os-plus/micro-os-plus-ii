@@ -18,7 +18,7 @@
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/GpioDefinitions.h"
 
-#include "hal/architecture/arm/cortexm/peripheral/include/BitBanding.h"
+#include "hal/architecture/arm/cortexm/peripheral/include/BitBand.h"
 
 namespace hal
 {
@@ -283,14 +283,10 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::configureOutputType(gpio::OutputType value)
       {
-        hal::cortexm::address_t otyperAddress =
-            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.otyper);
+        gpio::bitValue_t newValue = static_cast<gpio::reg32_t>(value);
 
-        gpio::bitValue_t newValue;
-        newValue = static_cast<gpio::reg32_t>(value);
-
-        hal::cortexm::bitband::writePeripheralBitValue(otyperAddress, m_bitNumber,
-            newValue);
+        hal::cortexm::BitBand::writePeripheralBitValue(&m_portRegisters.otyper,
+            m_bitNumber, newValue);
       }
 
     /// \details
@@ -300,11 +296,8 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::retrieveOutputType(void)
       {
-        hal::cortexm::address_t otyperAddress =
-            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.otyper);
-
-        return static_cast<gpio::OutputType>(hal::cortexm::bitband::readPeripheralBitValue(
-            otyperAddress, m_bitNumber));
+        return static_cast<gpio::OutputType>(hal::cortexm::BitBand::readPeripheralBitValue(
+            &m_portRegisters.otyper, m_bitNumber));
       }
 
     /// \details
@@ -458,16 +451,13 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::togglePin(void)
       {
-        hal::cortexm::address_t odrAddress =
-            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.odr);
-
         gpio::bitValue_t oldValue =
-            hal::cortexm::bitband::readPeripheralBitValue(odrAddress,
+            hal::cortexm::BitBand::readPeripheralBitValue(&m_portRegisters.odr,
                 m_bitNumber);
 
         gpio::bitValue_t newValue = ~oldValue;
-        hal::cortexm::bitband::writePeripheralBitValue(odrAddress, m_bitNumber,
-            newValue);
+        hal::cortexm::BitBand::writePeripheralBitValue(&m_portRegisters.odr,
+            m_bitNumber, newValue);
       }
 
     /// \details
@@ -477,11 +467,8 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::isPinHigh(void)
       {
-        hal::cortexm::address_t const idrAddress =
-            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
-
-        return (hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
-            m_bitNumber) != 0);
+        return (hal::cortexm::BitBand::readPeripheralBitValue(
+            &m_portRegisters.idr, m_bitNumber) != 0);
       }
 
     /// \details
@@ -491,11 +478,8 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::isPinLow(void)
       {
-        hal::cortexm::address_t const idrAddress =
-            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
-
-        return (hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
-            m_bitNumber) == 0);
+        return (hal::cortexm::BitBand::readPeripheralBitValue(
+            &m_portRegisters.idr, m_bitNumber) == 0);
       }
 
     /// \details
@@ -505,11 +489,8 @@ namespace hal
       __attribute__((always_inline))
       TGpioPin<Port_T, Bit_T>::readPin(void)
       {
-        hal::cortexm::address_t const idrAddress =
-            reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
-
-        return hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
-            m_bitNumber);
+        return hal::cortexm::BitBand::readPeripheralBitValue(
+            &m_portRegisters.idr, m_bitNumber);
       }
 
     // ========================================================================
@@ -834,14 +815,10 @@ namespace hal
     __attribute__((always_inline))
     GpioPin::configureOutputType(gpio::OutputType value)
     {
-      hal::cortexm::address_t otyperAddress =
-          reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.otyper);
+      gpio::reg32_t newValue = static_cast<gpio::reg32_t>(value);
 
-      gpio::reg32_t newValue;
-      newValue = static_cast<gpio::reg32_t>(value);
-
-      hal::cortexm::bitband::writePeripheralBitValue(otyperAddress, m_bitNumber,
-          newValue);
+      hal::cortexm::BitBand::writePeripheralBitValue(&m_portRegisters.otyper,
+          m_bitNumber, newValue);
     }
 
     /// \details
@@ -850,11 +827,8 @@ namespace hal
     __attribute__((always_inline))
     GpioPin::retrieveOutputType(void)
     {
-      hal::cortexm::address_t otyperAddress =
-          reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.otyper);
-
-      return static_cast<gpio::OutputType>(hal::cortexm::bitband::readPeripheralBitValue(
-          otyperAddress, m_bitNumber));
+      return static_cast<gpio::OutputType>(hal::cortexm::BitBand::readPeripheralBitValue(
+          &m_portRegisters.otyper, m_bitNumber));
     }
 
     /// \details
@@ -1015,15 +989,12 @@ namespace hal
     __attribute__((always_inline))
     GpioPin::togglePin(void)
     {
-      hal::cortexm::address_t odrAddress =
-          reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.odr);
-
-      gpio::bitValue_t oldValue = hal::cortexm::bitband::readPeripheralBitValue(
-          odrAddress, m_bitNumber);
+      gpio::bitValue_t oldValue = hal::cortexm::BitBand::readPeripheralBitValue(
+          &m_portRegisters.odr, m_bitNumber);
 
       gpio::bitValue_t newValue = ~oldValue;
-      hal::cortexm::bitband::writePeripheralBitValue(odrAddress, m_bitNumber,
-          newValue);
+      hal::cortexm::BitBand::writePeripheralBitValue(&m_portRegisters.odr,
+          m_bitNumber, newValue);
     }
 
     /// \details
@@ -1032,11 +1003,8 @@ namespace hal
     __attribute__((always_inline))
     GpioPin::isPinHigh(void)
     {
-      hal::cortexm::address_t idrAddress =
-          reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
-
-      return (hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
-          m_bitNumber) != 0);
+      return (hal::cortexm::BitBand::readPeripheralBitValue(
+          &m_portRegisters.idr, m_bitNumber) != 0);
     }
 
     /// \details
@@ -1045,11 +1013,8 @@ namespace hal
     __attribute__((always_inline))
     GpioPin::isPinLow(void)
     {
-      hal::cortexm::address_t idrAddress =
-          reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
-
-      return (hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
-          m_bitNumber) == 0);
+      return (hal::cortexm::BitBand::readPeripheralBitValue(
+          &m_portRegisters.idr, m_bitNumber) == 0);
     }
 
     /// \details
@@ -1058,10 +1023,7 @@ namespace hal
     __attribute__((always_inline))
     GpioPin::readPin(void)
     {
-      hal::cortexm::address_t idrAddress =
-          reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
-
-      return hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
+      return hal::cortexm::BitBand::readPeripheralBitValue(&m_portRegisters.idr,
           m_bitNumber);
     }
 

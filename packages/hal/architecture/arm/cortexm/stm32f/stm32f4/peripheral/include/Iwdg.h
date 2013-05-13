@@ -17,7 +17,7 @@
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/IwdgHardware.h"
 
-//#include "hal/architecture/arm/cortexm/peripheral/include/BitBanding.h"
+//#include "hal/architecture/arm/cortexm/peripheral/include/BitBand.h"
 
 namespace hal
 {

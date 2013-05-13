@@ -17,7 +17,7 @@
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/RccHardware.h"
 
-#include "hal/architecture/arm/cortexm/peripheral/include/BitBanding.h"
+#include "hal/architecture/arm/cortexm/peripheral/include/BitBand.h"
 
 namespace hal
 {
@@ -158,13 +158,10 @@ namespace hal
       __attribute__((always_inline))
       TRcc<A_T>::enableAhb1PeripheralClock(rcc::Ahb1Peripheral number)
       {
-        hal::cortexm::address_t ahb1enrAddress =
-            reinterpret_cast<hal::cortexm::address_t>(&m_registers.ahb1enr);
+        rcc::bitNumber_t bitNumber = static_cast<gpio::reg32_t>(number);
 
-        rcc::bitNumber_t bitNumber;
-        bitNumber = static_cast<gpio::reg32_t>(number);
-
-        hal::cortexm::bitband::setPeripheralBit(ahb1enrAddress, bitNumber);
+        hal::cortexm::BitBand::setPeripheralBit(&m_registers.ahb1enr,
+            bitNumber);
       }
 
     /// \details
@@ -174,13 +171,10 @@ namespace hal
       __attribute__((always_inline))
       TRcc<A_T>::disableAhb1PeripheralClock(rcc::Ahb1Peripheral number)
       {
-        hal::cortexm::address_t ahb1enrAddress =
-            reinterpret_cast<hal::cortexm::address_t>(&m_registers.ahb1enr);
+        rcc::bitNumber_t bitNumber = static_cast<gpio::reg32_t>(number);
 
-        rcc::bitNumber_t bitNumber;
-        bitNumber = static_cast<gpio::reg32_t>(number);
-
-        hal::cortexm::bitband::clearPeripheralBit(ahb1enrAddress, bitNumber);
+        hal::cortexm::BitBand::clearPeripheralBit(&m_registers.ahb1enr,
+            bitNumber);
       }
 
     /// \details
@@ -190,14 +184,10 @@ namespace hal
       __attribute__((always_inline))
       TRcc<A_T>::isEnabledAhb1PeripheralClock(rcc::Ahb1Peripheral number)
       {
-        hal::cortexm::address_t ahb1enrAddress =
-            reinterpret_cast<hal::cortexm::address_t>(&m_registers.ahb1enr);
+        rcc::bitNumber_t bitNumber = static_cast<gpio::reg32_t>(number);
 
-        rcc::bitNumber_t bitNumber;
-        bitNumber = static_cast<gpio::reg32_t>(number);
-
-        return (hal::cortexm::bitband::readPeripheralBitValue(ahb1enrAddress,
-            bitNumber) != 0);
+        return (hal::cortexm::BitBand::readPeripheralBitValue(
+            &m_registers.ahb1enr, bitNumber) != 0);
       }
 
     template<hal::cortexm::address_t A_T>
