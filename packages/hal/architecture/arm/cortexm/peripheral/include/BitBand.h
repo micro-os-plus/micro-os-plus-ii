@@ -134,7 +134,8 @@ namespace hal
         volatile address_t* const bitWordPointer =
             reinterpret_cast<uint32_t*>(bitWordAddress);
 
-        // return only the least significant bit, all other are 0
+        // return the entire word, but only the least
+        // significant bit, all other are 0
         return *bitWordPointer;
       }
 
