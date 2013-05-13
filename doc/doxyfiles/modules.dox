@@ -192,6 +192,10 @@ The ST Micro STM32F10X family of microcontrollers consists of the following subf
 			\ingroup stm32f427x
 			\brief STM32F427X Interrupt numbers and handlers.
 
+		\defgroup stm32f4_rcc RCC
+		\ingroup stm32f4
+		\brief STM32F4 RCC implementation.
+	
 		\defgroup stm32f4_gpio GPIO
 		\ingroup stm32f4
 		\brief STM32F4 GPIO implementation.
