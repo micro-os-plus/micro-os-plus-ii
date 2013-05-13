@@ -289,7 +289,7 @@ namespace hal
         gpio::bitValue_t newValue;
         newValue = static_cast<gpio::reg32_t>(value);
 
-        hal::cortexm::bitband::setPeripheralBitValue(otyperAddress, m_bitNumber,
+        hal::cortexm::bitband::writePeripheralBitValue(otyperAddress, m_bitNumber,
             newValue);
       }
 
@@ -303,7 +303,7 @@ namespace hal
         hal::cortexm::address_t otyperAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.otyper);
 
-        return static_cast<gpio::OutputType>(hal::cortexm::bitband::getPeripheralBitValue(
+        return static_cast<gpio::OutputType>(hal::cortexm::bitband::readPeripheralBitValue(
             otyperAddress, m_bitNumber));
       }
 
@@ -462,11 +462,11 @@ namespace hal
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.odr);
 
         gpio::bitValue_t oldValue =
-            hal::cortexm::bitband::getPeripheralBitValue(odrAddress,
+            hal::cortexm::bitband::readPeripheralBitValue(odrAddress,
                 m_bitNumber);
 
         gpio::bitValue_t newValue = ~oldValue;
-        hal::cortexm::bitband::setPeripheralBitValue(odrAddress, m_bitNumber,
+        hal::cortexm::bitband::writePeripheralBitValue(odrAddress, m_bitNumber,
             newValue);
       }
 
@@ -480,7 +480,7 @@ namespace hal
         hal::cortexm::address_t const idrAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
 
-        return (hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
+        return (hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
             m_bitNumber) != 0);
       }
 
@@ -494,7 +494,7 @@ namespace hal
         hal::cortexm::address_t const idrAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
 
-        return (hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
+        return (hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
             m_bitNumber) == 0);
       }
 
@@ -508,7 +508,7 @@ namespace hal
         hal::cortexm::address_t const idrAddress =
             reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
 
-        return hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
+        return hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
             m_bitNumber);
       }
 
@@ -840,7 +840,7 @@ namespace hal
       gpio::reg32_t newValue;
       newValue = static_cast<gpio::reg32_t>(value);
 
-      hal::cortexm::bitband::setPeripheralBitValue(otyperAddress, m_bitNumber,
+      hal::cortexm::bitband::writePeripheralBitValue(otyperAddress, m_bitNumber,
           newValue);
     }
 
@@ -853,7 +853,7 @@ namespace hal
       hal::cortexm::address_t otyperAddress =
           reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.otyper);
 
-      return static_cast<gpio::OutputType>(hal::cortexm::bitband::getPeripheralBitValue(
+      return static_cast<gpio::OutputType>(hal::cortexm::bitband::readPeripheralBitValue(
           otyperAddress, m_bitNumber));
     }
 
@@ -1018,11 +1018,11 @@ namespace hal
       hal::cortexm::address_t odrAddress =
           reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.odr);
 
-      gpio::bitValue_t oldValue = hal::cortexm::bitband::getPeripheralBitValue(
+      gpio::bitValue_t oldValue = hal::cortexm::bitband::readPeripheralBitValue(
           odrAddress, m_bitNumber);
 
       gpio::bitValue_t newValue = ~oldValue;
-      hal::cortexm::bitband::setPeripheralBitValue(odrAddress, m_bitNumber,
+      hal::cortexm::bitband::writePeripheralBitValue(odrAddress, m_bitNumber,
           newValue);
     }
 
@@ -1035,7 +1035,7 @@ namespace hal
       hal::cortexm::address_t idrAddress =
           reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
 
-      return (hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
+      return (hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
           m_bitNumber) != 0);
     }
 
@@ -1048,7 +1048,7 @@ namespace hal
       hal::cortexm::address_t idrAddress =
           reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
 
-      return (hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
+      return (hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
           m_bitNumber) == 0);
     }
 
@@ -1061,7 +1061,7 @@ namespace hal
       hal::cortexm::address_t idrAddress =
           reinterpret_cast<hal::cortexm::address_t>(&m_portRegisters.idr);
 
-      return hal::cortexm::bitband::getPeripheralBitValue(idrAddress,
+      return hal::cortexm::bitband::readPeripheralBitValue(idrAddress,
           m_bitNumber);
     }
 
