@@ -31,7 +31,7 @@ namespace os
 
           for (++count; --count > 0;)
             {
-              WatchDog::reset();
+              WatchDog::reload();
             }
         }
 

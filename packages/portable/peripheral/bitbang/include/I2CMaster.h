@@ -83,7 +83,7 @@ namespace os
         {
           while (isLow())
             {
-              WatchDog::reset();
+              WatchDog::reload();
             }
         }
 

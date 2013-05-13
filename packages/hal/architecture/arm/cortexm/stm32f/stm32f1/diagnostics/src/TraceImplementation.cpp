@@ -244,7 +244,7 @@ namespace hal
       /// For synchronisation purposes, the slave may keep the
       /// lines low until ready to continue. The master shall
       /// wait for this condition.
-      /// To avoid the watch dog to trigger, reset it.
+      /// To avoid the watch dog to trigger, reload it.
       /// \warning If used for devices that compile on release
       /// the implementation should not loop forever.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
@@ -254,7 +254,7 @@ namespace hal
         {
           while (isLow())
             {
-              WatchDog::reset();
+              WatchDog::reload();
             }
         }
 
@@ -280,13 +280,13 @@ namespace hal
       public:
         static
         void
-        reset(void);
+        reload(void);
       };
 
-      /// \brief Reset the watch dog device.
+      /// \brief Reload the watch dog device.
       inline __attribute__((always_inline))
       void
-      WatchDog::reset(void)
+      WatchDog::reload(void)
       {
         IWDG ->KR = ((uint16_t) 0xAAAA);
       }
