@@ -14,16 +14,12 @@
 
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Gpio.h"
 #include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Iwdg.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/Rcc.h"
 
 #include "portable/peripheral/bitbang/include/I2CMaster.h"
 #include "portable/peripheral/bitbang/include/I2CMaster.cpp.h"
 
 #include "hal/platform/include/XCDL_TraceI2CDefines.h"
-
-#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx.h"
-
-// required for gpio clock
-#include "hal/architecture/arm/cortexm/stm32f/stm32f4/lib/stm/include/stm32f4xx_rcc.h"
 
 namespace hal
 {
@@ -69,13 +65,6 @@ namespace hal
         {
         public:
           typedef WatchDog_T WatchDog;
-          static constexpr gpio::bitNumber_t GPIO_BitNo = Bit_T;
-
-          // 0 = GPIOA, 1 = GPIOC, ...
-          static constexpr gpio::portNumber_t GPIO_PortNo = Port_T;
-
-          // kind of explicit instantiation
-          typedef class TGpioPin<GPIO_PortNo, GPIO_BitNo> GpioPin;
 
           /// \name Constructors/destructor
           /// @{
@@ -160,6 +149,33 @@ namespace hal
           static void
           setHighAndSynchronise(void);
 
+          /// @} end of name Public member functions
+
+        private:
+          /// \name Private members
+          /// @{
+
+          /// \brief Bit number.
+          ///
+          /// \details
+          /// Constant, from template instantiation.
+          static constexpr gpio::bitNumber_t m_bitNumber = Bit_T;
+
+          /// \brief Port number.
+          ///
+          /// \details
+          /// Constant, from template instantiation.
+          /// (0 = GPIOA, 1 = GPIOC, ...)
+          static constexpr gpio::portNumber_t m_portNumber = Port_T;
+
+          /// \brief GPIO pin class.
+          ///
+          /// \details
+          /// Kind of explicit instantiation.
+          typedef class TGpioPin<m_portNumber, m_bitNumber> GpioPin;
+
+          /// @} end of name Private members
+
         };
 
       // ======================================================================
@@ -171,8 +187,7 @@ namespace hal
         void
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::powerUp(void)
         {
-          /// \todo Implement this in C++.
-          RCC_AHB1PeriphClockCmd((RCC_AHB1Periph_GPIOA << GPIO_PortNo), ENABLE);
+          Rcc::enableGpioPeripheralClock(m_portNumber);
 
           GpioPin::configureMode(gpio::Mode::Output);
           GpioPin::configureOutputType(gpio::OutputType::OpenDrain);
