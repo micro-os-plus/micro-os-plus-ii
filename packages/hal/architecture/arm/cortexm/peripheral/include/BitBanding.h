@@ -30,7 +30,7 @@ namespace hal
 
       address_t
       inline __attribute__((always_inline))
-      getPeripheralBitWordAddress(address_t registerAddress,
+      computePeripheralBitWordAddress(address_t registerAddress,
           bitNumber_t bitNumber)
       {
         address_t const peripheralOffset = registerAddress - PERIPHERAL_BASE;
@@ -44,9 +44,9 @@ namespace hal
 
       bitValue_t
       inline __attribute__((always_inline))
-      getPeripheralBitValue(address_t registerAddress, bitNumber_t bitNumber)
+      readPeripheralBitValue(address_t registerAddress, bitNumber_t bitNumber)
       {
-        const address_t bitWordAddress = getPeripheralBitWordAddress(
+        const address_t bitWordAddress = computePeripheralBitWordAddress(
             registerAddress, bitNumber);
 
         volatile address_t* const bitWordPointer =
@@ -58,10 +58,10 @@ namespace hal
 
       void
       inline __attribute__((always_inline))
-      setPeripheralBitValue(address_t registerAddress, bitNumber_t bitNumber,
+      writePeripheralBitValue(address_t registerAddress, bitNumber_t bitNumber,
           bitValue_t value)
       {
-        const address_t bitWordAddress = getPeripheralBitWordAddress(
+        const address_t bitWordAddress = computePeripheralBitWordAddress(
             registerAddress, bitNumber);
 
         volatile address_t* const bitWordPointer =
@@ -69,6 +69,20 @@ namespace hal
 
         // only the least significant bit is used, all other are ignored
         *bitWordPointer = value;
+      }
+
+      void
+      inline __attribute__((always_inline))
+      setPeripheralBit(address_t registerAddress, bitNumber_t bitNumber)
+      {
+        writePeripheralBitValue(registerAddress, bitNumber, 1);
+      }
+
+      void
+      inline __attribute__((always_inline))
+      clearPeripheralBit(address_t registerAddress, bitNumber_t bitNumber)
+      {
+        writePeripheralBitValue(registerAddress, bitNumber, 0);
       }
 
       // ----------------------------------------------------------------------
