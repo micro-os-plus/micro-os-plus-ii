@@ -16,7 +16,7 @@
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 #include "hal/architecture/arm/cortexm/peripheral/include/BitBand.h"
 
-#include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/PeripheralMemoryMap.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/MemoryMap.h"
 
 namespace hal
 {
@@ -147,7 +147,7 @@ namespace hal
 
         /// \brief Base address of the device.
         static const hal::cortexm::address_t MEMORY_BASE_ADDRESS =
-            PeripheralMemoryMap::IWDG_BASE_ADDRESS;
+            MemoryMap::IWDG_BASE_ADDRESS;
 
         /// @} end of name Memory definitions
 
@@ -215,7 +215,7 @@ namespace hal
     // ========================================================================
     }// namespace iwdg
   } // namespace stm32f4
-} // namespace os
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_IWDGHARDWARE_H_

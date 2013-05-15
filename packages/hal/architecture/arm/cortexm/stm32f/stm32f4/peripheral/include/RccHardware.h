@@ -16,7 +16,7 @@
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 #include "hal/architecture/arm/cortexm/peripheral/include/BitBand.h"
 
-#include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/PeripheralMemoryMap.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/MemoryMap.h"
 
 namespace hal
 {
@@ -138,7 +138,7 @@ namespace hal
 
         /// \brief Base address of the device.
         static const hal::cortexm::address_t MEMORY_BASE_ADDRESS =
-            PeripheralMemoryMap::RCC_BASE_ADDRESS;
+            MemoryMap::RCC_BASE_ADDRESS;
 
         /// @} end of name Memory definitions
 
@@ -166,13 +166,13 @@ namespace hal
         /// \brief 0x0018 - AHB3 peripheral reset register.
         hal::cortexm::regReadWrite_t ahb3rstr;
         /// \brief 0x001C - reserved.
-        hal::cortexm::regReadWrite_t reserved0;
+        hal::cortexm::regNotAllocated_t reserved0;
         /// \brief 0x0020 - APB1 peripheral reset register.
         hal::cortexm::regReadWrite_t apb1rstr;
         /// \brief 0x0024 - APB2 peripheral reset register.
         hal::cortexm::regReadWrite_t apb2rstr;
         /// \brief 0x0028-0x002C - reserved.
-        hal::cortexm::regReadWrite_t reserved1[2];
+        hal::cortexm::regNotAllocated_t reserved1[2];
         /// \brief 0x0030 - AHB1 peripheral clock register.
         hal::cortexm::regReadWrite_t ahb1enr;
         /// \brief 0x0034 - AHB1 peripheral clock register.
@@ -180,13 +180,13 @@ namespace hal
         /// \brief 0x0038 - AHB2 peripheral clock register.
         hal::cortexm::regReadWrite_t ahb3enr;
         /// \brief 0x003C - AHB3 peripheral clock reserved.
-        hal::cortexm::regReadWrite_t reserved2;
+        hal::cortexm::regNotAllocated_t reserved2;
         /// \brief 0x0040 - APB1 peripheral clock enable register.
         hal::cortexm::regReadWrite_t apb1enr;
         /// \brief 0x0044 - APB2 peripheral clock enable register.
         hal::cortexm::regReadWrite_t apb2enr;
         /// \brief 0x0048-0x004C - reserved.
-        hal::cortexm::regReadWrite_t reserved3[2];
+        hal::cortexm::regNotAllocated_t reserved3[2];
         /// \brief 0x0050 - AHB1 peripheral clock enable in low power mode register.
         hal::cortexm::regReadWrite_t ahb1lpenr;
         /// \brief 0x0054 - AHB2 peripheral clock enable in low power mode register.
@@ -194,26 +194,26 @@ namespace hal
         /// \brief 0x0058 - AHB3 peripheral clock enable in low power mode register.
         hal::cortexm::regReadWrite_t ahb3lpenr;
         /// \brief 0x005C - reserved.
-        hal::cortexm::regReadWrite_t reserved4;
+        hal::cortexm::regNotAllocated_t reserved4;
         /// \brief 0x0060 - APB1 peripheral clock enable in low power mode register.
         hal::cortexm::regReadWrite_t apb1lpenr;
         /// \brief 0x0064 - APB2 peripheral clock enable in low power mode register.
         hal::cortexm::regReadWrite_t apb2lpenr;
         /// \brief 0x0068-0x006C - reserved.
-        hal::cortexm::regReadWrite_t reserved5[2];
+        hal::cortexm::regNotAllocated_t reserved5[2];
         /// \brief 0x0070 - Backup domain control register.
         hal::cortexm::regReadWrite_t bdcr;
         /// \brief 0x0074 - clock control & status register.
         hal::cortexm::regReadWrite_t csr;
         /// \brief 0x0078-0x007C - reserved.
-        hal::cortexm::regReadWrite_t reserved6[2];
+        hal::cortexm::regNotAllocated_t reserved6[2];
         /// \brief 0x0080 - spread spectrum clock generation register.
         hal::cortexm::regReadWrite_t sscgr;
         /// \brief 0x0084 - PLLI2S configuration register.
         hal::cortexm::regReadWrite_t plli2scfgr;
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F427X) || defined(__DOXYGEN__)
         /// \brief 0x0088 - reserved.
-        hal::cortexm::regReadWrite_t reserved7;
+        hal::cortexm::regNotAllocated_t reserved7;
         /// \brief 0x008C - Dedicated Clocks configuration register.
         hal::cortexm::regReadWrite_t dckcfgr;
 #endif
@@ -241,7 +241,7 @@ namespace hal
     // ========================================================================
     }// namespace rcc
   } // namespace stm32f4
-} // namespace os
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_RCCHARDWARE_H_

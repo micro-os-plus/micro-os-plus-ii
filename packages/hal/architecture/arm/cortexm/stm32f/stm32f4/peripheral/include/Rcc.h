@@ -225,7 +225,7 @@ namespace hal
 
   // ==========================================================================
   }// namespace stm32f4
-} // namespace os
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_RCC_H_

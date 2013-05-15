@@ -4,10 +4,10 @@
 //
 
 /// \file
-/// \brief STM32F4 peripheral memory map.
+/// \brief STM32F4 memory map.
 
-#ifndef HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERALMEMORYMAP_H_
-#define HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERALMEMORYMAP_H_
+#ifndef HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_MEMORYMAP_H_
+#define HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_MEMORYMAP_H_
 
 #include "portable/core/include/ConfigDefines.h"
 
@@ -22,66 +22,66 @@ namespace hal
     // ------------------------------------------------------------------------
 
     /// \ingroup stm32f4
-    /// \headerfile PeripheralMemoryMap.h "hal/architecture/arm/cortexm/stm32f4/include/PeripheralMemoryMap.h"
+    /// \headerfile MemoryMap.h "hal/architecture/arm/cortexm/stm32f/stm32f4/include/MemoryMap.h"
     /// \nosubgrouping
     ///
-    /// \brief STM32F4 family peripheral memory map.
+    /// \brief STM32F4 family memory map.
 
-    class PeripheralMemoryMap
+    class MemoryMap
     {
     public:
       /// FLASH(up to 1 MB) base address in the alias region
       static const hal::cortexm::address_t FLASH_BASE_ADDRESS =
-          ((uint32_t) 0x08000000UL);
+          0x08000000UL;
 
       /// CCM(core coupled memory) data RAM(64 KB) base address in the alias region
       static const hal::cortexm::address_t CCMDATARAM_BASE_ADDRESS =
-          ((uint32_t) 0x10000000UL);
+          0x10000000UL;
 
       /// SRAM1(112 KB) base address in the alias region
       static const hal::cortexm::address_t SRAM1_BASE_ADDRESS =
-          ((uint32_t) 0x20000000UL);
+          0x20000000UL;
 
       /// SRAM2(16 KB) base address in the alias region
       static const hal::cortexm::address_t SRAM2_BASE_ADDRESS =
-          ((uint32_t) 0x2001C000UL);
+          0x2001C000UL;
       /// SRAM3(64 KB) base address in the alias region
       static const hal::cortexm::address_t SRAM3_BASE_ADDRESS =
-          ((uint32_t) 0x20020000UL);
+          0x20020000UL;
       /// Peripheral base address in the alias region
       static const hal::cortexm::address_t PERIPH_BASE_ADDRESS =
-          ((uint32_t) 0x40000000UL);
+          0x40000000UL;
       /// Backup SRAM(4 KB) base address in the alias region
       static const hal::cortexm::address_t BKPSRAM_BASE_ADDRESS =
-          ((uint32_t) 0x40024000UL);
+          0x40024000UL;
       /// FSMC registers base address
       static const hal::cortexm::address_t FSMC_R_BASE_ADDRESS =
-          ((uint32_t) 0xA0000000UL);
+          0xA0000000UL;
 
       /// CCM(core coupled memory) data RAM(64 KB) base address in the bit-band region
       static const hal::cortexm::address_t CCMDATARAM_BB_BASE_ADDRESS =
-          ((uint32_t) 0x12000000UL);
+          0x12000000UL;
       /// SRAM1(112 KB) base address in the bit-band region
       static const hal::cortexm::address_t SRAM1_BB_BASE_ADDRESS =
-          ((uint32_t) 0x22000000UL);
+          0x22000000UL;
       /// SRAM2(16 KB) base address in the bit-band region
       static const hal::cortexm::address_t SRAM2_BB_BASE_ADDRESS =
-          ((uint32_t) 0x2201C000UL);
+          0x2201C000UL;
       /// SRAM3(64 KB) base address in the bit-band region
       static const hal::cortexm::address_t SRAM3_BB_BASE_ADDRESS =
-          ((uint32_t) 0x22020000UL);
+          0x22020000UL;
       /// Peripheral base address in the bit-band region
       static const hal::cortexm::address_t PERIPH_BB_BASE_ADDRESS =
-          ((uint32_t) 0x42000000UL);
+          0x42000000UL;
       /// Backup SRAM(4 KB) base address in the bit-band region
       static const hal::cortexm::address_t BKPSRAM_BB_BASE_ADDRESS =
-          ((uint32_t) 0x42024000UL);
+          0x42024000UL;
 
       /* Legacy defines */
       static const hal::cortexm::address_t SRAM_BASE_ADDRESS = SRAM1_BASE_ADDRESS;
       static const hal::cortexm::address_t SRAM_BB_BASE_ADDRESS = SRAM1_BB_BASE_ADDRESS;
 
-      /// Peripheral memory map */
+      /// Peripheral memory map
       static const hal::cortexm::address_t APB1PERIPH_BASE_ADDRESS = PERIPH_BASE_ADDRESS;
       static const hal::cortexm::address_t APB2PERIPH_BASE_ADDRESS = (PERIPH_BASE_ADDRESS
           + 0x00010000UL);
@@ -283,9 +283,9 @@ namespace hal
       static const hal::cortexm::address_t FSMC_Bank4_R_BASE_ADDRESS = (FSMC_R_BASE_ADDRESS
           + 0x00A0UL);
 
-      // Debug MCU registers base address
+      /// Debug MCU registers base address
       static const hal::cortexm::address_t DBGMCU_BASE_ADDRESS =
-          ((uint32_t) 0xE0042000UL);
+          0xE0042000UL;
 
     };
 
@@ -295,4 +295,4 @@ namespace hal
 }
 
 #endif // OS_INCLUDE_HAL_MCU_FAMILY_STM32F4
-#endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERALMEMORYMAP_H_
+#endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_MEMORYMAP_H_

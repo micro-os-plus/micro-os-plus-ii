@@ -16,7 +16,7 @@
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 #include "hal/architecture/arm/cortexm/peripheral/include/BitBand.h"
 
-#include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/PeripheralMemoryMap.h"
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/include/MemoryMap.h"
 
 namespace hal
 {
@@ -131,7 +131,7 @@ namespace hal
 
       // ======================================================================
 
-      /// \headerfile GpioDefinitions.h "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/GpioDefinitions.h"
+      /// \headerfile GpioHardware.h "hal/architecture/arm/cortexm/stm32f/stm32f4/peripheral/include/GpioHardware.h"
       /// \ingroup stm32f4_gpio
       /// \nosubgrouping
       ///
@@ -221,10 +221,10 @@ namespace hal
 
         /// \brief Base address of the first port.
         static const hal::cortexm::address_t MEMORY_BASE =
-            PeripheralMemoryMap::GPIOA_BASE_ADDRESS;
+            MemoryMap::GPIOA_BASE_ADDRESS;
         /// \brief Offset between successive ports.
         static const hal::cortexm::address_t MEMORY_OFFSET =
-            PeripheralMemoryMap::GPIO_OFFSET;
+            MemoryMap::GPIO_OFFSET;
 
         /// @} end of name Memory definitions
 
@@ -385,7 +385,7 @@ namespace hal
     // ========================================================================
     }// namespace gpio
   } // namespace stm32f4
-} // namespace os
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F4)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_PERIPHERAL_GPIODEFINITIONS_H_
