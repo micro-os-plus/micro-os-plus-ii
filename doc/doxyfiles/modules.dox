@@ -41,6 +41,13 @@ The Release build configurations should not use this object.
 	\ingroup arm_cm
 	\brief ARM Cortex-M architecture interrupts.
 
+	\defgroup arm_cm_systick System timer
+	\ingroup arm_cm
+	\brief ARM Cortex-M system timer.
+	
+	ARMv7-M includes an architected system timer – SysTick.
+	SysTick provides a simple, 24-bit clear-on-write, decrementing, wrap-on-zero counter with a flexible control mechanism.
+
 	\defgroup arm_cm0 ARM Cortex-M0
 	\ingroup arm_cm
 	\brief ARM Cortex-M0 architecture support.
