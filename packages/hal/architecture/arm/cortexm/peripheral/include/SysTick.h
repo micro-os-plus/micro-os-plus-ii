@@ -69,8 +69,7 @@ namespace hal
 
         /// @} end of name Getters
 
-        // ----- Configuration functions ----------------------------------------
-        /// \name Configuration functions
+        /// \name Member functions
         /// @{
 
         /// \brief Enable the clock for one AHB1 connected peripheral.
@@ -98,11 +97,6 @@ namespace hal
         ///     Nothing.
         static void
         disableInterrupts(void);
-
-        /// @} end of name Configuration functions
-
-        /// \name Member functions
-        /// @{
 
         /// \brief Enable the system timer.
         ///
@@ -178,7 +172,7 @@ namespace hal
           }
 
         m_registers.writeReloadValue(val);
-        m_registers.writeCurrentValue(0);
+        m_registers.clearCurrentValue();
 
         // enable core clock and the interrupts
         m_registers.writeControlAndStatus(
