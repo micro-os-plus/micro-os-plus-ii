@@ -182,7 +182,8 @@ namespace hal
 
         /// \brief Clear the Current Value register.
         ///
-        /// \param [in] value A 32-bit mask.
+        /// \par Parameters
+        ///    None.
         /// \par Returns
         ///    Nothing.
         void
