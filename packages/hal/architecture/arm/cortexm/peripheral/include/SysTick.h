@@ -5,7 +5,6 @@
 
 /// \file
 /// \brief Cortex-M System Timer (SysTick) high level classes.
-///
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_PERIPHERAL_SYSTICK_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_PERIPHERAL_SYSTICK_H_
@@ -16,8 +15,6 @@
 
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 #include "hal/architecture/arm/cortexm/peripheral/include/SysTickHardware.h"
-
-//#include "hal/architecture/arm/cortexm/peripheral/include/BitBand.h"
 
 namespace hal
 {
