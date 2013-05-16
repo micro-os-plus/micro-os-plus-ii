@@ -69,8 +69,7 @@ namespace hal
 
         /// @} end of name Getters
 
-        // ----- Configuration functions ----------------------------------------
-        /// \name Configuration functions
+        /// \name Member functions
         /// @{
 
         /// \brief Configure the interrupt priority.
@@ -90,18 +89,13 @@ namespace hal
         static interruptPriority_t
         retrievePriority(const interruptNumber_t number) const;
 
-        /// @} end of name Configuration functions
-
-        /// \name Member functions
-        /// @{
-
         /// \brief Enable the interrupt.
         ///
         /// \param [in] number The unsigned number of the interrupt.
         /// \par Returns
         ///     Nothing.
         static void
-        enableInterrupt(const interruptNumber_t number);
+        enable(const interruptNumber_t number);
 
         /// \brief Disable the interrupt.
         ///
@@ -109,7 +103,7 @@ namespace hal
         /// \par Returns
         ///     Nothing.
         static void
-        disableInterrupt(const interruptNumber_t number);
+        disable(const interruptNumber_t number);
 
         /// \brief Set the pending bit of the interrupt.
         ///
@@ -184,7 +178,7 @@ namespace hal
     template<hal::cortexm::address_t A_T>
       inline void
       __attribute__((always_inline))
-      TNvic<A_T>::enableInterrupt(const interruptNumber_t number)
+      TNvic<A_T>::enable(const interruptNumber_t number)
       {
         index_t index = number / 32;
         bitNumber_t bitNumber = number % 32;
@@ -194,7 +188,7 @@ namespace hal
     template<hal::cortexm::address_t A_T>
       inline void
       __attribute__((always_inline))
-      TNvic<A_T>::disableInterrupt(const interruptNumber_t number)
+      TNvic<A_T>::disable(const interruptNumber_t number)
       {
         index_t index = number / 32;
         bitNumber_t bitNumber = number % 32;
