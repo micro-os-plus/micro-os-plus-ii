@@ -9,6 +9,54 @@
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_PERIPHERAL_SYSTICKHARDWARE_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_PERIPHERAL_SYSTICKHARDWARE_H_
 
+/// \addtogroup arm_cm_systick
+/// \details
+/// ARMv7-M includes an architected system timer – SysTick.
+///
+/// SysTick provides a simple, 24-bit clear-on-write, decrementing,
+/// wrap-on-zero counter with a flexible control mechanism. It can be
+/// used as an RTOS tick timer which fires at a programmable rate
+/// (for example 100Hz) and invokes a SysTick routine.
+///
+/// The timer consists of four registers:
+/// -   A control and status counter to configure its clock,
+///     enable the counter, enable the SysTick interrupt, and
+///     determine counter status.
+/// -   The reload value for the counter, used to provide the
+///     counter’s wrap value.
+/// -   The current value of the counter.
+/// -   A calibration value register, indicating the preload
+///     value necessary for a 10ms (100Hz) system clock.
+///
+/// When enabled, the timer will count down from the reload value
+/// to zero, reload (wrap) to the value in the SysTick Reload
+/// Value Register on the next clock edge, then decrement on
+/// subsequent clocks. Writing a value of zero to the Reload
+/// Value Register disables the counter on the next wrap.
+/// When the counter transitions to zero, the COUNTFLAG status
+/// bit is set. The COUNTFLAG bit clears on reads.
+///
+/// Writing to the Current Value Register will clear the register
+/// and the COUNTFLAG status bit. The write does not trigger the
+/// SysTick exception logic. On a read, the current value is the
+/// value of the register at the time the register is accessed.
+///
+/// The calibration value TENMS allows software to scale the counter
+/// to other desired clock rates within the counter’s dynamic range.
+///
+/// If the core is in Debug state (halted), the counter will not
+/// decrement.
+///
+/// The timer is clocked with respect to a reference clock. The
+/// reference clock can be the core clock or an external clock source.
+/// Where an external clock source is used, the implementation must
+/// document the relationship between the core clock and the external
+/// reference. This is required for system timing calibration, taking
+/// account of metastability, clock skew and jitter.
+///
+/// (Excerpts from *ARMv7-M Architecture Reference Manual*,
+/// chapter B3.3).
+
 #include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
@@ -79,16 +127,8 @@ namespace hal
       ///
       /// \brief SysTick memory mapped registers.
       ///
-      /// When enabled, the timer will count down from the reload value
-      /// to zero, reload (wrap) to the value in the SysTick Reload
-      /// Value Register on the next clock edge, then decrement on
-      /// subsequent clocks. Writing a value of zero to the Reload
-      /// Value Register disables the counter on the next wrap.
-      /// When the counter transitions to zero, the COUNTFLAG status
-      /// bit is set. The COUNTFLAG bit clears on reads.
-      ///
-      /// For more details, please see *ARMv7-M Architecture Reference Manual*,
-      /// chapter B3.3.
+      /// For more details, please read *ARMv7-M Architecture Reference Manual*,
+      /// chapter B3.3
       ///
       /// \warning This class is packed and mapped over a specific memory
       ///       area. DO NOT change the members order or add new data members.
@@ -140,13 +180,13 @@ namespace hal
         reg32_t
         readReloadValue(void);
 
-        /// \brief Write the Current Value register.
+        /// \brief Clear the Current Value register.
         ///
         /// \param [in] value A 32-bit mask.
         /// \par Returns
         ///    Nothing.
         void
-        writeCurrentValue(const reg32_t value);
+        clearCurrentValue(void);
 
         /// \brief Read the Current Value register.
         ///
@@ -208,6 +248,9 @@ namespace hal
         return this->ctrl;
       }
 
+      /// \details
+      /// Write the value to load into the Current Value register when
+      /// the counter reaches 0.
       inline void
       __attribute__((always_inline))
       Registers::writeReloadValue(const reg32_t value)
@@ -215,6 +258,8 @@ namespace hal
         this->load = value;
       }
 
+      /// Read the value to be loaded into the Current Value register when
+      /// the counter reaches 0.
       inline reg32_t
       __attribute__((always_inline))
       Registers::readReloadValue(void)
@@ -222,13 +267,22 @@ namespace hal
         return this->load;
       }
 
+      /// \details
+      /// The register is write-clear.
+      /// A software write of any value will clear the register to 0.
+      /// Unsupported bits are ignored.
       inline void
       __attribute__((always_inline))
-      Registers::writeCurrentValue(const reg32_t value)
+      Registers::clearCurrentValue(void)
       {
-        this->val = value;
+        this->val = 0;
       }
 
+      /// \details
+      /// This is the value of the counter
+      /// at the time it is sampled. The counter does not provide
+      /// read-modify-write protection.
+      /// Unsupported bits read as zero.
       inline reg32_t
       __attribute__((always_inline))
       Registers::readCurrentValue(void)
