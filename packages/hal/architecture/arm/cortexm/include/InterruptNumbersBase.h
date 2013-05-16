@@ -13,7 +13,7 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
-//#include "portable/core/include/OS.h"
+#include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 
 namespace hal
 {
@@ -36,7 +36,7 @@ namespace hal
     public:
 
       /// \brief Type of an interrupt number (a signed integer).
-      typedef int interruptNumber_t;
+      typedef hal::cortexm::interruptNumber_t interruptNumber_t;
 
       /// \name Constructors/destructor
       /// @{
