@@ -30,10 +30,17 @@ namespace hal
     typedef uint32_t address_t;
     typedef uint32_t reg32_t;
     typedef uint16_t reg16_t;
+    typedef uint8_t reg8_t;
 
     typedef uint32_t bitNumber_t; // 0-31
     typedef uint32_t portNumber_t; // 0 = port 'A'
     typedef uint32_t index_t; // index in an array of registers
+
+    /// \brief Type definition of an interrupt number
+    /// (a signed integer, from -16 to +495).
+    typedef int16_t interruptNumber_t;
+
+    typedef uint8_t interruptPriority_t;
 
   // --------------------------------------------------------------------------
 
