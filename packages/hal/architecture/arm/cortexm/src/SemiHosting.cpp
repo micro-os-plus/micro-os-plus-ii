@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief ARM Cortex-M semihosting implementation (experimental).
+/// \brief Cortex-M semihosting implementation (experimental).
 
 #include "portable/core/include/ConfigDefines.h"
 

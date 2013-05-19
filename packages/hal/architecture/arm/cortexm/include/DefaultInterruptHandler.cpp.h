@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief ARM Cortex-M default interrupt handler.
+/// \brief Cortex-M default interrupt handler.
 
 #include "portable/core/include/ConfigDefines.h"
 

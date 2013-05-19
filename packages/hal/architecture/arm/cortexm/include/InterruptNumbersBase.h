@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief ARM Cortex-M base for all architecture interrupt numbers.
+/// \brief Cortex-M base for all architecture interrupt numbers.
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_INTERRUPTNUMBERSBASE_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_INTERRUPTNUMBERSBASE_H_
@@ -27,7 +27,7 @@ namespace hal
     /// \headerfile InterruptNumbersBase.h "hal/architecture/arm/cortexm/include/InterruptNumbersBase.h"
     /// \nosubgrouping
     ///
-    /// \brief ARM Cortex-M architecture interrupt numbers base.
+    /// \brief Cortex-M architecture interrupt numbers base.
     ///
     /// \details
     /// Common definitions for all Cortex-M architectures.

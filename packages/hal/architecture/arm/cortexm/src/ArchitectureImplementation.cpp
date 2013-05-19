@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief ARM Cortex-M implementation of architecture class.
+/// \brief Cortex-M implementation of architecture class.
 
 #include "portable/core/include/ConfigDefines.h"
 

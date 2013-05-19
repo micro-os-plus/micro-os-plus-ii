@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief ARM Cortex-M4 interrupt numbers.
+/// \brief Cortex-M4 interrupt numbers.
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM4_INTERRUPTNUMBERS_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM4_INTERRUPTNUMBERS_H_
@@ -25,7 +25,7 @@ namespace hal
     /// \ingroup arm_cm4_irq
     /// \nosubgrouping
     ///
-    /// \brief ARM Cortex-M4 architecture interrupt numbers.
+    /// \brief Cortex-M4 architecture interrupt numbers.
     ///
     /// \details
     /// Interrupt numbers defined by the  Cortex-M4

@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief ARM Cortex-M4 interrupt vectors.
+/// \brief Cortex-M4 interrupt vectors.
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM4_INTERRUPTVECTORS_CPP_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM4_INTERRUPTVECTORS_CPP_H_
@@ -96,7 +96,7 @@ namespace hal
 
     /// \ingroup arm_cm4_irq
     /// \showinitializer
-    /// \brief ARM Cortex-M4 core interrupt vector array.
+    /// \brief Cortex-M4 core interrupt vector array.
     ///
     /// \details
     /// These are the first interrupt vectors, common to all Cortex-M4 devices.

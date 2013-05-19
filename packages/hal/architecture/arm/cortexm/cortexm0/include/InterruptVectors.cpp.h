@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief ARM Cortex-M0 interrupt vectors.
+/// \brief Cortex-M0 interrupt vectors.
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM0_INTERRUPTVECTORS_CPP_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM0_INTERRUPTVECTORS_CPP_H_
@@ -80,7 +80,7 @@ namespace hal
 
     /// \ingroup arm_cm0_irq
     /// \showinitializer
-    /// \brief ARM Cortex-M0/M0+ core interrupt vector array.
+    /// \brief Cortex-M0/M0+ core interrupt vector array.
     ///
     /// \details
     /// These are the first interrupt vectors, common to all Cortex-M0

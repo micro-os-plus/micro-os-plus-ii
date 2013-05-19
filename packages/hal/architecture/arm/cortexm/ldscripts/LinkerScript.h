@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief ARM Cortex-M class to access the GNU linker script definitions.
+/// \brief Cortex-M class to access the GNU linker script definitions.
 
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_LDSCRIPT_LINKERSCRIPT_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_LDSCRIPT_LINKERSCRIPT_H_
