@@ -14,7 +14,10 @@ The Release build configurations should not use this object.
     Templates used to generate conversion functions for the 
     trace light functions.
     
-\defgroup std Standard library
+\defgroup std C++ Standard library
+This is a subset of the C++ standard library. To distinguish it, and
+also to allow both to be used simultaneously, like when running on
+synthetic POSIX, the namespace was renamed as `os::std::`.
 
     \defgroup std_io I/O
     \ingroup std
@@ -35,51 +38,52 @@ The Release build configurations should not use this object.
     \ingroup std
 
 \defgroup arm_cm ARM Cortex-M
-\brief ARM Cortex-M architecture support.
+\brief Cortex-M architecture support.
 
-	\defgroup arm_cm_irq Interrupts
-	\ingroup arm_cm
-	\brief ARM Cortex-M architecture interrupts.
-
-	\defgroup arm_cm_nvic NVIC
-	\ingroup arm_cm
-	\brief ARM Cortex-M nested vectored interrupt controller.
-
-	\defgroup arm_cm_systick SysTick
-	\ingroup arm_cm
-	\brief ARM Cortex-M system timer.
-	
 	\defgroup arm_cm0 ARM Cortex-M0
 	\ingroup arm_cm
-	\brief ARM Cortex-M0 architecture support.
+	\brief Cortex-M0 architecture support.
 
 		\defgroup arm_cm0_irq Interrupts
 		\ingroup arm_cm0
-		\brief ARM Cortex-M0 architecture interrupts.
+		\brief Cortex-M0 architecture interrupts.
 
 	\defgroup arm_cm0p ARM Cortex-M0+
 	\ingroup arm_cm
-	\brief ARM Cortex-M0+ architecture support.
+	\brief Cortex-M0+ architecture support.
 
 		\defgroup arm_cm0p_irq Interrupts
 		\ingroup arm_cm0p
-		\brief ARM Cortex-M0+ architecture interrupts.
+		\brief Cortex-M0+ architecture interrupts.
 
 	\defgroup arm_cm3 ARM Cortex-M3
 	\ingroup arm_cm
-	\brief ARM Cortex-M3 architecture support.
+	\brief Cortex-M3 architecture support.
 
 		\defgroup arm_cm3_irq Interrupts
 		\ingroup arm_cm3
-		\brief ARM Cortex-M3 architecture interrupts.
+		\brief Cortex-M3 architecture interrupts.
 
 	\defgroup arm_cm4 ARM Cortex-M4
 	\ingroup arm_cm
-	\brief ARM Cortex-M4 architecture support.
+	\brief Cortex-M4 architecture support.
 
 		\defgroup arm_cm4_irq Interrupts
 		\ingroup arm_cm4
-		\brief ARM Cortex-M4 architecture interrupts.
+		\brief Cortex-M4 architecture interrupts.
+
+	\defgroup arm_cm_irq Interrupts
+	\ingroup arm_cm
+	\brief Cortex-M architecture interrupts.
+
+	\defgroup arm_cm_nvic NVIC
+	\ingroup arm_cm
+	\brief Cortex-M nested vectored interrupt controller.
+
+	\defgroup arm_cm_systick SysTick
+	\ingroup arm_cm
+	\brief Cortex-M system timer.
+	
 
 \defgroup stm32f STM32F families
 \brief ST Micro STM32F[1234] families of microcontrollers.
