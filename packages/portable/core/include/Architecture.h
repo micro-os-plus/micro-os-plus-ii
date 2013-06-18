@@ -17,8 +17,8 @@
 
 namespace os
 {
-  /// \brief Declaration of the external instantiation of `architecture`.
-  /// The object instantiation is in `EarlyInitialisations.cpp`.
+  // Declaration of the external instantiation of `architecture`.
+  // The object instantiation is in `EarlyInitialisations.cpp`.
   extern hal::arch::ArchitectureImplementation architecture;
 }
 
