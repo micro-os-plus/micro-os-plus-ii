@@ -15,6 +15,9 @@ namespace os
 {
   namespace core
   {
+    typedef void
+    (*threadEntryPoint_t)(void*);
+
     // ========================================================================
 
     /// \headerfile ArchitectureBase.h "portable/core/include/ArchitectureBase.h"
