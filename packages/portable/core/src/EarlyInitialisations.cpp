@@ -14,12 +14,17 @@
 #include "portable/diagnostics/include/Trace.h"
 #include "portable/core/include/Greeting.h"
 
+#include "portable/core/include/Scheduler.h"
+
 namespace os
 {
   namespace core
   {
     // ========================================================================
 
+    /// \ingroup core
+    /// \nosubgrouping
+    ///
     /// \brief Special class used to perform early initialisations and
     /// late cleanups.
     ///
@@ -166,8 +171,10 @@ namespace os
   namespace core
   {
 
+    /// \ingroup core
+    /// \nosubgrouping
+    ///
     /// \brief Special class used to display greetings.
-
     class EarlyGreetings
     {
     public:
@@ -222,6 +229,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
+/// \ingroup core
 /// \brief Single static instance of the `os::core::EarlyInitialisations` class.
 ///
 /// \details
@@ -241,6 +249,9 @@ namespace os
 {
   // The order might be important, first architecture, then platform.
 
+  /// \ingroup core
+  /// @{
+
   /// \brief The portable `architecture` object. Use it even if
   /// on most architectures the functions are static.
   hal::arch::ArchitectureImplementation architecture;
@@ -248,6 +259,22 @@ namespace os
   /// \brief The portable `platform` abject. Use it even if
   /// on most platforms the functions are static.
   hal::platform::PlatformImplementation platform;
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+#pragma clang diagnostic ignored "-Wexit-time-destructors"
+#endif
+
+  /// \brief The scheduler object.
+  /// \note Since the scheduler is used in Thread constructors/destructors to
+  /// register/deregister threads, the scheduler object
+  /// must be constructed before any Thread object.
+  os::core::Scheduler scheduler;
+
+#pragma GCC diagnostic pop
+
+  /// @} end of ingroup core
 } // namespace os
 
 // ----------------------------------------------------------------------------
