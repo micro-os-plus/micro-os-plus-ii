@@ -23,7 +23,9 @@ namespace hal
       // ======================================================================
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wpadded"
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
 
       /// \headerfile TestSuiteImplementation.h "hal/architecture/synthetic/posix/include/TestSuiteImplementation.h"
       /// \nosubgrouping
