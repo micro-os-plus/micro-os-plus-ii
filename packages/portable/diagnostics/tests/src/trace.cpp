@@ -165,7 +165,7 @@ runTestCompile()
       t.putString(s4);
 
       void* p = 0;
-      t.putNameAndAddress(s1, p);
+      t.putStringAndAddress(s1, p);
 
       unsigned int un1 = 0x12;
       t.putHex(un1);
@@ -825,26 +825,26 @@ runTestDec()
 // ----------------------------------------------------------------------------
 
 void
-runTestNameAndAddress();
+runTestStringAndAddress();
 
 void
-runTestNameAndAddress()
+runTestStringAndAddress()
 {
-  ts.reportInfo("name and address");
+  ts.reportInfo("string and address");
 
     {
       TraceBaseCharArray t;
       TraceImplementationCharArray& ti = t.getImplementation();
 
-      ts.reportInfo("putNameAndAddress");
-      ts.setFunctionNameOrPrefix("putNameAndAddress()");
+      ts.reportInfo("putStringAndAddress");
+      ts.setFunctionNameOrPrefix("putStringAndAddress()");
 
       const char* s = "abc";
       void* ptr = (void*) 0x1234;
 
       ts.assertCondition(ti.array[0] == ti.getDefaultChar());
 
-      t.putNameAndAddress(s, ptr);
+      t.putStringAndAddress(s, ptr);
 
 #if __SIZEOF_POINTER__ == 4
       ts.assertCondition(ti.count == 13);

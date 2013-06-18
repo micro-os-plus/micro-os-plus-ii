@@ -408,25 +408,39 @@ namespace os
         void
         putDec(long n);
 
-        /// \brief Put name and address.
+        /// \brief Put string and address.
         ///
         /// \param [in] pStr    A pointer to string.
         /// \param [in] addr    An address.
         /// \par Returns
         ///     Nothing.
         void
-        putNameAndAddress(const char* pStr, void* addr);
+        putStringAndAddress(const char* pStr, void* addr);
+
+        /// \brief Put string and address and name.
+        ///
+        /// \param [in] pStr    A pointer to string.
+        /// \param [in] addr    An address.
+        /// \param [in] pName   A pointer to name string.
+        /// \par Returns
+        ///     Nothing.
+        void
+        putStringAndAddress(const char* pStr, void* addr, const char* pName);
 
 #if defined(DEBUG)
         /// \brief Put constructor.
-#define putConstructor()        putNameAndAddress(__PRETTY_FUNCTION__, this)
+#define putConstructor()        putStringAndAddress(__PRETTY_FUNCTION__, this)
         /// \brief Put destructor.
-#define putDestructor()         putNameAndAddress(__PRETTY_FUNCTION__, this)
+#define putDestructor()         putStringAndAddress(__PRETTY_FUNCTION__, this)
         /// \brief Put member function.
-#define putMemberFunction()     putNameAndAddress(__PRETTY_FUNCTION__, this)
+#define putMemberFunction()     putStringAndAddress(__PRETTY_FUNCTION__, this)
+
+#define putConstructorWithName()        putStringAndAddress(__PRETTY_FUNCTION__, this, getName())
+#define putDestructorWithName()         putStringAndAddress(__PRETTY_FUNCTION__, this, getName())
+#define putMemberFunctionWithName()     putStringAndAddress(__PRETTY_FUNCTION__, this, getName())
 
 #else
-#define putMemberFunction()
+//#define putMemberFunction()
 #endif
 
         /// @} end of name Light functions.

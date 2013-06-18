@@ -138,12 +138,31 @@ namespace os
     /// `putConstructor()` and `putDestructor()` macros.
     template<class Base_T, class Implementation_T>
       void
-      TTraceBase<Base_T, Implementation_T>::putNameAndAddress(const char* pStr,
+      TTraceBase<Base_T, Implementation_T>::putStringAndAddress(const char* pStr,
           void* addr)
       {
         putString(pStr);
         putString(" @");
         putHex(addr);
+        putNewLine();
+      }
+
+    /// \details
+    /// Output a string and an address, usually representing a function
+    /// name and the `this` pointer of the current class.
+    /// It is used to implement the
+    /// `putConstructor()` and `putDestructor()` macros.
+    template<class Base_T, class Implementation_T>
+      void
+      TTraceBase<Base_T, Implementation_T>::putStringAndAddress(const char* pStr,
+          void* addr, const char* pName)
+      {
+        putString(pStr);
+        putString(" @");
+        putHex(addr);
+        putString(" \"");
+        putString(pName);
+        putChar('"');
         putNewLine();
       }
 
