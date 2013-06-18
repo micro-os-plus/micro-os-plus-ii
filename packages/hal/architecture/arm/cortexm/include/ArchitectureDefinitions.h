@@ -46,5 +46,19 @@ namespace hal
 
   }// namespace cortexm
 } // namespace hal
+
+// Portable definitions.
+namespace hal
+{
+  namespace arch
+  {
+    /// \brief Type definition of a stack word unit.
+    typedef uint32_t stackElement_t;
+
+    typedef uint32_t stackSize_t;
+
+    static const stackElement_t STACK_FILL = 0x55AAAA55;
+  }// namespace arch
+}// namespace hal
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_ARCHITECTUREDEFINITIONS_H_
