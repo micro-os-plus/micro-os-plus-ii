@@ -10,7 +10,7 @@ UNAME=`uname`
 FULL=""
 DEST=build
 
-declare -a testNames=( 'minimal' 'trace' 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
+declare -a testNames=( 'minimal' 'trace' 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' 'threads' )
 
 while [ $# -gt 0 ]
 do
@@ -47,15 +47,15 @@ function runTest()
 		action='run'
 	fi
 	/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=$1 $MAKE_ARGS $action
-	[ $? -eq 0 ] || exit $? 
+	[ $? -eq 0 ] || exit $?
 }
 
 function runTestPair()
 {
 	[ $# -ge 1 ] || exit 1
 
-	runTest $1"_Debug" $2
-	runTest $1"_Release" $2
+	(runTest $1"_Debug" $2) || exit $?
+	(runTest $1"_Release" $2) || exit $?
 }
 
 function runTestArray()
@@ -64,7 +64,7 @@ function runTestArray()
 
 	for bc in "${testNames[@]}"
 	do
-		runTestPair $1"_"$bc"_"$2 $3
+		(runTestPair $1"_"$bc"_"$2 $3) || exit $?
 	done
 }
 
@@ -82,21 +82,21 @@ then
 			# decide on 64/32 bits			
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				(PATH=$PATH; runTestArray "linux" "x64_gcc" "run")
+				(PATH=$PATH; runTestArray "linux" "x64_gcc" "run") || exit $?
 			else
-				(PATH=$PATH; runTestArray "linux" "x32_gcc" "run")
+				(PATH=$PATH; runTestArray "linux" "x32_gcc" "run") || exit $?
 			fi
 
 		else
 			
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				(PATH=$PATH; runTestArray "linux" "x64_gcc" "run")
+				(PATH=$PATH; runTestArray "linux" "x64_gcc" "run") || exit $?
 			fi
-			(PATH=$PATH; runTestArray "linux" "x32_gcc" "run")
+			(PATH=$PATH; runTestArray "linux" "x32_gcc" "run") || exit $?
 		
 		fi
-	)
+	) || exit $?
 
 elif [ $UNAME == "Darwin" ]
 then
@@ -111,9 +111,9 @@ then
 			# decide only on 64/32 bits			
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				(PATH=$PATH; runTestArray "osx" "x64_llvm" "run")
+				(PATH=$PATH; runTestArray "osx" "x64_llvm" "run") || exit $?
 			else
-				(PATH=$PATH; runTestArray "osx" "x32_llvm" "run")
+				(PATH=$PATH; runTestArray "osx" "x32_llvm" "run") || exit $?
 			fi
 		
 		else
@@ -121,9 +121,9 @@ then
 			# clang is always available on OS X
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				(PATH=$PATH; runTestArray "osx" "x64_llvm" "run")
+				(PATH=$PATH; runTestArray "osx" "x64_llvm" "run") || exit $?
 			fi
-			(PATH=$PATH; runTestArray "osx" "x32_llvm" "run")
+			(PATH=$PATH; runTestArray "osx" "x32_llvm" "run") || exit $?
 	
 			PATH_GCC47=/opt/local/bin
 			
@@ -131,9 +131,9 @@ then
 			then
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x64_gcc47" "run")
+					(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x64_gcc47" "run") || exit $?
 				fi
-				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32_gcc47" "run")
+				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32_gcc47" "run") || exit $?
 			fi
 			
 			PATH_GCC46=/opt/local/bin
@@ -142,12 +142,12 @@ then
 			then
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x64_gcc46" "run")
+					(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x64_gcc46" "run") || exit $?
 				fi
-				(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x32_gcc46" "run")
+				(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x32_gcc46" "run") || exit $?
 			fi
 		fi
-	)
+	) || exit $?
 
 fi
 
