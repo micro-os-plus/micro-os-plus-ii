@@ -37,6 +37,54 @@ namespace hal
     }
 #endif
 
+    hal::arch::stackElement_t*
+    ArchitectureImplementation::Context::createInitial(
+        hal::arch::stackElement_t* pStackTop,
+        os::core::threadEntryPoint_t entryPoint __attribute__((unused)),
+        void* pParameters __attribute__((unused)))
+    {
+      // The value on the right is the offset from the thread stack pointer
+
+      // Place a few bytes of known values on the bottom of the stack.
+      // This is just useful for debugging.
+
+//#define STACK_WORD_COUNT   (16+1)
+      *pStackTop-- = 0x12345678; // (magic)     +16*4=68
+
+      // Simulate how the stack would look after a call to yield()
+
+      // Thread starts with interrupts enabled ???
+      // T bit set
+      *pStackTop-- = 0x01000000; // xPSR        +15*4=64
+
+      // The start of the thread code will be popped off the stack last,
+      // so place it first.
+
+//#define STACK_PCL_WORD_OFFSET   (14)
+      *pStackTop-- = (hal::arch::stackElement_t) entryPoint; // PCL     +14*4=60
+
+      // Next simulate the stack as if after a call to Context::save().
+      *pStackTop-- = 0x00; // LR        +13*4=56
+      *pStackTop-- = 0x12; // R12       +12*4=52
+      *pStackTop-- = 0x03; // R3        +11*4=48
+      *pStackTop-- = 0x02; // R2        +10*4=44
+      *pStackTop-- = 0x01; // R1        +9*4=40
+
+//#define STACK_R0_WORD_OFFSET    (8)
+      *pStackTop-- = (hal::arch::stackElement_t) pParameters; // R0     +8*4=36
+      *pStackTop-- = 0x11; // R11       +7*4=32
+      *pStackTop-- = 0x10; // R10       +6*4=28
+      *pStackTop-- = 0x09; // R9        +5*4=24
+      *pStackTop-- = 0x08; // R8        +4*4=20
+      *pStackTop-- = 0x07; // R7        +3*4=16
+      *pStackTop-- = 0x06; // R6        +2*4=12
+      *pStackTop-- = 0x05; // R5        +1*4=8
+      *pStackTop-- = 0x04; // R4        +0*4=4
+
+      ++pStackTop;
+
+      return pStackTop;
+    }
   // --------------------------------------------------------------------------
   }
 }
