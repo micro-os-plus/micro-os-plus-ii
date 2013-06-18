@@ -10,6 +10,9 @@ Package(
     
     sourceFiles=[
         'PlatformBase.cpp',
+        'Stack.cpp',
+        'Thread.cpp',
+        'Scheduler.cpp',
     ],
         
     includeFiles=[
