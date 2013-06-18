@@ -25,7 +25,9 @@ namespace os
     // ========================================================================
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wpadded"
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
 
     /// This test exercises all TestSuite member functions. It currently
     /// runs on
