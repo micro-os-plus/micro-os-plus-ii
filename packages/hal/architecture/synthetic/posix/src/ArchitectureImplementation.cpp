@@ -22,7 +22,7 @@ namespace hal
   {
     // ----------------------------------------------------------------------
 
-#if defined(DEBUG)
+#if defined(DEBUG) || defined(__DOXYGEN__)
     /// \details
     /// Write a POSIX specific greeting to the Trace device. If `uname()`
     /// returns a valid response, write detailed response.
@@ -48,6 +48,14 @@ namespace hal
     }
 #endif
 
+    hal::arch::stackElement_t*
+    ArchitectureImplementation::Context::createInitial(
+        hal::arch::stackElement_t* pStackTop,
+        os::core::threadEntryPoint_t entryPoint __attribute__((unused)),
+        void* pParameters __attribute__((unused)))
+    {
+      return pStackTop;
+    }
   // ----------------------------------------------------------------------
 
   }// namespace posix
