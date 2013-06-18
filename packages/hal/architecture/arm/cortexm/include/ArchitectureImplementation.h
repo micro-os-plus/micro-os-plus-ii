@@ -14,7 +14,15 @@
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
 #include "portable/core/include/ArchitectureBase.h"
+
+// Include architecture definitions, like various types.
+#include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
+
+// Include one of the supported families,
+// copied to the build folder by the XCDL procedure.
 #include "hal/architecture/include/FamilyImplementation.h"
+
+//#include "portable/core/include/Stack.h"
 
 namespace hal
 {
@@ -74,14 +82,71 @@ namespace hal
 #endif
 
       /// @} end of name Public member functions
+
+      /// \headerfile ArchitectureImplementation.h "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
+      /// \ingroup arm_cm
+      /// \nosubgrouping
+      ///
+      /// \brief Cortex-M context handling.
+      ///
+      /// \details
+      /// This class provides generic Cortex-M context handling support.
+      class Context
+      {
+      public:
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief Default constructor.
+        Context() = default;
+
+        /// @} end of name Constructors/destructor
+
+        /// \name Public member functions
+        /// @{
+
+        /// \brief Create the initial context in the stack object.
+        ///
+        /// \param [in] pStackTop Pointer to the last stack element.
+        /// \param [in] entryPoint Pointer to thread code.
+        /// \param [in] pParameters Pointer to thread parameters.
+        /// \par Returns
+        ///    Nothing.
+        static hal::arch::stackElement_t*
+        createInitial(hal::arch::stackElement_t* pStackTop,
+            os::core::threadEntryPoint_t entryPoint, void* pParameters);
+
+        /// \brief Save the current context on the stack.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        save(void);
+
+        /// \brief Restore the current context from the stack.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Returns
+        ///    Nothing.
+        static void
+        restore(void);
+
+        /// @} end of name Public member functions
+
+      };
+
+      Context context;
     };
 
     // ------------------------------------------------------------------------
 
     /// \details
     /// Use the family implementation initialisation code.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     ArchitectureImplementation::initialiseSystem(void)
     {
       hal::cortexm::FamilyImplementation::initialiseSystem();
@@ -89,11 +154,29 @@ namespace hal
 
     /// \details
     /// Use the family implementation reset code.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     ArchitectureImplementation::resetSystem(void)
     {
       hal::cortexm::FamilyImplementation::resetSystem();
+    }
+
+    /// \details
+    /// TBD
+    inline void
+    __attribute__((always_inline))
+    ArchitectureImplementation::Context::save(void)
+    {
+      // TBD
+    }
+
+    /// \details
+    /// TBD
+    inline void
+    __attribute__((always_inline))
+    ArchitectureImplementation::Context::restore(void)
+    {
+      // TBD
     }
 
   } // namespace cortexm
@@ -106,9 +189,9 @@ namespace hal
     typedef hal::cortexm::ArchitectureImplementation ArchitectureImplementation;
   }
 
-  // ==========================================================================
+// ==========================================================================
 
-} // namspace hal
+}// namspace hal
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_ARCHITECTUREIMPLEMENTATION_H_
