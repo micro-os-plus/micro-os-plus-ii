@@ -22,7 +22,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    /// \headerfile Stack.h "portable/core/include/Stack.h"
+    /// \class Stack Stack.h "portable/core/include/Stack.h"
     /// \ingroup core
     /// \nosubgrouping
     ///
@@ -63,8 +63,8 @@ namespace os
 
       /// \brief Constructor.
       ///
-      /// \param [in] pStack Pointer to the beginning of the stack area.
-      /// \param [in] size Number of stack elements.
+      /// \param [in] pStack    Pointer to the beginning of the stack area.
+      /// \param [in] size      Number of stack elements.
       Stack(element_t* const pStack, size_t const size);
 
       /// @} end of name Constructors/destructor
@@ -74,8 +74,9 @@ namespace os
 
       /// \brief Initialise stack for usage.
       ///
-      /// \par Parameters
-      ///    None.
+      /// \param [in] entryPoint        Pointer to the thread code.
+      /// \param [in] pParameters       Pointer to the parameters passed
+      ///                               to the thread.
       /// \par Returns
       ///    Nothing.
       void
