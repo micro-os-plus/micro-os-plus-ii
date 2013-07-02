@@ -34,10 +34,6 @@ namespace os
       element_t* pTop = m_pStart + (m_size - 1);
       m_pCurrent = architecture.context.createInitial(pTop, entryPoint,
           pParameters);
-
-#if 1
-      (*entryPoint)(pParameters);
-#endif
     }
 
   // --------------------------------------------------------------------------
