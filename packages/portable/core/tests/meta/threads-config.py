@@ -27,14 +27,19 @@ Configuration(
         # enable the test suite code
         'enable("component.os.portable.infrastructure.testsuite")',
 
-        # enable component under test
-        #'enable("component.os.portable.language.cpp.streams")',
-        
         # enable ostream support for Trace
         'enable("option.os.portable.diagnostics.trace.ostream")',
 
         # enable test artefact
         'enable("component.os.portable.core.tests.threads")',
+        
+        
+        'setValue("OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS", 7)',
+        
+        'enable("component.os.portable.core.scheduler.custom")',
+
+        'setValue("OS_STRING_CORE_SCHEDULER_CUSTOM_HEADER", "portable/core/tests/include/FakeScheduler.h")',
+        
     ],
                   
     children=[
