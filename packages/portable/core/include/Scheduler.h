@@ -11,6 +11,13 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
+#if defined(OS_INCLUDE_CORE_SCHEDULER_CUSTOM)
+
+// To use a custom scheduler, define this to the actual header location
+#include OS_STRING_CORE_SCHEDULER_CUSTOM_HEADER
+
+#else
+
 #include <stdint.h>
 
 namespace os
@@ -128,6 +135,8 @@ namespace os
 
   } // namespace core
 } // namespace os
+
+#endif
 
 namespace os
 {
