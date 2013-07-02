@@ -6,6 +6,8 @@
 /// \file
 /// \brief Core thread.
 
+
+
 #ifndef OS_PORTABLE_CORE_THREAD_H_
 #define OS_PORTABLE_CORE_THREAD_H_
 
@@ -28,7 +30,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    /// \headerfile Thread.h "portable/core/include/Thread.h"
+    /// \class Thread Thread.h "portable/core/include/Thread.h"
     /// \ingroup core
     /// \nosubgrouping
     ///
@@ -37,6 +39,10 @@ namespace os
     /// \details
     /// This is the definition of the core thread, used by the
     /// scheduler(s).
+    ///
+    /// \example portable/core/tests/src/threads.cpp
+    /// \example portable/core/tests/include/FakeScheduler.h
+    /// \example portable/core/tests/src/FakeScheduler.cpp
     class Thread : public NamedObject
     {
     public:
@@ -65,12 +71,12 @@ namespace os
 
       /// \brief Constructor.
       ///
-      /// \param [in] pName Pointer to the null terminated thread name.
-      /// \param [in] entryPoint Pointer to the thread code.
-      /// \param [in] pParameters Pointer to the parameters passed to the thread.
-      /// \param [in] pStack Pointer to the beginning of the stack area.
-      /// \param [in] stackSize Number of stack elements.
-      /// \param [in] priority Initial priority.
+      /// \param [in] pName             Pointer to the null terminated thread name.
+      /// \param [in] entryPoint        Pointer to the thread code.
+      /// \param [in] pParameters       Pointer to the parameters passed to the thread.
+      /// \param [in] pStack            Pointer to the beginning of the stack area.
+      /// \param [in] stackSize         Number of stack elements.
+      /// \param [in] priority          Initial priority.
       Thread(const char* const pName, threadEntryPoint_t entryPoint,
           void* pParameters, Stack::element_t* const pStack,
           Stack::size_t const stackSize, priority_t priority =
@@ -78,12 +84,12 @@ namespace os
 
       /// \brief Template Constructor.
       ///
-      /// \param [in] pName Pointer to the null terminated thread name.
-      /// \param [in] function A lambda to be called with one parameter.
-      /// \param [in] pObject Pointer to the parameters passed to the thread.
-      /// \param [in] pStack Pointer to the beginning of the stack area.
-      /// \param [in] stackSize Number of stack elements.
-      /// \param [in] priority Initial priority.
+      /// \param [in] pName             Pointer to the null terminated thread name.
+      /// \param [in] function          A lambda to be called with one parameter.
+      /// \param [in] pObject           Pointer to the parameters passed to the thread.
+      /// \param [in] pStack            Pointer to the beginning of the stack area.
+      /// \param [in] stackSize         Number of stack elements.
+      /// \param [in] priority          Initial priority.
       template<class Lambda_T, class Object_T>
         Thread(const char* const pName, Lambda_T function, Object_T* pObject,
             Stack::element_t* const pStack, Stack::size_t const stackSize,
@@ -129,6 +135,22 @@ namespace os
       id_t
       getId(void) const;
 
+      /// \brief Get the thread entry point address.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return The thread entry point address.
+      threadEntryPoint_t
+      getEntryPointAddress(void);
+
+      /// \brief Get the thread entry point parameter.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return The thread entry point parameter.
+      void*
+      getEntryPointParameter(void);
+
       /// @} end of Public member functions
 
     private:
@@ -138,9 +160,10 @@ namespace os
 
       /// \brief Initialise thread.
       ///
-      /// \param [in] entryPoint Pointer to the thread code.
-      /// \param [in] pParameters Pointer to the parameters passed to the thread.
-      /// \param [in] priority Initial priority.
+      /// \param [in] entryPoint        Pointer to the thread code.
+      /// \param [in] pParameters       Pointer to the parameters passed
+      ///                               to the thread code.
+      /// \param [in] priority          Initial priority.
       void
       initialise(threadEntryPoint_t entryPoint, void* pParameters,
           priority_t priority);
@@ -150,7 +173,7 @@ namespace os
       /// \name Private member variables
       /// @{
 
-      /// \brief Instance of the stack object.
+      /// \brief An instance of the stack object.
       Stack m_stack;
 
       /// \brief The current thread static priority.
@@ -158,6 +181,12 @@ namespace os
 
       /// \brief The ID used by the scheduler to identify the thread
       id_t m_id;
+
+      /// \brief The address of entry point to call for execution.
+      threadEntryPoint_t m_entryPointAddress;
+
+      /// \brief The parameter passed when calling the entry point.
+      void* m_entryPointParameter;
 
       /// @} end of Private member variables
 
@@ -197,7 +226,7 @@ namespace os
       }
 
     /// \details
-    /// Return the reference to the stack object from the private
+    /// Return the reference to the stack object as stored in the private
     /// member variable.
     inline Stack&
     __attribute__((always_inline))
@@ -207,7 +236,7 @@ namespace os
     }
 
     /// \details
-    /// Return the current thread static priority from the private
+    /// Return the current thread static priority as stored in the private
     /// member variable.
     inline Thread::priority_t
     __attribute__((always_inline))
@@ -235,6 +264,26 @@ namespace os
     Thread::getId(void) const
     {
       return m_id;
+    }
+
+    /// \details
+    /// Return the address of the code used for the thread.
+    inline threadEntryPoint_t
+    __attribute__((always_inline))
+    Thread::getEntryPointAddress(void)
+    {
+      return m_entryPointAddress;
+    }
+
+    /// \details
+    /// Return the parameter used when calling the thread code. For
+    /// Threads implemented with C++ classes, this is typically a
+    /// pointer to the actual object.
+    inline void*
+    __attribute__((always_inline))
+    Thread::getEntryPointParameter(void)
+    {
+      return m_entryPointParameter;
     }
 
   // ==========================================================================

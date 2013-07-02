@@ -44,7 +44,10 @@ namespace os
       os::diag::trace.putDestructorWithName();
 #endif
 
-      m_id = scheduler.deregisterThread(this);
+      scheduler.deregisterThread(this);
+
+      // clear the id, to mark that the thread was deregistered
+      m_id = Scheduler::NO_ID;
     }
 
     /// \details
@@ -55,6 +58,10 @@ namespace os
     {
       m_id = Scheduler::NO_ID;
       m_staticPriority = priority;
+
+      // Normally not used directly, added for completeness
+      m_entryPointAddress = entryPoint;
+      m_entryPointParameter = pParameters;
 
       m_stack.initialise(entryPoint, pParameters);
     }
