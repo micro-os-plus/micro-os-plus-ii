@@ -96,5 +96,58 @@ first place, to run all system initialisation.',
                 ),
             ],
         ),
+              
+        Component(
+            id='component.os.portable.core.scheduler',
+            name='Core scheduler definitions',
+            description='.',
+            
+            isEnabled=True,
+
+            children=[
+
+                Option(
+                    id='component.os.portable.core.scheduler.maxuserthreads',
+                    name='The max number of user threads',
+                    description='.',
+                    
+                    isEnabled=True,
+                    
+                    headerFile='include/portable/core/include/XCDL_SchedulerDefines.h',
+                    headerDefinition='OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS',
+                    
+                    valueType='int',
+                    defaultValue='2',                    
+                ),
+
+                Component(
+                    id='component.os.portable.core.scheduler.custom',
+                    name='Custom scheduler',
+                    description='.',
+                    
+                    isEnabled=False,
+                    
+                    headerDefinition='OS_INCLUDE_CORE_SCHEDULER_CUSTOM',
+
+                    children=[
+
+                        Option(
+                            id='option.os.portable.core.scheduler.custom.header',
+                            name='The path to the scheduler header file',
+                            description='.',
+                            
+                            isEnabled=True,
+                            
+                            headerDefinition='OS_STRING_CORE_SCHEDULER_CUSTOM_HEADER',
+                            
+                            valueType='string',
+                            defaultValue='must be set',                    
+                        ),
+                              
+                    ],
+                ),
+                      
+            ],
+        ),
     ],
 )
