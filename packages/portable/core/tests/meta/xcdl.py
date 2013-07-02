@@ -22,6 +22,7 @@ Package(
             isEnabled=False,
             sourceFiles=[
                 'threads.cpp',
+                'FakeScheduler.cpp'
             ],
                   
             includeFiles=[
