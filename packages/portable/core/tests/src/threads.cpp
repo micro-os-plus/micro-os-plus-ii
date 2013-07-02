@@ -50,6 +50,7 @@ getNextGlobalCountValue(void)
 
 // ----------------------------------------------------------------------------
 
+// this value will be updated by the thread
 static count_t cCount = 0;
 
 void
@@ -123,9 +124,9 @@ CommonTask::CommonTask(const char* pName)
 #if defined(DEBUG)
   os::diag::trace.putConstructor();
 #endif
-#if 0
+
+  // clear test counter
   m_count = 0;
-#endif
 }
 
 CommonTask::~CommonTask()
@@ -183,16 +184,22 @@ public:
 
   static void
   threadMain1(void* pParam);
+
+  // this count will be updated by the thread
   static count_t m_count1;
 
   void
   threadMain2();
+
+  // this count will be updated by the thread
   count_t m_count2;
 
   // This member function will be used by two threads, called with
   // different parameters
   void
   threadMain3(int i);
+
+  // these counts will be updated by the threads
   count_t m_count3[3];
 
 private:
@@ -237,11 +244,11 @@ MultiThreadedTask::MultiThreadedTask()
 #if defined(DEBUG)
   os::diag::trace.putConstructor();
 #endif
-#if 0
+
+  // clear all test counters
   m_count2 = 0;
   for (size_t i = 0; i < sizeof(m_count3) / sizeof(m_count3[0]); ++i)
   m_count3[i] = 0;
-#endif
 }
 
 MultiThreadedTask::~MultiThreadedTask()
@@ -314,6 +321,16 @@ main(int argc, char* argv[])
   ts.start("portable/core/tests/src/threads.cpp");
 
   ts.setClassName("os::core::Thread");
+
+  ts.assertCondition(cCount == 0);
+  ts.assertCondition(commonTask1.getCount() == 0);
+  ts.assertCondition(commonTask2.getCount() == 0);
+  ts.assertCondition(multiThreadedTask.m_count1 == 0);
+  ts.assertCondition(multiThreadedTask.m_count2 == 0);
+  ts.assertCondition(multiThreadedTask.m_count3[1] == 0);
+  ts.assertCondition(multiThreadedTask.m_count3[2] == 0);
+
+  os::scheduler.run();
 
   ts.assertCondition(cCount == 1);
   ts.assertCondition(commonTask1.getCount() == 2);
