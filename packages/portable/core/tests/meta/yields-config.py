@@ -23,19 +23,24 @@ Configuration(
         'setValue("APP_STRING_APPLICATION_NAME", "Yields")',        
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
         
+        # enable the test suite code
+        'enable("component.os.portable.infrastructure.testsuite")',
+
+        # enable ostream support for Trace
+        'enable("option.os.portable.diagnostics.trace.ostream")',
+
         # enable test artefact
         'enable("component.os.portable.core.tests.yields")',
+        
+        'setValue("OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS", 3)',
+
     ],
                   
     includeFiles=[
         'yields-stm32f4discovery-config.py',
+        'yields-posix-config.py',
     ],
               
     artefactName='yields',
-
-    copyFiles=[
-        ('makefile_defs.mk','makefile_defs.mk'),
-        ('makefile_targets.mk','makefile_targets.mk'),
-    ],
 
 )
