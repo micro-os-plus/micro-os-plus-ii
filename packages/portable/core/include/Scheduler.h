@@ -53,11 +53,17 @@ namespace os
       /// Must be below MIN priority.
       static const threadPriority_t IDLE_PRIORITY = 0x00;
 
+      /// \brief Priority of main() default thread.
+      ///
+      /// \details
+      /// Must be below MIN priority.
+      static const threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY + 1;
+
       /// \brief Minimum priority.
       ///
       /// \details
       /// Must be above IDLE priority.
-      static const threadPriority_t MIN_PRIORITY = IDLE_PRIORITY + 1;
+      static const threadPriority_t MIN_PRIORITY = MAIN_PRIORITY + 1;
 
       /// \brief Maximum priority.
       ///
@@ -69,8 +75,8 @@ namespace os
       ///
       /// \details
       /// Computed as average between MIN and MAX priorities.
-      static const threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY - MIN_PRIORITY)
-          / 2 + 1);
+      static const threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY
+          - MIN_PRIORITY) / 2 + 1);
 
       /// \brief Thread ID.
       ///
