@@ -20,7 +20,7 @@ namespace hal
 {
   namespace posix
   {
-    // ----------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
     /// \details
@@ -48,15 +48,33 @@ namespace hal
     }
 #endif
 
-    hal::arch::stackElement_t*
-    ArchitectureImplementation::Context::createInitial(
-        hal::arch::stackElement_t* pStackTop,
-        os::core::threadEntryPoint_t entryPoint __attribute__((unused)),
-        void* pParameters __attribute__((unused)))
+    // ========================================================================
+
+    void
+    ArchitectureImplementation::ThreadContext::create(
+        hal::arch::stackElement_t* pStackBottom,
+        hal::arch::stackSize_t stackSize,
+        os::core::threadEntryPoint_t entryPoint, void* pParameters)
     {
-      return pStackTop;
+      m_context.uc_link = 0;
+      m_context.uc_stack.ss_sp = pStackBottom;
+      m_context.uc_stack.ss_size = stackSize * sizeof(hal::arch::stackElement_t);
+      m_context.uc_stack.ss_flags = 0;
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
+      makecontext(&m_context, (void
+      (*)())entryPoint, 1, pParameters);
+
+#pragma GCC diagnostic pop
+
+      return;
     }
-  // ----------------------------------------------------------------------
+
+  // --------------------------------------------------------------------------
 
   }// namespace posix
 } // namespace hal

@@ -18,11 +18,16 @@
 // Include architecture definitions, like various types.
 #include "hal/architecture/synthetic/posix/include/ArchitectureDefinitions.h"
 
+#define _XOPEN_SOURCE
+#include <ucontext.h>
+
+#include <errno.h>
+
 namespace hal
 {
   namespace posix
   {
-    // ======================================================================
+    // ========================================================================
 
     /// \headerfile ArchitectureImplementation.h "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
     /// \ingroup posix
@@ -60,6 +65,13 @@ namespace hal
 
       /// @} end of name Public member functions
 
+      // ======================================================================
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
       /// \headerfile ArchitectureImplementation.h "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
       /// \ingroup posix
       /// \nosubgrouping
@@ -68,76 +80,114 @@ namespace hal
       ///
       /// \details
       /// This class provides generic POSIX context handling support.
-      class Context
+      class ThreadContext
       {
+
       public:
         /// \name Constructors/destructor
         /// @{
 
-        /// \brief Default constructor.
-        Context() = default;
+        ThreadContext();
 
         /// @} end of name Constructors/destructor
 
         /// \name Public member functions
         /// @{
 
-        /// \brief Create the initial context in the stack object.
+        /// \brief Create the initial context in the local storage.
         ///
-        /// \param [in] pStackTop Pointer to the last stack element.
-        /// \param [in] entryPoint Pointer to thread code.
-        /// \param [in] pParameters Pointer to thread parameters.
+        /// \param [in] pStackBottom    Pointer to the first stack element.
+        /// \param [in] stackSize       Size of stack in elements.
+        /// \param [in] entryPoint      Pointer to thread code.
+        /// \param [in] pParameters     Pointer to thread parameters.
         /// \par Returns
         ///    Nothing.
-        static hal::arch::stackElement_t*
-        createInitial(hal::arch::stackElement_t* pStackTop,
+        void
+        create(hal::arch::stackElement_t* pStackBottom,
+            hal::arch::stackSize_t stackSize,
             os::core::threadEntryPoint_t entryPoint, void* pParameters);
 
-        /// \brief Save the current context on the stack.
+        /// \brief Save the current context in the local storage.
         ///
         /// \par Parameters
         ///    None.
         /// \par Returns
         ///    Nothing.
-        static void
-        save(void);
+        void
+        save();
 
-        /// \brief Restore the current context from the stack.
+        /// \brief Restore the current context from the local storage.
         ///
         /// \par Parameters
         ///    None.
         /// \par Returns
         ///    Nothing.
-        static void
-        restore(void);
+        void
+        restore();
 
         /// @} end of name Public member functions
 
+      private:
+        /// \brief The context storage.
+        ucontext_t m_context;
+
+        /// \brief The C error indicator storage.
+        int m_error;
       };
-
-      Context context;
-
     };
 
+#pragma GCC diagnostic pop
+
+    // ========================================================================
+
+    inline
+    __attribute__((always_inline))
+    ArchitectureImplementation::ThreadContext::ThreadContext(void)
+    {
+      m_error = 0;
+    }
+
     /// \details
-     /// TBD
-     inline void
-     __attribute__((always_inline))
-     ArchitectureImplementation::Context::save(void)
-     {
-       // TBD
-     }
+    /// TBD
+    inline void
+    __attribute__((always_inline))
+    ArchitectureImplementation::ThreadContext::save(void)
+    {
+      m_error = errno;
 
-     /// \details
-     /// TBD
-     inline void
-     __attribute__((always_inline))
-     ArchitectureImplementation::Context::restore(void)
-     {
-       // TBD
-     }
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif
 
-  } // namespace posix
+      getcontext(&m_context);
+
+#pragma GCC diagnostic pop
+
+    }
+
+    /// \details
+    /// TBD
+    inline void
+    __attribute__((always_inline))
+    ArchitectureImplementation::ThreadContext::restore(void)
+    {
+      errno = m_error;
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
+      setcontext(&m_context);
+
+#pragma GCC diagnostic pop
+
+    }
+
+  // ========================================================================
+
+  }// namespace posix
 
   // ------------------------------------------------------------------------
 
