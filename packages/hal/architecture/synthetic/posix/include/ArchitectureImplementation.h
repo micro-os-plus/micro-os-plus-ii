@@ -44,7 +44,7 @@ namespace hal
       /// \name Constructors/destructor
       /// @{
 
-      /// \brief Deleted constructor.
+      /// \brief Default constructor.
       ArchitectureImplementation() = default;
 
       /// @} end of name Constructors/destructor
@@ -87,6 +87,7 @@ namespace hal
         /// \name Constructors/destructor
         /// @{
 
+        /// \brief Constructor.
         ThreadContext();
 
         /// @} end of name Constructors/destructor
@@ -140,6 +141,8 @@ namespace hal
 
     // ========================================================================
 
+    /// \details
+    /// Used only to explicitly initialise m_error.
     inline
     __attribute__((always_inline))
     ArchitectureImplementation::ThreadContext::ThreadContext(void)
@@ -148,7 +151,7 @@ namespace hal
     }
 
     /// \details
-    /// TBD
+    /// Preserve errno and get context.
     inline void
     __attribute__((always_inline))
     ArchitectureImplementation::ThreadContext::save(void)
@@ -167,7 +170,7 @@ namespace hal
     }
 
     /// \details
-    /// TBD
+    /// Restore context and errno.
     inline void
     __attribute__((always_inline))
     ArchitectureImplementation::ThreadContext::restore(void)
