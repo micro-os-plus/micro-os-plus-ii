@@ -74,13 +74,12 @@ namespace os
 
       /// \brief Initialise stack for usage.
       ///
-      /// \param [in] entryPoint        Pointer to the thread code.
-      /// \param [in] pParameters       Pointer to the parameters passed
-      ///                               to the thread.
+      /// \par Parameters
+      ///    None.
       /// \par Returns
       ///    Nothing.
       void
-      initialise(threadEntryPoint_t entryPoint, void* pParameters);
+      initialise();
 
       /// \brief Get stack size.
       ///
@@ -90,13 +89,14 @@ namespace os
       size_t
       getSize(void) const;
 
-      /// \brief Get current stack pointer.
+      /// \brief Get stack start address.
       ///
       /// \par Parameters
       ///    None.
-      /// \return The current stack pointer.
+      /// \return The start of the stack area.
       element_t*
-      getCurrent(void);
+      getStart(void);
+
 
       /// @} end of Public member functions
 
@@ -106,8 +106,6 @@ namespace os
 
       /// \brief Pointer to the beginning of the stack area.
       element_t* const m_pStart;
-
-      element_t* m_pCurrent;
 
       /// \brief The stack size, in stackElement_t units.
       size_t const m_size;
@@ -130,7 +128,6 @@ namespace os
         : m_pStart(pStack), //
         m_size(size)
     {
-      m_pCurrent = nullptr;
     }
 
     /// \details
@@ -143,12 +140,12 @@ namespace os
     }
 
     /// \details
-    /// Return the current stack pointer, saved in the member variable.
+    /// Return the start of the stack area, saved in the member variable.
     inline Stack::element_t*
     __attribute__((always_inline))
-    Stack::getCurrent(void)
+    Stack::getStart(void)
     {
-      return m_pCurrent;
+      return m_pStart;
     }
 
   // ==========================================================================

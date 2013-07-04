@@ -19,21 +19,14 @@ namespace os
     /// Prepare the stack for scheduler usage:
     /// - fill it entirely with a
     /// pattern, in order to know how much it was used;
-    /// - create the initial thread context, that will be used on the
-    /// first Context::restore()
     void
-    Stack::initialise(threadEntryPoint_t entryPoint, void* pParameters)
+    Stack::initialise()
     {
       // fill entire stack
       element_t* p = m_pStart;
       size_t cnt = m_size;
       for (; cnt > 0; --cnt)
         *p++ = STACK_FILL;
-
-      // create initial context (architecture dependent)
-      element_t* pTop = m_pStart + (m_size - 1);
-      m_pCurrent = architecture.context.createInitial(pTop, entryPoint,
-          pParameters);
     }
 
   // --------------------------------------------------------------------------
