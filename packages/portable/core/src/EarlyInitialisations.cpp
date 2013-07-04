@@ -15,6 +15,7 @@
 #include "portable/core/include/Greeting.h"
 
 #include "portable/core/include/Scheduler.h"
+#include "portable/core/include/Thread.h"
 
 namespace os
 {
@@ -113,9 +114,9 @@ namespace os
       os::platform.resetSystem();
     }
 
-    // ========================================================================
+  // ========================================================================
 
-  } // namespace core
+  }// namespace core
 } // namespace os
 
 // ----------------------------------------------------------------------------
@@ -272,9 +273,13 @@ namespace os
   /// must be constructed before any Thread object.
   os::core::Scheduler scheduler;
 
+  // \brief The thread associated with the main() function.
+  os::core::Thread mainThread("main()", nullptr, nullptr, nullptr, 0,
+      os::core::Scheduler::MAIN_PRIORITY);
+
 #pragma GCC diagnostic pop
 
-  /// @} end of ingroup core
-} // namespace os
+/// @} end of ingroup core
+}// namespace os
 
 // ----------------------------------------------------------------------------
