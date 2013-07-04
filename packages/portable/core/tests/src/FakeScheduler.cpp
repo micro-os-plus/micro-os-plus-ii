@@ -81,6 +81,9 @@ namespace os
     FakeScheduler::threadId_t
     FakeScheduler::deregisterThread(Thread* pThread)
     {
+#if defined(DEBUG)
+      os::diag::trace.putMemberFunction();
+#endif
       threadId_t id;
       id = pThread->getId();
       if (id != NO_ID)
@@ -112,7 +115,7 @@ namespace os
 #endif
 
       threadPriority_t pri;
-      for (pri = MAX_PRIORITY; pri >= MIN_PRIORITY; pri--)
+      for (pri = MAX_PRIORITY; pri >= MAIN_PRIORITY; pri--)
         {
           threadCount_t i;
           for (i = 0; i < getThreadsArraySize(); ++i)
@@ -120,11 +123,20 @@ namespace os
               Thread* pThread = m_threads[i];
               if (pThread != nullptr)
                 {
-                  if (pThread->getPriority() != pri)
-                    break;
-
-                  (*(pThread->getEntryPointAddress()))(
-                      pThread->getEntryPointParameter());
+                  if (pThread->getPriority() == pri)
+                    {
+                      os::core::threadEntryPoint_t p =
+                          pThread->getEntryPointAddress();
+                      if (p != nullptr)
+                        {
+                          Thread::trampolineParameters_t pPar;
+                          pPar.pThread = pThread;
+                          pPar.entryPoint = p;
+                          pPar.pParameters = pThread->getEntryPointParameter();
+                          Thread::trampoline(&pPar);
+                          //(*p)(pThread->getEntryPointParameter());
+                        }
+                    }
                 }
             }
         }
