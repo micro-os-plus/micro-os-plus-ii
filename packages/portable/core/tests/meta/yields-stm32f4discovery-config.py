@@ -27,6 +27,11 @@ Configuration(
     buildFolder='stm32f4discovery/yields',
     
     buildTargetCpuOptions='-mcpu=cortex-m4 -mthumb -mfloat-abi=soft',
+
+    copyFiles=[
+        ('makefile_defs.mk','makefile_defs.mk'),
+        ('makefile_targets.mk','makefile_targets.mk'),
+    ],
     
     children=[
                
