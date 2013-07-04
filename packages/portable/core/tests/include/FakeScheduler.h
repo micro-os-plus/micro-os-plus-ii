@@ -57,11 +57,17 @@ namespace os
       /// Must be below MIN priority.
       static const threadPriority_t IDLE_PRIORITY = 0x00;
 
+      /// \brief Priority of main() default thread.
+      ///
+      /// \details
+      /// Must be below MIN priority.
+      static const threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY+1;
+
       /// \brief Minimum priority.
       ///
       /// \details
       /// Must be above IDLE priority.
-      static const threadPriority_t MIN_PRIORITY = IDLE_PRIORITY + 1;
+      static const threadPriority_t MIN_PRIORITY = MAIN_PRIORITY + 1;
 
       /// \brief Maximum priority.
       ///
@@ -155,7 +161,7 @@ namespace os
       /// @} end of Public member functions
 
     private:
-      Thread* m_threads[OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS];
+      Thread* m_threads[OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS+1];
       threadCount_t m_threadCount;
     };
 
