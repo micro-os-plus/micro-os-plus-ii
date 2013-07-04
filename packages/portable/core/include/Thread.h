@@ -6,8 +6,6 @@
 /// \file
 /// \brief Core thread.
 
-
-
 #ifndef OS_PORTABLE_CORE_THREAD_H_
 #define OS_PORTABLE_CORE_THREAD_H_
 
@@ -61,8 +59,16 @@ namespace os
       /// Redefined here, based on scheduler definitions.
       typedef Scheduler::threadId_t id_t;
 
-      //typedef void
-      //(*function_t)(void*);
+      static const id_t NO_ID = Scheduler::NO_ID;
+
+      typedef hal::arch::ArchitectureImplementation::ThreadContext Context;
+
+      typedef struct
+      {
+        Thread* pThread;
+        threadEntryPoint_t entryPoint;
+        void* pParameters;
+      } trampolineParameters_t;
 
       /// @} end of name Types and constants
 
@@ -151,6 +157,24 @@ namespace os
       void*
       getEntryPointParameter(void);
 
+      /// \brief Join the thread.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      void
+      join();
+
+      Context&
+      getContext();
+
+      void
+      cleanup();
+
+      static void
+      trampoline(trampolineParameters_t* pTrampolineParameters);
+
       /// @} end of Public member functions
 
     private:
@@ -173,13 +197,18 @@ namespace os
       /// \name Private member variables
       /// @{
 
+      Context m_context;
+
       /// \brief An instance of the stack object.
       Stack m_stack;
 
       /// \brief The current thread static priority.
       priority_t volatile m_staticPriority;
 
-      /// \brief The ID used by the scheduler to identify the thread
+      /// \brief The ID used by the scheduler to identify the thread.
+      ///
+      /// \details
+      /// After construction it is
       id_t m_id;
 
       /// \brief The address of entry point to call for execution.
@@ -248,8 +277,7 @@ namespace os
     /// \details
     /// Set the new static priority in the private
     /// member variable.
-    inline
-    void
+    inline void
     __attribute__((always_inline))
     Thread::setPriority(priority_t priority)
     {
@@ -284,6 +312,26 @@ namespace os
     Thread::getEntryPointParameter(void)
     {
       return m_entryPointParameter;
+    }
+
+    inline Thread::Context&
+    __attribute__((always_inline))
+    Thread::getContext()
+    {
+      return m_context;
+    }
+
+    inline void
+    __attribute__((always_inline))
+    Thread::cleanup()
+    {
+      if (m_id != Scheduler::NO_ID)
+        {
+          scheduler.deregisterThread(this);
+
+          // clear the id, to mark that the thread was deregistered
+          m_id = Scheduler::NO_ID;
+        }
     }
 
   // ==========================================================================

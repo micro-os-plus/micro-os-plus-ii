@@ -36,6 +36,15 @@ namespace os
       initialise(entryPoint, pParameters, priority);
 
       m_id = scheduler.registerThread(this);
+#if defined(DEBUG)
+      if (m_id == Scheduler::NO_ID)
+        {
+          os::diag::trace.putString("cannot register thread \"");
+          os::diag::trace.putString(getName());
+          os::diag::trace.putString("\"");
+          os::diag::trace.putNewLine();
+        }
+#endif
     }
 
     Thread::~Thread()
@@ -44,17 +53,14 @@ namespace os
       os::diag::trace.putDestructorWithName();
 #endif
 
-      scheduler.deregisterThread(this);
-
-      // clear the id, to mark that the thread was deregistered
-      m_id = Scheduler::NO_ID;
+      cleanup();
     }
 
     /// \details
     /// Call the architecture function.
     void
-    Thread::initialise(threadEntryPoint_t entryPoint,
-        void* pParameters, priority_t priority)
+    Thread::initialise(threadEntryPoint_t entryPoint, void* pParameters,
+        priority_t priority)
     {
       m_id = Scheduler::NO_ID;
       m_staticPriority = priority;
@@ -63,7 +69,42 @@ namespace os
       m_entryPointAddress = entryPoint;
       m_entryPointParameter = pParameters;
 
-      m_stack.initialise(entryPoint, pParameters);
+      m_stack.initialise();
+
+      m_context.create(m_stack.getStart(), m_stack.getSize(), entryPoint, pParameters);
+    }
+
+    /// \details
+    /// Block until the thread has completed.
+    void
+    Thread::join()
+    {
+#if 0
+      // TODO: implement with events
+      while (m_id != Scheduler::NO_ID)
+        {
+          os::scheduler.yield();
+        }
+#endif
+    }
+
+    /// \details
+    /// This function is needed to ensure that the thread cleanup code
+    /// is always called after the thread code is completed, and
+    /// control is passed to the next thread.
+    void
+    Thread::trampoline(trampolineParameters_t* pTrampolineParameters)
+    {
+      // call the desired code with the given parameters
+      (*pTrampolineParameters->entryPoint)(pTrampolineParameters->pParameters);
+
+      // deregister the thread and make sure it'll never be used
+      pTrampolineParameters->pThread->cleanup();
+
+      // TODO: notify threads waiting to join
+
+      // pass control to next thread
+      os::scheduler.yield();
     }
 
   // ------------------------------------------------------------------------
