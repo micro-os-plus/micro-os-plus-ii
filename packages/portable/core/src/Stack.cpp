@@ -20,7 +20,7 @@ namespace os
     /// - fill it entirely with a
     /// pattern, in order to know how much it was used;
     void
-    Stack::initialise()
+    Stack::initialise(void)
     {
       // fill entire stack
       element_t* p = m_pStart;

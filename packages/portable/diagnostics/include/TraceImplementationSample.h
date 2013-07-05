@@ -36,7 +36,7 @@ namespace os
       /// @{
 
       /// \brief Constructor.
-      TraceImplementationSample();
+      TraceImplementationSample(void);
 
       /// \brief Destructor.
       ~TraceImplementationSample();
@@ -93,7 +93,7 @@ namespace os
     // Sample inline definitions
 
     inline
-    TraceImplementationSample::TraceImplementationSample()
+    TraceImplementationSample::TraceImplementationSample(void)
     {
     }
 

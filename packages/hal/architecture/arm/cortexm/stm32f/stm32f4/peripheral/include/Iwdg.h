@@ -53,7 +53,7 @@ namespace hal
         /// @{
 
         /// \brief Default constructor.
-        TIwdg() = default;
+        TIwdg(void) = default;
 
         /// @} end of name Constructors/destructor
 

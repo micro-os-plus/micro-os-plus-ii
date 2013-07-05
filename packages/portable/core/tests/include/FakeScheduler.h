@@ -106,7 +106,7 @@ namespace os
       /// @{
 
       /// \brief Constructor.
-      FakeScheduler();
+      FakeScheduler(void);
 
       /// \brief Destructor.
       ~FakeScheduler();

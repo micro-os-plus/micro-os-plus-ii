@@ -73,7 +73,7 @@ public:
   getCount2(void);
 
   os::core::Thread&
-  getThread();
+  getThread(void);
 
 private:
   count_t m_count1;
@@ -129,7 +129,7 @@ Task::getCount2(void)
 }
 
 void
-Task::threadMain()
+Task::threadMain(void)
 {
 #if defined(DEBUG)
   os::diag::trace.putMemberFunction();
@@ -142,7 +142,7 @@ Task::threadMain()
 }
 
 os::core::Thread&
-Task::getThread()
+Task::getThread(void)
 {
   return m_thread;
 }

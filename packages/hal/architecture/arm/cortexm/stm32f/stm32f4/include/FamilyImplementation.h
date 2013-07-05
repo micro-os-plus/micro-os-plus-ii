@@ -38,7 +38,7 @@ namespace hal
       /// @{
 
       /// \brief Deleted constructor.
-      FamilyImplementation() = delete;
+      FamilyImplementation(void) = delete;
 
       /// @} end of name Constructors/destructor
 

@@ -19,7 +19,7 @@ namespace os
 
     /// \details
     /// Iterate the storage array and clear all entries.
-    FakeScheduler::FakeScheduler()
+    FakeScheduler::FakeScheduler(void)
     {
 #if defined(DEBUG)
       os::diag::trace.putConstructor();

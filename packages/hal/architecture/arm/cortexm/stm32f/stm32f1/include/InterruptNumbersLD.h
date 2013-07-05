@@ -33,7 +33,7 @@ namespace hal
       /// @{
 
       /// \brief Deleted constructor
-      InterruptNumber() = delete;
+      InterruptNumber(void) = delete;
 
       /// @} end of name Constructors/destructor
 

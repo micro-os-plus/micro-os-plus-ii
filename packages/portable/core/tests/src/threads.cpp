@@ -103,7 +103,7 @@ public:
   ~CommonTask();
 
   void
-  threadMain();
+  threadMain(void);
 
   count_t
   getCount(void);
@@ -148,7 +148,7 @@ CommonTask::getCount(void)
 }
 
 void
-CommonTask::threadMain()
+CommonTask::threadMain(void)
 {
 #if defined(DEBUG)
   os::diag::trace.putMemberFunction();
@@ -179,7 +179,7 @@ CommonTask commonTask2("CT2");
 class MultiThreadedTask
 {
 public:
-  MultiThreadedTask();
+  MultiThreadedTask(void);
   ~MultiThreadedTask();
 
   static void
@@ -189,7 +189,7 @@ public:
   static count_t m_count1;
 
   void
-  threadMain2();
+  threadMain2(void);
 
   // this count will be updated by the thread
   count_t m_count2;
@@ -229,7 +229,7 @@ auto th2 = [](MultiThreadedTask* pTask)
 
 #pragma GCC diagnostic pop
 
-MultiThreadedTask::MultiThreadedTask()
+MultiThreadedTask::MultiThreadedTask(void)
     : m_thread1("MT1", &threadMain1, this, m_stack1,
         sizeof(m_stack1) / sizeof(m_stack1[0])), // with static function
     m_thread2("MT2", th2, this, m_stack2,
@@ -275,7 +275,7 @@ MultiThreadedTask::threadMain1(void* pParam
 }
 
 void
-MultiThreadedTask::threadMain2()
+MultiThreadedTask::threadMain2(void)
 {
 #if defined(DEBUG)
   os::diag::trace.putMemberFunction();

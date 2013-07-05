@@ -42,7 +42,7 @@ namespace hal
       /// @{
 
       /// \brief Deleted constructor.
-      InterruptNumberBase() = delete;
+      InterruptNumberBase(void) = delete;
 
       /// @} end of name Constructors/destructor
     };

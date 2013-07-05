@@ -107,7 +107,7 @@ namespace os
         /// \brief Simple constructor.
         /// \par Parameters
         ///     None.
-        TTestSuiteBase();
+        TTestSuiteBase(void);
 
         /// \brief Constructor with main() style parameters
         ///

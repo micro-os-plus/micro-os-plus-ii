@@ -40,7 +40,7 @@ namespace hal
       /// @{
 
       /// \brief Deleted constructor.
-      LinkerScript() = delete;
+      LinkerScript(void) = delete;
 
       /// @} end of name Constructors/destructor
 

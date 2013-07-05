@@ -48,7 +48,7 @@ namespace os
         public:
           typedef WatchDog_T WatchDog;
 
-          TPinSample() = delete;
+          TPinSample(void) = delete;
 
           // should leave the pin High
           static void
@@ -120,7 +120,7 @@ namespace os
           /// @{
 
           /// \brief Deleted constructor.
-          TTimer() = delete;
+          TTimer(void) = delete;
 
           /// @} end of name Constructors/destructor
 
@@ -261,7 +261,7 @@ namespace os
           /// @{
 
           /// \brief Deleted constructor.
-          TMaster() = delete;
+          TMaster(void) = delete;
 
           /// @} end of name Constructors/destructor
 

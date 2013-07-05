@@ -45,7 +45,7 @@ namespace hal
       /// @{
 
       /// \brief Deleted constructor.
-      ArchitectureImplementation() = default;
+      ArchitectureImplementation(void) = default;
 
       /// @} end of name Constructors/destructor
 
@@ -98,7 +98,7 @@ namespace hal
         /// @{
 
         /// \brief Default constructor.
-        Context() = default;
+        Context(void) = default;
 
         /// @} end of name Constructors/destructor
 

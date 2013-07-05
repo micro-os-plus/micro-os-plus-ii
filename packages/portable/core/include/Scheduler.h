@@ -96,7 +96,7 @@ namespace os
       /// @{
 
       /// \brief Constructor.
-      Scheduler();
+      Scheduler(void);
 
       /// \brief Destructor.
       ~Scheduler();

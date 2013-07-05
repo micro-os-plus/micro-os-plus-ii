@@ -51,7 +51,7 @@ namespace hal
         /// @{
 
         /// \brief Default constructor.
-        TSysTick() = default;
+        TSysTick(void) = default;
 
         /// @} end of name Constructors/destructor
 

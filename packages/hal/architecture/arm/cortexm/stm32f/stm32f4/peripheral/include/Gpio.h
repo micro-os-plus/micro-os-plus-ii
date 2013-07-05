@@ -61,7 +61,7 @@ namespace hal
         ///
         /// \par Parameters
         ///    None.
-        TGpioPin() = default;
+        TGpioPin(void) = default;
 
         /// @} end of name Constructors/destructor
 

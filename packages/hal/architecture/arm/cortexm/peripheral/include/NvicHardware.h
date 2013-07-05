@@ -123,7 +123,7 @@ namespace hal
         /// @{
 
         /// \brief Deleted constructor
-        Registers() = delete;
+        Registers(void) = delete;
 
         /// @} end of name Constructors/destructor
 

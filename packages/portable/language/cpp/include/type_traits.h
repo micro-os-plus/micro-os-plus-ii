@@ -1336,10 +1336,10 @@ template    <class _Tp> struct _LIBCPP_VISIBLE has_virtual_destructor
     struct __nat
     {
 #ifndef _LIBCPP_HAS_NO_DELETED_FUNCTIONS
-      __nat() = delete;
+      __nat(void) = delete;
       __nat(const __nat&) = delete;
       __nat& operator=(const __nat&) = delete;
-      ~__nat() = delete;
+      ~__nat(void) = delete;
 #endif
     };
 

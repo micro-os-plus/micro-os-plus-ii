@@ -49,7 +49,7 @@ namespace hal
       /// @{
 
       /// \brief Deleted constructor.
-      BitBand() = delete;
+      BitBand(void) = delete;
 
       /// @} end of name Constructors/destructor
 

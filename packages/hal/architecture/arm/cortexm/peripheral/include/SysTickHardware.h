@@ -92,7 +92,7 @@ namespace hal
       class CtrlMask
       {
       public:
-        CtrlMask() = delete;
+        CtrlMask(void) = delete;
 
         static const reg32_t Enable = (1 << CtrlBit::Enable);
         static const reg32_t TickInterruptEnable = (1
@@ -112,7 +112,7 @@ namespace hal
       class CalibMask
       {
       public:
-        CalibMask() = delete;
+        CalibMask(void) = delete;
 
         static const reg32_t Skew = (1 << CalibBit::Skew);
         static const reg32_t NoRef = (1 << CalibBit::NoRef);
@@ -141,7 +141,7 @@ namespace hal
         /// @{
 
         /// \brief Deleted constructor
-        Registers() = delete;
+        Registers(void) = delete;
 
         /// @} end of name Constructors/destructor
 

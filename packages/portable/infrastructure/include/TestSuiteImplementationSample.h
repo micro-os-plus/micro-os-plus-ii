@@ -58,7 +58,7 @@ namespace os
       /// @{
 
       /// \brief Simple constructor.
-      TestSuiteImplementationSample();
+      TestSuiteImplementationSample(void);
 
       /// \brief Constructor with process parameters
       ///
@@ -144,7 +144,7 @@ namespace os
     // sample inline definitions
 
     inline
-    TestSuiteImplementationSample::TestSuiteImplementationSample()
+    TestSuiteImplementationSample::TestSuiteImplementationSample(void)
     {
     }
 

@@ -51,7 +51,7 @@ namespace hal
         /// @{
 
         /// \brief Default constructor.
-        TNvic() = default;
+        TNvic(void) = default;
 
         /// @} end of name Constructors/destructor
 

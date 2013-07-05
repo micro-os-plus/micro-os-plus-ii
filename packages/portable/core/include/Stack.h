@@ -79,7 +79,7 @@ namespace os
       /// \par Returns
       ///    Nothing.
       void
-      initialise();
+      initialise(void);
 
       /// \brief Get stack size.
       ///

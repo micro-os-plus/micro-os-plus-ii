@@ -13,7 +13,7 @@
 class Led
 {
 public:
-  Led() = delete;
+  Led(void) = delete;
 
   static void
   powerUp(void);

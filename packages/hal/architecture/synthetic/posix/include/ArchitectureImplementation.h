@@ -45,7 +45,7 @@ namespace hal
       /// @{
 
       /// \brief Default constructor.
-      ArchitectureImplementation() = default;
+      ArchitectureImplementation(void) = default;
 
       /// @} end of name Constructors/destructor
 
@@ -88,7 +88,7 @@ namespace hal
         /// @{
 
         /// \brief Constructor.
-        ThreadContext();
+        ThreadContext(void);
 
         /// @} end of name Constructors/destructor
 
@@ -115,7 +115,7 @@ namespace hal
         /// \par Returns
         ///    Nothing.
         void
-        save();
+        save(void);
 
         /// \brief Restore the current context from the local storage.
         ///
@@ -124,7 +124,7 @@ namespace hal
         /// \par Returns
         ///    Nothing.
         void
-        restore();
+        restore(void);
 
         /// @} end of name Public member functions
 

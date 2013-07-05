@@ -27,7 +27,7 @@ namespace hal
 
       /// \details
       /// Initialise the object without XML output.
-      TestSuiteImplementation::TestSuiteImplementation()
+      TestSuiteImplementation::TestSuiteImplementation(void)
       {
 #if defined(DEBUG)
         os::diag::trace.putConstructor();

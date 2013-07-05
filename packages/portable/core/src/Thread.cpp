@@ -77,7 +77,7 @@ namespace os
     /// \details
     /// Block until the thread has completed.
     void
-    Thread::join()
+    Thread::join(void)
     {
 #if 0
       // TODO: implement with events

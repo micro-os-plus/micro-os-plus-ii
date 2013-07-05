@@ -148,7 +148,7 @@ namespace hal
         /// @{
 
         /// \brief Deleted constructor
-        PortRegisters() = delete;
+        PortRegisters(void) = delete;
 
         /// @} end of name Constructors/destructor
 

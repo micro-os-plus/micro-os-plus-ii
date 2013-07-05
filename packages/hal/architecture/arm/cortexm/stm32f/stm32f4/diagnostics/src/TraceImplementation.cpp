@@ -70,7 +70,7 @@ namespace hal
           /// @{
 
           /// \brief Deleted constructor.
-          TPinOpenDrain() = delete;
+          TPinOpenDrain(void) = delete;
 
           /// @} end of name Constructors/destructor
 

@@ -49,7 +49,7 @@ namespace os
     /// to initialise the tracing output device as early as possible.
     ///
     /// The parent ostream was just initialised, so we can use it.
-    Trace::Trace()
+    Trace::Trace(void)
     {
       // This is the earliest time we can display something on the
       // trace device.

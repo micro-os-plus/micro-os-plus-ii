@@ -22,7 +22,7 @@ namespace os
     // ------------------------------------------------------------------------
 
     /// \details
-    Scheduler::Scheduler()
+    Scheduler::Scheduler(void)
     {
 #if defined(DEBUG)
       os::diag::trace.putConstructor();

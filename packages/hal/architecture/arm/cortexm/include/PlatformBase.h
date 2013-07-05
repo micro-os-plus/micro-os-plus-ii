@@ -41,7 +41,7 @@ namespace hal
       /// @{
 
       /// \brief Deleted constructor.
-      PlatformBase() = default;
+      PlatformBase(void) = default;
 
       /// @} end of name Constructors/destructor
 

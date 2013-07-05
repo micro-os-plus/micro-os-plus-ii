@@ -55,7 +55,7 @@ namespace hal
         /// @{
 
         /// \brief Default constructor.
-        TRcc() = default;
+        TRcc(void) = default;
 
         /// @} end of name Constructors/destructor
 

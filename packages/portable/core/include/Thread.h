@@ -164,13 +164,13 @@ namespace os
       /// \par Returns
       ///    Nothing.
       void
-      join();
+      join(void);
 
       Context&
-      getContext();
+      getContext(void);
 
       void
-      cleanup();
+      cleanup(void);
 
       static void
       trampoline(trampolineParameters_t* pTrampolineParameters);

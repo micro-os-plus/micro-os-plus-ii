@@ -45,7 +45,7 @@ namespace os
     /// \details
     /// Create the default test suite.
     template<class Implementation_T>
-      TTestSuiteBase<Implementation_T>::TTestSuiteBase()
+      TTestSuiteBase<Implementation_T>::TTestSuiteBase(void)
           : m_implementation()
       {
         TTestSuiteBase<Implementation_T>::__init();

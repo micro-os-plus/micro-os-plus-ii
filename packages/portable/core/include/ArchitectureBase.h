@@ -37,7 +37,7 @@ namespace os
       /// @{
 
       /// \brief Deleted constructor.
-      ArchitectureBase() = default;
+      ArchitectureBase(void) = default;
 
       /// @} end of name Constructors/destructor
 

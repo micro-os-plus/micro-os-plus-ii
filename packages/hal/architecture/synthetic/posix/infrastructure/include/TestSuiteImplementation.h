@@ -51,7 +51,7 @@ namespace hal
         /// @{
 
         /// \brief Simple constructor.
-        TestSuiteImplementation();
+        TestSuiteImplementation(void);
 
         /// \brief Constructor with process parameters.
         ///

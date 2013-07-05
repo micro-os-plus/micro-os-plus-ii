@@ -41,7 +41,7 @@ namespace hal
       /// @{
 
       /// \brief Deleted constructor.
-      FamilyBase() = delete;
+      FamilyBase(void) = delete;
 
       /// @} end of name Constructors/destructor
 

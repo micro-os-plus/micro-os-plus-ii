@@ -41,10 +41,10 @@ namespace hal
         /// @{
 
         /// \brief Default constructor.
-        TraceImplementation() = default;
+        TraceImplementation(void) = default;
 
         /// \brief Default destructor.
-        ~TraceImplementation() = default;
+        ~TraceImplementation(void) = default;
 
         /// @} end of name Constructors/destructor
 
@@ -109,7 +109,7 @@ namespace hal
       /// there is nothing to flush.
       inline
       void
-      TraceImplementation::flush()
+      TraceImplementation::flush(void)
       {
       }
 

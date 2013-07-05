@@ -28,7 +28,7 @@
 // Notice: do not use parenthesis! (the values will be stringified)
 #define OS_INTEGER_VERSION_MAJOR        5
 #define OS_INTEGER_VERSION_MINOR        1
-#define OS_INTEGER_VERSION_REVISION     7630
+#define OS_INTEGER_VERSION_REVISION     7631
 
 #define OS_MACRO_SHARP(x)               #x
 #define OS_MACRO_STRINGIFY(x)           OS_MACRO_SHARP(x)

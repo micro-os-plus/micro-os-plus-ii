@@ -41,7 +41,7 @@ namespace os
       /// @{
 
       /// \brief Constructor.
-      MainThread();
+      MainThread(void);
 
       /// \brief Destructor.
       ~MainThread();
@@ -57,7 +57,7 @@ namespace os
     /// \details
     /// The main thread has no entry point, no parameters, no stack
     /// and very low priority.
-    MainThread::MainThread()
+    MainThread::MainThread(void)
         : Thread("main()", nullptr, nullptr, nullptr, 0,
             os::core::Scheduler::MAIN_PRIORITY)
     {
