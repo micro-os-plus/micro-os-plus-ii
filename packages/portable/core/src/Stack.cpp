@@ -24,9 +24,12 @@ namespace os
     {
       // fill entire stack
       element_t* p = m_pStart;
-      size_t cnt = m_size;
-      for (; cnt > 0; --cnt)
-        *p++ = STACK_FILL;
+      if (p != nullptr)
+        {
+          size_t cnt = m_size;
+          for (; cnt > 0; --cnt)
+            *p++ = STACK_FILL;
+        }
     }
 
   // --------------------------------------------------------------------------
