@@ -59,9 +59,10 @@ namespace os
       /// Redefined here, based on scheduler definitions.
       typedef Scheduler::threadId_t id_t;
 
-      static const id_t NO_ID = Scheduler::NO_ID;
+      //static const id_t NO_ID = scheduler::NO_ID;
 
-      typedef hal::arch::ArchitectureImplementation::ThreadContext Context;
+      // Use the architecture defined context.
+      typedef hal::arch::ThreadContext Context;
 
       typedef struct
       {
@@ -123,7 +124,7 @@ namespace os
       ///    None.
       /// \return The current thread priority.
       priority_t
-      getPriority(void) const;
+      getPriority(void) volatile;
 
       /// \brief Set the thread priority.
       ///
@@ -147,7 +148,7 @@ namespace os
       ///    None.
       /// \return The thread entry point address.
       threadEntryPoint_t
-      getEntryPointAddress(void);
+      getEntryPointAddress(void) const;
 
       /// \brief Get the thread entry point parameter.
       ///
@@ -155,7 +156,7 @@ namespace os
       ///    None.
       /// \return The thread entry point parameter.
       void*
-      getEntryPointParameter(void);
+      getEntryPointParameter(void) const;
 
       /// \brief Join the thread.
       ///
@@ -217,6 +218,8 @@ namespace os
       /// \brief The parameter passed when calling the entry point.
       void* m_entryPointParameter;
 
+      trampolineParameters_t m_trampolineParameters;
+
       /// @} end of Private member variables
 
     };
@@ -251,7 +254,7 @@ namespace os
         initialise(reinterpret_cast<threadEntryPoint_t>(*function),
             static_cast<void*>(pObject), priority);
 
-        m_id = scheduler.registerThread(this);
+        m_id = os::scheduler.registerThread(this);
       }
 
     /// \details
@@ -269,7 +272,7 @@ namespace os
     /// member variable.
     inline Thread::priority_t
     __attribute__((always_inline))
-    Thread::getPriority(void) const
+    Thread::getPriority(void) volatile
     {
       return m_staticPriority;
     }
@@ -298,7 +301,7 @@ namespace os
     /// Return the address of the code used for the thread.
     inline threadEntryPoint_t
     __attribute__((always_inline))
-    Thread::getEntryPointAddress(void)
+    Thread::getEntryPointAddress(void) const
     {
       return m_entryPointAddress;
     }
@@ -309,7 +312,7 @@ namespace os
     /// pointer to the actual object.
     inline void*
     __attribute__((always_inline))
-    Thread::getEntryPointParameter(void)
+    Thread::getEntryPointParameter(void) const
     {
       return m_entryPointParameter;
     }
@@ -325,12 +328,12 @@ namespace os
     __attribute__((always_inline))
     Thread::cleanup()
     {
-      if (m_id != Scheduler::NO_ID)
+      if (m_id != scheduler::NO_ID)
         {
-          scheduler.deregisterThread(this);
+          os::scheduler.deregisterThread(this);
 
           // clear the id, to mark that the thread was deregistered
-          m_id = Scheduler::NO_ID;
+          m_id = scheduler::NO_ID;
         }
     }
 
