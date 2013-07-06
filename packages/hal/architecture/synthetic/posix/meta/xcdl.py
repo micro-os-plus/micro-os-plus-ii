@@ -17,10 +17,6 @@ Package(
     ],
 
     headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX',
-
-    copyFiles=[
-        ('../include/ArchitectureImplementation.h','include/hal/architecture/include/ArchitectureImplementation.h'),
-    ],
             
     implements=[
         # mark this is an architecture
