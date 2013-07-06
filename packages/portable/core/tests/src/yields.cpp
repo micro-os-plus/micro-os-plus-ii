@@ -25,7 +25,7 @@ os::infra::TestSuite ts;
 
 #include "portable/core/include/Thread.h"
 
-static const os::core::Stack::size_t STACK_SIZE = 30;
+static const os::core::Stack::size_t STACK_SIZE = 10000;
 
 typedef int count_t;
 
@@ -185,8 +185,7 @@ main(int argc, char* argv[])
   task2.getThread().join();
   task3.getThread().join();
 
-
-#if defined(DEBUG)
+#if defined(_DEBUG)
   os::diag::trace << os::std::dec << task1.getCount1() << " "
       << task1.getCount2() << os::std::endl;
   os::diag::trace << os::std::dec << task2.getCount1() << " "
@@ -194,6 +193,13 @@ main(int argc, char* argv[])
   os::diag::trace << os::std::dec << task3.getCount1() << " "
       << task3.getCount2() << os::std::endl;
 #endif
+
+  ts.assertCondition(task1.getCount1() == 1);
+  ts.assertCondition(task1.getCount2() == 4);
+  ts.assertCondition(task2.getCount1() == 2);
+  ts.assertCondition(task2.getCount2() == 5);
+  ts.assertCondition(task3.getCount1() == 3);
+  ts.assertCondition(task3.getCount2() == 6);
 
   // mark the stop of the test suite
   ts.stop();
