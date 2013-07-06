@@ -24,6 +24,23 @@ namespace os
   {
     class Thread;
 
+    namespace scheduler
+    {
+      /// \brief Thread ID.
+      ///
+      /// \details
+      /// A unique value identifying each thread.
+      typedef uint8_t threadId_t;
+
+      /// \brief No valid ID.
+      ///
+      /// \details
+      /// Value returned by threads that are not registered to the
+      /// scheduler.
+      static const threadId_t NO_ID = 0xFF;
+
+    }
+
 #pragma GCC diagnostic push
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wpadded"
@@ -86,14 +103,7 @@ namespace os
       ///
       /// \details
       /// A unique value identifying each thread.
-      typedef uint8_t threadId_t;
-
-      /// \brief No valid ID.
-      ///
-      /// \details
-      /// Value returned by threads that are not registered to the
-      /// scheduler.
-      static const threadId_t NO_ID = 0xFF;
+      typedef scheduler::threadId_t threadId_t;
 
       /// \brief Thread count.
       ///
@@ -102,6 +112,7 @@ namespace os
       typedef uint32_t threadCount_t;
 
       /// @} end of name Types and constants
+
       /// \name Constructors/destructor
       /// @{
 
@@ -158,10 +169,21 @@ namespace os
       threadCount_t
       getThreadsArraySize(void);
 
+      Thread*
+      getCurrentThread(void);
+
+      void
+      setCurrentThread(Thread* pThread);
+
+      void
+      performContextSwitch(void);
+
       /// @} end of Public member functions
 
     private:
-      Thread* m_threads[OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS+1];
+
+      // add one more for main and one more for idle
+      Thread* m_threads[OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS+2];
       threadCount_t m_threadCount;
     };
 
@@ -183,6 +205,23 @@ namespace os
     FakeScheduler::getThreadsArraySize(void)
     {
       return sizeof(m_threads) / sizeof(m_threads[0]);
+    }
+
+    inline void
+    FakeScheduler::setCurrentThread(Thread* pThread __attribute__((unused)))
+    {
+    }
+
+    inline Thread*
+    FakeScheduler::getCurrentThread(void)
+    {
+      return 0;
+    }
+
+    inline void
+    FakeScheduler::performContextSwitch(void)
+    {
+
     }
 
     // ------------------------------------------------------------------------

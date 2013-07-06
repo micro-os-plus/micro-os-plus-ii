@@ -49,12 +49,20 @@ namespace os
     FakeScheduler::registerThread(Thread* pThread)
     {
       threadId_t id = pThread->getId();
-      if (id != NO_ID)
+      if (id != scheduler::NO_ID)
         {
           return id;
         }
 
       // here id = NO_ID;
+      if (m_threadCount >= getThreadsArraySize())
+        {
+#if defined(DEBUG)
+          os::diag::trace.putString("RegisteredThreads full!");
+          os::diag::trace.putNewLine();
+#endif
+          return scheduler::NO_ID;
+        }
 
       threadCount_t i;
       // find an empty slot
@@ -66,7 +74,7 @@ namespace os
               m_threads[i] = pThread;
 
               // generate thread id
-              id = static_cast<threadId_t>(m_threadCount);
+              id = static_cast<threadId_t>(i);
               m_threadCount++;
 
               break;
@@ -86,7 +94,7 @@ namespace os
 #endif
       threadId_t id;
       id = pThread->getId();
-      if (id != NO_ID)
+      if (id != scheduler::NO_ID)
         {
           threadCount_t i;
           for (i = 0; i < getThreadsArraySize(); ++i)
@@ -102,7 +110,7 @@ namespace os
 
           return id;
         }
-      return NO_ID;
+      return scheduler::NO_ID;
     }
 
     /// \details
