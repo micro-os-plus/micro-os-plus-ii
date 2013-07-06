@@ -35,9 +35,9 @@ namespace os
 
       initialise(entryPoint, pParameters, priority);
 
-      m_id = scheduler.registerThread(this);
+      m_id = os::scheduler.registerThread(this);
 #if defined(DEBUG)
-      if (m_id == Scheduler::NO_ID)
+      if (m_id == scheduler::NO_ID)
         {
           os::diag::trace.putString("cannot register thread \"");
           os::diag::trace.putString(getName());
@@ -62,7 +62,7 @@ namespace os
     Thread::initialise(threadEntryPoint_t entryPoint, void* pParameters,
         priority_t priority)
     {
-      m_id = Scheduler::NO_ID;
+      m_id = scheduler::NO_ID;
       m_staticPriority = priority;
 
       // Normally not used directly, added for completeness
@@ -71,7 +71,12 @@ namespace os
 
       m_stack.initialise();
 
-      m_context.create(m_stack.getStart(), m_stack.getSize(), entryPoint, pParameters);
+      m_trampolineParameters.pThread = this;
+      m_trampolineParameters.entryPoint = entryPoint;
+      m_trampolineParameters.pParameters = pParameters;
+
+      m_context.create(m_stack.getStart(), m_stack.getSize(),
+          (threadEntryPoint_t) trampoline, &m_trampolineParameters);
     }
 
     /// \details
@@ -79,9 +84,13 @@ namespace os
     void
     Thread::join(void)
     {
-#if 0
+#if defined(DEBUG)
+      os::diag::trace.putMemberFunctionWithName();
+#endif
+
+#if 1
       // TODO: implement with events
-      while (m_id != Scheduler::NO_ID)
+      while (m_id != scheduler::NO_ID)
         {
           os::scheduler.yield();
         }
