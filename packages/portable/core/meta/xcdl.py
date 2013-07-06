@@ -11,8 +11,10 @@ Package(
     sourceFiles=[
         'PlatformBase.cpp',
         'Stack.cpp',
-        'Thread.cpp',
         'Scheduler.cpp',
+        'Thread.cpp',
+        'IdleThread.cpp',
+        #'makecontext.c',
     ],
         
     includeFiles=[
