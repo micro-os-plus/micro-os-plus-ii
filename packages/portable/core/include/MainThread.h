@@ -57,6 +57,7 @@ namespace os
     /// \details
     /// The main thread has no entry point, no parameters, no stack
     /// and very low priority.
+    inline
     MainThread::MainThread(void)
         : Thread("main()", nullptr, nullptr, nullptr, 0,
             os::core::Scheduler::MAIN_PRIORITY)
@@ -64,10 +65,14 @@ namespace os
 #if defined(DEBUG)
       os::diag::trace.putConstructorWithName();
 #endif
-      // TODO: do something so that when the first yield
-      // occurs, the context is saved in this thread.
+
+      // Tell the scheduler that this is the current thread,
+      // so that when the first yield
+      // occurs, the context will be saved here.
+      os::scheduler.setCurrentThread(this);
     }
 
+    inline
     MainThread::~MainThread()
     {
 #if defined(DEBUG)
@@ -79,5 +84,12 @@ namespace os
 
   }// namespace core
 } // namespace os
+
+namespace os
+{
+  // Declaration of the external instantiation of `MainThread`.
+  // The object instantiation is in `EarlyInitialisations.cpp`.
+  extern os::core::MainThread mainThread;
+}
 
 #endif // OS_PORTABLE_CORE_MAINTHREAD_H_
