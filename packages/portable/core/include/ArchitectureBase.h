@@ -71,6 +71,9 @@ namespace os
       static void
       putGreeting(void);
 
+      static void
+      resetWatchdog(void);
+
       /// @} end of Public member functions
 
     };
@@ -80,8 +83,8 @@ namespace os
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
     /// with actual architecture specific system initialisation code.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     ArchitectureBase::initialiseSystem(void)
     {
     }
@@ -89,8 +92,8 @@ namespace os
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
     /// with actual architecture specific system reset code.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     ArchitectureBase::resetSystem(void)
     {
     }
@@ -98,13 +101,19 @@ namespace os
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
     /// with actual architecture specific code.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     ArchitectureBase::putGreeting(void)
     {
     }
 
-    // ========================================================================
+    inline void
+    __attribute__((always_inline))
+    ArchitectureBase::resetWatchdog(void)
+    {
+    }
+
+  // ========================================================================
 
   }// namespace core
 } // namespace os
