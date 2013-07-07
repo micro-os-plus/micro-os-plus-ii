@@ -25,9 +25,9 @@ namespace os
     /// in the private member variables.
     Thread::Thread(const char* const pName, threadEntryPoint_t entryPoint,
         void* pParameters, Stack::element_t* const pStack,
-        Stack::size_t const stackSize, priority_t priority)
+        Stack::size_t const stackSizeBytes, priority_t priority)
         : NamedObject(pName), //
-        m_stack(pStack, stackSize)
+        m_stack(pStack, stackSizeBytes)
     {
 #if defined(DEBUG)
       os::diag::trace.putConstructorWithName();
@@ -64,6 +64,13 @@ namespace os
     {
       m_id = scheduler::NO_ID;
       m_staticPriority = priority;
+#if defined(_DEBUG)
+          os::diag::trace.putString("pri1=");
+          os::diag::trace.putDec(m_staticPriority);
+          os::diag::trace.putString(" @");
+          os::diag::trace.putHex((void*)&m_staticPriority);
+          os::diag::trace.putNewLine();
+#endif
 
       // Normally not used directly, added for completeness
       m_entryPointAddress = entryPoint;
@@ -77,6 +84,11 @@ namespace os
 
       m_context.create(m_stack.getStart(), m_stack.getSize(),
           (threadEntryPoint_t) trampoline, &m_trampolineParameters);
+#if defined(_DEBUG)
+          os::diag::trace.putString("pri2=");
+          os::diag::trace.putDec(m_staticPriority);
+          os::diag::trace.putNewLine();
+#endif
     }
 
     /// \details

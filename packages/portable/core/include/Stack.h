@@ -64,8 +64,8 @@ namespace os
       /// \brief Constructor.
       ///
       /// \param [in] pStack    Pointer to the beginning of the stack area.
-      /// \param [in] size      Number of stack elements.
-      Stack(element_t* const pStack, size_t const size);
+      /// \param [in] sizeBytes Number of stack elements.
+      Stack(element_t* const pStack, size_t const sizeBytes);
 
       /// @} end of name Constructors/destructor
 
@@ -85,7 +85,7 @@ namespace os
       ///
       /// \par Parameters
       ///    None.
-      /// \return The number of elements in the stack, in stackElement_t units.
+      /// \return The number of bytes in the stack.
       size_t
       getSize(void) const;
 
@@ -107,8 +107,8 @@ namespace os
       /// \brief Pointer to the beginning of the stack area.
       element_t* const m_pStart;
 
-      /// \brief The stack size, in stackElement_t units.
-      size_t const m_size;
+      /// \brief The stack size, in bytes.
+      size_t const m_sizeBytes;
 
       /// @} end of Private member variables
 
@@ -124,9 +124,9 @@ namespace os
     ///
     /// Leave the compiler to decide if it is inlined.
     inline
-    Stack::Stack(element_t* const pStack, size_t const size)
+    Stack::Stack(element_t* const pStack, size_t const sizeBytes)
         : m_pStart(pStack), //
-        m_size(size)
+        m_sizeBytes(sizeBytes)
     {
     }
 
@@ -136,7 +136,7 @@ namespace os
     __attribute__((always_inline))
     Stack::getSize(void) const
     {
-      return m_size;
+      return m_sizeBytes;
     }
 
     /// \details

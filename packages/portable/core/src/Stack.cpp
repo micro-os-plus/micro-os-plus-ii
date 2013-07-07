@@ -26,7 +26,7 @@ namespace os
       element_t* p = m_pStart;
       if (p != nullptr)
         {
-          size_t cnt = m_size;
+          size_t cnt = m_sizeBytes / sizeof(element_t);
           for (; cnt > 0; --cnt)
             *p++ = STACK_FILL;
         }
