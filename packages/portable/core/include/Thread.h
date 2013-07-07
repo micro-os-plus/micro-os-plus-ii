@@ -82,11 +82,11 @@ namespace os
       /// \param [in] entryPoint        Pointer to the thread code.
       /// \param [in] pParameters       Pointer to the parameters passed to the thread.
       /// \param [in] pStack            Pointer to the beginning of the stack area.
-      /// \param [in] stackSize         Number of stack elements.
+      /// \param [in] stackSizeBytes    Size of stack in Bytes.
       /// \param [in] priority          Initial priority.
       Thread(const char* const pName, threadEntryPoint_t entryPoint,
           void* pParameters, Stack::element_t* const pStack,
-          Stack::size_t const stackSize, priority_t priority =
+          Stack::size_t const stackSizeBytes, priority_t priority =
               Scheduler::DEFAULT_PRIORITY);
 
       /// \brief Template Constructor.
@@ -95,11 +95,11 @@ namespace os
       /// \param [in] function          A lambda to be called with one parameter.
       /// \param [in] pObject           Pointer to the parameters passed to the thread.
       /// \param [in] pStack            Pointer to the beginning of the stack area.
-      /// \param [in] stackSize         Number of stack elements.
+      /// \param [in] stackSizeBytes    Size of stack in Bytes.
       /// \param [in] priority          Initial priority.
       template<class Lambda_T, class Object_T>
         Thread(const char* const pName, Lambda_T function, Object_T* pObject,
-            Stack::element_t* const pStack, Stack::size_t const stackSize,
+            Stack::element_t* const pStack, Stack::size_t const stackSizeBytes,
             priority_t priority = Scheduler::DEFAULT_PRIORITY);
 
       /// \brief Destructor.
@@ -244,9 +244,9 @@ namespace os
     template<class Lambda_T, class Object_T>
       Thread::Thread(const char* const pName, Lambda_T function,
           Object_T* pObject, Stack::element_t* const pStack,
-          Stack::size_t const stackSize, priority_t priority)
+          Stack::size_t const stackSizeBytes, priority_t priority)
           : NamedObject(pName), //
-          m_stack(pStack, stackSize)
+          m_stack(pStack, stackSizeBytes)
       {
 #if defined(DEBUG)
         os::diag::trace.putConstructorWithName();

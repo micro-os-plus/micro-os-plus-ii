@@ -25,8 +25,6 @@ os::infra::TestSuite ts;
 
 #include "portable/core/include/Thread.h"
 
-static const os::core::Stack::size_t STACK_SIZE = 10000;
-
 typedef int count_t;
 
 // ----------------------------------------------------------------------------
@@ -79,7 +77,7 @@ private:
   count_t m_count1;
   count_t m_count2;
 
-  os::core::Stack::element_t m_stack[STACK_SIZE];
+  os::core::Stack::element_t m_stack[hal::arch::MIN_STACK_SIZE/sizeof(os::core::Stack::element_t)];
   os::core::Thread m_thread;
 };
 
@@ -88,7 +86,7 @@ private:
 Task::Task(const char* pName)
     : m_thread(pName, [](Task* pTask)
       { pTask->threadMain();}, this, m_stack,
-        sizeof(m_stack) / sizeof(m_stack[0]))
+        sizeof(m_stack))
 {
 #if defined(DEBUG)
   os::diag::trace.putConstructor();
@@ -109,22 +107,12 @@ Task::~Task()
 inline count_t
 Task::getCount1(void)
 {
-#if defined(_DEBUG)
-  os::diag::trace.putString("m_count1=");
-  os::diag::trace.putDec(m_count1);
-  os::diag::trace.putNewLine();
-#endif
   return m_count1;
 }
 
 inline count_t
 Task::getCount2(void)
 {
-#if defined(_DEBUG)
-  os::diag::trace.putString("m_count2=");
-  os::diag::trace.putDec(m_count2);
-  os::diag::trace.putNewLine();
-#endif
   return m_count2;
 }
 
@@ -185,7 +173,7 @@ main(int argc, char* argv[])
   task2.getThread().join();
   task3.getThread().join();
 
-#if defined(_DEBUG)
+#if defined(DEBUG)
   os::diag::trace << os::std::dec << task1.getCount1() << " "
       << task1.getCount2() << os::std::endl;
   os::diag::trace << os::std::dec << task2.getCount1() << " "
