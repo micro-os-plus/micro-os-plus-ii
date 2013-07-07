@@ -61,15 +61,21 @@ namespace hal
 
     // ========================================================================
 
+    /// \details
+    /// A null stack will prevent creating a new context.
     void
     ThreadContext::create(hal::arch::stackElement_t* pStackBottom,
-        hal::arch::stackSize_t stackSize,
+        hal::arch::stackSize_t stackSizeBytes,
         os::core::threadEntryPoint_t entryPoint, void* pParameters)
     {
 #if defined(DEBUG)
-      os::diag::trace.putString("create ");
+      os::diag::trace.putString("create sb=");
+      os::diag::trace.putHex((void*) pStackBottom);
+      os::diag::trace.putString(", ss=");
+      os::diag::trace.putDec((int) stackSizeBytes);
+      os::diag::trace.putString(", ep=");
       os::diag::trace.putHex((void*) entryPoint);
-      os::diag::trace.putString(" ");
+      os::diag::trace.putString(", pp=");
       os::diag::trace.putHex(pParameters);
       os::diag::trace.putNewLine();
 #endif
@@ -79,25 +85,33 @@ namespace hal
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 //#endif
 
-      // fetch current context
-      getcontext(&m_context);
-
-      // remove parent link
-      m_context.uc_link = 0;
-
-      if (pStackBottom != nullptr && stackSize != 0)
+      if (pStackBottom != nullptr && stackSizeBytes != 0)
         {
+#if 1
+          // fetch current context
+          if (getcontext(&m_context) != 0)
+            {
+#if defined(DEBUG)
+              os::diag::trace.putString("getcontext failed with ");
+              os::diag::trace.putString(strerror(errno));
+              os::diag::trace.putNewLine();
+#endif
+            }
+#endif
+
+          // remove parent link
+          m_context.uc_link = 0;
+
           // configure new stack, if not the main thread
           m_context.uc_stack.ss_sp = pStackBottom;
-          m_context.uc_stack.ss_size = stackSize
-              * sizeof(hal::arch::stackElement_t);
+          m_context.uc_stack.ss_size = stackSizeBytes;
           m_context.uc_stack.ss_flags = 0;
 
           // configure entry point with one argument
+          // warning: no error returned
           makecontext(&m_context, (void
-          (*)())entryPoint, 2, pParameters);
+          (*)())entryPoint, 1, pParameters);
         }
-
 
 #pragma GCC diagnostic pop
 
@@ -116,7 +130,14 @@ namespace hal
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 //#endif
 
-      getcontext(&m_context);
+      if (getcontext(&m_context) != 0)
+        {
+#if defined(DEBUG)
+          os::diag::trace.putString("getcontext failed with ");
+          os::diag::trace.putString(strerror(errno));
+          os::diag::trace.putNewLine();
+#endif
+        }
 
 #pragma GCC diagnostic pop
 
@@ -134,7 +155,14 @@ namespace hal
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 //#endif
 
-      setcontext(&m_context);
+      if (setcontext(&m_context) != 0)
+        {
+#if defined(DEBUG)
+          os::diag::trace.putString("setcontext failed with ");
+          os::diag::trace.putString(strerror(errno));
+          os::diag::trace.putNewLine();
+#endif
+        }
 
 #pragma GCC diagnostic pop
 
