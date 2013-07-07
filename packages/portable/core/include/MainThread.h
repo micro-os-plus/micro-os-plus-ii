@@ -57,6 +57,7 @@ namespace os
     /// \details
     /// The main thread has no entry point, no parameters, no stack
     /// and very low priority.
+    /// Using a null stack pointer will prevent creating a new context.
     inline
     MainThread::MainThread(void)
         : Thread("main()", nullptr, nullptr, nullptr, 0,
