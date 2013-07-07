@@ -14,6 +14,7 @@
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 
 #include <stdint.h>
+#include <signal.h>
 
 namespace hal
 {
@@ -41,6 +42,8 @@ namespace hal
 #endif
 
     typedef uint32_t stackSize_t;
+
+    static const stackSize_t MIN_STACK_SIZE = SIGSTKSZ;
 
   } // namespace arch
 } // namespace hal
