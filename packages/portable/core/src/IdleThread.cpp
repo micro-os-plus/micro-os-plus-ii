@@ -17,6 +17,27 @@ namespace os
   {
     // ------------------------------------------------------------------------
 
+    /// \details
+    /// The main thread has no entry point, no parameters, no stack
+    /// and very low priority.
+    IdleThread::IdleThread(void)
+        : Thread("idle", [](IdleThread* p)
+          { p->threadMain();}, (IdleThread*) this, m_stack, sizeof(m_stack),
+            os::core::Scheduler::IDLE_PRIORITY)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putConstructorWithName();
+#endif
+      // TODO: add code
+    }
+
+    IdleThread::~IdleThread()
+    {
+#if defined(DEBUG)
+      os::diag::trace.putDestructorWithName();
+#endif
+    }
+
 #pragma GCC diagnostic push
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wmissing-noreturn"

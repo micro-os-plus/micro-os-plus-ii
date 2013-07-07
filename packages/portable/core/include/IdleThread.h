@@ -48,37 +48,12 @@ namespace os
       threadMain(void);
 
     private:
-      os::core::Stack::element_t m_stack[10000];
+      os::core::Stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
+          / sizeof(os::core::Stack::element_t)];
 
     };
 
 #pragma GCC diagnostic pop
-
-    // ------------------------------------------------------------------------
-
-    /// \details
-    /// The main thread has no entry point, no parameters, no stack
-    /// and very low priority.
-    inline
-    IdleThread::IdleThread(void)
-        : Thread("idle", [](IdleThread* p)
-          { p->threadMain();}, this, m_stack,
-            sizeof(m_stack) / sizeof(m_stack[0]),
-            os::core::Scheduler::IDLE_PRIORITY)
-    {
-#if defined(DEBUG)
-      os::diag::trace.putConstructorWithName();
-#endif
-      // TODO: add code
-    }
-
-    inline
-    IdleThread::~IdleThread()
-    {
-#if defined(DEBUG)
-      os::diag::trace.putDestructorWithName();
-#endif
-    }
 
   // ==========================================================================
 
