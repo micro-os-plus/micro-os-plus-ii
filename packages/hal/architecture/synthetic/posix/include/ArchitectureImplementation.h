@@ -18,7 +18,7 @@
 // Include architecture definitions, like various types.
 #include "hal/architecture/synthetic/posix/include/ArchitectureDefinitions.h"
 
-#define _XOPEN_SOURCE
+#define _XOPEN_SOURCE 600L
 #include <ucontext.h>
 
 #include <errno.h>
@@ -103,14 +103,14 @@ namespace hal
       /// \brief Create the initial context in the local storage.
       ///
       /// \param [in] pStackBottom    Pointer to the first stack element.
-      /// \param [in] stackSize       Size of stack in elements.
+      /// \param [in] stackSizeBytes  Size of stack in bytes.
       /// \param [in] entryPoint      Pointer to thread code.
       /// \param [in] pParameters     Pointer to thread parameters.
       /// \par Returns
       ///    Nothing.
       void
       create(hal::arch::stackElement_t* pStackBottom,
-          hal::arch::stackSize_t stackSize,
+          hal::arch::stackSize_t stackSizeBytes,
           os::core::threadEntryPoint_t entryPoint, void* pParameters);
 
       /// \brief Save the current context in the local storage.
@@ -136,6 +136,20 @@ namespace hal
     private:
       /// \brief The context storage.
       ucontext_t m_context;
+
+#if defined(__APPLE__) || defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX)
+
+      // On OS X, for unknown reasons, the context does not include
+      // the machine context, but only a pointer, so we reserve some
+      // space to avoid overwriting next variables.
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wunused-private-field"
+#endif
+      _STRUCT_MCONTEXT64 m_mcontext;
+#pragma GCC diagnostic pop
+
+#endif
 
       /// \brief The C error indicator storage.
       int m_error;
