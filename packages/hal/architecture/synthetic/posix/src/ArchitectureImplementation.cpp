@@ -31,35 +31,49 @@ namespace hal
     /// returns a valid response, write detailed response.
     void
     ArchitectureImplementation::putGreeting(void)
-    {
-      struct utsname name;
+      {
+        struct utsname name;
 
-      if (::uname(&name) != -1)
-        {
-          os::diag::trace.putString("POSIX synthetic, running on ");
-          os::diag::trace.putString(name.machine);
-          os::diag::trace.putString(" ");
-          os::diag::trace.putString(name.sysname);
-          os::diag::trace.putString(" ");
-          os::diag::trace.putString(name.release);
-        }
-      else
-        {
-          os::diag::trace.putString("POSIX synthetic");
-        }
-      os::diag::trace.putNewLine();
-    }
+        if (::uname(&name) != -1)
+          {
+            os::diag::trace.putString("POSIX synthetic, running on ");
+            os::diag::trace.putString(name.machine);
+            os::diag::trace.putString(" ");
+            os::diag::trace.putString(name.sysname);
+            os::diag::trace.putString(" ");
+            os::diag::trace.putString(name.release);
+          }
+        else
+          {
+            os::diag::trace.putString("POSIX synthetic");
+          }
+        os::diag::trace.putNewLine();
+      }
 #endif
 
-    void
-    ArchitectureImplementation::yield(void)
+    // ========================================================================
+
+    /// \details
+    /// Used only to explicitly initialise m_error.
+    ThreadContext::ThreadContext(void)
     {
-      ((os::core::Thread*) os::scheduler.getCurrentThread())->getContext().save();
-      os::scheduler.performContextSwitch();
-      ((os::core::Thread*) os::scheduler.getCurrentThread())->getContext().restore();
+      m_error = 0;
+      m_saved = false;
+
+#if defined(DEBUG)
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putString(" ctx @");
+      os::diag::trace.putHex((void*) &m_context);
+      os::diag::trace.putString(", mctx @");
+      os::diag::trace.putHex((void*) &m_context.__mcontext_data);
+      os::diag::trace.putString(", sz=");
+      os::diag::trace.putDec((int) sizeof(m_context.__mcontext_data));
+      os::diag::trace.putNewLine();
+#endif
     }
 
-    // ========================================================================
+    typedef void
+    (*mfunc)();
 
     /// \details
     /// A null stack will prevent creating a new context.
@@ -69,9 +83,14 @@ namespace hal
         os::core::threadEntryPoint_t entryPoint, void* pParameters)
     {
 #if defined(DEBUG)
-      os::diag::trace.putString("create sb=");
+      os::diag::trace.putString("ThreadContext::create");
+      os::diag::trace.putString(" stack=");
       os::diag::trace.putHex((void*) pStackBottom);
-      os::diag::trace.putString(", ss=");
+      os::diag::trace.putString("-");
+      os::diag::trace.putHex(
+          (void*) (pStackBottom
+              + stackSizeBytes / sizeof(hal::arch::stackElement_t)));
+      os::diag::trace.putString(", size=");
       os::diag::trace.putDec((int) stackSizeBytes);
       os::diag::trace.putString(", ep=");
       os::diag::trace.putHex((void*) entryPoint);
@@ -81,13 +100,10 @@ namespace hal
 #endif
 
 #pragma GCC diagnostic push
-//#if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-//#endif
 
       if (pStackBottom != nullptr && stackSizeBytes != 0)
         {
-#if 1
           // fetch current context
           if (getcontext(&m_context) != 0)
             {
@@ -97,7 +113,6 @@ namespace hal
               os::diag::trace.putNewLine();
 #endif
             }
-#endif
 
           // remove parent link
           m_context.uc_link = 0;
@@ -109,27 +124,31 @@ namespace hal
 
           // configure entry point with one argument
           // warning: no error returned
-          makecontext(&m_context, (void
-          (*)())entryPoint, 1, pParameters);
+          makecontext(&m_context, (mfunc) entryPoint, 1, pParameters);
         }
 
 #pragma GCC diagnostic pop
+
+      m_saved = false;
 
       return;
     }
 
     /// \details
     /// Preserve errno and get context.
-    void
+    /// \warning Due to some compiler complicated reasons, it cannot be
+    /// inlined, so its content was manually inlined in yield().
+    inline bool
+    __attribute__((always_inline))
     ThreadContext::save(void)
     {
       m_error = errno;
+      m_saved = true;
 
 #pragma GCC diagnostic push
-//#if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-//#endif
 
+      // This function will return twice, the second time after setcontext()
       if (getcontext(&m_context) != 0)
         {
 #if defined(DEBUG)
@@ -141,19 +160,21 @@ namespace hal
 
 #pragma GCC diagnostic pop
 
+      // Set to false by restore()
+      return m_saved;
     }
 
     /// \details
     /// Restore context and errno.
-    void
+    inline void
+    __attribute__((always_inline))
     ThreadContext::restore(void)
     {
       errno = m_error;
+      m_saved = false;
 
 #pragma GCC diagnostic push
-//#if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-//#endif
 
       if (setcontext(&m_context) != 0)
         {
@@ -166,6 +187,48 @@ namespace hal
 
 #pragma GCC diagnostic pop
 
+    }
+
+    // --------------------------------------------------------------------------
+
+    /// \details
+    /// Save the current context, perform the context switch
+    /// and return to the next thread selected by the scheduler.
+    ///
+    /// \note save() uses the classical trick of entering once
+    /// and returning twice, the second time after restore().
+    void
+    ArchitectureImplementation::yield(void)
+    {
+
+      os::core::Thread::Context& context =
+          (((os::core::Thread*) os::scheduler.getCurrentThread())->getContext());
+      bool volatile saved;
+
+        {
+          // manual inlining of save()
+          context.m_error = errno;
+          context.m_saved = true;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+          getcontext(&context.m_context);
+#pragma GCC diagnostic pop
+          saved = context.m_saved;
+        }
+
+      // save() is function that returns twice
+      if (saved)
+        {
+          // First time after saving the context, when we have to
+          // select the next context
+          os::scheduler.performContextSwitch();
+          // and resume from there
+          ((os::core::Thread*) os::scheduler.getCurrentThread())->getContext().restore();
+        }
+      else
+        {
+          // Then after restore, when we just return to the new thread
+        }
     }
 
   // --------------------------------------------------------------------------
