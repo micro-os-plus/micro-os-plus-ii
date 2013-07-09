@@ -272,6 +272,8 @@ namespace os
             m_array[i] = m_array[i + 1];
           }
         m_count--;
+        // clear the pointer (only for aesthetics)
+        m_array[m_count] = nullptr;
       }
 
     // ========================================================================
