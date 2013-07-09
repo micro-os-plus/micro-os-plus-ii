@@ -90,6 +90,7 @@ namespace hal
     {
 
     public:
+
       /// \name Constructors/destructor
       /// @{
 
@@ -105,14 +106,16 @@ namespace hal
       ///
       /// \param [in] pStackBottom    Pointer to the first stack element.
       /// \param [in] stackSizeBytes  Size of stack in bytes.
-      /// \param [in] entryPoint      Pointer to thread code.
-      /// \param [in] pParameters     Pointer to thread parameters.
+      /// \param [in] entryPoint      Pointer to trampoline code.
+      /// \param [in] p1              First parameter.
+      /// \param [in] p2              Second parameter.
+      /// \param [in] p3              Third parameter.
       /// \par Returns
       ///    Nothing.
       void
       create(hal::arch::stackElement_t* pStackBottom,
           hal::arch::stackSize_t stackSizeBytes,
-          os::core::threadEntryPoint_t entryPoint, void* pParameters);
+          os::core::trampoline3_t entryPoint, void* p1, void* p2, void* p3);
 
       /// \brief Save the current context in the local storage.
       ///
@@ -137,6 +140,7 @@ namespace hal
 
     private:
 
+      // Required for manual inlines in yield()
       friend class ArchitectureImplementation;
 
       /// \brief The context storage.

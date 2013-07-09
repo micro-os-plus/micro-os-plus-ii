@@ -12,6 +12,8 @@
 
 #include "portable/core/include/OS.h"
 
+#include <string.h>
+
 #include "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
 
 #include "portable/core/include/Scheduler.h"
@@ -31,24 +33,24 @@ namespace hal
     /// returns a valid response, write detailed response.
     void
     ArchitectureImplementation::putGreeting(void)
-      {
-        struct utsname name;
+    {
+      struct utsname name;
 
-        if (::uname(&name) != -1)
-          {
-            os::diag::trace.putString("POSIX synthetic, running on ");
-            os::diag::trace.putString(name.machine);
-            os::diag::trace.putString(" ");
-            os::diag::trace.putString(name.sysname);
-            os::diag::trace.putString(" ");
-            os::diag::trace.putString(name.release);
-          }
-        else
-          {
-            os::diag::trace.putString("POSIX synthetic");
-          }
-        os::diag::trace.putNewLine();
-      }
+      if (::uname(&name) != -1)
+        {
+          os::diag::trace.putString("POSIX synthetic, running on ");
+          os::diag::trace.putString(name.machine);
+          os::diag::trace.putString(" ");
+          os::diag::trace.putString(name.sysname);
+          os::diag::trace.putString(" ");
+          os::diag::trace.putString(name.release);
+        }
+      else
+        {
+          os::diag::trace.putString("POSIX synthetic");
+        }
+      os::diag::trace.putNewLine();
+    }
 #endif
 
     // ========================================================================
@@ -80,7 +82,7 @@ namespace hal
     void
     ThreadContext::create(hal::arch::stackElement_t* pStackBottom,
         hal::arch::stackSize_t stackSizeBytes,
-        os::core::threadEntryPoint_t entryPoint, void* pParameters)
+        os::core::trampoline3_t entryPoint, void* p1, void* p2, void* p3)
     {
 #if defined(DEBUG)
       os::diag::trace.putString("ThreadContext::create");
@@ -92,10 +94,14 @@ namespace hal
               + stackSizeBytes / sizeof(hal::arch::stackElement_t)));
       os::diag::trace.putString(", size=");
       os::diag::trace.putDec((int) stackSizeBytes);
-      os::diag::trace.putString(", ep=");
+      os::diag::trace.putString(", entry=");
       os::diag::trace.putHex((void*) entryPoint);
-      os::diag::trace.putString(", pp=");
-      os::diag::trace.putHex(pParameters);
+      os::diag::trace.putString(", p1=");
+      os::diag::trace.putHex(p1);
+      os::diag::trace.putString(", p2=");
+      os::diag::trace.putHex(p2);
+      os::diag::trace.putString(", p3=");
+      os::diag::trace.putHex(p3);
       os::diag::trace.putNewLine();
 #endif
 
@@ -124,7 +130,7 @@ namespace hal
 
           // configure entry point with one argument
           // warning: no error returned
-          makecontext(&m_context, (mfunc) entryPoint, 1, pParameters);
+          makecontext(&m_context, (mfunc) entryPoint, 3, p1, p2, p3);
         }
 
 #pragma GCC diagnostic pop
@@ -136,7 +142,7 @@ namespace hal
 
     /// \details
     /// Preserve errno and get context.
-    /// \warning Due to some compiler complicated reasons, it cannot be
+    /// \warning Due to some compiler complicated reasons, it could not be
     /// inlined, so its content was manually inlined in yield().
     inline bool
     __attribute__((always_inline))
@@ -201,23 +207,30 @@ namespace hal
     ArchitectureImplementation::yield(void)
     {
 
+#if 0
+      if ((os::core::Thread*) os::scheduler.getCurrentThread())->getContext().save())
+#else
+      // ----- inline Context.save() begin ------------------------------------
+
+      // getcontext() is like setjmp(), it cannot be used from
+      // a separate function that returns before longjmp(),
+      // so we manually inline the content of Context.save()
+
       os::core::Thread::Context& context =
           (((os::core::Thread*) os::scheduler.getCurrentThread())->getContext());
-      bool volatile saved;
 
-        {
-          // manual inlining of save()
-          context.m_error = errno;
-          context.m_saved = true;
+      context.m_error = errno;
+      context.m_saved = true;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-          getcontext(&context.m_context);
+      getcontext(&context.m_context);
 #pragma GCC diagnostic pop
-          saved = context.m_saved;
-        }
 
-      // save() is function that returns twice
-      if (saved)
+      // ----- inline Context.save() end --------------------------------------
+
+      // save()/getcontext() are functions that return twice
+      if (context.m_saved)
+#endif
         {
           // First time after saving the context, when we have to
           // select the next context
