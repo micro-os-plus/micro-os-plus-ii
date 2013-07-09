@@ -10,7 +10,12 @@ UNAME=`uname`
 FULL=""
 DEST=build
 
-declare -a testNames=( 'minimal' 'trace' 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' 'threads' )
+declare -a testNamesDefault=( 'minimal' 'trace' )
+testNamesDefault=("${testNames[@]}" 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
+testNamesDefault=("${testNames[@]}" 'threads' 'yields' )
+
+# empty array
+declare -a testNames=(  )
 
 while [ $# -gt 0 ]
 do
@@ -24,11 +29,23 @@ do
 		#echo "Dest" $2
 		DEST=$2
 		shift
+	elif [ ${1:0:2} == "--" ]
+	then
+		echo "unsupported option" $1
 	else
-		echo "unsupported" $1
+		#
+		testNames=("${testNames[@]}" $1)
 	fi
 	shift
 done
+
+if [ ${#testNames[@]} -eq 0 ]
+then
+  testNames=("${testNamesDefault[@]}")
+fi
+
+#echo ${testNames[@]}
+#exit
 
 # this is x86_64 on 64 bit machines
 MACHINE=$(uname -m)
@@ -46,6 +63,9 @@ function runTest()
 	else
 		action='run'
 	fi
+	
+	echo
+	echo /bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=$1 $MAKE_ARGS $action
 	/bin/bash "$XCDLBUILD" --repository="$REPO" --build_dir="$DEST" --build_dir="$DEST" --build_config=$1 $MAKE_ARGS $action
 	[ $? -eq 0 ] || exit $?
 }
