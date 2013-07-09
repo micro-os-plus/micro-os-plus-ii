@@ -67,6 +67,7 @@ Toolchain(
             category='base',
             
             compilerOptimisationOptions='-O0',
+            #compilerOptimisationOptions='-O3',
             
             children=[
                       
@@ -101,6 +102,7 @@ Toolchain(
             category='base',
             
             compilerOptimisationOptions='-O3',
+            #compilerOptimisationOptions='-O0',
             
             children=[
                       

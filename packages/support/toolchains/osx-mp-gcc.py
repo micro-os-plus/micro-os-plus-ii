@@ -172,7 +172,7 @@ Toolchain(
 
                     programNameSuffix='-mp-4.6',
                     
-                    # to keep gdb happy, disable optimisations
+                    # optimise for space, same as for embedded
                     compilerOptimisationOptions='-Os',
                     
                     cpp=Tool(
@@ -213,8 +213,9 @@ Toolchain(
 
                     programNameSuffix='-mp-4.7',
                     
-                    # to keep gdb happy, disable optimisations
+                    # optimise for space, same as for embedded
                     compilerOptimisationOptions='-Os',
+                    #compilerOptimisationOptions='-O1',
                     
                     children=[
                               
