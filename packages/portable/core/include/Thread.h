@@ -64,12 +64,8 @@ namespace os
       // Use the architecture defined context.
       typedef hal::arch::ThreadContext Context;
 
-      typedef struct
-      {
-        Thread* pThread;
-        threadEntryPoint_t entryPoint;
-        void* pParameters;
-      } trampolineParameters_t;
+      typedef void
+      (*trampoline3_t)(void*, void*, void*);
 
       /// @} end of name Types and constants
 
@@ -174,7 +170,8 @@ namespace os
       cleanup(void);
 
       static void
-      trampoline(trampolineParameters_t* pTrampolineParameters);
+      trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
+          Thread* pThread);
 
       /// @} end of Public member functions
 
@@ -217,8 +214,6 @@ namespace os
 
       /// \brief The parameter passed when calling the entry point.
       void* m_entryPointParameter;
-
-      trampolineParameters_t m_trampolineParameters;
 
       /// @} end of Private member variables
 

@@ -47,6 +47,8 @@ namespace os
 #endif
     }
 
+    /// \details
+    /// Perform the cleanups.
     Thread::~Thread()
     {
 #if defined(DEBUG)
@@ -64,13 +66,6 @@ namespace os
     {
       m_id = scheduler::NO_ID;
       m_staticPriority = priority;
-#if defined(_DEBUG)
-          os::diag::trace.putString("pri1=");
-          os::diag::trace.putDec(m_staticPriority);
-          os::diag::trace.putString(" @");
-          os::diag::trace.putHex((void*)&m_staticPriority);
-          os::diag::trace.putNewLine();
-#endif
 
       // Normally not used directly, added for completeness
       m_entryPointAddress = entryPoint;
@@ -78,17 +73,9 @@ namespace os
 
       m_stack.initialise();
 
-      m_trampolineParameters.pThread = this;
-      m_trampolineParameters.entryPoint = entryPoint;
-      m_trampolineParameters.pParameters = pParameters;
-
       m_context.create(m_stack.getStart(), m_stack.getSize(),
-          (threadEntryPoint_t) trampoline, &m_trampolineParameters);
-#if defined(_DEBUG)
-          os::diag::trace.putString("pri2=");
-          os::diag::trace.putDec(m_staticPriority);
-          os::diag::trace.putNewLine();
-#endif
+          (trampoline3_t) trampoline3, (void*) entryPoint, (void*) pParameters,
+          (void*) this);
     }
 
     /// \details
@@ -109,18 +96,16 @@ namespace os
 #endif
     }
 
-    /// \details
-    /// This function is needed to ensure that the thread cleanup code
-    /// is always called after the thread code is completed, and
-    /// control is passed to the next thread.
+
     void
-    Thread::trampoline(trampolineParameters_t* pTrampolineParameters)
+    Thread::trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
+        Thread* pThread)
     {
-      // call the desired code with the given parameters
-      (*pTrampolineParameters->entryPoint)(pTrampolineParameters->pParameters);
+      // call the thread code
+      (*entryPoint)(pParameters);
 
       // deregister the thread and make sure it'll never be used
-      pTrampolineParameters->pThread->cleanup();
+      pThread->cleanup();
 
       // TODO: notify threads waiting to join
 

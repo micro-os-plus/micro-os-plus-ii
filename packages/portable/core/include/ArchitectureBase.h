@@ -15,8 +15,13 @@ namespace os
 {
   namespace core
   {
+    // Common definitions for all architectures
+
     typedef void
     (*threadEntryPoint_t)(void*);
+
+    typedef void
+    (*trampoline3_t)(void*, void*, void*);
 
     // ========================================================================
 

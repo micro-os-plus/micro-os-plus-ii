@@ -137,12 +137,8 @@ namespace os
                           pThread->getEntryPointAddress();
                       if (p != nullptr)
                         {
-                          Thread::trampolineParameters_t pPar;
-                          pPar.pThread = pThread;
-                          pPar.entryPoint = p;
-                          pPar.pParameters = pThread->getEntryPointParameter();
-                          Thread::trampoline(&pPar);
-                          //(*p)(pThread->getEntryPointParameter());
+                          Thread::trampoline3(p,
+                              pThread->getEntryPointParameter(), pThread);
                         }
                     }
                 }
