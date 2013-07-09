@@ -67,6 +67,7 @@ Toolchain(
             
             # to keep gdb happy, disable optimisations
             compilerOptimisationOptions='-O0',
+            #compilerOptimisationOptions='-Os',
             
             children=[
                       
@@ -103,6 +104,7 @@ Toolchain(
             
             # use an aggressive optimisation level
             compilerOptimisationOptions='-Os',
+            #compilerOptimisationOptions='-O0',
 
             children=[
                       
