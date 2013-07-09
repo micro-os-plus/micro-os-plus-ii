@@ -141,9 +141,13 @@ Task::getThread(void)
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
+#define MULTI 1
+
 Task task1("T1");
+#if MULTI
 Task task2("T2");
 Task task3("T3");
+#endif
 
 #pragma GCC diagnostic pop
 
@@ -162,33 +166,42 @@ main(int argc, char* argv[])
 
   ts.assertCondition(task1.getCount1() == 0);
   ts.assertCondition(task1.getCount2() == 0);
+#if MULTI
   ts.assertCondition(task2.getCount1() == 0);
   ts.assertCondition(task2.getCount2() == 0);
   ts.assertCondition(task3.getCount1() == 0);
   ts.assertCondition(task3.getCount2() == 0);
+#endif
 
   os::scheduler.run();
 
   task1.getThread().join();
+#if MULTI
   task2.getThread().join();
   task3.getThread().join();
-
+#endif
+    
 #if defined(DEBUG)
   os::diag::trace << os::std::dec << task1.getCount1() << " "
       << task1.getCount2() << os::std::endl;
+#if MULTI
   os::diag::trace << os::std::dec << task2.getCount1() << " "
       << task2.getCount2() << os::std::endl;
   os::diag::trace << os::std::dec << task3.getCount1() << " "
       << task3.getCount2() << os::std::endl;
 #endif
+#endif
 
   ts.assertCondition(task1.getCount1() == 1);
+#if MULTI
   ts.assertCondition(task1.getCount2() == 4);
   ts.assertCondition(task2.getCount1() == 2);
   ts.assertCondition(task2.getCount2() == 5);
   ts.assertCondition(task3.getCount1() == 3);
   ts.assertCondition(task3.getCount2() == 6);
-
+#else
+  ts.assertCondition(task1.getCount2() == 2);
+#endif
   // mark the stop of the test suite
   ts.stop();
 
