@@ -172,7 +172,8 @@ then
 fi
 
 echo
-echo "XCDL runTests: completed, results in $DEST"
+echo "XCDL runTests: completed ( ${testNames[@]} )"
+echo "Results in $DEST"
 echo
 echo "PWD=`pwd`"
 
