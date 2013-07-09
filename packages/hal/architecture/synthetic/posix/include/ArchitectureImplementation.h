@@ -13,13 +13,14 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 
+#define _XOPEN_SOURCE 600L
+#include <ucontext.h>
+
 #include "portable/core/include/ArchitectureBase.h"
 
 // Include architecture definitions, like various types.
 #include "hal/architecture/synthetic/posix/include/ArchitectureDefinitions.h"
 
-#define _XOPEN_SOURCE 600L
-#include <ucontext.h>
 
 #include <errno.h>
 
@@ -117,9 +118,10 @@ namespace hal
       ///
       /// \par Parameters
       ///    None.
-      /// \par Returns
+      /// \retval true  Context saved, returns for the first time
+      /// \retval false Context restored, returns for the second time
       ///    Nothing.
-      void
+      bool
       save(void);
 
       /// \brief Restore the current context from the local storage.
@@ -134,37 +136,19 @@ namespace hal
       /// @} end of name Public member functions
 
     private:
+
+      friend class ArchitectureImplementation;
+
       /// \brief The context storage.
       ucontext_t m_context;
 
-#if defined(__APPLE__) || defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX)
-
-      // On OS X, for unknown reasons, the context does not include
-      // the machine context, but only a pointer, so we reserve some
-      // space to avoid overwriting next variables.
-#pragma GCC diagnostic push
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wunused-private-field"
-#endif
-      _STRUCT_MCONTEXT64 m_mcontext;
-#pragma GCC diagnostic pop
-
-#endif
-
       /// \brief The C error indicator storage.
       int m_error;
+
+      bool volatile m_saved;
     };
 
 #pragma GCC diagnostic pop
-
-    /// \details
-    /// Used only to explicitly initialise m_error.
-    inline
-    __attribute__((always_inline))
-    ThreadContext::ThreadContext(void)
-    {
-      m_error = 0;
-    }
 
 
   // ========================================================================
