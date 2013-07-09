@@ -13,7 +13,9 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 
+#if defined(__APPLE__)
 #define _XOPEN_SOURCE 600L
+#endif
 #include <ucontext.h>
 
 #include "portable/core/include/ArchitectureBase.h"

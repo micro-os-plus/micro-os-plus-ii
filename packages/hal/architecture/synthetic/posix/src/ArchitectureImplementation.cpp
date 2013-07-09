@@ -66,10 +66,12 @@ namespace hal
       os::diag::trace.putString(__PRETTY_FUNCTION__);
       os::diag::trace.putString(" ctx @");
       os::diag::trace.putHex((void*) &m_context);
+#if defined(__APPLE__)
       os::diag::trace.putString(", mctx @");
       os::diag::trace.putHex((void*) &m_context.__mcontext_data);
       os::diag::trace.putString(", sz=");
       os::diag::trace.putDec((int) sizeof(m_context.__mcontext_data));
+#endif
       os::diag::trace.putNewLine();
 #endif
     }
