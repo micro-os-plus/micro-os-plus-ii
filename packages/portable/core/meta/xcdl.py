@@ -14,7 +14,6 @@ Package(
         'Scheduler.cpp',
         'Thread.cpp',
         'IdleThread.cpp',
-        #'makecontext.c',
     ],
         
     includeFiles=[
