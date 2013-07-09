@@ -11,8 +11,8 @@ FULL=""
 DEST=build
 
 declare -a testNamesDefault=( 'minimal' 'trace' )
-testNamesDefault=("${testNames[@]}" 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
-testNamesDefault=("${testNames[@]}" 'threads' 'yields' )
+testNamesDefault=("${testNamesDefault[@]}" 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
+testNamesDefault=("${testNamesDefault[@]}" 'threads' 'yields' )
 
 # empty array
 declare -a testNames=(  )
@@ -44,8 +44,8 @@ then
   testNames=("${testNamesDefault[@]}")
 fi
 
-#echo ${testNames[@]}
-#exit
+echo "Running ( ${testNames[@]} )"
+echo
 
 # this is x86_64 on 64 bit machines
 MACHINE=$(uname -m)
