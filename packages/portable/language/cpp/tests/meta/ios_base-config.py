@@ -34,6 +34,9 @@ Configuration(
         
         # enable test artefact
         'enable("component.os.portable.language.cpp.tests.ios_base")',
+        
+        # this test does not need the scheduler related stuff
+        'disable("component.os.portable.core.scheduler")',
     ],
                   
     children=[

@@ -13,10 +13,14 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
 #if defined(__APPLE__)
 #define _XOPEN_SOURCE 600L
 #endif
 #include <ucontext.h>
+
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
 #include "portable/core/include/ArchitectureBase.h"
 
@@ -72,6 +76,8 @@ namespace hal
       /// @} end of name Public member functions
 
     };
+
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
     // ========================================================================
 
@@ -159,6 +165,8 @@ namespace hal
 
   // ========================================================================
 
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+
   }// namespace posix
 
   // ------------------------------------------------------------------------
@@ -166,7 +174,10 @@ namespace hal
   namespace arch
   {
     typedef hal::posix::ArchitectureImplementation ArchitectureImplementation;
+
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
     typedef hal::posix::ThreadContext ThreadContext;
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }
 
 // ========================================================================

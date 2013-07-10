@@ -30,6 +30,9 @@ Configuration(
                 
         # enable test artefact
         'enable("component.os.portable.diagnostics.tests.trace")',
+                
+        # this test does not need the scheduler related stuff
+        'disable("component.os.portable.core.scheduler")',
     ],
                   
     children=[

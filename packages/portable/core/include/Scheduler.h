@@ -11,6 +11,8 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
 #include "portable/core/include/XCDL_SchedulerDefines.h"
 
 #if defined(OS_INCLUDE_CORE_SCHEDULER_CUSTOM)
@@ -403,5 +405,7 @@ namespace os
   // The object instantiation is in `EarlyInitialisations.cpp`.
   extern os::core::Scheduler scheduler;
 }
+
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
 #endif // OS_PORTABLE_CORE_SCHEDULER_H_

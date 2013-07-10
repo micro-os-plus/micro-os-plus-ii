@@ -53,6 +53,8 @@ namespace hal
     }
 #endif
 
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
     // ========================================================================
 
     /// \details
@@ -247,6 +249,7 @@ namespace hal
     }
 
   // --------------------------------------------------------------------------
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
   }// namespace posix
 } // namespace hal

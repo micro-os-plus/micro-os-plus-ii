@@ -9,6 +9,10 @@
 #ifndef OS_PORTABLE_CORE_THREAD_H_
 #define OS_PORTABLE_CORE_THREAD_H_
 
+#include "portable/core/include/ConfigDefines.h"
+
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
 #include "portable/core/include/OS.h"
 
 #include "portable/core/include/Architecture.h"
@@ -336,5 +340,7 @@ namespace os
 
   }// namespace core
 } // namespace os
+
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
 #endif // OS_PORTABLE_CORE_THREAD_H_

@@ -10,10 +10,6 @@ Package(
     
     sourceFiles=[
         'PlatformBase.cpp',
-        'Stack.cpp',
-        'Scheduler.cpp',
-        'Thread.cpp',
-        'IdleThread.cpp',
     ],
         
     includeFiles=[
@@ -104,6 +100,15 @@ first place, to run all system initialisation.',
             description='.',
             
             isEnabled=True,
+
+            sourceFiles=[
+                'Stack.cpp',
+                'Scheduler.cpp',
+                'Thread.cpp',
+                'IdleThread.cpp',
+            ],
+
+            headerDefinition='OS_INCLUDE_PORTABLE_CORE_SCHEDULER',
 
             children=[
 

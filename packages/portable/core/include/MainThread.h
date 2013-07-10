@@ -9,6 +9,10 @@
 #ifndef OS_PORTABLE_CORE_MAINTHREAD_H_
 #define OS_PORTABLE_CORE_MAINTHREAD_H_
 
+#include "portable/core/include/ConfigDefines.h"
+
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
 #include "portable/core/include/Thread.h"
 
 namespace os
@@ -92,5 +96,7 @@ namespace os
   // The object instantiation is in `EarlyInitialisations.cpp`.
   extern os::core::MainThread mainThread;
 }
+
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
 #endif // OS_PORTABLE_CORE_MAINTHREAD_H_

@@ -6,6 +6,10 @@
 /// \file
 /// \brief Stack member functions definitions.
 
+#include "portable/core/include/ConfigDefines.h"
+
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
 #include "portable/core/include/Architecture.h"
 #include "portable/core/include/Stack.h"
 
@@ -36,3 +40,4 @@ namespace os
   }// namespace core
 } //namespace os
 
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)

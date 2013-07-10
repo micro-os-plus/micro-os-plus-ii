@@ -262,6 +262,8 @@ namespace os
   /// on most platforms the functions are static.
   hal::platform::PlatformImplementation platform;
 
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+
 #pragma GCC diagnostic push
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wglobal-constructors"
@@ -287,6 +289,8 @@ namespace os
   os::core::IdleThread idleThread;
 
 #pragma GCC diagnostic pop
+
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
 /// @} end of ingroup core
 }// namespace os
