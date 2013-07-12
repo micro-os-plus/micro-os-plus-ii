@@ -320,7 +320,66 @@ Configuration(
 
                     toolchain='toolchain.linux.release.gcc.x32',                    
                 ),
+                      
+                # GCC 4.6 x64
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.basic_ios.linux.x64.gcc46.debug',
+                    name='Debug GNU/Linux basic_ios configuration with x86_64 4.6 GCC',
+                    description='Debug build configuration for basic_ios.',
+                    
+                    buildConfigurationName='linux_basic_ios_x64_gcc46_Debug',
+                    
+                    buildFolder='$(PARENT)/x64/gcc46/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc46.x64',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.basic_ios.linux.x64.gcc46.release',
+                    name='Release GNU/Linux basic_ios configuration with x86_64 4.6 GCC',
+                    description='Release build configuration for basic_ios.',
+                    
+                    buildConfigurationName='linux_basic_ios_x64_gcc46_Release',
+                    
+                    buildFolder='$(PARENT)/x64/gcc46/Release',
+                                          
+                    toolchain='toolchain.linux.release.gcc46.x64',                    
+                ),
+
+                # GCC 4.6 x32
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.basic_ios.linux.x32.gcc46.debug',
+                    name='Debug GNU/Linux basic_ios configuration with i386 4.6 GCC',
+                    description='Debug build configuration for basic_ios.',
+                    
+                    buildConfigurationName='linux_basic_ios_x32_gcc46_Debug',
+                    
+                    buildFolder='$(PARENT)/x32/gcc46/Debug',
+                    
+                    requirements=[
+                        'enable("DEBUG")',
+                    ],
+                      
+                    toolchain='toolchain.linux.debug.gcc46.x32',                    
+                ),
+
+                Configuration(
+                    id='config.os.portable.diagnostics.tests.basic_ios.linux.x32.gcc46.release',
+                    name='Release GNU/Linux basic_ios configuration with i386 4.6 GCC',
+                    description='Release build configuration for basic_ios.',
+                    
+                    buildConfigurationName='linux_basic_ios_x32_gcc46_Release',
+                    
+                    buildFolder='$(PARENT)/x32/gcc46/Release',
+
+                    toolchain='toolchain.linux.release.gcc46.x32',                    
+                ),
+
             ],
-	),          
+	   ),          
     ],
 )

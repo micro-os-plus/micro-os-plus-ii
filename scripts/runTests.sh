@@ -10,8 +10,9 @@ UNAME=`uname`
 FULL=""
 DEST=build
 
-declare -a testNamesDefault=( 'minimal' 'trace' )
+declare -a testNamesDefault=( 'trace' )
 testNamesDefault=("${testNamesDefault[@]}" 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
+testNamesDefault=("${testNamesDefault[@]}" 'minimal' )
 testNamesDefault=("${testNamesDefault[@]}" 'threads' 'yields' )
 
 # empty array
@@ -86,8 +87,12 @@ function runTestArray()
 	do
 		(runTestPair $1"_"$bc"_"$2 $3) || exit $?
 	done
+	
+	echo "$2 tests included" >>$SUMMARY_FILE
 }
 
+SUMMARY_FILE=$DEST/summary.txt
+echo >$SUMMARY_FILE
 
 echo "XCDL runTests: started"
 
@@ -98,23 +103,36 @@ then
 	
 		if [ -z "$FULL" ]
 		then
+			# quick tests, use only default g++
+						
+			if [ -x /usr/bin/g++-4.66 ]
+			then
+				compiler=gcc46
+			else
+				# use the default compiler (4.6 on Ubuntu 12.04 LTS)
+				compiler=gcc			
+			fi
 
 			# decide on 64/32 bits			
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				(PATH=$PATH; runTestArray "linux" "x64_gcc" "run") || exit $?
+				(PATH=$PATH; runTestArray "linux" "x64_$compiler" "run") || exit $?
 			else
-				(PATH=$PATH; runTestArray "linux" "x32_gcc" "run") || exit $?
+				(PATH=$PATH; runTestArray "linux" "x32_$compiler" "run") || exit $?
 			fi
-
+			
 		else
 			
-			if [ "$MACHINE" == "x86_64" ]
+			# full tests, try to use all possible compilers
+			
+			if [ -x /usr/bin/g++-4.6 ]
 			then
-				(PATH=$PATH; runTestArray "linux" "x64_gcc" "run") || exit $?
+				if [ "$MACHINE" == "x86_64" ]
+				then
+					(PATH=$PATH; runTestArray "linux" "x64_gcc46" "run") || exit $?
+				fi
+				(PATH=$PATH; runTestArray "linux" "x32_gcc46" "run") || exit $?
 			fi
-			(PATH=$PATH; runTestArray "linux" "x32_gcc" "run") || exit $?
-		
 		fi
 	) || exit $?
 
@@ -177,6 +195,10 @@ echo "Results in $DEST"
 echo
 echo "PWD=`pwd`"
 
+cat $SUMMARY_FILE
+echo
+
+exit
 
 if [ -z "$FULL" ]
 then

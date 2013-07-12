@@ -70,29 +70,84 @@ Toolchain(
             #compilerOptimisationOptions='-Os',
             
             children=[
-                      
+                
                 Toolchain(
-                          
-                    id='toolchain.linux.debug.gcc.x64',
-                    name='GNU/Linux Debug GCC x86_64',
-                    description='The GNU/Linux GCC x86_64 toolchain base for debug builds',
-                    
-                    category='debug',
-                    
-                    compilerCpu='-m64',
-                ),
+                    id='toolchain.linux.debug.gcc',
+                    name='GNU/Linux Debug GCC',
+                    description='The GNU/Linux GCC toolchain base for debug builds',
+
+                    category='base',
+
+                    cpp=Tool(
+                        # 4.6 is too old for -std=c++11
+                        standard='-std=c++0x',
+                    ),
+                        
+                    children=[
+                        Toolchain(
+                                  
+                            id='toolchain.linux.debug.gcc.x64',
+                            name='GNU/Linux Debug GCC x86_64',
+                            description='The GNU/Linux GCC x86_64 toolchain base for debug builds',
+                            
+                            category='debug',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                                  
+                            id='toolchain.linux.debug.gcc.x32',
+                            name='GNU/Linux Debug GCC i386',
+                            description='The GNU/Linux GCC i386 toolchain base for debug builds',
+        
+                            category='debug',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],  
+                ),     
 
                 Toolchain(
-                          
-                    id='toolchain.linux.debug.gcc.x32',
-                    name='GNU/Linux Debug GCC i386',
-                    description='The GNU/Linux GCC i386 toolchain base for debug builds',
+                    id='toolchain.linux.debug.gcc46',
+                    name='GNU/Linux Debug GCC 4.6',
+                    description='The GNU/Linux GCC 4.6 toolchain base for debug builds',
 
-                    category='debug',
-                    
-                    compilerCpu='-m32',
+                    category='base',
+
+                    cpp=Tool(
+                        # 4.6 is too old for -std=c++11
+                        standard='-std=c++0x',
+                    ),
+
+                    programNameSuffix='-4.6',
+                        
+                    children=[
+                        Toolchain(
+                                  
+                            id='toolchain.linux.debug.gcc46.x64',
+                            name='GNU/Linux Debug GCC 4.6 x86_64',
+                            description='The GNU/Linux GCC 4.6 x86_64 toolchain base for debug builds',
+                            
+                            category='debug',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                                  
+                            id='toolchain.linux.debug.gcc46.x32',
+                            name='GNU/Linux Debug GCC 4.6 i386',
+                            description='The GNU/Linux GCC 4.6 i386 toolchain base for debug builds',
+        
+                            category='debug',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],  
                 ),
-            ],            
+                           
+            ],                              
         ),
 
         Toolchain(
@@ -107,28 +162,83 @@ Toolchain(
             #compilerOptimisationOptions='-O0',
 
             children=[
+                
+                Toolchain(
+                    id='toolchain.linux.release.gcc',
+                    name='GNU/Linux Release GCC',
+                    description='The GNU/Linux GCC toolchain base for release builds',
+
+                    category='base',
+
+                    cpp=Tool(
+                        # 4.6 is too old for -std=c++11
+                        standard='-std=c++0x',
+                    ),
+                          
+                    children=[
+                        Toolchain(
+                                  
+                            id='toolchain.linux.release.gcc.x64',
+                            name='GNU/Linux Release GCC x86_64',
+                            description='The GNU/Linux GCC x86_64 toolchain base for release builds',
+                            
+                            category='release',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                                  
+                            id='toolchain.linux.release.gcc.x32',
+                            name='GNU/Linux Release GCC i386',
+                            description='The GNU/Linux GCC i386 toolchain base for release builds',
+        
+                            category='release',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],
+                ),   
                       
                 Toolchain(
-                          
-                    id='toolchain.linux.release.gcc.x64',
-                    name='GNU/Linux Release GCC x86_64',
-                    description='The GNU/Linux GCC x86_64 toolchain base for release builds',
-                    
-                    category='release',
-                    
-                    compilerCpu='-m64',
-                ),
+                    id='toolchain.linux.release.gcc46',
+                    name='GNU/Linux Release GCC 4.6',
+                    description='The GNU/Linux GCC 4.6 toolchain base for release builds',
 
-                Toolchain(
-                          
-                    id='toolchain.linux.release.gcc.x32',
-                    name='GNU/Linux Release GCC i386',
-                    description='The GNU/Linux GCC i386 toolchain base for release builds',
+                    category='base',
 
-                    category='release',
-                    
-                    compilerCpu='-m32',
-                ),
+                    cpp=Tool(
+                        # 4.6 is too old for -std=c++11
+                        standard='-std=c++0x',
+                    ),
+
+                    programNameSuffix='-4.6',
+                          
+                    children=[
+                        Toolchain(
+                                  
+                            id='toolchain.linux.release.gcc46.x64',
+                            name='GNU/Linux Release GCC 4.6 x86_64',
+                            description='The GNU/Linux GCC 4.6 x86_64 toolchain base for release builds',
+                            
+                            category='release',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                                  
+                            id='toolchain.linux.release.gcc46.x32',
+                            name='GNU/Linux Release GCC 4.6 i386',
+                            description='The GNU/Linux GCC 4.6 i386 toolchain base for release builds',
+        
+                            category='release',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],
+                ),      
+                         
             ],              
         ),
     ],
