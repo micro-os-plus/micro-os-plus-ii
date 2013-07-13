@@ -126,10 +126,10 @@ then
 			# decide on 64/32 bits			
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				echo "64 bit machine, quick tests" >>$SUMMARY_FILE
+				echo "$UNAME $MACHINE, quick tests" >>$SUMMARY_FILE
 				(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
 			else
-				echo "32 bit machine, quick tests" >>$SUMMARY_FILE
+				echo "$UNAME $MACHINE, quick tests" >>$SUMMARY_FILE
 				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
 			
@@ -137,9 +137,9 @@ then
 
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				echo "64 bit machine, full tests" >>$SUMMARY_FILE
+				echo "$UNAME $MACHINE, full tests" >>$SUMMARY_FILE
 			else
-				echo "32 bit machine, full tests" >>$SUMMARY_FILE
+				echo "$UNAME $MACHINE, full tests" >>$SUMMARY_FILE
 			fi
 			
 			# full tests, try to use all possible compilers
@@ -187,10 +187,10 @@ then
 			# decide only on 64/32 bits			
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				echo "64 bit machine, quick tests" >>$SUMMARY_FILE
+				echo "$UNAME $MACHINE, quick tests" >>$SUMMARY_FILE
 				(PATH=$PATH; runTestArray "osx" "x64" "llvm" "run") || exit $?
 			else
-				echo "32 bit machine, quick tests" >>$SUMMARY_FILE
+				echo "$UNAME $MACHINE, quick tests" >>$SUMMARY_FILE
 				(PATH=$PATH; runTestArray "osx" "x32" "llvm" "run") || exit $?
 			fi
 		
@@ -198,9 +198,9 @@ then
 
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				echo "64 bit machine, full tests" >>$SUMMARY_FILE
+				echo "$UNAME $MACHINE, full tests" >>$SUMMARY_FILE
 			else
-				echo "32 bit machine, full tests" >>$SUMMARY_FILE
+				echo "$UNAME $MACHINE, full tests" >>$SUMMARY_FILE
 			fi
 
 			# full tests, try to use all possible compilers
