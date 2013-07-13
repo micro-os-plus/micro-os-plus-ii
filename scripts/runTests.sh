@@ -81,18 +81,23 @@ function runTestPair()
 
 function runTestArray()
 {
-	[ $# -ge 2 ] || exit 1
+	[ $# -ge 3 ] || exit 1
 
+	platform=$1
+	bits=$2
+	compiler=$3
+	action=$4
 	for bc in "${testNames[@]}"
 	do
-		(runTestPair $1"_"$bc"_"$2 $3) || exit $?
+		(runTestPair $platform"_"$bc"_"$bits"_"$compiler $action) || exit $?
 	done
 	
-	echo "$2 tests included" >>$SUMMARY_FILE
+	echo "$compiler $bits tests performed" >>$SUMMARY_FILE
 }
 
 SUMMARY_FILE=$DEST/summary.txt
-echo >$SUMMARY_FILE
+rm -f $SUMMARY_FILE
+touch $SUMMARY_FILE
 
 echo "XCDL runTests: started"
 
@@ -101,44 +106,77 @@ then
 
 	time (
 	
+		if [ ! -z "$(g++ --version | grep 4.7)" ]
+		then
+			defaultCompiler=gcc47
+		elif [ ! -z "$(g++ --version | grep 4.6)" ]
+		then
+			defaultCompiler=gcc46
+		else
+			defaultCompiler=gcc
+		fi
+		echo "Default compiler: $defaultCompiler" >>$SUMMARY_FILE
+		
 		if [ -z "$FULL" ]
 		then
 			# quick tests, use only default g++
-						
-			if [ -x /usr/bin/g++-4.66 ]
-			then
-				compiler=gcc46
-			else
-				# use the default compiler (4.6 on Ubuntu 12.04 LTS)
-				compiler=gcc			
-			fi
+
+			compiler=$defaultCompiler			
 
 			# decide on 64/32 bits			
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				(PATH=$PATH; runTestArray "linux" "x64_$compiler" "run") || exit $?
+				echo "64 bit machine, quick tests" >>$SUMMARY_FILE
+				(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
 			else
-				(PATH=$PATH; runTestArray "linux" "x32_$compiler" "run") || exit $?
+				echo "32 bit machine, quick tests" >>$SUMMARY_FILE
+				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
 			
 		else
+
+			if [ "$MACHINE" == "x86_64" ]
+			then
+				echo "64 bit machine, full tests" >>$SUMMARY_FILE
+			else
+				echo "32 bit machine, full tests" >>$SUMMARY_FILE
+			fi
 			
 			# full tests, try to use all possible compilers
 			
-			if [ -x /usr/bin/g++-4.6 ]
+			if [ -x /usr/bin/g++-4.7 ]
 			then
+				compiler=gcc47			
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH; runTestArray "linux" "x64_gcc46" "run") || exit $?
+					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
 				fi
-				(PATH=$PATH; runTestArray "linux" "x32_gcc46" "run") || exit $?
+				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
+			if [ -x /usr/bin/g++-4.6 ]
+			then
+				compiler=gcc46			
+				if [ "$MACHINE" == "x86_64" ]
+				then
+					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
+				fi
+				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
+			fi
+			if [ -x /usr/bin/clang++7 ]
+			then
+				compiler=llvm			
+				if [ "$MACHINE" == "x86_64" ]
+				then
+					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
+				fi
+				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
+			fi
+			
 		fi
 	) || exit $?
 
 elif [ $UNAME == "Darwin" ]
 then
-
 	
 	time ( 
 		
@@ -149,19 +187,30 @@ then
 			# decide only on 64/32 bits			
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				(PATH=$PATH; runTestArray "osx" "x64_llvm" "run") || exit $?
+				echo "64 bit machine, quick tests" >>$SUMMARY_FILE
+				(PATH=$PATH; runTestArray "osx" "x64" "llvm" "run") || exit $?
 			else
-				(PATH=$PATH; runTestArray "osx" "x32_llvm" "run") || exit $?
+				echo "32 bit machine, quick tests" >>$SUMMARY_FILE
+				(PATH=$PATH; runTestArray "osx" "x32" "llvm" "run") || exit $?
 			fi
 		
 		else
+
+			if [ "$MACHINE" == "x86_64" ]
+			then
+				echo "64 bit machine, full tests" >>$SUMMARY_FILE
+			else
+				echo "32 bit machine, full tests" >>$SUMMARY_FILE
+			fi
+
+			# full tests, try to use all possible compilers
 		
 			# clang is always available on OS X
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				(PATH=$PATH; runTestArray "osx" "x64_llvm" "run") || exit $?
+				(PATH=$PATH; runTestArray "osx" "x64" "llvm" "run") || exit $?
 			fi
-			(PATH=$PATH; runTestArray "osx" "x32_llvm" "run") || exit $?
+			(PATH=$PATH; runTestArray "osx" "x32" "llvm" "run") || exit $?
 	
 			PATH_GCC47=/opt/local/bin
 			
@@ -169,9 +218,9 @@ then
 			then
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x64_gcc47" "run") || exit $?
+					(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x64" "gcc47" "run") || exit $?
 				fi
-				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32_gcc47" "run") || exit $?
+				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32" "gcc47" "run") || exit $?
 			fi
 			
 			PATH_GCC46=/opt/local/bin
@@ -180,9 +229,9 @@ then
 			then
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x64_gcc46" "run") || exit $?
+					(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x64" "gcc46" "run") || exit $?
 				fi
-				(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x32_gcc46" "run") || exit $?
+				(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x32" "gcc46" "run") || exit $?
 			fi
 		fi
 	) || exit $?
@@ -194,7 +243,7 @@ echo "XCDL runTests: completed ( ${testNames[@]} )"
 echo "Results in $DEST"
 echo
 echo "PWD=`pwd`"
-
+echo
 cat $SUMMARY_FILE
 echo
 
