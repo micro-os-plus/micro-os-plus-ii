@@ -41,11 +41,57 @@ Configuration(
         'setValue("OS_STRING_CORE_SCHEDULER_CUSTOM_HEADER", "portable/core/tests/include/FakeScheduler.h")',
         
     ],
-                  
-    includeFiles=[
-        'threads-posix-config.py',
-    ],
-              
+                                
     artefactName='threads',
+
+    children=[
+        # configuration specific for platform OS X
+        Configuration(
+              
+            id='config.os.portable.core.tests.threads.osx',
+            name='Test threads creation on OS X configuration',
+            description='Common definitions for Debug/Release build configurations running on OS X',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.osx',
+            ],
+                      
+            requirements=[
+                'enable("package.os.hal.platform.synthetic.osx")',
+            ],
+                      
+            buildFolder='osx/threads',
+                
+            includeFiles=[
+                'threads-osx-config.py',
+            ],
+            
+        ),
+        
+        # configuration specific for platform GNU/Linux
+        Configuration(
+              
+            id='config.os.portable.core.tests.threads.linux',
+            name='Test threads creation on GNU/Linux configuration',
+            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.linux',
+            ],
+                      
+            requirements=[
+                'enable("package.os.hal.platform.synthetic.linux")',
+            ],
+                      
+            buildFolder='linux/threads',
+            
+            includeFiles=[
+                'threads-linux-config.py',
+            ],
+        ),
+              
+    ],
 
 )

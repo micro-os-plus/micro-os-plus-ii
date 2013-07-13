@@ -46,6 +46,7 @@ Package(
             
             includeFiles=[
                 'linux-gcc.py',
+                'linux-llvm.py',
                 
                 # ARM toolchains
                 'linux-aep-arm-gcc.py',

@@ -26,10 +26,62 @@ Configuration(
         # enable test artefact
         'enable("component.os.portable.tests.minimal")',
     ],
-                  
+
+    artefactName='minimal',
+            
+    children=[
+              
+        # configuration specific for platform GNU/Linux
+        Configuration(
+              
+            id='config.os.portable.tests.minimal.linux',
+            name='Test Minimal on GNU/Linux configuration',
+            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.linux',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.linux")',                
+            ],
+                      
+            buildFolder='linux/minimal',
+            
+            includeFiles=[
+                'minimal-linux-config.py'
+            ],
+        ),   
+              
+        # configuration specific for platform OS X
+        Configuration(
+              
+            id='config.os.portable.tests.minimal.osx',
+            name='Test Minimal on OS X configuration',
+            description='Common definitions for Debug/Release build configurations running on OS X',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.osx',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.osx")',                
+            ],
+                      
+            buildFolder='osx/minimal',
+            
+            includeFiles=[
+                'minimal-osx-config.py'
+            ],
+        )      
+                 
+    ],
+                      
     includeFiles=[
-        'minimal-osx-config.py',
-        'minimal-linux-config.py',
         'minimal-stm32h103-config.py',
     ],
 )

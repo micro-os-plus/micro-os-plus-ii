@@ -35,12 +35,60 @@ Configuration(
         'setValue("OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS", 3)',
 
     ],
-                  
+                                
+    artefactName='yields',
+
+    children=[
+              
+        # configuration specific for platform OS X
+        Configuration(
+              
+            id='config.os.portable.core.tests.yields.osx',
+            name='Test yields on OS X configuration',
+            description='Common definitions for Debug/Release build configurations running on OS X',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.osx',
+            ],
+                      
+            requirements=[
+                'enable("package.os.hal.platform.synthetic.osx")',
+            ],
+                      
+            buildFolder='osx/yields',
+            
+            includeFiles=[
+                'yields-osx-config.py',
+            ],
+        ),
+        
+        # configuration specific for platform GNU/Linux
+        Configuration(
+              
+            id='config.os.portable.core.tests.yields.linux',
+            name='Test yields on GNU/Linux configuration',
+            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.linux',
+            ],
+                      
+            requirements=[
+                'enable("package.os.hal.platform.synthetic.linux")',
+            ],
+                      
+            buildFolder='linux/yields',
+            
+            includeFiles=[
+                'yields-linux-config.py',
+            ],
+        ),
+    ],
+
     includeFiles=[
         'yields-stm32f4discovery-config.py',
-        'yields-posix-config.py',
     ],
-              
-    artefactName='yields',
 
 )
