@@ -17,7 +17,7 @@
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-os::infra::TestSuite ts;
+static os::infra::TestSuite ts;
 
 #pragma GCC diagnostic pop
 
@@ -83,7 +83,7 @@ static os::core::Stack::element_t stackC[hal::arch::MIN_STACK_SIZE
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-os::core::Thread threadC("C", threadCMain, &threadC, stackC, sizeof(stackC));
+static os::core::Thread threadC("C", threadCMain, &threadC, stackC, sizeof(stackC));
 
 #pragma GCC diagnostic pop
 
@@ -162,8 +162,8 @@ CommonTask::threadMain(void)
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-CommonTask commonTask1("CT1");
-CommonTask commonTask2("CT2");
+static CommonTask commonTask1("CT1");
+static CommonTask commonTask2("CT2");
 
 #pragma GCC diagnostic pop
 
@@ -304,7 +304,7 @@ MultiThreadedTask::threadMain3(int i)
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-MultiThreadedTask multiThreadedTask;
+static MultiThreadedTask multiThreadedTask;
 count_t MultiThreadedTask::m_count1 = 0;
 
 #pragma GCC diagnostic pop

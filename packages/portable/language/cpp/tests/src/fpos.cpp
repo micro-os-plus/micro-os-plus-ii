@@ -50,7 +50,7 @@ typedef fpos<mbstate_t> P;
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-os::infra::TestSuite ts;
+static os::infra::TestSuite ts;
 
 #pragma GCC diagnostic pop
 

@@ -47,7 +47,7 @@ using namespace os::std;
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-os::infra::TestSuite ts;
+static os::infra::TestSuite ts;
 
 #pragma GCC diagnostic pop
 
@@ -58,7 +58,7 @@ os::infra::TestSuite ts;
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-int global_sync_called = 0;
+static int global_sync_called = 0;
 
 template<class CharT>
   class testbuf : public basic_streambuf<CharT>
@@ -559,8 +559,8 @@ runTestManip()
 // test/input.output/iostream.format/output.stream/ostream.seeks/seekp2.pass.cpp
 // test/input.output/iostream.format/output.stream/ostream.seeks/tellp.pass.cpp
 
-int seekpos_called;
-int seekoff_called = 0;
+static int seekpos_called;
+static int seekoff_called = 0;
 
 template<class CharT>
   struct testbuf_seeks : public basic_streambuf<CharT>

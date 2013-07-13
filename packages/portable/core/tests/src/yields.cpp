@@ -17,7 +17,7 @@
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-os::infra::TestSuite ts;
+static os::infra::TestSuite ts;
 
 #pragma GCC diagnostic pop
 
@@ -143,10 +143,10 @@ Task::getThread(void)
 
 #define MULTI 1
 
-Task task1("T1");
+static Task task1("T1");
 #if MULTI
-Task task2("T2");
-Task task3("T3");
+static Task task2("T2");
+static Task task3("T3");
 #endif
 
 #pragma GCC diagnostic pop

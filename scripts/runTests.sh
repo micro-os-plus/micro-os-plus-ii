@@ -162,7 +162,7 @@ then
 				fi
 				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
-			if [ -x /usr/bin/clang++7 ]
+			if [ -x /usr/bin/clang++ ]
 			then
 				compiler=llvm			
 				if [ "$MACHINE" == "x86_64" ]
