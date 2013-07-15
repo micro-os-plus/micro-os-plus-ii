@@ -24,151 +24,158 @@ popd  > /dev/null
 
 cd "$SCRIPT_PATH"
 
+echo 'Building configuration files from template...'
+echo
 
+CONFIG=/portable/diagnostics/tests/meta/trace-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/trace/' \
 -e 's/ARTEFACTDESCRIPTION/Trace/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/diagnostics/tests/meta/trace-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/diagnostics/tests/meta/trace-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/trace/' \
 -e 's/ARTEFACTDESCRIPTION/Trace/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/diagnostics/tests/meta/trace-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/tests/meta/minimal-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.tests/' \
 -e 's/ARTEFACTNAME/minimal/' \
 -e 's/ARTEFACTDESCRIPTION/Minimal/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/tests/meta/minimal-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/tests/meta/minimal-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.tests/' \
 -e 's/ARTEFACTNAME/minimal/' \
 -e 's/ARTEFACTDESCRIPTION/Minimal/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/tests/meta/minimal-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
 
+CONFIG=/portable/core/tests/meta/threads-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/threads/' \
 -e 's/ARTEFACTDESCRIPTION/Threads/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/core/tests/meta/threads-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/core/tests/meta/threads-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/threads/' \
 -e 's/ARTEFACTDESCRIPTION/Threads/' \
 -e 's/OSNAME/osx/' \
 -e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/core/tests/meta/threads-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
 
+CONFIG=/portable/core/tests/meta/yields-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/yields/' \
 -e 's/ARTEFACTDESCRIPTION/Yields/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/core/tests/meta/yields-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/core/tests/meta/yields-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/yields/' \
 -e 's/ARTEFACTDESCRIPTION/Yields/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/core/tests/meta/yields-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
 
+CONFIG=/portable/language/cpp/tests/meta/basic_ios-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/basic_ios/' \
 -e 's/ARTEFACTDESCRIPTION/C++ basic_ios/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/language/cpp/tests/meta/basic_ios-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/language/cpp/tests/meta/basic_ios-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/basic_ios/' \
 -e 's/ARTEFACTDESCRIPTION/C++ basic_ios/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/language/cpp/tests/meta/basic_ios-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
 
+CONFIG=/portable/language/cpp/tests/meta/fpos-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/fpos/' \
 -e 's/ARTEFACTDESCRIPTION/C++ fpos/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/language/cpp/tests/meta/fpos-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/language/cpp/tests/meta/fpos-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/fpos/' \
 -e 's/ARTEFACTDESCRIPTION/C++ fpos/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/language/cpp/tests/meta/fpos-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
 
+CONFIG=/portable/language/cpp/tests/meta/ios_base-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/ios_base/' \
 -e 's/ARTEFACTDESCRIPTION/C++ ios_base/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/language/cpp/tests/meta/ios_base-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/language/cpp/tests/meta/ios_base-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/ios_base/' \
 -e 's/ARTEFACTDESCRIPTION/C++ ios_base/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/language/cpp/tests/meta/ios_base-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
 
+CONFIG=/portable/language/cpp/tests/meta/ostream-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/ostream/' \
 -e 's/ARTEFACTDESCRIPTION/C++ ostream/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/language/cpp/tests/meta/ostream-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/language/cpp/tests/meta/ostream-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/ostream/' \
 -e 's/ARTEFACTDESCRIPTION/C++ ostream/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/language/cpp/tests/meta/ostream-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
 
+CONFIG=/portable/language/cpp/tests/meta/ostreamConversions-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/ostreamconv/' \
 -e 's/ARTEFACTDESCRIPTION/C++ ostream conversions/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/language/cpp/tests/meta/ostreamConversions-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/language/cpp/tests/meta/ostreamConversions-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/ostreamconv/' \
 -e 's/ARTEFACTDESCRIPTION/C++ ostream conversions/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/language/cpp/tests/meta/ostreamConversions-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
 
+CONFIG=/portable/language/cpp/tests/meta/streambuf-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/streambuf/' \
 -e 's/ARTEFACTDESCRIPTION/C++ streambuf/' \
--e 's/OSNAME/linux/' \
--e 's/OSDESCRIPTION/GNU\/Linux/' \
-linux-config-template.py >$DEST/portable/language/cpp/tests/meta/streambuf-linux-config.py
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+CONFIG=/portable/language/cpp/tests/meta/streambuf-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/streambuf/' \
 -e 's/ARTEFACTDESCRIPTION/C++ streambuf/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
-osx-config-template.py >$DEST/portable/language/cpp/tests/meta/streambuf-osx-config.py
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+echo
+echo '[done]'

@@ -12,6 +12,7 @@ encoding//packages/portable/core/tests/meta/threads-linux-config.py=utf-8
 encoding//packages/portable/core/tests/meta/threads-osx-config.py=utf-8
 encoding//packages/portable/core/tests/meta/xcdl.py=utf-8
 encoding//packages/portable/core/tests/meta/yields-config.py=utf-8
+encoding//packages/portable/core/tests/meta/yields-osx-config.py=utf-8
 encoding//packages/portable/diagnostics/meta/xcdl.py=utf-8
 encoding//packages/portable/diagnostics/tests/meta/trace-config.py=utf-8
 encoding//packages/portable/diagnostics/tests/meta/xcdl.py=utf-8

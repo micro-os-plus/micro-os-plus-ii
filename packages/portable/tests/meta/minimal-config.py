@@ -28,6 +28,7 @@ Configuration(
     ],
 
     artefactName='minimal',
+    artefactDescription='Minimal Test',
             
     children=[
               
@@ -35,8 +36,8 @@ Configuration(
         Configuration(
               
             id='config.os.portable.tests.minimal.linux',
-            name='Test Minimal on GNU/Linux configuration',
-            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            name='GNU/Linux Minimal Test configuration',
+            description='Common Debug/Release definitions for Minimal Test running on GNU/Linux.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -59,8 +60,8 @@ Configuration(
         Configuration(
               
             id='config.os.portable.tests.minimal.osx',
-            name='Test Minimal on OS X configuration',
-            description='Common definitions for Debug/Release build configurations running on OS X',
+            name='OS X Minimal Test configuration',
+            description='Common Debug/Release definitions for Minimal Test running on OS X.',
             
             loadPackages=[
                 # mandatory platform requirement

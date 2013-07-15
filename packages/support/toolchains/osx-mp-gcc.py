@@ -147,7 +147,47 @@ Toolchain(
                             compilerCpu='-m32',
                         ),
                     ],
-                ),                      
+                ), 
+                                           
+                Toolchain(
+                          
+                    id='toolchain.osx.debug.mp.gcc48',
+                    name='OS X MacPorts Debug GCC 4.8',
+                    description='The OS X MacPorts GCC 4.8 toolchain for debug builds',
+                    
+                    category='base',
+
+                    programNameSuffix='-mp-4.8',
+                    
+                    # to keep gdb happy, disable optimisations
+                    compilerOptimisationOptions='-O0',
+                    
+                    children=[
+                              
+                        Toolchain(
+                                  
+                            id='toolchain.osx.debug.mp.gcc48.x64',
+                            name='OS X MacPorts Debug GCC 4.8 x86_64',
+                            description='The OS X MacPorts GCC 4.8 x86_64 toolchain for debug builds',
+                            
+                            category='debug',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                                  
+                            id='toolchain.osx.debug.mp.gcc48.x32',
+                            name='OS X MacPorts Debug GCC 4.8 i386',
+                            description='The OS X MacPorts GCC 4.8 i386 toolchain for debug builds',
+
+                            category='debug',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],
+                ), 
+                      
             ],
         ),
 
@@ -242,6 +282,47 @@ Toolchain(
                         ),
                     ],
                 ),                      
+
+                Toolchain(
+                          
+                    id='toolchain.osx.release.mp.gcc48',
+                    name='OS X MacPorts Release GCC 4.8',
+                    description='The OS X MacPorts GCC 4.8 toolchain for release builds',
+                    
+                    category='base',
+
+                    programNameSuffix='-mp-4.8',
+                    
+                    # optimise for space, same as for embedded
+                    compilerOptimisationOptions='-Os',
+                    #compilerOptimisationOptions='-O1',
+                    
+                    children=[
+                              
+                        Toolchain(
+                                  
+                            id='toolchain.osx.release.mp.gcc48.x64',
+                            name='OS X MacPorts Release GCC 4.8 x86_64',
+                            description='The OS X MacPorts GCC 4.8 x86_64 toolchain for release builds',
+                            
+                            category='release',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                                  
+                            id='toolchain.osx.release.mp.gcc48.x32',
+                            name='OS X MacPorts Release GCC 4.8 i386',
+                            description='The OS X MacPorts GCC 4.8 i386 toolchain for release builds',
+
+                            category='release',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],
+                ),                      
+
             ],
         ),
     ],
