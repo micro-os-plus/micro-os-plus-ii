@@ -255,6 +255,8 @@ namespace os
 
       typedef scheduler::threadCount_t threadCount_t;
 
+      typedef uint32_t lockCounter_t;
+
       /// @} end of name Types and constants
 
       /// \name Constructors/destructor
@@ -298,8 +300,14 @@ namespace os
       volatile Thread*
       getCurrentThread(void) volatile;
 
-      // public since the below friend does not work in 4.6
-      //friend hal::arch::ArchitectureImplementation;
+      void
+      lock(void);
+
+      void
+      unlock(void);
+
+      bool
+      isLocked(void) const;
 
       /// @} end of Public member functions
 
@@ -314,8 +322,13 @@ namespace os
       friend hal::arch::ArchitectureImplementation;
 #endif
 
+      /// \name Private member functions
+      /// @{
+
       void
-      performContextSwitch(void);
+      performContextSwitchFromInterrupt(void);
+
+      /// @} end of Private member functions
 
       // ----------------------------------------------------------------------
 
@@ -323,9 +336,27 @@ namespace os
 
       friend class MainThread;
 
+      friend class Thread;
+
+      /// \name Private member functions
+      /// @{
+
       void
       setCurrentThread(Thread* pThread);
 
+      // NOT synchronised
+      void
+      suspendThread(Thread* pThread);
+
+      // NOT synchronised
+      void
+      resumeThread(Thread* pThread);
+
+      /// @} end of Private member functions
+
+      /// \details
+      /// Although the constructor sets this to nullptr,
+      /// the MainThread will immediately set it to a valid value.
       volatile Thread* volatile m_pCurrentThread;
 
       bool volatile m_isRunning;
@@ -333,6 +364,8 @@ namespace os
       scheduler::RegisteredThreads m_registered;
 
       scheduler::ActiveThreads m_active;
+
+      lockCounter_t volatile m_lockCounter;
     };
 
 #pragma GCC diagnostic pop
@@ -344,38 +377,6 @@ namespace os
     Scheduler::isRunning(void) const
     {
       return m_isRunning;
-    }
-
-    /// \details
-    /// If the ID is valid, just return it, the thread was already registered.
-    /// Otherwise... TBD
-    inline Scheduler::threadId_t
-    __attribute__((always_inline))
-    Scheduler::registerThread(Thread* pThread)
-    {
-      threadId_t id = m_registered.add(pThread);
-      if (id != scheduler::NO_ID)
-        {
-          m_active.insert(pThread);
-        }
-      return id;
-    }
-
-    /// \details
-    /// If the thread is still registered, deregister it.
-    inline Scheduler::threadId_t
-    __attribute__((always_inline))
-    Scheduler::deregisterThread(Thread* pThread)
-    {
-      threadId_t id =  m_registered.remove(pThread);
-      return id;
-    }
-
-    inline void
-    __attribute__((always_inline))
-    Scheduler::yield(void)
-    {
-      hal::arch::ArchitectureImplementation::yield();
     }
 
     inline volatile Thread*
@@ -392,7 +393,42 @@ namespace os
       m_pCurrentThread = pThread;
     }
 
-  // ==========================================================================
+    inline void
+    __attribute__((always_inline))
+    Scheduler::lock(void)
+    {
+      m_lockCounter++;
+    }
+
+    inline void
+    __attribute__((always_inline))
+    Scheduler::unlock(void)
+    {
+      m_lockCounter--;
+    }
+
+    inline bool
+    __attribute__((always_inline))
+    Scheduler::isLocked(void) const
+    {
+      return (m_lockCounter != 0);
+    }
+
+    inline void
+    __attribute__((always_inline))
+    Scheduler::suspendThread(Thread* pThread)
+    {
+      m_active.remove(pThread);
+    }
+
+    inline void
+    __attribute__((always_inline))
+    Scheduler::resumeThread(Thread* pThread)
+    {
+      m_active.insert(pThread);
+    }
+
+  // ========================================================================
 
   }// namespace core
 } // namespace os
@@ -406,6 +442,6 @@ namespace os
   extern os::core::Scheduler scheduler;
 }
 
-#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 #endif // OS_PORTABLE_CORE_SCHEDULER_H_

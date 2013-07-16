@@ -167,15 +167,33 @@ namespace os
       void
       join(void);
 
-      Context&
-      getContext(void);
+      // Suspend the thread and remove it from the ready list.
+      void
+      suspend(void);
+      // Resume the thread, previously suspended by inserting it into the ready list.
 
       void
-      cleanup(void);
+      resumeFromInterrupt(void);
 
-      static void
-      trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
-          Thread* pThread);
+      void
+      resume(void);
+
+      // Check if the thread is suspended.
+      bool
+      isSuspended(void) const;
+      // Check if the thread is waiting on an event.
+
+      bool
+      isAttentionRequested(void) const;
+
+      void
+      requestAttention(void);
+
+      void
+      acknowledgeAttention(void);
+
+      Context&
+      getContext(void);
 
       /// @} end of Public member functions
 
@@ -194,10 +212,22 @@ namespace os
       initialise(threadEntryPoint_t entryPoint, void* pParameters,
           priority_t priority);
 
+      static void
+      trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
+          Thread* pThread);
+
+      void
+      cleanup(void);
+
       /// @} end of Private member functions
 
       /// \name Private member variables
       /// @{
+
+      // True if the thread is suspended.
+      bool volatile m_isSuspended;
+
+      bool volatile m_isAttentionRequested;
 
       Context m_context;
 
@@ -218,6 +248,8 @@ namespace os
 
       /// \brief The parameter passed when calling the entry point.
       void* m_entryPointParameter;
+
+      volatile Thread* m_pJoiner;
 
       /// @} end of Private member variables
 
@@ -323,17 +355,20 @@ namespace os
       return m_context;
     }
 
-    inline void
-    __attribute__((always_inline))
-    Thread::cleanup()
-    {
-      if (m_id != scheduler::NO_ID)
-        {
-          os::scheduler.deregisterThread(this);
 
-          // clear the id, to mark that the thread was deregistered
-          m_id = scheduler::NO_ID;
-        }
+    // Check if the thread is suspended.
+    inline bool
+    __attribute__((always_inline))
+    Thread::isSuspended(void) const
+    {
+      return m_isSuspended;
+    }
+
+    inline bool
+    __attribute__((always_inline))
+    Thread::isAttentionRequested(void) const
+    {
+      return m_isAttentionRequested;
     }
 
   // ==========================================================================
@@ -342,5 +377,4 @@ namespace os
 } // namespace os
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
 #endif // OS_PORTABLE_CORE_THREAD_H_

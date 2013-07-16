@@ -11,6 +11,7 @@
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
 #include "portable/core/include/Scheduler.h"
+#include "portable/core/include/CriticalSections.h"
 #include "portable/core/include/Thread.h"
 #include "portable/core/include/IdleThread.h"
 
@@ -34,7 +35,10 @@ namespace os
 
       m_isRunning = false;
 
+      // MainThread will immediately set this to a valid value.
       m_pCurrentThread = nullptr;
+
+      m_lockCounter = 0;
     }
 
     /// \details
@@ -67,10 +71,38 @@ namespace os
     }
 
     void
-    Scheduler::performContextSwitch(void)
+    Scheduler::yield(void)
+    {
+      if (isLocked())
+        {
+          // if the scheduler is locked, do not change the current thread
+          return;
+        }
+
+      hal::arch::ArchitectureImplementation::yield();
+    }
+
+    /// \details
+    /// If not locked, remove the current thread from the active list,
+    /// eventually reinsert it at the end, for round robin reasons,
+    /// and select the top thread.
+    /// The result is left in the m_pCurrentThread pointer and
+    /// will be used by context.resume() shortly.
+    /// \note No synchronisation required while running from
+    /// interrupt contexts.
+    void
+    Scheduler::performContextSwitchFromInterrupt(void)
     {
       hal::arch::ArchitectureImplementation::resetWatchdog();
 
+      if (isLocked())
+        {
+          // if the scheduler is locked, do not change the current thread
+          return;
+        }
+
+      // As long as MainThread was constructed, this will
+      // always point to a thread.
       Thread* pThread = (Thread*) m_pCurrentThread;
 
       // Remove the running thread from the top of the active list
@@ -78,7 +110,7 @@ namespace os
 
       // Eventually reinsert it at the end of the list (round robin)
 
-      if (pThread->getId() != scheduler::NO_ID)
+      if ((!pThread->isSuspended()) && (pThread->getId() != scheduler::NO_ID))
         {
           // if not suspended and not waiting
           m_active.insert(pThread);
@@ -86,6 +118,37 @@ namespace os
 
       // Select the next running thread from the top of the active list
       m_pCurrentThread = m_active.getTop();
+    }
+
+    /// \details
+    /// If the ID is valid, just return it, the thread was already registered.
+    /// Otherwise... TBD
+    Scheduler::threadId_t
+    Scheduler::registerThread(Thread* pThread)
+    {
+      // ----- Critical section begin -----------------------------------------
+      os::core::scheduler::InterruptsCriticalSection cs;
+
+      threadId_t id = m_registered.add(pThread);
+      if (id != scheduler::NO_ID)
+        {
+          m_active.insert(pThread);
+        }
+      return id;
+      // ----- Critical section end -------------------------------------------
+    }
+
+    /// \details
+    /// If the thread is still registered, deregister it.
+    Scheduler::threadId_t
+    Scheduler::deregisterThread(Thread* pThread)
+    {
+      // ----- Critical section begin -----------------------------------------
+      os::core::scheduler::InterruptsCriticalSection cs;
+
+      threadId_t id = m_registered.remove(pThread);
+      return id;
+      // ----- Critical section end -------------------------------------------
     }
 
     namespace scheduler
@@ -285,5 +348,4 @@ namespace os
 } //namespace os
 
 #endif // !defined(OS_INCLUDE_CORE_SCHEDULER_CUSTOM)
-
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)

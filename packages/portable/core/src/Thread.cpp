@@ -12,6 +12,7 @@
 
 #include "portable/core/include/Thread.h"
 #include "portable/core/include/Scheduler.h"
+#include "portable/core/include/CriticalSections.h"
 
 //#include "portable/core/include/PlatformBase.h"
 //#include "portable/core/include/Architecture.h"
@@ -68,16 +69,60 @@ namespace os
     {
       m_id = scheduler::NO_ID;
       m_staticPriority = priority;
+      m_isSuspended = false;
+      m_isAttentionRequested = false;
 
       // Normally not used directly, added for completeness
       m_entryPointAddress = entryPoint;
       m_entryPointParameter = pParameters;
+
+      m_pJoiner = nullptr;
 
       m_stack.initialise();
 
       m_context.create(m_stack.getStart(), m_stack.getSize(),
           (trampoline3_t) trampoline3, (void*) entryPoint, (void*) pParameters,
           (void*) this);
+    }
+
+    void
+    Thread::cleanup()
+    {
+      m_isSuspended = true;
+
+      if (m_id != scheduler::NO_ID)
+        {
+          os::scheduler.deregisterThread(this);
+
+          // clear the id, to mark that the thread was de-registered
+          m_id = scheduler::NO_ID;
+        }
+
+      m_pJoiner = nullptr;
+    }
+
+    void
+    Thread::suspend(void)
+    {
+      m_isSuspended = true;
+      os::scheduler.yield();
+    }
+
+    void
+    Thread::resumeFromInterrupt(void)
+    {
+      m_isSuspended = false;
+      os::scheduler.resumeThread(this);
+    }
+
+    // Resume the thread, previously suspended by inserting it into the ready list.
+    void
+    Thread::resume(void)
+    {
+      // ----- Critical section begin -----------------------------------------
+      os::core::scheduler::InterruptsCriticalSection cs;
+      resumeFromInterrupt();
+      // ----- Critical section end -------------------------------------------
     }
 
     /// \details
@@ -89,30 +134,63 @@ namespace os
       os::diag::trace.putMemberFunctionWithName();
 #endif
 
-#if 1
+      if (m_pJoiner == nullptr)
+        {
+          // When the thread quits, it'll resume this joiner
+          m_pJoiner = os::scheduler.getCurrentThread();
+        }
+#if defined(DEBUG)
+      else
+        {
+          os::diag::trace.putString("Multiple join() not allowed.");
+          os::diag::trace.putNewLine();
+
+          return;
+        }
+#endif
+
       // TODO: implement with events
       while (m_id != scheduler::NO_ID)
         {
           os::scheduler.yield();
         }
-#endif
     }
-
 
     void
     Thread::trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
         Thread* pThread)
     {
-      // call the thread code
+      // call the actual thread code
       (*entryPoint)(pParameters);
 
-      // deregister the thread and make sure it'll never be used
-      pThread->cleanup();
+        { // ----- Critical section begin -------------------------------------
+          os::core::scheduler::InterruptsCriticalSection cs;
 
-      // TODO: notify threads waiting to join
+          Thread* pJoiner = const_cast<Thread*>(pThread->m_pJoiner);
+          if (pJoiner != nullptr)
+            {
+              // Resume thread waiting to join, if any
+              pJoiner->resumeFromInterrupt();
+            }
+          // deregister the given thread and make sure it'll never be used
+          pThread->cleanup();
 
-      // pass control to next thread
+        } // ----- Critical section end ---------------------------------------
+
+      // pass control to the next thread
       os::scheduler.yield();
+    }
+
+    void
+    Thread::requestAttention(void)
+    {
+      m_isAttentionRequested = true;
+    }
+
+    void
+    Thread::acknowledgeAttention(void)
+    {
+      m_isAttentionRequested = false;
     }
 
   // ------------------------------------------------------------------------
