@@ -97,7 +97,7 @@ function runTestArray()
 
 SUMMARY_FILE=$DEST/summary.txt
 rm -f $SUMMARY_FILE
-touch $SUMMARY_FILE
+touch -f $SUMMARY_FILE
 
 echo "XCDL runTests: started"
 
