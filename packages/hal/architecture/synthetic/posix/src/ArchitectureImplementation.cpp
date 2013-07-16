@@ -210,7 +210,6 @@ namespace hal
     void
     ArchitectureImplementation::yield(void)
     {
-
 #if 0
       if ((os::core::Thread*) os::scheduler.getCurrentThread())->getContext().save())
 #else
@@ -238,7 +237,7 @@ namespace hal
         {
           // First time after saving the context, when we have to
           // select the next context
-          os::scheduler.performContextSwitch();
+          os::scheduler.performContextSwitchFromInterrupt();
           // and resume from there
           ((os::core::Thread*) os::scheduler.getCurrentThread())->getContext().restore();
         }
