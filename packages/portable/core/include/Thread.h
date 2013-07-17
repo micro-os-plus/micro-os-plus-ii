@@ -13,7 +13,7 @@
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
-#include "portable/core/include/OS.h"
+#include "portable/diagnostics/include/Trace.h"
 
 #include "portable/core/include/Architecture.h"
 
@@ -65,9 +65,13 @@ namespace os
 
       //static const id_t NO_ID = scheduler::NO_ID;
 
-      // Use the architecture defined context.
+      /// \brief Thread context.
+      ///
+      /// \details
+      /// Redefined here, based on architecture definitions.
       typedef hal::arch::ThreadContext Context;
 
+      /// \brief Pointer to trampoline function.
       typedef void
       (*trampoline3_t)(void*, void*, void*);
 
@@ -167,31 +171,72 @@ namespace os
       void
       join(void);
 
-      // Suspend the thread and remove it from the ready list.
+      /// \brief Suspend the thread.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       suspend(void);
-      // Resume the thread, previously suspended by inserting it into the ready list.
 
+      /// \brief Resume the thread from an interrupt.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       resumeFromInterrupt(void);
 
+      /// \brief Resume the thread.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       resume(void);
 
-      // Check if the thread is suspended.
+      /// \brief Check if the thread is suspended.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return True if the thread is suspended.
       bool
       isSuspended(void) const;
-      // Check if the thread is waiting on an event.
 
+      /// \brief Check if the thread is waiting for attention.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return True if the thread is waiting for attention.
       bool
       isAttentionRequested(void) const;
 
+      /// \brief Request the thread for special attention.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       requestAttention(void);
 
+      /// \brief Acknowledge that special attention was provided.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       acknowledgeAttention(void);
 
+      /// \brief Get context
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return Reference to context (architecture dependent content).
       Context&
       getContext(void);
 
@@ -212,10 +257,22 @@ namespace os
       initialise(threadEntryPoint_t entryPoint, void* pParameters,
           priority_t priority);
 
+      /// \brief Static trampoline used to execute the thread.
+      ///
+      /// \param [in] entryPoint        Pointer to the thread code.
+      /// \param [in] pParameters       Pointer to the parameters passed
+      ///                               to the thread code.
+      /// \param [in] pThread           Pointer to the thread object.
       static void
       trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
           Thread* pThread);
 
+      /// \brief Clean thread object after code completed.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       cleanup(void);
 
@@ -224,14 +281,16 @@ namespace os
       /// \name Private member variables
       /// @{
 
-      // True if the thread is suspended.
+      /// \brief Boolean to remember when the thread is suspended.
       bool volatile m_isSuspended;
 
+      /// \brief Boolean to remember when special attention is requested.
       bool volatile m_isAttentionRequested;
 
+      /// \brief Storage for the architecture dependent context.
       Context m_context;
 
-      /// \brief An instance of the stack object.
+      /// \brief The stack object.
       Stack m_stack;
 
       /// \brief The current thread static priority.
@@ -249,6 +308,7 @@ namespace os
       /// \brief The parameter passed when calling the entry point.
       void* m_entryPointParameter;
 
+      /// \brief Pointer to the thread that requested to join().
       volatile Thread* m_pJoiner;
 
       /// @} end of Private member variables
@@ -356,8 +416,7 @@ namespace os
     }
 
 
-    // Check if the thread is suspended.
-    inline bool
+     inline bool
     __attribute__((always_inline))
     Thread::isSuspended(void) const
     {
