@@ -248,8 +248,8 @@ namespace hal
     }
 
   // --------------------------------------------------------------------------
-#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }// namespace posix
 } // namespace hal
 

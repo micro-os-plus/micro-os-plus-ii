@@ -14,6 +14,7 @@ Package(
 
     sourceFiles=[
         'ArchitectureImplementation.cpp',
+        'TimerTicksImplementation.cpp',
     ],
 
     headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX',

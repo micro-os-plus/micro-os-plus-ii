@@ -21,12 +21,12 @@
 #include <ucontext.h>
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
 #include "portable/core/include/ArchitectureBase.h"
 
 // Include architecture definitions, like various types.
 #include "hal/architecture/synthetic/posix/include/ArchitectureDefinitions.h"
 
+#include "hal/architecture/synthetic/posix/include/TimerTicksImplementation.h"
 
 #include <errno.h>
 
@@ -162,25 +162,26 @@ namespace hal
 
 #pragma GCC diagnostic pop
 
-
-  // ========================================================================
+  // ==========================================================================
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
   }// namespace posix
 
-  // ------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
   namespace arch
   {
     typedef hal::posix::ArchitectureImplementation ArchitectureImplementation;
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
     typedef hal::posix::ThreadContext ThreadContext;
-#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+    typedef hal::posix::TimerTicksImplementation TimerTicksImplementation;
+
+    #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }
 
-// ========================================================================
+// ============================================================================
 
 }// namespace hal
 
