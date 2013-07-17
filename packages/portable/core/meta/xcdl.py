@@ -106,6 +106,8 @@ first place, to run all system initialisation.',
                 'Scheduler.cpp',
                 'Thread.cpp',
                 'IdleThread.cpp',
+                'TimerBase.cpp',
+                'TimerTicks.cpp',
             ],
 
             headerDefinition='OS_INCLUDE_PORTABLE_CORE_SCHEDULER',

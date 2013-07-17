@@ -17,6 +17,7 @@
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/MainThread.h"
 #include "portable/core/include/IdleThread.h"
+#include "portable/core/include/TimerTicks.h"
 
 namespace os
 {
@@ -287,6 +288,9 @@ namespace os
   /// \details
   /// Must be placed after the scheduler is constructed.
   os::core::IdleThread idleThread;
+
+  /// \brief The timer counting scheduler ticks.
+  os::core::TimerTicks timerTicks;
 
 #pragma GCC diagnostic pop
 
