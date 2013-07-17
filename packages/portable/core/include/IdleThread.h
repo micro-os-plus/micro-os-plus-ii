@@ -26,7 +26,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    /// \header IdleThread.h "portable/core/include/IdleThread.h"
+    /// \headerfile IdleThread.h "portable/core/include/IdleThread.h"
     /// \ingroup core
     /// \nosubgrouping
     ///

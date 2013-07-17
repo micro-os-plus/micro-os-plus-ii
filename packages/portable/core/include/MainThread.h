@@ -26,7 +26,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    /// \header MainThread.h "portable/core/include/MainThread.h"
+    /// \headerfile MainThread.h "portable/core/include/MainThread.h"
     /// \ingroup core
     /// \nosubgrouping
     ///

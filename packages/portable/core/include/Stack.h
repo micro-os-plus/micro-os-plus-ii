@@ -30,11 +30,10 @@ namespace os
     /// \ingroup core
     /// \nosubgrouping
     ///
-    /// \brief Base for all classes that have a name.
+    /// \brief Thread stack.
     ///
     /// \details
-    /// Provide common support for all objects that have a name,
-    /// used mainly to identify the objects.
+    /// Provide support for stack storage.
     class Stack
     {
     public:
