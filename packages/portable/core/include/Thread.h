@@ -240,6 +240,16 @@ namespace os
       Context&
       getContext(void);
 
+      /// \brief Static trampoline used to execute the thread.
+      ///
+      /// \param [in] entryPoint        Pointer to the thread code.
+      /// \param [in] pParameters       Pointer to the parameters passed
+      ///                               to the thread code.
+      /// \param [in] pThread           Pointer to the thread object.
+      static void
+      trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
+          Thread* pThread);
+
       /// @} end of Public member functions
 
     private:
@@ -256,16 +266,6 @@ namespace os
       void
       initialise(threadEntryPoint_t entryPoint, void* pParameters,
           priority_t priority);
-
-      /// \brief Static trampoline used to execute the thread.
-      ///
-      /// \param [in] entryPoint        Pointer to the thread code.
-      /// \param [in] pParameters       Pointer to the parameters passed
-      ///                               to the thread code.
-      /// \param [in] pThread           Pointer to the thread object.
-      static void
-      trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
-          Thread* pThread);
 
       /// \brief Clean thread object after code completed.
       ///

@@ -164,6 +164,8 @@ namespace os
     /// \details
     /// Directly starting the thread entry point is not enough, since it can
     /// return, and we need a place to perform thread cleanup operations.
+    ///
+    /// \note Must be public, to be accessible from custom schedulers.
     void
     Thread::trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
         Thread* pThread)
