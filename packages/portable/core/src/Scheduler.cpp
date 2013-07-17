@@ -14,6 +14,7 @@
 #include "portable/core/include/CriticalSections.h"
 #include "portable/core/include/Thread.h"
 #include "portable/core/include/IdleThread.h"
+#include "portable/core/include/TimerTicks.h"
 
 //#include "portable/core/include/PlatformBase.h"
 #include "portable/core/include/Architecture.h"
@@ -51,7 +52,7 @@ namespace os
     }
 
     void
-    Scheduler::run(void)
+    Scheduler::start(void)
     {
 #if defined(DEBUG)
       os::diag::trace.putMemberFunction();
@@ -64,10 +65,29 @@ namespace os
         }
 #endif
 
+      os::timerTicks.initialise();
+
       m_isRunning = true;
+
+      os::timerTicks.start();
 
       // pass control to the thread with the highest priority
       yield();
+    }
+
+    void
+    Scheduler::stop(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putMemberFunction();
+#endif
+
+      // TODO: add code to kill all threads (except main)
+      // in case they are still running
+
+      os::timerTicks.stop();
+
+      m_isRunning = false;
     }
 
     void

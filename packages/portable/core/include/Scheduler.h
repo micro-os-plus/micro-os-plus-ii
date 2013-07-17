@@ -40,6 +40,7 @@ namespace os
       /// A unique value identifying each thread.
       typedef uint8_t threadId_t;
 
+      /// \brief Count of threads.
       typedef int threadCount_t;
 
       // ----------------------------------------------------------------------
@@ -60,12 +61,15 @@ namespace os
 
       // ----------------------------------------------------------------------
 
+      /// \brief Constant with the maximum number of user threads.
       static const threadCount_t MAX_USER_THREADS =
           OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS;
 
-      // main & idle
+      /// \brief Constant with the number of system threads
+      /// (currently two, main & idle).
       static const threadCount_t SYSTEM_THREADS = 2;
 
+      /// \brief Constant with the maximum number of threads to accommodate.
       static const threadCount_t MAX_THREADS = SYSTEM_THREADS
           + MAX_USER_THREADS;
 
@@ -141,7 +145,7 @@ namespace os
         remove(Thread* pThread);
 
         // return the first thread from active list (thread with higher priority)
-        volatile Thread*
+        Thread*
         getTop(void);
 
         // return the number of active threads
@@ -156,7 +160,7 @@ namespace os
         int
         find(Thread* pThread);
 
-        volatile Thread* volatile m_array[MAX_THREADS];
+        Thread* volatile m_array[MAX_THREADS];
 
         threadCount_t volatile m_count;
       };
@@ -165,7 +169,7 @@ namespace os
 
       // ----------------------------------------------------------------------
 
-      inline volatile Thread*
+      inline Thread*
       __attribute__((always_inline))
       ActiveThreads::getTop(void)
       {
@@ -289,7 +293,10 @@ namespace os
       deregisterThread(Thread* pThread);
 
       void
-      run(void);
+      start(void);
+
+      void
+      stop(void);
 
       bool
       isRunning(void) const;
@@ -297,8 +304,8 @@ namespace os
       void
       yield(void);
 
-      volatile Thread*
-      getCurrentThread(void) volatile;
+      Thread*
+      getCurrentThread(void);
 
       void
       lock(void);
@@ -319,7 +326,10 @@ namespace os
     public:
 #else
     private:
+#if !defined(__DOXYGEN__)
+      // Doxygen complains "no uniquely matching class member found"
       friend hal::arch::ArchitectureImplementation;
+#endif
 #endif
 
       /// \name Private member functions
@@ -354,10 +364,13 @@ namespace os
 
       /// @} end of Private member functions
 
+      /// \name Private member variables
+      /// @{
+
       /// \details
       /// Although the constructor sets this to nullptr,
       /// the MainThread will immediately set it to a valid value.
-      volatile Thread* volatile m_pCurrentThread;
+      Thread* volatile m_pCurrentThread;
 
       bool volatile m_isRunning;
 
@@ -366,6 +379,8 @@ namespace os
       scheduler::ActiveThreads m_active;
 
       lockCounter_t volatile m_lockCounter;
+
+      /// @} end of Private member variables
     };
 
 #pragma GCC diagnostic pop
@@ -379,9 +394,9 @@ namespace os
       return m_isRunning;
     }
 
-    inline volatile Thread*
+    inline Thread*
     __attribute__((always_inline))
-    Scheduler::getCurrentThread(void) volatile
+    Scheduler::getCurrentThread(void)
     {
       return m_pCurrentThread;
     }
@@ -428,7 +443,7 @@ namespace os
       m_active.insert(pThread);
     }
 
-  // ========================================================================
+  // ==========================================================================
 
   }// namespace core
 } // namespace os
@@ -441,7 +456,6 @@ namespace os
   // The object instantiation is in `EarlyInitialisations.cpp`.
   extern os::core::Scheduler scheduler;
 }
-
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 #endif // OS_PORTABLE_CORE_SCHEDULER_H_
