@@ -173,15 +173,17 @@ main(int argc, char* argv[])
   ts.assertCondition(task3.getCount2() == 0);
 #endif
 
-  os::scheduler.run();
+  os::scheduler.start();
 
   task1.getThread().join();
 #if MULTI
   task2.getThread().join();
   task3.getThread().join();
 #endif
-    
-#if defined(DEBUG)
+
+  os::scheduler.stop();
+
+#if defined(_DEBUG)
   os::diag::trace << os::std::dec << task1.getCount1() << " "
       << task1.getCount2() << os::std::endl;
 #if MULTI
