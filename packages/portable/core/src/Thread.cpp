@@ -101,6 +101,8 @@ namespace os
       m_pJoiner = nullptr;
     }
 
+    /// \details
+    /// Suspend the thread and remove it from the ready list.
     void
     Thread::suspend(void)
     {
@@ -108,6 +110,8 @@ namespace os
       os::scheduler.yield();
     }
 
+    /// \details
+    /// Resume the thread by inserting it into the ready list.
     void
     Thread::resumeFromInterrupt(void)
     {
@@ -115,7 +119,8 @@ namespace os
       os::scheduler.resumeThread(this);
     }
 
-    // Resume the thread, previously suspended by inserting it into the ready list.
+    /// \details
+    /// Resume the thread by inserting it into the ready list.
     void
     Thread::resume(void)
     {
@@ -149,13 +154,16 @@ namespace os
         }
 #endif
 
-      // TODO: implement with events
       while (m_id != scheduler::NO_ID)
         {
-          os::scheduler.yield();
+          suspend();
         }
     }
 
+
+    /// \details
+    /// Directly starting the thread entry point is not enough, since it can
+    /// return, and we need a place to perform thread cleanup operations.
     void
     Thread::trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
         Thread* pThread)
