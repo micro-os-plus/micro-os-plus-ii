@@ -116,7 +116,7 @@ namespace os
     /// \details
     /// Run all threads, in priority order, each one until completion.
     void
-    FakeScheduler::run(void)
+    FakeScheduler::start(void)
     {
 #if defined(DEBUG)
       os::diag::trace.putMemberFunction();

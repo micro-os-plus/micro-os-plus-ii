@@ -330,7 +330,9 @@ main(int argc, char* argv[])
   ts.assertCondition(multiThreadedTask.m_count3[1] == 0);
   ts.assertCondition(multiThreadedTask.m_count3[2] == 0);
 
-  os::scheduler.run();
+  os::scheduler.start();
+
+  os::scheduler.stop();
 
   ts.assertCondition(cCount == 1);
   ts.assertCondition(commonTask1.getCount() == 2);

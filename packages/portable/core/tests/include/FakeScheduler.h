@@ -78,7 +78,7 @@ namespace os
       ///
       /// \details
       /// Must be below MIN priority.
-      static const threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY+1;
+      static const threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY + 1;
 
       /// \brief Minimum priority.
       ///
@@ -96,8 +96,8 @@ namespace os
       ///
       /// \details
       /// Computed as average between MIN and MAX priorities.
-      static const threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY - MIN_PRIORITY)
-          / 2 + 1);
+      static const threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY
+          - MIN_PRIORITY) / 2 + 1);
 
       /// \brief Thread ID.
       ///
@@ -150,7 +150,10 @@ namespace os
       /// \par Returns
       ///    Nothing.
       void
-      run(void);
+      start(void);
+
+      void
+      stop(void);
 
       /// \brief Yield the core to another thread.
       ///
@@ -176,14 +179,26 @@ namespace os
       setCurrentThread(Thread* pThread);
 
       void
-      performContextSwitch(void);
+      performContextSwitchFromInterrupt(void);
+
+      void
+      lock(void);
+
+      void
+      unlock(void);
+
+      bool
+      isLocked(void);
+
+      void
+      resumeThread(Thread* pThread);
 
       /// @} end of Public member functions
 
     private:
 
       // add one more for main and one more for idle
-      Thread* m_threads[OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS+2];
+      Thread* m_threads[OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS + 2];
       threadCount_t m_threadCount;
     };
 
@@ -219,9 +234,36 @@ namespace os
     }
 
     inline void
-    FakeScheduler::performContextSwitch(void)
+    FakeScheduler::performContextSwitchFromInterrupt(void)
     {
 
+    }
+
+    inline void
+    FakeScheduler::stop(void)
+    {
+    }
+
+    inline void
+    FakeScheduler::lock(void)
+    {
+    }
+
+    inline void
+    FakeScheduler::unlock(void)
+    {
+    }
+
+    inline void
+    FakeScheduler::resumeThread(Thread* pThread __attribute__((unused)))
+    {
+
+    }
+
+    inline bool
+    FakeScheduler::isLocked(void)
+    {
+      return true;
     }
 
     // ------------------------------------------------------------------------
