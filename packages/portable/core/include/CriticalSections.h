@@ -44,34 +44,12 @@ namespace os
       CriticalSection::~CriticalSection()
       {
         os::scheduler.unlock();
+        os::scheduler.yield();
       }
 
-      // ========================================================================
+      // ======================================================================
 
-      class InterruptsCriticalSection
-      {
-      public:
-        InterruptsCriticalSection(void);
-
-        ~InterruptsCriticalSection();
-
-      private:
-        // TODO: add location to store interrupt status
-      };
-
-      inline
-      __attribute__((always_inline))
-      InterruptsCriticalSection::InterruptsCriticalSection(void)
-      {
-        // TODO: save status
-      }
-
-      inline
-      __attribute__((always_inline))
-      InterruptsCriticalSection::~InterruptsCriticalSection()
-      {
-        // TODO: restore status
-      }
+      typedef hal::arch::InterruptsCriticalSection InterruptsCriticalSection;
 
     // ========================================================================
     }// namespace scheduler
