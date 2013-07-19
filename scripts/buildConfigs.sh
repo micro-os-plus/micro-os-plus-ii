@@ -27,6 +27,7 @@ cd "$SCRIPT_PATH"
 echo 'Building configuration files from template...'
 echo
 
+
 CONFIG=/portable/diagnostics/tests/meta/trace-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/trace/' \
@@ -40,6 +41,7 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTDESCRIPTION/Trace/' \
 osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
+
 
 CONFIG=/portable/tests/meta/minimal-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.tests/' \
@@ -67,8 +69,6 @@ CONFIG=/portable/core/tests/meta/threads-osx-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/threads/' \
 -e 's/ARTEFACTDESCRIPTION/Threads/' \
--e 's/OSNAME/osx/' \
--e 's/OSDESCRIPTION/OS X/' \
 osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
@@ -87,6 +87,20 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
+
+CONFIG=/portable/core/tests/meta/sleep-linux-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/sleep/' \
+-e 's/ARTEFACTDESCRIPTION/Sleep/' \
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+CONFIG=/portable/core/tests/meta/sleep-osx-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/sleep/' \
+-e 's/ARTEFACTDESCRIPTION/Sleep/' \
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
 CONFIG=/portable/language/cpp/tests/meta/basic_ios-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
@@ -176,6 +190,7 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTDESCRIPTION/C++ streambuf/' \
 osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
+
 
 echo
 echo '[done]'
