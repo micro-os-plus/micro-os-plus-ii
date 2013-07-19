@@ -45,6 +45,8 @@ namespace hal
 
     static const stackSize_t MIN_STACK_SIZE = SIGSTKSZ;
 
+    //typedef sigset_t interruptStatus_t;
+
   } // namespace arch
 } // namespace hal
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
