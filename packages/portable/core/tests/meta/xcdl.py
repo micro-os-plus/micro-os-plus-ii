@@ -38,7 +38,7 @@ Package(
         Component(
             id='component.os.portable.core.tests.yields',
             name='Test yields configuration',
-            description='Test build a minimal application.',
+            description='Test yields application.',
     
             category='test',
     
@@ -49,6 +49,28 @@ Package(
                   
             includeFiles=[
                 'yields-config.py',
+            ],
+                  
+            implements=[
+                'interface.os.artefact',
+            ],
+
+        ),
+
+        Component(
+            id='component.os.portable.core.tests.sleep',
+            name='Test sleep configuration',
+            description='Test sleep application.',
+    
+            category='test',
+    
+            isEnabled=False,
+            sourceFiles=[
+                'sleep.cpp',
+            ],
+                  
+            includeFiles=[
+                'sleep-config.py',
             ],
                   
             implements=[
