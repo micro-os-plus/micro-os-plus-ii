@@ -13,12 +13,21 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 
+#include <signal.h>
+
 namespace hal
 {
   namespace posix
   {
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
+    namespace timer
+    {
+      //static const int SIGNAL_NUMBER = SIGVTALRM;
+      static const int SIGNAL_NUMBER = SIGALRM;
+
+    } // namespace timer
 
     // ========================================================================
 
@@ -30,33 +39,41 @@ namespace hal
       /// @{
 
       /// \brief Default constructor.
-      TimerTicksImplementation(void) = default;
+      TimerTicksImplementation(void);
+
+      ~TimerTicksImplementation();
 
       /// @} end of name Constructors/destructor
 
       /// \name Public member functions
       /// @{
 
-      static void
+      void
       initialise(void);
 
-      static void
+      void
       start(void);
 
-      static void
+      void
       stop(void);
 
-      static void
+      void
       acknowledgeInterrupt(void);
 
       /// @} end of name Public member functions
 
+    private:
+
+      sigset_t m_signalSet;
+
+
+      static void
+      signalHandler(int signalNumber);
     };
 
   // ==========================================================================
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
   }// namespace posix
 }      // namespace hal
 
