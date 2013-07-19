@@ -29,6 +29,7 @@
 #include "hal/architecture/synthetic/posix/include/TimerTicksImplementation.h"
 
 #include <errno.h>
+#include <unistd.h>
 
 namespace hal
 {
@@ -73,9 +74,19 @@ namespace hal
       static void
       yield(void);
 
+      static void
+      waitForInterrupt(void);
+
       /// @} end of name Public member functions
 
     };
+
+    inline void
+    __attribute__((always_inline))
+    ArchitectureImplementation::waitForInterrupt(void)
+    {
+      pause();
+    }
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
@@ -162,6 +173,20 @@ namespace hal
 
 #pragma GCC diagnostic pop
 
+    // ========================================================================
+
+    class InterruptsCriticalSection
+    {
+    public:
+      InterruptsCriticalSection(void);
+
+      ~InterruptsCriticalSection();
+
+    private:
+       sigset_t m_status;
+    };
+
+
   // ==========================================================================
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
@@ -177,8 +202,9 @@ namespace hal
 
     typedef hal::posix::ThreadContext ThreadContext;
     typedef hal::posix::TimerTicksImplementation TimerTicksImplementation;
+    typedef hal::posix::InterruptsCriticalSection InterruptsCriticalSection;
 
-    #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }
 
 // ============================================================================

@@ -25,7 +25,7 @@ namespace hal
 {
   namespace posix
   {
-    // ------------------------------------------------------------------------
+    // ========================================================================
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
     /// \details
@@ -54,6 +54,24 @@ namespace hal
 #endif
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
+    // ========================================================================
+
+    InterruptsCriticalSection::InterruptsCriticalSection(void)
+    {
+      // TODO: save status
+      sigset_t set;
+      sigemptyset(&set);
+      sigaddset(&set, timer::SIGNAL_NUMBER);
+
+      sigprocmask(SIG_BLOCK, &set, &m_status);
+    }
+
+    InterruptsCriticalSection::~InterruptsCriticalSection()
+    {
+      // TODO: restore status
+      sigprocmask(SIG_SETMASK, &m_status, NULL);
+    }
 
     // ========================================================================
 
@@ -199,7 +217,7 @@ namespace hal
 
     }
 
-    // --------------------------------------------------------------------------
+    // ========================================================================
 
     /// \details
     /// Save the current context, perform the context switch
@@ -247,7 +265,7 @@ namespace hal
         }
     }
 
-  // --------------------------------------------------------------------------
+  // ==========================================================================
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }// namespace posix
