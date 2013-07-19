@@ -107,7 +107,10 @@ namespace os
     Thread::suspend(void)
     {
       m_isSuspended = true;
-      os::scheduler.yield();
+      if (this == os::scheduler.getCurrentThread())
+        {
+          os::scheduler.yield();
+        }
     }
 
     /// \details
@@ -159,7 +162,6 @@ namespace os
           suspend();
         }
     }
-
 
     /// \details
     /// Directly starting the thread entry point is not enough, since it can

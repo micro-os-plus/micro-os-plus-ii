@@ -67,13 +67,17 @@ namespace os
 
       /// \brief Constant with the number of system threads
       /// (currently two, main & idle).
-      static const threadCount_t SYSTEM_THREADS = 2;
+      static const threadCount_t SYSTEM_THREADS =
+          OS_INTEGER_CORE_SCHEDULER_SYSTEMTHREADS;
 
       /// \brief Constant with the maximum number of threads to accommodate.
       static const threadCount_t MAX_THREADS = SYSTEM_THREADS
           + MAX_USER_THREADS;
 
-      // ----------------------------------------------------------------------
+      static const int TICKS_PER_SECOND =
+          OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
+
+      // ======================================================================
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -97,6 +101,9 @@ namespace os
 
         threadCount_t
         getSize(void) const;
+
+        Thread*
+        operator[](int index);
 
       private:
 
@@ -122,6 +129,13 @@ namespace os
       RegisteredThreads::getSize(void) const
       {
         return sizeof(m_array) / sizeof(m_array[0]);
+      }
+
+      inline Thread*
+      __attribute__((always_inline))
+      RegisteredThreads::operator[](int index)
+      {
+        return m_array[index];
       }
 
       // ======================================================================
@@ -385,7 +399,7 @@ namespace os
 
 #pragma GCC diagnostic pop
 
-    // ========================================================================
+    // ------------------------------------------------------------------------
 
     inline bool
     __attribute__((always_inline))

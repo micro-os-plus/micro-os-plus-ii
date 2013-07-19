@@ -67,6 +67,18 @@ namespace os
 
       os::timerTicks.initialise();
 
+      // activate all non suspended threads
+      threadCount_t i;
+      for (i = 0; i < m_registered.getCount(); ++i)
+        {
+          Thread* pThread = m_registered[i];
+
+          if (!pThread->isSuspended())
+            {
+              m_active.insert(pThread);
+            }
+        }
+
       m_isRunning = true;
 
       os::timerTicks.start();
@@ -93,7 +105,7 @@ namespace os
     void
     Scheduler::yield(void)
     {
-      if (isLocked())
+      if (!m_isRunning || isLocked())
         {
           // if the scheduler is locked, do not change the current thread
           return;
@@ -103,7 +115,8 @@ namespace os
     }
 
     /// \details
-    /// If not locked, remove the current thread from the active list,
+    /// If running and not locked, remove the current thread
+    /// from the active list,
     /// eventually reinsert it at the end, for round robin reasons,
     /// and select the top thread.
     /// The result is left in the m_pCurrentThread pointer and
@@ -115,9 +128,10 @@ namespace os
     {
       hal::arch::ArchitectureImplementation::resetWatchdog();
 
-      if (isLocked())
+      if (!m_isRunning || isLocked())
         {
-          // if the scheduler is locked, do not change the current thread
+          // if the scheduler is not running, or is locked,
+          // do not change the current thread
           return;
         }
 
@@ -146,13 +160,21 @@ namespace os
     Scheduler::threadId_t
     Scheduler::registerThread(Thread* pThread)
     {
+#if defined(DEBUG)
+      os::diag::trace.putMemberFunction();
+#endif
+
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
 
       threadId_t id = m_registered.add(pThread);
-      if (id != scheduler::NO_ID)
+      if (os::scheduler.isRunning())
         {
-          m_active.insert(pThread);
+          if (id != scheduler::NO_ID)
+            {
+              // if the scheduler is running, all new threads are active
+              m_active.insert(pThread);
+            }
         }
       return id;
       // ----- Critical section end -------------------------------------------
@@ -163,6 +185,10 @@ namespace os
     Scheduler::threadId_t
     Scheduler::deregisterThread(Thread* pThread)
     {
+#if defined(DEBUG)
+      os::diag::trace.putMemberFunction();
+#endif
+
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
 
