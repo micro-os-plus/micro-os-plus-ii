@@ -50,6 +50,12 @@ namespace os
     {
       for (;;)
         {
+          os::architecture.waitForInterrupt();
+
+#if defined(DEBUG)
+          os::diag::trace.putChar('i');
+#endif
+
           os::scheduler.yield();
         }
     }
