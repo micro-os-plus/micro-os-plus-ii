@@ -51,6 +51,9 @@ namespace os
       /// \name Types and constants
       /// @{
 
+      static const timer::count_t ARRAY_SIZE =
+          OS_INTEGER_CORE_SCHEDULER_TIMERTICKSSIZE;
+
       /// @} end of name Types and constants
 
       /// \name Constructors/destructor
@@ -84,7 +87,7 @@ namespace os
       /// @} end of Public member functions
 
     private:
-      timer::Element m_array[7];
+      timer::Element m_array[ARRAY_SIZE];
 
       hal::arch::TimerTicksImplementation m_implementation;
     };
