@@ -162,6 +162,12 @@ namespace os
       void*
       getEntryPointParameter(void) const;
 
+      void
+      start(void);
+
+      //void
+      //stop(void);
+
       /// \brief Join the thread.
       ///
       /// \par Parameters
@@ -296,6 +302,9 @@ namespace os
       /// \brief The current thread static priority.
       priority_t volatile m_staticPriority;
 
+      /// \brief The initial priority given via the constructor.
+      priority_t volatile m_initialPriority;
+
       /// \brief The ID used by the scheduler to identify the thread.
       ///
       /// \details
@@ -340,12 +349,16 @@ namespace os
           m_stack(pStack, stackSizeBytes)
       {
 #if defined(DEBUG)
+#if defined(OS_DEBUG_THREAD)
         os::diag::trace.putConstructorWithName();
+#else
+        os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
+            pName);
+#endif
 #endif
         initialise(reinterpret_cast<threadEntryPoint_t>(*function),
             static_cast<void*>(pObject), priority);
 
-        m_id = os::scheduler.registerThread(this);
       }
 
     /// \details

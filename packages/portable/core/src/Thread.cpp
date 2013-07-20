@@ -33,21 +33,15 @@ namespace os
         m_stack(pStack, stackSizeBytes)
     {
 #if defined(DEBUG)
+#if defined(OS_DEBUG_THREAD)
       os::diag::trace.putConstructorWithName();
+#else
+      os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
+          pName);
+#endif
 #endif
 
       initialise(entryPoint, pParameters, priority);
-
-      m_id = os::scheduler.registerThread(this);
-#if defined(DEBUG)
-      if (m_id == scheduler::NO_ID)
-        {
-          os::diag::trace.putString("cannot register thread \"");
-          os::diag::trace.putString(getName());
-          os::diag::trace.putString("\"");
-          os::diag::trace.putNewLine();
-        }
-#endif
     }
 
     /// \details
@@ -68,21 +62,50 @@ namespace os
         priority_t priority)
     {
       m_id = scheduler::NO_ID;
+      m_initialPriority = priority;
       m_staticPriority = priority;
-      m_isSuspended = false;
+      m_isSuspended = true;
       m_isAttentionRequested = false;
 
       // Normally not used directly, added for completeness
       m_entryPointAddress = entryPoint;
       m_entryPointParameter = pParameters;
+    }
+
+    void
+    Thread::start(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putMemberFunctionWithName();
+#endif
+      if (m_id != scheduler::NO_ID)
+        // already started
+        return;
+
+      m_isSuspended = false;
+      m_isAttentionRequested = false;
+
+      m_staticPriority = m_initialPriority;
 
       m_pJoiner = nullptr;
 
       m_stack.initialise();
 
       m_context.create(m_stack.getStart(), m_stack.getSize(),
-          (trampoline3_t) trampoline3, (void*) entryPoint, (void*) pParameters,
-          (void*) this);
+          (trampoline3_t) trampoline3, (void*) m_entryPointAddress,
+          (void*) m_entryPointParameter, (void*) this);
+
+      m_id = os::scheduler.registerThread(this);
+#if defined(DEBUG)
+      if (m_id == scheduler::NO_ID)
+        {
+          os::diag::trace.putString("cannot register thread \"");
+          os::diag::trace.putString(getName());
+          os::diag::trace.putString("\"");
+          os::diag::trace.putNewLine();
+        }
+#endif
+
     }
 
     void
@@ -106,11 +129,15 @@ namespace os
     void
     Thread::suspend(void)
     {
+#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
+      os::diag::trace.putMemberFunctionWithName();
+#endif
       m_isSuspended = true;
-      if (this == os::scheduler.getCurrentThread())
-        {
-          os::scheduler.yield();
-        }
+
+      // suspend should always yield, to remove the current thread
+      // from the active list, otherwise loops waiting for a condition
+      // will hang
+      os::scheduler.yield();
     }
 
     /// \details
@@ -118,6 +145,9 @@ namespace os
     void
     Thread::resumeFromInterrupt(void)
     {
+#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
+      os::diag::trace.putMemberFunctionWithName();
+#endif
       m_isSuspended = false;
       os::scheduler.resumeThread(this);
     }
@@ -159,7 +189,7 @@ namespace os
 
       while (m_id != scheduler::NO_ID)
         {
-          suspend();
+          os::scheduler.getCurrentThread()->suspend();
         }
     }
 
