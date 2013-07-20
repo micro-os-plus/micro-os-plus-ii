@@ -57,5 +57,4 @@ namespace os
 } // namespace os
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
 #endif // OS_PORTABLE_CORE_CRITICALSECTION_H_
