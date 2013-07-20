@@ -23,6 +23,7 @@ static os::infra::TestSuite ts;
 
 // ----------------------------------------------------------------------------
 
+#include "portable/core/include/NamedObject.h"
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/Thread.h"
 #include "portable/core/include/TimerTicks.h"
@@ -53,23 +54,38 @@ runTestAccuracy()
 
   timeval endTime;
   gettimeofday(&endTime, 0);
-  long deltaMicros = (endTime.tv_sec - begTime.tv_sec) * 1000000 + (endTime.tv_usec - begTime.tv_usec);
+  long deltaMicros = (endTime.tv_sec - begTime.tv_sec) * 1000000
+      + (endTime.tv_usec - begTime.tv_usec);
   //int deltaMillis = (int)((deltaMicros + 500) / 1000);
 
   double deltaProcents = (deltaMicros - 1000000) * 100.0 / 1000000.0;
 
-  std::cout << std::endl << "sleep(" << os::core::scheduler::TICKS_PER_SECOND
-      << ") took " << deltaMicros << " micros, delta=" << deltaProcents << "%"
-      << std::endl;
+#if defined(DEBUG)
+  os::diag::trace << os::std::endl << "sleep("
+      << os::core::scheduler::TICKS_PER_SECOND << ") took " << deltaMicros
+      << " micros" << os::std::endl;
+#endif
 
   ts.assertCondition((-10.0 < deltaProcents) && (deltaProcents < 10.0));
+
 }
 
 // ----------------------------------------------------------------------------
 
-class Task
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
+class Task : public os::core::NamedObject
 {
 public:
+  static const unsigned int FROM = 1;
+  static const unsigned int TO = 10;
+  static const unsigned int REPEAT = 10;
+
+  static const unsigned int SUM = (TO - FROM + 1) * (FROM + TO) / 2 * REPEAT;
+
   Task(const char* pName);
   ~Task();
 
@@ -79,28 +95,39 @@ public:
   os::core::Thread&
   getThread(void);
 
+  int
+  getCount(void);
+
+  os::core::timer::ticks_t
+  getDeltaTicks(void);
+
 private:
-  os::core::Stack::element_t m_stack[hal::arch::MIN_STACK_SIZE/sizeof(os::core::Stack::element_t)];
+  os::core::Stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
+      / sizeof(os::core::Stack::element_t)];
 
   os::core::Thread m_thread;
 
+  int m_count;
+  os::core::timer::ticks_t m_deltaTicks;
 };
 
+#pragma GCC diagnostic pop
+
 Task::Task(const char* pName)
-    : m_thread(pName, [](Task* pTask)
-      { pTask->threadMain();}, this, m_stack,
-        sizeof(m_stack))
+    : NamedObject(pName), m_thread(pName, [](Task* pTask)
+      { pTask->threadMain();}, this, m_stack, sizeof(m_stack))
 {
 #if defined(DEBUG)
   os::diag::trace.putConstructor();
 #endif
-  m_thread.suspend();
+  m_count = 0;
+  m_deltaTicks = 0;
 }
 
 Task::~Task()
 {
 #if defined(DEBUG)
-  os::diag::trace.putDestructor();
+  os::diag::trace.putDestructorWithName();
 #endif
 }
 
@@ -110,20 +137,66 @@ Task::getThread(void)
   return m_thread;
 }
 
+int
+Task::getCount(void)
+{
+  return m_count;
+}
+
+os::core::timer::ticks_t
+Task::getDeltaTicks(void)
+{
+  return m_deltaTicks;
+}
+
 void
 Task::threadMain(void)
 {
 #if defined(DEBUG)
-  os::diag::trace.putMemberFunction();
+  os::diag::trace.putMemberFunctionWithName();
 #endif
 
-#if 0
-  os::core::timer::ticks_t i;
-  for (i = 1; i < 10; i++)
+  os::timerTicks.sleep(10);
+
+  os::core::timer::ticks_t ticksBegin = os::timerTicks.getTicks();
+
+  os::core::timer::ticks_t cnt;
+  for (cnt = 1; cnt <= REPEAT; cnt++)
     {
-      os::timerTicks.sleep(i);
+      os::core::timer::ticks_t i;
+      for (i = FROM; i <= TO; i++)
+        {
+          os::timerTicks.sleep(i);
+          m_count += i;
+        }
     }
+
+  os::core::timer::ticks_t ticksEnd = os::timerTicks.getTicks();
+
+  m_deltaTicks = ticksEnd - ticksBegin;
+
+  os::timerTicks.sleep(50);
+
+#if defined(DEBUG)
+  os::diag::trace.putString("many sleeps, took ");
+  os::diag::trace.putDec((int)m_deltaTicks);
+  os::diag::trace.putString(" milliseconds, \"");
+  os::diag::trace.putString(getThread().getName());
+  os::diag::trace.putString("\"");
+  os::diag::trace.putNewLine();
 #endif
+
+  //std::cout << "deltaTicks=" << m_deltaTicks << std::endl;
+
+#if defined(_DEBUG)
+  os::diag::trace.putString("m_count=");
+  os::diag::trace.putDec(m_count);
+  os::diag::trace.putString(" SUM=");
+  os::diag::trace.putDec(SUM);
+  os::diag::trace.putString(" deltaTicks=");
+  os::diag::trace.putDec((int)m_deltaTicks);
+#endif
+
 }
 
 #pragma GCC diagnostic push
@@ -134,6 +207,9 @@ Task::threadMain(void)
 
 static Task task1("T1");
 static Task task2("T2");
+static Task task3("T3");
+static Task task4("T4");
+static Task task5("T5");
 
 #pragma GCC diagnostic pop
 
@@ -143,15 +219,34 @@ runTestMulti();
 void
 runTestMulti()
 {
-  {
-    os::core::scheduler::CriticalSection cs;
+  Task* array[5] =
+    { &task1, &task2, &task3, &task4, &task5 };
 
-    task1.getThread().resume();
-    task2.getThread().resume();
-  }
+  unsigned int i;
+  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+    {
+      ts.assertCondition(array[i]->getCount() == 0);
+    }
 
-  task1.getThread().join();
-  task2.getThread().join();
+  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+    {
+      array[i]->getThread().start();
+    }
+
+  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+    {
+      array[i]->getThread().join();
+    }
+
+  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+    {
+      ts.assertCondition(array[i]->getCount() == static_cast<int>(Task::SUM));
+    }
+
+  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+    {
+      ts.assertCondition(array[i]->getDeltaTicks() == Task::SUM);
+    }
 }
 
 // ----------------------------------------------------------------------------
