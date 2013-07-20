@@ -173,6 +173,12 @@ main(int argc, char* argv[])
   ts.assertCondition(task3.getCount2() == 0);
 #endif
 
+  task1.getThread().start();
+#if MULTI
+  task2.getThread().start();
+  task3.getThread().start();
+#endif
+
   os::scheduler.start();
 
   task1.getThread().join();

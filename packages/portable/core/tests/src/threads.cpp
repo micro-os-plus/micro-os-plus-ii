@@ -108,6 +108,9 @@ public:
   count_t
   getCount(void);
 
+  os::core::Thread&
+  getThread(void);
+
 private:
   count_t m_count;
   os::core::Stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
@@ -134,6 +137,12 @@ CommonTask::~CommonTask()
 #if defined(DEBUG)
   os::diag::trace.putDestructor();
 #endif
+}
+
+inline os::core::Thread&
+CommonTask::getThread(void)
+{
+  return m_thread;
 }
 
 inline count_t
@@ -202,7 +211,7 @@ public:
   // these counts will be updated by the threads
   count_t m_count3[3];
 
-private:
+public:
   os::core::Stack::element_t m_stack1[hal::arch::MIN_STACK_SIZE
       / sizeof(os::core::Stack::element_t)];
   os::core::Thread m_thread1;
@@ -329,6 +338,15 @@ main(int argc, char* argv[])
   ts.assertCondition(multiThreadedTask.m_count2 == 0);
   ts.assertCondition(multiThreadedTask.m_count3[1] == 0);
   ts.assertCondition(multiThreadedTask.m_count3[2] == 0);
+
+  // this order is mandatory, and must match the test below
+  threadC.start();
+  commonTask1.getThread().start();
+  commonTask2.getThread().start();
+  multiThreadedTask.m_thread1.start();
+  multiThreadedTask.m_thread2.start();
+  multiThreadedTask.m_thread3a.start();
+  multiThreadedTask.m_thread3b.start();
 
   os::scheduler.start();
 
