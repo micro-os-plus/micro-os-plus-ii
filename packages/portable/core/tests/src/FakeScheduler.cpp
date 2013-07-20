@@ -41,6 +41,15 @@ namespace os
 #endif
     }
 
+#if defined(DEBUG) || defined(__DOXYGEN__)
+    void
+    FakeScheduler::putGreeting(void)
+    {
+      os::diag::trace.putString("Custom fake scheduler, runs each thread to completion.");
+      os::diag::trace.putNewLine();
+    }
+#endif
+
     /// \details
     /// If the ID is valid, just return it, the thread was already registered.
     /// Otherwise find an empty slot in the array and

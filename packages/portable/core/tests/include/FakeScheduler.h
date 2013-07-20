@@ -18,6 +18,8 @@
 
 #include <stdint.h>
 
+#include "portable/core/include/Architecture.h"
+
 namespace os
 {
   namespace core
@@ -40,6 +42,8 @@ namespace os
       static const threadId_t NO_ID = 0xFF;
 
     }
+
+    // ========================================================================
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -126,6 +130,11 @@ namespace os
 
       /// \name Public member functions
       /// @{
+
+#if defined(DEBUG) || defined(__DOXYGEN__)
+      void
+      putGreeting(void);
+#endif
 
       /// \brief Register thread to the scheduler lists.
       ///
@@ -266,7 +275,8 @@ namespace os
       return true;
     }
 
-    // ------------------------------------------------------------------------
+    // ========================================================================
+
     // Make this the default scheduler
     typedef os::core::FakeScheduler Scheduler;
 
