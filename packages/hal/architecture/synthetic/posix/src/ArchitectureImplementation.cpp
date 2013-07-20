@@ -17,6 +17,7 @@
 #include "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
 
 #include "portable/core/include/Scheduler.h"
+#include "portable/core/include/CriticalSections.h"
 #include "portable/core/include/Thread.h"
 
 #include <sys/utsname.h>
@@ -44,12 +45,18 @@ namespace hal
           os::diag::trace.putString(name.sysname);
           os::diag::trace.putString(" ");
           os::diag::trace.putString(name.release);
+          os::diag::trace.putString(".");
         }
       else
         {
-          os::diag::trace.putString("POSIX synthetic");
+          os::diag::trace.putString("POSIX synthetic.");
         }
       os::diag::trace.putNewLine();
+
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+      os::scheduler.putGreeting();
+#endif
+
     }
 #endif
 
@@ -82,7 +89,7 @@ namespace hal
       m_error = 0;
       m_saved = false;
 
-#if defined(DEBUG)
+#if defined(DEBUG) && defined(OS_DEBUG_THREADCONTEXT)
       os::diag::trace.putString(__PRETTY_FUNCTION__);
       os::diag::trace.putString(" ctx @");
       os::diag::trace.putHex((void*) &m_context);
@@ -106,7 +113,7 @@ namespace hal
         hal::arch::stackSize_t stackSizeBytes,
         os::core::trampoline3_t entryPoint, void* p1, void* p2, void* p3)
     {
-#if defined(DEBUG)
+#if defined(DEBUG) && defined(OS_DEBUG_THREADCONTEXT)
       os::diag::trace.putString("ThreadContext::create");
       os::diag::trace.putString(" stack=");
       os::diag::trace.putHex((void*) pStackBottom);
@@ -255,7 +262,11 @@ namespace hal
         {
           // First time after saving the context, when we have to
           // select the next context
-          os::scheduler.performContextSwitchFromInterrupt();
+            { // ---- InterruptsCriticalSection begin -------------------------
+              os::core::scheduler::InterruptsCriticalSection cs;
+
+              os::scheduler.performContextSwitchFromInterrupt();
+            } // ---- InterruptsCriticalSection end ---------------------------
           // and resume from there
           ((os::core::Thread*) os::scheduler.getCurrentThread())->getContext().restore();
         }
