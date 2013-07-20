@@ -52,7 +52,7 @@ namespace os
         {
           os::architecture.waitForInterrupt();
 
-#if defined(DEBUG)
+#if defined(DEBUG) && defined(OS_DEBUG_IDLETHREAD)
           os::diag::trace.putChar('i');
 #endif
 

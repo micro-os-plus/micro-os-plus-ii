@@ -58,7 +58,7 @@ namespace os
 
       interruptTick();
 
-#if defined(DEBUG) && defined(OS_DEBUG_OSTIMERTICKS_ISR_MARK_SECONDS)
+#if defined(DEBUG) && defined(OS_DEBUG_TIMERTICKS_ISR_MARK_SECONDS)
 
       if ((i++ % OS_CFGINT_TICK_RATE_HZ) == 0)
         {
@@ -67,7 +67,7 @@ namespace os
           OSDeviceDebug::putChar('L');
         }
 
-#endif /* defined(DEBUG) && defined(OS_DEBUG_OSTIMERTICKS_ISR_MARK_SECONDS) */
+#endif /* defined(DEBUG) && defined(OS_DEBUG_TIMERTICKS_ISR_MARK_SECONDS) */
 
     }
 

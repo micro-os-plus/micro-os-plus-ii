@@ -26,6 +26,12 @@ namespace os
     void
     TimerBase::sleep(timer::ticks_t ticks)
     {
+#if defined(DEBUG) && defined(OS_DEBUG_TIMERBASE)
+      os::diag::trace.putString("TimerBase::sleep(");
+      os::diag::trace.putDec((int)ticks);
+      os::diag::trace.putString(")");
+      os::diag::trace.putNewLine();
+#endif
       if (ticks == 0)
         return;
 
@@ -58,6 +64,9 @@ namespace os
             {
               // Normally the entry should not be there, but for just in case
               remove(index);
+#if defined(DEBUG)
+              os::diag::trace.putString(" snrt sleep() ");
+#endif
             }
 
           insert(ticks, pThread);
@@ -148,7 +157,7 @@ namespace os
         {
           if (p->pThread == pThread)
             {
-              os::diag::trace.putString("OSTimer::insert() already in ");
+              os::diag::trace.putString("TimerBase::insert() already in ");
               os::diag::trace.putHex(pThread);
               os::diag::trace.putChar(' ');
               os::diag::trace.putString(pThread->getName());
@@ -186,6 +195,12 @@ namespace os
             }
         }
 
+#if defined(DEBUG) && defined(OS_DEBUG_TIMERBASE)
+      os::diag::trace.putString("TimerBase::insert() cnt=");
+      os::diag::trace.putDec(cnt);
+      os::diag::trace.putNewLine();
+#endif
+
       // fill in timer::element_t
       p->ticks = ticks;
       p->pThread = pThread;
@@ -218,11 +233,10 @@ namespace os
               do
                 {
 #if defined(DEBUG) && defined(OS_DEBUG_TIMERBASE_INTERRUPTTICK)
-                  os::diag::trace.putString("Tick() ");
-                  os::diag::trace.putHex(p);
+                  os::diag::trace.putString("Tick() resume ");
+                  os::diag::trace.putString(p->pThread->getName());
                   os::diag::trace.putNewLine();
 #endif // defined(DEBUG) && defined(OS_DEBUG_TIMERBASE_INTERRUPTTICK)
-
                   // sleep period completed, resume the thread
                   p->pThread->resumeFromInterrupt();
 
