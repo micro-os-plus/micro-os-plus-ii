@@ -135,11 +135,11 @@ namespace os
     /// Output a string and an address, usually representing a function
     /// name and the `this` pointer of the current class.
     /// It is used to implement the
-    /// `putConstructor()` and `putDestructor()` macros.
+    /// `putConstructor()`, `putDestructor()` and `putMemberFunction()` macros.
     template<class Base_T, class Implementation_T>
       void
-      TTraceBase<Base_T, Implementation_T>::putStringAndAddress(const char* pStr,
-          void* addr)
+      TTraceBase<Base_T, Implementation_T>::putStringAndAddress(
+          const char* pStr, void* addr)
       {
         putString(pStr);
         putString(" @");
@@ -148,18 +148,35 @@ namespace os
       }
 
     /// \details
-    /// Output a string and an address, usually representing a function
-    /// name and the `this` pointer of the current class.
+    /// Output a string, an address and a name, usually representing a function
+    /// name, the `this` pointer and the name of the current class.
     /// It is used to implement the
-    /// `putConstructor()` and `putDestructor()` macros.
+    /// `putConstructorWithName()` and `putDestructorWithName()` macros.
     template<class Base_T, class Implementation_T>
       void
-      TTraceBase<Base_T, Implementation_T>::putStringAndAddress(const char* pStr,
-          void* addr, const char* pName)
+      TTraceBase<Base_T, Implementation_T>::putStringAndAddress(
+          const char* pStr, void* addr, const char* pName)
       {
         putString(pStr);
         putString(" @");
         putHex(addr);
+        putString(" \"");
+        putString(pName);
+        putChar('"');
+        putNewLine();
+      }
+
+    /// \details
+    /// Output a string and a name, usually representing a function
+    /// name and the name of the current class.
+    /// It is used to implement the
+    /// `putMemberFunctionWithName()` macro.
+    template<class Base_T, class Implementation_T>
+      void
+      TTraceBase<Base_T, Implementation_T>::putStringAndName(const char* pStr,
+          const char* pName)
+      {
+        putString(pStr);
         putString(" \"");
         putString(pName);
         putChar('"');

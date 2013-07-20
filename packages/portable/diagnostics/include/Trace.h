@@ -427,6 +427,15 @@ namespace os
         void
         putStringAndAddress(const char* pStr, void* addr, const char* pName);
 
+        /// \brief Put string and name.
+        ///
+        /// \param [in] pStr    A pointer to string.
+        /// \param [in] pName   A pointer to name string.
+        /// \par Returns
+        ///     Nothing.
+        void
+        putStringAndName(const char* pStr, const char* pName);
+
 #if defined(DEBUG)
         /// \brief Put constructor.
 #define putConstructor()        putStringAndAddress(__PRETTY_FUNCTION__, this)
@@ -437,7 +446,8 @@ namespace os
 
 #define putConstructorWithName()        putStringAndAddress(__PRETTY_FUNCTION__, this, getName())
 #define putDestructorWithName()         putStringAndAddress(__PRETTY_FUNCTION__, this, getName())
-#define putMemberFunctionWithName()     putStringAndAddress(__PRETTY_FUNCTION__, this, getName())
+//#define putMemberFunctionWithName()     putStringAndAddress(__PRETTY_FUNCTION__, this, getName())
+#define putMemberFunctionWithName()     putStringAndName(__PRETTY_FUNCTION__, getName())
 
 #else
 //#define putMemberFunction()
