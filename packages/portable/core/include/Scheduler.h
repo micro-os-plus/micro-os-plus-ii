@@ -291,6 +291,11 @@ namespace os
       /// \name Public member functions
       /// @{
 
+#if defined(DEBUG) || defined(__DOXYGEN__)
+      void
+      putGreeting(void);
+#endif
+
       /// \brief Register thread to the scheduler lists.
       ///
       /// \param [in] pThread Pointer to the thread.

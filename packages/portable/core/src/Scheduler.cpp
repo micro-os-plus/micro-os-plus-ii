@@ -13,6 +13,7 @@
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/CriticalSections.h"
 #include "portable/core/include/Thread.h"
+#include "portable/core/include/MainThread.h"
 #include "portable/core/include/IdleThread.h"
 #include "portable/core/include/TimerTicks.h"
 
@@ -51,11 +52,23 @@ namespace os
 
     }
 
+#if defined(DEBUG) || defined(__DOXYGEN__)
+    void
+    Scheduler::putGreeting(void)
+    {
+      os::diag::trace.putString("Cooperative scheduler, ");
+      os::diag::trace.putDec(os::core::scheduler::TICKS_PER_SECOND);
+      os::diag::trace.putString(" ticks/second.");
+      os::diag::trace.putNewLine();
+    }
+#endif
+
     void
     Scheduler::start(void)
     {
 #if defined(DEBUG)
-      os::diag::trace.putMemberFunction();
+      os::diag::trace.putString("Scheduler::start()");
+      os::diag::trace.putNewLine();
 #endif
 
 #if defined(DEBUG)
@@ -65,7 +78,9 @@ namespace os
         }
 #endif
 
-      os::timerTicks.initialise();
+      // start the two system threads
+      os::mainThread.start();
+      os::idleThread.start();
 
       // activate all non suspended threads
       threadCount_t i;
@@ -79,6 +94,8 @@ namespace os
             }
         }
 
+      os::timerTicks.initialise();
+
       m_isRunning = true;
 
       os::timerTicks.start();
@@ -91,7 +108,8 @@ namespace os
     Scheduler::stop(void)
     {
 #if defined(DEBUG)
-      os::diag::trace.putMemberFunction();
+      os::diag::trace.putString("Scheduler::stop()");
+      os::diag::trace.putNewLine();
 #endif
 
       // TODO: add code to kill all threads (except main)
@@ -105,6 +123,9 @@ namespace os
     void
     Scheduler::yield(void)
     {
+#if defined(DEBUG) && defined(OS_DEBUG_SCHEDULER)
+      os::diag::trace.putString(" yield() ");
+#endif
       if (!m_isRunning || isLocked())
         {
           // if the scheduler is locked, do not change the current thread
@@ -139,6 +160,11 @@ namespace os
       // always point to a thread.
       Thread* pThread = (Thread*) m_pCurrentThread;
 
+#if defined(DEBUG) && defined(OS_DEBUG_SCHEDULER)
+      os::diag::trace.putString(" switch <<< ");
+      os::diag::trace.putString(pThread->getName());
+#endif
+
       // Remove the running thread from the top of the active list
       m_active.remove(pThread);
 
@@ -152,6 +178,11 @@ namespace os
 
       // Select the next running thread from the top of the active list
       m_pCurrentThread = m_active.getTop();
+#if defined(DEBUG) && defined(OS_DEBUG_SCHEDULER)
+      os::diag::trace.putString(" >>> ");
+      os::diag::trace.putString(m_pCurrentThread->getName());
+      os::diag::trace.putNewLine();
+#endif
     }
 
     /// \details
@@ -161,7 +192,8 @@ namespace os
     Scheduler::registerThread(Thread* pThread)
     {
 #if defined(DEBUG)
-      os::diag::trace.putMemberFunction();
+      os::diag::trace.putStringAndName("Scheduler::registerThread()",
+          pThread->getName());
 #endif
 
       // ----- Critical section begin -----------------------------------------
@@ -186,7 +218,8 @@ namespace os
     Scheduler::deregisterThread(Thread* pThread)
     {
 #if defined(DEBUG)
-      os::diag::trace.putMemberFunction();
+      os::diag::trace.putStringAndName("Scheduler::deregisterThread()",
+          pThread->getName());
 #endif
 
       // ----- Critical section begin -----------------------------------------
@@ -236,7 +269,7 @@ namespace os
         if (m_count >= getSize())
           {
 #if defined(DEBUG)
-            os::diag::trace.putString("RegisteredThreads full!");
+            os::diag::trace.putString("RegisteredThreads::add() full!");
             os::diag::trace.putNewLine();
 #endif
             return NO_ID;
