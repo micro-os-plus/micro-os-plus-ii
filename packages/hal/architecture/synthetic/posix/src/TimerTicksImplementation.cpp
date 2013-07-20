@@ -10,6 +10,8 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
 #include "portable/core/include/XCDL_SchedulerDefines.h"
 
 #include "portable/diagnostics/include/Trace.h"
@@ -24,8 +26,6 @@ namespace hal
 {
   namespace posix
   {
-
-#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
     // ========================================================================
 
@@ -63,7 +63,12 @@ namespace hal
 #if defined(__APPLE__)
       sa.__sigaction_u.__sa_handler = signalHandler;
 #else
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
+#endif
       sa.sa_handler = signalHandler;
+#pragma GCC diagnostic pop
 #endif
       sigemptyset(&sa.sa_mask);
       sa.sa_flags = SA_RESTART;
@@ -83,7 +88,12 @@ namespace hal
       tv.it_value.tv_usec = 1000000 / OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
       tv.it_interval.tv_sec = 0;
       tv.it_interval.tv_usec = 1000000 / OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
-      if (setitimer(ITIMER_REAL, &tv, NULL) != 0)
+#if defined(__linux__)
+#define TIMER   0
+#else
+#define TIMER   ITIMER_REAL
+#endif
+      if (setitimer(TIMER, &tv, NULL) != 0)
         {
 #if defined(DEBUG)
           os::diag::trace.putString("setitimer() failed ");
@@ -169,8 +179,9 @@ namespace hal
 
   // ========================================================================
 
-#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }// namespace posix
 } // namespace hal
+
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
