@@ -13,7 +13,7 @@ DEST=build
 declare -a testNamesDefault=( 'trace' )
 testNamesDefault=("${testNamesDefault[@]}" 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
 testNamesDefault=("${testNamesDefault[@]}" 'minimal' )
-testNamesDefault=("${testNamesDefault[@]}" 'threads' 'yields' )
+testNamesDefault=("${testNamesDefault[@]}" 'threads' 'yields' 'sleep' )
 
 # empty array
 declare -a testNames=(  )
@@ -144,6 +144,15 @@ then
 			
 			# full tests, try to use all possible compilers
 			
+			if [ -x /usr/bin/clang++ ]
+			then
+				compiler=llvm			
+				if [ "$MACHINE" == "x86_64" ]
+				then
+					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
+				fi
+				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
+			fi
 			if [ -x /usr/bin/g++-4.7 ]
 			then
 				compiler=gcc47			
@@ -156,15 +165,6 @@ then
 			if [ -x /usr/bin/g++-4.6 ]
 			then
 				compiler=gcc46			
-				if [ "$MACHINE" == "x86_64" ]
-				then
-					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
-				fi
-				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
-			fi
-			if [ -x /usr/bin/clang++ ]
-			then
-				compiler=llvm			
 				if [ "$MACHINE" == "x86_64" ]
 				then
 					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
