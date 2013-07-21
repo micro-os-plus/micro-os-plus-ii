@@ -63,7 +63,7 @@ namespace os
       /// Redefined here, based on scheduler definitions.
       typedef Scheduler::threadId_t id_t;
 
-      //static const id_t NO_ID = scheduler::NO_ID;
+      //static constexpr id_t NO_ID = scheduler::NO_ID;
 
       /// \brief Thread context.
       ///

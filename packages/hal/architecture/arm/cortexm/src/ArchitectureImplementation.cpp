@@ -106,7 +106,7 @@ namespace hal
 #if defined(DEBUG)
     typedef unsigned int constantMarker_t;
 
-    static const constantMarker_t CONSTANT_MARKER_MAGIC = 0x12345678;
+    static constexpr constantMarker_t CONSTANT_MARKER_MAGIC = 0x12345678;
     static volatile constantMarker_t constantMarker = CONSTANT_MARKER_MAGIC;
 #endif
 

@@ -45,31 +45,31 @@ namespace hal
       /// @{
 
       ///  Non Maskable Interrupt
-      static const interruptNumber_t NonMaskableInt = -14;
+      static constexpr interruptNumber_t NonMaskableInt = -14;
 
       /// HardFault Interrupt
-      static const interruptNumber_t HardFault = -13;
+      static constexpr interruptNumber_t HardFault = -13;
 
       /// Memory Management Interrupt
-      static const interruptNumber_t MemoryManagement = -12;
+      static constexpr interruptNumber_t MemoryManagement = -12;
 
       /// Bus Fault Interrupt
-      static const interruptNumber_t BusFault = -11;
+      static constexpr interruptNumber_t BusFault = -11;
 
       /// Usage Fault Interrupt
-      static const interruptNumber_t UsageFault = -10;
+      static constexpr interruptNumber_t UsageFault = -10;
 
       /// SV Call Interrupt
-      static const interruptNumber_t ServiceCall = -5;
+      static constexpr interruptNumber_t ServiceCall = -5;
 
       /// Debug Monitor Interrupt
-      static const interruptNumber_t DebugMonitor = -4;
+      static constexpr interruptNumber_t DebugMonitor = -4;
 
       /// Pend SV Interrupt
-      static const interruptNumber_t PendService = -2;
+      static constexpr interruptNumber_t PendService = -2;
 
       /// System Tick Interrupt
-      static const interruptNumber_t SystemTick = -1;
+      static constexpr interruptNumber_t SystemTick = -1;
 
       /// @} end of name Interrupt numbers
 

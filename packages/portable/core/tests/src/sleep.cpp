@@ -80,11 +80,11 @@ runTestAccuracy()
 class Task : public os::core::NamedObject
 {
 public:
-  static const unsigned int FROM = 1;
-  static const unsigned int TO = 10;
-  static const unsigned int REPEAT = 10;
+  static constexpr unsigned int FROM = 1;
+  static constexpr unsigned int TO = 10;
+  static constexpr unsigned int REPEAT = 10;
 
-  static const unsigned int SUM = (TO - FROM + 1) * (FROM + TO) / 2 * REPEAT;
+  static constexpr unsigned int SUM = (TO - FROM + 1) * (FROM + TO) / 2 * REPEAT;
 
   Task(const char* pName);
   ~Task();

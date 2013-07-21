@@ -25,7 +25,7 @@ static os::infra::TestSuite ts;
 
 #include "portable/core/include/Thread.h"
 
-static const os::core::Stack::size_t STACK_SIZE = 30;
+constexpr os::core::Stack::size_t STACK_SIZE = 30;
 
 // ----------------------------------------------------------------------------
 

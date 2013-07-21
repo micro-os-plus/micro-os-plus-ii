@@ -94,14 +94,14 @@ namespace hal
       public:
         CtrlMask(void) = delete;
 
-        static const reg32_t Enable = (1 << CtrlBit::Enable);
-        static const reg32_t TickInterruptEnable = (1
+        static constexpr reg32_t Enable = (1 << CtrlBit::Enable);
+        static constexpr reg32_t TickInterruptEnable = (1
             << CtrlBit::TickInterruptEnable);
-        static const reg32_t ClockSourceCore = (1 << CtrlBit::ClockSourceCore);
-        static const reg32_t CountFlag = (1 << CtrlBit::CountFlag);
+        static constexpr reg32_t ClockSourceCore = (1 << CtrlBit::ClockSourceCore);
+        static constexpr reg32_t CountFlag = (1 << CtrlBit::CountFlag);
       };
 
-      static const reg32_t ReloadMask = 0x00FFFFFFUL; // [23:0]
+      static constexpr reg32_t ReloadMask = 0x00FFFFFFUL; // [23:0]
 
       enum class CalibBit
         : reg32_t
@@ -114,9 +114,9 @@ namespace hal
       public:
         CalibMask(void) = delete;
 
-        static const reg32_t Skew = (1 << CalibBit::Skew);
-        static const reg32_t NoRef = (1 << CalibBit::NoRef);
-        static const reg32_t TenMs = (0x00FFFFFFUL << CalibBit::TenMs);
+        static constexpr reg32_t Skew = (1 << CalibBit::Skew);
+        static constexpr reg32_t NoRef = (1 << CalibBit::NoRef);
+        static constexpr reg32_t TenMs = (0x00FFFFFFUL << CalibBit::TenMs);
       };
 
       // ======================================================================
@@ -211,7 +211,7 @@ namespace hal
         /// @{
 
         /// \brief Base address of the peripheral.
-        static const hal::cortexm::address_t MEMORY_BASE_ADDRESS =
+        static constexpr hal::cortexm::address_t MEMORY_BASE_ADDRESS =
             MemoryMap::SysTick_BASE_ADDRESS;
 
         /// @} end of name Memory definitions

@@ -44,7 +44,7 @@ namespace hal
       /// \name Interrupt numbers
       /// @{
 
-      static const interruptNumber_t FPUGlobal = 81; ///< FPU global interrupt
+      static constexpr interruptNumber_t FPUGlobal = 81; ///< FPU global interrupt
 
       /// @} end of name Interrupt numbers
 

@@ -57,25 +57,23 @@ namespace os
       /// \details
       /// Value returned by threads that are not registered to the
       /// scheduler.
-      static const threadId_t NO_ID = 0xFF;
+      constexpr threadId_t NO_ID = 0xFF;
 
       // ----------------------------------------------------------------------
 
       /// \brief Constant with the maximum number of user threads.
-      static const threadCount_t MAX_USER_THREADS =
+      constexpr threadCount_t MAX_USER_THREADS =
           OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS;
 
       /// \brief Constant with the number of system threads
       /// (currently two, main & idle).
-      static const threadCount_t SYSTEM_THREADS =
+      constexpr threadCount_t SYSTEM_THREADS =
           OS_INTEGER_CORE_SCHEDULER_SYSTEMTHREADS;
 
       /// \brief Constant with the maximum number of threads to accommodate.
-      static const threadCount_t MAX_THREADS = SYSTEM_THREADS
-          + MAX_USER_THREADS;
+      constexpr threadCount_t MAX_THREADS = SYSTEM_THREADS + MAX_USER_THREADS;
 
-      static const int TICKS_PER_SECOND =
-          OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
+      constexpr int TICKS_PER_SECOND = OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
 
       // ======================================================================
 
@@ -238,31 +236,31 @@ namespace os
       ///
       /// \details
       /// Must be below MIN priority.
-      static const threadPriority_t IDLE_PRIORITY = 0x00;
+      static constexpr threadPriority_t IDLE_PRIORITY = 0x00;
 
       /// \brief Priority of main() default thread.
       ///
       /// \details
       /// Must be below MIN priority.
-      static const threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY + 1;
+      static constexpr threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY + 1;
 
       /// \brief Minimum priority.
       ///
       /// \details
       /// Must be above IDLE priority.
-      static const threadPriority_t MIN_PRIORITY = MAIN_PRIORITY + 1;
+      static constexpr threadPriority_t MIN_PRIORITY = MAIN_PRIORITY + 1;
 
       /// \brief Maximum priority.
       ///
       /// \details
       /// Must be above MIN priority.
-      static const threadPriority_t MAX_PRIORITY = 0xFF;
+      static constexpr threadPriority_t MAX_PRIORITY = 0xFF;
 
       /// \brief Default priority.
       ///
       /// \details
       /// Computed as average between MIN and MAX priorities.
-      static const threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY
+      static constexpr threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY
           - MIN_PRIORITY) / 2 + 1);
 
       /// \brief Thread ID.

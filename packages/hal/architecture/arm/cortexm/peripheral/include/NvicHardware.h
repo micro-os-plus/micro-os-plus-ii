@@ -232,7 +232,7 @@ namespace hal
         /// @{
 
         /// \brief Base address of the peripheral.
-        static const hal::cortexm::address_t MEMORY_BASE_ADDRESS =
+        static constexpr hal::cortexm::address_t MEMORY_BASE_ADDRESS =
             MemoryMap::NVIC_BASE_ADDRESS;
 
         /// @} end of name Memory definitions

@@ -137,7 +137,7 @@ namespace hal
         /// @{
 
         /// \brief Base address of the device.
-        static const hal::cortexm::address_t MEMORY_BASE_ADDRESS =
+        static constexpr hal::cortexm::address_t MEMORY_BASE_ADDRESS =
             MemoryMap::RCC_BASE_ADDRESS;
 
         /// @} end of name Memory definitions

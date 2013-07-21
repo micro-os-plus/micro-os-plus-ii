@@ -45,41 +45,41 @@ namespace hal
       /// @{
 
       /// Window WatchDog Interrupt
-      static const interruptNumber_t WindowWatchdog = 0;
+      static constexpr interruptNumber_t WindowWatchdog = 0;
       /// Programable Voltage Detector through EXTI Line detection Interrupt
-      static const interruptNumber_t ProgramableVoltageDetector = 1;
+      static constexpr interruptNumber_t ProgramableVoltageDetector = 1;
       /// Tamper Interrupt
-      static const interruptNumber_t TamperDetection = 2;
+      static constexpr interruptNumber_t TamperDetection = 2;
       /// Real Time Clock global Interrupt
-      static const interruptNumber_t RealTimeClockGlobal = 3;
+      static constexpr interruptNumber_t RealTimeClockGlobal = 3;
       /// Flash global Interrupt
-      static const interruptNumber_t FlashGlobal = 4;
+      static constexpr interruptNumber_t FlashGlobal = 4;
       /// Reset Clock Control global Interrupt
-      static const interruptNumber_t ResetClockControlGlobal = 5;
+      static constexpr interruptNumber_t ResetClockControlGlobal = 5;
       /// EXTI Line0 Interrupt
-      static const interruptNumber_t ExternalLine0 = 6;
+      static constexpr interruptNumber_t ExternalLine0 = 6;
       /// EXTI Line1 Interrupt
-      static const interruptNumber_t ExternalLine1 = 7;
+      static constexpr interruptNumber_t ExternalLine1 = 7;
       /// EXTI Line2 Interrupt
-      static const interruptNumber_t ExternalLine2 = 8;
+      static constexpr interruptNumber_t ExternalLine2 = 8;
       /// EXTI Line3 Interrupt
-      static const interruptNumber_t ExternalLine3 = 9;
+      static constexpr interruptNumber_t ExternalLine3 = 9;
       /// EXTI Line4 Interrupt
-      static const interruptNumber_t ExternalLine4 = 10;
+      static constexpr interruptNumber_t ExternalLine4 = 10;
       /// DMA1 Channel 1 global Interrupt
-      static const interruptNumber_t DMA1Channel1Global = 11;
+      static constexpr interruptNumber_t DMA1Channel1Global = 11;
       /// DMA1 Channel 2 global Interrupt
-      static const interruptNumber_t DMA1Channel2Global = 12;
+      static constexpr interruptNumber_t DMA1Channel2Global = 12;
       /// DMA1 Channel 3 global Interrupt
-      static const interruptNumber_t DMA1Channel3Global = 13;
+      static constexpr interruptNumber_t DMA1Channel3Global = 13;
       /// DMA1 Channel 4 global Interrupt
-      static const interruptNumber_t DMA1Channel4Global = 14;
+      static constexpr interruptNumber_t DMA1Channel4Global = 14;
       /// DMA1 Channel 5 global Interrupt
-      static const interruptNumber_t DMA1Channel5Global = 15;
+      static constexpr interruptNumber_t DMA1Channel5Global = 15;
       /// DMA1 Channel 6 global Interrupt
-      static const interruptNumber_t DMA1Channel6Global = 16;
+      static constexpr interruptNumber_t DMA1Channel6Global = 16;
       /// DMA1 Channel 7 global Interrupt
-      static const interruptNumber_t DMA1Channel7Global = 17;
+      static constexpr interruptNumber_t DMA1Channel7Global = 17;
 
       /// @} end of name Interrupt numbers
 

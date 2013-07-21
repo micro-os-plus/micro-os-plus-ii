@@ -44,12 +44,12 @@ namespace hal
       /// \name Interrupt numbers
       /// @{
 
-      static const interruptNumber_t FPUGlobal = 81; ///< FPU global interrupt
-      static const interruptNumber_t UART7Global = 82; ///< UART7 global interrupt
-      static const interruptNumber_t UART8Global = 83; ///< UART8 global interrupt
-      static const interruptNumber_t SPI4Global = 84; ///< SPI4 global Interrupt
-      static const interruptNumber_t SPI5Global = 85; ///< SPI5 global Interrupt
-      static const interruptNumber_t SPI6Global = 86; ///< SPI6 global Interrupt
+      static constexpr interruptNumber_t FPUGlobal = 81; ///< FPU global interrupt
+      static constexpr interruptNumber_t UART7Global = 82; ///< UART7 global interrupt
+      static constexpr interruptNumber_t UART8Global = 83; ///< UART8 global interrupt
+      static constexpr interruptNumber_t SPI4Global = 84; ///< SPI4 global Interrupt
+      static constexpr interruptNumber_t SPI5Global = 85; ///< SPI5 global Interrupt
+      static constexpr interruptNumber_t SPI6Global = 86; ///< SPI6 global Interrupt
 
       /// @} end of name Interrupt numbers
 

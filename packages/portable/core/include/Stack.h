@@ -50,7 +50,7 @@ namespace os
       ///
       /// \details
       /// Portable redefinition, based on architecture definitions.
-      static const element_t STACK_FILL = hal::arch::STACK_FILL;
+      static constexpr element_t STACK_FILL = hal::arch::STACK_FILL;
 
       /// \brief Stack size type.
       ///

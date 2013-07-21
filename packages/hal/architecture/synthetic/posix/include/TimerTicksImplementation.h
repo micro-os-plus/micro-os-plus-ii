@@ -24,8 +24,8 @@ namespace hal
 
     namespace timer
     {
-      //static const int SIGNAL_NUMBER = SIGVTALRM;
-      static const int SIGNAL_NUMBER = SIGALRM;
+      // constexpr int SIGNAL_NUMBER = SIGVTALRM;
+      constexpr int SIGNAL_NUMBER = SIGALRM;
 
     } // namespace timer
 
@@ -65,7 +65,6 @@ namespace hal
     private:
 
       sigset_t m_signalSet;
-
 
       static void
       signalHandler(int signalNumber);

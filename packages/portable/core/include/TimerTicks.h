@@ -51,7 +51,7 @@ namespace os
       /// \name Types and constants
       /// @{
 
-      static const timer::count_t ARRAY_SIZE =
+      static constexpr timer::count_t ARRAY_SIZE =
           OS_INTEGER_CORE_SCHEDULER_TIMERTICKSSIZE;
 
       /// @} end of name Types and constants

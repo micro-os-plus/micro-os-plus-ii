@@ -32,20 +32,20 @@ namespace hal
       typedef os::bitbang::i2c::duration_t duration_t;
       typedef os::bitbang::i2c::address_t address_t;
 
-      static const duration_t CLOCK_DURATION_LOOPS =
+      static constexpr duration_t CLOCK_DURATION_LOOPS =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DURATION_CLK;
 
-      static const address_t I2C_DESTINATION_ADDRESS =
+      static constexpr address_t I2C_DESTINATION_ADDRESS =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_DESTINATION_ADDRESS;
 
-      static const int SDA_PORT =
+      static constexpr int SDA_PORT =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_PORT;
-      static const int SDA_BIT =
+      static constexpr int SDA_BIT =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SDA_BIT;
 
-      static const int SCL_PORT =
+      static constexpr int SCL_PORT =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_PORT;
-      static const int SCL_BIT =
+      static constexpr int SCL_BIT =
           OS_INTEGER_PORTABLE_DIAGNOSTICS_TRACE_I2C_SCL_BIT;
 
       // ======================================================================

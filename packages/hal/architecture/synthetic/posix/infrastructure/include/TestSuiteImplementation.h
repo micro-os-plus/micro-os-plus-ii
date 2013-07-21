@@ -133,7 +133,7 @@ namespace hal
         /// @{
 
         /// \brief The file descriptor of the output device.
-        static const int OUTPUT_DEVICE_FILE_DESCRIPTOR = 1;
+        static constexpr int OUTPUT_DEVICE_FILE_DESCRIPTOR = 1;
 
         /// @} end of Private constants
 

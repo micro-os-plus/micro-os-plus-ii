@@ -41,9 +41,9 @@ namespace hal
 
       // ----------------------------------------------------------------------
 
-      static const reg16_t ACCESS_KEY = 0x5555U;
-      static const reg16_t START_KEY = 0xCCCCU;
-      static const reg16_t RELOAD_KEY = 0xAAAAU;
+      static constexpr reg16_t ACCESS_KEY = 0x5555U;
+      static constexpr reg16_t START_KEY = 0xCCCCU;
+      static constexpr reg16_t RELOAD_KEY = 0xAAAAU;
 
       // ----------------------------------------------------------------------
 
@@ -146,7 +146,7 @@ namespace hal
         /// @{
 
         /// \brief Base address of the device.
-        static const hal::cortexm::address_t MEMORY_BASE_ADDRESS =
+        static constexpr hal::cortexm::address_t MEMORY_BASE_ADDRESS =
             MemoryMap::IWDG_BASE_ADDRESS;
 
         /// @} end of name Memory definitions

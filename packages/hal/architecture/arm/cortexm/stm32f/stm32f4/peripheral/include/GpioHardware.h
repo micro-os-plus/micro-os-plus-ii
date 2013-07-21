@@ -57,7 +57,7 @@ namespace hal
       };
 
       /// \brief Mask to isolate the port mode bits.
-      static const mode_t MODE_MASK = 0x3U;
+      static constexpr mode_t MODE_MASK = 0x3U;
 
       // ----------------------------------------------------------------------
 
@@ -82,7 +82,7 @@ namespace hal
       };
 
       /// \brief Mask to isolate the port output speed bits.
-      static const outputSpeed_t OUTPUT_SPEED_MASK = 0x3U;
+      static constexpr outputSpeed_t OUTPUT_SPEED_MASK = 0x3U;
 
       // ----------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ namespace hal
       };
 
       /// \brief Mask to isolate the port pull up/pull down bits.
-      static const resistors_t RESISTORS_MASK = 0x3U;
+      static constexpr resistors_t RESISTORS_MASK = 0x3U;
 
       // ----------------------------------------------------------------------
 
@@ -125,7 +125,7 @@ namespace hal
       };
 
       /// \brief Mask to isolate the alternate function bits.
-      static const alternateFunction_t ALTERNATE_FUNCTION_MASK = 0xFU;
+      static constexpr alternateFunction_t ALTERNATE_FUNCTION_MASK = 0xFU;
 
       /// @} end of addtogroup stm32f4_gpio
 
@@ -220,10 +220,10 @@ namespace hal
         /// @{
 
         /// \brief Base address of the first port.
-        static const hal::cortexm::address_t MEMORY_BASE =
+        static constexpr hal::cortexm::address_t MEMORY_BASE =
             MemoryMap::GPIOA_BASE_ADDRESS;
         /// \brief Offset between successive ports.
-        static const hal::cortexm::address_t MEMORY_OFFSET =
+        static constexpr hal::cortexm::address_t MEMORY_OFFSET =
             MemoryMap::GPIO_OFFSET;
 
         /// @} end of name Memory definitions

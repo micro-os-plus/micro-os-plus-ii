@@ -216,7 +216,7 @@ namespace hal
         /// @{
 
         /// \brief The port number, as given when instantiating the template.
-        static const gpio::portNumber_t m_portNumber = Port_T;
+        static constexpr gpio::portNumber_t m_portNumber = Port_T;
 
         /// \brief The address of the port hardware registers.
         ///
@@ -229,7 +229,7 @@ namespace hal
                 + (m_portNumber * gpio::PortRegisters::MEMORY_OFFSET));
 
         /// \brief The bit number, as given when instantiating the template.
-        static const gpio::bitNumber_t m_bitNumber = Bit_T;
+        static constexpr gpio::bitNumber_t m_bitNumber = Bit_T;
 
         /// \brief The single bit mask, corresponding to the bit number.
         ///

@@ -19,8 +19,8 @@ namespace hal
 {
   namespace cortexm
   {
-    static const address_t PERIPHERAL_BASE = 0x40000000UL;
-    static const address_t PERIPHERAL_BITBAND_BASE = 0x42000000UL;
+    static constexpr address_t PERIPHERAL_BASE = 0x40000000UL;
+    static constexpr address_t PERIPHERAL_BITBAND_BASE = 0x42000000UL;
 
     namespace bitband
     {
