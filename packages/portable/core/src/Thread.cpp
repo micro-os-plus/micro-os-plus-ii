@@ -189,6 +189,8 @@ namespace os
 
       while (m_id != scheduler::NO_ID)
         {
+          // Suspend the thread calling join(), not the thread
+          // to be joined!
           os::scheduler.getCurrentThread()->suspend();
         }
     }
