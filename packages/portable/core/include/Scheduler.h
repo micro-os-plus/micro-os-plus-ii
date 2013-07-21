@@ -103,6 +103,12 @@ namespace os
         Thread*
         operator[](int index);
 
+        Thread* volatile *
+        begin(void);
+
+        Thread* volatile *
+        end(void);
+
       private:
 
         Thread* volatile m_array[MAX_THREADS];
@@ -134,6 +140,18 @@ namespace os
       RegisteredThreads::operator[](int index)
       {
         return m_array[index];
+      }
+
+      inline Thread* volatile *
+      RegisteredThreads::begin(void)
+      {
+        return &m_array[0];
+      }
+
+      inline Thread* volatile *
+      RegisteredThreads::end(void)
+      {
+        return &m_array[m_count];
       }
 
       // ======================================================================

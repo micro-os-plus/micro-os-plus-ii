@@ -83,15 +83,12 @@ namespace os
       os::idleThread.start();
 
       // activate all non suspended threads
-      threadCount_t i;
-      for (i = 0; i < m_registered.getCount(); ++i)
+      for (auto pThread : m_registered)
         {
-          Thread* pThread = m_registered[i];
-
-          if (!pThread->isSuspended())
-            {
-              m_active.insert(pThread);
-            }
+           if (!pThread->isSuspended())
+             {
+               m_active.insert(pThread);
+             }
         }
 
       os::timerTicks.initialise();
