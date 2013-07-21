@@ -71,10 +71,9 @@ namespace os
       os::diag::trace.putConstructorWithName();
 #endif
 
-      // Tell the scheduler that this is the current thread,
-      // so that when the first yield
-      // occurs, the context will be saved here.
-      os::scheduler.setCurrentThread(this);
+      // The scheduler will automatically initialise the pointer to the
+      // current thread with the address of the main thread, so
+      // there is no need to call setCurrentThread(this) here.
     }
 
     inline

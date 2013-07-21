@@ -37,8 +37,10 @@ namespace os
 
       m_isRunning = false;
 
-      // MainThread will immediately set this to a valid value.
-      m_pCurrentThread = nullptr;
+      // start by pointing to the main thread, so when the first
+      // context switch will occur, the main thread context will be
+      // saved properly.
+      m_pCurrentThread = &mainThread;
 
       m_lockCounter = 0;
     }
