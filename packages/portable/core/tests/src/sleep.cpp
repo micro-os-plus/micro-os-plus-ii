@@ -42,6 +42,11 @@ runTestAccuracy();
 void
 runTestAccuracy()
 {
+#if defined(DEBUG)
+  os::diag::trace.putString(__PRETTY_FUNCTION__);
+  os::diag::trace.putNewLine();
+#endif
+
   ts.setClassName("os::core::TimerTicks");
   ts.setFunctionNameOrPrefix("sleep()");
 
@@ -84,9 +89,10 @@ public:
   static constexpr unsigned int TO = 10;
   static constexpr unsigned int REPEAT = 10;
 
-  static constexpr unsigned int SUM = (TO - FROM + 1) * (FROM + TO) / 2 * REPEAT;
+  static constexpr unsigned int SUM = (TO - FROM + 1) * (FROM + TO) / 2
+      * REPEAT;
 
-  Task(const char* pName);
+  Task(const char* pName, os::core::stack::size_t stackSizeBytes);
   ~Task();
 
   void
@@ -102,8 +108,7 @@ public:
   getDeltaTicks(void);
 
 private:
-  os::core::Stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::Stack::element_t)];
+  os::core::StackWithAllocator m_stack;
 
   os::core::Thread m_thread;
 
@@ -113,9 +118,11 @@ private:
 
 #pragma GCC diagnostic pop
 
-Task::Task(const char* pName)
-    : NamedObject(pName), m_thread(pName, [](Task* pTask)
-      { pTask->threadMain();}, this, m_stack, sizeof(m_stack))
+Task::Task(const char* pName, os::core::stack::size_t stackSizeBytes)
+    : NamedObject(pName), //
+    m_stack(stackSizeBytes), //
+    m_thread(pName, [](Task* pTask)
+      { pTask->threadMain();}, this, m_stack)
 {
 #if defined(DEBUG)
   os::diag::trace.putConstructor();
@@ -205,12 +212,6 @@ Task::threadMain(void)
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-static Task task1("T1");
-static Task task2("T2");
-static Task task3("T3");
-static Task task4("T4");
-static Task task5("T5");
-
 #pragma GCC diagnostic pop
 
 void
@@ -219,6 +220,20 @@ runTestMulti();
 void
 runTestMulti()
 {
+#if defined(DEBUG)
+  os::diag::trace.putString(__PRETTY_FUNCTION__);
+  os::diag::trace.putNewLine();
+#endif
+
+  ts.setClassName("os::core::TimerTicks");
+  ts.setFunctionNameOrPrefix("sleep()");
+
+  Task task1("T1", hal::arch::MIN_STACK_SIZE);
+  Task task2("T2", hal::arch::MIN_STACK_SIZE);
+  Task task3("T3", hal::arch::MIN_STACK_SIZE);
+  Task task4("T4", hal::arch::MIN_STACK_SIZE);
+  Task task5("T5", hal::arch::MIN_STACK_SIZE);
+
   Task* array[5] =
     { &task1, &task2, &task3, &task4, &task5 };
 
