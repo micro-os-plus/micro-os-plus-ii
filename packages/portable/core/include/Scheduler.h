@@ -38,7 +38,7 @@ namespace os
       ///
       /// \details
       /// A unique value identifying each thread.
-      typedef uint8_t threadId_t;
+      typedef unsigned int threadId_t;
 
       /// \brief Count of threads.
       typedef int threadCount_t;
@@ -57,7 +57,7 @@ namespace os
       /// \details
       /// Value returned by threads that are not registered to the
       /// scheduler.
-      constexpr threadId_t NO_ID = 0xFF;
+      constexpr threadId_t NO_ID = 0;
 
       // ----------------------------------------------------------------------
 
@@ -120,10 +120,10 @@ namespace os
       public:
         RegisteredThreads(void);
 
-        threadId_t
-        add(Thread* pThread);
+        bool
+        pushBack(Thread* pThread);
 
-        threadId_t
+        bool
         remove(Thread* pThread);
 
         // return the number of known threads
@@ -132,6 +132,9 @@ namespace os
 
         threadCount_t
         getSize(void) const;
+
+        bool
+        isIdInUse(threadId_t id);
 
         Thread*
         operator[](int index);
@@ -145,6 +148,10 @@ namespace os
 #endif
 
       private:
+
+        // find if pThread is in the array
+        int
+        find(Thread* pThread);
 
         friend Thread* volatile *
         begin(RegisteredThreads& registeredThreads);
@@ -330,17 +337,18 @@ namespace os
 
       /// \brief Register thread to the scheduler lists.
       ///
-      /// \param [in] pThread Pointer to the thread.
-      /// \retval       NO_ID if the thread could not be registered.
-      /// \retval       The newly allocated thread ID, if successful.
-      scheduler::threadId_t
+      /// \param [in]   pThread Pointer to the thread.
+      /// \retval       True if the thread was registered.
+      /// \retval       False if the thread was not registered.
+      bool
       registerThread(Thread* pThread);
 
       /// \brief Deregister thread from the scheduler lists.
       ///
-      /// \param [in] pThread Pointer to the thread.
-      /// \return NO_ID.
-      scheduler::threadId_t
+      /// \param [in]   pThread Pointer to the thread.
+      /// \retval       True if the thread was deregistered.
+      /// \retval       False if the thread was not deregistered.
+      bool
       deregisterThread(Thread* pThread);
 
       void
@@ -423,13 +431,16 @@ namespace os
       /// the MainThread will immediately set it to a valid value.
       Thread* volatile m_pCurrentThread;
 
+      lockCounter_t volatile m_lockCounter;
+
       bool volatile m_isRunning;
 
-      scheduler::RegisteredThreads m_registered;
+      scheduler::threadId_t m_lastUsedId;
 
       scheduler::ActiveThreads m_active;
 
-      lockCounter_t volatile m_lockCounter;
+      scheduler::RegisteredThreads m_registered;
+
 
       /// @} end of Private member variables
     };

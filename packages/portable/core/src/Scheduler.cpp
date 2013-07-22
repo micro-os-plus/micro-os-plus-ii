@@ -43,6 +43,8 @@ namespace os
       m_pCurrentThread = &mainThread;
 
       m_lockCounter = 0;
+
+      m_lastUsedId = scheduler::NO_ID;
     }
 
     /// \details
@@ -87,10 +89,10 @@ namespace os
       // activate all non suspended threads
       for (auto pThread : m_registered)
         {
-           if (!pThread->isSuspended())
-             {
-               m_active.insert(pThread);
-             }
+          if (!pThread->isSuspended())
+            {
+              m_active.insert(pThread);
+            }
         }
 
       os::timerTicks.initialise();
@@ -185,9 +187,10 @@ namespace os
     }
 
     /// \details
-    /// If the ID is valid, just return it, the thread was already registered.
-    /// Otherwise... TBD
-    scheduler::threadId_t
+    /// If the ID is valid, just return, the thread was already registered.
+    /// Otherwise find an ID that is not in use, assign it to the thread
+    /// and, if the scheduler is running, add thread to the active list.
+    bool
     Scheduler::registerThread(Thread* pThread)
     {
 #if defined(DEBUG)
@@ -198,23 +201,32 @@ namespace os
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
 
-      scheduler::threadId_t id = m_registered.add(pThread);
-      if (os::scheduler.isRunning())
+      bool wasRegistered = m_registered.pushBack(pThread);
+      if (wasRegistered)
         {
-          if (id != scheduler::NO_ID)
+          do
+            {
+              ++m_lastUsedId;
+            }
+          while (m_registered.isIdInUse(m_lastUsedId));
+
+          pThread->setId(m_lastUsedId);
+
+          if (os::scheduler.isRunning())
             {
               // if the scheduler is running, all new threads are active
               m_active.insert(pThread);
             }
         }
-      return id;
       // ----- Critical section end -------------------------------------------
+
+      return wasRegistered;
     }
 
     /// \details
     /// If the thread is still registered, deregister it.
-    scheduler::threadId_t
-    Scheduler::deregisterThread(Thread* pThread)
+    bool
+    Scheduler::deregisterThread(Thread * pThread)
     {
 #if defined(DEBUG)
       os::diag::trace.putStringAndName("Scheduler::deregisterThread()",
@@ -224,8 +236,8 @@ namespace os
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
 
-      scheduler::threadId_t id = m_registered.remove(pThread);
-      return id;
+      bool wasDeregistered = m_registered.remove(pThread);
+      return wasDeregistered;
       // ----- Critical section end -------------------------------------------
     }
 
@@ -242,86 +254,96 @@ namespace os
 #endif
         m_count = 0;
 
-        threadCount_t i;
-        for (i = 0; i < getSize(); ++i)
+        for (threadCount_t i = 0; i < getSize(); ++i)
           {
             m_array[i] = nullptr;
           }
       }
 
-      /// \details
-      /// If the ID is valid, just return it, the thread was already registered.
-      /// Otherwise find an empty slot in the array and
-      /// store the pointer to the thread there.
-      threadId_t
-      RegisteredThreads::add(Thread* pThread)
+      // Used only in add() and remove(), so better inline it,
+      // if appropriate.
+      inline int
+      RegisteredThreads::find(Thread* pThread)
       {
-        // TODO: add synchronisation
-
-        threadId_t id = pThread->getId();
-        if (id != NO_ID)
+        for (int i = 0; i < m_count; ++i)
           {
-            return id;
+            if (m_array[i] == pThread)
+              return i;
           }
 
-        // here id = NO_ID;
+        return -1; // thread not found
+      }
+
+      /// \details
+      /// Check if the thread was already registered.
+      /// If not, check if there is still space in the array and
+      /// store the pointer to the thread there.
+      bool
+      RegisteredThreads::pushBack(Thread* pThread)
+      {
+        // Try to find the thread in the registered list
+        int i = find(pThread);
+        if (i != -1)
+          {
+            return false; // thread found, no need to add again
+          }
+
         if (m_count >= getSize())
           {
 #if defined(DEBUG)
             os::diag::trace.putString("RegisteredThreads::add() full!");
             os::diag::trace.putNewLine();
 #endif
-            return NO_ID;
+            return false;
           }
 
-        threadCount_t i;
-        // find an empty slot
-        for (i = 0; i < getSize(); ++i)
-          {
-            if (m_array[i] == nullptr)
-              {
-                // found an empty slot, register thread
-                m_array[i] = pThread;
+        m_array[m_count++] = pThread;
 
-                // generate thread id from index
-                id = static_cast<threadId_t>(i);
-                m_count++;
-
-                break;
-              }
-          }
-
-        return id;
+        return true;
       }
 
       /// \details
       /// If the thread is still registered, deregister it.
-      threadId_t
+      bool
       RegisteredThreads::remove(Thread* pThread)
       {
-        // TODO: add synchronisation
-
-        threadId_t id;
-        id = pThread->getId();
-        if (id == NO_ID)
+        // Try to find the thread in the registered list
+        int i = find(pThread);
+        if (i == -1)
           {
-            // already deregistered
-            return id;
+            return false; // thread not found, nothing to remove
           }
 
-        threadCount_t i;
-        for (i = 0; i < getSize(); ++i)
+        // Remove the thread by copying the list one step to the left
+        for (; i < m_count - 1; ++i)
           {
-            if (m_array[i] == pThread)
-              {
-                m_array[i] = nullptr;
-                m_count--;
+            m_array[i] = m_array[i + 1];
+          }
+        m_count--;
 
-                break;
+        // clear the pointer (only for aesthetics)
+        m_array[m_count] = nullptr;
+
+        return true;
+      }
+
+      bool
+      RegisteredThreads::isIdInUse(threadId_t id)
+      {
+        if (id == NO_ID)
+          {
+            return true;
+          }
+
+        for (auto pThread : *this)
+          {
+            if (pThread->getId() == id)
+              {
+                return true;
               }
           }
 
-        return NO_ID;
+        return false;
       }
 
       // ======================================================================
@@ -333,8 +355,7 @@ namespace os
 #endif
         m_count = 0;
 
-        threadCount_t i;
-        for (i = 0; i < getSize(); ++i)
+        for (threadCount_t i = 0; i < getSize(); ++i)
           {
             m_array[i] = nullptr;
           }
@@ -358,10 +379,8 @@ namespace os
       void
       ActiveThreads::insert(Thread* pThread)
       {
-        int i;
-
         // Check if already in
-        i = find(pThread);
+        int i = find(pThread);
         if (i != -1)
           {
             return; // already in, we're done
@@ -372,7 +391,7 @@ namespace os
         for (i = 0; i < m_count; ++i)
           {
             // If threads with identical priority exist, insert at the end
-            // in other words, insert before thread with higher priority.
+            // in other words, insert before the next thread with lower priority.
             if (prio > m_array[i]->getPriority())
               break;
           }
@@ -399,12 +418,14 @@ namespace os
       ActiveThreads::remove(Thread* pThread)
       {
         if (pThread == &idleThread)
-          return; // do not remove the idle thread
-
-        int i;
+          {
+            // do not remove the idle thread, to be sure there is
+            // always one entry, to be returned by getTop();
+            return;
+          }
 
         // Try to find the thread in the active list
-        i = find(pThread);
+        int i = find(pThread);
         if (i == -1)
           {
             return; // thread not found, nothing to remove
