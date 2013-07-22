@@ -109,9 +109,6 @@ then
 		if [ ! -z "$(g++ --version | grep 4.7)" ]
 		then
 			defaultCompiler=gcc47
-		elif [ ! -z "$(g++ --version | grep 4.6)" ]
-		then
-			defaultCompiler=gcc46
 		else
 			defaultCompiler=gcc
 		fi
@@ -153,6 +150,7 @@ then
 				fi
 				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
+			
 			if [ -x /usr/bin/g++-4.7 ]
 			then
 				compiler=gcc47			
@@ -162,9 +160,10 @@ then
 				fi
 				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
-			if [ -x /usr/bin/g++-4.6 ]
+			
+			if [ -x /usr/bin/g++-4.8 ]
 			then
-				compiler=gcc46			
+				compiler=gcc48			
 				if [ "$MACHINE" == "x86_64" ]
 				then
 					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
@@ -212,31 +211,7 @@ then
 			fi
 			(PATH=$PATH; runTestArray "osx" "x32" "llvm" "run") || exit $?
 	
-			
-			PATH_GCC46=/opt/local/bin
-			
-			if [ -x /opt/local/bin/g++-mp-4.6 ]
-			then
-				if [ "$MACHINE" == "x86_64" ]
-				then
-					(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x64" "gcc46" "run") || exit $?
-				fi
-				(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x32" "gcc46" "run") || exit $?
-			fi
-
-			PATH_GCC48=/opt/local/bin
-			
-			if [ -x /opt/local/bin/g++-mp-4.8 ]
-			then
-				if [ "$MACHINE" == "x86_64" ]
-				then
-					(PATH=$PATH_GCC48:$PATH; runTestArray "osx" "x64" "gcc48" "run") || exit $?
-				fi
-				(PATH=$PATH_GCC48:$PATH; runTestArray "osx" "x32" "gcc48" "run") || exit $?
-			fi
-
-			PATH_GCC47=/opt/local/bin
-			
+			PATH_GCC47=/opt/local/bin			
 			if [ -x /opt/local/bin/g++-mp-4.7 ]
 			then
 				if [ "$MACHINE" == "x86_64" ]
@@ -244,6 +219,16 @@ then
 					(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x64" "gcc47" "run") || exit $?
 				fi
 				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32" "gcc47" "run") || exit $?
+			fi
+			
+			PATH_GCC48=/opt/local/bin			
+			if [ -x /opt/local/bin/g++-mp-4.8 ]
+			then
+				if [ "$MACHINE" == "x86_64" ]
+				then
+					(PATH=$PATH_GCC48:$PATH; runTestArray "osx" "x64" "gcc48" "run") || exit $?
+				fi
+				(PATH=$PATH_GCC48:$PATH; runTestArray "osx" "x32" "gcc48" "run") || exit $?
 			fi
 
 		fi
