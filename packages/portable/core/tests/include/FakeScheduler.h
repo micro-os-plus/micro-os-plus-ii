@@ -41,6 +41,44 @@ namespace os
       /// scheduler.
       constexpr threadId_t NO_ID = 0xFF;
 
+      /// \brief Priority type.
+      ///
+      /// \details
+      /// A single byte should be more than enough, even for
+      /// larger embedded systems.
+      typedef uint8_t threadPriority_t;
+
+      /// \brief Idle task priority.
+      ///
+      /// \details
+      /// Must be below MIN priority.
+      constexpr threadPriority_t IDLE_PRIORITY = 0x00;
+
+      /// \brief Priority of main() default thread.
+      ///
+      /// \details
+      /// Must be below MIN priority.
+      constexpr threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY + 1;
+
+      /// \brief Minimum priority.
+      ///
+      /// \details
+      /// Must be above IDLE priority.
+      constexpr threadPriority_t MIN_PRIORITY = MAIN_PRIORITY + 1;
+
+      /// \brief Maximum priority.
+      ///
+      /// \details
+      /// Must be above MIN priority.
+      constexpr threadPriority_t MAX_PRIORITY = 0xFF;
+
+      /// \brief Default priority.
+      ///
+      /// \details
+      /// Computed as average between MIN and MAX priorities.
+      constexpr threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY
+          - MIN_PRIORITY) / 2 + 1);
+
     }
 
     // ========================================================================
@@ -64,50 +102,6 @@ namespace os
     public:
       /// \name Types and constants
       /// @{
-
-      /// \brief Priority type.
-      ///
-      /// \details
-      /// A single byte should be more than enough, even for
-      /// larger embedded systems.
-      typedef uint8_t threadPriority_t;
-
-      /// \brief Idle task priority.
-      ///
-      /// \details
-      /// Must be below MIN priority.
-      static constexpr threadPriority_t IDLE_PRIORITY = 0x00;
-
-      /// \brief Priority of main() default thread.
-      ///
-      /// \details
-      /// Must be below MIN priority.
-      static constexpr threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY + 1;
-
-      /// \brief Minimum priority.
-      ///
-      /// \details
-      /// Must be above IDLE priority.
-      static constexpr threadPriority_t MIN_PRIORITY = MAIN_PRIORITY + 1;
-
-      /// \brief Maximum priority.
-      ///
-      /// \details
-      /// Must be above MIN priority.
-      static constexpr threadPriority_t MAX_PRIORITY = 0xFF;
-
-      /// \brief Default priority.
-      ///
-      /// \details
-      /// Computed as average between MIN and MAX priorities.
-      static constexpr threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY
-          - MIN_PRIORITY) / 2 + 1);
-
-      /// \brief Thread ID.
-      ///
-      /// \details
-      /// A unique value identifying each thread.
-      typedef scheduler::threadId_t threadId_t;
 
       /// \brief Thread count.
       ///
@@ -141,7 +135,7 @@ namespace os
       /// \param [in] pThread   Pointer to the thread.
       /// \retval       NO_ID if the thread could not be registered.
       /// \retval       The newly allocated thread ID, if successful.
-      threadId_t
+      scheduler::threadId_t
       registerThread(Thread* pThread);
 
       /// \brief Deregister thread from the scheduler lists.
@@ -149,7 +143,7 @@ namespace os
       /// \param [in] pThread   Pointer to the thread.
       /// \retval       NO_ID if the thread was not registered.
       /// \retval       The thread ID, if successful.
-      threadId_t
+      scheduler::threadId_t
       deregisterThread(Thread* pThread);
 
       /// \brief Run all registered threads.

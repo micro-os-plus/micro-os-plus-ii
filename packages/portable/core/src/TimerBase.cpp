@@ -28,7 +28,7 @@ namespace os
     {
 #if defined(DEBUG) && defined(OS_DEBUG_TIMERBASE)
       os::diag::trace.putString("TimerBase::sleep(");
-      os::diag::trace.putDec((int)ticks);
+      os::diag::trace.putDec(ticks);
       os::diag::trace.putString(")");
       os::diag::trace.putNewLine();
 #endif
@@ -162,7 +162,7 @@ namespace os
               os::diag::trace.putChar(' ');
               os::diag::trace.putString(pThread->getName());
               os::diag::trace.putChar(' ');
-              os::diag::trace.putDec((int) p->ticks);
+              os::diag::trace.putDec(p->ticks);
               os::diag::trace.putNewLine();
             }
         }

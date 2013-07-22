@@ -88,7 +88,34 @@ namespace os
         // atomic call to the implementation
         implementation.write(&buff[pos], (sizeof(buff) - pos));
       }
-  // ========================================================================
+
+    /// \ingroup diag_conv
+    /// \relates TTraceBase
+    ///
+    /// \brief Convert a generic unsigned to a decimal representation.
+    template<class Implementation_T, typename number_T>
+      inline __attribute__((always_inline))
+      void
+      __putUnsigned(Implementation_T& implementation, number_T n)
+      {
+        size_t pos;
+        // the size is maximal and must fit all digits
+        char buff[sizeof(n) * 5 / 2]; // one more for the sign
+
+        for (pos = sizeof(buff); pos != 0;)
+          {
+            char ch = (n % 10);
+            buff[--pos] = ch + '0';
+            n /= 10;
+            if (n == 0)
+              break; // stop when there are no more digits
+          }
+
+        // atomic call to the implementation
+        implementation.write(&buff[pos], (sizeof(buff) - pos));
+      }
+
+    // ========================================================================
 
   }// namespace diag
 } // namespace os

@@ -267,6 +267,22 @@ namespace os
         __putSigned(m_implementation, n);
       }
 
+    template<class Base_T, class Implementation_T>
+      void
+      TTraceBase<Base_T, Implementation_T>::putDec(unsigned int n)
+      {
+        // inline function template
+        __putUnsigned(m_implementation, n);
+      }
+
+    template<class Base_T, class Implementation_T>
+      void
+      TTraceBase<Base_T, Implementation_T>::putDec(unsigned long n)
+      {
+        // inline function template
+        __putUnsigned(m_implementation, n);
+      }
+
   // ========================================================================
 
   }// namespace diag

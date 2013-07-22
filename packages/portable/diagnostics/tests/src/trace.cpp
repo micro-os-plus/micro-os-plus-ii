@@ -703,6 +703,38 @@ runTestDec()
       TraceBaseCharArray t;
       TraceImplementationCharArray& ti = t.getImplementation();
 
+      ts.reportInfo("unsigned int");
+      ts.setFunctionNameOrPrefix("putDec(unsigned int n)");
+
+#if __SIZEOF_INT__ == 4
+      ts.setInputValues("1234567890");
+
+      ts.assertCondition(ti.array[0] == ti.getDefaultChar());
+
+      unsigned int un = 1234567890;
+      t.putDec(un);
+
+      ts.assertCondition(ti.count == 10);
+      ts.assertCondition(ti.array[0] == '1');
+      ts.assertCondition(ti.array[1] == '2');
+      ts.assertCondition(ti.array[2] == '3');
+      ts.assertCondition(ti.array[3] == '4');
+      ts.assertCondition(ti.array[4] == '5');
+      ts.assertCondition(ti.array[5] == '6');
+      ts.assertCondition(ti.array[6] == '7');
+      ts.assertCondition(ti.array[7] == '8');
+      ts.assertCondition(ti.array[8] == '9');
+      ts.assertCondition(ti.array[9] == '0');
+      ts.assertCondition(ti.array[10] == ti.getDefaultChar());
+#else
+#error "unsupported sizeof int"
+#endif
+    }
+
+    {
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
+
       ts.reportInfo("long");
       ts.setFunctionNameOrPrefix("putDec(long n)");
 
@@ -820,6 +852,67 @@ runTestDec()
 #error "unsupported sizeof long"
 #endif
     }
+
+    {
+      TraceBaseCharArray t;
+      TraceImplementationCharArray& ti = t.getImplementation();
+
+      ts.reportInfo("unsigned long");
+      ts.setFunctionNameOrPrefix("putDec(unsigned long n)");
+
+#if __SIZEOF_LONG__ == 4
+      ts.setInputValues("123456789");
+
+      ts.assertCondition(ti.array[0] == ti.getDefaultChar());
+
+      unsigned long un = 123456789;
+      t.putDec(un);
+
+      ts.assertCondition(ti.count == 9);
+      ts.assertCondition(ti.array[0] == '1');
+      ts.assertCondition(ti.array[1] == '2');
+      ts.assertCondition(ti.array[2] == '3');
+      ts.assertCondition(ti.array[3] == '4');
+      ts.assertCondition(ti.array[4] == '5');
+      ts.assertCondition(ti.array[5] == '6');
+      ts.assertCondition(ti.array[6] == '7');
+      ts.assertCondition(ti.array[7] == '8');
+      ts.assertCondition(ti.array[8] == '9');
+      ts.assertCondition(ti.array[9] == ti.getDefaultChar());
+#elif __SIZEOF_LONG__ == 8
+      ts.setInputValues("1234567890123456789");
+
+      ts.assertCondition(ti.array[0] == ti.getDefaultChar());
+
+      unsigned long un = 1234567890123456789L;
+      t.putDec(un);
+
+      ts.assertCondition(ti.count == 19);
+      ts.assertCondition(ti.array[0] == '1');
+      ts.assertCondition(ti.array[1] == '2');
+      ts.assertCondition(ti.array[2] == '3');
+      ts.assertCondition(ti.array[3] == '4');
+      ts.assertCondition(ti.array[4] == '5');
+      ts.assertCondition(ti.array[5] == '6');
+      ts.assertCondition(ti.array[6] == '7');
+      ts.assertCondition(ti.array[7] == '8');
+      ts.assertCondition(ti.array[8] == '9');
+      ts.assertCondition(ti.array[9] == '0');
+      ts.assertCondition(ti.array[10] == '1');
+      ts.assertCondition(ti.array[11] == '2');
+      ts.assertCondition(ti.array[12] == '3');
+      ts.assertCondition(ti.array[13] == '4');
+      ts.assertCondition(ti.array[14] == '5');
+      ts.assertCondition(ti.array[15] == '6');
+      ts.assertCondition(ti.array[16] == '7');
+      ts.assertCondition(ti.array[17] == '8');
+      ts.assertCondition(ti.array[18] == '9');
+      ts.assertCondition(ti.array[19] == ti.getDefaultChar());
+#else
+#error "unsupported sizeof long"
+#endif
+    }
+
 }
 
 // ----------------------------------------------------------------------------

@@ -408,6 +408,22 @@ namespace os
         void
         putDec(long n);
 
+        /// \brief Put unsigned int decimal.
+        ///
+        /// \param [in] n       A number.
+        /// \par Returns
+        ///     Nothing.
+        void
+        putDec(unsigned int n);
+
+        /// \brief Put unsigned long decimal.
+        ///
+        /// \param [in] n       A number.
+        /// \par Returns
+        ///     Nothing.
+        void
+        putDec(unsigned long n);
+
         /// \brief Put string and address.
         ///
         /// \param [in] pStr    A pointer to string.

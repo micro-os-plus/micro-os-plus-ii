@@ -179,7 +179,7 @@ Task::threadMain(void)
 
 #if defined(DEBUG)
   os::diag::trace.putString("many sleeps, took ");
-  os::diag::trace.putDec((int)m_deltaTicks);
+  os::diag::trace.putDec(m_deltaTicks);
   os::diag::trace.putString(" milliseconds, \"");
   os::diag::trace.putString(getThread().getName());
   os::diag::trace.putString("\"");
@@ -194,7 +194,7 @@ Task::threadMain(void)
   os::diag::trace.putString(" SUM=");
   os::diag::trace.putDec(SUM);
   os::diag::trace.putString(" deltaTicks=");
-  os::diag::trace.putDec((int)m_deltaTicks);
+  os::diag::trace.putDec(m_deltaTicks);
 #endif
 
 }

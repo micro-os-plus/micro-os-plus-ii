@@ -54,10 +54,10 @@ namespace os
     /// If the ID is valid, just return it, the thread was already registered.
     /// Otherwise find an empty slot in the array and
     /// store the pointer to the thread there.
-    FakeScheduler::threadId_t
+    scheduler::threadId_t
     FakeScheduler::registerThread(Thread* pThread)
     {
-      threadId_t id = pThread->getId();
+      scheduler::threadId_t id = pThread->getId();
       if (id != scheduler::NO_ID)
         {
           return id;
@@ -83,7 +83,7 @@ namespace os
               m_threads[i] = pThread;
 
               // generate thread id
-              id = static_cast<threadId_t>(i);
+              id = static_cast<scheduler::threadId_t>(i);
               m_threadCount++;
 
               break;
@@ -95,13 +95,13 @@ namespace os
 
     /// \details
     /// If the thread is still registered, deregister it.
-    FakeScheduler::threadId_t
+    scheduler::threadId_t
     FakeScheduler::deregisterThread(Thread* pThread)
     {
 #if defined(DEBUG)
       os::diag::trace.putMemberFunction();
 #endif
-      threadId_t id;
+      scheduler::threadId_t id;
       id = pThread->getId();
       if (id != scheduler::NO_ID)
         {
@@ -131,8 +131,8 @@ namespace os
       os::diag::trace.putMemberFunction();
 #endif
 
-      threadPriority_t pri;
-      for (pri = MAX_PRIORITY; pri >= MAIN_PRIORITY; pri--)
+      scheduler::threadPriority_t pri;
+      for (pri = scheduler::MAX_PRIORITY; pri >= scheduler::MAIN_PRIORITY; pri--)
         {
           threadCount_t i;
           for (i = 0; i < getThreadsArraySize(); ++i)

@@ -97,7 +97,7 @@ namespace hal
       os::diag::trace.putString(", mctx @");
       os::diag::trace.putHex((void*) &m_context.__mcontext_data);
       os::diag::trace.putString(", sz=");
-      os::diag::trace.putDec((int) sizeof(m_context.__mcontext_data));
+      os::diag::trace.putDec(sizeof(m_context.__mcontext_data));
 #endif
       os::diag::trace.putNewLine();
 #endif
@@ -122,7 +122,7 @@ namespace hal
           (void*) (pStackBottom
               + stackSizeBytes / sizeof(hal::arch::stackElement_t)));
       os::diag::trace.putString(", size=");
-      os::diag::trace.putDec((int) stackSizeBytes);
+      os::diag::trace.putDec(stackSizeBytes);
       os::diag::trace.putString(", entry=");
       os::diag::trace.putHex((void*) entryPoint);
       os::diag::trace.putString(", p1=");
