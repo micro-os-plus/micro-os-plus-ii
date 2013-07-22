@@ -72,7 +72,7 @@ namespace os
       m_entryPointParameter = pParameters;
     }
 
-    void
+    bool
     Thread::start(void)
     {
 #if defined(DEBUG)
@@ -80,7 +80,7 @@ namespace os
 #endif
       if (m_id != scheduler::NO_ID)
         // already started
-        return;
+        return true;
 
       m_isSuspended = false;
       m_isAttentionRequested = false;
@@ -95,9 +95,9 @@ namespace os
           (trampoline3_t) trampoline3, (void*) m_entryPointAddress,
           (void*) m_entryPointParameter, (void*) this);
 
-      m_id = os::scheduler.registerThread(this);
+      bool wasRegistered = os::scheduler.registerThread(this);
 #if defined(DEBUG)
-      if (m_id == scheduler::NO_ID)
+      if (!wasRegistered)
         {
           os::diag::trace.putString("cannot register thread \"");
           os::diag::trace.putString(getName());
@@ -105,7 +105,7 @@ namespace os
           os::diag::trace.putNewLine();
         }
 #endif
-
+      return wasRegistered;
     }
 
     void

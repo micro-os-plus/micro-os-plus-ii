@@ -146,6 +146,7 @@ namespace os
       id_t
       getId(void) const;
 
+
       /// \brief Get the thread entry point address.
       ///
       /// \par Parameters
@@ -162,7 +163,7 @@ namespace os
       void*
       getEntryPointParameter(void) const;
 
-      void
+      bool
       start(void);
 
       //void
@@ -260,6 +261,8 @@ namespace os
 
     private:
 
+      friend class Scheduler;
+
       /// \name Private member functions
       /// @{
 
@@ -281,6 +284,14 @@ namespace os
       ///    Nothing.
       void
       cleanup(void);
+
+      /// \brief Set the thread ID.
+      ///
+      /// \param [in] id        The new thread id.
+      /// \par Returns
+      ///    Nothing.
+      void
+      setId(id_t id);
 
       /// @} end of Private member functions
 
@@ -400,6 +411,17 @@ namespace os
     {
       return m_id;
     }
+
+    /// \details
+    /// Set the thread ID, as assigned by the scheduler
+    /// when the thread was registered.
+    inline void
+    __attribute__((always_inline))
+    Thread::setId(Thread::id_t id)
+    {
+       m_id = id;
+    }
+
 
     /// \details
     /// Return the address of the code used for the thread.
