@@ -13,7 +13,6 @@
 #include "portable/core/include/OS.h"
 
 #include "portable/infrastructure/include/TestSuite.h"
-#include "hal/architecture/infrastructure/include/TestSuiteImplementation.h"
 
 #include <string.h>
 
