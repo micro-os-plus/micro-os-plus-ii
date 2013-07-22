@@ -183,9 +183,8 @@ namespace hal
       ~InterruptsCriticalSection();
 
     private:
-       sigset_t m_status;
+      sigset_t m_status;
     };
-
 
   // ==========================================================================
 
@@ -196,13 +195,23 @@ namespace hal
 
   namespace arch
   {
+#if __GNUC__ == 4 && __GNUC_MINOR__ == 6
     typedef hal::posix::ArchitectureImplementation ArchitectureImplementation;
+#else
+    using ArchitectureImplementation = hal::posix::ArchitectureImplementation;
+#endif
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
+#if __GNUC__ == 4 && __GNUC_MINOR__ == 6
     typedef hal::posix::ThreadContext ThreadContext;
     typedef hal::posix::TimerTicksImplementation TimerTicksImplementation;
     typedef hal::posix::InterruptsCriticalSection InterruptsCriticalSection;
+#else
+    using ThreadContext = hal::posix::ThreadContext;
+    using TimerTicksImplementation = hal::posix::TimerTicksImplementation;
+    using InterruptsCriticalSection = hal::posix::InterruptsCriticalSection;
+#endif
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }
