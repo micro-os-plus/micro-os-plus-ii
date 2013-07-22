@@ -27,10 +27,10 @@ namespace os
     Stack::initialise(void)
     {
       // fill entire stack
-      element_t* p = m_pStart;
+      stack::element_t* p = m_pStart;
       if (p != nullptr)
         {
-          size_t cnt = m_sizeBytes / sizeof(element_t);
+          stack::size_t cnt = m_sizeBytes / sizeof(stack::element_t);
           for (; cnt > 0; --cnt)
             *p++ = STACK_FILL;
         }
