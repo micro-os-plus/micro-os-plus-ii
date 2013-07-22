@@ -65,7 +65,7 @@ namespace os
     inline
     MainThread::MainThread(void)
         : Thread("main()", nullptr, nullptr, nullptr, 0,
-            os::core::Scheduler::MAIN_PRIORITY)
+            os::core::scheduler::MAIN_PRIORITY)
     {
 #if defined(DEBUG)
       os::diag::trace.putConstructorWithName();

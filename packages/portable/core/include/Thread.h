@@ -55,13 +55,13 @@ namespace os
       ///
       /// \details
       /// Redefined here, based on scheduler definitions.
-      typedef Scheduler::threadPriority_t priority_t;
+      typedef scheduler::threadPriority_t priority_t;
 
       /// \brief Thread ID.
       ///
       /// \details
       /// Redefined here, based on scheduler definitions.
-      typedef Scheduler::threadId_t id_t;
+      typedef scheduler::threadId_t id_t;
 
       //static constexpr id_t NO_ID = scheduler::NO_ID;
 
@@ -91,7 +91,7 @@ namespace os
       Thread(const char* const pName, threadEntryPoint_t entryPoint,
           void* pParameters, Stack::element_t* const pStack,
           Stack::size_t const stackSizeBytes, priority_t priority =
-              Scheduler::DEFAULT_PRIORITY);
+              scheduler::DEFAULT_PRIORITY);
 
       /// \brief Template Constructor.
       ///
@@ -104,7 +104,7 @@ namespace os
       template<class Lambda_T, class Object_T>
         Thread(const char* const pName, Lambda_T function, Object_T* pObject,
             Stack::element_t* const pStack, Stack::size_t const stackSizeBytes,
-            priority_t priority = Scheduler::DEFAULT_PRIORITY);
+            priority_t priority = scheduler::DEFAULT_PRIORITY);
 
       /// \brief Destructor.
       ~Thread();

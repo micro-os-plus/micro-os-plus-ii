@@ -25,7 +25,7 @@ namespace os
     IdleThread::IdleThread(void)
         : Thread("idle", [](IdleThread* p)
           { p->threadMain();}, (IdleThread*) this, m_stack, sizeof(m_stack),
-            os::core::Scheduler::IDLE_PRIORITY)
+            os::core::scheduler::IDLE_PRIORITY)
     {
 #if defined(DEBUG)
       os::diag::trace.putConstructorWithName();

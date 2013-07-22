@@ -75,6 +75,39 @@ namespace os
 
       constexpr int TICKS_PER_SECOND = OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
 
+      // ----------------------------------------------------------------------
+
+      /// \brief Idle task priority.
+      ///
+      /// \details
+      /// Must be below MIN priority.
+      constexpr threadPriority_t IDLE_PRIORITY = 0x00;
+
+      /// \brief Priority of main() default thread.
+      ///
+      /// \details
+      /// Must be below MIN priority.
+      constexpr threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY + 1;
+
+      /// \brief Minimum priority.
+      ///
+      /// \details
+      /// Must be above IDLE priority.
+      constexpr threadPriority_t MIN_PRIORITY = MAIN_PRIORITY + 1;
+
+      /// \brief Maximum priority.
+      ///
+      /// \details
+      /// Must be above MIN priority.
+      constexpr threadPriority_t MAX_PRIORITY = 0xFF;
+
+      /// \brief Default priority.
+      ///
+      /// \details
+      /// Computed as average between MIN and MAX priorities.
+      constexpr threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY
+          - MIN_PRIORITY) / 2 + 1);
+
       // ======================================================================
 
 #pragma GCC diagnostic push
@@ -103,13 +136,21 @@ namespace os
         Thread*
         operator[](int index);
 
+#if 0
         Thread* volatile *
         begin(void);
 
         Thread* volatile *
         end(void);
+#endif
 
       private:
+
+        friend Thread* volatile *
+        begin(RegisteredThreads& registeredThreads);
+
+        friend Thread* volatile *
+        end(RegisteredThreads& registeredThreads);
 
         Thread* volatile m_array[MAX_THREADS];
 
@@ -142,17 +183,38 @@ namespace os
         return m_array[index];
       }
 
+#if 0
       inline Thread* volatile *
+      __attribute__((always_inline))
       RegisteredThreads::begin(void)
+        {
+          return &m_array[0];
+        }
+
+      inline Thread* volatile *
+      __attribute__((always_inline))
+      RegisteredThreads::end(void)
+        {
+          return &m_array[m_count];
+        }
+#else
+
+      // required by GCC 4.6, otherwise 'for' with iterator does not work
+
+      inline Thread* volatile *
+      __attribute__((always_inline))
+      begin(RegisteredThreads& registeredThreads)
       {
-        return &m_array[0];
+        return &registeredThreads.m_array[0];
       }
 
       inline Thread* volatile *
-      RegisteredThreads::end(void)
+      __attribute__((always_inline))
+      end(RegisteredThreads& registeredThreads)
       {
-        return &m_array[m_count];
+        return &registeredThreads.m_array[registeredThreads.m_count];
       }
+#endif
 
       // ======================================================================
 
@@ -243,52 +305,6 @@ namespace os
       /// \name Types and constants
       /// @{
 
-      /// \brief Priority type.
-      ///
-      /// \details
-      /// A single byte should be more than enough, even for
-      /// larger embedded systems.
-      typedef scheduler::threadPriority_t threadPriority_t;
-
-      /// \brief Idle task priority.
-      ///
-      /// \details
-      /// Must be below MIN priority.
-      static constexpr threadPriority_t IDLE_PRIORITY = 0x00;
-
-      /// \brief Priority of main() default thread.
-      ///
-      /// \details
-      /// Must be below MIN priority.
-      static constexpr threadPriority_t MAIN_PRIORITY = IDLE_PRIORITY + 1;
-
-      /// \brief Minimum priority.
-      ///
-      /// \details
-      /// Must be above IDLE priority.
-      static constexpr threadPriority_t MIN_PRIORITY = MAIN_PRIORITY + 1;
-
-      /// \brief Maximum priority.
-      ///
-      /// \details
-      /// Must be above MIN priority.
-      static constexpr threadPriority_t MAX_PRIORITY = 0xFF;
-
-      /// \brief Default priority.
-      ///
-      /// \details
-      /// Computed as average between MIN and MAX priorities.
-      static constexpr threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY
-          - MIN_PRIORITY) / 2 + 1);
-
-      /// \brief Thread ID.
-      ///
-      /// \details
-      /// A unique value identifying each thread.
-      typedef scheduler::threadId_t threadId_t;
-
-      typedef scheduler::threadCount_t threadCount_t;
-
       typedef uint32_t lockCounter_t;
 
       /// @} end of name Types and constants
@@ -317,14 +333,14 @@ namespace os
       /// \param [in] pThread Pointer to the thread.
       /// \retval       NO_ID if the thread could not be registered.
       /// \retval       The newly allocated thread ID, if successful.
-      threadId_t
+      scheduler::threadId_t
       registerThread(Thread* pThread);
 
       /// \brief Deregister thread from the scheduler lists.
       ///
       /// \param [in] pThread Pointer to the thread.
       /// \return NO_ID.
-      threadId_t
+      scheduler::threadId_t
       deregisterThread(Thread* pThread);
 
       void

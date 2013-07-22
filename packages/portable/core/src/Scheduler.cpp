@@ -187,7 +187,7 @@ namespace os
     /// \details
     /// If the ID is valid, just return it, the thread was already registered.
     /// Otherwise... TBD
-    Scheduler::threadId_t
+    scheduler::threadId_t
     Scheduler::registerThread(Thread* pThread)
     {
 #if defined(DEBUG)
@@ -198,7 +198,7 @@ namespace os
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
 
-      threadId_t id = m_registered.add(pThread);
+      scheduler::threadId_t id = m_registered.add(pThread);
       if (os::scheduler.isRunning())
         {
           if (id != scheduler::NO_ID)
@@ -213,7 +213,7 @@ namespace os
 
     /// \details
     /// If the thread is still registered, deregister it.
-    Scheduler::threadId_t
+    scheduler::threadId_t
     Scheduler::deregisterThread(Thread* pThread)
     {
 #if defined(DEBUG)
@@ -224,7 +224,7 @@ namespace os
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
 
-      threadId_t id = m_registered.remove(pThread);
+      scheduler::threadId_t id = m_registered.remove(pThread);
       return id;
       // ----- Critical section end -------------------------------------------
     }
