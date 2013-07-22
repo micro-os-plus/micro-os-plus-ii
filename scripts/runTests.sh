@@ -212,6 +212,18 @@ then
 			fi
 			(PATH=$PATH; runTestArray "osx" "x32" "llvm" "run") || exit $?
 	
+			
+			PATH_GCC46=/opt/local/bin
+			
+			if [ -x /opt/local/bin/g++-mp-4.6 ]
+			then
+				if [ "$MACHINE" == "x86_64" ]
+				then
+					(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x64" "gcc46" "run") || exit $?
+				fi
+				(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x32" "gcc46" "run") || exit $?
+			fi
+
 			PATH_GCC48=/opt/local/bin
 			
 			if [ -x /opt/local/bin/g++-mp-4.8 ]
@@ -233,17 +245,7 @@ then
 				fi
 				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32" "gcc47" "run") || exit $?
 			fi
-			
-			PATH_GCC46=/opt/local/bin
-			
-			if [ -x /opt/local/bin/g++-mp-4.6 ]
-			then
-				if [ "$MACHINE" == "x86_64" ]
-				then
-					(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x64" "gcc46" "run") || exit $?
-				fi
-				(PATH=$PATH_GCC46:$PATH; runTestArray "osx" "x32" "gcc46" "run") || exit $?
-			fi
+
 		fi
 	) || exit $?
 
