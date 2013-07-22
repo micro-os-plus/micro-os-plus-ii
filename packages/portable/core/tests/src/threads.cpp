@@ -25,7 +25,7 @@ static os::infra::TestSuite ts;
 
 #include "portable/core/include/Thread.h"
 
-constexpr os::core::Stack::size_t STACK_SIZE = 30;
+constexpr os::core::stack::size_t STACK_SIZE = 30;
 
 // ----------------------------------------------------------------------------
 
@@ -74,8 +74,8 @@ threadCMain(void* pParam
   cCount = getNextGlobalCountValue();
 }
 
-static os::core::Stack::element_t stackC[hal::arch::MIN_STACK_SIZE
-    / sizeof(os::core::Stack::element_t)];
+static os::core::stack::element_t stackC[hal::arch::MIN_STACK_SIZE
+    / sizeof(os::core::stack::element_t)];
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -113,8 +113,8 @@ public:
 
 private:
   count_t m_count;
-  os::core::Stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::Stack::element_t)];
+  os::core::stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
+      / sizeof(os::core::stack::element_t)];
   os::core::Thread m_thread;
 };
 
@@ -212,20 +212,20 @@ public:
   count_t m_count3[3];
 
 public:
-  os::core::Stack::element_t m_stack1[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::Stack::element_t)];
+  os::core::stack::element_t m_stack1[hal::arch::MIN_STACK_SIZE
+      / sizeof(os::core::stack::element_t)];
   os::core::Thread m_thread1;
 
-  os::core::Stack::element_t m_stack2[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::Stack::element_t)];
+  os::core::stack::element_t m_stack2[hal::arch::MIN_STACK_SIZE
+      / sizeof(os::core::stack::element_t)];
   os::core::Thread m_thread2;
 
-  os::core::Stack::element_t m_stack3a[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::Stack::element_t)];
+  os::core::stack::element_t m_stack3a[hal::arch::MIN_STACK_SIZE
+      / sizeof(os::core::stack::element_t)];
   os::core::Thread m_thread3a;
 
-  os::core::Stack::element_t m_stack3b[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::Stack::element_t)];
+  os::core::stack::element_t m_stack3b[hal::arch::MIN_STACK_SIZE
+      / sizeof(os::core::stack::element_t)];
   os::core::Thread m_thread3b;
 };
 

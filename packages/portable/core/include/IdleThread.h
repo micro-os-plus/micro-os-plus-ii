@@ -52,8 +52,8 @@ namespace os
       threadMain(void);
 
     private:
-      os::core::Stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
-          / sizeof(os::core::Stack::element_t)];
+      os::core::stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
+          / sizeof(os::core::stack::element_t)];
 
     };
 

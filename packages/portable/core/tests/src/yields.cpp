@@ -77,7 +77,7 @@ private:
   count_t m_count1;
   count_t m_count2;
 
-  os::core::Stack::element_t m_stack[hal::arch::MIN_STACK_SIZE/sizeof(os::core::Stack::element_t)];
+  os::core::stack::element_t m_stack[hal::arch::MIN_STACK_SIZE/sizeof(os::core::stack::element_t)];
   os::core::Thread m_thread;
 };
 

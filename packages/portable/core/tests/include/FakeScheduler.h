@@ -272,7 +272,7 @@ namespace os
     // ========================================================================
 
     // Make this the default scheduler
-    typedef os::core::FakeScheduler Scheduler;
+    using Scheduler = os::core::FakeScheduler ;
 
   } // namespace core
 } // namespace os
