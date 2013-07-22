@@ -82,6 +82,10 @@ namespace hal
 
     // ========================================================================
 
+#if defined(DEBUG)
+//#define OS_DEBUG_THREADCONTEXT  1
+#endif
+
     /// \details
     /// Used only to explicitly initialise m_error.
     ThreadContext::ThreadContext(void)
@@ -103,6 +107,15 @@ namespace hal
 #endif
     }
 
+    /// \details
+    /// Used only to explicitly initialise m_error.
+    ThreadContext::~ThreadContext()
+    {
+#if defined(DEBUG) && defined(OS_DEBUG_THREADCONTEXT)
+      os::diag::trace.putDestructor();
+#endif
+    }
+
     typedef void
     (*mfunc)();
 
@@ -114,7 +127,7 @@ namespace hal
         os::core::trampoline3_t entryPoint, void* p1, void* p2, void* p3)
     {
 #if defined(DEBUG) && defined(OS_DEBUG_THREADCONTEXT)
-      os::diag::trace.putString("ThreadContext::create");
+      os::diag::trace.putString("ThreadContext::create()");
       os::diag::trace.putString(" stack=");
       os::diag::trace.putHex((void*) pStackBottom);
       os::diag::trace.putString("-");

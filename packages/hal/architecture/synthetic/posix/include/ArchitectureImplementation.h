@@ -116,6 +116,9 @@ namespace hal
       /// \brief Constructor.
       ThreadContext(void);
 
+      /// \brief Destructor.
+      ~ThreadContext();
+
       /// @} end of name Constructors/destructor
 
       /// \name Public member functions
