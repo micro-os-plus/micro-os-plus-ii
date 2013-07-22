@@ -13,7 +13,31 @@
 
 #if defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE) || defined(__DOXYGEN__)
 
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION)
+
+#include "hal/architecture/synthetic/posix/infrastructure/include/TestSuiteImplementation.h"
+
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_CUSTOM)
+
 #include "hal/architecture/infrastructure/include/TestSuiteImplementation.h"
+
+//
+//      'enable("component.os.hal.architecture.infrastructure.testsuite.implementation.custom")',
+//
+//      implements=[
+//              'interface.os.portable.infrastructure.testsuite',
+//      ],
+//
+//      copyFiles=[
+//              ('../include/TestSuiteImplementation.h','include/hal/architecture/infrastructure/include/TestSuiteImplementation.h'),
+//      ],
+//
+
+#else
+
+#error "missing TestSuiteImplementation.h"
+
+#endif
 
 #include <stdint.h>
 

@@ -31,11 +31,13 @@ Package(
             headerDefinition='OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE',
               
             children=[
+                      
                 Interface(
                     id='interface.os.portable.infrastructure.testsuite',
                     name='Unit tests output interface',
                     description='Platform implementation for the unit tests output.',
                 ),
+                      
             ],
         ),
     ],

@@ -13,7 +13,23 @@
 
 #if defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE) || defined(__DOXYGEN__)
 
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_DIAGNOSTICS_TRACEIMPLEMENTATION)
+
+#include "hal/architecture/synthetic/posix/diagnostics/include/TraceImplementation.h"
+
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_DIAGNOSTICS_TRACEIMPLEMENTATION_CUSTOM)
+
 #include "hal/architecture/diagnostics/include/TraceImplementation.h"
+
+//      copyFiles=[
+//              ('../include/TraceImplementation.h','include/hal/architecture/diagnostics/include/TraceImplementation.h'),
+//      ],
+
+#else
+
+#error "missing TraceImplementation.h"
+
+#endif
 
 // Do not enable it for __DOXYGEN__, the dependency graphs are too large
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)

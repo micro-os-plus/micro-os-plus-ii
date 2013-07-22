@@ -18,9 +18,25 @@
 // Include architecture definitions, like various types.
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 
+#if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F)
+
+#include "hal/architecture/arm/cortexm/stm32f/include/FamilyImplementationSelector.h"
+
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_FAMILY_CUSTOM)
+
 // Include one of the supported families,
 // copied to the build folder by the XCDL procedure.
 #include "hal/architecture/include/FamilyImplementation.h"
+
+//    copyFiles=[
+//        ('../include/FamilyImplementation.h', 'include/hal/architecture/include/FamilyImplementation.h'),
+//    ],
+
+#else
+
+#error "missing FamilyImplementation.h"
+
+#endif
 
 //#include "portable/core/include/Stack.h"
 

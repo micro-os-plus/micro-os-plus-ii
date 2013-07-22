@@ -24,7 +24,6 @@ Component(
 
     copyFiles=[
         ('../ldscripts/sections.ld', 'ldscripts/sections.ld'),
-        ('../include/FamilyImplementation.h', 'include/hal/architecture/include/FamilyImplementation.h'),
     ],
 
     children=[
