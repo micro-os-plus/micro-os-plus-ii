@@ -89,8 +89,19 @@ namespace os
       /// \param [in] stackSizeBytes    Size of stack in Bytes.
       /// \param [in] priority          Initial priority.
       Thread(const char* const pName, threadEntryPoint_t entryPoint,
-          void* pParameters, Stack::element_t* const pStack,
-          Stack::size_t const stackSizeBytes, priority_t priority =
+          void* pParameters, stack::element_t* const pStack,
+          stack::size_t const stackSizeBytes, priority_t priority =
+              scheduler::DEFAULT_PRIORITY);
+
+      /// \brief Constructor.
+      ///
+      /// \param [in] pName             Pointer to the null terminated thread name.
+      /// \param [in] entryPoint        Pointer to the thread code.
+      /// \param [in] pParameters       Pointer to the parameters passed to the thread.
+      /// \param [in] stack             Reference to the stack object.
+      /// \param [in] priority          Initial priority.
+      Thread(const char* const pName, threadEntryPoint_t entryPoint,
+          void* pParameters, StackWithAllocator& stack, priority_t priority =
               scheduler::DEFAULT_PRIORITY);
 
       /// \brief Template Constructor.
@@ -103,8 +114,20 @@ namespace os
       /// \param [in] priority          Initial priority.
       template<class Lambda_T, class Object_T>
         Thread(const char* const pName, Lambda_T function, Object_T* pObject,
-            Stack::element_t* const pStack, Stack::size_t const stackSizeBytes,
+            stack::element_t* const pStack, stack::size_t const stackSizeBytes,
             priority_t priority = scheduler::DEFAULT_PRIORITY);
+
+      /// \brief Template Constructor.
+      ///
+      /// \param [in] pName             Pointer to the null terminated thread name.
+      /// \param [in] function          A lambda to be called with one parameter.
+      /// \param [in] pObject           Pointer to the parameters passed to the thread.
+      /// \param [in] stack             Reference to the stack object.
+      /// \param [in] priority          Initial priority.
+      template<class Lambda_T, class Object_T>
+        Thread(const char* const pName, Lambda_T function, Object_T* pObject,
+            StackWithAllocator& stack, priority_t priority =
+                scheduler::DEFAULT_PRIORITY);
 
       /// \brief Destructor.
       ~Thread();
@@ -145,7 +168,6 @@ namespace os
       /// \return The current thread ID.
       id_t
       getId(void) const;
-
 
       /// \brief Get the thread entry point address.
       ///
@@ -261,7 +283,7 @@ namespace os
 
     private:
 
-      friend class Scheduler;
+      friend Scheduler;
 
       /// \name Private member functions
       /// @{
@@ -354,10 +376,29 @@ namespace os
     /// \endcode
     template<class Lambda_T, class Object_T>
       Thread::Thread(const char* const pName, Lambda_T function,
-          Object_T* pObject, Stack::element_t* const pStack,
-          Stack::size_t const stackSizeBytes, priority_t priority)
+          Object_T* pObject, stack::element_t* const pStack,
+          stack::size_t const stackSizeBytes, priority_t priority)
           : NamedObject(pName), //
           m_stack(pStack, stackSizeBytes)
+      {
+#if defined(DEBUG)
+#if defined(OS_DEBUG_THREAD)
+        os::diag::trace.putConstructorWithName();
+#else
+        os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
+            pName);
+#endif
+#endif
+        initialise(reinterpret_cast<threadEntryPoint_t>(*function),
+            static_cast<void*>(pObject), priority);
+
+      }
+
+    template<class Lambda_T, class Object_T>
+      Thread::Thread(const char* const pName, Lambda_T function,
+          Object_T* pObject, StackWithAllocator& stack, priority_t priority)
+          : NamedObject(pName), //
+          m_stack(stack)
       {
 #if defined(DEBUG)
 #if defined(OS_DEBUG_THREAD)
@@ -419,9 +460,8 @@ namespace os
     __attribute__((always_inline))
     Thread::setId(Thread::id_t id)
     {
-       m_id = id;
+      m_id = id;
     }
-
 
     /// \details
     /// Return the address of the code used for the thread.
@@ -450,8 +490,7 @@ namespace os
       return m_context;
     }
 
-
-     inline bool
+    inline bool
     __attribute__((always_inline))
     Thread::isSuspended(void) const
     {

@@ -27,10 +27,27 @@ namespace os
     /// Store the stack reference and the priority
     /// in the private member variables.
     Thread::Thread(const char* const pName, threadEntryPoint_t entryPoint,
-        void* pParameters, Stack::element_t* const pStack,
-        Stack::size_t const stackSizeBytes, priority_t priority)
+        void* pParameters, stack::element_t* const pStack,
+        stack::size_t const stackSizeBytes, priority_t priority)
         : NamedObject(pName), //
         m_stack(pStack, stackSizeBytes)
+    {
+#if defined(DEBUG)
+#if defined(OS_DEBUG_THREAD)
+      os::diag::trace.putConstructorWithName();
+#else
+      os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
+          pName);
+#endif
+#endif
+
+      initialise(entryPoint, pParameters, priority);
+    }
+
+    Thread::Thread(const char* const pName, threadEntryPoint_t entryPoint,
+        void* pParameters, StackWithAllocator& stack, priority_t priority)
+        : NamedObject(pName), //
+        m_stack(stack)
     {
 #if defined(DEBUG)
 #if defined(OS_DEBUG_THREAD)
