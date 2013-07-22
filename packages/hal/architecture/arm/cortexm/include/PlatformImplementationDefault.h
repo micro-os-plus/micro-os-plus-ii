@@ -13,6 +13,8 @@
 
 #include "hal/architecture/arm/cortexm/include/PlatformBase.h"
 
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
+
 namespace hal
 {
   namespace cortexm
@@ -48,4 +50,5 @@ namespace hal
   }// namespace platform
 } // namespace hal
 
+#endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_PLATFORMIMPLEMENTATIONDEFAULT_H_
