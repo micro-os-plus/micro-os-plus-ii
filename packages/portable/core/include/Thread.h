@@ -155,7 +155,7 @@ namespace os
 
       /// \brief Set the thread priority.
       ///
-      /// \param [in] priority The new priority.
+      /// \param [in] priority  The new priority.
       /// \par Returns
       ///    Nothing.
       void
@@ -283,7 +283,12 @@ namespace os
 
     private:
 
+      /// \name Private friends
+      /// @{
+
       friend Scheduler;
+
+      /// @} end of Private friends
 
       /// \name Private member functions
       /// @{

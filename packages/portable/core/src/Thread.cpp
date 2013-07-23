@@ -166,7 +166,7 @@ namespace os
       os::diag::trace.putMemberFunctionWithName();
 #endif
       m_isSuspended = false;
-      os::scheduler.resumeThread(this);
+      os::scheduler.resumeThreadFromInterrupt(this);
     }
 
     /// \details

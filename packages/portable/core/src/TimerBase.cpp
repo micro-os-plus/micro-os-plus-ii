@@ -15,7 +15,7 @@
 #include "portable/core/include/CriticalSections.h"
 
 //#include "portable/core/include/PlatformBase.h"
-//#include "portable/core/include/Architecture.h"
+#include "portable/core/include/Architecture.h"
 
 namespace os
 {
@@ -23,6 +23,16 @@ namespace os
   {
     // ------------------------------------------------------------------------
 
+    /// \details
+    /// Insert the current thread with the given number of ticks in the
+    /// timer counters storage, and suspend the current thread repeately
+    /// until the number of ticks elapsed.
+    ///
+    /// In case the thread was requested attention, the sleep is
+    /// cancelled as soon as possible.
+    ///
+    /// If the scheduler is locked, this call is still functional, but
+    /// using a busy wait until the ticks elapse.
     void
     TimerBase::sleep(timer::ticks_t ticks)
     {
@@ -39,9 +49,10 @@ namespace os
 
       if (os::scheduler.isLocked())
         {
+          // If the scheduler is locked we can only busy wait for the ticks
           while ((getTicks() - beginTicks) < ticks)
             {
-              // TODO: watchdogReset()
+              hal::arch::ArchitectureImplementation::resetWatchdog();
             }
 
           return;
@@ -51,7 +62,7 @@ namespace os
 
       if (pThread->isAttentionRequested())
         {
-          // return immediately if attention was requested
+          // Return immediately if attention was requested
           return;
         }
 
@@ -73,13 +84,14 @@ namespace os
           // ----- Critical section end ---------------------------------------
         }
 
+      // Wait for the ticks to elapse, possibly with multiple suspend calls
       while ((getTicks() - beginTicks) < ticks)
         {
           pThread->suspend();
 
           if (pThread->isAttentionRequested())
             {
-              // return immediately if attention was requested
+              // Return immediately if attention was requested
               return;
             }
         }
@@ -87,6 +99,9 @@ namespace os
       return;
     }
 
+    /// \details
+    /// Iterate through the array and return the index in case the
+    /// thread is found.
     int
     TimerBase::find(Thread* pThread)
     {
@@ -106,6 +121,10 @@ namespace os
       return -1;
     }
 
+    /// \details
+    /// Move all subsequent elements one step to the left. This is not
+    /// particularly efficient, especially when called with index=0,
+    /// but with just a few entries in the array it should be ok.
     void
     TimerBase::remove(int index)
     {
@@ -126,6 +145,15 @@ namespace os
         }
     }
 
+    /// \details
+    /// Insert a new element in a position so that the ticks used to
+    /// sleep are ordered ascending. The value stored for the ticks is
+    /// relative to the previous element.
+    ///
+    /// In case two threads need to be resumed at the same time, the
+    /// second one inserted will have a ticks value of 0, and the
+    /// ticks interrupt routine must process all elements until
+    /// a non zero is encountered.
     bool
     TimerBase::insert(timer::ticks_t ticks, Thread* pThread)
     {
@@ -173,7 +201,7 @@ namespace os
       i = 0;
       if (cnt > 0)
         {
-          // find position where to insert
+          // Find position where to insert
           for (i = 0; i < cnt; ++i, ++p)
             {
               if (ticks < p->ticks)
@@ -183,10 +211,10 @@ namespace os
                 }
               ticks -= p->ticks;
             }
-          // return i = position where to insert,
-          // may be count, i.e. not found, end of array
+          // Here i = position where to insert, but it
+          // may also be count, i.e. not found, end of array
 
-          // move right to make space
+          // Move all elements right to make space
           timer::Element* q;
           int j;
           for (j = cnt, q = &m_pArray[j]; j > i; j--, q--)
@@ -201,7 +229,7 @@ namespace os
       os::diag::trace.putNewLine();
 #endif
 
-      // fill in timer::element_t
+      // Fill in timer::element_t
       p->ticks = ticks;
       p->pThread = pThread;
 
@@ -210,9 +238,17 @@ namespace os
       return true;
     }
 
-    // called from the interrupt routine to notify time events
+    /// \details
+    /// This routine is called from the timer interrupt service routine
+    /// to count ticks and to resume the suspended threads when their
+    /// associated counters reach zero.
+    ///
+    /// Due to the way ticks are stored relatively to the previous element,
+    /// only the top counter needs to be decremented. When zero is
+    /// reached, the thread related to the current element and the threads
+    /// related to all following elements with ticks=0 will be resumed.
     void
-    TimerBase::interruptTick(void)
+    TimerBase::processTickFromInterrupt(void)
     {
 #if defined(DEBUG) && defined(OS_DEBUG_TIMERBASE_INTERRUPTTICK)
       os::diag::trace.putChar('[');
@@ -228,6 +264,7 @@ namespace os
           volatile timer::Element* p;
           p = m_pArray;
 
+          // Decrement the counter associated with the first element
           if (--(p->ticks) == 0)
             {
               do
@@ -240,8 +277,9 @@ namespace os
                   // sleep period completed, resume the thread
                   p->pThread->resumeFromInterrupt();
 
-                  // remove top element from the array
-                  // MANDATORY, otherwise infinite loop!
+                  // Remove the top element from the array
+                  // MANDATORY, otherwise the routine hangs with
+                  // an infinite loop!
                   remove(0);
                 }
               while ((p->ticks == 0) && (m_count > 0));

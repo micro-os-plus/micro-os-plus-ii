@@ -18,6 +18,8 @@ namespace os
   {
     // ------------------------------------------------------------------------
 
+    /// \details
+    /// Call the TimerBase constructor with the current array.
     TimerTicks::TimerTicks(void)
         : TimerBase(m_array, sizeof(m_array) / sizeof(m_array[0]))
     {
@@ -33,30 +35,39 @@ namespace os
 #endif
     }
 
+    /// \details
+    /// Call the implementation code.
     void
     TimerTicks::initialise(void)
     {
       m_implementation.initialise();
     }
 
+    /// \details
+    /// Call the implementation code.
     void
     TimerTicks::start(void)
     {
       m_implementation.start();
     }
 
+    /// \details
+    /// Call the implementation code.
     void
     TimerTicks::stop(void)
     {
       m_implementation.stop();
     }
 
+    /// \details
+    /// Called from the interrupt handler, for each tick interrupt.
+    /// Basically call the TimerBase code.
     void
     TimerTicks::interruptServiceRoutine(void)
     {
       m_implementation.acknowledgeInterrupt();
 
-      interruptTick();
+      processTickFromInterrupt();
 
 #if defined(DEBUG) && defined(OS_DEBUG_TIMERTICKS_ISR_MARK_SECONDS)
 

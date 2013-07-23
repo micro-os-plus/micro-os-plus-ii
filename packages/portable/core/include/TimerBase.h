@@ -27,10 +27,10 @@ namespace os
       /// \name Types and constants
       /// @{
 
-      // signed
+      /// \brief Count of elements and size. Must be signed.
       typedef int count_t;
 
-      // unsigned
+      /// \brief Count of timer ticks.
       typedef uint32_t ticks_t;
 
 #pragma GCC diagnostic push
@@ -38,6 +38,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
+      /// \brief The timer will keep an array of such elements.
       typedef struct
       {
         ticks_t volatile ticks;
@@ -67,14 +68,12 @@ namespace os
     ///
     /// \details
     /// Provide common support for all system timers.
+    /// The main routines are sleep() that prepares the timer counters,
+    /// and the routine executed on the interrupt context, used to
+    /// resume threads.
     class TimerBase
     {
     public:
-      /// \name Types and constants
-      /// @{
-
-      /// @} end of name Types and constants
-
       /// \name Constructors/destructor
       /// @{
 
@@ -84,6 +83,7 @@ namespace os
       /// \param [in] size      Number of timer elements.
       TimerBase(timer::Element* const pArray, timer::count_t const size);
 
+      /// \brief Destructor.
       ~TimerBase();
 
       /// @} end of name Constructors/destructor
@@ -91,18 +91,39 @@ namespace os
       /// \name Public member functions
       /// @{
 
+
+      /// \brief Get the number of active timer elements.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return               An integer with the number of active elements.
       timer::count_t
       getCount(void) const;
 
+      /// \brief Get the number of ticks since the timer was started.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return               An integer with the number of ticks.
       timer::ticks_t
       getTicks(void) const;
 
+      /// \brief Sleep a number of ticks.
+      ///
+      /// \param [in] ticks     The number of ticks to sleep.
+      /// \par Returns
+      ///    Nothing.
       void
-      sleep(timer::ticks_t);
+      sleep(timer::ticks_t ticks);
 
-      // used in interrupt routines
+      /// \brief The tick interrupt routine.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
-      interruptTick(void);
+      processTickFromInterrupt(void);
 
       /// @} end of Public member functions
 
@@ -111,12 +132,26 @@ namespace os
       /// \name Protected member functions
       /// @{
 
+      /// \brief Find the index of a thread in the timer array.
+      ///
+      /// \param [in] pThread   Pointer to the thread.
+      /// \retval -1            Thread not found
+      /// \retval >0            Index to the thread
       int
       find(Thread* pThread);
 
+      /// \brief Remove the element at an index.
+      ///
+      /// \param [in] index     Index of the element to be removed.
+      /// \par Returns
+      ///    Nothing.
       void
       remove(int index);
 
+      /// \brief Insert an element associated with a thread.
+      ///
+      /// \param [in] ticks     The number of ticks to sleep.
+      /// \param [in] pThread   The associatd thread.
       bool
       insert(timer::ticks_t ticks, Thread* pThread);
 
@@ -125,25 +160,25 @@ namespace os
       /// \name Protected member variables
       /// @{
 
-      /// \brief Pointer to the beginning of the stack area.
-      // the array of timeouts
+      /// \brief Pointer to the beginning of the storage area,
+      /// the array of timer elements.
       timer::Element* const m_pArray;
 
-      // the size of m_pArray, in elements
+      /// \brief The size of m_pArray, in elements.
       timer::count_t const m_size;
 
-      // the number of slots used from m_pArray
+      /// \brief The number of m_pArray used elements.
       timer::count_t volatile m_count;
 
       /// @} end of Protected member variables
 
     private:
 
-      /// \brief the current number of ticks counted by the timer.
+      /// \brief The current number of ticks counted by the timer.
       ///
       /// \details
       /// A 32 bit unsigned will hold about 49 days at 1000 ticks/second
-      /// and then will start again from 0.
+      /// and then will roll over to 0.
       timer::ticks_t volatile m_ticks;
     };
 
@@ -151,6 +186,9 @@ namespace os
 
     // ------------------------------------------------------------------------
 
+    /// \details
+    /// Store the pointer to the real array and its size in the
+    /// member variables, and initialise the number of used elements to 0.
     inline
     __attribute__((always_inline))
     TimerBase::TimerBase(timer::Element* const pArray,

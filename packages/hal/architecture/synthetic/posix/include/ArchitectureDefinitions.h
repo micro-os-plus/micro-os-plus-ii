@@ -29,10 +29,17 @@ namespace hal
 {
   namespace arch
   {
-#if defined(__x86_64__)
+    /// \addtogroup posix
+    /// @{
+
+    /// \name Types and constants
+    /// @{
+
+#if defined(__x86_64__) || defined(__DOXYGEN__)
     /// \brief Type definition of a stack word unit.
     typedef uint64_t stackElement_t;
 
+    /// \brief A magic value used to fill the stack.
     constexpr stackElement_t STACK_FILL = 0x55AA5A5AA5A5AA55;
 #else
     /// \brief Type definition of a stack word unit.
@@ -41,11 +48,15 @@ namespace hal
     constexpr stackElement_t STACK_FILL = 0x55AAAA55;
 #endif
 
+    /// \brief Type definition to represent a stack size.
     typedef uint32_t stackSize_t;
 
+    /// \brief The minimum stack size, as defined in the POSIX headers.
     constexpr stackSize_t MIN_STACK_SIZE = SIGSTKSZ;
 
-  //typedef sigset_t interruptStatus_t;
+  /// @} end of name Types and constants
+
+  /// @} end of addtogroup posix
 
   }// namespace arch
 } // namespace hal
