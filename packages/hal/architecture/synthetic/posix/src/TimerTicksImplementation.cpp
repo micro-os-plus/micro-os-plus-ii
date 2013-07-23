@@ -29,6 +29,9 @@ namespace hal
 
     // ========================================================================
 
+    /// \details
+    /// Prepare a signal set structure with the timer signal number,
+    /// to be used be sigprocmask() later.
     TimerTicksImplementation::TimerTicksImplementation(void)
     {
 #if defined(DEBUG)
@@ -44,9 +47,12 @@ namespace hal
 #if defined(DEBUG)
       os::diag::trace.putDestructor();
 #endif
-
     }
 
+    /// \details
+    /// Uses sigaction() to prepare the signal to point to the
+    /// signal handler, and setitimer() to configure the timer
+    /// to automatically be delivered with the desired rate.
     void
     TimerTicksImplementation::initialise(void)
     {
@@ -102,6 +108,9 @@ namespace hal
         }
     }
 
+    /// \details
+    /// With the timer initialised, unblock the
+    /// signals with sigprocmask() and the interrupts will start to arrive.
     void
     TimerTicksImplementation::start(void)
     {
@@ -119,8 +128,9 @@ namespace hal
 #endif
         }
 
-      pause();
 #if 0
+      // used for debugging, to see the signals arriving
+      pause();
       for (int i = 50; i > 0; --i)
         {
           for (int j = 100; j > 0; --j)
@@ -134,6 +144,9 @@ namespace hal
 #endif
     }
 
+    /// \details
+    /// Block the
+    /// signals with sigprocmask() and the interrupts will stop coming.
     void
     TimerTicksImplementation::stop(void)
     {
@@ -147,11 +160,20 @@ namespace hal
 
     }
 
+    /// \details
+    /// Not needed, signals can be configured to re-trigger automatically,
+    /// without program intervention.
     void
     TimerTicksImplementation::acknowledgeInterrupt(void)
     {
     }
 
+    /// \details
+    /// This is the routine called by the system as signal handler.
+    /// It must be static, and have one integer parameter.
+    ///
+    /// Besides some diagnostics, at the end it calls the timer
+    /// interrupt service routine.
     void
     TimerTicksImplementation::signalHandler(int signalNumber)
     {
@@ -174,6 +196,7 @@ namespace hal
       write(1, &c, 1);
 #endif
 
+      // Call the ticks timer ISR
       os::timerTicks.interruptServiceRoutine();
     }
 

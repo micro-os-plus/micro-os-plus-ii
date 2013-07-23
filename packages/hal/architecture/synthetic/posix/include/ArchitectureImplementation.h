@@ -105,6 +105,9 @@ namespace hal
     ///
     /// \details
     /// This class provides generic POSIX context handling support.
+    ///
+    /// It uses the makecontext()/getcontext()/setcontext() family of functions.
+    ///
     class ThreadContext
     {
 
@@ -128,7 +131,7 @@ namespace hal
       ///
       /// \param [in] pStackBottom    Pointer to the first stack element.
       /// \param [in] stackSizeBytes  Size of stack in bytes.
-      /// \param [in] entryPoint      Pointer to trampoline code.
+      /// \param [in] trampolineEntryPoint      Pointer to trampoline code.
       /// \param [in] p1              First parameter.
       /// \param [in] p2              Second parameter.
       /// \param [in] p3              Third parameter.
@@ -137,7 +140,7 @@ namespace hal
       void
       create(hal::arch::stackElement_t* pStackBottom,
           hal::arch::stackSize_t stackSizeBytes,
-          os::core::trampoline3_t entryPoint, void* p1, void* p2, void* p3);
+          os::core::trampoline3_t trampolineEntryPoint, void* p1, void* p2, void* p3);
 
       /// \brief Save the current context in the local storage.
       ///
@@ -162,8 +165,16 @@ namespace hal
 
     private:
 
-      // Required for manual inlines in yield()
+      /// \name Private friends
+      /// @{
+
+      /// \brief Required for manual inlines in yield()
       friend class ArchitectureImplementation;
+
+      /// @} end of Private friends
+
+      /// \name Private member variables
+      /// @{
 
       /// \brief The context storage.
       ucontext_t m_context;
@@ -171,22 +182,55 @@ namespace hal
       /// \brief The C error indicator storage.
       int m_error;
 
+      /// \brief Flag used to differentiate the two save() return cases.
       bool volatile m_saved;
+
+      /// @} end of Private member variables
+
     };
 
 #pragma GCC diagnostic pop
 
     // ========================================================================
 
+    /// \headerfile ArchitectureImplementation.h "hal/architecture/synthetic/posix/include/ArchitectureImplementation.h"
+    /// \ingroup posix
+    /// \nosubgrouping
+    ///
+    /// \brief Implementation of the interrupts critical section.
+    ///
+    /// \details
+    /// This class is used to create a critical section where the timer ticks
+    /// are disabled.
+    /// It uses the RAII paradigm, i.e. it blocks the signals in
+    /// the constructor and restores them to the initial state in the
+    /// destructor.
+    ///
+    /// Embedded calls are allowed, without other depth limitations other
+    /// than the available stack.
     class InterruptsCriticalSection
     {
     public:
+      /// \name Constructors/destructor
+      /// @{
+
+      /// \brief Constructor
       InterruptsCriticalSection(void);
 
+      /// \brief Destructor
       ~InterruptsCriticalSection();
 
+      /// @} end of name Constructors/destructor
+
     private:
+      /// \name Private member variables
+      /// @{
+
+      /// \brief Storage for the signal status
       sigset_t m_status;
+
+      /// @} end of Private member variables
+
     };
 
   // ==========================================================================
@@ -198,23 +242,13 @@ namespace hal
 
   namespace arch
   {
-#if __GNUC__ == 4 && __GNUC_MINOR__ == 6
-    typedef hal::posix::ArchitectureImplementation ArchitectureImplementation;
-#else
     using ArchitectureImplementation = hal::posix::ArchitectureImplementation;
-#endif
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
-#if __GNUC__ == 4 && __GNUC_MINOR__ == 6
-    typedef hal::posix::ThreadContext ThreadContext;
-    typedef hal::posix::TimerTicksImplementation TimerTicksImplementation;
-    typedef hal::posix::InterruptsCriticalSection InterruptsCriticalSection;
-#else
     using ThreadContext = hal::posix::ThreadContext;
     using TimerTicksImplementation = hal::posix::TimerTicksImplementation;
     using InterruptsCriticalSection = hal::posix::InterruptsCriticalSection;
-#endif
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }

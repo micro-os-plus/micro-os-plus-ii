@@ -21,15 +21,6 @@ namespace os
 {
   namespace core
   {
-    namespace timer
-    {
-    /// \name Types and constants
-    /// @{
-
-    /// @} end of name Types and constants
-
-    }// namespace timer
-
     // ========================================================================
 
 #pragma GCC diagnostic push
@@ -37,20 +28,21 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    /// \class TimerTicks Stack.h "portable/core/include/TimerTicks.h"
+    /// \class TimerTicks TimerTicks.h "portable/core/include/TimerTicks.h"
     /// \ingroup core
     /// \nosubgrouping
     ///
-    /// \brief System timers base.
+    /// \brief System ticks timer.
     ///
     /// \details
-    /// Provide common support for all system timers.
+    /// System timer counting scheduler ticks.
     class TimerTicks : public TimerBase
     {
     public:
       /// \name Types and constants
       /// @{
 
+      /// \brief The size of the array to store timer elements.
       static constexpr timer::count_t ARRAY_SIZE =
           OS_INTEGER_CORE_SCHEDULER_TIMERTICKSSIZE;
 
@@ -60,9 +52,9 @@ namespace os
       /// @{
 
       /// \brief Constructor.
-      ///
       TimerTicks(void);
 
+      /// \brief Destructor.
       ~TimerTicks();
 
       /// @} end of name Constructors/destructor
@@ -70,33 +62,59 @@ namespace os
       /// \name Public member functions
       /// @{
 
+      /// \brief Initialise the timer.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       initialise(void);
 
+      /// \brief Start the timer.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       start(void);
 
+      /// \brief Stop the timer.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       stop(void);
 
-      // called each time a tick expire
-      // increment the current ticks number, and call the OSTimer::interruptTick.
+      /// \brief Timer interrupt service routine.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       void
       interruptServiceRoutine(void);
 
       /// @} end of Public member functions
 
     private:
+      /// \name Private member variables
+      /// @{
+
+      /// \brief Array of elements to store timer data.
       timer::Element m_array[ARRAY_SIZE];
 
+      /// \brief Instance of the implementation class.
       hal::arch::TimerTicksImplementation m_implementation;
+
+      /// @} end of Private member variables
     };
 
 #pragma GCC diagnostic pop
 
-  // ------------------------------------------------------------------------
-
-  // --
   // ==========================================================================
 
   }// namespace core

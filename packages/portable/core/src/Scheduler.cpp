@@ -29,19 +29,23 @@ namespace os
     // ========================================================================
 
     /// \details
+    /// Very important here is to initialise the current thread to point
+    /// to main thread, so when the first
+    /// context switch will occur, the main thread context will be
+    /// saved properly.
     Scheduler::Scheduler(void)
     {
 #if defined(DEBUG)
       os::diag::trace.putConstructor();
 #endif
 
+      // Not running until start()
       m_isRunning = false;
 
-      // start by pointing to the main thread, so when the first
-      // context switch will occur, the main thread context will be
-      // saved properly.
+      // start by pointing to the main thread
       m_pCurrentThread = &mainThread;
 
+      // Not locked
       m_lockCounter = 0;
 
       m_lastUsedId = scheduler::NO_ID;
@@ -57,6 +61,8 @@ namespace os
     }
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
+    /// \details
+    /// This is printed during startup, after the platform greetings.
     void
     Scheduler::putGreeting(void)
     {
@@ -67,6 +73,19 @@ namespace os
     }
 #endif
 
+    /// \details
+    /// Manually start the main thread (register to the scheduler and
+    /// prepare), the idle thread and then activate all registered
+    /// threads.
+    ///
+    /// Finally initialise the system timers and set m_isRunning = true.
+    ///
+    /// From this moment on, the scheduler will start switching threads
+    /// and the system timers to count ticks.
+    ///
+    /// \note The default priority of the main thread is just above the
+    /// idle thread priority, so start() will return, but only when
+    /// all other threads rich the suspended state.
     void
     Scheduler::start(void)
     {
@@ -95,16 +114,22 @@ namespace os
             }
         }
 
+      // Initialise and start the system timer
       os::timerTicks.initialise();
-
-      m_isRunning = true;
-
       os::timerTicks.start();
 
-      // pass control to the thread with the highest priority
+      // Mark that the scheduler is running
+      m_isRunning = true;
+
+      // Relinquish control to the thread with the highest priority
       yield();
+
+      // This will return, but only when all other threads have
+      // nothing to do.
     }
 
+    /// \details
+    /// Stop the system timer and set the m_isRunning flag to false.
     void
     Scheduler::stop(void)
     {
@@ -121,6 +146,11 @@ namespace os
       m_isRunning = false;
     }
 
+    /// \details
+    /// If the scheduler is not running or is locked, do nothing,
+    /// i.e. return immediately to the calling thread.
+    ///
+    /// Otherwise call the architecture implementation.
     void
     Scheduler::yield(void)
     {
@@ -141,23 +171,27 @@ namespace os
     /// from the active list,
     /// eventually reinsert it at the end, for round robin reasons,
     /// and select the top thread.
+    ///
     /// The result is left in the m_pCurrentThread pointer and
     /// will be used by context.resume() shortly.
-    /// \note No synchronisation required while running from
-    /// interrupt contexts.
+    ///
+    /// \note An InterruptsCriticalSection is needed when called from
+    /// a user context.
     void
-    Scheduler::performContextSwitchFromInterrupt(void)
+    Scheduler::prepareContextSwitchFromInterrupt(void)
     {
+      // This should be the only place where the watchdog is reset.
+      // When the scheduler is not running, it is also used in sleep().
       hal::arch::ArchitectureImplementation::resetWatchdog();
 
       if (!m_isRunning || isLocked())
         {
-          // if the scheduler is not running, or is locked,
+          // If the scheduler is not running, or is locked,
           // do not change the current thread
           return;
         }
 
-      // As long as MainThread was constructed, this will
+      // Since the constructor set this to MainThread, this will
       // always point to a thread.
       Thread* pThread = (Thread*) m_pCurrentThread;
 
@@ -173,7 +207,8 @@ namespace os
 
       if ((!pThread->isSuspended()) && (pThread->getId() != scheduler::NO_ID))
         {
-          // if not suspended and not waiting
+          // If not suspended and not terminated, insert again
+          // Th
           m_active.insert(pThread);
         }
 
@@ -187,9 +222,9 @@ namespace os
     }
 
     /// \details
-    /// If the ID is valid, just return, the thread was already registered.
-    /// Otherwise find an ID that is not in use, assign it to the thread
-    /// and, if the scheduler is running, add thread to the active list.
+    /// Find an ID that is not in use, assign it to the thread
+    /// and, if the scheduler is running, add the thread to the active list.
+    /// The entire logic is performed in a critical section.
     bool
     Scheduler::registerThread(Thread* pThread)
     {
@@ -224,7 +259,7 @@ namespace os
     }
 
     /// \details
-    /// If the thread is still registered, deregister it.
+    /// In a critical section, deregister the thread.
     bool
     Scheduler::deregisterThread(Thread * pThread)
     {
@@ -260,8 +295,17 @@ namespace os
           }
       }
 
-      // Used only in add() and remove(), so better inline it,
-      // if appropriate.
+      RegisteredThreads::~RegisteredThreads()
+      {
+#if defined(DEBUG)
+        os::diag::trace.putDestructor();
+#endif
+      }
+
+      /// \details
+      /// Linear search of the array for the given pointer to thread.
+      /// Used only in pushBack() and remove(), so allow the
+      /// compiler to inline it, if appropriate.
       inline int
       RegisteredThreads::find(Thread* pThread)
       {
@@ -327,6 +371,9 @@ namespace os
         return true;
       }
 
+      /// \details
+      /// Check if the ID is the special NO_ID value, or if
+      /// it matches an ID used by any of the registered threads.
       bool
       RegisteredThreads::isIdInUse(threadId_t id)
       {
@@ -335,6 +382,7 @@ namespace os
             return true;
           }
 
+        // Iterate for all threads in this collection
         for (auto pThread : *this)
           {
             if (pThread->getId() == id)
@@ -348,6 +396,8 @@ namespace os
 
       // ======================================================================
 
+      /// \details
+      /// Clear the array of active threads.
       ActiveThreads::ActiveThreads(void)
       {
 #if defined(DEBUG)
@@ -359,10 +409,24 @@ namespace os
           {
             m_array[i] = nullptr;
           }
+
+        // This will guarantee that we have at least one thread in the list
+        // and getTop() will be valid.
+        // remove() will never take the idleThread() out of the array.
+        insert(&idleThread);
       }
 
-      // Used only in insert() and remove(), so better inline it,
-      // if appropriate.
+      ActiveThreads::~ActiveThreads()
+      {
+#if defined(DEBUG)
+        os::diag::trace.putDestructor();
+#endif
+      }
+
+      /// \details
+      /// Linear search of the array for the given pointer to thread.
+      /// Used only in insert() and remove(), so better inline it,
+      /// if appropriate.
       inline int
       ActiveThreads::find(Thread* pThread)
       {
@@ -376,6 +440,11 @@ namespace os
         return -1; // thread not found
       }
 
+      /// \details
+      /// Check if the thread is already in the array.
+      /// If not, find the position of the first thread with lower priority
+      /// and move all subsequent pointers (if any) one step to the right,
+      /// to make place for the new element.
       void
       ActiveThreads::insert(Thread* pThread)
       {
@@ -388,10 +457,11 @@ namespace os
 
         threadPriority_t prio = pThread->getPriority();
 
+        // Find the position of the first thread with lower priority. In case
+        // several threads with the same priority are present, this
+        // ensures a round robin policy.
         for (i = 0; i < m_count; ++i)
           {
-            // If threads with identical priority exist, insert at the end
-            // in other words, insert before the next thread with lower priority.
             if (prio > m_array[i]->getPriority())
               break;
           }
@@ -401,7 +471,7 @@ namespace os
             // i is the place where to insert
 
             int j;
-            // shift array right to make space
+            // shift the remaining array elements right to make space
             for (j = m_count; j > i; j--)
               {
                 m_array[j] = m_array[j - 1];
@@ -414,13 +484,18 @@ namespace os
         m_count++;
       }
 
+      /// \details
+      /// This is somehow the opposite of insert, it finds the location
+      /// of the desired thread and copies the subsequent elements one step
+      /// to the left.
+      /// \note The idle thread is never removed, to guarantee getTop()
+      /// always returns a valid pointer.
       void
       ActiveThreads::remove(Thread* pThread)
       {
         if (pThread == &idleThread)
           {
-            // do not remove the idle thread, to be sure there is
-            // always one entry, to be returned by getTop();
+            // do not remove the idle thread
             return;
           }
 
@@ -431,12 +506,13 @@ namespace os
             return; // thread not found, nothing to remove
           }
 
-        // Remove the thread by copying the list one step to the left
+        // Remove the thread by copying the array one step to the left
         for (; i < m_count - 1; ++i)
           {
             m_array[i] = m_array[i + 1];
           }
         m_count--;
+
         // clear the pointer (only for aesthetics)
         m_array[m_count] = nullptr;
       }

@@ -64,9 +64,11 @@ namespace hal
 
     // ========================================================================
 
+    /// \details
+    /// Store the current signal status in the local private variable,
+    /// and block the signal used by the ticks timer.
     InterruptsCriticalSection::InterruptsCriticalSection(void)
     {
-      // TODO: save status
       sigset_t set;
       sigemptyset(&set);
       sigaddset(&set, timer::SIGNAL_NUMBER);
@@ -74,9 +76,10 @@ namespace hal
       sigprocmask(SIG_BLOCK, &set, &m_status);
     }
 
+    /// \details
+    /// Restore the signal status from the local private variable.
     InterruptsCriticalSection::~InterruptsCriticalSection()
     {
-      // TODO: restore status
       sigprocmask(SIG_SETMASK, &m_status, NULL);
     }
 
@@ -87,7 +90,7 @@ namespace hal
 #endif
 
     /// \details
-    /// Used only to explicitly initialise m_error.
+    /// Used to explicitly initialise m_error and the m_saved flag.
     ThreadContext::ThreadContext(void)
     {
       m_error = 0;
@@ -107,8 +110,6 @@ namespace hal
 #endif
     }
 
-    /// \details
-    /// Used only to explicitly initialise m_error.
     ThreadContext::~ThreadContext()
     {
 #if defined(DEBUG) && defined(OS_DEBUG_THREADCONTEXT)
@@ -120,11 +121,17 @@ namespace hal
     (*mfunc)();
 
     /// \details
-    /// A null stack will prevent creating a new context.
+    /// A null stack will prevent creating a new context (used by main thread
+    /// which is already running).
+    ///
+    /// The trampolineEntryPoint is pointing to the thread trampoline,
+    /// a small routine used to gain control after the thread main code
+    /// terminates.
     void
     ThreadContext::create(hal::arch::stackElement_t* pStackBottom,
         hal::arch::stackSize_t stackSizeBytes,
-        os::core::trampoline3_t entryPoint, void* p1, void* p2, void* p3)
+        os::core::trampoline3_t trampolineEntryPoint, void* p1, void* p2,
+        void* p3)
     {
 #if defined(DEBUG) && defined(OS_DEBUG_THREADCONTEXT)
       os::diag::trace.putString("ThreadContext::create()");
@@ -137,7 +144,7 @@ namespace hal
       os::diag::trace.putString(", size=");
       os::diag::trace.putDec(stackSizeBytes);
       os::diag::trace.putString(", entry=");
-      os::diag::trace.putHex((void*) entryPoint);
+      os::diag::trace.putHex((void*) trampolineEntryPoint);
       os::diag::trace.putString(", p1=");
       os::diag::trace.putHex(p1);
       os::diag::trace.putString(", p2=");
@@ -152,7 +159,7 @@ namespace hal
 
       if (pStackBottom != nullptr && stackSizeBytes != 0)
         {
-          // fetch current context
+          // Fetch the current context and store it in the private member.
           if (getcontext(&m_context) != 0)
             {
 #if defined(DEBUG)
@@ -162,30 +169,35 @@ namespace hal
 #endif
             }
 
-          // remove parent link
+          // The context in itself is not needed, but makecontext()
+          // requires a context obtained by getcontext(), so we got it and
+          // now we modify it to suit our needs.
+
+          // Remove the parent link
           m_context.uc_link = 0;
 
-          // configure new stack, if not the main thread
+          // Configure the new stack (for the main thread both values are 0)
           m_context.uc_stack.ss_sp = pStackBottom;
           m_context.uc_stack.ss_size = stackSizeBytes;
           m_context.uc_stack.ss_flags = 0;
 
-          // configure entry point with one argument
+          // Configure the entry point with three arguments
           // warning: no error returned
-          makecontext(&m_context, (mfunc) entryPoint, 3, p1, p2, p3);
+          makecontext(&m_context, (mfunc) trampolineEntryPoint, 3, p1, p2, p3);
         }
 
 #pragma GCC diagnostic pop
 
+      // restore() will set it anyway to false, but for just in case
       m_saved = false;
 
       return;
     }
 
     /// \details
-    /// Preserve errno and get context.
+    /// Preserve errno and get the context.
     /// \warning Due to some compiler complicated reasons, it could not be
-    /// inlined, so its content was manually inlined in yield().
+    /// inlined, so its content will be manually inlined in yield().
     inline bool
     __attribute__((always_inline))
     ThreadContext::save(void)
@@ -273,19 +285,20 @@ namespace hal
       if (context.m_saved)
 #endif
         {
-          // First time after saving the context, when we have to
-          // select the next context
+          // Here we are right after saving the context (the first return),
+          // when we have to select the next context
             { // ---- InterruptsCriticalSection begin -------------------------
               os::core::scheduler::InterruptsCriticalSection cs;
 
-              os::scheduler.performContextSwitchFromInterrupt();
+              os::scheduler.prepareContextSwitchFromInterrupt();
             } // ---- InterruptsCriticalSection end ---------------------------
           // and resume from there
           ((os::core::Thread*) os::scheduler.getCurrentThread())->getContext().restore();
         }
       else
         {
-          // Then after restore, when we just return to the new thread
+          // Here we are after restore (the second return),
+          // when we have nothing else to do, just return to the new thread
         }
     }
 
