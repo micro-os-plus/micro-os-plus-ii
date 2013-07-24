@@ -79,5 +79,27 @@ Package(
 
         ),
               
+        Component(
+            id='component.os.portable.core.tests.sleepstress',
+            name='Test sleep stress configuration',
+            description='Test sleep stress application.',
+    
+            category='test',
+    
+            isEnabled=False,
+            sourceFiles=[
+                'sleepStress.cpp',
+            ],
+                  
+            includeFiles=[
+                'sleepStress-config.py',
+            ],
+                  
+            implements=[
+                'interface.os.artefact',
+            ],
+
+        ),
+              
     ],
 )
