@@ -38,7 +38,7 @@ namespace os
       /// Portable redefinition, based on architecture definitions.
       typedef hal::arch::stackSize_t size_t;
 
-      /// @} end of name Types and constants
+    /// @} end of name Types and constants
 
     }
     // ========================================================================
@@ -68,6 +68,11 @@ namespace os
       /// \param [in] pStack            Pointer to the beginning of the stack area.
       /// \param [in] sizeBytes         Size of stack in bytes.
       Stack(stack::element_t* const pStack, stack::size_t const sizeBytes);
+
+      /// \brief Copy constructor.
+      ///
+      /// \param [in] stack             Reference to another stack object.
+      Stack(Stack& stack);
 
       /// \brief Destructor.
       ~Stack();
@@ -144,6 +149,21 @@ namespace os
 #endif
     }
 
+    /// \details
+    /// Store the pointer to the beginning and the size
+    /// in the private member variables.
+    ///
+    /// Leave the compiler to decide if it is inlined.
+    inline
+    Stack::Stack(Stack& stack)
+        : m_pStart(stack.getStart()), //
+        m_sizeBytes(stack.getSize())
+    {
+#if defined(DEBUG)
+      os::diag::trace.putConstructor();
+#endif
+    }
+
     inline
     Stack::~Stack()
     {
@@ -177,10 +197,16 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    // This special stack allocates the stack on the free store, using
-    // the recommended RAII paradigm of calling delete only in the
-    // destructor.
-
+    /// \class StackWithAllocator Stack.h "portable/core/include/Stack.h"
+    /// \ingroup core
+    /// \nosubgrouping
+    ///
+    /// \brief A stack with dynamic allocator.
+    ///
+    /// \details
+    /// This special stack allocates the stack on the free store, using
+    /// the recommended RAII paradigm of calling delete only in the
+    /// destructor.
     class StackWithAllocator : public Stack
     {
     public:
