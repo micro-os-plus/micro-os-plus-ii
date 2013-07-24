@@ -11,6 +11,8 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
+#include <stdint.h>
+
 namespace os
 {
   namespace core
@@ -46,7 +48,7 @@ namespace os
 
       /// @} end of name Constructors/destructor
 
-      /// \name Public member functions
+      /// \name Public static functions
       /// @{
 
       /// \brief Initialise the hardware.
@@ -76,8 +78,22 @@ namespace os
       static void
       putGreeting(void);
 
+      /// \brief Reset watchdog.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
       static void
       resetWatchdog(void);
+
+      /// \brief Busy wait microseconds.
+      ///
+      /// \param [in] micros     The number of microseconds to sleep.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      busyWaitMicros(uint32_t micros);
 
       /// @} end of Public member functions
 
@@ -112,9 +128,21 @@ namespace os
     {
     }
 
+    /// \details
+    /// Empty inline function, so no code is generated. Overwrite this
+    /// with actual architecture specific code.
     inline void
     __attribute__((always_inline))
     ArchitectureBase::resetWatchdog(void)
+    {
+    }
+
+    /// \details
+    /// Empty inline function, so no code is generated. Overwrite this
+    /// with actual architecture specific code.
+    inline void
+    __attribute__((always_inline))
+    ArchitectureBase::busyWaitMicros(uint32_t micros __attribute__((unused)))
     {
     }
 
