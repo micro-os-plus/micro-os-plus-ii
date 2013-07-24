@@ -185,11 +185,23 @@ namespace os
       void*
       getEntryPointParameter(void) const;
 
+      /// \brief Start the thread.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \retval True          The thread was started.
+      /// \retval False         The thread was not started.
       bool
       start(void);
 
-      //void
-      //stop(void);
+      /// \brief Stop the thread.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      void
+      stop(void);
 
       /// \brief Join the thread.
       ///
@@ -370,7 +382,7 @@ namespace os
     /// Cast the lambda to an entryPoint pointer
     /// and process like the regular non-template call.
     ///
-    /// When the thread is used as another object member,
+    /// When the thread is used as a member in another object,
     /// the recommended usage pattern is:
     /// \code{.cpp}
     /// Task::Task() :
@@ -399,11 +411,14 @@ namespace os
 
       }
 
+    /// \details
+    /// Cast the lambda to an entryPoint pointer, copy the stack object
+    /// and process like the regular non-template call.
     template<class Lambda_T, class Object_T>
       Thread::Thread(const char* const pName, Lambda_T function,
           Object_T* pObject, StackWithAllocator& stack, priority_t priority)
           : NamedObject(pName), //
-          m_stack(stack)
+          m_stack(stack) // copy constructor!
       {
 #if defined(DEBUG)
 #if defined(OS_DEBUG_THREAD)

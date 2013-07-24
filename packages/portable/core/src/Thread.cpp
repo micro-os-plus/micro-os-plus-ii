@@ -44,10 +44,13 @@ namespace os
       initialise(entryPoint, pParameters, priority);
     }
 
+    /// \details
+    /// Copy the stack object and  the priority
+    /// in the private member variables.
     Thread::Thread(const char* const pName, threadEntryPoint_t entryPoint,
         void* pParameters, StackWithAllocator& stack, priority_t priority)
         : NamedObject(pName), //
-        m_stack(stack)
+        m_stack(stack) // copy constructor!
     {
 #if defined(DEBUG)
 #if defined(OS_DEBUG_THREAD)
@@ -89,6 +92,11 @@ namespace os
       m_entryPointParameter = pParameters;
     }
 
+    /// \details
+    /// Initialise all thread data, create the new stack context
+    /// and register the thread to the scheduler with a new identity.
+    /// It can be called not only after object creation, but also
+    /// after the thread terminates, either normally or with stop().
     bool
     Thread::start(void)
     {
@@ -123,6 +131,19 @@ namespace os
         }
 #endif
       return wasRegistered;
+    }
+
+    /// \details
+    /// Forces the thread to terminate abruptly, without any notification
+    /// to the thread code.
+    void
+    Thread::stop(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putMemberFunctionWithName();
+#endif
+
+      // TODO: add code
     }
 
     void
