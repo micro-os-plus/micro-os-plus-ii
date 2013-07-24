@@ -102,6 +102,22 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
+
+CONFIG=/portable/core/tests/meta/sleepstress-linux-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/sleepstress/' \
+-e 's/ARTEFACTDESCRIPTION/Sleep Stress/' \
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+CONFIG=/portable/core/tests/meta/sleepstress-osx-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/sleepstress/' \
+-e 's/ARTEFACTDESCRIPTION/Sleep Stress/' \
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+
 CONFIG=/portable/language/cpp/tests/meta/basic_ios-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/basic_ios/' \
