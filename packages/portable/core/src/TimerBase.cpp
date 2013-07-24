@@ -52,7 +52,7 @@ namespace os
           // If the scheduler is locked we can only busy wait for the ticks
           while ((getTicks() - beginTicks) < ticks)
             {
-              hal::arch::ArchitectureImplementation::resetWatchdog();
+              os::architecture.resetWatchdog();
             }
 
           return;
