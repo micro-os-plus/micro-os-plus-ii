@@ -21,6 +21,7 @@
 #include "portable/core/include/Thread.h"
 
 #include <sys/utsname.h>
+#include <sys/time.h>
 
 namespace hal
 {
@@ -300,6 +301,35 @@ namespace hal
           // Here we are after restore (the second return),
           // when we have nothing else to do, just return to the new thread
         }
+    }
+
+    /// \details
+    /// Empty inline function, so no code is generated. Overwrite this
+    /// with actual architecture specific code.
+    void
+    ArchitectureImplementation::busyWaitMicros(uint32_t micros)
+    {
+      if (micros == 0)
+        return;
+
+      timeval begTime;
+      gettimeofday(&begTime, 0);
+
+#if defined(_DEBUG)
+          os::diag::trace.putChar('w');
+          os::diag::trace.putDec(micros);
+#endif
+
+      long deltaMicros;
+      do
+        {
+          timeval endTime;
+          gettimeofday(&endTime, 0);
+          deltaMicros = (endTime.tv_sec - begTime.tv_sec) * 1000000
+              + (endTime.tv_usec - begTime.tv_usec);
+        }
+      while (deltaMicros < micros);
+
     }
 
   // ==========================================================================

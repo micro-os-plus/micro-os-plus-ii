@@ -77,6 +77,14 @@ namespace hal
       static void
       waitForInterrupt(void);
 
+      /// \brief Busy wait microseconds.
+      ///
+      /// \param [in] micros     The number of microseconds to sleep.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      busyWaitMicros(uint32_t micros);
+
       /// @} end of name Public member functions
 
     };
