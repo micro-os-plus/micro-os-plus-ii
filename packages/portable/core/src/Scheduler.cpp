@@ -163,7 +163,7 @@ namespace os
           return;
         }
 
-      hal::arch::ArchitectureImplementation::yield();
+      os::architecture.yield();
     }
 
     /// \details
@@ -182,7 +182,7 @@ namespace os
     {
       // This should be the only place where the watchdog is reset.
       // When the scheduler is not running, it is also used in sleep().
-      hal::arch::ArchitectureImplementation::resetWatchdog();
+      os::architecture.resetWatchdog();
 
       if (!m_isRunning || isLocked())
         {
