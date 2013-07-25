@@ -33,8 +33,9 @@ namespace os
     /// \brief Main thread.
     ///
     /// \details
-    /// This is the definition of the thread associated to the main()
+    /// This is the definition of the thread associated with the main()
     /// function.
+    ///
     /// It is used only to store the scheduler context, it has not
     /// its own stack (uses the system stack, at the end of RAM)
     /// and has no entry point, since it is started by the system.
@@ -52,6 +53,17 @@ namespace os
 
       /// @} end of name Constructors/destructor
 
+    private:
+
+      /// \name Private member variables
+      /// @{
+
+      /// \brief Empty stack (the only allowed).
+      Stack m_stack
+        { nullptr, 0 };
+
+      /// @} end of Private member variables
+
     };
 
 #pragma GCC diagnostic pop
@@ -64,7 +76,7 @@ namespace os
     /// Using a null stack pointer will prevent creating a new context.
     inline
     MainThread::MainThread(void)
-        : Thread("main()", nullptr, nullptr, nullptr, 0,
+        : Thread("main()", nullptr, nullptr, m_stack,
             os::core::scheduler::MAIN_PRIORITY)
     {
 #if defined(DEBUG)
@@ -97,5 +109,4 @@ namespace os
 }
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
 #endif // OS_PORTABLE_CORE_MAINTHREAD_H_
