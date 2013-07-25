@@ -362,13 +362,13 @@ runTestStress()
   Task::seed((uint16_t) time(NULL));
 
   TaskPeriodic taskP("P", hal::arch::MIN_STACK_SIZE);
-  Task task0("0", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
-  Task task1("1", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
+  Task task0("0", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
+  Task task1("1", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
   Task task2("2", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
   Task task3("3", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 200);
   Task task4("4", hal::arch::MIN_STACK_SIZE, 500, 2500, 1, 200);
   Task task5("5", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 100);
-  Task task6("6", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 200);
+  Task task6("6", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
   Task task7("7", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 400);
   Task task8("8", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
   Task task9("9", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
