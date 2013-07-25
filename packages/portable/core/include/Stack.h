@@ -69,10 +69,8 @@ namespace os
       /// \param [in] sizeBytes         Size of stack in bytes.
       Stack(stack::element_t* const pStack, stack::size_t const sizeBytes);
 
-      /// \brief Copy constructor.
-      ///
-      /// \param [in] stack             Reference to another stack object.
-      Stack(Stack& stack);
+      /// \brief No Copy constructor.
+      Stack(Stack& stack) = delete;
 
       /// \brief Destructor.
       ~Stack();
@@ -145,22 +143,13 @@ namespace os
         m_sizeBytes(sizeBytes)
     {
 #if defined(DEBUG)
-      os::diag::trace.putConstructor();
-#endif
-    }
-
-    /// \details
-    /// Store the pointer to the beginning and the size
-    /// in the private member variables.
-    ///
-    /// Leave the compiler to decide if it is inlined.
-    inline
-    Stack::Stack(Stack& stack)
-        : m_pStart(stack.getStart()), //
-        m_sizeBytes(stack.getSize())
-    {
-#if defined(DEBUG)
-      os::diag::trace.putConstructor();
+      os::diag::trace.putString("os::core::Stack::Stack(");
+      os::diag::trace.putHex(pStack);
+      os::diag::trace.putString(", ");
+      os::diag::trace.putDec(sizeBytes);
+      os::diag::trace.putString(") @");
+      os::diag::trace.putHex(this);
+      os::diag::trace.putNewLine();
 #endif
     }
 
@@ -189,6 +178,60 @@ namespace os
     {
       return m_pStart;
     }
+
+    // ========================================================================
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
+    template<stack::size_t SizeBytes_T>
+      class TStaticStack : public Stack
+      {
+      public:
+        TStaticStack(void);
+        ~TStaticStack();
+
+      private:
+        os::core::stack::element_t m_stackArray[SizeBytes_T
+            / sizeof(os::core::stack::element_t)];
+      };
+
+    template<stack::size_t SizeBytes_T>
+      inline
+      __attribute__((always_inline))
+      TStaticStack<SizeBytes_T>::TStaticStack(void)
+          : Stack(m_stackArray, sizeof(m_stackArray))
+      {
+#if defined(DEBUG)
+        os::diag::trace.putConstructor();
+#endif
+      }
+
+    template<stack::size_t SizeBytes_T>
+      inline
+      __attribute__((always_inline))
+      TStaticStack<SizeBytes_T>::~TStaticStack()
+      {
+#if defined(DEBUG)
+        os::diag::trace.putDestructor();
+#endif
+      }
+
+#pragma GCC diagnostic pop
+
+    // ========================================================================
+
+    template<stack::size_t SizeBytes_T>
+      class TAllocatedStack : public Stack
+      {
+      public:
+        TAllocatedStack(stack::size_t const sizeBytes);
+        ~TAllocatedStack();
+
+      private:
+      };
 
     // ========================================================================
 
