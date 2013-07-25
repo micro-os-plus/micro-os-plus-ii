@@ -66,7 +66,7 @@ public:
   ~Task();
 
   void
-  threadMain()[[noreturn]];
+  threadMain() __attribute__((noreturn));
 
   os::core::Thread&
   getThread(void);
@@ -264,7 +264,7 @@ public:
   ~TaskPeriodic();
 
   void
-  threadMain()[[noreturn]];
+  threadMain() __attribute__((noreturn));
 
   os::core::Thread&
   getThread(void);
