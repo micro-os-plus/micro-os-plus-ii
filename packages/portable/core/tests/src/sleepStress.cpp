@@ -194,15 +194,11 @@ Task::threadMain(void)
   os::diag::trace.putMemberFunctionWithName();
 #endif
 
-  uint16_t nBusy, nSleep;
-  uint16_t nCnt;
-  nCnt = 0;
-
   // thread endless loop
   for (;;)
     {
-      nBusy = (rand() % (m_maxMicros - m_minMicros)) + m_minMicros;
-      nSleep = (rand() % (m_maxTicks - m_minTicks)) + m_minTicks;
+      uint16_t nBusy = (rand() % (m_maxMicros - m_minMicros)) + m_minMicros;
+      uint16_t nSleep = (rand() % (m_maxTicks - m_minTicks)) + m_minTicks;
 
       // simulate a period of intense activity
       os::architecture.busyWaitMicros(nBusy);
@@ -215,12 +211,6 @@ Task::threadMain(void)
 
       m_averageCount++;
       m_averageTicksSum += (m_ticks / m_count);
-
-      nCnt += nSleep;
-      if (nCnt >= 1000)
-        {
-          nCnt -= 1000;
-        }
     }
 }
 
@@ -237,6 +227,7 @@ Task::rand(void)
   return 9;
 #else
   uint16_t ret;
+
   os::core::scheduler::CriticalSection cs;
   //os.sched.critical.enter();
     {
