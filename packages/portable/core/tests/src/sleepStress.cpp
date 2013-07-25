@@ -17,6 +17,9 @@
 
 // ----------------------------------------------------------------------------
 
+constexpr int MAX_RUN_SECONDS = 30;
+//constexpr int MAX_RUN_SECONDS = 0;
+
 #pragma GCC diagnostic push
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wglobal-constructors"
@@ -180,8 +183,8 @@ Task::resetTicks(void)
 int32_t
 Task::getDelta(void)
 {
-  int ret = (int32_t)(m_averageTicksSum/m_averageCount);
-  return ret - (m_maxTicks-m_minTicks)/2;
+  int ret = (int32_t) (m_averageTicksSum / m_averageCount);
+  return ret - (m_maxTicks - m_minTicks) / 2;
 }
 
 void
@@ -264,7 +267,7 @@ public:
   ~TaskPeriodic();
 
   void
-  threadMain() __attribute__((noreturn));
+  threadMain();
 
   os::core::Thread&
   getThread(void);
@@ -315,34 +318,46 @@ TaskPeriodic::threadMain(void)
 #endif
 
   // thread endless loop
+  int t = 0;
   for (;;)
     {
-      os::timerTicks.sleep(5000);
+      ts.reportInfo("periodic task running");
 
+      os::timerTicks.sleep(5000);
+      t += 5;
+      if (MAX_RUN_SECONDS != 0 and t > MAX_RUN_SECONDS)
+        return;
+
+      // ----- begin of critical section --------------------------------------
       os::core::scheduler::CriticalSection cs;
+        {
+#if defined(DEBUG)
+          os::diag::trace.putNewLine();
+#endif
+          for (size_t i = 0; i < sizeof(taskArray) / sizeof(taskArray[0]); ++i)
+            {
+              Task* pTask = taskArray[i];
 
 #if defined(DEBUG)
-      os::diag::trace.putNewLine();
-      for (size_t i = 0; i < sizeof(taskArray) / sizeof(taskArray[0]); ++i)
-        {
-          Task* pTask = taskArray[i];
-          os::diag::trace.putString(pTask->getName());
-          os::diag::trace.putChar(':');
-          os::diag::trace.putDec(pTask->getTicks());
-          os::diag::trace.putChar('/');
-          os::diag::trace.putDec(pTask->getCount());
-          os::diag::trace.putChar('=');
-          os::diag::trace.putDec(pTask->getTicks() / pTask->getCount());
-          os::diag::trace.putChar('(');
-          os::diag::trace.putDec(pTask->getDelta());
-          os::diag::trace.putChar(')');
-          os::diag::trace.putChar('\t');
-
-          pTask->resetCount();
-          pTask->resetTicks();
-        }
-      //os::diag::trace.putNewLine();
+              os::diag::trace.putString(pTask->getName());
+              os::diag::trace.putChar(':');
+              os::diag::trace.putDec(pTask->getTicks());
+              os::diag::trace.putChar('/');
+              os::diag::trace.putDec(pTask->getCount());
+              os::diag::trace.putChar('=');
+              os::diag::trace.putDec(pTask->getTicks() / pTask->getCount());
+              os::diag::trace.putChar('(');
+              os::diag::trace.putDec(pTask->getDelta());
+              os::diag::trace.putChar(')');
+              os::diag::trace.putChar('\t');
 #endif
+
+              pTask->resetCount();
+              pTask->resetTicks();
+            }
+          //os::diag::trace.putNewLine();
+        }
+      // ----- end of critical section ----------------------------------------
     }
 }
 
@@ -396,8 +411,20 @@ runTestStress()
   taskArray[9] = &task9;
   task9.getThread().start();
 
-  // since threads loop forever, this will never return
+  // after MAX_RUN_SECONDS, the periodic thread terminates
   taskP.getThread().join();
+
+  task0.getThread().stop();
+  task1.getThread().stop();
+  task2.getThread().stop();
+  task3.getThread().stop();
+  task4.getThread().stop();
+  task5.getThread().stop();
+  task6.getThread().stop();
+  task7.getThread().stop();
+  task8.getThread().stop();
+  task9.getThread().stop();
+
 }
 
 // ============================================================================
