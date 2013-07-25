@@ -328,7 +328,7 @@ namespace hal
           deltaMicros = (endTime.tv_sec - begTime.tv_sec) * 1000000
               + (endTime.tv_usec - begTime.tv_usec);
         }
-      while (deltaMicros < micros);
+      while (deltaMicros < static_cast<long>(micros));
 
     }
 
