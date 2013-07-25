@@ -24,7 +24,7 @@ namespace os
     /// and very low priority.
     IdleThread::IdleThread(void)
         : Thread("idle", [](IdleThread* p)
-          { p->threadMain();}, (IdleThread*) this, m_stack, sizeof(m_stack),
+          { p->threadMain();}, (IdleThread*) this, m_stack,
             os::core::scheduler::IDLE_PRIORITY)
     {
 #if defined(DEBUG)

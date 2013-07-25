@@ -48,12 +48,30 @@ namespace os
 
       /// @} end of name Constructors/destructor
 
+    private:
+
+      /// \name Private friends
+      /// @{
+
+      /// \brief The idle thread main code.
       void
       threadMain(void);
 
-    private:
-      os::core::stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
+      /// @} end of Private friends
+
+      /// \name Private member variables
+      /// @{
+
+#if 0
+      os::core::stack::element_t m_stackArray[hal::arch::MIN_STACK_SIZE
           / sizeof(os::core::stack::element_t)];
+
+      Stack m_stack
+        { m_stackArray, sizeof(m_stackArray) };
+#else
+      TStaticStack<hal::arch::MIN_STACK_SIZE> m_stack;
+#endif
+      /// @} end of Private member variables
 
     };
 
@@ -72,5 +90,4 @@ namespace os
 }
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
 #endif // OS_PORTABLE_CORE_IDLETHREAD_H_
