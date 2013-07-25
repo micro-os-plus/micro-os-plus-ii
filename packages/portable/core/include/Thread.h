@@ -85,37 +85,11 @@ namespace os
       /// \param [in] pName             Pointer to the null terminated thread name.
       /// \param [in] entryPoint        Pointer to the thread code.
       /// \param [in] pParameters       Pointer to the parameters passed to the thread.
-      /// \param [in] pStack            Pointer to the beginning of the stack area.
-      /// \param [in] stackSizeBytes    Size of stack in Bytes.
-      /// \param [in] priority          Initial priority.
-      Thread(const char* const pName, threadEntryPoint_t entryPoint,
-          void* pParameters, stack::element_t* const pStack,
-          stack::size_t const stackSizeBytes, priority_t priority =
-              scheduler::DEFAULT_PRIORITY);
-
-      /// \brief Constructor.
-      ///
-      /// \param [in] pName             Pointer to the null terminated thread name.
-      /// \param [in] entryPoint        Pointer to the thread code.
-      /// \param [in] pParameters       Pointer to the parameters passed to the thread.
       /// \param [in] stack             Reference to the stack object.
       /// \param [in] priority          Initial priority.
       Thread(const char* const pName, threadEntryPoint_t entryPoint,
-          void* pParameters, StackWithAllocator& stack, priority_t priority =
+          void* pParameters, Stack& stack, priority_t priority =
               scheduler::DEFAULT_PRIORITY);
-
-      /// \brief Template Constructor.
-      ///
-      /// \param [in] pName             Pointer to the null terminated thread name.
-      /// \param [in] function          A lambda to be called with one parameter.
-      /// \param [in] pObject           Pointer to the parameters passed to the thread.
-      /// \param [in] pStack            Pointer to the beginning of the stack area.
-      /// \param [in] stackSizeBytes    Size of stack in Bytes.
-      /// \param [in] priority          Initial priority.
-      template<class Lambda_T, class Object_T>
-        Thread(const char* const pName, Lambda_T function, Object_T* pObject,
-            stack::element_t* const pStack, stack::size_t const stackSizeBytes,
-            priority_t priority = scheduler::DEFAULT_PRIORITY);
 
       /// \brief Template Constructor.
       ///
@@ -126,8 +100,7 @@ namespace os
       /// \param [in] priority          Initial priority.
       template<class Lambda_T, class Object_T>
         Thread(const char* const pName, Lambda_T function, Object_T* pObject,
-            StackWithAllocator& stack, priority_t priority =
-                scheduler::DEFAULT_PRIORITY);
+            Stack& stack, priority_t priority = scheduler::DEFAULT_PRIORITY);
 
       /// \brief Destructor.
       ~Thread();
@@ -347,7 +320,7 @@ namespace os
       Context m_context;
 
       /// \brief The stack object.
-      Stack m_stack;
+      Stack& m_stack;
 
       /// \brief The current thread static priority.
       priority_t volatile m_staticPriority;
@@ -379,7 +352,7 @@ namespace os
     // ------------------------------------------------------------------------
 
     /// \details
-    /// Cast the lambda to an entryPoint pointer
+    /// Cast the lambda to an entryPoint pointer, copy the stack object
     /// and process like the regular non-template call.
     ///
     /// When the thread is used as a member in another object,
@@ -391,42 +364,16 @@ namespace os
     ///   ...
     /// }
     /// \endcode
+    /// \warning Do not use the stack yet! (see initialise())
     template<class Lambda_T, class Object_T>
       Thread::Thread(const char* const pName, Lambda_T function,
-          Object_T* pObject, stack::element_t* const pStack,
-          stack::size_t const stackSizeBytes, priority_t priority)
-          : NamedObject(pName), //
-          m_stack(pStack, stackSizeBytes)
-      {
-#if defined(DEBUG)
-#if defined(OS_DEBUG_THREAD)
-        os::diag::trace.putConstructorWithName();
-#else
-        os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
-            pName);
-#endif
-#endif
-        initialise(reinterpret_cast<threadEntryPoint_t>(*function),
-            static_cast<void*>(pObject), priority);
-
-      }
-
-    /// \details
-    /// Cast the lambda to an entryPoint pointer, copy the stack object
-    /// and process like the regular non-template call.
-    template<class Lambda_T, class Object_T>
-      Thread::Thread(const char* const pName, Lambda_T function,
-          Object_T* pObject, StackWithAllocator& stack, priority_t priority)
+          Object_T* pObject, Stack& stack, priority_t priority)
           : NamedObject(pName), //
           m_stack(stack) // copy constructor!
       {
 #if defined(DEBUG)
-#if defined(OS_DEBUG_THREAD)
-        os::diag::trace.putConstructorWithName();
-#else
         os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
             pName);
-#endif
 #endif
         initialise(reinterpret_cast<threadEntryPoint_t>(*function),
             static_cast<void*>(pObject), priority);
@@ -525,6 +472,9 @@ namespace os
     }
 
   // ==========================================================================
+
+
+  // ========================================================================
 
   }// namespace core
 } // namespace os

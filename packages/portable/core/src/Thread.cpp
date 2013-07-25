@@ -26,39 +26,15 @@ namespace os
     /// \details
     /// Store the stack reference and the priority
     /// in the private member variables.
+    /// \warning Do not use the stack yet! (see initialise())
     Thread::Thread(const char* const pName, threadEntryPoint_t entryPoint,
-        void* pParameters, stack::element_t* const pStack,
-        stack::size_t const stackSizeBytes, priority_t priority)
+        void* pParameters, Stack& stack, priority_t priority)
         : NamedObject(pName), //
-        m_stack(pStack, stackSizeBytes)
+        m_stack(stack) // copy reference
     {
 #if defined(DEBUG)
-#if defined(OS_DEBUG_THREAD)
-      os::diag::trace.putConstructorWithName();
-#else
       os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
           pName);
-#endif
-#endif
-
-      initialise(entryPoint, pParameters, priority);
-    }
-
-    /// \details
-    /// Copy the stack object and  the priority
-    /// in the private member variables.
-    Thread::Thread(const char* const pName, threadEntryPoint_t entryPoint,
-        void* pParameters, StackWithAllocator& stack, priority_t priority)
-        : NamedObject(pName), //
-        m_stack(stack) // copy constructor!
-    {
-#if defined(DEBUG)
-#if defined(OS_DEBUG_THREAD)
-      os::diag::trace.putConstructorWithName();
-#else
-      os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
-          pName);
-#endif
 #endif
 
       initialise(entryPoint, pParameters, priority);
@@ -76,7 +52,13 @@ namespace os
     }
 
     /// \details
-    /// Call the architecture function.
+    /// Initialise all member functions.
+    ///
+    /// \warning Do not use the stack yet! Due to the C++
+    /// initialisation order, if the Stack object is a member of
+    /// the derived class, it is
+    /// constructed after the base class, so at this moment the reference
+    /// may be to an object not yet constructed.
     void
     Thread::initialise(threadEntryPoint_t entryPoint, void* pParameters,
         priority_t priority)
@@ -104,8 +86,10 @@ namespace os
       os::diag::trace.putMemberFunctionWithName();
 #endif
       if (m_id != scheduler::NO_ID)
-        // already started
-        return true;
+        {
+          // already started
+          return true;
+        }
 
       m_isSuspended = false;
       m_isAttentionRequested = false;
