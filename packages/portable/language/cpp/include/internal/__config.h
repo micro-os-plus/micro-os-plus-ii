@@ -536,7 +536,7 @@ struct __static_assert_check
 #undef OS_INCLUDE_STD_EXCEPTIONS
 #endif
 
-// Maye removed later
+// Maybe removed later
 #ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 #define _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 #endif
