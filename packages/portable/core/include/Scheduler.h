@@ -74,7 +74,8 @@ namespace os
       constexpr threadCount_t MAX_THREADS = SYSTEM_THREADS + MAX_USER_THREADS;
 
       /// \brief Constant with the number of scheduler ticks per second.
-      constexpr int TICKS_PER_SECOND = OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
+      constexpr uint32_t TICKS_PER_SECOND =
+          OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
 
       // ----------------------------------------------------------------------
 
@@ -698,9 +699,9 @@ namespace os
     inline void
     __attribute__((always_inline))
     Scheduler::suspendThread(Thread* pThread)
-    {
-      m_active.remove(pThread);
-    }
+      {
+        m_active.remove(pThread);
+      }
 #endif
 
     /// \details
