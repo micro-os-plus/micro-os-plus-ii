@@ -74,16 +74,14 @@ threadCMain(void* pParam
   cCount = getNextGlobalCountValue();
 }
 
-static os::core::stack::element_t stackC[hal::arch::MIN_STACK_SIZE
-    / sizeof(os::core::stack::element_t)];
-
 #pragma GCC diagnostic push
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-static os::core::Thread threadC("C", threadCMain, &threadC, stackC, sizeof(stackC));
+static os::core::TStaticStack<hal::arch::MIN_STACK_SIZE> stackC;
+static os::core::Thread threadC("C", threadCMain, &threadC, stackC);
 
 #pragma GCC diagnostic pop
 
@@ -113,8 +111,8 @@ public:
 
 private:
   count_t m_count;
-  os::core::stack::element_t m_stack[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::stack::element_t)];
+  os::core::TStaticStack<hal::arch::MIN_STACK_SIZE> m_stack;
+
   os::core::Thread m_thread;
 };
 
@@ -122,7 +120,7 @@ private:
 
 CommonTask::CommonTask(const char* pName)
     : m_thread(pName, [](CommonTask* pTask)
-      { pTask->threadMain();}, this, m_stack, sizeof(m_stack))
+      { pTask->threadMain();}, this, m_stack)
 {
 #if defined(DEBUG)
   os::diag::trace.putConstructor();
@@ -212,20 +210,16 @@ public:
   count_t m_count3[3];
 
 public:
-  os::core::stack::element_t m_stack1[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::stack::element_t)];
+  os::core::TStaticStack<hal::arch::MIN_STACK_SIZE> m_stack1;
   os::core::Thread m_thread1;
 
-  os::core::stack::element_t m_stack2[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::stack::element_t)];
+  os::core::TStaticStack<hal::arch::MIN_STACK_SIZE> m_stack2;
   os::core::Thread m_thread2;
 
-  os::core::stack::element_t m_stack3a[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::stack::element_t)];
+  os::core::TStaticStack<hal::arch::MIN_STACK_SIZE> m_stack3a;
   os::core::Thread m_thread3a;
 
-  os::core::stack::element_t m_stack3b[hal::arch::MIN_STACK_SIZE
-      / sizeof(os::core::stack::element_t)];
+  os::core::TStaticStack<hal::arch::MIN_STACK_SIZE> m_stack3b;
   os::core::Thread m_thread3b;
 };
 
@@ -243,12 +237,12 @@ auto th2 = [](MultiThreadedTask* pTask)
 #pragma GCC diagnostic pop
 
 MultiThreadedTask::MultiThreadedTask(void)
-    : m_thread1("MT1", &threadMain1, this, m_stack1, sizeof(m_stack1)), // with static function
-    m_thread2("MT2", th2, this, m_stack2, sizeof(m_stack2)), // with separate lambda
+    : m_thread1("MT1", &threadMain1, this, m_stack1), // with static function
+    m_thread2("MT2", th2, this, m_stack2), // with separate lambda
     m_thread3a("MT3A", [](MultiThreadedTask* pTask)
-      { pTask->threadMain3(1);}, this, m_stack3a, sizeof(m_stack3a)), // with inline lambda with more params
+      { pTask->threadMain3(1);}, this, m_stack3a), // with inline lambda with more params
     m_thread3b("MT3B", [](MultiThreadedTask* pTask)
-      { pTask->threadMain3(2);}, this, m_stack3b, sizeof(m_stack3b)) // with inline lambda with more params
+      { pTask->threadMain3(2);}, this, m_stack3b) // with inline lambda with more params
 {
 #if defined(DEBUG)
   os::diag::trace.putConstructor();

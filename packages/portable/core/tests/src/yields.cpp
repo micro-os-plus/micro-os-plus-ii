@@ -77,7 +77,7 @@ private:
   count_t m_count1;
   count_t m_count2;
 
-  os::core::stack::element_t m_stack[hal::arch::MIN_STACK_SIZE/sizeof(os::core::stack::element_t)];
+  os::core::TStaticStack<hal::arch::MIN_STACK_SIZE> m_stack;
   os::core::Thread m_thread;
 };
 
@@ -85,8 +85,7 @@ private:
 
 Task::Task(const char* pName)
     : m_thread(pName, [](Task* pTask)
-      { pTask->threadMain();}, this, m_stack,
-        sizeof(m_stack))
+      { pTask->threadMain();}, this, m_stack)
 {
 #if defined(DEBUG)
   os::diag::trace.putConstructor();
