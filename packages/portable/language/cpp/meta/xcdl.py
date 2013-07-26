@@ -23,6 +23,9 @@ Package(
                 'ostream.cpp',
                 'locale_tiny.cpp',
                 'locale.cpp',
+                'exception.cpp',
+                'new.cpp',
+                'malloc.cpp',
             ],
 
             headerDefinition='OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS',
