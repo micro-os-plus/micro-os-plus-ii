@@ -52,26 +52,33 @@ runTestAccuracy()
 
   os::timerTicks.sleep(1);
 
+  os::core::timer::ticks_t ticksBegin = os::timerTicks.getTicks();
+
   timeval begTime;
   gettimeofday(&begTime, 0);
 
   os::timerTicks.sleep(os::core::scheduler::TICKS_PER_SECOND);
 
+  os::core::timer::ticks_t ticksEnd = os::timerTicks.getTicks();
+
   timeval endTime;
   gettimeofday(&endTime, 0);
+
   long deltaMicros = (endTime.tv_sec - begTime.tv_sec) * 1000000
       + (endTime.tv_usec - begTime.tv_usec);
   //int deltaMillis = (int)((deltaMicros + 500) / 1000);
 
   double deltaProcents = (deltaMicros - 1000000) * 100.0 / 1000000.0;
 
-#if defined(DEBUG)
-  os::diag::trace << os::std::endl << "sleep("
-      << os::core::scheduler::TICKS_PER_SECOND << ") took " << deltaMicros
-      << " micros" << os::std::endl;
-#endif
+  os::core::timer::ticks_t deltaTicks = ticksEnd - ticksBegin;
 
-  ts.assertCondition((-10.0 < deltaProcents) && (deltaProcents < 10.0));
+  ts.assertCondition(((deltaTicks - os::core::scheduler::TICKS_PER_SECOND) <= 1));
+
+  std::cout << std::endl << "sleep(" << os::core::scheduler::TICKS_PER_SECOND
+      << ") took " << deltaTicks << " ticks, " << deltaMicros
+      << " real time micros, accuracy " << deltaProcents << " %" << std::endl;
+
+  //ts.assertCondition((-10.0 < deltaProcents) && (deltaProcents < 10.0));
 
 }
 
@@ -101,19 +108,23 @@ public:
   os::core::Thread&
   getThread(void);
 
-  int
+  os::core::timer::ticks_t
   getCount(void);
 
   os::core::timer::ticks_t
   getDeltaTicks(void);
+
+  unsigned int
+  getSleepCalls(void);
 
 private:
   os::core::StackWithAllocator m_stack;
 
   os::core::Thread m_thread;
 
-  int m_count;
+  os::core::timer::ticks_t m_count;
   os::core::timer::ticks_t m_deltaTicks;
+  unsigned int m_sleepCalls;
 };
 
 #pragma GCC diagnostic pop
@@ -129,6 +140,7 @@ Task::Task(const char* pName, os::core::stack::size_t stackSizeBytes)
 #endif
   m_count = 0;
   m_deltaTicks = 0;
+  m_sleepCalls = 0;
 }
 
 Task::~Task()
@@ -144,7 +156,7 @@ Task::getThread(void)
   return m_thread;
 }
 
-int
+os::core::timer::ticks_t
 Task::getCount(void)
 {
   return m_count;
@@ -154,6 +166,12 @@ os::core::timer::ticks_t
 Task::getDeltaTicks(void)
 {
   return m_deltaTicks;
+}
+
+unsigned int
+Task::getSleepCalls(void)
+{
+  return m_sleepCalls;
 }
 
 void
@@ -175,6 +193,7 @@ Task::threadMain(void)
         {
           os::timerTicks.sleep(i);
           m_count += i;
+          ++m_sleepCalls;
         }
     }
 
@@ -184,16 +203,19 @@ Task::threadMain(void)
 
   os::timerTicks.sleep(50);
 
-#if defined(DEBUG)
-  os::diag::trace.putString("many sleeps, took ");
+#if defined(_DEBUG)
+  os::diag::trace.putString("multiple sleeps of ");
+  os::diag::trace.putDec(SUM);
+  os::diag::trace.putString(" ticks took ");
   os::diag::trace.putDec(m_deltaTicks);
-  os::diag::trace.putString(" milliseconds, \"");
+  os::diag::trace.putString(" counted ticks, \"");
   os::diag::trace.putString(getThread().getName());
   os::diag::trace.putString("\"");
   os::diag::trace.putNewLine();
 #endif
 
-  //std::cout << "deltaTicks=" << m_deltaTicks << std::endl;
+  std::cout << "Multiple sleeps of " << SUM << " ticks took " << m_deltaTicks
+      << " counted ticks, \"" << getThread().getName() << "\"" << std::endl;
 
 #if defined(_DEBUG)
   os::diag::trace.putString("m_count=");
@@ -255,17 +277,9 @@ runTestMulti()
 
   for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
     {
-      ts.assertCondition(array[i]->getCount() == static_cast<int>(Task::SUM));
+      ts.assertCondition(((array[i]->getDeltaTicks() - array[i]->getCount()) <= array[i]->getSleepCalls()));
     }
 
-  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
-    {
-      os::core::timer::ticks_t deltaTicks = array[i]->getDeltaTicks();
-      bool absdelta = ((-static_cast<int>(Task::SUM / 10)
-          < static_cast<int>(deltaTicks - Task::SUM))
-          && ((deltaTicks - Task::SUM) < static_cast<int>(Task::SUM / 10)));
-      ts.assertCondition(absdelta);
-    }
 }
 
 // ----------------------------------------------------------------------------
