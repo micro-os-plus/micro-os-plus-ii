@@ -77,7 +77,7 @@ private:
   count_t m_count1;
   count_t m_count2;
 
-  os::core::TStaticStack<hal::arch::MIN_STACK_SIZE> m_stack;
+  os::core::TStaticStack<> m_stack; // stack with default size
   os::core::Thread m_thread;
 };
 
