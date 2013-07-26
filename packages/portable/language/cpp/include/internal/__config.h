@@ -80,7 +80,6 @@
 #   define _LIBCPP_BIG_ENDIAN    1
 # endif
 #endif // __sun__
-
 #if defined(__BYTE_ORDER__)
 
 # if __BYTE_ORDER__ == 1234
@@ -436,13 +435,13 @@ typedef unsigned int char32_t;
 
 #if !defined(__DOXYGEN__)
 template<bool>
-  struct __static_assert_test;
+struct __static_assert_test;
 template<>
-  struct __static_assert_test<true>
+struct __static_assert_test<true>
   {
   };
 template<unsigned>
-  struct __static_assert_check
+struct __static_assert_check
   {
   };
 #define static_assert(__b, __m) \
