@@ -112,6 +112,9 @@ then
 		if [ ! -z "$(g++ --version | grep 4.7)" ]
 		then
 			defaultCompiler=gcc47
+		elif [ ! -z "$(g++ --version | grep 4.8)" ]
+		then
+			defaultCompiler=gcc48
 		else
 			defaultCompiler=gcc
 		fi
@@ -154,9 +157,14 @@ then
 				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
 			
-			if [ -x /usr/bin/g++-4.7 ]
+			if [ -x /usr/bin/g++-4.7 -o "$defaultCompiler" == "gcc47" ]
 			then
-				compiler=gcc47			
+				if [ -x /usr/bin/g++-4.7 ]
+				then
+					compiler=gcc47
+				else
+					compiler=gcc
+				fi		
 				if [ "$MACHINE" == "x86_64" ]
 				then
 					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
@@ -164,9 +172,14 @@ then
 				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
 			
-			if [ -x /usr/bin/g++-4.8 ]
+			if [ -x /usr/bin/g++-4.8 -o "$defaultCompiler" == "gcc48" ]
 			then
-				compiler=gcc48			
+				if [ -x /usr/bin/g++-4.8 ]
+				then
+					compiler=gcc48
+				else
+					compiler=gcc
+				fi		
 				if [ "$MACHINE" == "x86_64" ]
 				then
 					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
