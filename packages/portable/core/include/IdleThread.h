@@ -62,6 +62,12 @@ namespace os
       /// \name Private member variables
       /// @{
 
+      /// \brief The idle thread stack.
+      /// \warning Defining it inside a class derived from another class
+      /// that needs a reference to it
+      /// is potentially wrong, since it is constructed after the
+      /// parent class, but in this case we do not use the reference
+      /// to the stack in the constructor.
       TStaticStack<hal::arch::MIN_STACK_SIZE> m_stack;
 
       /// @} end of Private member variables

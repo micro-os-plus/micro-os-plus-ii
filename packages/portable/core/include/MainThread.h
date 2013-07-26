@@ -59,6 +59,11 @@ namespace os
       /// @{
 
       /// \brief Empty stack (the only allowed).
+      /// \warning Defining it inside a class derived from another class
+      /// that needs a reference to it
+      /// is potentially wrong, since it is constructed after the
+      /// parent class, but in this case we do not use the reference
+      /// to the stack in the constructor.
       Stack m_stack
         { nullptr, 0 };
 
