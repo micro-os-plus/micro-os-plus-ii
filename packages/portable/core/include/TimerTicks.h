@@ -38,6 +38,7 @@ namespace os
     /// System timer counting scheduler ticks.
     ///
     /// \example portable/core/tests/src/sleep.cpp
+    /// \example portable/core/tests/src/sleepStress.cpp
     class TimerTicks : public TimerBase
     {
     public:
