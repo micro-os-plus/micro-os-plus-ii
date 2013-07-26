@@ -95,6 +95,9 @@ function runTestArray()
 	echo "$compiler $bits tests performed" >>$SUMMARY_FILE
 }
 
+# make sure the destination folder is there
+mkdir -p $DEST
+
 SUMMARY_FILE=$DEST/summary.txt
 rm -f $SUMMARY_FILE
 touch -f $SUMMARY_FILE
