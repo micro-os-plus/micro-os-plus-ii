@@ -96,7 +96,7 @@ public:
   getDelta(void);
 
 private:
-  os::core::StackWithAllocator m_stack;
+  os::core::AllocatedStack m_stack;
 
   os::core::Thread m_thread;
 
@@ -264,7 +264,7 @@ public:
   getThread(void);
 
 private:
-  os::core::StackWithAllocator m_stack;
+  os::core::AllocatedStack m_stack;
 
   os::core::Thread m_thread;
 

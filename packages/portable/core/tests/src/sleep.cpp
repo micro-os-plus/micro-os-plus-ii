@@ -118,8 +118,8 @@ public:
   getSleepCalls(void);
 
 private:
-  os::core::StackWithAllocator m_stack;
-
+  // since it is passed to Thread, must be initialised before
+  os::core::AllocatedStack m_stack;
   os::core::Thread m_thread;
 
   os::core::timer::ticks_t m_count;
