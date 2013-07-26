@@ -3,7 +3,7 @@
 # This file is part of the µOS++ SE distribution.
 # Copyright (c) 2013 Liviu Ionescu.
                
-# GCC x64
+# ----- GCC x64 ---------------------------------------------------------------
 Configuration(
     id='config.os.portable.tests.minimal.linux.x64.gcc.debug',
     name='Debug GNU/Linux Minimal configuration with x86_64 GCC',
@@ -61,65 +61,7 @@ Configuration(
     toolchain='toolchain.linux.release.gcc.x32',                    
 ),
 
-# GCC 4.6 x64
-Configuration(
-    id='config.os.portable.tests.minimal.linux.x64.gcc46.debug',
-    name='Debug GNU/Linux Minimal configuration with x86_64 GCC 4.6',
-    description='Debug build configuration for Minimal.',
-    
-    buildConfigurationName='linux_minimal_x64_gcc46_Debug',
-    
-    buildFolder='$(PARENT)/x64/gcc46/Debug',
-    
-    requirements=[
-        'enable("DEBUG")',
-    ],
-      
-    toolchain='toolchain.linux.debug.gcc46.x64',                    
-),
-
-Configuration(
-    id='config.os.portable.tests.minimal.linux.x64.gcc46.release',
-    name='Release GNU/Linux Minimal configuration with x86_64 GCC 4.6',
-    description='Release build configuration for Minimal.',
-    
-    buildConfigurationName='linux_minimal_x64_gcc46_Release',
-    
-    buildFolder='$(PARENT)/x64/gcc46/Release',
-                          
-    toolchain='toolchain.linux.release.gcc46.x64',                    
-),
-
-# GCC 4.6 x32
-Configuration(
-    id='config.os.portable.tests.minimal.linux.x32.gcc46.debug',
-    name='Debug GNU/Linux Minimal configuration with i386 GCC 4.6',
-    description='Debug build configuration for Minimal.',
-    
-    buildConfigurationName='linux_minimal_x32_gcc46_Debug',
-    
-    buildFolder='$(PARENT)/x32/gcc46/Debug',
-    
-    requirements=[
-        'enable("DEBUG")',
-    ],
-      
-    toolchain='toolchain.linux.debug.gcc46.x32',                    
-),
-
-Configuration(
-    id='config.os.portable.tests.minimal.linux.x32.gcc46.release',
-    name='Release GNU/Linux Minimal configuration with i386 GCC 4.6',
-    description='Release build configuration for Minimal.',
-    
-    buildConfigurationName='linux_minimal_x32_gcc46_Release',
-    
-    buildFolder='$(PARENT)/x32/gcc46/Release',
-
-    toolchain='toolchain.linux.release.gcc46.x32',                    
-),
-
-# GCC 4.7 x64
+# ----- GCC 4.7 x64 -----------------------------------------------------------
 Configuration(
     id='config.os.portable.tests.minimal.linux.x64.gcc47.debug',
     name='Debug GNU/Linux Minimal configuration with x86_64 GCC 4.7',
@@ -177,7 +119,66 @@ Configuration(
     toolchain='toolchain.linux.release.gcc47.x32',                    
 ),
 
-# LLVM x64
+# ----- GCC 4.8 x64 -----------------------------------------------------------
+Configuration(
+    id='config.os.portable.tests.minimal.linux.x64.gcc48.debug',
+    name='Debug GNU/Linux Minimal configuration with x86_64 GCC 4.8',
+    description='Debug build configuration for Minimal.',
+    
+    buildConfigurationName='linux_minimal_x64_gcc48_Debug',
+    
+    buildFolder='$(PARENT)/x64/gcc48/Debug',
+    
+    requirements=[
+        'enable("DEBUG")',
+    ],
+      
+    toolchain='toolchain.linux.debug.gcc48.x64',                    
+),
+
+Configuration(
+    id='config.os.portable.tests.minimal.linux.x64.gcc48.release',
+    name='Release GNU/Linux Minimal configuration with x86_64 GCC 4.8',
+    description='Release build configuration for Minimal.',
+    
+    buildConfigurationName='linux_minimal_x64_gcc48_Release',
+    
+    buildFolder='$(PARENT)/x64/gcc48/Release',
+                          
+    toolchain='toolchain.linux.release.gcc48.x64',                    
+),
+
+# GCC 4.8 x32
+Configuration(
+    id='config.os.portable.tests.minimal.linux.x32.gcc48.debug',
+    name='Debug GNU/Linux Minimal configuration with i386 GCC 4.8',
+    description='Debug build configuration for Minimal.',
+    
+    buildConfigurationName='linux_minimal_x32_gcc48_Debug',
+    
+    buildFolder='$(PARENT)/x32/gcc48/Debug',
+    
+    requirements=[
+        'enable("DEBUG")',
+    ],
+      
+    toolchain='toolchain.linux.debug.gcc48.x32',                    
+),
+
+Configuration(
+    id='config.os.portable.tests.minimal.linux.x32.gcc48.release',
+    name='Release GNU/Linux Minimal configuration with i386 GCC 4.8',
+    description='Release build configuration for Minimal.',
+    
+    buildConfigurationName='linux_minimal_x32_gcc48_Release',
+    
+    buildFolder='$(PARENT)/x32/gcc48/Release',
+
+    toolchain='toolchain.linux.release.gcc48.x32',                    
+),
+
+
+# ----- LLVM x64 --------------------------------------------------------------
 Configuration(
     id='config.os.portable.tests.minimal.linux.x64.llvm.debug',
     name='Debug GNU/Linux Minimal configuration with x86_64 LLVM',
