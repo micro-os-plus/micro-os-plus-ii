@@ -181,6 +181,40 @@ Toolchain(
                     ],  
                 ),
                            
+                Toolchain(
+                    id='toolchain.linux.debug.gcc48',
+                    name='GNU/Linux Debug GCC 4.8',
+                    description='The GNU/Linux GCC 4.8 toolchain base for debug builds',
+
+                    category='base',
+
+                    programNameSuffix='-4.8',
+                        
+                    children=[
+                        Toolchain(
+                                  
+                            id='toolchain.linux.debug.gcc48.x64',
+                            name='GNU/Linux Debug GCC 4.8 x86_64',
+                            description='The GNU/Linux GCC 4.8 x86_64 toolchain base for debug builds',
+                            
+                            category='debug',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                                  
+                            id='toolchain.linux.debug.gcc48.x32',
+                            name='GNU/Linux Debug GCC 4.8 i386',
+                            description='The GNU/Linux GCC 4.8 i386 toolchain base for debug builds',
+        
+                            category='debug',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],  
+                ),
+                           
             ],                              
         ),
 
@@ -299,6 +333,40 @@ Toolchain(
                             id='toolchain.linux.release.gcc47.x32',
                             name='GNU/Linux Release GCC 4.7 i386',
                             description='The GNU/Linux GCC 4.7 i386 toolchain base for release builds',
+        
+                            category='release',
+                            
+                            compilerCpu='-m32',
+                        ),
+                    ],
+                ),      
+                         
+                Toolchain(
+                    id='toolchain.linux.release.gcc48',
+                    name='GNU/Linux Release GCC 4.8',
+                    description='The GNU/Linux GCC 4.8 toolchain base for release builds',
+
+                    category='base',
+
+                    programNameSuffix='-4.8',
+                          
+                    children=[
+                        Toolchain(
+                                  
+                            id='toolchain.linux.release.gcc48.x64',
+                            name='GNU/Linux Release GCC 4.8 x86_64',
+                            description='The GNU/Linux GCC 4.8 x86_64 toolchain base for release builds',
+                            
+                            category='release',
+                            
+                            compilerCpu='-m64',
+                        ),
+        
+                        Toolchain(
+                                  
+                            id='toolchain.linux.release.gcc48.x32',
+                            name='GNU/Linux Release GCC 4.8 i386',
+                            description='The GNU/Linux GCC 4.8 i386 toolchain base for release builds',
         
                             category='release',
                             
