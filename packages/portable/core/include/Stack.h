@@ -186,7 +186,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    template<stack::size_t SizeBytes_T>
+    template<stack::size_t SizeBytes_T = hal::arch::MIN_STACK_SIZE>
       class TStaticStack : public Stack
       {
       public:
@@ -223,7 +223,7 @@ namespace os
 
     // ========================================================================
 
-    template<stack::size_t SizeBytes_T>
+    template<class Allocator_T>
       class TAllocatedStack : public Stack
       {
       public:
@@ -233,6 +233,8 @@ namespace os
       private:
       };
 
+    // TODO: define it, using the given allocator
+
     // ========================================================================
 
 #pragma GCC diagnostic push
@@ -240,17 +242,17 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    /// \class StackWithAllocator Stack.h "portable/core/include/Stack.h"
+    /// \class AllocatedStack Stack.h "portable/core/include/Stack.h"
     /// \ingroup core
     /// \nosubgrouping
     ///
-    /// \brief A stack with dynamic allocator.
+    /// \brief A stack with dynamic allocation.
     ///
     /// \details
-    /// This special stack allocates the stack on the free store, using
+    /// This special stack allocates the stack array on the free store, using
     /// the recommended RAII paradigm of calling delete only in the
     /// destructor.
-    class StackWithAllocator : public Stack
+    class AllocatedStack : public Stack
     {
     public:
       /// \name Constructors/destructor
@@ -259,10 +261,10 @@ namespace os
       /// \brief Constructor.
       ///
       /// \param [in] sizeBytes         Size of stack in bytes.
-      StackWithAllocator(stack::size_t const sizeBytes);
+      AllocatedStack(stack::size_t const sizeBytes);
 
       /// \brief Destructor.
-      ~StackWithAllocator();
+      ~AllocatedStack();
 
       /// @} end of name Constructors/destructor
 
@@ -274,7 +276,7 @@ namespace os
     /// Allocate the requested buffer on the free store and pass its
     /// address to the parent constructor.
     inline
-    StackWithAllocator::StackWithAllocator(stack::size_t const sizeBytes)
+    AllocatedStack::AllocatedStack(stack::size_t const sizeBytes)
         : Stack(new stack::element_t[sizeBytes / sizeof(stack::element_t)],
             sizeBytes)
     {
@@ -286,7 +288,7 @@ namespace os
     /// \details
     /// Free the space allocated in the constructor.
     inline
-    StackWithAllocator::~StackWithAllocator()
+    AllocatedStack::~AllocatedStack()
     {
 #if defined(DEBUG)
       os::diag::trace.putDestructor();
