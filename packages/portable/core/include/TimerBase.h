@@ -16,6 +16,7 @@
 #include <stdint.h>
 
 #include "portable/diagnostics/include/Trace.h"
+
 #include "portable/core/include/Thread.h"
 
 namespace os
@@ -47,7 +48,6 @@ namespace os
       } Element;
 
 #pragma GCC diagnostic pop
-
 
     /// @} end of name Types and constants
 
@@ -90,7 +90,6 @@ namespace os
 
       /// \name Public member functions
       /// @{
-
 
       /// \brief Get the number of active timer elements.
       ///
