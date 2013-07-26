@@ -260,7 +260,11 @@ runTestMulti()
 
   for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
     {
-      ts.assertCondition(array[i]->getDeltaTicks() == Task::SUM);
+      os::core::timer::ticks_t deltaTicks = array[i]->getDeltaTicks();
+      bool absdelta = ((-static_cast<int>(Task::SUM / 10)
+          < static_cast<int>(deltaTicks - Task::SUM))
+          && ((deltaTicks - Task::SUM) < static_cast<int>(Task::SUM / 10)));
+      ts.assertCondition(absdelta);
     }
 }
 
