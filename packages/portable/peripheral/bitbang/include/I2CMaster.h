@@ -173,8 +173,8 @@ namespace os
       // ------------------------------------------------------------------------
 
       template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleepClockDuration(
             void)
         {
@@ -182,8 +182,8 @@ namespace os
         }
 
       template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleepSetupDuration(
             void)
         {
@@ -191,8 +191,8 @@ namespace os
         }
 
       template<class WatchDog_T, int ClockDuration_T, int SetupDuration_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TTimer<WatchDog_T, ClockDuration_T, SetupDuration_T>::sleepHalfClockDuration(
             void)
         {

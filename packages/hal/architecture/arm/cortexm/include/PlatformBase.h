@@ -68,8 +68,8 @@ namespace hal
     /// \details
     /// Display the platform greeting lines (if available)
     /// and call the family function.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     PlatformBase::putGreeting(void)
     {
 #if defined(OS_STRING_PLATFORM_GREETING_FIRST)

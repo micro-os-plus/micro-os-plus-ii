@@ -97,8 +97,8 @@ namespace hal
     /// \details
     /// Each peripheral bit has a separate word in the bit-band space.
     template<typename A_T>
-      address_t
-      inline __attribute__((always_inline))
+      inline address_t
+      __attribute__((always_inline))
       BitBand::computePeripheralBitWordAddress(A_T genericAddress,
           bitNumber_t bitNumber)
       {
@@ -124,8 +124,8 @@ namespace hal
     /// Compute the bit-banding address and return the corresponding
     /// bit as a word.
     template<typename A_T>
-      bitband::bitValue_t
-      inline __attribute__((always_inline))
+    inline bitband::bitValue_t
+      __attribute__((always_inline))
       BitBand::readPeripheralBitValue(A_T genericAddress, bitNumber_t bitNumber)
       {
         const address_t bitWordAddress = computePeripheralBitWordAddress(
@@ -143,8 +143,8 @@ namespace hal
     /// Compute the bit-banding address and write the corresponding
     /// bit as a word.
     template<typename A_T>
-      void
-      inline __attribute__((always_inline))
+    inline void
+      __attribute__((always_inline))
       BitBand::writePeripheralBitValue(A_T genericAddress,
           bitNumber_t bitNumber, bitband::bitValue_t value)
       {
@@ -162,8 +162,8 @@ namespace hal
     /// Compute the bit-banding address and set the corresponding
     /// bit to 1.
     template<typename A_T>
-      void
-      inline __attribute__((always_inline))
+    inline void
+      __attribute__((always_inline))
       BitBand::setPeripheralBit(A_T genericAddress, bitNumber_t bitNumber)
       {
         writePeripheralBitValue(genericAddress, bitNumber, 1);
@@ -173,8 +173,8 @@ namespace hal
     /// Compute the bit-banding address and secleart the corresponding
     /// bit to 0.
     template<typename A_T>
-      void
-      inline __attribute__((always_inline))
+    inline void
+      __attribute__((always_inline))
       BitBand::clearPeripheralBit(A_T genericAddress, bitNumber_t bitNumber)
       {
         writePeripheralBitValue(genericAddress, bitNumber, 0);

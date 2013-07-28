@@ -200,8 +200,8 @@ namespace hal
       /// the bus low, the effect will be delayed accordingly.
       /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        void
+        inline  void
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setHigh(void)
         {
           GPIO_Address->BSRR = GPIO_BitMask;
@@ -211,8 +211,8 @@ namespace hal
       /// Set the pin to low state. The effect will be immediate.
       /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setLow(void)
         {
           GPIO_Address->BRR = GPIO_BitMask;
@@ -222,8 +222,8 @@ namespace hal
       /// Read the pin state and return true if low.
       /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        bool
+        inline bool
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::isLow(void)
         {
           return ((GPIO_Address->IDR & GPIO_BitMask) == 0);
@@ -233,8 +233,8 @@ namespace hal
       /// Read the pin state and return true if high.
       /// \todo Implement this in C++.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        bool
+        inline bool
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::isHigh(void)
         {
           return ((GPIO_Address->IDR & GPIO_BitMask) != 0);
@@ -248,8 +248,8 @@ namespace hal
       /// \warning If used for devices that compile on release
       /// the implementation should not loop forever.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::waitToGetHigh(void)
         {
           while (isLow())
@@ -263,8 +263,8 @@ namespace hal
       /// high, eventually resetting
       /// the watch dog.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
-        inline __attribute__((always_inline))
-        void
+        inline void
+        __attribute__((always_inline))
         TPinOpenDrain<WatchDog_T, Port_T, Bit_T>::setHighAndSynchronise(void)
         {
           setHigh();
@@ -284,8 +284,8 @@ namespace hal
       };
 
       /// \brief Reload the watch dog device.
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       WatchDog::reload(void)
       {
         IWDG ->KR = ((uint16_t) 0xAAAA);

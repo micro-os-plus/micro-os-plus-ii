@@ -29,8 +29,8 @@ namespace os
     ///
     /// \brief Convert a generic unsigned to a hex representation.
     template<class Implementation_T, typename number_T>
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       __putHex(Implementation_T& implementation, number_T n)
       {
         size_t pos;
@@ -54,8 +54,8 @@ namespace os
     ///
     /// \brief Convert a generic signed to a decimal representation.
     template<class Implementation_T, typename number_T>
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       __putSigned(Implementation_T& implementation, number_T n)
       {
         bool isNegative = false;
@@ -94,8 +94,8 @@ namespace os
     ///
     /// \brief Convert a generic unsigned to a decimal representation.
     template<class Implementation_T, typename number_T>
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       __putUnsigned(Implementation_T& implementation, number_T n)
       {
         size_t pos;

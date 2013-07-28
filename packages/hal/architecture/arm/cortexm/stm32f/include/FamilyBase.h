@@ -85,8 +85,8 @@ namespace hal
     /// \details
     /// Place holder for the generic STM32F initialisation code.
     /// Overwrite it for each family with the actual code.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     FamilyBase::initialiseSystem(void)
     {
 #if defined(DEBUG)
@@ -98,8 +98,8 @@ namespace hal
     /// \details
     /// Place holder for the generic STM32F reset code.
     /// Overwrite it for each family with the actual code.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     FamilyBase::resetSystem(void)
     {
 #if defined(DEBUG)
@@ -112,8 +112,8 @@ namespace hal
     /// \details
     /// Place holder for the family greeting code.
     /// Overwrite it for each family with the actual code.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     FamilyBase::putGreeting(void)
     {
       os::diag::trace.putString("STM32F Cortex-M");

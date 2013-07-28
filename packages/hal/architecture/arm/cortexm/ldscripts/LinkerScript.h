@@ -155,65 +155,65 @@ namespace hal
 {
   namespace cortexm
   {
-    inline __attribute__((always_inline))      //
-    LinkerScript::linkerAlign_t*
+    inline LinkerScript::linkerAlign_t*
+    __attribute__((always_inline))
     LinkerScript::getBssBegin(void)
     {
       return (&__bss_start__);
     }
 
-    inline __attribute__((always_inline))      //
-    LinkerScript::linkerAlign_t*
+    inline LinkerScript::linkerAlign_t*
+    __attribute__((always_inline))
     LinkerScript::getBssEnd(void)
     {
       return (&__bss_end__);
     }
 
-    inline __attribute__((always_inline))      //
-    LinkerScript::linkerAlign_t*
+    inline LinkerScript::linkerAlign_t*
+    __attribute__((always_inline))
     LinkerScript::getFlashDataBegin(void)
     {
       // the initialised data starts at the end of the text section (in flash)
       return (&__etext);
     }
 
-    inline __attribute__((always_inline))      //
-    LinkerScript::linkerAlign_t*
+    inline LinkerScript::linkerAlign_t*
+    __attribute__((always_inline))
     LinkerScript::getRamDataBegin(void)
     {
       return (&__data_start__);
     }
 
-    inline __attribute__((always_inline))      //
-    LinkerScript::linkerAlign_t*
+    inline LinkerScript::linkerAlign_t*
+    __attribute__((always_inline))
     LinkerScript::getRamDataEnd(void)
     {
       return (&__data_end__);
     }
 
-    inline __attribute__((always_inline))      //
-    LinkerScript::linkerAlign_t*
+    inline LinkerScript::linkerAlign_t*
+    __attribute__((always_inline))
     LinkerScript::getInitArrayBegin(void)
     {
       return (&__init_array_start);
     }
 
-    inline __attribute__((always_inline))      //
-    LinkerScript::linkerAlign_t*
+    inline LinkerScript::linkerAlign_t*
+    __attribute__((always_inline))
     LinkerScript::getInitArrayEnd(void)
     {
       return (&__init_array_end);
     }
 
-    inline __attribute__((always_inline))      //
-    LinkerScript::linkerAlign_t*
+    inline LinkerScript::linkerAlign_t*
+    __attribute__((always_inline))
     LinkerScript::getFiniArrayBegin(void)
     {
       return (&__fini_array_start);
     }
 
-    inline __attribute__((always_inline))      //
-    LinkerScript::linkerAlign_t*
+    inline LinkerScript::linkerAlign_t*
+    __attribute__((always_inline))
     LinkerScript::getFiniArrayEnd(void)
     {
       return (&__fini_array_end);

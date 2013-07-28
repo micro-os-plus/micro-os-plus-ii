@@ -84,8 +84,8 @@ namespace os
     /// initialisations. Overwrite this
     /// with actual platform specific system initialisation code,
     /// if the platform requires more specific functionality.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     PlatformBase::initialiseSystem(void)
     {
       os::architecture.initialiseSystem();
@@ -96,14 +96,14 @@ namespace os
     /// reset code. Overwrite this
     /// with actual platform specific system reset code,
     /// if the platform requires more specific functionality.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     PlatformBase::resetSystem(void)
     {
       os::architecture.resetSystem();
     }
 
-    // ========================================================================
+  // ========================================================================
 
   }
 }

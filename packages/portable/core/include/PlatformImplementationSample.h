@@ -67,15 +67,15 @@ namespace hal
     // ------------------------------------------------------------------------
 
     /// Overwrite only if default architecture is not enough.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     PlatformImplementation::initialiseSystem(void)
     {
     }
 
     /// Overwrite only if default architecture is not enough.
-    inline __attribute__((always_inline))
-    void
+    inline void
+    __attribute__((always_inline))
     PlatformImplementation::resetSystem(void)
     {
     }

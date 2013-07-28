@@ -51,8 +51,8 @@ namespace os
       };
 
     template<class LinkerScript_T, typename linkerAlign_T>
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       TCppStartup<LinkerScript_T, linkerAlign_T>::copyInitialisedData(
           linkerAlign_t* fromBegin, linkerAlign_t* toBegin,
           linkerAlign_t* toEnd)
@@ -67,8 +67,8 @@ namespace os
       }
 
     template<class LinkerScript_T, typename linkerAlign_T>
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       TCppStartup<LinkerScript_T, linkerAlign_T>::clearBss(linkerAlign_t* bssBegin,
           linkerAlign_t* bssEnd)
       {
@@ -115,8 +115,8 @@ namespace os
       }
 
     template<class LinkerScript_T, typename linkerAlign_T>
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       TCppStartup<LinkerScript_T, linkerAlign_T>::initialiseDataAndBss(
           void)
       {
@@ -127,8 +127,8 @@ namespace os
       }
 
     template<class LinkerScript_T, typename linkerAlign_T>
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       TCppStartup<LinkerScript_T, linkerAlign_T>::callStaticConstructors(void)
       {
         callStaticFunctionsAscending(LinkerScript::getInitArrayBegin(),
@@ -136,8 +136,8 @@ namespace os
       }
 
     template<class LinkerScript_T, typename linkerAlign_T>
-      inline __attribute__((always_inline))
-      void
+      inline void
+      __attribute__((always_inline))
       TCppStartup<LinkerScript_T, linkerAlign_T>::callStaticDestructors(void)
       {
         callStaticFunctionsDescending(LinkerScript::getFiniArrayBegin(),
