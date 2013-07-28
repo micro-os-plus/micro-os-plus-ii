@@ -279,7 +279,7 @@ typedef __char32_t char32_t;
 #endif
 #endif
 
-#if (__has_feature(cxx_noexcept))
+#if defined(__MICRO_OS_PLUS_PLUS__) //(__has_feature(cxx_noexcept))
 #  define _NOEXCEPT noexcept
 #  define _NOEXCEPT_(x) noexcept(x)
 #else
@@ -454,7 +454,7 @@ struct __static_assert_check
 #define decltype(x) __typeof__(x)
 #endif
 
-#if 0 //defined(_LIBCPP_HAS_NO_CONSTEXPR)
+#if !defined(__MICRO_OS_PLUS_PLUS__) //defined(_LIBCPP_HAS_NO_CONSTEXPR)
 #define _LIBCPP_CONSTEXPR
 #else
 #define _LIBCPP_CONSTEXPR constexpr
@@ -470,7 +470,7 @@ struct __static_assert_check
 #define __has_feature(__x) 0
 #endif
 
-#if 1 //__has_feature(cxx_explicit_conversions)
+#if defined(__MICRO_OS_PLUS_PLUS__) //__has_feature(cxx_explicit_conversions)
 #   define _LIBCPP_EXPLICIT explicit
 #else
 #   define _LIBCPP_EXPLICIT
@@ -532,13 +532,13 @@ struct __static_assert_check
 #define _LIBCPP_HAS_NO_LONG_LONG
 #endif
 
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
-#undef OS_INCLUDE_STD_EXCEPTIONS
-#endif
+//#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+//#undef OS_INCLUDE_STD_EXCEPTIONS
+//#endif
 
-// Maybe removed later
-#ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
-#define _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+// force HAS_NO_GENERALIZED_INITIALIZERS
+#ifdef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
+#undef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 #endif
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
