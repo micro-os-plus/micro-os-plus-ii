@@ -20,6 +20,8 @@
 #include "portable/core/include/CriticalSections.h"
 #include "portable/core/include/Thread.h"
 
+//#include "portable/language/cpp/include/cstdlib.h"
+
 #include <sys/utsname.h>
 #include <sys/time.h>
 
@@ -302,7 +304,7 @@ namespace hal
           // when we have nothing else to do, just return to the new thread
         }
     }
-
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
     /// with actual architecture specific code.
@@ -316,8 +318,8 @@ namespace hal
       gettimeofday(&begTime, 0);
 
 #if defined(_DEBUG)
-          os::diag::trace.putChar('w');
-          os::diag::trace.putDec(micros);
+      os::diag::trace.putChar('w');
+      os::diag::trace.putDec(micros);
 #endif
 
       long deltaMicros;
@@ -334,7 +336,6 @@ namespace hal
 
   // ==========================================================================
 
-#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }// namespace posix
 } // namespace hal
 
