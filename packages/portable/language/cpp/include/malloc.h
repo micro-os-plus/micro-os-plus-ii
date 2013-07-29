@@ -24,11 +24,26 @@ namespace os
 {
   namespace std
   {
-    void*
-    malloc(os::std::size_t size);
+    /// \addtogroup std_support
+    /// @{
 
+    /// \brief Allocate memory.
+    ///
+    /// \param [in] size        The size to allocate, in bytes.
+    /// \retval 0               Error, could not allocate.
+    /// \retval !=0             Pointer to the allocated area.
+    void*
+    malloc(os::std::size_t size) noexcept;
+
+    /// \brief Free memory.
+    ///
+    /// \param [in] ptr         Pointer to the area to free.
+    /// \par Returns
+    ///    Nothing.
     void
-    free(void *ptr);
+    free(void *ptr) noexcept;
+
+    /// @} end of addtogroup std_support
 
   } // namespace std
 } // namespace os

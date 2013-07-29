@@ -24,8 +24,12 @@ namespace os
 {
   namespace std
   {
+    /// \details
+    /// The malloc() function allocates size bytes of memory and returns a
+    /// pointer to the allocated memory. Currently it calls
+    /// the C function.
     void*
-    malloc(os::std::size_t size)
+    malloc(os::std::size_t size) noexcept
     {
       void* p = ::malloc(size);
 #if defined(DEBUG)
@@ -38,8 +42,14 @@ namespace os
       return p;
     }
 
+    /// \details
+    /// The free() function deallocates the memory allocation pointed
+    /// to by ptr.
+    /// If ptr is a NULL pointer, no operation is performed.
+    /// Currently it calls
+    /// the C function.
     void
-    free(void *ptr)
+    free(void *ptr) noexcept
     {
 #if defined(DEBUG)
       os::diag::trace.putString("os::core::free(");

@@ -13,6 +13,13 @@ namespace os
 {
   namespace std
   {
+    /// \brief Abort execution.
+    /// \ingroup std_support
+    ///
+    /// \par Parameters
+    ///    None.
+    /// \par Returns
+    ///    Never.
     void
     __attribute__((noreturn))
     abort(void);
