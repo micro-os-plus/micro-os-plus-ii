@@ -37,6 +37,9 @@ synthetic POSIX, the namespace was renamed as `os::std::`.
     \defgroup std_iter Iterators
     \ingroup std
 
+    \defgroup std_support Language Support
+    \ingroup std
+
 \defgroup arm_cm ARM Cortex-M
 \brief Cortex-M architecture support.
 
