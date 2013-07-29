@@ -28,6 +28,8 @@
 
 #include "hal/architecture/synthetic/posix/include/TimerTicksImplementation.h"
 
+#include "portable/language/cpp/include/cstdlib.h"
+
 #include <errno.h>
 #include <unistd.h>
 
@@ -77,6 +79,16 @@ namespace hal
       static void
       waitForInterrupt(void);
 
+      /// \brief Software reset the processor.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      __attribute__((noreturn))
+      resetSystem(void);
+
       /// \brief Busy wait microseconds.
       ///
       /// \param [in] micros     The number of microseconds to sleep.
@@ -88,6 +100,13 @@ namespace hal
       /// @} end of name Public member functions
 
     };
+
+    inline void
+    __attribute__((always_inline))
+    ArchitectureImplementation::resetSystem(void)
+    {
+      ::abort();
+    }
 
     inline void
     __attribute__((always_inline))
