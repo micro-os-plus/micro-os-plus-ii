@@ -13,6 +13,8 @@
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
+#include "portable/language/cpp/include/memory.h"
+
 #include "portable/diagnostics/include/Trace.h"
 
 #include "portable/core/include/Architecture.h"
@@ -69,7 +71,7 @@ namespace os
       /// \param [in] sizeBytes         Size of stack in bytes.
       Stack(stack::element_t* const pStack, stack::size_t const sizeBytes);
 
-      /// \brief No Copy constructor.
+      /// \brief No copy constructor.
       Stack(Stack& stack) = delete;
 
       /// \brief Destructor.
@@ -95,7 +97,7 @@ namespace os
       ///    None.
       /// \return The number of bytes in the stack.
       stack::size_t
-      getSize(void) const;
+      getSizeBytes(void) const;
 
       /// \brief Get stack start address.
       ///
@@ -165,7 +167,7 @@ namespace os
     /// Return the stack size, configured by the constructor.
     inline stack::size_t
     __attribute__((always_inline))
-    Stack::getSize(void) const
+    Stack::getSizeBytes(void) const
     {
       return m_sizeBytes;
     }
@@ -186,18 +188,49 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
+    /// \headerfile Stack.h "portable/core/include/Stack.h"
+    /// \ingroup core
+    /// \nosubgrouping
+    ///
+    /// \brief A statically allocated stack.
+    ///
+    /// \tparam SizeBytes_T  The size of the stack, in bytes.
+    ///
+    /// \details
+    /// This stack is intended for cases when the size
+    /// is known at compile time and fixed. It allocates the
+    /// stack space as a private member array inside this object.
     template<stack::size_t SizeBytes_T = hal::arch::MIN_STACK_SIZE>
       class TStaticStack : public Stack
       {
       public:
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief Constructor.
+        ///
+        /// \par Parameters
+        ///    None.
         TStaticStack(void);
+
+        /// \brief Destructor.
         ~TStaticStack();
 
+        /// @} end of name Constructors/destructor
+
       private:
+        /// \name Private member variables
+        /// @{
+
+        /// \brief The static storage where the stack will be located.
         os::core::stack::element_t m_stackArray[SizeBytes_T
             / sizeof(os::core::stack::element_t)];
+
+        /// @} end of Private member variables
       };
 
+    /// \details
+    /// Pass the address of the privte member to the parent constructor.
     template<stack::size_t SizeBytes_T>
       inline
       __attribute__((always_inline))
@@ -209,6 +242,8 @@ namespace os
 #endif
       }
 
+    /// \details
+    /// No functionality required.
     template<stack::size_t SizeBytes_T>
       inline
       __attribute__((always_inline))
@@ -223,78 +258,95 @@ namespace os
 
     // ========================================================================
 
-    template<class Allocator_T>
-      class TAllocatedStack : public Stack
-      {
-      public:
-        TAllocatedStack(stack::size_t const sizeBytes);
-        ~TAllocatedStack();
-
-      private:
-      };
-
-    // TODO: define it, using the given allocator
-
-    // ========================================================================
-
 #pragma GCC diagnostic push
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    /// \class AllocatedStack Stack.h "portable/core/include/Stack.h"
+    /// \headerfile Stack.h "portable/core/include/Stack.h"
     /// \ingroup core
     /// \nosubgrouping
     ///
     /// \brief A stack with dynamic allocation.
     ///
+    /// \tparam Allocator_T  The allocator to use.
+    ///
     /// \details
-    /// This special stack allocates the stack array on the free store, using
-    /// the recommended RAII paradigm of calling delete only in the
+    /// This special stack allocates the stack storage on the free store, using
+    /// the recommended RAII paradigm of allocating in the constructor
+    /// and deallocating only in the
     /// destructor.
-    class AllocatedStack : public Stack
-    {
-    public:
-      /// \name Constructors/destructor
-      /// @{
+    template<class Allocator_T = os::std::allocator<stack::element_t>>
+      class TAllocatedStack : public Stack
+      {
+      public:
+        typedef Allocator_T allocator_type;
+        typedef typename allocator_type::reference reference;
+        typedef typename allocator_type::const_reference const_reference;
+        typedef typename allocator_type::size_type size_type;
+        typedef typename allocator_type::difference_type difference_type;
+        typedef typename allocator_type::pointer pointer;
+        typedef typename allocator_type::const_pointer const_pointer;
 
-      /// \brief Constructor.
-      ///
-      /// \param [in] sizeBytes         Size of stack in bytes.
-      AllocatedStack(stack::size_t const sizeBytes);
+        /// \name Constructors/destructor
+        /// @{
 
-      /// \brief Destructor.
-      ~AllocatedStack();
+        /// \brief Constructor.
+        ///
+        /// \param [in] sizeBytes         Size of stack in bytes.
+        TAllocatedStack(stack::size_t const sizeBytes);
 
-      /// @} end of name Constructors/destructor
+        /// \brief Destructor.
+        ~TAllocatedStack();
 
-    };
+        /// @} end of name Constructors/destructor
+
+      private:
+        /// \name Private member variables
+        /// @{
+
+        /// \brief The allocator object.
+        allocator_type m_allocator;
+
+        /// @} end of Private member variables
+
+      };
 
 #pragma GCC diagnostic pop
 
     /// \details
-    /// Allocate the requested buffer on the free store and pass its
+    /// Allocate the requested buffer using the given allocator and pass its
     /// address to the parent constructor.
-    inline
-    AllocatedStack::AllocatedStack(stack::size_t const sizeBytes)
-        : Stack(new stack::element_t[sizeBytes / sizeof(stack::element_t)],
-            sizeBytes)
-    {
+    template<class Allocator_T>
+      inline
+      TAllocatedStack<Allocator_T>::TAllocatedStack(
+          stack::size_t const sizeBytes)
+          : Stack(m_allocator.allocate(sizeBytes / sizeof(stack::element_t)),
+              sizeBytes)
+      {
 #if defined(DEBUG)
-      os::diag::trace.putConstructor();
+        os::diag::trace.putConstructor();
 #endif
-    }
+      }
 
     /// \details
     /// Free the space allocated in the constructor.
-    inline
-    AllocatedStack::~AllocatedStack()
-    {
+    template<class Allocator_T>
+      inline
+      TAllocatedStack<Allocator_T>::~TAllocatedStack()
+      {
 #if defined(DEBUG)
-      os::diag::trace.putDestructor();
+        os::diag::trace.putDestructor();
 #endif
-      delete[] getStart();
-    }
+        m_allocator.deallocate(getStart(),
+            getSizeBytes() / sizeof(stack::element_t));
+      }
+
+    // ========================================================================
+
+    /// \ingroup core
+    /// \brief Stack allocated via the default allocator.
+    using AllocatedStack = TAllocatedStack<>;
 
   // ==========================================================================
   }// namespace core
