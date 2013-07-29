@@ -25,7 +25,7 @@ namespace os
     /// static storage duration and without calling functions
     /// passed to atexit() (3.6.3).
     ///
-    /// The local implementation just calls the platform reset function.
+    /// The current implementation just calls the platform reset function.
     void
     abort(void)
     {
@@ -37,7 +37,7 @@ namespace os
       // The platform reset will abruptly end the application,
       // without running any C++ destructors or cleanups.
       os::platform.resetSystem();
-      // As defined in the declaration, it should never return
+      // As defined in the declaration, it should never return.
     }
 
   } // namespace std
