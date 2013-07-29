@@ -100,7 +100,7 @@ namespace os
 
       m_stack.initialise();
 
-      m_context.create(m_stack.getStart(), m_stack.getSize(),
+      m_context.create(m_stack.getStart(), m_stack.getSizeBytes(),
           (trampoline3_t) trampoline3, (void*) m_entryPointAddress,
           (void*) m_entryPointParameter, (void*) this);
 
