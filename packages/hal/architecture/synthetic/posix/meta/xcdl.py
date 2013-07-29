@@ -18,7 +18,11 @@ Package(
     ],
 
     headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX',
-            
+      
+    requirements=[
+        'disable("OS_INCLUDE_PORTABLE_CORE_EARLYINITIALISATIONS_RESET")',
+    ],
+          
     implements=[
         # mark this is an architecture
         'interface.os.architecture',
