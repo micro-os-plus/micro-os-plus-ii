@@ -51,9 +51,11 @@ namespace os
 
 #endif
 
+#if 0
     // not in C++ spec
     void
     __throw_bad_alloc() __attribute__((noreturn));
+#endif
 
     struct nothrow_t
     {

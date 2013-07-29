@@ -14,10 +14,13 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#include "portable/language/cpp/include/cstdlib.h"
 
 #include "portable/language/cpp/include/new.h"
 #include "portable/language/cpp/include/malloc.h"
+
+#include "portable/language/cpp/include/abort.h"
+
+#include "portable/diagnostics/include/Trace.h"
 
 void *
 operator new(os::std::size_t size)
@@ -31,7 +34,7 @@ operator new(os::std::size_t size)
       }
 
     void* p;
-    while ((p = os::core::malloc(size)) == 0)
+    while ((p = os::std::malloc(size)) == 0)
       {
 #if 0
 // If malloc fails and there is a new_handler,
@@ -102,7 +105,7 @@ void
 operator delete(void* ptr) noexcept
 {
   if (ptr)
-    os::core::free(ptr);
+    os::std::free(ptr);
 }
 
 //__attribute__((__weak__, __visibility__("default")))
@@ -184,16 +187,23 @@ namespace os
 
 #endif
 
+#if 0
     void
     __throw_bad_alloc()
     {
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       throw bad_alloc();
 #else
-      for (;;)
-        ;
+
+#if defined(DEBUG)
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
+#endif
+
+      os::std::abort();
 #endif
     }
+#endif
 
   }  // namespace std
 } // namespace os
