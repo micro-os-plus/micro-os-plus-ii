@@ -14,17 +14,21 @@
 
 #include "portable/core/include/Platform.h"
 
-void
-abort(void)
+namespace os
 {
+  namespace std
+  {
+
+    void
+    abort(void)
+    {
 #if defined(DEBUG)
-  os::diag::trace.putString(__PRETTY_FUNCTION__);
-  os::diag::trace.putNewLine();
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
 #endif
 
-  os::platform.resetSystem();
+      os::platform.resetSystem();
+    }
 
-  for (;;)
-    ;
-}
-
+  } // namespace std
+} // namespace os

@@ -9,11 +9,14 @@
 #ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_ABORT_H
 #define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_ABORT_H
 
-extern "C"
+namespace os
 {
-  void
-  __attribute__((noreturn))
-  abort(void);
-}
+  namespace std
+  {
+    void
+    __attribute__((noreturn))
+    abort(void);
+  } // namespace std
+} // namespace os
 
 #endif // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_ABORT_H
