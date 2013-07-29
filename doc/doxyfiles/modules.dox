@@ -39,6 +39,12 @@ synthetic POSIX, the namespace was renamed as `os::std::`.
 
     \defgroup std_support Language Support
     \ingroup std
+    \brief Functions providing language run-time support.
+
+    \defgroup std_dynmem Dynamic Memory Management
+    \ingroup std
+    \brief Functions to allocate/deallocate memory.
+
 
 \defgroup arm_cm ARM Cortex-M
 \brief Cortex-M architecture support.
