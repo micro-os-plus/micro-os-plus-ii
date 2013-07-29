@@ -20,6 +20,8 @@
 #include "portable/language/cpp/include/internal/__config.h"
 #include <stdlib.h>
 
+#include "portable/language/cpp/include/abort.h"
+
 namespace os
 {
   namespace std
@@ -28,9 +30,11 @@ namespace os
     using ::size_t;
     using ::div_t;
     using ::ldiv_t;
-#ifndef _LIBCPP_HAS_NO_LONG_LONG
     using ::lldiv_t;
-#endif // _LIBCPP_HAS_NO_LONG_LONG
+
+//    using ::abort;
+
+#if 0
     using ::atof;
     using ::atoi;
     using ::atol;
@@ -54,7 +58,6 @@ namespace os
     using ::free;
     using ::malloc;
     using ::realloc;
-    using ::abort;
     using ::atexit;
     using ::exit;
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
@@ -87,33 +90,38 @@ namespace os
     using ::aligned_alloc;
 #endif
 
-// MSVC already has the correct prototype in <stdlib.h.h> #ifdef __cplusplus
-#if !defined(_MSC_VER) && !defined(__sun__)
-    inline _LIBCPP_INLINE_VISIBILITY long
-    abs(long __x) _NOEXCEPT
+#endif
+
+#if 0
+    // TODO: define labs(), llabs(), ldiv(), lldiv()
+    inline long
+    __attribute__((always_inline))
+    abs(long __x) noexcept
     {
       return labs(__x);
     }
-#ifndef _LIBCPP_HAS_NO_LONG_LONG
-    inline _LIBCPP_INLINE_VISIBILITY long long
-    abs(long long __x) _NOEXCEPT
+
+    inline long long
+    __attribute__((always_inline))
+    abs(long long __x) noexcept
     {
       return llabs(__x);
     }
-#endif // _LIBCPP_HAS_NO_LONG_LONG
-    inline _LIBCPP_INLINE_VISIBILITY ldiv_t
-    div(long __x, long __y) _NOEXCEPT
+
+    inline ldiv_t
+    __attribute__((always_inline))
+    div(long __x, long __y) noexcept
     {
       return ldiv(__x, __y);
     }
-#ifndef _LIBCPP_HAS_NO_LONG_LONG
-    inline _LIBCPP_INLINE_VISIBILITY lldiv_t
-    div(long long __x, long long __y) _NOEXCEPT
+
+    inline lldiv_t
+    __attribute__((always_inline))
+    div(long long __x, long long __y) noexcept
     {
       return lldiv(__x, __y);
     }
-#endif // _LIBCPP_HAS_NO_LONG_LONG
-#endif // _MSC_VER
+#endif
 
   }
 }
