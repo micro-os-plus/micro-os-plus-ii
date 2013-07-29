@@ -98,6 +98,7 @@ namespace os
     /// if the platform requires more specific functionality.
     inline void
     __attribute__((always_inline))
+    __attribute__((noreturn))
     PlatformBase::resetSystem(void)
     {
       os::architecture.resetSystem();

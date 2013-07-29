@@ -67,6 +67,7 @@ namespace os
       /// \par Returns
       ///    Nothing.
       static void
+      __attribute__((noreturn))
       resetSystem(void);
 
       /// \brief Put architecture greeting.
@@ -110,6 +111,11 @@ namespace os
     {
     }
 
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Winvalid-noreturn"
+#endif
+
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
     /// with actual architecture specific system reset code.
@@ -118,6 +124,8 @@ namespace os
     ArchitectureBase::resetSystem(void)
     {
     }
+
+#pragma GCC diagnostic pop
 
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
