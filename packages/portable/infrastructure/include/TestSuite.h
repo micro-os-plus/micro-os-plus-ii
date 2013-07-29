@@ -415,6 +415,7 @@ namespace os
         /// \brief The boolean status of XML output.
         bool m_isXmlOpened;
 
+      protected:
         /// \brief The actual platform implementation.
         Implementation m_implementation;
       };
@@ -462,6 +463,11 @@ namespace os
 
     // ========================================================================
 
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
     /// \headerfile TestSuite.h "portable/infrastructure/include/TestSuite.h"
     /// \nosubgrouping
     /// \brief Test suite class.
@@ -486,10 +492,64 @@ namespace os
       /// \brief Destructor.
       ~TestSuite();
 
-      /// @}
-
+      /// @} end of name Constructors/destructor
 
     };
+
+#pragma GCC diagnostic pop
+
+    // ========================================================================
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
+    /// \headerfile TestSuite.h "portable/infrastructure/include/TestSuite.h"
+    /// \nosubgrouping
+    /// \brief Test suite class with ostream functionality.
+
+    class TestSuiteOstream : public TestSuiteBase, public os::std::ostream
+    {
+    public:
+      /// \name Constructors/destructor
+      /// @{
+
+      /// \brief Simple constructor.
+      /// \par Parameters
+      ///       None.
+      TestSuiteOstream();
+
+      /// \brief Constructor with main() style parameters
+      ///
+      /// \param [in] argc count of arguments.
+      /// \param [in] argv array of pointer to strings.
+      TestSuiteOstream(int argc, char* argv[]);
+
+      /// \brief Destructor.
+      ~TestSuiteOstream();
+
+      /// @}
+
+    private:
+
+      class Streambuf : public os::std::streambuf
+      {
+      public:
+        Streambuf(TestSuiteImplementation implementation);
+        virtual ~Streambuf();
+
+        virtual int_type
+        overflow(int_type c);
+
+      private:
+        TestSuiteImplementation m_implementation;
+      };
+
+      Streambuf m_streambuf;
+    };
+
+#pragma GCC diagnostic pop
 
 
     // ========================================================================

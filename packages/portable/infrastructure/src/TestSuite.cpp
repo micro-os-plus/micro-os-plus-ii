@@ -596,10 +596,54 @@ namespace os
 #endif
     }
 
+    // ========================================================================
+
+    TestSuiteOstream::TestSuiteOstream()
+        : os::std::ostream(&m_streambuf), //
+        m_streambuf(m_implementation)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putConstructor();
+#endif
+    }
+
+    TestSuiteOstream::TestSuiteOstream(int argc, char* argv[])
+        : TestSuiteBase(argc, argv), //
+        os::std::ostream(&m_streambuf), //
+        m_streambuf(m_implementation)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putConstructor();
+#endif
+    }
+
+    TestSuiteOstream::~TestSuiteOstream()
+    {
+#if defined(DEBUG)
+      os::diag::trace.putDestructor();
+#endif
+    }
+
+    TestSuiteOstream::Streambuf::Streambuf(
+        TestSuiteImplementation implementation)
+    {
+      m_implementation = implementation;
+    }
+
+    TestSuiteOstream::Streambuf::~Streambuf()
+    {
+    }
+
+    TestSuiteOstream::int_type
+    TestSuiteOstream::Streambuf::overflow(int_type c)
+    {
+      m_implementation.putBytes(&c, 1);
+      return c;
+    }
+
   // ========================================================================
 
   } /* namespace infra */
 } /* namespace os */
 
 #endif // defined(OS_INCLUDE_PORTABLE_INFRASTRUCTURE_TESTSUITE)
-
