@@ -22,7 +22,7 @@
 
 namespace os
 {
-  namespace core
+  namespace std
   {
     void*
     malloc(os::std::size_t size)
@@ -49,5 +49,5 @@ namespace os
 #endif
       return ::free(ptr);
     }
-  } // namespace core
+  } // namespace std
 } // namespace os

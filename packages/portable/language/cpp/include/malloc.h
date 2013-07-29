@@ -22,7 +22,7 @@
 
 namespace os
 {
-  namespace core
+  namespace std
   {
     void*
     malloc(os::std::size_t size);
@@ -30,7 +30,7 @@ namespace os
     void
     free(void *ptr);
 
-  } // namespace core
+  } // namespace std
 } // namespace os
 
 #endif // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_MALLOC_H
