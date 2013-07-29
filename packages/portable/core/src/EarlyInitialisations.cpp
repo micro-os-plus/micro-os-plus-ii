@@ -113,7 +113,9 @@ namespace os
       // power down the trace device
       os::diag::Trace::powerDown();
 #endif
+#if defined(OS_INCLUDE_PORTABLE_CORE_EARLYINITIALISATIONS_DESTRUCTOR_RESET)
       os::platform.resetSystem();
+#endif
     }
 
   // ========================================================================
@@ -295,7 +297,6 @@ namespace os
 #pragma GCC diagnostic pop
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
 /// @} end of ingroup core
 }// namespace os
 

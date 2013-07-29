@@ -32,8 +32,8 @@ Package(
             ],
         ),
               
-        Option(
-            id='option.os.portable.core.early',
+        Component(
+            id='component.os.portable.core.early',
             name='Early initialisation class',
             description='The constructor of this class should be run in the\
 first place, to run all system initialisation.',
@@ -44,6 +44,21 @@ first place, to run all system initialisation.',
                     
             sourceFiles=[
                 'EarlyInitialisations.cpp',
+            ],
+                  
+            children=[
+                
+                Option(
+                    id='component.os.portable.core.early.destructor.reset',
+                    name='Late destructor reset',
+                    description='The destructor will reset the platform',
+                    
+                    isEnabled=True,
+            
+                    headerDefinition='OS_INCLUDE_PORTABLE_CORE_EARLYINITIALISATIONS_DESTRUCTOR_RESET',
+
+                ),
+                
             ],
         ),
 

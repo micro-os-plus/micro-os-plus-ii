@@ -20,7 +20,7 @@ Package(
     headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX',
       
     requirements=[
-        'disable("OS_INCLUDE_PORTABLE_CORE_EARLYINITIALISATIONS_RESET")',
+        'disable("OS_INCLUDE_PORTABLE_CORE_EARLYINITIALISATIONS_DESTRUCTOR_RESET")',
     ],
           
     implements=[
