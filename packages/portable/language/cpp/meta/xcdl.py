@@ -27,6 +27,7 @@ Package(
                 'new.cpp',
                 'malloc.cpp',
                 'abort.cpp',
+                'memory.cpp',
             ],
 
             headerDefinition='OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS',
