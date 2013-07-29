@@ -3,6 +3,8 @@
 // Copyright (c) 2013 Liviu Ionescu.
 //
 
+// ----------------------------------------------------------------------------
+
 #include "portable/core/include/OS.h"
 
 #include "portable/infrastructure/include/TestSuite.h"
@@ -17,7 +19,7 @@
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-static os::infra::TestSuite ts;
+static os::infra::TestSuiteOstream ts;
 
 #pragma GCC diagnostic pop
 
@@ -31,8 +33,8 @@ static os::infra::TestSuite ts;
 
 // ----------------------------------------------------------------------------
 
-#include <iostream>
 #include <sys/time.h>
+
 
 // ----------------------------------------------------------------------------
 
@@ -64,19 +66,21 @@ runTestAccuracy()
   timeval endTime;
   gettimeofday(&endTime, 0);
 
+
   long deltaMicros = (endTime.tv_sec - begTime.tv_sec) * 1000000
       + (endTime.tv_usec - begTime.tv_usec);
   //int deltaMillis = (int)((deltaMicros + 500) / 1000);
 
   double deltaProcents = (deltaMicros - 1000000) * 100.0 / 1000000.0;
 
+
   os::core::timer::ticks_t deltaTicks = ticksEnd - ticksBegin;
 
   ts.assertCondition(((deltaTicks - os::core::scheduler::TICKS_PER_SECOND) <= 1));
 
-  std::cout << std::endl << "sleep(" << os::core::scheduler::TICKS_PER_SECOND
+  ts << os::std::endl << "sleep(" << os::core::scheduler::TICKS_PER_SECOND
       << ") took " << deltaTicks << " ticks, " << deltaMicros
-      << " real time micros, accuracy " << deltaProcents << " %" << std::endl;
+      << " real time micros, accuracy " << (long)(deltaProcents*1000) << "/1000 %" << os::std::endl;
 
   //ts.assertCondition((-10.0 < deltaProcents) && (deltaProcents < 10.0));
 
@@ -214,8 +218,9 @@ Task::threadMain(void)
   os::diag::trace.putNewLine();
 #endif
 
-  std::cout << "Multiple sleeps of " << SUM << " ticks took " << m_deltaTicks
-      << " counted ticks, \"" << getThread().getName() << "\"" << std::endl;
+
+  ts << "Multiple sleeps of " << SUM << " ticks took " << m_deltaTicks
+      << " counted ticks, \"" << getThread().getName() << "\"" << os::std::endl;
 
 #if defined(_DEBUG)
   os::diag::trace.putString("m_count=");
