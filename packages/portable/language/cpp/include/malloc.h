@@ -24,7 +24,7 @@ namespace os
 {
   namespace std
   {
-    /// \addtogroup std_support
+    /// \addtogroup std_dynmem
     /// @{
 
     /// \brief Allocate memory.
@@ -43,7 +43,7 @@ namespace os
     void
     free(void *ptr) noexcept;
 
-    /// @} end of addtogroup std_support
+    /// @} end of addtogroup std_dynmem
 
   } // namespace std
 } // namespace os
