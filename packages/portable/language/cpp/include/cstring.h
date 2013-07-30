@@ -1,118 +1,99 @@
-// -*- C++ -*-
-//===--------------------------- cstring ----------------------------------===//
 //
-//                     The LLVM Compiler Infrastructure
+// This file is part of the µOS++ distribution.
+// Copyright (c) 2013 Liviu Ionescu.
 //
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// [Partly inspired from the LLVM libcxx sources].
+// Copyright (c) 2009-2013 by the contributors listed in
+// 'LLVM libcxx Credits.txt'. See 'LLVM libcxx License.txt' for details.
 //
-//===----------------------------------------------------------------------===//
+// References are to ISO/IEC 14882:2011(E) Third edition (2011-09-01).
+//
 
-#ifndef _LIBCPP_CSTRING
-#define _LIBCPP_CSTRING
+/// \file
+/// \brief C string functions.
 
-/*
-    cstring synopsis
+#ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CSTRING_H_
+#define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CSTRING_H_
 
-Macros:
+#include "portable/core/include/ConfigDefines.h"
 
-    NULL
+#include "portable/language/cpp/include/internal/__config.h"
+#include <string.h>
 
-namespace std
+namespace os
 {
+  namespace std
+  {
 
-Types:
+    using ::size_t;
+    using ::memcpy;
+    using ::memmove;
+    using ::strcpy;
+    using ::strncpy;
+    using ::strcat;
+    using ::strncat;
+    using ::memcmp;
+    using ::strcmp;
+    using ::strncmp;
+    using ::strcoll;
+    using ::strxfrm;
 
-    size_t
+    using ::memchr;
 
-void* memcpy(void* restrict s1, const void* restrict s2, size_t n);
-void* memmove(void* s1, const void* s2, size_t n);
-char* strcpy (char* restrict s1, const char* restrict s2);
-char* strncpy(char* restrict s1, const char* restrict s2, size_t n);
-char* strcat (char* restrict s1, const char* restrict s2);
-char* strncat(char* restrict s1, const char* restrict s2, size_t n);
-int memcmp(const void* s1, const void* s2, size_t n);
-int strcmp (const char* s1, const char* s2);
-int strncmp(const char* s1, const char* s2, size_t n);
-int strcoll(const char* s1, const char* s2);
-size_t strxfrm(char* restrict s1, const char* restrict s2, size_t n);
-const void* memchr(const void* s, int c, size_t n);
-      void* memchr(      void* s, int c, size_t n);
-const char* strchr(const char* s, int c);
-      char* strchr(      char* s, int c);
-size_t strcspn(const char* s1, const char* s2);
-const char* strpbrk(const char* s1, const char* s2);
-      char* strpbrk(      char* s1, const char* s2);
-const char* strrchr(const char* s, int c);
-      char* strrchr(      char* s, int c);
-size_t strspn(const char* s1, const char* s2);
-const char* strstr(const char* s1, const char* s2);
-      char* strstr(      char* s1, const char* s2);
-char* strtok(char* restrict s1, const char* restrict s2);
-void* memset(void* s, int c, size_t n);
-char* strerror(int errnum);
-size_t strlen(const char* s);
+    using ::strchr;
 
-}  // std
+    using ::strcspn;
 
-*/
+    using ::strpbrk;
 
-#if defined(__MICRO_OS_PLUS_PLUS__)
-#include "portable/language/cpp/include/__config.h"
-#include <string.h>
+    using ::strrchr;
 
-#else
-#include <__config>
-#include <string.h>
+    using ::strspn;
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
-#pragma GCC system_header
-#endif
-#endif
-
-_LIBCPP_BEGIN_NAMESPACE_STD
-
-using ::size_t;
-using ::memcpy;
-using ::memmove;
-using ::strcpy;
-using ::strncpy;
-using ::strcat;
-using ::strncat;
-using ::memcmp;
-using ::strcmp;
-using ::strncmp;
-using ::strcoll;
-using ::strxfrm;
-
-using ::memchr;
-
-using ::strchr;
-
-using ::strcspn;
-
-using ::strpbrk;
-
-using ::strrchr;
-
-using ::strspn;
-
-using ::strstr;
+    using ::strstr;
 
 // MSVC, GNU libc and its derivates already have the correct prototype in <string.h> #ifdef __cplusplus
 #if !defined(__GLIBC__) && !defined(_MSC_VER) && !defined(__sun__)
-inline _LIBCPP_INLINE_VISIBILITY       char* strchr(      char* __s, int __c) {return ::strchr(__s, __c);}
-inline _LIBCPP_INLINE_VISIBILITY       char* strpbrk(      char* __s1, const char* __s2) {return ::strpbrk(__s1, __s2);}
-inline _LIBCPP_INLINE_VISIBILITY       char* strrchr(      char* __s, int __c) {return ::strrchr(__s, __c);}
-inline _LIBCPP_INLINE_VISIBILITY       void* memchr(      void* __s, int __c, size_t __n) {return ::memchr(__s, __c, __n);}
-inline _LIBCPP_INLINE_VISIBILITY       char* strstr(      char* __s1, const char* __s2) {return ::strstr(__s1, __s2);}
+
+    inline char*
+    __attribute__ ((always_inline))
+    strchr(char* __s, int __c)
+    {
+      return ::strchr(__s, __c);
+    }
+    inline char*
+    __attribute__ ((always_inline))
+    strpbrk(char* __s1, const char* __s2)
+    {
+      return ::strpbrk(__s1, __s2);
+    }
+    inline char*
+    __attribute__ ((always_inline))
+    strrchr(char* __s, int __c)
+    {
+      return ::strrchr(__s, __c);
+    }
+    inline void*
+    __attribute__ ((always_inline))
+    memchr(void* __s, int __c, size_t __n)
+    {
+      return ::memchr(__s, __c, __n);
+    }
+    inline char*
+    __attribute__ ((always_inline))
+    strstr(char* __s1, const char* __s2)
+    {
+      return ::strstr(__s1, __s2);
+    }
+
 #endif
 
-using ::strtok;
-using ::memset;
-using ::strerror;
-using ::strlen;
+    using ::strtok;
+    using ::memset;
+    using ::strerror;
+    using ::strlen;
 
-_LIBCPP_END_NAMESPACE_STD
+  } // namespace std
+} // namespace os
 
-#endif  // _LIBCPP_CSTRING
+#endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CSTRING_H_
