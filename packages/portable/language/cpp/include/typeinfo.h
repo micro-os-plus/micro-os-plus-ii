@@ -1,137 +1,119 @@
-// -*- C++ -*-
-//===-------------------------- typeinfo ----------------------------------===//
 //
-//                     The LLVM Compiler Infrastructure
+// This file is part of the µOS++ distribution.
+// Copyright (c) 2013 Liviu Ionescu.
 //
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// [Partly inspired from the LLVM libcxx sources].
+// Copyright (c) 2009-2013 by the contributors listed in
+// 'LLVM libcxx Credits.txt'. See 'LLVM libcxx License.txt' for details.
 //
-//===----------------------------------------------------------------------===//
+// References are to ISO/IEC 14882:2011(E) Third edition (2011-09-01).
+//
 
-#ifndef __LIBCPP_TYPEINFO
-#define __LIBCPP_TYPEINFO
+/// \file
+/// \brief Type info.
 
-/*
+#ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_TYPEINFO_H_
+#define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_TYPEINFO_H_
 
-    typeinfo synopsis
+#include "portable/core/include/ConfigDefines.h"
 
-namespace std {
+#include "portable/language/cpp/include/internal/__config.h"
+#include "portable/language/cpp/include/exception.h"
+#include "portable/language/cpp/include/cstddef.h"
 
-class type_info
+namespace os
 {
-public:
-    virtual ~type_info();
+  namespace std  // purposefully not using versioning namespace
+  {
 
-    bool operator==(const type_info& rhs) const noexcept;
-    bool operator!=(const type_info& rhs) const noexcept;
+    class  type_info
+    {
+      type_info&
+      operator=(const type_info&);
+      type_info(const type_info&);
+    protected:
+      const char* __type_name;
 
-    bool before(const type_info& rhs) const noexcept;
-    size_t hash_code() const noexcept;
-    const char* name() const noexcept;
+      __attribute__ ((always_inline))
+      explicit
+      type_info(const char* __n)
+          : __type_name(__n)
+      {
+      }
 
-    type_info(const type_info& rhs) = delete;
-    type_info& operator=(const type_info& rhs) = delete;
-};
+    public:
+      virtual
+      ~type_info();
 
-class bad_cast
-    : public exception
-{
-public:
-    bad_cast() noexcept;
-    bad_cast(const bad_cast&) noexcept;
-    bad_cast& operator=(const bad_cast&) noexcept;
-    virtual const char* what() const noexcept;
-};
+      __attribute__ ((always_inline))
+      const char*
+      name() const noexcept
+      {
+        return __type_name;
+      }
 
-class bad_typeid
-    : public exception
-{
-public:
-    bad_typeid() noexcept;
-    bad_typeid(const bad_typeid&) noexcept;
-    bad_typeid& operator=(const bad_typeid&) noexcept;
-    virtual const char* what() const noexcept;
-};
+      __attribute__ ((always_inline))
+      bool
+      before(const type_info& __arg) const noexcept
+      {
+        return __type_name < __arg.__type_name;
+      }
 
-}  // std
-
-*/
-
-#if defined(__MICRO_OS_PLUS_PLUS__)
-#include "portable/language/cpp/include/__config.h"
-#include "portable/language/cpp/include/exception"
-#include "portable/language/cpp/include/cstddef"
-
+      __attribute__ ((always_inline))
+      size_t
+      hash_code() const noexcept
+      {
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wundefined-reinterpret-cast"
 #else
-#include <__config>
-#include <exception>
-#include <cstddef>
-
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
-#pragma GCC system_header
+#pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif
-#endif
+        return *reinterpret_cast<const size_t*>(&__type_name);
+#pragma GCC diagnostic pop
+      }
 
-#if defined(__MICRO_OS_PLUS_PLUS__)
-namespace os {
-#endif
-namespace std  // purposefully not using versioning namespace
-{
+      __attribute__ ((always_inline))
+      bool
+      operator==(const type_info& __arg) const noexcept
+      {
+        return __type_name == __arg.__type_name;
+      }
 
-class _LIBCPP_EXCEPTION_ABI type_info
-{
-    type_info& operator=(const type_info&);
-    type_info(const type_info&);
-protected:
-    const char* __type_name;
+      __attribute__ ((always_inline))
+      bool
+      operator!=(const type_info& __arg) const noexcept
+      {
+        return !operator==(__arg);
+      }
 
-    _LIBCPP_INLINE_VISIBILITY
-    explicit type_info(const char* __n)
-        : __type_name(__n) {}
+    };
 
-public:
-    virtual ~type_info();
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
 
-    _LIBCPP_INLINE_VISIBILITY
-    const char* name() const _NOEXCEPT {return __type_name;}
+    class  bad_cast : public exception
+    {
+    public:
+      bad_cast() noexcept;
+      virtual
+      ~bad_cast() noexcept;
+      virtual const char*
+      what() const noexcept;
+    };
 
-    _LIBCPP_INLINE_VISIBILITY
-    bool before(const type_info& __arg) const _NOEXCEPT
-        {return __type_name < __arg.__type_name;}
-    _LIBCPP_INLINE_VISIBILITY
-    size_t hash_code() const _NOEXCEPT
-        {return *reinterpret_cast<const size_t*>(&__type_name);}
+    class  bad_typeid : public exception
+    {
+    public:
+      bad_typeid() noexcept;
+      virtual
+      ~bad_typeid() noexcept;
+      virtual const char*
+      what() const noexcept;
+    };
 
-    _LIBCPP_INLINE_VISIBILITY
-    bool operator==(const type_info& __arg) const _NOEXCEPT
-        {return __type_name == __arg.__type_name;}
-    _LIBCPP_INLINE_VISIBILITY
-    bool operator!=(const type_info& __arg) const _NOEXCEPT
-        {return !operator==(__arg);}
+#endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
 
-};
+  }  // namespace std
+} // namespace os
 
-class _LIBCPP_EXCEPTION_ABI bad_cast
-    : public exception
-{
-public:
-    bad_cast() _NOEXCEPT;
-    virtual ~bad_cast() _NOEXCEPT;
-    virtual const char* what() const _NOEXCEPT;
-};
-
-class _LIBCPP_EXCEPTION_ABI bad_typeid
-    : public exception
-{
-public:
-    bad_typeid() _NOEXCEPT;
-    virtual ~bad_typeid() _NOEXCEPT;
-    virtual const char* what() const _NOEXCEPT;
-};
-
-}  // std
-#if defined(__MICRO_OS_PLUS_PLUS__)
-}
-#endif
-
-#endif  // __LIBCPP_TYPEINFO
+#endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_TYPEINFO_H_
