@@ -7,6 +7,10 @@ Package(
     id='package.os.portable.infrastructure',
     name='Infrastructure support',
     description='Support for all infrastructure functionality.',
+
+    sourceFiles=[
+        'assert.cpp',
+    ],
           
     children=[
               
