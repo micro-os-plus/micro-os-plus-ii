@@ -13,7 +13,7 @@
 #ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CONFIG_H_
 #define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CONFIG_H_
 
-//#include "portable/core/include/ConfigDefines.h"
+#include "portable/core/include/ConfigDefines.h"
 
 #define _LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER
 
@@ -151,7 +151,7 @@
 
 #ifndef _LIBCPP_INLINE_VISIBILITY
 //#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__always_inline__)) __attribute__ ((__visibility__("hidden")))
-#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__always_inline__))
+#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((always_inline))
 #endif
 
 #ifndef _LIBCPP_EXCEPTION_ABI
@@ -165,7 +165,7 @@
 
 #ifndef _LIBCPP_ALWAYS_INLINE
 //#define _LIBCPP_ALWAYS_INLINE  __attribute__ ((__always_inline__)) __attribute__ ((__visibility__("hidden")))
-#define _LIBCPP_ALWAYS_INLINE  __attribute__ ((__always_inline__))
+#define _LIBCPP_ALWAYS_INLINE  __attribute__ ((always_inline))
 #endif
 
 #if defined(__clang__)
@@ -547,6 +547,10 @@ struct __static_assert_check
 
 #ifndef _LIBCPP_HAS_NO_ADVANCED_SFINAE
 #define _LIBCPP_HAS_NO_ADVANCED_SFINAE
+#endif
+
+#if !defined(_LIBCPP_NO_EXCEPTIONS) && !defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
+#define _LIBCPP_NO_EXCEPTIONS
 #endif
 
 #ifdef _LIBCPP_HAS_NO_NULLPTR
