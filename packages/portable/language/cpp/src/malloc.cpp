@@ -19,6 +19,7 @@
 #include "portable/language/cpp/include/malloc.h"
 
 #include "portable/language/cpp/include/cstdlib.h"
+#include "portable/core/include/CriticalSections.h"
 
 namespace os
 {
@@ -28,10 +29,19 @@ namespace os
     /// The malloc() function allocates size bytes of memory and returns a
     /// pointer to the allocated memory. Currently it calls
     /// the C function.
+    ///
+    /// \note Synchronisation is provided by using a scheduler lock.
     void*
     malloc(os::std::size_t size) noexcept
     {
-      void* p = ::malloc(size);
+      void* p;
+        {
+          // ----- begin of critical section ----------------------------------
+          os::core::scheduler::CriticalSection cs;
+
+          p = ::malloc(size);
+          // ----- end of critical section ------------------------------------
+        }
 #if defined(DEBUG)
       os::diag::trace.putString("os::core::malloc(");
       os::diag::trace.putDec(size);
@@ -48,6 +58,8 @@ namespace os
     /// If ptr is a NULL pointer, no operation is performed.
     /// Currently it calls
     /// the C function.
+    ///
+    /// \note Synchronisation is provided by using a scheduler lock.
     void
     free(void *ptr) noexcept
     {
@@ -57,7 +69,10 @@ namespace os
       os::diag::trace.putString(")");
       os::diag::trace.putNewLine();
 #endif
+      // ----- begin of critical section --------------------------------------
+      os::core::scheduler::CriticalSection cs;
       return ::free(ptr);
+      // ----- end of critical section ----------------------------------------
     }
   } // namespace std
 } // namespace os
