@@ -12,8 +12,8 @@
 #include "portable/core/include/ConfigDefines.h"
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
-
 #include "portable/core/include/Scheduler.h"
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
 namespace os
 {
@@ -36,25 +36,31 @@ namespace os
       __attribute__((always_inline))
       CriticalSection::CriticalSection(void)
       {
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
         os::scheduler.lock();
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
       }
 
       inline
       __attribute__((always_inline))
       CriticalSection::~CriticalSection()
       {
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
         os::scheduler.unlock();
         os::scheduler.yield();
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
       }
 
       // ======================================================================
 
+      // TODO: make an empty instance available always
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
       typedef hal::arch::InterruptsCriticalSection InterruptsCriticalSection;
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
     // ========================================================================
     }// namespace scheduler
   } // namespace core
 } // namespace os
 
-#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 #endif // OS_PORTABLE_CORE_CRITICALSECTION_H_
