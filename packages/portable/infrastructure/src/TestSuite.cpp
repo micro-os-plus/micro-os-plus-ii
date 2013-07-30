@@ -534,10 +534,22 @@ namespace os
             if (pMessage != nullptr)
               {
                 writeStringToXmlFile(" name=\"");
+
                 if (m_pFunctionName != nullptr)
                   {
                     writeStringToXmlFile(m_pFunctionName);
-                    writeStringToXmlFile(" ");
+                    if (m_pInputValues != nullptr)
+                      {
+                        writeStringToXmlFile(" (");
+                        writeStringToXmlFile(m_pInputValues);
+                        writeStringToXmlFile(")");
+                      }
+                    if (m_pPreconditions != nullptr)
+                      {
+                        writeStringToXmlFile(" with ");
+                        writeStringToXmlFile(m_pPreconditions);
+                      }
+                    writeStringToXmlFile(" --- ");
                   }
                 writeStringToXmlFile(pMessage);
                 writeStringToXmlFile("\"");
