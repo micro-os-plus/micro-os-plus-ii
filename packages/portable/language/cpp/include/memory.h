@@ -17,19 +17,19 @@
 #include "portable/language/cpp/include/cstdlib.h"
 
 #include "portable/language/cpp/include/type_traits.h"
-//#include "portable/language/cpp/include/typeinfo"
+#include "portable/language/cpp/include/typeinfo.h"
 #include "portable/language/cpp/include/cstddef.h"
-//#include "portable/language/cpp/include/cstdint"
+#include "portable/language/cpp/include/cstdint.h"
 #include "portable/language/cpp/include/new.h"
 #include "portable/language/cpp/include/utility.h"
 #include "portable/language/cpp/include/limits.h"
 #include "portable/language/cpp/include/iterator.h"
-//#include "portable/language/cpp/include/__functional_base.h"
+#include "portable/language/cpp/include/internal/_functional_base.h"
 //#include "portable/language/cpp/include/iosfwd"
 //#include "portable/language/cpp/include/tuple"
 #include "portable/language/cpp/include/cstring.h"
 #if defined(_LIBCPP_NO_EXCEPTIONS)
-//    #include "portable/language/cpp/include/cassert"
+#include "portable/language/cpp/include/cassert.h"
 #endif
 
 #if __has_feature(cxx_atomic)
@@ -117,8 +117,6 @@ public:
 
     template <class _Up> struct rebind {typedef allocator<_Up> other;};
 };
-
-#if 1//defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
 // pointer_traits
 
@@ -1078,8 +1076,6 @@ private:
             {return __a;}
 };
 
-#endif // defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-
 // allocator
 
 template <class _Tp>
@@ -1704,7 +1700,6 @@ public:
         swap(__second_, __x.__second_);
     }
 };
-//#endif
 
 template <class _T1, class _T2>
 class __libcpp_compressed_pair_imp<_T1, _T2, 2>
@@ -1987,7 +1982,6 @@ swap(__compressed_pair<_T1, _T2>& __x, __compressed_pair<_T1, _T2>& __y)
                    __is_nothrow_swappable<_T1>::value)
     {__x.swap(__y);}
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
 // __same_or_less_cv_qualified
 
@@ -2709,12 +2703,22 @@ struct __murmur2_or_cityhash<_Size, 64>
       return __hash_len_16(__a, __rotate_by_at_least_1(__b + __len, __len)) ^ __b;
     }
     if (__len >= 4) {
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wcast-align"
+#endif
       const uint32_t __a = *(const uint32_t*)(__s);
+#pragma GCC diagnostic pop
       const uint32_t __b = *(const uint32_t*)(__s + __len - 4);
       return __hash_len_16(__len + (__a << 3), __b);
     }
     if (__len > 0) {
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#endif
       const unsigned char __a = __s[0];
+#pragma GCC diagnostic pop
       const unsigned char __b = __s[__len >> 1];
       const unsigned char __c = __s[__len - 1];
       const uint32_t __y = static_cast<uint32_t>(__a) +
@@ -2879,7 +2883,7 @@ struct __scalar_hash<_Tp, 2>
         union
         {
             _Tp __t;
-            struct
+            struct s
             {
                 size_t __a;
                 size_t __b;
@@ -2900,7 +2904,7 @@ struct __scalar_hash<_Tp, 3>
         union
         {
             _Tp __t;
-            struct
+            struct s
             {
                 size_t __a;
                 size_t __b;
@@ -2922,7 +2926,7 @@ struct __scalar_hash<_Tp, 4>
         union
         {
             _Tp __t;
-            struct
+            struct s
             {
                 size_t __a;
                 size_t __b;
@@ -3118,6 +3122,8 @@ uninitialized_fill_n(_ForwardIterator __f, _Size __n, const _Tp& __x)
     return __f;
 }
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
+
 class _LIBCPP_EXCEPTION_ABI bad_weak_ptr
     : public os::std::exception
 {
@@ -3125,6 +3131,8 @@ public:
     virtual ~bad_weak_ptr() noexcept;
     virtual const char* what() const  noexcept;
 };
+
+#endif
 
 template<class _Tp> class  weak_ptr;
 
@@ -3201,13 +3209,14 @@ private:
 
 #ifndef _LIBCPP_NO_RTTI
 
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 template <class _Tp, class _Dp, class _Alloc>
 const void*
 __shared_ptr_pointer<_Tp, _Dp, _Alloc>::__get_deleter(const type_info& __t) const noexcept
 {
     return __t == typeid(_Dp) ? &__data_.first().second() : 0;
 }
-
+#endif // defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 #endif  // _LIBCPP_NO_RTTI
 
 template <class _Tp, class _Dp, class _Alloc>
@@ -3239,12 +3248,14 @@ public:
     __shared_ptr_emplace(_Alloc __a)
         :  __data_(os::std::move(__a)) {}
 
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
     template <class ..._Args>
         __attribute__ ((always_inline))
         __shared_ptr_emplace(_Alloc __a, _Args&& ...__args)
             :  __data_(piecewise_construct, os::std::forward_as_tuple(__a),
                    os::std::forward_as_tuple(os::std::forward<_Args>(__args)...)) {}
 
+#endif // defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 #else  // _LIBCPP_HAS_NO_VARIADICS
 
     __attribute__ ((always_inline))
@@ -3501,10 +3512,14 @@ public:
         {return __cntrl_ == __p.__cntrl_;}
 
 #ifndef _LIBCPP_NO_RTTI
+
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
     template <class _Dp>
         __attribute__ ((always_inline))
         _Dp* __get_deleter() const noexcept
             {return (_Dp*)(__cntrl_ ? __cntrl_->__get_deleter(typeid(_Dp)) : 0);}
+#endif
+
 #endif  // _LIBCPP_NO_RTTI
 
 #ifndef _LIBCPP_HAS_NO_VARIADICS
@@ -4812,6 +4827,8 @@ operator<<(basic_ostream<_CharT, _Traits>& __os, shared_ptr<_Yp> const& __p);
 
 #if __has_feature(cxx_atomic)
 
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+
 class __sp_mut
 {
     void* __lx;
@@ -4936,22 +4953,24 @@ atomic_compare_exchange_weak_explicit(shared_ptr<_Tp>* __p, shared_ptr<_Tp>* __v
     return atomic_compare_exchange_weak(__p, __v, __w);
 }
 
+#endif // defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 #endif  // __has_feature(cxx_atomic)
 
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 //enum class
 struct  pointer_safety
 {
-    enum __lx
+    enum __lxe
     {
         relaxed,
         preferred,
         strict
     };
 
-    __lx __v_;
+    __lxe __v_;
 
     __attribute__ ((always_inline))
-    pointer_safety(__lx __v) : __v_(__v) {}
+    pointer_safety(__lxe __v) : __v_(__v) {}
     __attribute__ ((always_inline))
     operator int() const {return __v_;}
 };
