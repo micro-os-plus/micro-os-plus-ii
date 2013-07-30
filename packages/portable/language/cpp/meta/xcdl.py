@@ -8,7 +8,16 @@ Package(
     name='C++ language support',
     description='Support for C++, similar to standard library.',
     
-          
+    sourceFiles=[
+        'locale_tiny.cpp',
+        'locale.cpp',
+        'exception.cpp',
+        'new.cpp',
+        'malloc.cpp',
+        'abort.cpp',
+        'memory.cpp',
+    ],
+         
     children=[
               
         Component(
@@ -21,13 +30,6 @@ Package(
                 'ios.cpp',
                 'streambuf.cpp',
                 'ostream.cpp',
-                'locale_tiny.cpp',
-                'locale.cpp',
-                'exception.cpp',
-                'new.cpp',
-                'malloc.cpp',
-                'abort.cpp',
-                'memory.cpp',
             ],
 
             headerDefinition='OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS',
