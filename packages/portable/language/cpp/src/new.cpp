@@ -46,6 +46,8 @@ operator new(os::std::size_t size) noexcept
     }
 
   void* p;
+
+  // scheduler lock used by malloc
   while ((p = os::std::malloc(size)) == 0)
     {
 #if 0
@@ -160,7 +162,10 @@ __attribute__((weak))
 operator delete(void* ptr) noexcept
 {
   if (ptr)
-    os::std::free(ptr);
+    {
+      // scheduler lock used by free()
+      os::std::free(ptr);
+    }
 }
 
 /// \details
