@@ -3,6 +3,10 @@
 \defgroup core Core
 
 
+\defgroup infra Infrastructure
+Infrastructure support includes startup code, test suite code,
+macros to help check program integrity (like assert).
+
 \defgroup diag Diagnostics
 The `Trace` object is an output stream intended to display  
 diagnostics related informations
