@@ -76,13 +76,19 @@ runTestAccuracy()
 
   os::core::timer::ticks_t deltaTicks = ticksEnd - ticksBegin;
 
+  ts.setFunctionNameOrPrefix("sleep()");
+
+  // TODO: replace snprintf() with a proper conversion
+  char tmp[10];
+  snprintf(tmp, sizeof(tmp), "%d", os::core::scheduler::TICKS_PER_SECOND);
+  ts.setInputValues(tmp);
+
   ts.assertCondition(((deltaTicks - os::core::scheduler::TICKS_PER_SECOND) <= 1));
 
   ts << os::std::endl << "sleep(" << os::core::scheduler::TICKS_PER_SECOND
       << ") took " << deltaTicks << " ticks, " << deltaMicros
       << " real time micros, accuracy " << (long)(deltaProcents*1000) << "/1000 %" << os::std::endl;
 
-  //ts.assertCondition((-10.0 < deltaProcents) && (deltaProcents < 10.0));
 
 }
 
@@ -207,29 +213,8 @@ Task::threadMain(void)
 
   os::timerTicks.sleep(50);
 
-#if defined(_DEBUG)
-  os::diag::trace.putString("multiple sleeps of ");
-  os::diag::trace.putDec(SUM);
-  os::diag::trace.putString(" ticks took ");
-  os::diag::trace.putDec(m_deltaTicks);
-  os::diag::trace.putString(" counted ticks, \"");
-  os::diag::trace.putString(getThread().getName());
-  os::diag::trace.putString("\"");
-  os::diag::trace.putNewLine();
-#endif
-
-
   ts << "Multiple sleeps of " << SUM << " ticks took " << m_deltaTicks
       << " counted ticks, \"" << getThread().getName() << "\"" << os::std::endl;
-
-#if defined(_DEBUG)
-  os::diag::trace.putString("m_count=");
-  os::diag::trace.putDec(m_count);
-  os::diag::trace.putString(" SUM=");
-  os::diag::trace.putDec(SUM);
-  os::diag::trace.putString(" deltaTicks=");
-  os::diag::trace.putDec(m_deltaTicks);
-#endif
 
 }
 
@@ -261,28 +246,31 @@ runTestMulti()
   Task task4("T4", hal::arch::MIN_STACK_SIZE);
   Task task5("T5", hal::arch::MIN_STACK_SIZE);
 
-  Task* array[5] =
+  Task* taskArray[5] =
     { &task1, &task2, &task3, &task4, &task5 };
 
-  unsigned int i;
-  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+  ts.setFunctionNameOrPrefix("sleep()");
+
+  for (auto pTask : taskArray)
     {
-      ts.assertCondition(array[i]->getCount() == 0);
+      ts.setPreconditions(pTask->getName());
+      ts.assertCondition(pTask->getCount() == 0);
     }
 
-  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+  for (auto pTask : taskArray)
     {
-      array[i]->getThread().start();
+      pTask->getThread().start();
     }
 
-  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+  for (auto pTask : taskArray)
     {
-      array[i]->getThread().join();
+      pTask->getThread().join();
     }
 
-  for (i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+  for (auto pTask : taskArray)
     {
-      ts.assertCondition(((array[i]->getDeltaTicks() - array[i]->getCount()) <= array[i]->getSleepCalls()));
+      ts.setPreconditions(pTask->getName());
+      ts.assertCondition(((pTask->getDeltaTicks() - pTask->getCount()) <= pTask->getSleepCalls()));
     }
 
 }

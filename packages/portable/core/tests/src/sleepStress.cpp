@@ -26,7 +26,7 @@ constexpr int MAX_RUN_SECONDS = 30;
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-static os::infra::TestSuite ts;
+static os::infra::TestSuiteOstream ts;
 
 #pragma GCC diagnostic pop
 
@@ -40,7 +40,7 @@ static os::infra::TestSuite ts;
 
 // ----------------------------------------------------------------------------
 
-#include <iostream>
+//#include <iostream>
 #include <sys/time.h>
 
 // ----------------------------------------------------------------------------
@@ -85,6 +85,12 @@ public:
 
   os::core::timer::ticks_t
   getTicks(void);
+
+  os::core::timer::ticks_t
+  getMaxTicks(void);
+
+  os::core::timer::ticks_t
+  getMinTicks(void);
 
   void
   resetCount(void);
@@ -168,6 +174,18 @@ Task::getTicks(void)
   return m_ticks;
 }
 
+os::core::timer::ticks_t
+Task::getMaxTicks(void)
+{
+  return m_maxTicks;
+}
+
+os::core::timer::ticks_t
+Task::getMinTicks(void)
+{
+  return m_minTicks;
+}
+
 void
 Task::resetCount(void)
 {
@@ -209,8 +227,8 @@ Task::threadMain(void)
       m_count++;
       m_ticks += nSleep;
 
-      m_averageCount++;
-      m_averageTicksSum += (m_ticks / m_count);
+      m_averageCount += m_count;
+      m_averageTicksSum += m_ticks;
     }
 }
 
@@ -312,43 +330,61 @@ TaskPeriodic::threadMain(void)
   int t = 0;
   for (;;)
     {
-      ts.reportInfo("periodic task running");
-
       os::timerTicks.sleep(5000);
       t += 5;
       if (MAX_RUN_SECONDS != 0 and t > MAX_RUN_SECONDS)
-        return;
+        break;
 
-      // ----- begin of critical section --------------------------------------
-      os::core::scheduler::CriticalSection cs;
         {
-#if defined(DEBUG)
-          os::diag::trace.putNewLine();
-#endif
-          for (size_t i = 0; i < sizeof(taskArray) / sizeof(taskArray[0]); ++i)
-            {
-              Task* pTask = taskArray[i];
+          // ----- begin of critical section -----------------------------------
+          os::core::scheduler::CriticalSection cs;
 
-#if defined(DEBUG)
-              os::diag::trace.putString(pTask->getName());
-              os::diag::trace.putChar(':');
-              os::diag::trace.putDec(pTask->getTicks());
-              os::diag::trace.putChar('/');
-              os::diag::trace.putDec(pTask->getCount());
-              os::diag::trace.putChar('=');
-              os::diag::trace.putDec(pTask->getTicks() / pTask->getCount());
-              os::diag::trace.putChar('(');
-              os::diag::trace.putDec(pTask->getDelta());
-              os::diag::trace.putChar(')');
-              os::diag::trace.putChar('\t');
-#endif
+          for (auto pTask : taskArray)
+            {
+              ts << pTask->getName() << ':' << pTask->getTicks() << '/'
+                  << pTask->getCount() << '='
+                  << (pTask->getTicks() / pTask->getCount()) << '('
+                  << pTask->getDelta() << ')' << '\t';
 
               pTask->resetCount();
               pTask->resetTicks();
             }
-          //os::diag::trace.putNewLine();
+          ts << os::std::endl;
+          // ----- end of critical section -------------------------------------
         }
-      // ----- end of critical section ----------------------------------------
+    }
+
+    {
+      // ----- begin of critical section ---------------------------------------
+      os::core::scheduler::CriticalSection cs;
+
+      for (auto pTask : taskArray)
+        {
+          int proc = (pTask->getDelta() * 100)
+              / ((int) (pTask->getMinTicks() + pTask->getMaxTicks()) / 2);
+
+          ts << pTask->getName() << ':' << pTask->getDelta() << '/'
+              << ((pTask->getMinTicks() + pTask->getMaxTicks()) / 2) << '='
+              << proc << "%" << '\t';
+
+        }
+      ts << os::std::endl;
+      // ----- end of critical section -----------------------------------------
+    }
+
+  ts.setFunctionNameOrPrefix("sleep()");
+
+  for (auto pTask : taskArray)
+    {
+      int proc = (pTask->getDelta() * 100)
+          / ((int) (pTask->getMinTicks() + pTask->getMaxTicks()) / 2);
+
+      if (proc < 0)
+        {
+          proc = -proc;
+        }
+      ts.setPreconditions(pTask->getName());
+      ts.assertCondition(proc <= 30);
     }
 }
 
