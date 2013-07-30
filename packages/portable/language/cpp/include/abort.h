@@ -13,6 +13,8 @@ namespace os
 {
   namespace std
   {
+    /// \headerfile cstdlib.h "portable/language/cpp/include/cstdlib.h"
+    ///
     /// \brief Abort execution.
     /// \ingroup std_support
     ///
@@ -20,6 +22,8 @@ namespace os
     ///    None.
     /// \par Returns
     ///    Never.
+    /// \par Header
+    ///    "portable/language/cpp/include/cstdlib.h"
     void
     __attribute__((noreturn))
     abort(void);
