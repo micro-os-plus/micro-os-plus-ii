@@ -21,13 +21,13 @@
 #include "portable/language/cpp/include/cstddef.h"
 //#include "portable/language/cpp/include/cstdint"
 #include "portable/language/cpp/include/new.h"
-//#include "portable/language/cpp/include/utility"
-//#include "portable/language/cpp/include/limits"
+#include "portable/language/cpp/include/utility.h"
+#include "portable/language/cpp/include/limits.h"
 #include "portable/language/cpp/include/iterator.h"
 //#include "portable/language/cpp/include/__functional_base.h"
 //#include "portable/language/cpp/include/iosfwd"
 //#include "portable/language/cpp/include/tuple"
-//#include "portable/language/cpp/include/cstring"
+#include "portable/language/cpp/include/cstring.h"
 #if defined(_LIBCPP_NO_EXCEPTIONS)
 //    #include "portable/language/cpp/include/cassert"
 #endif
@@ -118,7 +118,7 @@ public:
     template <class _Up> struct rebind {typedef allocator<_Up> other;};
 };
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if 1//defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
 // pointer_traits
 
@@ -989,7 +989,7 @@ struct  allocator_traits
              is_trivially_move_constructible<_Tp>::value,
             void
         >::type
-        __construct_forward(allocator_type& __a, _Tp* __begin1, _Tp* __end1, _Tp*& __begin2)
+        __construct_forward(allocator_type& __a __attribute__((unused)), _Tp* __begin1, _Tp* __end1, _Tp*& __begin2)
         {
             ptrdiff_t _Np = __end1 - __begin1;
             os::std::memcpy(__begin2, __begin1, _Np * sizeof(_Tp));
@@ -1019,7 +1019,7 @@ struct  allocator_traits
              is_trivially_move_constructible<_Tp>::value,
             void
         >::type
-        __construct_backward(allocator_type& __a, _Tp* __begin1, _Tp* __end1, _Tp*& __end2)
+        __construct_backward(allocator_type& __a __attribute__((unused)), _Tp* __begin1, _Tp* __end1, _Tp*& __end2)
         {
             ptrdiff_t _Np = __end1 - __begin1;
             __end2 -= _Np;
@@ -1389,16 +1389,22 @@ public:
         {raw_storage_iterator __t(*this); ++__x_; return __t;}
 };
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
 template <class _Tp>
 pair<_Tp*, ptrdiff_t>
 get_temporary_buffer(ptrdiff_t __n) noexcept
 {
     pair<_Tp*, ptrdiff_t> __r(0, 0);
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wshift-sign-overflow"
+#endif
     const ptrdiff_t __m = (~ptrdiff_t(0) ^
                            ptrdiff_t(ptrdiff_t(1) << (sizeof(ptrdiff_t) * __CHAR_BIT__ - 1)))
                            / sizeof(_Tp);
+#pragma GCC diagnostic pop
+
     if (__n > __m)
         __n = __m;
     while (__n > 0)
@@ -1536,14 +1542,14 @@ public:
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp(const __libcpp_compressed_pair_imp& __p)
-        noexcept_(is_nothrow_copy_constructible<_T1>::value &&
+        noexcept (is_nothrow_copy_constructible<_T1>::value &&
                    is_nothrow_copy_constructible<_T2>::value)
         : __first_(__p.first()),
           __second_(__p.second()) {}
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp& operator=(const __libcpp_compressed_pair_imp& __p)
-        noexcept_(is_nothrow_copy_assignable<_T1>::value &&
+        noexcept (is_nothrow_copy_assignable<_T1>::value &&
                    is_nothrow_copy_assignable<_T2>::value)
         {
             __first_ = __p.first();
@@ -1555,14 +1561,14 @@ public:
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp(__libcpp_compressed_pair_imp&& __p)
-        noexcept_(is_nothrow_move_constructible<_T1>::value &&
+        noexcept (is_nothrow_move_constructible<_T1>::value &&
                    is_nothrow_move_constructible<_T2>::value)
         : __first_(os::std::forward<_T1>(__p.first())),
           __second_(os::std::forward<_T2>(__p.second())) {}
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp& operator=(__libcpp_compressed_pair_imp&& __p)
-        noexcept_(is_nothrow_move_assignable<_T1>::value &&
+        noexcept (is_nothrow_move_assignable<_T1>::value &&
                    is_nothrow_move_assignable<_T2>::value)
         {
             __first_ = os::std::forward<_T1>(__p.first());
@@ -1596,7 +1602,7 @@ public:
     __attribute__ ((always_inline)) _T2_const_reference second() const noexcept {return __second_;}
 
     __attribute__ ((always_inline)) void swap(__libcpp_compressed_pair_imp& __x)
-        noexcept_(__is_nothrow_swappable<_T1>::value &&
+        noexcept (__is_nothrow_swappable<_T1>::value &&
                    __is_nothrow_swappable<_T1>::value)
     {
         using os::std::swap;
@@ -1633,13 +1639,13 @@ public:
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp(const __libcpp_compressed_pair_imp& __p)
-        noexcept_(is_nothrow_copy_constructible<_T1>::value &&
+        noexcept (is_nothrow_copy_constructible<_T1>::value &&
                    is_nothrow_copy_constructible<_T2>::value)
         : _T1(__p.first()), __second_(__p.second()) {}
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp& operator=(const __libcpp_compressed_pair_imp& __p)
-        noexcept_(is_nothrow_copy_assignable<_T1>::value &&
+        noexcept (is_nothrow_copy_assignable<_T1>::value &&
                    is_nothrow_copy_assignable<_T2>::value)
         {
             _T1::operator=(__p.first());
@@ -1651,13 +1657,13 @@ public:
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp(__libcpp_compressed_pair_imp&& __p)
-        noexcept_(is_nothrow_move_constructible<_T1>::value &&
+        noexcept (is_nothrow_move_constructible<_T1>::value &&
                    is_nothrow_move_constructible<_T2>::value)
         : _T1(os::std::move(__p.first())), __second_(os::std::forward<_T2>(__p.second())) {}
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp& operator=(__libcpp_compressed_pair_imp&& __p)
-        noexcept_(is_nothrow_move_assignable<_T1>::value &&
+        noexcept (is_nothrow_move_assignable<_T1>::value &&
                    is_nothrow_move_assignable<_T2>::value)
         {
             _T1::operator=(os::std::move(__p.first()));
@@ -1691,13 +1697,14 @@ public:
     __attribute__ ((always_inline)) _T2_const_reference second() const noexcept {return __second_;}
 
     __attribute__ ((always_inline)) void swap(__libcpp_compressed_pair_imp& __x)
-        noexcept_(__is_nothrow_swappable<_T1>::value &&
+        noexcept (__is_nothrow_swappable<_T1>::value &&
                    __is_nothrow_swappable<_T1>::value)
     {
         using os::std::swap;
         swap(__second_, __x.__second_);
     }
 };
+//#endif
 
 template <class _T1, class _T2>
 class __libcpp_compressed_pair_imp<_T1, _T2, 2>
@@ -1721,7 +1728,7 @@ public:
     __attribute__ ((always_inline)) explicit __libcpp_compressed_pair_imp(_T2_param __t2)
         : _T2(os::std::forward<_T2_param>(__t2)) {}
     __attribute__ ((always_inline)) __libcpp_compressed_pair_imp(_T1_param __t1, _T2_param __t2)
-        noexcept_(is_nothrow_move_constructible<_T1>::value &&
+        noexcept (is_nothrow_move_constructible<_T1>::value &&
                    is_nothrow_move_constructible<_T2>::value)
         : _T2(os::std::forward<_T2_param>(__t2)), __first_(os::std::forward<_T1_param>(__t1)) {}
 
@@ -1729,13 +1736,13 @@ public:
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp(const __libcpp_compressed_pair_imp& __p)
-        noexcept_(is_nothrow_copy_constructible<_T1>::value &&
+        noexcept (is_nothrow_copy_constructible<_T1>::value &&
                    is_nothrow_copy_constructible<_T2>::value)
         : _T2(__p.second()), __first_(__p.first()) {}
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp& operator=(const __libcpp_compressed_pair_imp& __p)
-        noexcept_(is_nothrow_copy_assignable<_T1>::value &&
+        noexcept (is_nothrow_copy_assignable<_T1>::value &&
                    is_nothrow_copy_assignable<_T2>::value)
         {
             _T2::operator=(__p.second());
@@ -1747,13 +1754,13 @@ public:
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp(__libcpp_compressed_pair_imp&& __p)
-        noexcept_(is_nothrow_move_constructible<_T1>::value &&
+        noexcept (is_nothrow_move_constructible<_T1>::value &&
                    is_nothrow_move_constructible<_T2>::value)
         : _T2(os::std::forward<_T2>(__p.second())), __first_(os::std::move(__p.first())) {}
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp& operator=(__libcpp_compressed_pair_imp&& __p)
-        noexcept_(is_nothrow_move_assignable<_T1>::value &&
+        noexcept (is_nothrow_move_assignable<_T1>::value &&
                    is_nothrow_move_assignable<_T2>::value)
         {
             _T2::operator=(os::std::forward<_T2>(__p.second()));
@@ -1788,7 +1795,7 @@ public:
     __attribute__ ((always_inline)) _T2_const_reference second() const noexcept {return *this;}
 
     __attribute__ ((always_inline)) void swap(__libcpp_compressed_pair_imp& __x)
-        noexcept_(__is_nothrow_swappable<_T1>::value &&
+        noexcept (__is_nothrow_swappable<_T1>::value &&
                    __is_nothrow_swappable<_T1>::value)
     {
         using os::std::swap;
@@ -1823,13 +1830,13 @@ public:
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp(const __libcpp_compressed_pair_imp& __p)
-        noexcept_(is_nothrow_copy_constructible<_T1>::value &&
+        noexcept (is_nothrow_copy_constructible<_T1>::value &&
                    is_nothrow_copy_constructible<_T2>::value)
         : _T1(__p.first()), _T2(__p.second()) {}
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp& operator=(const __libcpp_compressed_pair_imp& __p)
-        noexcept_(is_nothrow_copy_assignable<_T1>::value &&
+        noexcept (is_nothrow_copy_assignable<_T1>::value &&
                    is_nothrow_copy_assignable<_T2>::value)
         {
             _T1::operator=(__p.first());
@@ -1841,13 +1848,13 @@ public:
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp(__libcpp_compressed_pair_imp&& __p)
-        noexcept_(is_nothrow_move_constructible<_T1>::value &&
+        noexcept (is_nothrow_move_constructible<_T1>::value &&
                    is_nothrow_move_constructible<_T2>::value)
         : _T1(os::std::move(__p.first())), _T2(os::std::move(__p.second())) {}
 
     __attribute__ ((always_inline))
     __libcpp_compressed_pair_imp& operator=(__libcpp_compressed_pair_imp&& __p)
-        noexcept_(is_nothrow_move_assignable<_T1>::value &&
+        noexcept (is_nothrow_move_assignable<_T1>::value &&
                    is_nothrow_move_assignable<_T2>::value)
         {
             _T1::operator=(os::std::move(__p.first()));
@@ -1881,7 +1888,7 @@ public:
     __attribute__ ((always_inline)) _T2_const_reference second() const noexcept {return *this;}
 
     __attribute__ ((always_inline)) void swap(__libcpp_compressed_pair_imp&)
-        noexcept_(__is_nothrow_swappable<_T1>::value &&
+        noexcept (__is_nothrow_swappable<_T1>::value &&
                    __is_nothrow_swappable<_T1>::value)
     {
     }
@@ -1914,13 +1921,13 @@ public:
 
     __attribute__ ((always_inline))
     __compressed_pair(const __compressed_pair& __p)
-        noexcept_(is_nothrow_copy_constructible<_T1>::value &&
+        noexcept (is_nothrow_copy_constructible<_T1>::value &&
                    is_nothrow_copy_constructible<_T2>::value)
         : base(__p) {}
 
     __attribute__ ((always_inline))
     __compressed_pair& operator=(const __compressed_pair& __p)
-        noexcept_(is_nothrow_copy_assignable<_T1>::value &&
+        noexcept (is_nothrow_copy_assignable<_T1>::value &&
                    is_nothrow_copy_assignable<_T2>::value)
         {
             base::operator=(__p);
@@ -1930,13 +1937,13 @@ public:
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
     __attribute__ ((always_inline))
     __compressed_pair(__compressed_pair&& __p)
-        noexcept_(is_nothrow_move_constructible<_T1>::value &&
+        noexcept (is_nothrow_move_constructible<_T1>::value &&
                    is_nothrow_move_constructible<_T2>::value)
         : base(os::std::move(__p)) {}
 
     __attribute__ ((always_inline))
     __compressed_pair& operator=(__compressed_pair&& __p)
-        noexcept_(is_nothrow_move_assignable<_T1>::value &&
+        noexcept (is_nothrow_move_assignable<_T1>::value &&
                    is_nothrow_move_assignable<_T2>::value)
         {
             base::operator=(os::std::move(__p));
@@ -1967,7 +1974,7 @@ public:
     __attribute__ ((always_inline)) _T2_const_reference second() const noexcept {return base::second();}
 
     __attribute__ ((always_inline)) void swap(__compressed_pair& __x)
-        noexcept_(__is_nothrow_swappable<_T1>::value &&
+        noexcept (__is_nothrow_swappable<_T1>::value &&
                    __is_nothrow_swappable<_T1>::value)
         {base::swap(__x);}
 };
@@ -1976,9 +1983,11 @@ template <class _T1, class _T2>
 inline __attribute__ ((always_inline))
 void
 swap(__compressed_pair<_T1, _T2>& __x, __compressed_pair<_T1, _T2>& __y)
-        noexcept_(__is_nothrow_swappable<_T1>::value &&
+        noexcept (__is_nothrow_swappable<_T1>::value &&
                    __is_nothrow_swappable<_T1>::value)
     {__x.swap(__y);}
+
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
 // __same_or_less_cv_qualified
 
@@ -3110,7 +3119,7 @@ uninitialized_fill_n(_ForwardIterator __f, _Size __n, const _Tp& __x)
 }
 
 class _LIBCPP_EXCEPTION_ABI bad_weak_ptr
-    : public std::exception
+    : public os::std::exception
 {
 public:
     virtual ~bad_weak_ptr() noexcept;
