@@ -1,0 +1,19 @@
+17.6.1.3 Freestanding implementations
+
+A freestanding implementation has an implementation-defined set of headers. This set shall include at least the headers shown in Table 16.
+
+Table 16 — C++ headers for freestanding implementations
+
+Subclause 						Header(s)
+								<ciso646>
+18.2 Types 						<cstddef>
+18.3 Implementation properties 	<cfloat> <limits> <climits>
+18.4 Integer types 				<cstdint>
+18.5 Start and termination 		<cstdlib>
+18.6 Dynamic memory management 	<new>
+18.7 Type identification 		<typeinfo>
+18.8 Exception handling 		<exception>
+18.9 Initializer lists 			<initializer_list>
+18.10 Other runtime support 	<cstdalign> <cstdarg> <cstdbool>
+20.9 Type traits 				<type_traits>
+29 Atomics 						<atomic>
