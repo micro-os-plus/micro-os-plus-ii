@@ -1231,6 +1231,12 @@ namespace        __is_convertible_imp
       {};
 
 #else  // __has_feature(is_empty)
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
     template<class _Tp>
       struct __is_empty1 : public _Tp
       {
@@ -1241,6 +1247,8 @@ namespace        __is_convertible_imp
     {
       double __lx;
     };
+
+#pragma GCC diagnostic pop
 
     template<class _Tp, bool = is_class<_Tp>::value>
       struct __libcpp_empty : public integral_constant<bool,

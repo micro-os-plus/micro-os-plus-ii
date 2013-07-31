@@ -1510,6 +1510,11 @@ struct __libcpp_compressed_pair_switch<_T1, _T2, true, true, true>     {enum {va
 template <class _T1, class _T2, unsigned = __libcpp_compressed_pair_switch<_T1, _T2>::value>
 class __libcpp_compressed_pair_imp;
 
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
 template <class _T1, class _T2>
 class __libcpp_compressed_pair_imp<_T1, _T2, 0>
 {
@@ -1606,6 +1611,8 @@ public:
         swap(__second_, __x.__second_);
     }
 };
+
+#pragma GCC diagnostic pop
 
 template <class _T1, class _T2>
 class __libcpp_compressed_pair_imp<_T1, _T2, 1>
@@ -1889,6 +1896,11 @@ public:
     }
 };
 
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
 template <class _T1, class _T2>
 class __compressed_pair
     : private __libcpp_compressed_pair_imp<_T1, _T2>
@@ -1973,6 +1985,8 @@ public:
                    __is_nothrow_swappable<_T1>::value)
         {base::swap(__x);}
 };
+
+#pragma GCC diagnostic pop
 
 template <class _T1, class _T2>
 inline __attribute__ ((always_inline))
