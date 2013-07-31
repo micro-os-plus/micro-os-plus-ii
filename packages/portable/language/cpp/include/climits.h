@@ -1,54 +1,24 @@
-// -*- C++ -*-
-//===--------------------------- climits ----------------------------------===//
 //
-//                     The LLVM Compiler Infrastructure
+// This file is part of the µOS++ distribution.
+// Copyright (c) 2013 Liviu Ionescu.
 //
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// [Partly inspired from the LLVM libcxx sources].
+// Copyright (c) 2009-2013 by the contributors listed in
+// 'LLVM libcxx Credits.txt'. See 'LLVM libcxx License.txt' for details.
 //
-//===----------------------------------------------------------------------===//
+// References are to ISO/IEC 14882:2011(E) Third edition (2011-09-01).
+//
 
-#ifndef _LIBCPP_CLIMITS
-#define _LIBCPP_CLIMITS
+/// \file
+/// \brief Limits definitions.
 
-/*
-    climits synopsis
+#ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CLIMITS_H_
+#define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CLIMITS_H_
 
-Macros:
+#include "portable/core/include/ConfigDefines.h"
 
-    CHAR_BIT
-    SCHAR_MIN
-    SCHAR_MAX
-    UCHAR_MAX
-    CHAR_MIN
-    CHAR_MAX
-    MB_LEN_MAX
-    SHRT_MIN
-    SHRT_MAX
-    USHRT_MAX
-    INT_MIN
-    INT_MAX
-    UINT_MAX
-    LONG_MIN
-    LONG_MAX
-    ULONG_MAX
-    LLONG_MIN   // C99
-    LLONG_MAX   // C99
-    ULLONG_MAX  // C99
-
-*/
-
-#if defined(__MICRO_OS_PLUS_PLUS__)
-#include "portable/language/cpp/include/__config.h"
+#include "portable/language/cpp/include/internal/__config.h"
 #include <limits.h>
 
-#else
-#include <__config>
-#include <limits.h>
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
-#pragma GCC system_header
-#endif
-#endif
-
-#endif  // _LIBCPP_CLIMITS
+#endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CLIMITS_H_
