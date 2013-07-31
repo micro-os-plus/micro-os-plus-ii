@@ -40,14 +40,14 @@
 #define assert_always(msg) ((void) ((os::infra::assertFailed(__func__, __FILE__, __LINE__, #msg), 0)))
 
 namespace os
-{
-  namespace infra
   {
-    void
-    __attribute__((noreturn))
-    assertFailed(const char* func, const char* file, int lineno, const char* expr);
+    namespace infra
+      {
+        void
+        __attribute__((noreturn))
+        assertFailed(const char* func, const char* file, int lineno, const char* expr);
+      }
   }
-}
 
 #else
 

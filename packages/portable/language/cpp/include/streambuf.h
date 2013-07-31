@@ -120,7 +120,7 @@ namespace os
         typedef typename traits_type::int_type int_type;
         typedef typename traits_type::pos_type pos_type;
         typedef typename traits_type::off_type off_type;
-        /// @}
+        /// @} end of name Standard template types
 
         /// \name Constructors/destructor
         /// @{
@@ -129,7 +129,7 @@ namespace os
         virtual
         ~basic_streambuf();
 
-        /// @}
+        /// @} end of name Constructors/destructor
 
         // Public locale functions (27.6.3.2.1)
         /// \name Locale member functions
@@ -148,7 +148,7 @@ namespace os
         locale
         getloc() const;
 
-        /// @}
+        /// @} end of name Locale member functions
 
         // \name Public buffer management and positioning functions (27.6.3.2.2)
         /// \name Buffer management and positioning member functions
@@ -192,7 +192,7 @@ namespace os
         int
         pubsync();
 
-        /// @}
+        /// @} end of name Buffer management and positioning member functions
 
         // Public get area functions (27.6.3.2.3)
 
@@ -240,7 +240,7 @@ namespace os
         streamsize
         sgetn(char_type* s, streamsize n);
 
-        /// @}
+        /// @} end of name Get area member functions
 
         // Public putback (27.6.3.2.4)
 
@@ -262,7 +262,7 @@ namespace os
         int_type
         sungetc();
 
-        /// @}
+        /// @} end of name Putback member functions
 
         // Put area (27.6.3.2.5)
 
@@ -285,7 +285,7 @@ namespace os
         streamsize
         sputn(const char_type* s, streamsize n);
 
-        /// @}
+        /// @} end of name Put area member functions
 
       protected:
 
@@ -303,7 +303,7 @@ namespace os
         /// \param [in] rhs Reference to the object to copy from.
         basic_streambuf(const basic_streambuf& rhs);
 
-        /// @}
+        /// @} end of name Constructors/destructor
 
         // \name Assignment (27.6.3.3.1)
         /// \name Assign/swap/move member functions
@@ -323,7 +323,7 @@ namespace os
         void
         swap(basic_streambuf& rhs);
 
-        /// @}
+        /// @} end of name Assign/swap/move member functions
 
         // Get area access (27.6.3.3.2)
 
@@ -375,7 +375,7 @@ namespace os
         void
         setg(char_type* gbeg, char_type* gnext, char_type* gend);
 
-        /// @}
+        /// @} end of name Get area access member functions
 
         // Put area access (27.6.3.3.3)
 
@@ -426,7 +426,7 @@ namespace os
         void
         setp(char_type* pbeg, char_type* pend);
 
-        /// @}
+        /// @} end of name Put area access member functions
 
         // 27.6.3.4 virtual functions
 
@@ -443,7 +443,7 @@ namespace os
         virtual void
         imbue(const locale& loc);
 
-        /// @}
+        /// @} end of name Locale member functions
 
         // Buffer management and positioning (27.6.3.4.2)
 
@@ -482,7 +482,7 @@ namespace os
         virtual int
         sync();
 
-        /// @}
+        /// @} end of name Buffer management and positioning member functions
 
         // Get area (27.6.3.4.3)
 
@@ -523,7 +523,7 @@ namespace os
         virtual int_type
         uflow();
 
-        /// @}
+        /// @} end of name Get area member functions
 
         // Putback (27.6.3.4.4)
 
@@ -537,7 +537,7 @@ namespace os
         virtual int_type
         pbackfail(int_type c = traits_type::eof());
 
-        /// @}
+        /// @} end of name Putback member functions
 
         // Put area (27.6.3.4.5)
 
@@ -561,7 +561,7 @@ namespace os
         virtual int_type
         overflow(int_type c = traits_type::eof());
 
-        /// @}
+        /// @} end of name Put area member functions
 
       private:
 
@@ -575,7 +575,7 @@ namespace os
         /// End of get area.
         char_type* m_einp;
 
-        /// @}
+        /// @} end of name Private input buffer pointer members
 
         /// \name Private output buffer pointer members
         /// @{
@@ -587,7 +587,7 @@ namespace os
         /// End of put area.
         char_type* m_eout;
 
-        /// @}
+        /// @} end of name Private output buffer pointer members
 
         /// \name Private locale member
         /// @{
@@ -595,7 +595,7 @@ namespace os
         /// Current locale setting.
         locale m_locale;
 
-        /// @}
+        /// @} end of name Private locale member
 
       };
 

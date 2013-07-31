@@ -33,8 +33,10 @@ namespace os
 
     /// \addtogroup standardManipulators
     /// @{
+
     /// \brief ios_base flags manipulators.
     /// \headerfile iomanip.h "portable/language/cpp/include/iomanip.h"
+    ///
     /// \details
     /// The header `iomanip.h` defines several functions that
     /// support extractors and inserters that alter
@@ -813,12 +815,11 @@ put_time(const tm* __tm, const TChar_T* __fmt)
     return __iom_t10<TChar_T>(__tm, __fmt);
   }
 
-/// @}
-// end of \name Extended manipulators (27.7.5)
+/// @} end of name Extended manipulators (27.7.5)
 
 #endif
 
-/// @}
+/// @} end of addtogroup standardManipulators
 }
 }
 

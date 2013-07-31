@@ -43,9 +43,9 @@ namespace os
     void
     free(void *ptr) noexcept;
 
-    /// @} end of addtogroup std_dynmem
+  /// @} end of addtogroup std_dynmem
 
-  } // namespace std
+  }// namespace std
 } // namespace os
 
 #endif // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_MALLOC_H

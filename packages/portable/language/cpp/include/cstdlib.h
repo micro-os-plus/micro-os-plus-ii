@@ -32,98 +32,98 @@ namespace os
     using ::ldiv_t;
     using ::lldiv_t;
 
-//    using ::abort;
+//  using ::abort; //  removed, since it is defined now in abort.h
 
 #if 0
-    using ::atof;
-    using ::atoi;
-    using ::atol;
+  using ::atof;
+  using ::atoi;
+  using ::atol;
 #ifndef _LIBCPP_HAS_NO_LONG_LONG
-    using ::atoll;
+  using ::atoll;
 #endif // _LIBCPP_HAS_NO_LONG_LONG
-    using ::strtod;
-    using ::strtof;
-    using ::strtold;
-    using ::strtol;
+  using ::strtod;
+  using ::strtof;
+  using ::strtold;
+  using ::strtol;
 #ifndef _LIBCPP_HAS_NO_LONG_LONG
-    using ::strtoll;
+  using ::strtoll;
 #endif // _LIBCPP_HAS_NO_LONG_LONG
-    using ::strtoul;
+  using ::strtoul;
 #ifndef _LIBCPP_HAS_NO_LONG_LONG
-    using ::strtoull;
+  using ::strtoull;
 #endif // _LIBCPP_HAS_NO_LONG_LONG
-    using ::rand;
-    using ::srand;
-    using ::calloc;
-    using ::free;
-    using ::malloc;
-    using ::realloc;
-    using ::atexit;
-    using ::exit;
+  using ::rand;
+  using ::srand;
+  using ::calloc;
+  using ::free;
+  using ::malloc;
+  using ::realloc;
+  using ::atexit;
+  using ::exit;
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-    using ::_Exit;
+  using ::_Exit;
 #endif
-    using ::getenv;
-    using ::system;
-    using ::bsearch;
-    using ::qsort;
-    using ::abs;
-    using ::labs;
+  using ::getenv;
+  using ::system;
+  using ::bsearch;
+  using ::qsort;
+  using ::abs;
+  using ::labs;
 #ifndef _LIBCPP_HAS_NO_LONG_LONG
-    using ::llabs;
+  using ::llabs;
 #endif // _LIBCPP_HAS_NO_LONG_LONG
-    using ::div;
-    using ::ldiv;
+  using ::div;
+  using ::ldiv;
 #ifndef _LIBCPP_HAS_NO_LONG_LONG
-    using ::lldiv;
+  using ::lldiv;
 #endif // _LIBCPP_HAS_NO_LONG_LONG
-    using ::mblen;
-    using ::mbtowc;
-    using ::wctomb;
-    using ::mbstowcs;
-    using ::wcstombs;
+  using ::mblen;
+  using ::mbtowc;
+  using ::wctomb;
+  using ::mbstowcs;
+  using ::wcstombs;
 #ifdef _LIBCPP_HAS_QUICK_EXIT
-    using ::at_quick_exit;
-    using ::quick_exit;
+  using ::at_quick_exit;
+  using ::quick_exit;
 #endif
 #ifdef _LIBCPP_HAS_C11_FEATURES
-    using ::aligned_alloc;
+  using ::aligned_alloc;
 #endif
 
 #endif
 
 #if 0
-    // TODO: define labs(), llabs(), ldiv(), lldiv()
-    inline long
-    __attribute__((always_inline))
-    abs(long __x) noexcept
+  // TODO: define labs(), llabs(), ldiv(), lldiv()
+  inline long
+  __attribute__((always_inline))
+  abs(long __x) noexcept
     {
       return labs(__x);
     }
 
-    inline long long
-    __attribute__((always_inline))
-    abs(long long __x) noexcept
+  inline long long
+  __attribute__((always_inline))
+  abs(long long __x) noexcept
     {
       return llabs(__x);
     }
 
-    inline ldiv_t
-    __attribute__((always_inline))
-    div(long __x, long __y) noexcept
+  inline ldiv_t
+  __attribute__((always_inline))
+  div(long __x, long __y) noexcept
     {
       return ldiv(__x, __y);
     }
 
-    inline lldiv_t
-    __attribute__((always_inline))
-    div(long long __x, long long __y) noexcept
+  inline lldiv_t
+  __attribute__((always_inline))
+  div(long long __x, long long __y) noexcept
     {
       return lldiv(__x, __y);
     }
 #endif
 
-  }
+}
 }
 
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CSTLIB_H_

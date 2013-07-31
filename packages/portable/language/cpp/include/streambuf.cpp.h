@@ -478,7 +478,7 @@ namespace os
         return traits_type::eof();
       }
 
-  }
-}
+  } // namespace std
+} // namespace os
 
 #endif // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STEAMBUF_CPP_H_

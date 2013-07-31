@@ -179,7 +179,6 @@ namespace os
               }
 
             if (__padAndOutput(_Ip(outs), pBeg, pPad, pEnd, outs, outs.fill()).failed())
-
               {
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
@@ -247,10 +246,10 @@ namespace os
         if (se)
           {
             typedef ostreambuf_iterator<TChar_T, TTraits_T> _Ip;
-            size_t __len = TTraits_T::length(str);
+            size_t len = TTraits_T::length(str);
 
             const TChar_T* pBeg = str;
-            const TChar_T* pEnd = str + __len;
+            const TChar_T* pEnd = str + len;
             const TChar_T* pPad;
 
             if ((outs.flags() & ios_base::adjustfield) == ios_base::left)
@@ -263,7 +262,6 @@ namespace os
               }
 
             if (__padAndOutput(_Ip(outs), pBeg, pPad, pEnd, outs, outs.fill()).failed())
-
               {
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
@@ -340,10 +338,10 @@ namespace os
         if (se)
           {
             typedef ostreambuf_iterator<char, TTraits_T> _Ip;
-            size_t __len = TTraits_T::length(str);
+            size_t len = TTraits_T::length(str);
 
             const char* pBeg = str;
-            const char* pEnd = str + __len;
+            const char* pEnd = str + len;
             const char* pPad;
 
             if ((outs.flags() & ios_base::adjustfield) == ios_base::left)
@@ -382,10 +380,10 @@ namespace os
         if (se)
           {
             typedef ostreambuf_iterator<char, TTraits_T> _Ip;
-            size_t __len = TTraits_T::length((const char*) str);
+            size_t len = TTraits_T::length((const char*) str);
 
             const char* pBeg = (const char*) (str);
-            const char* pEnd = (const char*) (str + __len);
+            const char* pEnd = (const char*) (str + len);
             const char* pPad;
 
             if ((outs.flags() & ios_base::adjustfield) == ios_base::left)
@@ -424,10 +422,10 @@ namespace os
         if (se)
           {
             typedef ostreambuf_iterator<char, TTraits_T> _Ip;
-            size_t __len = TTraits_T::length((const char*) str);
+            size_t len = TTraits_T::length((const char*) str);
 
             const char* pBeg = (const char*) (str);
-            const char* pEnd = (const char*) (str + __len);
+            const char* pEnd = (const char*) (str + len);
             const char* pPad;
 
             if ((outs.flags() & ios_base::adjustfield) == ios_base::left)

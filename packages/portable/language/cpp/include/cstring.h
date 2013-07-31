@@ -27,33 +27,34 @@ namespace os
 
     using ::size_t;
     using ::memcpy;
+
     using ::memmove;
-    using ::strcpy;
+//    using ::strcpy;
     using ::strncpy;
-    using ::strcat;
+//    using ::strcat;
     using ::strncat;
-    using ::memcmp;
-    using ::strcmp;
+//    using ::memcmp;
+//    using ::strcmp;
     using ::strncmp;
-    using ::strcoll;
-    using ::strxfrm;
+//    using ::strcoll;
+//    using ::strxfrm;
 
-    using ::memchr;
+//    using ::memchr;
 
-    using ::strchr;
+//    using ::strchr;
 
-    using ::strcspn;
+//    using ::strcspn;
 
-    using ::strpbrk;
+//    using ::strpbrk;
 
-    using ::strrchr;
+//    using ::strrchr;
 
-    using ::strspn;
+//    using ::strspn;
 
-    using ::strstr;
+//    using ::strstr;
 
 // MSVC, GNU libc and its derivates already have the correct prototype in <string.h> #ifdef __cplusplus
-#if !defined(__GLIBC__) && !defined(_MSC_VER) && !defined(__sun__)
+#if 0 //!defined(__GLIBC__) && !defined(_MSC_VER) && !defined(__sun__)
 
     inline char*
     __attribute__ ((always_inline))
@@ -88,9 +89,9 @@ namespace os
 
 #endif
 
-    using ::strtok;
+//   using ::strtok;
     using ::memset;
-    using ::strerror;
+//    using ::strerror;
     using ::strlen;
 
   } // namespace std

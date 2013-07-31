@@ -26,7 +26,7 @@ namespace os
   namespace std  // purposefully not using versioning namespace
   {
 
-    class  type_info
+    class type_info
     {
       type_info&
       operator=(const type_info&);
@@ -91,7 +91,7 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
 
-    class  bad_cast : public exception
+  class bad_cast : public exception
     {
     public:
       bad_cast() noexcept;
@@ -101,7 +101,7 @@ namespace os
       what() const noexcept;
     };
 
-    class  bad_typeid : public exception
+  class bad_typeid : public exception
     {
     public:
       bad_typeid() noexcept;
@@ -112,8 +112,8 @@ namespace os
     };
 
 #endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-
-  }  // namespace std
+}
+  // namespace std
 } // namespace os
 
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_TYPEINFO_H_

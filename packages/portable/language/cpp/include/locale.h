@@ -31,7 +31,7 @@ namespace os
     // This is a tiny version of locale
 
     template<class TChar_T, class _OutputIterator = ostreambuf_iterator<TChar_T> >
-      class _LIBCPP_VISIBLE num_put
+      class num_put
 
       {
       public:
@@ -95,7 +95,7 @@ namespace os
     extern num_put<char> num_put_char_tiny;
 
     template<class _Facet>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline __attribute__ ((always_inline))
       const _Facet&
       use_facet(const locale& __l __attribute__((unused)))
       {
@@ -103,10 +103,11 @@ namespace os
       }
 
     template<class TChar_T, class _OutputIterator>
-      _LIBCPP_HIDDEN
+
       _OutputIterator
       __padAndOutput(_OutputIterator __s, const TChar_T* __ob,
-          const TChar_T* __op, const TChar_T* __oe, ios_base& __iob, TChar_T __fl);
+          const TChar_T* __op, const TChar_T* __oe, ios_base& __iob,
+          TChar_T __fl);
 
   }
 }
