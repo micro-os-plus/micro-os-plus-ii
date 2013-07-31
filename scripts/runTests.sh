@@ -157,11 +157,11 @@ then
 				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
 			
-			if [ -x /usr/bin/g++-4.7 -o "$defaultCompiler" == "gcc47" ]
+			if [ -x /usr/bin/g++-4.8 -o "$defaultCompiler" == "gcc48" ]
 			then
-				if [ -x /usr/bin/g++-4.7 ]
+				if [ -x /usr/bin/g++-4.8 ]
 				then
-					compiler=gcc47
+					compiler=gcc48
 				else
 					compiler=gcc
 				fi		
@@ -172,11 +172,11 @@ then
 				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
 			fi
 			
-			if [ -x /usr/bin/g++-4.8 -o "$defaultCompiler" == "gcc48" ]
+			if [ -x /usr/bin/g++-4.7 -o "$defaultCompiler" == "gcc47" ]
 			then
-				if [ -x /usr/bin/g++-4.8 ]
+				if [ -x /usr/bin/g++-4.7 ]
 				then
-					compiler=gcc48
+					compiler=gcc47
 				else
 					compiler=gcc
 				fi		
@@ -227,16 +227,6 @@ then
 			fi
 			(PATH=$PATH; runTestArray "osx" "x32" "llvm" "run") || exit $?
 	
-			PATH_GCC47=/opt/local/bin			
-			if [ -x /opt/local/bin/g++-mp-4.7 ]
-			then
-				if [ "$MACHINE" == "x86_64" ]
-				then
-					(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x64" "gcc47" "run") || exit $?
-				fi
-				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32" "gcc47" "run") || exit $?
-			fi
-			
 			PATH_GCC48=/opt/local/bin			
 			if [ -x /opt/local/bin/g++-mp-4.8 ]
 			then
@@ -247,6 +237,16 @@ then
 				(PATH=$PATH_GCC48:$PATH; runTestArray "osx" "x32" "gcc48" "run") || exit $?
 			fi
 
+			PATH_GCC47=/opt/local/bin			
+			if [ -x /opt/local/bin/g++-mp-4.7 ]
+			then
+				if [ "$MACHINE" == "x86_64" ]
+				then
+					(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x64" "gcc47" "run") || exit $?
+				fi
+				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32" "gcc47" "run") || exit $?
+			fi
+			
 		fi
 	) || exit $?
 
