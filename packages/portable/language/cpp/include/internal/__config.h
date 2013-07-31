@@ -549,6 +549,10 @@ struct __static_assert_check
 #define _LIBCPP_HAS_NO_ADVANCED_SFINAE
 #endif
 
+#ifndef _LIBCPP_HAS_NO_UNICODE_CHARS
+#define _LIBCPP_HAS_NO_UNICODE_CHARS
+#endif
+
 #if !defined(_LIBCPP_NO_EXCEPTIONS) && !defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
 #define _LIBCPP_NO_EXCEPTIONS
 #endif
