@@ -1,29 +1,29 @@
-//===------------------------- string.cpp ---------------------------------===//
 //
-//                     The LLVM Compiler Infrastructure
+// This file is part of the µOS++ distribution.
+// Copyright (c) 2013 Liviu Ionescu.
 //
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// [Partly inspired from the LLVM libcxx sources].
+// Copyright (c) 2009-2013 by the contributors listed in
+// 'LLVM libcxx Credits.txt'. See 'LLVM libcxx License.txt' for details.
 //
-//===----------------------------------------------------------------------===//
+// References are to ISO/IEC 14882:2011(E) Third edition (2011-09-01).
+//
 
-#if defined(__MICRO_OS_PLUS_PLUS__)
-#include "portable/language/cpp/include/string"
-#include "portable/language/cpp/include/cstdlib"
-#include "portable/language/cpp/include/cwchar"
-#include "portable/language/cpp/include/cerrno"
+/// \file
+/// \brief String definitions.
 
-#else
-#include "string"
-#include "cstdlib"
-#include "cwchar"
-#include "cerrno"
-#if _WIN32
-#include "support/win32/support.h"
-#endif // _WIN32
-#endif
+#include "portable/core/include/ConfigDefines.h"
 
-_LIBCPP_BEGIN_NAMESPACE_STD
+#include "portable/language/cpp/include/string.h"
+#include "portable/language/cpp/include/cstdlib.h"
+//#include "portable/language/cpp/include/cwchar"
+//#include "portable/language/cpp/include/cerrno"
+
+
+namespace os
+{
+  namespace std
+  {
 
 template class __basic_string_common<true>;
 
@@ -33,6 +33,8 @@ template class basic_string<wchar_t>;
 template
     string
     operator+<char, char_traits<char>, allocator<char> >(char const*, string const&);
+
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
 int
 stoi(const string& str, size_t* idx, int base)
@@ -355,6 +357,8 @@ stold(const wstring& str, size_t* idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
 }
+
+#endif // #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
 string to_string(int val)
 {
@@ -692,4 +696,6 @@ wstring to_wstring(long double val)
     return s;
 }
 
-_LIBCPP_END_NAMESPACE_STD
+
+  } // namespace std
+} // namespace os
