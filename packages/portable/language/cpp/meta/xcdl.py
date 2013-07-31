@@ -16,6 +16,7 @@ Package(
         'malloc.cpp',
         'abort.cpp',
         'memory.cpp',
+        'string.cpp',
     ],
          
     children=[
