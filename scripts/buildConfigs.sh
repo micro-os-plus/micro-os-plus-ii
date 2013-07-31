@@ -208,5 +208,19 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+CONFIG=/portable/language/cpp/tests/meta/string-linux-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/string/' \
+-e 's/ARTEFACTDESCRIPTION/C++ string/' \
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+CONFIG=/portable/language/cpp/tests/meta/string-osx-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/string/' \
+-e 's/ARTEFACTDESCRIPTION/C++ string/' \
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
 echo
 echo '[done]'

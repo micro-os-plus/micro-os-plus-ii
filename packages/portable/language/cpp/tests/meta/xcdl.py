@@ -138,6 +138,28 @@ Package(
                 'interface.os.artefact',
             ],
         ),
+
+        Component(
+            id='component.os.portable.language.cpp.tests.string',
+            name='Test C++ string',
+            description='Test some methods of the string class.',
+    
+            category='test',
+    
+            isEnabled=False,
+            sourceFiles=[
+                'string.cpp',
+            ],
+                  
+            includeFiles=[
+                'string-config.py',
+            ],
+
+            implements=[
+                'interface.os.artefact',
+            ],
+        ),
+
               
 #        Component(
 #            id='component.os.portable.language.cpp.tests.ostrstream',

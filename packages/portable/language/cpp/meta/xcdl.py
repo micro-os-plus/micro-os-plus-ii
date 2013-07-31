@@ -48,7 +48,7 @@ Package(
             
             children=[
                 Option(
-                    id='component.os.portable.language.cpp.exceptions.handlers',
+                    id='option.os.portable.language.cpp.exceptions.handlers',
                     name='C++ language exceptions handlers support',
                     description='Support for C++ exception handlers.',
 
@@ -58,6 +58,28 @@ Package(
                     
                 ),
                 
+            ],
+        ),
+
+        Component(
+            id='component.os.portable.language.cpp.wide',
+            name='C++ language wide characters support',
+            description='Support for C++ wide characters.',
+
+            isEnabled=False,                      
+
+            children=[
+                Option(
+                    id='option.os.portable.language.cpp.wide.wchar_t',
+                    name='C++ language wchar_t support',
+                    description='Support for C++ wchar_t characters.',
+
+                    isEnabled=False,                      
+
+                    headerDefinition='OS_INCLUDE_PORTABLE_LANGUAGE_CPP_WCHAR_T',
+                    
+                ),
+                      
             ],
         ),
               
