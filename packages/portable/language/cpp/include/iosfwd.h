@@ -27,66 +27,66 @@ namespace os
   namespace std
   {
 #if !defined(__DOXYGEN__)
-    class _LIBCPP_VISIBLE ios_base;
+    class ios_base;
 
     /// struct char_traits.
     template<class TChar_T>
-      struct _LIBCPP_VISIBLE char_traits;
+      struct char_traits;
 
     /// class allocator.
     template<class _Tp>
-      class _LIBCPP_VISIBLE allocator;
+      class allocator;
 
     /// class basic_ios.
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-      class _LIBCPP_VISIBLE basic_ios;
+      class basic_ios;
 
     /// class basic_streambuf.
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-      class _LIBCPP_VISIBLE basic_streambuf;
+      class basic_streambuf;
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-    class _LIBCPP_VISIBLE basic_istream;
+    class basic_istream;
 #endif
 
     /// class basic_ostream.
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-      class _LIBCPP_VISIBLE basic_ostream;
+      class basic_ostream;
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-    class _LIBCPP_VISIBLE basic_iostream;
+    class basic_iostream;
 
     template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
     class _Allocator = allocator<TChar_T> >
-    class _LIBCPP_VISIBLE basic_stringbuf;
+    class basic_stringbuf;
     template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
     class _Allocator = allocator<TChar_T> >
-    class _LIBCPP_VISIBLE basic_istringstream;
+    class basic_istringstream;
     template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
     class _Allocator = allocator<TChar_T> >
-    class _LIBCPP_VISIBLE basic_ostringstream;
+    class basic_ostringstream;
     template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
     class _Allocator = allocator<TChar_T> >
-    class _LIBCPP_VISIBLE basic_stringstream;
+    class basic_stringstream;
 
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-    class _LIBCPP_VISIBLE basic_filebuf;
+    class basic_filebuf;
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-    class _LIBCPP_VISIBLE basic_ifstream;
+    class basic_ifstream;
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-    class _LIBCPP_VISIBLE basic_ofstream;
+    class basic_ofstream;
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-    class _LIBCPP_VISIBLE basic_fstream;
+    class basic_fstream;
 
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-    class _LIBCPP_VISIBLE istreambuf_iterator;
+    class istreambuf_iterator;
 #endif
 
     /// class ostreambuf_iterator.
     template<class TChar_T, class TTraits_T = char_traits<TChar_T> >
-      class _LIBCPP_VISIBLE ostreambuf_iterator;
+      class ostreambuf_iterator;
 
     /// Base class for @c char streams.
     typedef basic_ios<char> ios;
@@ -162,7 +162,7 @@ namespace os
 #endif
 
     template<class _State>
-      class _LIBCPP_VISIBLE fpos;
+      class fpos;
 
     /// \brief File position for char streams.
     ///
@@ -197,21 +197,21 @@ namespace os
     /// 27.2.2 and 27.3.
     typedef long long streamoff;        // for char_traits in <string>
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+//#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
-  template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
-  class _Allocator = allocator<TChar_T> >
-  class _LIBCPP_VISIBLE basic_string;
+    template<class TChar_T, class TTraits_T = char_traits<TChar_T>,
+        class _Allocator = allocator<TChar_T> >
+      class basic_string;
 
-  typedef basic_string<char, char_traits<char>, allocator<char> > string;
+    typedef basic_string<char, char_traits<char>, allocator<char> > string;
 
-  typedef basic_string<wchar_t, char_traits<wchar_t>, allocator<wchar_t> > wstring;
+    typedef basic_string<wchar_t, char_traits<wchar_t>, allocator<wchar_t> > wstring;
+
+//#endif
 
 #endif
 
-#endif
-
-}
+  }
 }
 
 #endif  /* OS_PORTABLE_LANGUAGE_CPP_INCLUDE_IOSFWD_H_ */
