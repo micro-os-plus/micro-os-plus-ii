@@ -37,7 +37,7 @@ namespace os
       // The platform reset will abruptly end the application,
       // without running any C++ destructors or cleanups.
       os::platform.resetSystem();
-      // As defined in the declaration, it should never return.
+      // As specified in the declaration, it should never return.
     }
 
   } // namespace std
