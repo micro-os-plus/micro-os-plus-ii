@@ -124,7 +124,12 @@ namespace os
     template<class _Tp, int digits, bool is_signed>
       struct __libcpp_compute_min
       {
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wshift-sign-overflow"
+#endif
         static _LIBCPP_CONSTEXPR _Tp value = _Tp(_Tp(1) << digits);
+#pragma GCC diagnostic pop
       };
 
     template<class _Tp, int digits>

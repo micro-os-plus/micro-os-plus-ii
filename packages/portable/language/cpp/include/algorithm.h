@@ -656,7 +656,7 @@ __search(_RandomAccessIterator1 __first1, _RandomAccessIterator1 __last1,
     const _RandomAccessIterator1 __s = __last1 - (__len2 - 1);  // Start of pattern match can't go beyond here
     while (true)
     {
-#if !_LIBCPP_UNROLL_LOOPS
+#if !defined(LIBCPP_UNROLL_LOOPS)
         while (true)
         {
             if (__first1 == __s)
@@ -698,7 +698,7 @@ __search(_RandomAccessIterator1 __first1, _RandomAccessIterator1 __last1,
 #endif  // !_LIBCPP_UNROLL_LOOPS
         _RandomAccessIterator1 __m1 = __first1;
         _RandomAccessIterator2 __m2 = __first2;
-#if !_LIBCPP_UNROLL_LOOPS
+#if !defined(LIBCPP_UNROLL_LOOPS)
          while (true)
          {
              if (++__m2 == __last2)
@@ -3502,8 +3502,10 @@ __buffered_inplace_merge(_BidirectionalIterator __first, _BidirectionalIterator 
                 typename iterator_traits<_BidirectionalIterator>::value_type* __buff)
 {
     typedef typename iterator_traits<_BidirectionalIterator>::value_type value_type;
+#if 0
     typedef typename iterator_traits<_BidirectionalIterator>::difference_type difference_type;
     typedef typename iterator_traits<_BidirectionalIterator>::pointer pointer;
+#endif
     __destruct_n __d(0);
     unique_ptr<value_type, __destruct_n&> __h2(__buff, __d);
     if (__len1 <= __len2)
@@ -3537,7 +3539,9 @@ __inplace_merge(_BidirectionalIterator __first, _BidirectionalIterator __middle,
                                  typename iterator_traits<_BidirectionalIterator>::difference_type __len2,
                 typename iterator_traits<_BidirectionalIterator>::value_type* __buff, ptrdiff_t __buff_size)
 {
+#if 0
     typedef typename iterator_traits<_BidirectionalIterator>::value_type value_type;
+#endif
     typedef typename iterator_traits<_BidirectionalIterator>::difference_type difference_type;
     while (true)
     {
@@ -3977,7 +3981,9 @@ void
 __push_heap_back(_RandomAccessIterator __first, _RandomAccessIterator __last, _Compare __comp,
                  typename iterator_traits<_RandomAccessIterator>::difference_type __len)
 {
+#if 0
     typedef typename iterator_traits<_RandomAccessIterator>::difference_type difference_type;
+#endif
     typedef typename iterator_traits<_RandomAccessIterator>::value_type value_type;
     if (__len > 1)
     {
