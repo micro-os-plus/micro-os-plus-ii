@@ -2209,6 +2209,7 @@ namespace os
         __eval(true_type);
       };
 
+#if !defined(__DOXYGEN__)
     template<class _Engine, class _UIntType>
       __independent_bits_engine<_Engine, _UIntType>::__independent_bits_engine(
           _Engine& __e, size_t __w)
@@ -2288,6 +2289,8 @@ namespace os
           }
         return _Sp;
       }
+
+#endif // !defined(__DOXYGEN__)
 
     // uniform_int_distribution
 
