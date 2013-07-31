@@ -69,10 +69,13 @@ namespace os
       os::diag::trace.putString(")");
       os::diag::trace.putNewLine();
 #endif
-      // ----- begin of critical section --------------------------------------
-      os::core::scheduler::CriticalSection cs;
-      return ::free(ptr);
-      // ----- end of critical section ----------------------------------------
+        {
+          // ----- begin of critical section ----------------------------------
+          os::core::scheduler::CriticalSection cs;
+
+          return ::free(ptr);
+          // ----- end of critical section ------------------------------------
+        }
     }
   } // namespace std
 } // namespace os
