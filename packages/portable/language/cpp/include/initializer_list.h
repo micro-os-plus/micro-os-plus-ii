@@ -29,43 +29,64 @@ namespace os
       class initializer_list
       {
         const _Ep* __begin_;
-        size_t __size_;
+        os::std::size_t __size_;
 
+        initializer_list(const _Ep* __b, os::std::size_t __s) noexcept;
+
+      public:
+        typedef _Ep value_type;
+        typedef const _Ep& reference;
+        typedef const _Ep& const_reference;
+        typedef os::std::size_t size_type;
+
+        typedef const _Ep* iterator;
+        typedef const _Ep* const_iterator;
+
+        initializer_list() noexcept;
+
+        os::std::size_t
         __attribute__((always_inline))
-        initializer_list(const _Ep* __b, size_t __s)
-noexcept            //
-            : __begin_(__b),
-            __size_(__s)
-              {}
-          public:
-            typedef _Ep value_type;
-            typedef const _Ep& reference;
-            typedef const _Ep& const_reference;
-            typedef size_t size_type;
+        size() const noexcept
+        {
+          return __size_;
+        }
 
-            typedef const _Ep* iterator;
-            typedef const _Ep* const_iterator;
+        const _Ep*
+        __attribute__((always_inline))
+        begin() const noexcept
+        {
+          return __begin_;
+        }
 
-            __attribute__((always_inline))
-            initializer_list() noexcept : __begin_(nullptr), __size_(0)
-              {}
+        const _Ep*
+        __attribute__((always_inline))
+        end() const noexcept
+        {
+          return __begin_ + __size_;
+        }
+      };
 
-            size_t
-            __attribute__((always_inline))
-            size() const noexcept
-              { return __size_;}
+    template<class _Ep>
+      inline
+      __attribute__((always_inline))
+      initializer_list<_Ep>::initializer_list(const _Ep* __b, os::std::size_t __s)
+noexcept          : //
+          __begin_(__b),
+          __size_(__s)
+            {
+            }
 
-            const _Ep*
-            __attribute__((always_inline))
-            begin() const noexcept
-              { return __begin_;}
+    template<class _Ep>
+      inline
+      __attribute__((always_inline))
+      initializer_list<_Ep>::initializer_list()
+noexcept          : //
+          __begin_(nullptr),
+          __size_(0)
+            {
+            }
 
-            const _Ep*
-            __attribute__((always_inline))
-            end() const noexcept
-              { return __begin_ + __size_;}
-          };
-
+    // free standing iterator functions
     template<class _Ep>
       inline const _Ep*
       __attribute__((always_inline))
