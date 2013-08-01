@@ -21,12 +21,12 @@
 #include "portable/language/cpp/include/streambuf.cpp.h"
 #include "portable/language/cpp/include/limits.h"
 #include "portable/language/cpp/include/cstdlib.h"
+#include "portable/language/cpp/include/string.h"
 
 #if 0
 #include "ios"
 #include "streambuf"
 #include "istream"
-#include "string"
 #include "__locale"
 #include "algorithm"
 #include "memory"
@@ -58,60 +58,67 @@ namespace os
 
 #endif
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-    class _LIBCPP_HIDDEN __iostream_category
-    : public __do_message
-      {
-      public:
-        virtual const char* name() const _NOEXCEPT;
-        virtual string message(int ev) const;
-      };
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
+    class _LIBCPP_HIDDEN __iostream_category : public __do_message
+    {
+    public:
+      virtual const char*
+      name() const noexcept;
+      virtual string
+      message(int ev) const;
+    };
 
     const char*
-    __iostream_category::name() const
-    _NOEXCEPT
-      {
-        return "iostream";
-      }
+    __iostream_category::name() const noexcept
+    {
+      return "iostream";
+    }
 
     string
     __iostream_category::message(int ev) const
-      {
-        if (ev != static_cast<int>(io_errc::stream)
+    {
+      if (ev != static_cast<int>(io_errc::stream)
 #ifdef ELAST
-            && ev <= ELAST
+          && ev <= ELAST
 #endif
-        )
+          )
         return __do_message::message(ev);
-        return string("unspecified iostream_category error");
-      }
+      return string("unspecified iostream_category error");
+    }
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wexit-time-destructors"
+#endif
 
     const error_category&
     iostream_category()
-      {
-        static __iostream_category s;
-        return s;
-      }
+    {
+      static __iostream_category s;
+      return s;
+    }
+
+#pragma GCC diagnostic push
 
     // ios_base::failure
 
     ios_base::failure::failure(const string& msg, const error_code& ec)
-    : system_error(ec, msg)
-      {
-      }
+        : system_error(ec, msg)
+    {
+    }
 
     ios_base::failure::failure(const char* msg, const error_code& ec)
-    : system_error(ec, msg)
-      {
-      }
+        : system_error(ec, msg)
+    {
+    }
 
     ios_base::failure::~failure() throw ()
-      {
-      }
-#endif
+    {
+    }
+
+#endif // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
 
     // ios_base locale
-
     const ios_base::fmtflags ios_base::boolalpha;
     const ios_base::fmtflags ios_base::dec;
     const ios_base::fmtflags ios_base::fixed;
@@ -146,15 +153,15 @@ namespace os
 #if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
     void
     ios_base::__call_callbacks(event ev __attribute__((unused)))
-    {
+      {
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-      for (size_t i = __event_size_; i;)
-        {
-          --i;
-          __fn_[i](ev, *this, __index_[i]);
-        }
+        for (size_t i = __event_size_; i;)
+          {
+            --i;
+            __fn_[i](ev, *this, __index_[i]);
+          }
 #endif
-    }
+      }
 #endif
 
     // locale
@@ -195,31 +202,31 @@ namespace os
     int ios_base::ms_xindex = 0;
 
     ///
-     /// \details
-     /// This function returns a unique integer every time it is called.  It
-     /// can be used for any purpose, but is primarily intended to be a unique
-     /// index for the iword and pword functions.  The expectation is that an
-     /// application calls xalloc in order to obtain an index in the iword and
-     /// pword arrays that can be used without fear of conflict.
-     ///
-     /// The implementation maintains a static variable that is incremented and
-     /// returned on each invocation.  xalloc is guaranteed to return an index
-     /// that is safe to use in the iword and pword arrays.
-   int
+    /// \details
+    /// This function returns a unique integer every time it is called.  It
+    /// can be used for any purpose, but is primarily intended to be a unique
+    /// index for the iword and pword functions.  The expectation is that an
+    /// application calls xalloc in order to obtain an index in the iword and
+    /// pword arrays that can be used without fear of conflict.
+    ///
+    /// The implementation maintains a static variable that is incremented and
+    /// returned on each invocation.  xalloc is guaranteed to return an index
+    /// that is safe to use in the iword and pword arrays.
+    int
     ios_base::xalloc()
       {
         return ms_xindex++;
       }
 
-   ///
-   /// \details
-   /// The iword function provides access to an array of integers that can be
-   /// used for any purpose.  The array grows as required to hold the
-   /// supplied index.  All integers in the array are initialized to 0.
-   ///
-   /// The implementation reserves several indices.  You should use xalloc to
-   /// obtain an index that is safe to use.  Also note that since the array
-   /// can grow dynamically, it is not safe to hold onto the reference.
+    ///
+    /// \details
+    /// The iword function provides access to an array of integers that can be
+    /// used for any purpose.  The array grows as required to hold the
+    /// supplied index.  All integers in the array are initialized to 0.
+    ///
+    /// The implementation reserves several indices.  You should use xalloc to
+    /// obtain an index that is safe to use.  Also note that since the array
+    /// can grow dynamically, it is not safe to hold onto the reference.
     long&
     ios_base::iword(int index)
       {
@@ -299,30 +306,30 @@ namespace os
     void
     ios_base::register_callback(event_callback fn __attribute__((unused)),
         int index __attribute__((unused)))
-    {
-      size_t req_size = __event_size_ + 1;
-      if (req_size > __event_cap_)
-        {
-          size_t newcap;
-          const size_t mx = numeric_limits < size_t > ::max();
-          if (req_size < mx / 2)
-          newcap = _VSTD::max(2 * __event_cap_, req_size);
-          else
-          newcap = mx;
-          event_callback* fns = (event_callback*) realloc(__fn_,
-              newcap * sizeof(event_callback));
-          if (fns == 0)
-          setstate(badbit);
-          __fn_ = fns;
-          int* indxs = (int*) realloc(__index_, newcap * sizeof(int));
-          if (indxs == 0)
-          setstate(badbit);
-          __index_ = indxs;
-        }
-      __fn_[__event_size_] = fn;
-      __index_[__event_size_] = index;
-      ++__event_size_;
-    }
+      {
+        size_t req_size = __event_size_ + 1;
+        if (req_size > __event_cap_)
+          {
+            size_t newcap;
+            const size_t mx = numeric_limits < size_t > ::max();
+            if (req_size < mx / 2)
+            newcap = _VSTD::max(2 * __event_cap_, req_size);
+            else
+            newcap = mx;
+            event_callback* fns = (event_callback*) realloc(__fn_,
+                newcap * sizeof(event_callback));
+            if (fns == 0)
+            setstate(badbit);
+            __fn_ = fns;
+            int* indxs = (int*) realloc(__index_, newcap * sizeof(int));
+            if (indxs == 0)
+            setstate(badbit);
+            __index_ = indxs;
+          }
+        __fn_[__event_size_] = fn;
+        __index_[__event_size_] = index;
+        ++__event_size_;
+      }
 #endif
 
     /// \details
@@ -359,15 +366,15 @@ namespace os
       if (__event_cap_ < rhs.__event_size_)
         {
           new_callbacks.reset((event_callback*)malloc(sizeof(event_callback) * rhs.__event_size_));
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           if (!new_callbacks)
           throw bad_alloc();
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
           new_ints.reset((int*)malloc(sizeof(int) * rhs.__event_size_));
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           if (!new_ints)
           throw bad_alloc();
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         }
 #endif
 
@@ -375,26 +382,26 @@ namespace os
       if (__iarray_cap_ < rhs.__iarray_size_)
         {
           new_longs.reset((long*)malloc(sizeof(long) * rhs.__iarray_size_));
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           if (!new_longs)
           throw bad_alloc();
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         }
       if (__parray_cap_ < rhs.__parray_size_)
         {
           new_pointers.reset((void**)malloc(sizeof(void*) * rhs.__parray_size_));
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           if (!new_pointers)
           throw bad_alloc();
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         }
 #endif
       // Got everything we need.  Copy everything but __rdstate_, __rdbuf_ and __exceptions_
       m_fmtflags = rhs.m_fmtflags;
       m_precision = rhs.m_precision;
       m_width = rhs.m_width;
-      locale& lhs_loc = *(locale*)&m_locale;
-      locale& rhs_loc = *(locale*)&rhs.m_locale;
+      locale& lhs_loc = *(locale*) &m_locale;
+      locale& rhs_loc = *(locale*) &rhs.m_locale;
       lhs_loc = rhs_loc;
 #if defined(OS_INCLUDE_STD_IOS_BASE_CALLBACKS)
       if (__event_cap_ < rhs.__event_size_)
@@ -471,8 +478,7 @@ namespace os
     }
 
     void
-    ios_base::swap(ios_base& rhs)
-    _NOEXCEPT
+    ios_base::swap(ios_base& rhs) noexcept
     {
       _VSTD::swap(m_fmtflags, rhs.m_fmtflags);
       _VSTD::swap(m_precision, rhs.m_precision);

@@ -569,10 +569,10 @@ basic_istream<TChar_T, TTraits_T>&
 operator>>(basic_istream<TChar_T, TTraits_T>& __is,
     const __iom_t7 <_MoneyT>& __x)
   {
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     try
       {
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_istream<TChar_T, TTraits_T>::sentry __s(__is);
         if (__s)
           {
@@ -583,13 +583,13 @@ operator>>(basic_istream<TChar_T, TTraits_T>& __is,
             __mf.get(_Ip(__is), _Ip(), __x.m_intl, __is, __err, __x.m_money);
             __is.setstate(__err);
           }
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         __is.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     return __is;
   }
 #endif
@@ -636,10 +636,10 @@ basic_ostream<TChar_T, TTraits_T>&
 operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
     const __iom_t8 <_MoneyT>& __x)
   {
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     try
       {
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<TChar_T, TTraits_T>::sentry __s(outs);
         if (__s)
           {
@@ -654,13 +654,13 @@ operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
               }
 #endif
           }
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     return outs;
   }
 
@@ -709,10 +709,10 @@ basic_istream<TChar_T, TTraits_T>&
 operator>>(basic_istream<TChar_T, TTraits_T>& __is,
     const __iom_t9 <TChar_T>& __x)
   {
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     try
       {
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_istream<TChar_T, TTraits_T>::sentry __s(__is);
         if (__s)
           {
@@ -724,13 +724,13 @@ operator>>(basic_istream<TChar_T, TTraits_T>& __is,
                 __x.m_fmt + TTraits_T::length(__x.m_fmt));
             __is.setstate(__err);
           }
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         __is.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     return __is;
   }
 
@@ -779,10 +779,10 @@ basic_ostream<TChar_T, TTraits_T>&
 operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
     const __iom_t10 <TChar_T>& __x)
   {
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     try
       {
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<TChar_T, TTraits_T>::sentry __s(outs);
         if (__s)
           {
@@ -797,13 +797,13 @@ operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
               }
 #endif
           }
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     return outs;
   }
 

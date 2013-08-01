@@ -294,7 +294,7 @@ namespace os
 
         /// @}
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         void
         __set_badbit_and_consider_rethrow();
 

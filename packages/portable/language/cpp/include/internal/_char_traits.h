@@ -44,7 +44,7 @@
 #ifndef _LIBCPP_HAS_NO_UNICODE_CHARS
 #include <cstdint>
 #endif
-#if defined(OS_INCLUDE_STD_EXCEPTIONS) || defined(_LIBCPP_DEBUG)
+#if !defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS) || defined(_LIBCPP_DEBUG)
 #include <cassert>
 #endif
 

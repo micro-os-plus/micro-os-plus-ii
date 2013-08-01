@@ -258,10 +258,10 @@ namespace os
   locale
   locale::combine(const locale& __other) const
     {
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
-      if (!_VSTD::has_facet<_Facet>(__other))
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
+      if (!os::std::has_facet<_Facet>(__other))
       throw runtime_error("locale::combine: locale missing facet");
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
       return locale(*this, &const_cast<_Facet&>(_VSTD::use_facet<_Facet>(__other)));
     }
 #endif

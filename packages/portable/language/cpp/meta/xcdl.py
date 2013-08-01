@@ -16,7 +16,6 @@ Package(
         'malloc.cpp',
         'abort.cpp',
         'memory.cpp',
-        'string.cpp',
     ],
          
     children=[
@@ -38,6 +37,20 @@ Package(
         ),
               
         Component(
+            id='component.os.portable.language.cpp.string',
+            name='C++ language string support',
+            description='Support for C++ string.',
+            
+            isEnabled=False,                      
+            sourceFiles=[
+                'string.cpp',
+            ],
+
+            headerDefinition='OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STRING',
+              
+        ),
+              
+        Component(
             id='component.os.portable.language.cpp.exceptions',
             name='C++ language exceptions support',
             description='Support for C++ exceptions.',
@@ -45,7 +58,12 @@ Package(
             isEnabled=False,                      
 
             headerDefinition='OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS',
-            
+           
+            sourceFiles=[
+                'stdexcept.cpp',
+                'system_error.cpp',
+            ],
+                  
             children=[
                 Option(
                     id='option.os.portable.language.cpp.exceptions.handlers',

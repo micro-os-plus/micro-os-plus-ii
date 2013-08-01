@@ -116,34 +116,34 @@ namespace os
                 new_callbacks.reset(
                     (event_callback*) malloc(
                         sizeof(event_callback) * rhs.__event_size_));
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
                 if (!new_callbacks)
                 throw bad_alloc();
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
                 new_ints.reset((int*) malloc(sizeof(int) * rhs.__event_size_));
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
                 if (!new_ints)
                 throw bad_alloc();
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
               }
 #endif
 #if defined(OS_INCLUDE_STD_IOS_BASE_STORAGE)
             if (__iarray_cap_ < rhs.__iarray_size_)
               {
                 new_longs.reset((long*) malloc(sizeof(long) * rhs.__iarray_size_));
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
                 if (!new_longs)
                 throw bad_alloc();
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
               }
             if (__parray_cap_ < rhs.__parray_size_)
               {
                 new_pointers.reset(
                     (void**) malloc(sizeof(void*) * rhs.__parray_size_));
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
                 if (!new_pointers)
                 throw bad_alloc();
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
               }
 #endif
 
@@ -220,27 +220,25 @@ namespace os
           {
             m_rdstate = state | badbit;
           }
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
-        if (((state | (m_rdbuf ? goodbit : badbit)) & __exceptions_) != 0)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
+        if (((state | (m_rdbuf ? goodbit : badbit)) & m_exceptions) != 0)
           {
             throw failure("ios_base::clear");
           }
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
       }
 
-#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
 
   template<class TChar_T, class TTraits_T>
   void
   basic_ios<TChar_T, TTraits_T>::__set_badbit_and_consider_rethrow()
     {
       m_rdstate |= badbit;
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
-      if (__exceptions_ & badbit)
+      if (m_exceptions & badbit)
         {
           throw;
         }
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
     }
 
   template<class TChar_T, class TTraits_T>
@@ -248,15 +246,13 @@ namespace os
   basic_ios<TChar_T, TTraits_T>::__set_failbit_and_consider_rethrow()
     {
       m_rdstate |= failbit;
-#if defined(OS_INCLUDE_STD_EXCEPTIONS)
-      if (__exceptions_ & failbit)
+      if (m_exceptions & failbit)
         {
           throw;
         }
-#endif  // OS_INCLUDE_STD_EXCEPTIONS
     }
 
-#endif
+#endif // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
 
 }
 }

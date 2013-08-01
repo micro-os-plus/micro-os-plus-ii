@@ -36,6 +36,7 @@ encoding//packages/portable/tests/meta/minimal-stm32h103-config.py=utf-8
 encoding//packages/support/templates/xcdl.py=utf-8
 encoding//packages/support/toolchains/linux-gcc.py=utf-8
 encoding//packages/support/toolchains/linux-llvm.py=utf-8
+encoding//packages/support/toolchains/osx-aep-arm-gcc.py=utf-8
 encoding//packages/support/toolchains/osx-llvm.py=utf-8
 encoding//packages/support/toolchains/osx-mp-gcc.py=utf-8
 encoding//packages/support/toolchains/xcdl.py=utf-8

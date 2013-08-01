@@ -59,20 +59,20 @@ namespace os
 #endif
             )
           {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
             try
               {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
             if (m_ostream.rdbuf()->pubsync() == -1)
               {
                 m_ostream.setstate(ios_base::badbit);
               }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           }
         catch (...)
           {
           }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
           }
       }
 
@@ -108,19 +108,19 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>::operator<<(
           basic_streambuf<TChar_T, TTraits_T>* sb)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
             if (sb)
               {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
                 try
                   {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
                 typedef istreambuf_iterator<TChar_T, TTraits_T> _Ip;
@@ -143,26 +143,26 @@ namespace os
                 this->setstate(ios_base::failbit);
 #endif
 
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
               }
             catch (...)
               {
                 this->__set_failbit_and_consider_rethrow();
               }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
               }
             else
               {
                 this->setstate(ios_base::badbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -170,10 +170,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(bool n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -186,13 +186,13 @@ namespace os
                 this->setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -200,10 +200,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(short n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -230,13 +230,13 @@ namespace os
               }
 #endif
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -244,10 +244,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(unsigned short n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -270,13 +270,13 @@ namespace os
               }
 #endif
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -284,10 +284,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(int n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -313,13 +313,13 @@ namespace os
               }
 #endif
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -327,10 +327,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(unsigned int n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -353,13 +353,13 @@ namespace os
               }
 #endif
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -367,10 +367,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(long n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -381,13 +381,13 @@ namespace os
                 this->setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -395,10 +395,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(unsigned long n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -409,13 +409,13 @@ namespace os
                 this->setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -423,10 +423,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(long long n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -437,13 +437,13 @@ namespace os
                 this->setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -451,10 +451,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(unsigned long long n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -466,13 +466,13 @@ namespace os
                 this->setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -480,10 +480,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(float n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -494,13 +494,13 @@ namespace os
                 this->setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -508,10 +508,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(double n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -522,13 +522,13 @@ namespace os
                 this->setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -536,10 +536,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(long double n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -550,13 +550,13 @@ namespace os
                 this->setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -564,10 +564,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       basic_ostream<TChar_T, TTraits_T>::operator<<(const void* n)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         sentry se(*this);
         if (se)
           {
@@ -578,13 +578,13 @@ namespace os
                 this->setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         this->__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return *this;
       }
 
@@ -607,10 +607,10 @@ namespace os
         if (sb != nullptr)
           {
 
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
             try
               {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
             sentry se(*this);
             if (se)
               {
@@ -627,13 +627,13 @@ namespace os
                   }
 #endif
               }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           }
         catch (...)
           {
             this->__set_badbit_and_consider_rethrow();
           }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
           }
         return *this;
       }
@@ -659,10 +659,10 @@ namespace os
         sb = this->rdbuf();
         if (sb != nullptr)
           {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
             try
               {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
             sentry __sen(*this);
             if (__sen)
               {
@@ -674,13 +674,13 @@ namespace os
                       }
                   }
               }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           }
         catch (...)
           {
             this->__set_badbit_and_consider_rethrow();
           }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
           }
         return *this;
       }
@@ -703,23 +703,23 @@ namespace os
         if (sb != nullptr)
           {
 
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
             try
               {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
             sentry se(*this);
             if (se)
               {
                 if (sb->pubsync() == -1)
                   this->setstate(ios_base::badbit);
               }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           }
         catch (...)
           {
             this->__set_badbit_and_consider_rethrow();
           }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
           }
         return *this;
       }

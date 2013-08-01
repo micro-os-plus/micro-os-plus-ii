@@ -1,176 +1,203 @@
-// -*- C++ -*-
-//===--------------------------- stdexcept --------------------------------===//
 //
-//                     The LLVM Compiler Infrastructure
+// This file is part of the µOS++ distribution.
+// Copyright (c) 2013 Liviu Ionescu.
 //
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// [Partly inspired from the LLVM libcxx sources].
+// Copyright (c) 2009-2013 by the contributors listed in
+// 'LLVM libcxx Credits.txt'. See 'LLVM libcxx License.txt' for details.
 //
-//===----------------------------------------------------------------------===//
+// References are to ISO/IEC 14882:2011(E) Third edition (2011-09-01).
+//
 
-#ifndef _LIBCPP_STDEXCEPT
-#define _LIBCPP_STDEXCEPT
+/// \file
+/// \brief Standard exceptions.
 
-/*
-    stdexcept synopsis
+#ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STDEXCEPT_H_
+#define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STDEXCEPT_H_
 
-namespace std
+#include "portable/core/include/ConfigDefines.h"
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS) || defined(__DOXYGEN__)
+
+#include "portable/language/cpp/include/internal/__config.h"
+#include "portable/language/cpp/include/exception.h"
+#include "portable/language/cpp/include/iosfwd.h"
+
+namespace os
 {
+  namespace std
+  {
 
-class logic_error;
-    class domain_error;
-    class invalid_argument;
-    class length_error;
-    class out_of_range;
-class runtime_error;
-    class range_error;
-    class overflow_error;
-    class underflow_error;
+    class logic_error : public exception
+    {
+    private:
+      void* __imp_;
+    public:
+      explicit
+      logic_error(const string&);
+      explicit
+      logic_error(const char*);
 
-for each class xxx_error:
+      logic_error(const logic_error&) noexcept;
+      logic_error&
+      operator=(const logic_error&) noexcept;
 
-class xxx_error : public exception // at least indirectly
-{
-public:
-    explicit xxx_error(const string& what_arg);
-    explicit xxx_error(const char*   what_arg);
+      virtual
+      ~logic_error() noexcept;
 
-    virtual const char* what() const noexcept // returns what_arg
-};
+      virtual const char*
+      what() const noexcept;
+    };
 
-}  // std
+    class runtime_error : public exception
+    {
+    private:
+      void* __imp_;
+    public:
+      explicit
+      runtime_error(const string&);
+      explicit
+      runtime_error(const char*);
 
-*/
+      runtime_error(const runtime_error&) noexcept;
+      runtime_error&
+      operator=(const runtime_error&) noexcept;
 
-#if defined(__MICRO_OS_PLUS_PLUS__)
-#include "portable/language/cpp/include/__config.h"
-#include "portable/language/cpp/include/exception"
-#include "portable/language/cpp/include/iosfwd"  // for string forward decl
+      virtual
+      ~runtime_error() noexcept;
 
-#else
-#include <__config>
-#include <exception>
-#include <iosfwd>  // for string forward decl
+      virtual const char*
+      what() const noexcept;
+    };
 
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
-#pragma GCC system_header
-#endif
-#endif
+    class domain_error : public logic_error
+    {
+    public:
+      __attribute__ ((always_inline)) explicit
+      domain_error(const string& __s)
+          : logic_error(__s)
+      {
+      }
+      __attribute__ ((always_inline)) explicit
+      domain_error(const char* __s)
+          : logic_error(__s)
+      {
+      }
 
-#if defined(__MICRO_OS_PLUS_PLUS__)
-namespace os {
-#endif
+      virtual
+      ~domain_error() noexcept;
+    };
 
-namespace std  // purposefully not using versioning namespace
-{
+    class invalid_argument : public logic_error
+    {
+    public:
+      __attribute__ ((always_inline)) explicit
+      invalid_argument(const string& __s)
+          : logic_error(__s)
+      {
+      }
+      __attribute__ ((always_inline)) explicit
+      invalid_argument(const char* __s)
+          : logic_error(__s)
+      {
+      }
 
-class _LIBCPP_EXCEPTION_ABI logic_error
-    : public exception
-{
-private:
-    void* __imp_;
-public:
-    explicit logic_error(const string&);
-    explicit logic_error(const char*);
+      virtual
+      ~invalid_argument() noexcept;
+    };
 
-    logic_error(const logic_error&) _NOEXCEPT;
-    logic_error& operator=(const logic_error&) _NOEXCEPT;
+    class length_error : public logic_error
+    {
+    public:
+      __attribute__ ((always_inline)) explicit
+      length_error(const string& __s)
+          : logic_error(__s)
+      {
+      }
+      __attribute__ ((always_inline)) explicit
+      length_error(const char* __s)
+          : logic_error(__s)
+      {
+      }
 
-    virtual ~logic_error() _NOEXCEPT;
+      virtual
+      ~length_error() noexcept;
+    };
 
-    virtual const char* what() const _NOEXCEPT;
-};
+    class out_of_range : public logic_error
+    {
+    public:
+      __attribute__ ((always_inline)) explicit
+      out_of_range(const string& __s)
+          : logic_error(__s)
+      {
+      }
+      __attribute__ ((always_inline)) explicit
+      out_of_range(const char* __s)
+          : logic_error(__s)
+      {
+      }
 
-class _LIBCPP_EXCEPTION_ABI runtime_error
-    : public exception
-{
-private:
-    void* __imp_;
-public:
-    explicit runtime_error(const string&);
-    explicit runtime_error(const char*);
+      virtual
+      ~out_of_range() noexcept;
+    };
 
-    runtime_error(const runtime_error&) _NOEXCEPT;
-    runtime_error& operator=(const runtime_error&) _NOEXCEPT;
+    class range_error : public runtime_error
+    {
+    public:
+      __attribute__ ((always_inline)) explicit
+      range_error(const string& __s)
+          : runtime_error(__s)
+      {
+      }
+      __attribute__ ((always_inline)) explicit
+      range_error(const char* __s)
+          : runtime_error(__s)
+      {
+      }
 
-    virtual ~runtime_error() _NOEXCEPT;
+      virtual
+      ~range_error() noexcept;
+    };
 
-    virtual const char* what() const _NOEXCEPT;
-};
+    class overflow_error : public runtime_error
+    {
+    public:
+      __attribute__ ((always_inline)) explicit
+      overflow_error(const string& __s)
+          : runtime_error(__s)
+      {
+      }
+      __attribute__ ((always_inline)) explicit
+      overflow_error(const char* __s)
+          : runtime_error(__s)
+      {
+      }
 
-class _LIBCPP_EXCEPTION_ABI domain_error
-    : public logic_error
-{
-public:
-    _LIBCPP_INLINE_VISIBILITY explicit domain_error(const string& __s) : logic_error(__s) {}
-    _LIBCPP_INLINE_VISIBILITY explicit domain_error(const char* __s)   : logic_error(__s) {}
+      virtual
+      ~overflow_error() noexcept;
+    };
 
-    virtual ~domain_error() _NOEXCEPT;
-};
+    class underflow_error : public runtime_error
+    {
+    public:
+      __attribute__ ((always_inline)) explicit
+      underflow_error(const string& __s)
+          : runtime_error(__s)
+      {
+      }
+      __attribute__ ((always_inline)) explicit
+      underflow_error(const char* __s)
+          : runtime_error(__s)
+      {
+      }
 
-class _LIBCPP_EXCEPTION_ABI invalid_argument
-    : public logic_error
-{
-public:
-    _LIBCPP_INLINE_VISIBILITY explicit invalid_argument(const string& __s) : logic_error(__s) {}
-    _LIBCPP_INLINE_VISIBILITY explicit invalid_argument(const char* __s)   : logic_error(__s) {}
+      virtual
+      ~underflow_error() noexcept;
+    };
 
-    virtual ~invalid_argument() _NOEXCEPT;
-};
+  }  // namespace std
+} // namespace os
 
-class _LIBCPP_EXCEPTION_ABI length_error
-    : public logic_error
-{
-public:
-    _LIBCPP_INLINE_VISIBILITY explicit length_error(const string& __s) : logic_error(__s) {}
-    _LIBCPP_INLINE_VISIBILITY explicit length_error(const char* __s)   : logic_error(__s) {}
-
-    virtual ~length_error() _NOEXCEPT;
-};
-
-class _LIBCPP_EXCEPTION_ABI out_of_range
-    : public logic_error
-{
-public:
-    _LIBCPP_INLINE_VISIBILITY explicit out_of_range(const string& __s) : logic_error(__s) {}
-    _LIBCPP_INLINE_VISIBILITY explicit out_of_range(const char* __s)   : logic_error(__s) {}
-
-    virtual ~out_of_range() _NOEXCEPT;
-};
-
-class _LIBCPP_EXCEPTION_ABI range_error
-    : public runtime_error
-{
-public:
-    _LIBCPP_INLINE_VISIBILITY explicit range_error(const string& __s) : runtime_error(__s) {}
-    _LIBCPP_INLINE_VISIBILITY explicit range_error(const char* __s)   : runtime_error(__s) {}
-
-    virtual ~range_error() _NOEXCEPT;
-};
-
-class _LIBCPP_EXCEPTION_ABI overflow_error
-    : public runtime_error
-{
-public:
-    _LIBCPP_INLINE_VISIBILITY explicit overflow_error(const string& __s) : runtime_error(__s) {}
-    _LIBCPP_INLINE_VISIBILITY explicit overflow_error(const char* __s)   : runtime_error(__s) {}
-
-    virtual ~overflow_error() _NOEXCEPT;
-};
-
-class _LIBCPP_EXCEPTION_ABI underflow_error
-    : public runtime_error
-{
-public:
-    _LIBCPP_INLINE_VISIBILITY explicit underflow_error(const string& __s) : runtime_error(__s) {}
-    _LIBCPP_INLINE_VISIBILITY explicit underflow_error(const char* __s)   : runtime_error(__s) {}
-
-    virtual ~underflow_error() _NOEXCEPT;
-};
-
-}  // std
-#if defined(__MICRO_OS_PLUS_PLUS__)
-}
-#endif
-
-#endif  // _LIBCPP_STDEXCEPT
+#endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
+#endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STDEXCEPT_H_

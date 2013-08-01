@@ -28,7 +28,7 @@
 //#include "portable/language/cpp/include/iosfwd"
 //#include "portable/language/cpp/include/tuple"
 #include "portable/language/cpp/include/cstring.h"
-#if defined(_LIBCPP_NO_EXCEPTIONS)
+#if !defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
 #include "portable/language/cpp/include/cassert.h"
 #endif
 
@@ -3046,14 +3046,14 @@ _ForwardIterator
 uninitialized_copy(_InputIterator __f, _InputIterator __l, _ForwardIterator __r)
 {
     typedef typename iterator_traits<_ForwardIterator>::value_type value_type;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     _ForwardIterator __s = __r;
     try
     {
 #endif
         for (; __f != __l; ++__f, ++__r)
             ::new(&*__r) value_type(*__f);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     }
     catch (...)
     {
@@ -3070,14 +3070,14 @@ _ForwardIterator
 uninitialized_copy_n(_InputIterator __f, _Size __n, _ForwardIterator __r)
 {
     typedef typename iterator_traits<_ForwardIterator>::value_type value_type;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     _ForwardIterator __s = __r;
     try
     {
 #endif
         for (; __n > 0; ++__f, ++__r, --__n)
             ::new(&*__r) value_type(*__f);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     }
     catch (...)
     {
@@ -3094,14 +3094,14 @@ void
 uninitialized_fill(_ForwardIterator __f, _ForwardIterator __l, const _Tp& __x)
 {
     typedef typename iterator_traits<_ForwardIterator>::value_type value_type;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     _ForwardIterator __s = __f;
     try
     {
 #endif
         for (; __f != __l; ++__f)
             ::new(&*__f) value_type(__x);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     }
     catch (...)
     {
@@ -3117,14 +3117,14 @@ _ForwardIterator
 uninitialized_fill_n(_ForwardIterator __f, _Size __n, const _Tp& __x)
 {
     typedef typename iterator_traits<_ForwardIterator>::value_type value_type;
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     _ForwardIterator __s = __f;
     try
     {
 #endif
         for (; __n > 0; ++__f, --__n)
             ::new(&*__f) value_type(__x);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     }
     catch (...)
     {
@@ -3138,7 +3138,7 @@ uninitialized_fill_n(_ForwardIterator __f, _Size __n, const _Tp& __x)
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
 
-class _LIBCPP_EXCEPTION_ABI bad_weak_ptr
+class bad_weak_ptr
     : public os::std::exception
 {
 public:
@@ -3632,21 +3632,21 @@ template<class _Yp, class _Dp, class>
 shared_ptr<_Tp>::shared_ptr(_Yp* __p, _Dp __d)
     : __ptr_(__p)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typedef __shared_ptr_pointer<_Yp*, _Dp, allocator<_Yp> > _CntrlBlk;
         __cntrl_ = new _CntrlBlk(__p, __d, allocator<_Yp>());
         __enable_weak_this(__p);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     }
     catch (...)
     {
         __d(__p);
         throw;
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
 }
 
 template<class _Tp>
@@ -3654,20 +3654,20 @@ template<class _Dp>
 shared_ptr<_Tp>::shared_ptr(nullptr_t __p, _Dp __d)
     : __ptr_(0)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typedef __shared_ptr_pointer<nullptr_t, _Dp, allocator<_Tp> > _CntrlBlk;
         __cntrl_ = new _CntrlBlk(__p, __d, allocator<_Tp>());
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     }
     catch (...)
     {
         __d(__p);
         throw;
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
 }
 
 template<class _Tp>
@@ -3675,10 +3675,10 @@ template<class _Yp, class _Dp, class _Alloc, class>
 shared_ptr<_Tp>::shared_ptr(_Yp* __p, _Dp __d, _Alloc __a)
     : __ptr_(__p)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typedef __shared_ptr_pointer<_Yp*, _Dp, _Alloc> _CntrlBlk;
         typedef typename _Alloc::template rebind<_CntrlBlk>::other _A2;
         typedef __allocator_destructor<_A2> _D2;
@@ -3687,14 +3687,14 @@ shared_ptr<_Tp>::shared_ptr(_Yp* __p, _Dp __d, _Alloc __a)
         ::new(__hold2.get()) _CntrlBlk(__p, __d, __a);
         __cntrl_ = __hold2.release();
         __enable_weak_this(__p);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     }
     catch (...)
     {
         __d(__p);
         throw;
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
 }
 
 template<class _Tp>
@@ -3702,10 +3702,10 @@ template<class _Dp, class _Alloc>
 shared_ptr<_Tp>::shared_ptr(nullptr_t __p, _Dp __d, _Alloc __a)
     : __ptr_(0)
 {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     try
     {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typedef __shared_ptr_pointer<nullptr_t, _Dp, _Alloc> _CntrlBlk;
         typedef typename _Alloc::template rebind<_CntrlBlk>::other _A2;
         typedef __allocator_destructor<_A2> _D2;
@@ -3713,14 +3713,14 @@ shared_ptr<_Tp>::shared_ptr(nullptr_t __p, _Dp __d, _Alloc __a)
         unique_ptr<_CntrlBlk, _D2> __hold2(__a2.allocate(1), _D2(__a2, 1));
         ::new(__hold2.get()) _CntrlBlk(__p, __d, __a);
         __cntrl_ = __hold2.release();
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     }
     catch (...)
     {
         __d(__p);
         throw;
     }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
 }
 
 template<class _Tp>
@@ -4745,7 +4745,7 @@ shared_ptr<_Tp>::shared_ptr(const weak_ptr<_Yp>& __r,
       __cntrl_(__r.__cntrl_ ? __r.__cntrl_->lock() : __r.__cntrl_)
 {
     if (__cntrl_ == 0)
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         throw bad_weak_ptr();
 #else
         assert(!"bad_weak_ptr");

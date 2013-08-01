@@ -33,10 +33,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       operator<<(basic_ostream<TChar_T, TTraits_T>& outs, TChar_T c)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<TChar_T, TTraits_T>::sentry se(outs);
         if (se)
           {
@@ -59,13 +59,13 @@ namespace os
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return outs;
       }
 
@@ -73,10 +73,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       operator<<(basic_ostream<TChar_T, TTraits_T>& outs, char ch)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<TChar_T, TTraits_T>::sentry se(outs);
         if (se)
           {
@@ -101,13 +101,13 @@ namespace os
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return outs;
       }
 
@@ -115,10 +115,10 @@ namespace os
       basic_ostream<char, TTraits_T>&
       operator<<(basic_ostream<char, TTraits_T>& outs, char ch)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
@@ -142,13 +142,13 @@ namespace os
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return outs;
       }
 
@@ -156,10 +156,10 @@ namespace os
       basic_ostream<char, TTraits_T>&
       operator<<(basic_ostream<char, TTraits_T>& outs, signed char ch)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
@@ -183,13 +183,13 @@ namespace os
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return outs;
       }
 
@@ -197,10 +197,10 @@ namespace os
       basic_ostream<char, TTraits_T>&
       operator<<(basic_ostream<char, TTraits_T>& outs, unsigned char ch)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
@@ -224,13 +224,13 @@ namespace os
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return outs;
       }
 
@@ -238,10 +238,10 @@ namespace os
       basic_ostream<TChar_T, TTraits_T>&
       operator<<(basic_ostream<TChar_T, TTraits_T>& outs, const TChar_T* str)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<TChar_T, TTraits_T>::sentry se(outs);
         if (se)
           {
@@ -266,13 +266,13 @@ namespace os
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return outs;
       }
 
@@ -281,10 +281,10 @@ namespace os
     basic_ostream<TChar_T, TTraits_T>&
     operator<<(basic_ostream<TChar_T, TTraits_T>& os, const char* __strn)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
             typename basic_ostream<TChar_T, TTraits_T>::sentry se(os);
             if (se)
               {
@@ -315,13 +315,13 @@ namespace os
                 os.setstate(ios_base::badbit | ios_base::failbit);
 #endif
               }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           }
         catch (...)
           {
             os.__set_badbit_and_consider_rethrow();
           }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return os;
       }
 #endif
@@ -330,10 +330,10 @@ namespace os
       basic_ostream<char, TTraits_T>&
       operator<<(basic_ostream<char, TTraits_T>& outs, const char* str)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
@@ -358,13 +358,13 @@ namespace os
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return outs;
       }
 
@@ -372,10 +372,10 @@ namespace os
       basic_ostream<char, TTraits_T>&
       operator<<(basic_ostream<char, TTraits_T>& outs, const signed char* str)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
@@ -400,13 +400,13 @@ namespace os
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return outs;
       }
 
@@ -414,10 +414,10 @@ namespace os
       basic_ostream<char, TTraits_T>&
       operator<<(basic_ostream<char, TTraits_T>& outs, const unsigned char* str)
       {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         try
           {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         typename basic_ostream<char, TTraits_T>::sentry se(outs);
         if (se)
           {
@@ -442,13 +442,13 @@ namespace os
                 outs.setstate(ios_base::badbit | ios_base::failbit);
               }
           }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       }
     catch (...)
       {
         outs.__set_badbit_and_consider_rethrow();
       }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         return outs;
       }
 
@@ -458,10 +458,10 @@ namespace os
   operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
       const basic_string<TChar_T, TTraits_T, _Allocator>& str)
     {
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       try
         {
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
           typename basic_ostream<TChar_T, TTraits_T>::sentry se(outs);
           if (se)
             {
@@ -475,13 +475,13 @@ namespace os
                   outs.setstate(ios_base::badbit | ios_base::failbit);
                 }
             }
-#if defined(OS_INCLUDE_LIBCPP_EXCEPTIONS)
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         }
       catch (...)
         {
           outs.__set_badbit_and_consider_rethrow();
         }
-#endif  // OS_INCLUDE_LIBCPP_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
       return outs;
     }
 #endif

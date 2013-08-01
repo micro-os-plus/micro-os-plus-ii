@@ -35,7 +35,7 @@
 void *
 __attribute__((weak))
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS) || defined(__DOXYGEN__)
-operator new(os::std::size_t size) throw(os::std::bad_alloc)
+operator new(os::std::size_t size) //throw(os::std::bad_alloc)
 #else
 operator new(os::std::size_t size) noexcept
 #endif
@@ -95,7 +95,7 @@ operator new(os::std::size_t size, const os::std::nothrow_t&) noexcept
     }
 #else
   p = ::operator new(size);
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
   return p;
 }
 
@@ -109,7 +109,7 @@ operator new(os::std::size_t size, const os::std::nothrow_t&) noexcept
 void*
 __attribute__((weak))
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS) || defined(__DOXYGEN__)
-operator new[](os::std::size_t size) throw(os::std::bad_alloc)
+operator new[](os::std::size_t size) //throw(os::std::bad_alloc)
 #else
 operator new[](os::std::size_t size) noexcept
 #endif
@@ -139,7 +139,7 @@ operator new[](os::std::size_t size, const os::std::nothrow_t&) noexcept
     }
 #else
   p = ::operator new[](size);
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
   return p;
 }
 

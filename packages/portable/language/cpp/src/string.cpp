@@ -14,6 +14,8 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STRING) || defined(__DOXYGEN)
+
 #include "portable/language/cpp/include/string.h"
 #include "portable/language/cpp/include/cstdlib.h"
 //#include "portable/language/cpp/include/cwchar"
@@ -45,13 +47,13 @@ stoi(const string& str, size_t* idx, int base)
     errno = 0;
     long r = strtol(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE || r < numeric_limits<int>::min() ||
                                 numeric_limits<int>::max() < r)
         throw out_of_range("stoi: out of range");
     if (ptr == p)
         throw invalid_argument("stoi: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return static_cast<int>(r);
@@ -66,13 +68,13 @@ stoi(const wstring& str, size_t* idx, int base)
     errno = 0;
     long r = wcstol(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE || r < numeric_limits<int>::min() ||
                                 numeric_limits<int>::max() < r)
         throw out_of_range("stoi: out of range");
     if (ptr == p)
         throw invalid_argument("stoi: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return static_cast<int>(r);
@@ -87,12 +89,12 @@ stol(const string& str, size_t* idx, int base)
     errno = 0;
     long r = strtol(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stol: out of range");
     if (ptr == p)
         throw invalid_argument("stol: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -107,12 +109,12 @@ stol(const wstring& str, size_t* idx, int base)
     errno = 0;
     long r = wcstol(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stol: out of range");
     if (ptr == p)
         throw invalid_argument("stol: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -127,12 +129,12 @@ stoul(const string& str, size_t* idx, int base)
     errno = 0;
     unsigned long r = strtoul(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stoul: out of range");
     if (ptr == p)
         throw invalid_argument("stoul: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -147,12 +149,12 @@ stoul(const wstring& str, size_t* idx, int base)
     errno = 0;
     unsigned long r = wcstoul(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stoul: out of range");
     if (ptr == p)
         throw invalid_argument("stoul: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -167,12 +169,12 @@ stoll(const string& str, size_t* idx, int base)
     errno = 0;
     long long r = strtoll(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stoll: out of range");
     if (ptr == p)
         throw invalid_argument("stoll: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -187,12 +189,12 @@ stoll(const wstring& str, size_t* idx, int base)
     errno = 0;
     long long r = wcstoll(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stoll: out of range");
     if (ptr == p)
         throw invalid_argument("stoll: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -207,12 +209,12 @@ stoull(const string& str, size_t* idx, int base)
     errno = 0;
     unsigned long long r = strtoull(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stoull: out of range");
     if (ptr == p)
         throw invalid_argument("stoull: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -227,12 +229,12 @@ stoull(const wstring& str, size_t* idx, int base)
     errno = 0;
     unsigned long long r = wcstoull(p, &ptr, base);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stoull: out of range");
     if (ptr == p)
         throw invalid_argument("stoull: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -247,12 +249,12 @@ stof(const string& str, size_t* idx)
     errno = 0;
     float r = strtof(p, &ptr);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stof: out of range");
     if (ptr == p)
         throw invalid_argument("stof: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -267,12 +269,12 @@ stof(const wstring& str, size_t* idx)
     errno = 0;
     float r = wcstof(p, &ptr);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stof: out of range");
     if (ptr == p)
         throw invalid_argument("stof: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -287,12 +289,12 @@ stod(const string& str, size_t* idx)
     errno = 0;
     double r = strtod(p, &ptr);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stod: out of range");
     if (ptr == p)
         throw invalid_argument("stod: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -307,12 +309,12 @@ stod(const wstring& str, size_t* idx)
     errno = 0;
     double r = wcstod(p, &ptr);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stod: out of range");
     if (ptr == p)
         throw invalid_argument("stod: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -327,12 +329,12 @@ stold(const string& str, size_t* idx)
     errno = 0;
     long double r = strtold(p, &ptr);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stold: out of range");
     if (ptr == p)
         throw invalid_argument("stold: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -347,12 +349,12 @@ stold(const wstring& str, size_t* idx)
     errno = 0;
     long double r = wcstold(p, &ptr);
     swap(errno, errno_save);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     if (errno_save == ERANGE)
         throw out_of_range("stold: out of range");
     if (ptr == p)
         throw invalid_argument("stold: no conversion");
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     if (idx)
         *idx = static_cast<size_t>(ptr - p);
     return r;
@@ -699,3 +701,5 @@ wstring to_wstring(long double val)
 
   } // namespace std
 } // namespace os
+
+#endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STRING)

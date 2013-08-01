@@ -15,6 +15,8 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STRING) || defined(__DOXYGEN)
+
 #include "portable/language/cpp/include/internal/__config.h"
 #include "portable/language/cpp/include/iosfwd.h"
 #include "portable/language/cpp/include/internal/_char_traits.h"
@@ -25,17 +27,17 @@
 //#include "portable/language/cpp/include/iterator"
 //#include "portable/language/cpp/include/utility"
 #include "portable/language/cpp/include/memory.h"
-//#include "portable/language/cpp/include/stdexcept"
+#include "portable/language/cpp/include/stdexcept.h"
 #include "portable/language/cpp/include/type_traits.h"
 #include "portable/language/cpp/include/initializer_list.h"
 //#include "portable/language/cpp/include/__functional_base.h"
 //#ifndef _LIBCPP_HAS_NO_UNICODE_CHARS
 //#include "portable/language/cpp/include/cstdint"
 //#endif
-//#if defined(_LIBCPP_NO_EXCEPTIONS) || defined(_LIBCPP_DEBUG)
+#if !defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS) || defined(_LIBCPP_DEBUG)
 #include "portable/language/cpp/include/cassert.h"
 //#include <assert.h>
-//#endif
+#endif
 
 #include "portable/language/cpp/include/internal/_undef_min_max.h"
 
@@ -85,7 +87,7 @@ namespace os
       void
       __basic_string_common<__b>::__throw_length_error() const
       {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         throw length_error("basic_string");
 #else
         assert_always("basic_string length_error");
@@ -96,7 +98,7 @@ namespace os
       void
       __basic_string_common<__b>::__throw_out_of_range() const
       {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         throw out_of_range("basic_string");
 #else
         assert_always("basic_string out_of_range");
@@ -1046,13 +1048,13 @@ namespace os
             _InputIterator __first, _InputIterator __last)
         {
           __zero();
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
           try
             {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
           for (; __first != __last; ++__first)
             push_back(*__first);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         }
       catch (...)
         {
@@ -1060,7 +1062,7 @@ namespace os
           __alloc_traits::deallocate(__alloc(), __get_long_pointer(), __get_long_cap());
           throw;
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         }
 
     template<class _CharT, class _Traits, class _Allocator>
@@ -2078,22 +2080,22 @@ namespace os
                       __res_arg + 1);
                 else
                   {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
                     try
                       {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
                     __new_data = __alloc_traits::allocate(__alloc(),
                         __res_arg + 1);
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
                   }
                 catch (...)
                   {
                     return;
                   }
-#else  // _LIBCPP_NO_EXCEPTIONS
+#else  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
                     if (__new_data == 0)
                       return;
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
                   }
                 __now_long = true;
                 __was_long = __is_long();
@@ -3192,4 +3194,5 @@ namespace os
   } // namespace std
 } // namespace os
 
+#endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STRING)
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STRING_H

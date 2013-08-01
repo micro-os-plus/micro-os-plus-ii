@@ -125,7 +125,7 @@ namespace os
   exception_ptr
   make_exception_ptr(_Ep __e) noexcept
     {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       try
         {
           throw __e;
@@ -134,7 +134,7 @@ namespace os
         {
           return current_exception();
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     }
 
 
@@ -178,7 +178,7 @@ public nested_exception
       >::type* = 0)
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
     {
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       throw __nested<typename remove_reference<_Tp>::type>(_VSTD::forward<_Tp>(__t));
 #endif
     }
@@ -197,8 +197,8 @@ public nested_exception
       >::type* = 0)
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
     {
-#ifndef _LIBCPP_NO_EXCEPTIONS
-      throw _VSTD::forward<_Tp>(__t);
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
+      throw os::std::forward<_Tp>(__t);
 #endif
     }
 

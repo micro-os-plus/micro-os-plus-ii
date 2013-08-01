@@ -15,6 +15,7 @@
 #include "portable/core/include/ConfigDefines.h"
 
 #include "portable/language/cpp/include/exception.h"
+#include "portable/language/cpp/include/abort.h"
 
 
 namespace os
@@ -64,26 +65,24 @@ namespace os
     terminate() noexcept
     {
 #if 0
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
       try
         {
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
           (*get_terminate())();
           // handler should not return
           ::abort ();
-#ifndef _LIBCPP_NO_EXCEPTIONS
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
         }
       catch (...)
         {
           // handler should not throw exception
           ::abort ();
         }
-#endif  // _LIBCPP_NO_EXCEPTIONS
+#endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
 #else
 
-      // TODO: reset
-      for (;;)
-        ;
+      abort();
 
 #endif
     }

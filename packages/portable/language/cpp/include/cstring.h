@@ -29,7 +29,9 @@ namespace os
     using ::memcpy;
 
     using ::memmove;
-//    using ::strcpy;
+
+    // TODO: disable it
+    using ::strcpy;
     using ::strncpy;
 //    using ::strcat;
     using ::strncat;
