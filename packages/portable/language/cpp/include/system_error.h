@@ -1,645 +1,412 @@
-// -*- C++ -*-
-//===---------------------------- system_error ----------------------------===//
 //
-//                     The LLVM Compiler Infrastructure
+// This file is part of the µOS++ distribution.
+// Copyright (c) 2013 Liviu Ionescu.
 //
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// [Partly inspired from the LLVM libcxx sources].
+// Copyright (c) 2009-2013 by the contributors listed in
+// 'LLVM libcxx Credits.txt'. See 'LLVM libcxx License.txt' for details.
 //
-//===----------------------------------------------------------------------===//
 
-#ifndef _LIBCPP_SYSTEM_ERROR
-#define _LIBCPP_SYSTEM_ERROR
+/// \file
+/// \brief String declarations.
 
-/*
-    system_error synopsis
+#ifndef OS_PORTABLE_LANGUAGE_CPP_INCLUDE_SYSTEMERROR_H
+#define OS_PORTABLE_LANGUAGE_CPP_INCLUDE_SYSTEMERROR_H
 
-namespace std
+#include "portable/core/include/ConfigDefines.h"
+
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS) || defined(__DOXYGEN__)
+
+#include "portable/language/cpp/include/internal/__config.h"
+//#include "portable/language/cpp/include/cerrno"
+#include "portable/language/cpp/include/type_traits.h"
+#include "portable/language/cpp/include/stdexcept.h"
+#include "portable/language/cpp/include/internal/_functional_base.h"
+
+namespace os
 {
+  namespace std
+  {
 
-class error_category
-{
-public:
-    virtual ~error_category() noexcept;
+    // is_error_code_enum
 
-    error_category(const error_category&) = delete;
-    error_category& operator=(const error_category&) = delete;
+    template<class _Tp>
+      struct is_error_code_enum : public false_type
+      {
+      };
 
-    virtual const char* name() const noexcept = 0;
-    virtual error_condition default_error_condition(int ev) const noexcept;
-    virtual bool equivalent(int code, const error_condition& condition) const noexcept;
-    virtual bool equivalent(const error_code& code, int condition) const noexcept;
-    virtual string message(int ev) const = 0;
+    // is_error_condition_enum
 
-    bool operator==(const error_category& rhs) const noexcept;
-    bool operator!=(const error_category& rhs) const noexcept;
-    bool operator<(const error_category& rhs) const noexcept;
-};
+    template<class _Tp>
+      struct is_error_condition_enum : public false_type
+      {
+      };
 
-const error_category& generic_category() noexcept;
-const error_category& system_category() noexcept;
+    // Some error codes are not present on all platforms, so we provide equivalents
+    // for them:
 
-template <class T> struct is_error_code_enum
-    : public false_type {};
+    enum class errc
+    {
+    // ILG: content removed
+    };
 
-template <class T> struct is_error_condition_enum
-    : public false_type {};
-
-class error_code
-{
-public:
-    // constructors:
-    error_code() noexcept;
-    error_code(int val, const error_category& cat) noexcept;
-    template <class ErrorCodeEnum>
-        error_code(ErrorCodeEnum e) noexcept;
-
-    // modifiers:
-    void assign(int val, const error_category& cat) noexcept;
-    template <class ErrorCodeEnum>
-        error_code& operator=(ErrorCodeEnum e) noexcept;
-    void clear() noexcept;
-
-    // observers:
-    int value() const noexcept;
-    const error_category& category() const noexcept;
-    error_condition default_error_condition() const noexcept;
-    string message() const;
-    explicit operator bool() const noexcept;
-};
-
-// non-member functions:
-bool operator<(const error_code& lhs, const error_code& rhs) noexcept;
-template <class charT, class traits>
-    basic_ostream<charT,traits>&
-    operator<<(basic_ostream<charT,traits>& os, const error_code& ec);
-
-class error_condition
-{
-public:
-    // constructors:
-    error_condition() noexcept;
-    error_condition(int val, const error_category& cat) noexcept;
-    template <class ErrorConditionEnum>
-        error_condition(ErrorConditionEnum e) noexcept;
-
-    // modifiers:
-    void assign(int val, const error_category& cat) noexcept;
-    template <class ErrorConditionEnum>
-        error_condition& operator=(ErrorConditionEnum e) noexcept;
-    void clear() noexcept;
-
-    // observers:
-    int value() const noexcept;
-    const error_category& category() const noexcept;
-    string message() const noexcept;
-    explicit operator bool() const noexcept;
-};
-
-bool operator<(const error_condition& lhs, const error_condition& rhs) noexcept;
-
-class system_error
-    : public runtime_error
-{
-public:
-    system_error(error_code ec, const string& what_arg);
-    system_error(error_code ec, const char* what_arg);
-    system_error(error_code ec);
-    system_error(int ev, const error_category& ecat, const string& what_arg);
-    system_error(int ev, const error_category& ecat, const char* what_arg);
-    system_error(int ev, const error_category& ecat);
-
-    const error_code& code() const noexcept;
-    const char* what() const noexcept;
-};
-
-enum class errc
-{
-    address_family_not_supported,       // EAFNOSUPPORT
-    address_in_use,                     // EADDRINUSE
-    address_not_available,              // EADDRNOTAVAIL
-    already_connected,                  // EISCONN
-    argument_list_too_long,             // E2BIG
-    argument_out_of_domain,             // EDOM
-    bad_address,                        // EFAULT
-    bad_file_descriptor,                // EBADF
-    bad_message,                        // EBADMSG
-    broken_pipe,                        // EPIPE
-    connection_aborted,                 // ECONNABORTED
-    connection_already_in_progress,     // EALREADY
-    connection_refused,                 // ECONNREFUSED
-    connection_reset,                   // ECONNRESET
-    cross_device_link,                  // EXDEV
-    destination_address_required,       // EDESTADDRREQ
-    device_or_resource_busy,            // EBUSY
-    directory_not_empty,                // ENOTEMPTY
-    executable_format_error,            // ENOEXEC
-    file_exists,                        // EEXIST
-    file_too_large,                     // EFBIG
-    filename_too_long,                  // ENAMETOOLONG
-    function_not_supported,             // ENOSYS
-    host_unreachable,                   // EHOSTUNREACH
-    identifier_removed,                 // EIDRM
-    illegal_byte_sequence,              // EILSEQ
-    inappropriate_io_control_operation, // ENOTTY
-    interrupted,                        // EINTR
-    invalid_argument,                   // EINVAL
-    invalid_seek,                       // ESPIPE
-    io_error,                           // EIO
-    is_a_directory,                     // EISDIR
-    message_size,                       // EMSGSIZE
-    network_down,                       // ENETDOWN
-    network_reset,                      // ENETRESET
-    network_unreachable,                // ENETUNREACH
-    no_buffer_space,                    // ENOBUFS
-    no_child_process,                   // ECHILD
-    no_link,                            // ENOLINK
-    no_lock_available,                  // ENOLCK
-    no_message_available,               // ENODATA
-    no_message,                         // ENOMSG
-    no_protocol_option,                 // ENOPROTOOPT
-    no_space_on_device,                 // ENOSPC
-    no_stream_resources,                // ENOSR
-    no_such_device_or_address,          // ENXIO
-    no_such_device,                     // ENODEV
-    no_such_file_or_directory,          // ENOENT
-    no_such_process,                    // ESRCH
-    not_a_directory,                    // ENOTDIR
-    not_a_socket,                       // ENOTSOCK
-    not_a_stream,                       // ENOSTR
-    not_connected,                      // ENOTCONN
-    not_enough_memory,                  // ENOMEM
-    not_supported,                      // ENOTSUP
-    operation_canceled,                 // ECANCELED
-    operation_in_progress,              // EINPROGRESS
-    operation_not_permitted,            // EPERM
-    operation_not_supported,            // EOPNOTSUPP
-    operation_would_block,              // EWOULDBLOCK
-    owner_dead,                         // EOWNERDEAD
-    permission_denied,                  // EACCES
-    protocol_error,                     // EPROTO
-    protocol_not_supported,             // EPROTONOSUPPORT
-    read_only_file_system,              // EROFS
-    resource_deadlock_would_occur,      // EDEADLK
-    resource_unavailable_try_again,     // EAGAIN
-    result_out_of_range,                // ERANGE
-    state_not_recoverable,              // ENOTRECOVERABLE
-    stream_timeout,                     // ETIME
-    text_file_busy,                     // ETXTBSY
-    timed_out,                          // ETIMEDOUT
-    too_many_files_open_in_system,      // ENFILE
-    too_many_files_open,                // EMFILE
-    too_many_links,                     // EMLINK
-    too_many_symbolic_link_levels,      // ELOOP
-    value_too_large,                    // EOVERFLOW
-    wrong_protocol_type                 // EPROTOTYPE
-};
-
-template <> struct is_error_condition_enum<errc>
-    : true_type { }
-
-error_code make_error_code(errc e) noexcept;
-error_condition make_error_condition(errc e) noexcept;
-
-// Comparison operators:
-bool operator==(const error_code& lhs, const error_code& rhs) noexcept;
-bool operator==(const error_code& lhs, const error_condition& rhs) noexcept;
-bool operator==(const error_condition& lhs, const error_code& rhs) noexcept;
-bool operator==(const error_condition& lhs, const error_condition& rhs) noexcept;
-bool operator!=(const error_code& lhs, const error_code& rhs) noexcept;
-bool operator!=(const error_code& lhs, const error_condition& rhs) noexcept;
-bool operator!=(const error_condition& lhs, const error_code& rhs) noexcept;
-bool operator!=(const error_condition& lhs, const error_condition& rhs) noexcept;
-
-template <> struct hash<std::error_code>;
-
-}  // std
-
-*/
-
-#if defined(__MICRO_OS_PLUS_PLUS__)
-#include "portable/language/cpp/include/__config.h"
-#include "portable/language/cpp/include/cerrno"
-#include "portable/language/cpp/include/type_traits"
-#include "portable/language/cpp/include/stdexcept"
-#include "portable/language/cpp/include/__functional_base.h"
-
-#else
-#include <__config>
-#include <cerrno>
-#include <type_traits>
-#include <stdexcept>
-#include <__functional_base>
-
-#if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
-#pragma GCC system_header
-#endif
-#endif
-
-_LIBCPP_BEGIN_NAMESPACE_STD
-
-// is_error_code_enum
-
-template <class _Tp>
-struct _LIBCPP_VISIBLE is_error_code_enum
-    : public false_type {};
-
-// is_error_condition_enum
-
-template <class _Tp>
-struct _LIBCPP_VISIBLE is_error_condition_enum
-    : public false_type {};
-
-// Some error codes are not present on all platforms, so we provide equivalents
-// for them:
-
-//enum class errc
-_LIBCPP_DECLARE_STRONG_ENUM(errc)
-{
-    address_family_not_supported        = EAFNOSUPPORT,
-    address_in_use                      = EADDRINUSE,
-    address_not_available               = EADDRNOTAVAIL,
-    already_connected                   = EISCONN,
-    argument_list_too_long              = E2BIG,
-    argument_out_of_domain              = EDOM,
-    bad_address                         = EFAULT,
-    bad_file_descriptor                 = EBADF,
-    bad_message                         = EBADMSG,
-    broken_pipe                         = EPIPE,
-    connection_aborted                  = ECONNABORTED,
-    connection_already_in_progress      = EALREADY,
-    connection_refused                  = ECONNREFUSED,
-    connection_reset                    = ECONNRESET,
-    cross_device_link                   = EXDEV,
-    destination_address_required        = EDESTADDRREQ,
-    device_or_resource_busy             = EBUSY,
-    directory_not_empty                 = ENOTEMPTY,
-    executable_format_error             = ENOEXEC,
-    file_exists                         = EEXIST,
-    file_too_large                      = EFBIG,
-    filename_too_long                   = ENAMETOOLONG,
-    function_not_supported              = ENOSYS,
-    host_unreachable                    = EHOSTUNREACH,
-    identifier_removed                  = EIDRM,
-    illegal_byte_sequence               = EILSEQ,
-    inappropriate_io_control_operation  = ENOTTY,
-    interrupted                         = EINTR,
-    invalid_argument                    = EINVAL,
-    invalid_seek                        = ESPIPE,
-    io_error                            = EIO,
-    is_a_directory                      = EISDIR,
-    message_size                        = EMSGSIZE,
-    network_down                        = ENETDOWN,
-    network_reset                       = ENETRESET,
-    network_unreachable                 = ENETUNREACH,
-    no_buffer_space                     = ENOBUFS,
-    no_child_process                    = ECHILD,
-    no_link                             = ENOLINK,
-    no_lock_available                   = ENOLCK,
-#ifdef ENODATA
-    no_message_available                = ENODATA,
-#else
-    no_message_available                = ENOMSG,
-#endif
-    no_message                          = ENOMSG,
-    no_protocol_option                  = ENOPROTOOPT,
-    no_space_on_device                  = ENOSPC,
-#ifdef ENOSR
-    no_stream_resources                 = ENOSR,
-#else
-    no_stream_resources                 = ENOMEM,
-#endif
-    no_such_device_or_address           = ENXIO,
-    no_such_device                      = ENODEV,
-    no_such_file_or_directory           = ENOENT,
-    no_such_process                     = ESRCH,
-    not_a_directory                     = ENOTDIR,
-    not_a_socket                        = ENOTSOCK,
-#ifdef ENOSTR
-    not_a_stream                        = ENOSTR,
-#else
-    not_a_stream                        = EINVAL,
-#endif
-    not_connected                       = ENOTCONN,
-    not_enough_memory                   = ENOMEM,
-    not_supported                       = ENOTSUP,
-    operation_canceled                  = ECANCELED,
-    operation_in_progress               = EINPROGRESS,
-    operation_not_permitted             = EPERM,
-    operation_not_supported             = EOPNOTSUPP,
-    operation_would_block               = EWOULDBLOCK,
-    owner_dead                          = EOWNERDEAD,
-    permission_denied                   = EACCES,
-    protocol_error                      = EPROTO,
-    protocol_not_supported              = EPROTONOSUPPORT,
-    read_only_file_system               = EROFS,
-    resource_deadlock_would_occur       = EDEADLK,
-    resource_unavailable_try_again      = EAGAIN,
-    result_out_of_range                 = ERANGE,
-    state_not_recoverable               = ENOTRECOVERABLE,
-#ifdef ETIME
-    stream_timeout                      = ETIME,
-#else
-    stream_timeout                      = ETIMEDOUT,
-#endif
-    text_file_busy                      = ETXTBSY,
-    timed_out                           = ETIMEDOUT,
-    too_many_files_open_in_system       = ENFILE,
-    too_many_files_open                 = EMFILE,
-    too_many_links                      = EMLINK,
-    too_many_symbolic_link_levels       = ELOOP,
-    value_too_large                     = EOVERFLOW,
-    wrong_protocol_type                 = EPROTOTYPE
-};
-_LIBCPP_DECLARE_STRONG_ENUM_EPILOG(errc)
-
-template <>
-struct _LIBCPP_VISIBLE is_error_condition_enum<errc>
-    : true_type { };
+    template<>
+      struct is_error_condition_enum<errc> : true_type
+      {
+      };
 
 #ifdef _LIBCPP_HAS_NO_STRONG_ENUMS
-template <>
-struct _LIBCPP_VISIBLE is_error_condition_enum<errc::__lx>
-    : true_type { };
+    template <>
+    struct is_error_condition_enum<errc::__lx>
+    : true_type
+      {};
 #endif
 
-class _LIBCPP_VISIBLE error_condition;
-class _LIBCPP_VISIBLE error_code;
+    class error_condition;
+    class error_code;
 
-// class error_category
+    // class error_category
 
-class _LIBCPP_HIDDEN __do_message;
+    class __do_message;
 
-class _LIBCPP_VISIBLE error_category
-{
-public:
-    virtual ~error_category() _NOEXCEPT;
+    class error_category
+    {
+    public:
+      virtual
+      ~error_category() noexcept;
 
-    error_category() _NOEXCEPT;
-private:
-    error_category(const error_category&);// = delete;
-    error_category& operator=(const error_category&);// = delete;
+      error_category() noexcept;
+    private:
+      error_category(const error_category&); // = delete;
+      error_category&
+      operator=(const error_category&); // = delete;
 
-public:
-    virtual const char* name() const _NOEXCEPT = 0;
-    virtual error_condition default_error_condition(int __ev) const _NOEXCEPT;
-    virtual bool equivalent(int __code, const error_condition& __condition) const _NOEXCEPT;
-    virtual bool equivalent(const error_code& __code, int __condition) const _NOEXCEPT;
-    virtual string message(int __ev) const = 0;
+    public:
+      virtual const char*
+      name() const noexcept = 0;
+      virtual error_condition
+      default_error_condition(int __ev) const noexcept;
+      virtual bool
+      equivalent(int __code, const error_condition& __condition) const noexcept;
+      virtual bool
+      equivalent(const error_code& __code, int __condition) const noexcept;
+      virtual string
+      message(int __ev) const = 0;
 
-    _LIBCPP_ALWAYS_INLINE
-    bool operator==(const error_category& __rhs) const _NOEXCEPT {return this == &__rhs;}
+      __attribute__ ((always_inline))
+      bool
+      operator==(const error_category& __rhs) const noexcept
+      {
+        return this == &__rhs;
+      }
 
-    _LIBCPP_ALWAYS_INLINE
-    bool operator!=(const error_category& __rhs) const _NOEXCEPT {return !(*this == __rhs);}
+      __attribute__ ((always_inline))
+      bool
+      operator!=(const error_category& __rhs) const noexcept
+      {
+        return !(*this == __rhs);
+      }
 
-    _LIBCPP_ALWAYS_INLINE
-    bool operator< (const error_category& __rhs) const _NOEXCEPT {return this < &__rhs;}
+      __attribute__ ((always_inline))
+      bool
+      operator<(const error_category& __rhs) const noexcept
+      {
+        return this < &__rhs;
+      }
 
-    friend class _LIBCPP_HIDDEN __do_message;
-};
+      friend class __do_message;
+    };
 
-class _LIBCPP_HIDDEN __do_message
-    : public error_category
-{
-public:
-    virtual string message(int ev) const;
-};
+    class __do_message : public error_category
+    {
+    public:
+      virtual string
+      message(int ev) const;
+    };
 
-const error_category& generic_category() _NOEXCEPT;
-const error_category& system_category() _NOEXCEPT;
+    const error_category&
+    generic_category() noexcept;
+    const error_category&
+    system_category() noexcept;
 
-class _LIBCPP_VISIBLE error_condition
-{
-    int __val_;
-    const error_category* __cat_;
-public:
-    _LIBCPP_ALWAYS_INLINE
-    error_condition() _NOEXCEPT : __val_(0), __cat_(&generic_category()) {}
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
 
-    _LIBCPP_ALWAYS_INLINE
-    error_condition(int __val, const error_category& __cat) _NOEXCEPT
-        : __val_(__val), __cat_(&__cat) {}
+    class error_condition
+    {
+      int __val_;
+      const error_category* __cat_;
 
-    template <class _Ep>
-        _LIBCPP_ALWAYS_INLINE
-        error_condition(_Ep __e,
+    public:
+      __attribute__((always_inline))
+      error_condition()
+noexcept          : //
+          __val_(0),//
+          __cat_(&generic_category())
+            {
+
+            }
+
+          __attribute__ ((always_inline))
+          error_condition(int __val, const error_category& __cat) noexcept
+          : __val_(__val), __cat_(&__cat)
+            {}
+
+          template <class _Ep>
+          __attribute__ ((always_inline))
+          error_condition(_Ep __e,
               typename enable_if<is_error_condition_enum<_Ep>::value>::type* = 0
-                                                                     ) _NOEXCEPT
-            {*this = make_error_condition(__e);}
+          ) noexcept
+            { *this = make_error_condition(__e);}
 
-    _LIBCPP_ALWAYS_INLINE
-    void assign(int __val, const error_category& __cat) _NOEXCEPT
+          __attribute__ ((always_inline))
+          void assign(int __val, const error_category& __cat) noexcept
+            {
+              __val_ = __val;
+              __cat_ = &__cat;
+            }
+
+          template <class _Ep>
+          __attribute__ ((always_inline))
+          typename enable_if
+          <
+          is_error_condition_enum<_Ep>::value,
+          error_condition&
+          >::type
+          operator=(_Ep __e) noexcept
+            { *this = make_error_condition(__e); return *this;}
+
+          __attribute__ ((always_inline))
+          void clear() noexcept
+            {
+              __val_ = 0;
+              __cat_ = &generic_category();
+            }
+
+          __attribute__ ((always_inline))
+          int value() const noexcept
+            { return __val_;}
+
+          __attribute__ ((always_inline))
+          const error_category& category() const noexcept
+            { return *__cat_;}
+          string message() const;
+
+          __attribute__ ((always_inline))
+          explicit
+          operator bool() const noexcept
+            { return __val_ != 0;}
+        };
+
+#pragma GCC diagnostic pop
+
+    inline __attribute__ ((always_inline))
+    error_condition
+    make_error_condition(errc __e) noexcept
     {
-        __val_ = __val;
-        __cat_ = &__cat;
+      return error_condition(static_cast<int>(__e), generic_category());
     }
 
-    template <class _Ep>
-        _LIBCPP_ALWAYS_INLINE
-        typename enable_if
-        <
-            is_error_condition_enum<_Ep>::value,
-            error_condition&
-        >::type
-        operator=(_Ep __e) _NOEXCEPT
-            {*this = make_error_condition(__e); return *this;}
-
-    _LIBCPP_ALWAYS_INLINE
-    void clear() _NOEXCEPT
+    inline __attribute__ ((always_inline))
+    bool
+    operator<(const error_condition& __x, const error_condition& __y) noexcept
     {
-        __val_ = 0;
-        __cat_ = &generic_category();
+      return __x.category() < __y.category()
+          || (__x.category() == __y.category() && __x.value() < __y.value());
     }
 
-    _LIBCPP_ALWAYS_INLINE
-    int value() const _NOEXCEPT {return __val_;}
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
 
-    _LIBCPP_ALWAYS_INLINE
-    const error_category& category() const _NOEXCEPT {return *__cat_;}
-    string message() const;
-
-    _LIBCPP_ALWAYS_INLINE
-        _LIBCPP_EXPLICIT
-        operator bool() const _NOEXCEPT {return __val_ != 0;}
-};
-
-inline _LIBCPP_INLINE_VISIBILITY
-error_condition
-make_error_condition(errc __e) _NOEXCEPT
-{
-    return error_condition(static_cast<int>(__e), generic_category());
-}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator<(const error_condition& __x, const error_condition& __y) _NOEXCEPT
-{
-    return __x.category() < __y.category()
-        || (__x.category() == __y.category() && __x.value() < __y.value());
-}
-
-// error_code
-
-class _LIBCPP_VISIBLE error_code
-{
-    int __val_;
-    const error_category* __cat_;
-public:
-    _LIBCPP_ALWAYS_INLINE
-    error_code() _NOEXCEPT : __val_(0), __cat_(&system_category()) {}
-
-    _LIBCPP_ALWAYS_INLINE
-    error_code(int __val, const error_category& __cat) _NOEXCEPT
-        : __val_(__val), __cat_(&__cat) {}
-
-    template <class _Ep>
-        _LIBCPP_ALWAYS_INLINE
-        error_code(_Ep __e,
-                   typename enable_if<is_error_code_enum<_Ep>::value>::type* = 0
-                                                                     ) _NOEXCEPT
-            {*this = make_error_code(__e);}
-
-    _LIBCPP_ALWAYS_INLINE
-    void assign(int __val, const error_category& __cat) _NOEXCEPT
+    // error_code
+    class error_code
     {
-        __val_ = __val;
-        __cat_ = &__cat;
+      int __val_;
+      const error_category* __cat_;
+    public:
+      __attribute__ ((always_inline))
+      error_code()
+noexcept          : __val_(0), __cat_(&system_category())
+            {}
+
+          __attribute__ ((always_inline))
+          error_code(int __val, const error_category& __cat) noexcept
+          : __val_(__val), __cat_(&__cat)
+            {}
+
+          template <class _Ep>
+          __attribute__ ((always_inline))
+          error_code(_Ep __e,
+              typename enable_if<is_error_code_enum<_Ep>::value>::type* = 0
+          ) noexcept
+            { *this = make_error_code(__e);}
+
+          __attribute__ ((always_inline))
+          void assign(int __val, const error_category& __cat) noexcept
+            {
+              __val_ = __val;
+              __cat_ = &__cat;
+            }
+
+          template <class _Ep>
+          __attribute__ ((always_inline))
+          typename enable_if
+          <
+          is_error_code_enum<_Ep>::value,
+          error_code&
+          >::type
+          operator=(_Ep __e) noexcept
+            { *this = make_error_code(__e); return *this;}
+
+          __attribute__ ((always_inline))
+          void clear() noexcept
+            {
+              __val_ = 0;
+              __cat_ = &system_category();
+            }
+
+          __attribute__ ((always_inline))
+          int value() const noexcept
+            { return __val_;}
+
+          __attribute__ ((always_inline))
+          const error_category& category() const noexcept
+            { return *__cat_;}
+
+          __attribute__ ((always_inline))
+          error_condition default_error_condition() const noexcept
+            { return __cat_->default_error_condition(__val_);}
+
+          string message() const;
+
+          __attribute__ ((always_inline))
+          explicit
+          operator bool() const noexcept
+            { return __val_ != 0;}
+        };
+
+#pragma GCC diagnostic pop
+
+    inline __attribute__ ((always_inline))
+    error_code
+    make_error_code(errc __e) noexcept
+    {
+      return error_code(static_cast<int>(__e), generic_category());
     }
 
-    template <class _Ep>
-        _LIBCPP_ALWAYS_INLINE
-        typename enable_if
-        <
-            is_error_code_enum<_Ep>::value,
-            error_code&
-        >::type
-        operator=(_Ep __e) _NOEXCEPT
-            {*this = make_error_code(__e); return *this;}
-
-    _LIBCPP_ALWAYS_INLINE
-    void clear() _NOEXCEPT
+    inline __attribute__ ((always_inline))
+    bool
+    operator<(const error_code& __x, const error_code& __y) noexcept
     {
-        __val_ = 0;
-        __cat_ = &system_category();
+      return __x.category() < __y.category()
+          || (__x.category() == __y.category() && __x.value() < __y.value());
     }
 
-    _LIBCPP_ALWAYS_INLINE
-    int value() const _NOEXCEPT {return __val_;}
-
-    _LIBCPP_ALWAYS_INLINE
-    const error_category& category() const _NOEXCEPT {return *__cat_;}
-
-    _LIBCPP_ALWAYS_INLINE
-    error_condition default_error_condition() const _NOEXCEPT
-        {return __cat_->default_error_condition(__val_);}
-
-    string message() const;
-
-    _LIBCPP_ALWAYS_INLINE
-        _LIBCPP_EXPLICIT
-        operator bool() const _NOEXCEPT {return __val_ != 0;}
-};
-
-inline _LIBCPP_INLINE_VISIBILITY
-error_code
-make_error_code(errc __e) _NOEXCEPT
-{
-    return error_code(static_cast<int>(__e), generic_category());
-}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator<(const error_code& __x, const error_code& __y) _NOEXCEPT
-{
-    return __x.category() < __y.category()
-        || (__x.category() == __y.category() && __x.value() < __y.value());
-}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator==(const error_code& __x, const error_code& __y) _NOEXCEPT
-{
-    return __x.category() == __y.category() && __x.value() == __y.value();
-}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator==(const error_code& __x, const error_condition& __y) _NOEXCEPT
-{
-    return __x.category().equivalent(__x.value(), __y)
-        || __y.category().equivalent(__x, __y.value());
-}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator==(const error_condition& __x, const error_code& __y) _NOEXCEPT
-{
-    return __y == __x;
-}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator==(const error_condition& __x, const error_condition& __y) _NOEXCEPT
-{
-    return __x.category() == __y.category() && __x.value() == __y.value();
-}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator!=(const error_code& __x, const error_code& __y) _NOEXCEPT
-{return !(__x == __y);}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator!=(const error_code& __x, const error_condition& __y) _NOEXCEPT
-{return !(__x == __y);}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator!=(const error_condition& __x, const error_code& __y) _NOEXCEPT
-{return !(__x == __y);}
-
-inline _LIBCPP_INLINE_VISIBILITY
-bool
-operator!=(const error_condition& __x, const error_condition& __y) _NOEXCEPT
-{return !(__x == __y);}
-
-template <>
-struct _LIBCPP_VISIBLE hash<error_code>
-    : public unary_function<error_code, size_t>
-{
-    _LIBCPP_INLINE_VISIBILITY
-    size_t operator()(const error_code& __ec) const _NOEXCEPT
+    inline __attribute__ ((always_inline))
+    bool
+    operator==(const error_code& __x, const error_code& __y) noexcept
     {
-        return static_cast<size_t>(__ec.value());
+      return __x.category() == __y.category() && __x.value() == __y.value();
     }
-};
 
-// system_error
+    inline __attribute__ ((always_inline))
+    bool
+    operator==(const error_code& __x, const error_condition& __y) noexcept
+    {
+      return __x.category().equivalent(__x.value(), __y)
+          || __y.category().equivalent(__x, __y.value());
+    }
 
-class _LIBCPP_VISIBLE system_error
-    : public runtime_error
-{
-    error_code __ec_;
-public:
-    system_error(error_code __ec, const string& __what_arg);
-    system_error(error_code __ec, const char* __what_arg);
-    system_error(error_code __ec);
-    system_error(int __ev, const error_category& __ecat, const string& __what_arg);
-    system_error(int __ev, const error_category& __ecat, const char* __what_arg);
-    system_error(int __ev, const error_category& __ecat);
-    ~system_error() _NOEXCEPT;
+    inline __attribute__ ((always_inline))
+    bool
+    operator==(const error_condition& __x, const error_code& __y) noexcept
+    {
+      return __y == __x;
+    }
 
-    _LIBCPP_ALWAYS_INLINE
-    const error_code& code() const _NOEXCEPT {return __ec_;}
+    inline __attribute__ ((always_inline))
+    bool
+    operator==(const error_condition& __x, const error_condition& __y) noexcept
+    {
+      return __x.category() == __y.category() && __x.value() == __y.value();
+    }
 
-private:
-    static string __init(const error_code&, string);
-};
+    inline __attribute__ ((always_inline))
+    bool
+    operator!=(const error_code& __x, const error_code& __y) noexcept
+    {
+      return !(__x == __y);
+    }
 
-void __throw_system_error(int ev, const char* what_arg);
+    inline __attribute__ ((always_inline))
+    bool
+    operator!=(const error_code& __x, const error_condition& __y) noexcept
+    {
+      return !(__x == __y);
+    }
 
-_LIBCPP_END_NAMESPACE_STD
+    inline __attribute__ ((always_inline))
+    bool
+    operator!=(const error_condition& __x, const error_code& __y) noexcept
+    {
+      return !(__x == __y);
+    }
 
-#endif  // _LIBCPP_SYSTEM_ERROR
+    inline __attribute__ ((always_inline))
+    bool
+    operator!=(const error_condition& __x, const error_condition& __y) noexcept
+    {
+      return !(__x == __y);
+    }
+
+    template<>
+      struct hash<error_code> : public unary_function<error_code, size_t>
+      {
+        __attribute__ ((always_inline))
+        size_t
+        operator()(const error_code& __ec) const noexcept
+        {
+          return static_cast<size_t>(__ec.value());
+        }
+      };
+
+    // system_error
+
+    class system_error : public runtime_error
+    {
+      error_code __ec_;
+    public:
+      system_error(error_code __ec, const string& __what_arg);
+      system_error(error_code __ec, const char* __what_arg);
+      system_error(error_code __ec);
+      system_error(int __ev, const error_category& __ecat,
+          const string& __what_arg);
+      system_error(int __ev, const error_category& __ecat,
+          const char* __what_arg);
+      system_error(int __ev, const error_category& __ecat);
+      ~system_error() noexcept;
+
+      __attribute__ ((always_inline))
+      const error_code&
+      code() const noexcept
+      {
+        return __ec_;
+      }
+
+    private:
+      static string
+      __init(const error_code&, string);
+    };
+
+    void
+    __throw_system_error(int ev, const char* what_arg);
+
+  } // namespace std
+} // namespace os
+
+#endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
+#endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_SYSTEMERROR_H
