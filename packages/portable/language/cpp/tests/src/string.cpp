@@ -36,6 +36,7 @@ using namespace std;
 
 #include "portable/language/cpp/include/string.h"
 #include "portable/language/cpp/include/climits.h"
+
 using namespace os::std;
 
 #endif
@@ -149,13 +150,13 @@ template<class T>
 #endif
         }
       ++count;
-      return (pointer) malloc(n * sizeof(T));
+      return (pointer) os::std::malloc(n * sizeof(T));
     }
 
     void
     deallocate(pointer p, size_type)
     {
-      free(p);
+      os::std::free(p);
     }
 
     size_type
