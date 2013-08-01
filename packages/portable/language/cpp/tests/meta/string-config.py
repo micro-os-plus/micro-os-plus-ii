@@ -37,6 +37,12 @@ Configuration(
 
         # enable wchar_t support
         'enable("option.os.portable.language.cpp.wide.wchar_t")',
+
+        # enable string
+        'enable("component.os.portable.language.cpp.string")',
+
+        # enable exceptions
+        'enable("component.os.portable.language.cpp.exceptions")',
         
         # this test does not need the scheduler related stuff
         'disable("component.os.portable.core.scheduler")',
