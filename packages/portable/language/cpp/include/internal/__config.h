@@ -124,7 +124,7 @@
 # if _MSC_VER
 #  define _LIBCPP_INLINE_VISIBILITY __forceinline
 # else // MinGW GCC and Clang
-#  define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__always_inline__))
+#  define _LIBCPP_INLINE_VISIBILITY __attribute__((always_inline))
 # endif
 #endif
 
@@ -140,32 +140,32 @@
 
 #endif // _WIN32
 #ifndef _LIBCPP_HIDDEN
-//#define _LIBCPP_HIDDEN __attribute__ ((__visibility__("hidden")))
+//#define _LIBCPP_HIDDEN __attribute__((__visibility__("hidden")))
 #define _LIBCPP_HIDDEN
 #endif
 
 #ifndef _LIBCPP_VISIBLE
-//#define _LIBCPP_VISIBLE __attribute__ ((__visibility__("default")))
+//#define _LIBCPP_VISIBLE __attribute__((__visibility__("default")))
 #define _LIBCPP_VISIBLE
 #endif
 
 #ifndef _LIBCPP_INLINE_VISIBILITY
-//#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((__always_inline__)) __attribute__ ((__visibility__("hidden")))
-#define _LIBCPP_INLINE_VISIBILITY __attribute__ ((always_inline))
+//#define _LIBCPP_INLINE_VISIBILITY __attribute__((always_inline)) __attribute__((__visibility__("hidden")))
+#define _LIBCPP_INLINE_VISIBILITY __attribute__((always_inline))
 #endif
 
 #ifndef _LIBCPP_EXCEPTION_ABI
-//#define _LIBCPP_EXCEPTION_ABI __attribute__ ((__visibility__("default")))
+//#define _LIBCPP_EXCEPTION_ABI __attribute__((__visibility__("default")))
 #define _LIBCPP_EXCEPTION_ABI
 #endif
 
 #ifndef _LIBCPP_CANTTHROW
-#define _LIBCPP_CANTTHROW __attribute__ ((__nothrow__))
+#define _LIBCPP_CANTTHROW __attribute__((__nothrow__))
 #endif
 
 #ifndef _LIBCPP_ALWAYS_INLINE
-//#define _LIBCPP_ALWAYS_INLINE  __attribute__ ((__always_inline__)) __attribute__ ((__visibility__("hidden")))
-#define _LIBCPP_ALWAYS_INLINE  __attribute__ ((always_inline))
+//#define _LIBCPP_ALWAYS_INLINE  __attribute__((always_inline)) __attribute__((__visibility__("hidden")))
+#define _LIBCPP_ALWAYS_INLINE  __attribute__((always_inline))
 #endif
 
 #if defined(__clang__)
@@ -210,7 +210,7 @@ typedef __char32_t char32_t;
 #if __has_feature(cxx_attributes)
 #  define _LIBCPP_NORETURN [[noreturn]]
 #else
-#  define _LIBCPP_NORETURN __attribute__ ((noreturn))
+#  define _LIBCPP_NORETURN __attribute__((noreturn))
 #endif
 
 #define _LIBCPP_HAS_NO_DEFAULTED_FUNCTIONS

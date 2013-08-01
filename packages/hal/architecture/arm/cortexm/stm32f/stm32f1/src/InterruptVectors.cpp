@@ -115,7 +115,7 @@ namespace hal
     /// \ingroup stm32f1_irq
     /// \showinitializer
     /// \brief STM32F10x specific interrupt vectors.
-    __attribute__ ((section(".family_isr_vectors")))
+    __attribute__((section(".family_isr_vectors")))
     interruptVector_t interruptVectors[] =
       { //
         // 0: Watchdog Timer
@@ -186,7 +186,7 @@ namespace hal
       /// \details
       /// All undefined interrupt handlers are routed to this function,
       /// via weak references, and from here to the architecture Default.
-      __attribute__ ((naked))
+      __attribute__((naked))
       void
       Default(void)
       {

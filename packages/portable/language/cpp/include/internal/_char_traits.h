@@ -60,7 +60,7 @@ namespace os
     // char_traits
 
     template<class TChar_T>
-      struct _LIBCPP_VISIBLE char_traits
+      struct char_traits
       {
         typedef TChar_T char_type;
         typedef int int_type;
@@ -68,71 +68,76 @@ namespace os
         typedef streampos pos_type;
         typedef mbstate_t state_type;
 
-        _LIBCPP_INLINE_VISIBILITY
         static void
-        assign(char_type& __c1, const char_type& __c2) _NOEXCEPT
+        __attribute__((always_inline))
+        assign(char_type& __c1, const char_type& __c2) noexcept
         {
           __c1 = __c2;
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR bool
-        eq(char_type __c1, char_type __c2) _NOEXCEPT
+        static constexpr bool
+        __attribute__((always_inline))
+        eq(char_type __c1, char_type __c2) noexcept
         {
           return __c1 == __c2;
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR bool
-        lt(char_type __c1, char_type __c2) _NOEXCEPT
+        static constexpr bool
+        __attribute__((always_inline))
+        lt(char_type __c1, char_type __c2) noexcept
         {
           return __c1 < __c2;
         }
 
         static int
         compare(const char_type* __s1, const char_type* __s2, size_t __n);
+
         static size_t
         length(const char_type* __s);
+
         static const char_type*
         find(const char_type* __s, size_t __n, const char_type& __a);
+
         static char_type*
         move(char_type* __s1, const char_type* __s2, size_t __n);
+
         static char_type*
         copy(char_type* __s1, const char_type* __s2, size_t __n);
+
         static char_type*
         assign(char_type* __s, size_t __n, char_type __a);
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR int_type
-        not_eof(int_type __c) _NOEXCEPT
+        static constexpr int_type
+        __attribute__((always_inline))
+        not_eof(int_type __c) noexcept
         {
           return eq_int_type(__c, eof()) ? ~eof() : __c;
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR char_type
-        to_char_type(int_type __c) _NOEXCEPT
+        static constexpr char_type
+        __attribute__((always_inline))
+        to_char_type(int_type __c) noexcept
         {
           return char_type(__c);
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR int_type
-        to_int_type(char_type __c) _NOEXCEPT
+        static constexpr int_type
+        __attribute__((always_inline))
+        to_int_type(char_type __c) noexcept
         {
           return int_type(__c);
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR bool
-        eq_int_type(int_type __c1, int_type __c2) _NOEXCEPT
+        static constexpr bool
+        __attribute__((always_inline))
+        eq_int_type(int_type __c1, int_type __c2) noexcept
         {
           return __c1 == __c2;
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR int_type
-        eof() _NOEXCEPT
+        __attribute__((always_inline))
+                        static constexpr int_type
+        eof() noexcept
         {
           return int_type(EOF);
         }
@@ -140,8 +145,8 @@ namespace os
 
     template<class TChar_T>
       int
-      char_traits<TChar_T>::compare(const char_type* __s1, const char_type* __s2,
-          size_t __n)
+      char_traits<TChar_T>::compare(const char_type* __s1,
+          const char_type* __s2, size_t __n)
       {
         for (; __n; --__n, ++__s1, ++__s2)
           {
@@ -154,8 +159,8 @@ namespace os
       }
 
     template<class TChar_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      size_t
+      inline size_t
+      __attribute__((always_inline))
       char_traits<TChar_T>::length(const char_type* __s)
       {
         size_t __len = 0;
@@ -165,8 +170,8 @@ namespace os
       }
 
     template<class TChar_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      const TChar_T*
+      inline const TChar_T*
+      __attribute__((always_inline))
       char_traits<TChar_T>::find(const char_type* __s, size_t __n,
           const char_type& __a)
       {
@@ -201,8 +206,8 @@ namespace os
       }
 
     template<class TChar_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      TChar_T*
+      inline TChar_T*
+      __attribute__((always_inline))
       char_traits<TChar_T>::copy(char_type* __s1, const char_type* __s2,
           size_t __n)
       {
@@ -213,8 +218,8 @@ namespace os
       }
 
     template<class TChar_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      TChar_T*
+      inline TChar_T*
+      __attribute__((always_inline))
       char_traits<TChar_T>::assign(char_type* __s, size_t __n, char_type __a)
       {
         char_type* __r = __s;
@@ -226,7 +231,7 @@ namespace os
     // char_traits<char>
 
     template<>
-      struct _LIBCPP_VISIBLE char_traits<char>
+      struct char_traits<char>
       {
         typedef char char_type;
         typedef int int_type;
@@ -234,99 +239,100 @@ namespace os
         typedef streampos pos_type;
         typedef mbstate_t state_type;
 
-        _LIBCPP_INLINE_VISIBILITY
         static void
-        assign(char_type& __c1, const char_type& __c2) _NOEXCEPT
+        __attribute__((always_inline))
+        assign(char_type& __c1, const char_type& __c2) noexcept
         {
           __c1 = __c2;
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR bool
-        eq(char_type __c1, char_type __c2) _NOEXCEPT
+        static constexpr bool
+        __attribute__((always_inline))
+        eq(char_type __c1, char_type __c2) noexcept
         {
           return __c1 == __c2;
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR bool
-        lt(char_type __c1, char_type __c2) _NOEXCEPT
+        static constexpr bool
+        __attribute__((always_inline))
+        lt(char_type __c1, char_type __c2) noexcept
         {
           return (unsigned char) __c1 < (unsigned char) __c2;
         }
 
-        _LIBCPP_INLINE_VISIBILITY
         static int
+        __attribute__((always_inline))
         compare(const char_type* __s1, const char_type* __s2, size_t __n)
         {
           return memcmp(__s1, __s2, __n);
         }
 
-        _LIBCPP_INLINE_VISIBILITY
         static size_t
+        __attribute__((always_inline))
         length(const char_type* __s)
         {
           return strlen(__s);
         }
 
-        _LIBCPP_INLINE_VISIBILITY
         static const char_type*
+        __attribute__((always_inline))
         find(const char_type* __s, size_t __n, const char_type& __a)
         {
           return (const char_type*) memchr(__s, to_int_type(__a), __n);
         }
 
-        _LIBCPP_INLINE_VISIBILITY
         static char_type*
+        __attribute__((always_inline))
         move(char_type* __s1, const char_type* __s2, size_t __n)
         {
           return (char_type*) memmove(__s1, __s2, __n);
         }
-        _LIBCPP_INLINE_VISIBILITY
+
         static char_type*
+        __attribute__((always_inline))
         copy(char_type* __s1, const char_type* __s2, size_t __n)
         {
           return (char_type*) memcpy(__s1, __s2, __n);
         }
 
-        _LIBCPP_INLINE_VISIBILITY
         static char_type*
+        __attribute__((always_inline))
         assign(char_type* __s, size_t __n, char_type __a)
         {
           return (char_type*) memset(__s, to_int_type(__a), __n);
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR int_type
-        not_eof(int_type __c) _NOEXCEPT
+        static constexpr int_type
+        __attribute__((always_inline))
+        not_eof(int_type __c) noexcept
         {
           return eq_int_type(__c, eof()) ? ~eof() : __c;
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR char_type
-        to_char_type(int_type __c) _NOEXCEPT
+        static constexpr char_type
+        __attribute__((always_inline))
+        to_char_type(int_type __c) noexcept
         {
           return char_type(__c);
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR int_type
-        to_int_type(char_type __c) _NOEXCEPT
+        static constexpr int_type
+        __attribute__((always_inline))
+        to_int_type(char_type __c) noexcept
         {
           return int_type((unsigned char) __c);
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR bool
-        eq_int_type(int_type __c1, int_type __c2) _NOEXCEPT
+        static constexpr bool
+        __attribute__((always_inline))
+        eq_int_type(int_type __c1, int_type __c2) noexcept
         {
           return __c1 == __c2;
         }
 
-        _LIBCPP_INLINE_VISIBILITY
-        static _LIBCPP_CONSTEXPR int_type
-        eof() _NOEXCEPT
+        static constexpr int_type
+        __attribute__((always_inline))
+        eof() noexcept
         {
           return int_type(EOF);
         }
@@ -337,7 +343,7 @@ namespace os
 // char_traits<wchar_t>
 
   template <>
-  struct _LIBCPP_VISIBLE char_traits<wchar_t>
+  struct char_traits<wchar_t>
     {
       typedef wchar_t char_type;
       typedef wint_t int_type;
@@ -345,56 +351,56 @@ namespace os
       typedef streampos pos_type;
       typedef mbstate_t state_type;
 
-      _LIBCPP_INLINE_VISIBILITY
-      static void assign(char_type& __c1, const char_type& __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static void assign(char_type& __c1, const char_type& __c2) noexcept
         { __c1 = __c2;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR bool eq(char_type __c1, char_type __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr bool eq(char_type __c1, char_type __c2) noexcept
         { return __c1 == __c2;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR bool lt(char_type __c1, char_type __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr bool lt(char_type __c1, char_type __c2) noexcept
         { return __c1 < __c2;}
 
-      _LIBCPP_INLINE_VISIBILITY
+      __attribute__((always_inline))
       static int compare(const char_type* __s1, const char_type* __s2, size_t __n)
         { return wmemcmp(__s1, __s2, __n);}
-      _LIBCPP_INLINE_VISIBILITY
+      __attribute__((always_inline))
       static size_t length(const char_type* __s)
         { return wcslen(__s);}
-      _LIBCPP_INLINE_VISIBILITY
+      __attribute__((always_inline))
       static const char_type* find(const char_type* __s, size_t __n, const char_type& __a)
         { return (const char_type*)wmemchr(__s, __a, __n);}
-      _LIBCPP_INLINE_VISIBILITY
+      __attribute__((always_inline))
       static char_type* move(char_type* __s1, const char_type* __s2, size_t __n)
         { return (char_type*)wmemmove(__s1, __s2, __n);}
-      _LIBCPP_INLINE_VISIBILITY
+      __attribute__((always_inline))
       static char_type* copy(char_type* __s1, const char_type* __s2, size_t __n)
         { return (char_type*)wmemcpy(__s1, __s2, __n);}
-      _LIBCPP_INLINE_VISIBILITY
+      __attribute__((always_inline))
       static char_type* assign(char_type* __s, size_t __n, char_type __a)
         { return (char_type*)wmemset(__s, __a, __n);}
 
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR int_type not_eof(int_type __c) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr int_type not_eof(int_type __c) noexcept
         { return eq_int_type(__c, eof()) ? ~eof() : __c;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR char_type to_char_type(int_type __c) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr char_type to_char_type(int_type __c) noexcept
         { return char_type(__c);}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR int_type to_int_type(char_type __c) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr int_type to_int_type(char_type __c) noexcept
         { return int_type(__c);}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR bool eq_int_type(int_type __c1, int_type __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr bool eq_int_type(int_type __c1, int_type __c2) noexcept
         { return __c1 == __c2;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR int_type eof() _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr int_type eof() noexcept
         { return int_type(WEOF);}
     };
 
 #ifndef _LIBCPP_HAS_NO_UNICODE_CHARS
 
   template <>
-  struct _LIBCPP_VISIBLE char_traits<char16_t>
+  struct char_traits<char16_t>
     {
       typedef char16_t char_type;
       typedef uint_least16_t int_type;
@@ -402,14 +408,14 @@ namespace os
       typedef u16streampos pos_type;
       typedef mbstate_t state_type;
 
-      _LIBCPP_INLINE_VISIBILITY
-      static void assign(char_type& __c1, const char_type& __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static void assign(char_type& __c1, const char_type& __c2) noexcept
         { __c1 = __c2;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR bool eq(char_type __c1, char_type __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr bool eq(char_type __c1, char_type __c2) noexcept
         { return __c1 == __c2;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR bool lt(char_type __c1, char_type __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr bool lt(char_type __c1, char_type __c2) noexcept
         { return __c1 < __c2;}
 
       static int compare(const char_type* __s1, const char_type* __s2, size_t __n);
@@ -419,24 +425,24 @@ namespace os
       static char_type* copy(char_type* __s1, const char_type* __s2, size_t __n);
       static char_type* assign(char_type* __s, size_t __n, char_type __a);
 
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR int_type not_eof(int_type __c) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr int_type not_eof(int_type __c) noexcept
         { return eq_int_type(__c, eof()) ? ~eof() : __c;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR char_type to_char_type(int_type __c) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr char_type to_char_type(int_type __c) noexcept
         { return char_type(__c);}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR int_type to_int_type(char_type __c) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr int_type to_int_type(char_type __c) noexcept
         { return int_type(__c);}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR bool eq_int_type(int_type __c1, int_type __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr bool eq_int_type(int_type __c1, int_type __c2) noexcept
         { return __c1 == __c2;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR int_type eof() _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr int_type eof() noexcept
         { return int_type(0xDFFF);}
     };
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   int
   char_traits<char16_t>::compare(const char_type* __s1, const char_type* __s2, size_t __n)
     {
@@ -450,7 +456,7 @@ namespace os
       return 0;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   size_t
   char_traits<char16_t>::length(const char_type* __s)
     {
@@ -460,7 +466,7 @@ namespace os
       return __len;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   const char16_t*
   char_traits<char16_t>::find(const char_type* __s, size_t __n, const char_type& __a)
     {
@@ -473,7 +479,7 @@ namespace os
       return 0;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   char16_t*
   char_traits<char16_t>::move(char_type* __s1, const char_type* __s2, size_t __n)
     {
@@ -493,7 +499,7 @@ namespace os
       return __r;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   char16_t*
   char_traits<char16_t>::copy(char_type* __s1, const char_type* __s2, size_t __n)
     {
@@ -503,7 +509,7 @@ namespace os
       return __r;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   char16_t*
   char_traits<char16_t>::assign(char_type* __s, size_t __n, char_type __a)
     {
@@ -514,7 +520,7 @@ namespace os
     }
 
   template <>
-  struct _LIBCPP_VISIBLE char_traits<char32_t>
+  struct char_traits<char32_t>
     {
       typedef char32_t char_type;
       typedef uint_least32_t int_type;
@@ -522,14 +528,14 @@ namespace os
       typedef u32streampos pos_type;
       typedef mbstate_t state_type;
 
-      _LIBCPP_INLINE_VISIBILITY
-      static void assign(char_type& __c1, const char_type& __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static void assign(char_type& __c1, const char_type& __c2) noexcept
         { __c1 = __c2;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR bool eq(char_type __c1, char_type __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr bool eq(char_type __c1, char_type __c2) noexcept
         { return __c1 == __c2;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR bool lt(char_type __c1, char_type __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr bool lt(char_type __c1, char_type __c2) noexcept
         { return __c1 < __c2;}
 
       static int compare(const char_type* __s1, const char_type* __s2, size_t __n);
@@ -539,24 +545,24 @@ namespace os
       static char_type* copy(char_type* __s1, const char_type* __s2, size_t __n);
       static char_type* assign(char_type* __s, size_t __n, char_type __a);
 
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR int_type not_eof(int_type __c) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr int_type not_eof(int_type __c) noexcept
         { return eq_int_type(__c, eof()) ? ~eof() : __c;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR char_type to_char_type(int_type __c) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr char_type to_char_type(int_type __c) noexcept
         { return char_type(__c);}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR int_type to_int_type(char_type __c) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr int_type to_int_type(char_type __c) noexcept
         { return int_type(__c);}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR bool eq_int_type(int_type __c1, int_type __c2) _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr bool eq_int_type(int_type __c1, int_type __c2) noexcept
         { return __c1 == __c2;}
-      _LIBCPP_INLINE_VISIBILITY
-      static _LIBCPP_CONSTEXPR int_type eof() _NOEXCEPT
+      __attribute__((always_inline))
+      static constexpr int_type eof() noexcept
         { return int_type(0xFFFFFFFF);}
     };
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   int
   char_traits<char32_t>::compare(const char_type* __s1, const char_type* __s2, size_t __n)
     {
@@ -570,7 +576,7 @@ namespace os
       return 0;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   size_t
   char_traits<char32_t>::length(const char_type* __s)
     {
@@ -580,7 +586,7 @@ namespace os
       return __len;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   const char32_t*
   char_traits<char32_t>::find(const char_type* __s, size_t __n, const char_type& __a)
     {
@@ -593,7 +599,7 @@ namespace os
       return 0;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   char32_t*
   char_traits<char32_t>::move(char_type* __s1, const char_type* __s2, size_t __n)
     {
@@ -613,7 +619,7 @@ namespace os
       return __r;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   char32_t*
   char_traits<char32_t>::copy(char_type* __s1, const char_type* __s2, size_t __n)
     {
@@ -623,7 +629,7 @@ namespace os
       return __r;
     }
 
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   char32_t*
   char_traits<char32_t>::assign(char_type* __s, size_t __n, char_type __a)
     {
@@ -637,7 +643,7 @@ namespace os
 #endif
 
 //_LIBCPP_END_NAMESPACE_STD
-}
-}
+} //namespace std
+} // namespace os
 
 #endif  /* OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_CHAR_TRAITS_H_ */

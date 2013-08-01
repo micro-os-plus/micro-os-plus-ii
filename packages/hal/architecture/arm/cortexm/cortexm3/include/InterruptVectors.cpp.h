@@ -123,7 +123,7 @@ namespace hal
     ///
     /// After this table each manufacturer adds specific vectors
     /// (see the manufacturer pages).
-    __attribute__ ((section(".core_isr_vectors")))
+    __attribute__((section(".core_isr_vectors")))
     interruptVector_t interruptVectors[] =
       { //
         // Top of stack

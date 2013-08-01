@@ -230,31 +230,30 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
 
-  template<class TChar_T, class TTraits_T>
-  void
-  basic_ios<TChar_T, TTraits_T>::__set_badbit_and_consider_rethrow()
-    {
-      m_rdstate |= badbit;
-      if (m_exceptions & badbit)
-        {
-          throw;
-        }
-    }
+    template<class TChar_T, class TTraits_T>
+      void
+      basic_ios<TChar_T, TTraits_T>::__set_badbit_and_consider_rethrow()
+      {
+        m_rdstate |= badbit;
+        if (m_exceptions & badbit)
+          {
+            throw;
+          }
+      }
 
-  template<class TChar_T, class TTraits_T>
-  void
-  basic_ios<TChar_T, TTraits_T>::__set_failbit_and_consider_rethrow()
-    {
-      m_rdstate |= failbit;
-      if (m_exceptions & failbit)
-        {
-          throw;
-        }
-    }
+    template<class TChar_T, class TTraits_T>
+      void
+      basic_ios<TChar_T, TTraits_T>::__set_failbit_and_consider_rethrow()
+      {
+        m_rdstate |= failbit;
+        if (m_exceptions & failbit)
+          {
+            throw;
+          }
+      }
 
 #endif // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-
-}
-}
+  } // namespace std
+} // namespace od
 
 #endif // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_IOS_CPP_H_

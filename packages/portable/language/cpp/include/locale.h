@@ -95,7 +95,7 @@ namespace os
     extern num_put<char> num_put_char_tiny;
 
     template<class _Facet>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       const _Facet&
       use_facet(const locale& __l __attribute__((unused)))
       {

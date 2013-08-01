@@ -53,14 +53,12 @@ namespace os
     /// \example portable/language/cpp/tests/src/fpos.cpp
 
     template<class TState_T>
-      class _LIBCPP_VISIBLE fpos
+      class fpos
       {
       public:
-        _LIBCPP_INLINE_VISIBILITY
         fpos(streamoff off = streamoff());
 
         // 27.5.4.1 Members
-        _LIBCPP_INLINE_VISIBILITY
         TState_T
         state() const;
 
@@ -69,40 +67,34 @@ namespace os
         /// \param st State.
         /// \par Returns
         /// Nothing.
-        _LIBCPP_INLINE_VISIBILITY
         void
         state(TState_T st);
 
         // 27.5.4.2 fpos requirements
         /// \brief Convert to streamoff.
-        _LIBCPP_INLINE_VISIBILITY
         operator streamoff() const;
 
         /// \brief Add offset to this position.
         ///
         /// \param off Offset.
-        _LIBCPP_INLINE_VISIBILITY
         fpos&
         operator+=(streamoff off);
 
         /// \brief Add position and offset.
         ///
         /// \param off Offset.
-        _LIBCPP_INLINE_VISIBILITY
         fpos
         operator+(streamoff off) const;
 
         /// \brief Subtract offset from this position.
         ///
         /// \param off Offset.
-        _LIBCPP_INLINE_VISIBILITY
         fpos&
         operator-=(streamoff off);
 
         /// \brief Subtract offset from position.
         ///
         /// \param off Offset.
-        _LIBCPP_INLINE_VISIBILITY
         fpos
         operator-(streamoff off) const;
 
@@ -119,38 +111,40 @@ namespace os
     // inline members
 
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline
+      __attribute__((always_inline))
       fpos<TState_T>::fpos(streamoff off)
           : m_off(off), m_st()
       {
       }
 
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline
+      __attribute__((always_inline))
       fpos<TState_T>::operator streamoff() const
       {
         return m_off;
       }
 
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      TState_T
+      inline TState_T
+      __attribute__((always_inline))
       fpos<TState_T>::state() const
       {
         return m_st;
       }
 
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      void
+      inline void
+      __attribute__((always_inline))
       fpos<TState_T>::state(TState_T st)
       {
         m_st = st;
       }
 
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      fpos<TState_T>&
+      inline fpos<TState_T>&
+      __attribute__((always_inline))
       fpos<TState_T>::operator+=(streamoff off)
       {
         m_off += off;
@@ -158,8 +152,8 @@ namespace os
       }
 
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      fpos<TState_T>
+      inline fpos<TState_T>
+      __attribute__((always_inline))
       fpos<TState_T>::operator+(streamoff off) const
       {
         fpos tpos(*this);
@@ -168,8 +162,8 @@ namespace os
       }
 
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      fpos<TState_T>&
+      inline fpos<TState_T>&
+      __attribute__((always_inline))
       fpos<TState_T>::operator-=(streamoff off)
       {
         m_off -= off;
@@ -177,8 +171,8 @@ namespace os
       }
 
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      fpos<TState_T>
+      inline fpos<TState_T>
+      __attribute__((always_inline))
       fpos<TState_T>::operator-(streamoff off) const
       {
         fpos tpos(*this);
@@ -189,8 +183,8 @@ namespace os
     // ========================================================================
     // Subtract two fpos<> and return a streamoff
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      streamoff
+      inline streamoff
+      __attribute__((always_inline))
       operator-(const fpos<TState_T>& x, const fpos<TState_T>& y)
       {
         return streamoff(x) - streamoff(y);
@@ -198,8 +192,8 @@ namespace os
 
     // Compare two fpos<> for equality
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      bool
+      inline bool
+      __attribute__((always_inline))
       operator==(const fpos<TState_T>& x, const fpos<TState_T>& y)
       {
         return streamoff(x) == streamoff(y);
@@ -207,16 +201,16 @@ namespace os
 
     // Compare two fpos<> for non equality
     template<class TState_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      bool
+      inline bool
+      __attribute__((always_inline))
       operator!=(const fpos<TState_T>& x, const fpos<TState_T>& y)
       {
         return streamoff(x) != streamoff(y);
       }
   // ========================================================================
 
-  }
-}
+  }// namespace std
+} // namespace os
 
 #endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)
 #endif // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_FPOS_H_

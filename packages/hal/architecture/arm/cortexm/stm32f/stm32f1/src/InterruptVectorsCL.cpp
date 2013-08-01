@@ -222,7 +222,7 @@ namespace hal
     /// \ingroup stm32f1cl_irq
     /// \showinitializer
     /// \brief STM32F10X_CL specific interrupt vectors.
-    __attribute__ ((section(".device_isr_vectors")))
+    __attribute__((section(".device_isr_vectors")))
     interruptVector_t interruptVectors[] =
       { //
         // 18: ADC1 and ADC2

@@ -80,12 +80,10 @@ namespace os
         /// \brief  Check if the stream status is ok.
         ///
         /// \details This is a conversion operator.
-        //_LIBCPP_ALWAYS_INLINE
         explicit
         operator bool() const;
 
         /// \brief  Check if the stream status is not ok.
-        //_LIBCPP_ALWAYS_INLINE
         bool
         operator!() const;
 
@@ -94,7 +92,6 @@ namespace os
         /// \par Parameters
         /// None.
         /// \return  A bit pattern.
-        //_LIBCPP_ALWAYS_INLINE
         iostate
         rdstate() const;
 
@@ -111,7 +108,6 @@ namespace os
         /// \param [in] state  The additional state flag(s) to set.
         /// \par Returns
         /// Nothing.
-        //_LIBCPP_ALWAYS_INLINE
         void
         setstate(iostate state);
 
@@ -120,7 +116,6 @@ namespace os
         /// \par Parameters
         /// None.
         /// \return  True if no error flags are set.
-        //_LIBCPP_ALWAYS_INLINE
         bool
         good() const;
 
@@ -129,7 +124,6 @@ namespace os
         /// \par Parameters
         /// None.
         /// \return  True if the `eofbit` is set.
-        //_LIBCPP_ALWAYS_INLINE
         bool
         eof() const;
 
@@ -138,7 +132,6 @@ namespace os
         /// \par Parameters
         /// None.
         /// \return  True if either the `badbit` or the `failbit` is set.
-        //_LIBCPP_ALWAYS_INLINE
         bool
         fail() const;
 
@@ -147,7 +140,6 @@ namespace os
         /// \par Parameters
         /// None.
         /// \return  True if the `badbit` is set.
-        //_LIBCPP_ALWAYS_INLINE
         bool
         bad() const;
 
@@ -156,7 +148,6 @@ namespace os
         /// \par Parameters
         /// None.
         /// \return  The current exceptions mask.
-        //_LIBCPP_ALWAYS_INLINE
         iostate
         exceptions() const;
 
@@ -165,7 +156,6 @@ namespace os
         /// \param [in] except  The new exceptions mask.
         /// \par Returns
         /// Nothing.
-        //_LIBCPP_ALWAYS_INLINE
         void
         exceptions(iostate except);
 
@@ -178,7 +168,6 @@ namespace os
         /// \brief  Constructor with initialisation.
         ///
         /// \param [in] sb  A pointer to the streambuf to use.
-        //_LIBCPP_INLINE_VISIBILITY
         explicit
         basic_ios(basic_streambuf<TChar_T, TTraits_T>* sb);
 
@@ -200,7 +189,6 @@ namespace os
         /// None.
         /// \return  A pointer to the tied stream, or NULL if the stream is
         ///          not tied.
-        //_LIBCPP_INLINE_VISIBILITY
         basic_ostream<TChar_T, TTraits_T>*
         tie() const;
 
@@ -209,7 +197,6 @@ namespace os
         /// \param [in] tiestr  The output stream.
         /// \return  The previously tied output stream, or NULL if the stream
         ///          was not tied.
-        //_LIBCPP_INLINE_VISIBILITY
         basic_ostream<TChar_T, TTraits_T>*
         tie(basic_ostream<TChar_T, TTraits_T>* tiestr);
 
@@ -218,7 +205,6 @@ namespace os
         /// \par Parameters
         /// None.
         /// \return  The current stream buffer.
-        //_LIBCPP_INLINE_VISIBILITY
         basic_streambuf<TChar_T, TTraits_T>*
         rdbuf() const;
 
@@ -226,7 +212,6 @@ namespace os
         ///
         /// \param [in] sb  The new stream buffer.
         /// \return  The previous stream buffer.
-        //_LIBCPP_INLINE_VISIBILITY
         basic_streambuf<TChar_T, TTraits_T>*
         rdbuf(basic_streambuf<TChar_T, TTraits_T>* sb);
 
@@ -235,7 +220,6 @@ namespace os
         /// \par Parameters
         /// None.
         /// \return  The current fill character.
-        //_LIBCPP_INLINE_VISIBILITY
         char_type
         fill() const;
 
@@ -245,7 +229,6 @@ namespace os
         /// None.
         /// \param [in] ch  The new character.
         /// \return  The previous fill character.
-        //_LIBCPP_INLINE_VISIBILITY
         char_type
         fill(char_type ch);
 
@@ -255,7 +238,6 @@ namespace os
         ///
         /// \param [in] loc  The new locale.
         /// \return  The previous locale.
-        //_LIBCPP_INLINE_VISIBILITY
         locale
         imbue(const locale& loc);
 
@@ -264,7 +246,6 @@ namespace os
         /// \param [in] c  The character to narrow.
         /// \param [in] dfault  The default character.
         /// \return  The narrowed character.
-        _LIBCPP_INLINE_VISIBILITY
         char
         narrow(char_type c, char dfault) const;
 
@@ -275,7 +256,6 @@ namespace os
         ///
         /// \param [in] c  The character to widen.
         /// \return  The widened character.
-        //_LIBCPP_INLINE_VISIBILITY
         char_type
         widen(char c) const;
 #pragma GCC diagnostic pop
@@ -309,7 +289,6 @@ namespace os
         /// @{
 
         /// \brief  Empty constructor.
-        //_LIBCPP_ALWAYS_INLINE
         basic_ios();
 
         /// @}
@@ -330,8 +309,7 @@ namespace os
         ///
         /// \param [in] sb A pointer to streambuf.
         /// \par Returns
-        /// Nothing.
-        //_LIBCPP_INLINE_VISIBILITY
+        ///     Nothing.
         void
         set_rdbuf(basic_streambuf<TChar_T, TTraits_T>* sb);
 
@@ -344,14 +322,12 @@ namespace os
         ///
         /// \param [in] rhs A reference to the right hand side basic_ios.
         /// \par Returns
-        /// Nothing.
-        //_LIBCPP_INLINE_VISIBILITY
+        ///     Nothing.
         void
         move(basic_ios& rhs);
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
         /// \return Nothing
-        //_LIBCPP_ALWAYS_INLINE
         void
         move(basic_ios&& rhs);
 #endif
@@ -360,8 +336,7 @@ namespace os
         ///
         /// \param [in,out] rhs A reference to the right hand side basic_ios.
         /// \par Returns
-        /// Nothing.
-        //_LIBCPP_INLINE_VISIBILITY
+        ///     Nothing.
         void
         swap(basic_ios& rhs) _NOEXCEPT;
 
@@ -401,7 +376,7 @@ namespace os
     /// Construct an object of class `basic_ios`, assigning initial
     /// values to its member objects by calling `init(sb)`.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::basic_ios(
           basic_streambuf<TChar_T, TTraits_T>* sb)
       {
@@ -415,7 +390,8 @@ namespace os
     /// is destroyed, whichever comes first; otherwise the behaviour
     /// is undefined.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::basic_ios()
       {
         // purposefully does no initialisation
@@ -425,7 +401,8 @@ namespace os
     /// This allows you to write constructs such as
     /// `if (!a_stream) ...` and `while (a_stream) ...`
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_ALWAYS_INLINE
+      inline
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::operator bool() const
       {
         return !fail();
@@ -435,8 +412,8 @@ namespace os
     /// This allows you to write constructs such as
     /// `if (!a_stream) ...` and `while (a_stream) ...`
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_ALWAYS_INLINE
-      bool
+      inline bool
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::operator!() const
       {
         return fail();
@@ -446,8 +423,8 @@ namespace os
     /// See `ios_base::iostate` for the possible bit values.  Most
     /// users will call one of the interpreting wrappers, e.g., `good()`.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      ios_base::iostate
+      inline ios_base::iostate
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::rdstate() const
       {
         return m_rdstate;
@@ -456,8 +433,8 @@ namespace os
     /// \details
     /// See `ios_base::iostate` for the possible bit values.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      void
+      inline void
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::setstate(iostate state)
       {
         clear(m_rdstate | state);
@@ -466,8 +443,8 @@ namespace os
     /// \details
     /// A wrapper around `rdstate`.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      bool
+      inline bool
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::good() const
       {
         return m_rdstate == 0;
@@ -476,8 +453,8 @@ namespace os
     /// \details
     /// Note that other `iostate` flags may also be set.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      bool
+      inline bool
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::eof() const
       {
         return m_rdstate & eofbit;
@@ -487,8 +464,8 @@ namespace os
     /// Checking the `badbit` in `fail()` is historical practice.
     /// Note that other `iostate` flags may also be set.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      bool
+      inline bool
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::fail() const
       {
         return m_rdstate & (failbit | badbit);
@@ -497,8 +474,8 @@ namespace os
     /// \details
     /// Note that other `iostate` flags may also be set.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      bool
+      inline bool
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::bad() const
       {
         return m_rdstate & badbit;
@@ -508,8 +485,8 @@ namespace os
     /// This changes nothing in the stream.  See the one-argument version
     /// of `exceptions(iostate)` for the meaning of the return value.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      ios_base::iostate
+      inline ios_base::iostate
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::exceptions() const
       {
         return m_exceptions;
@@ -524,8 +501,8 @@ namespace os
     /// If the error flag is already set when the exceptions mask is
     /// added, the exception is immediately thrown.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      void
+      inline void
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::exceptions(iostate except)
       {
         m_exceptions = except;
@@ -538,8 +515,8 @@ namespace os
     /// stream.  When this stream performs any I/O, the tied stream is
     /// first flushed.  For example, `std::cin` is tied to `std::cout`.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      basic_ostream<TChar_T, TTraits_T>*
+      inline basic_ostream<TChar_T, TTraits_T>*
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::tie() const
       {
         return m_tie;
@@ -550,9 +527,10 @@ namespace os
     /// be reachable by traversing the linked list of tied stream objects
     /// starting from `tiestr->tie()`.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      basic_ostream<TChar_T, TTraits_T>*
-      basic_ios<TChar_T, TTraits_T>::tie(basic_ostream<TChar_T, TTraits_T>* tiestr)
+      inline basic_ostream<TChar_T, TTraits_T>*
+      __attribute__((always_inline))
+      basic_ios<TChar_T, TTraits_T>::tie(
+          basic_ostream<TChar_T, TTraits_T>* tiestr)
       {
         basic_ostream<TChar_T, TTraits_T>* r = m_tie;
         m_tie = tiestr;
@@ -562,8 +540,8 @@ namespace os
     /// \details
     /// This does not change the state of the stream.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      basic_streambuf<TChar_T, TTraits_T>*
+      inline basic_streambuf<TChar_T, TTraits_T>*
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::rdbuf() const
       {
         return m_rdbuf;
@@ -587,9 +565,10 @@ namespace os
     /// foo.ios::rdbuf(p);            // ios == basic_ios<char>
     /// \endcode
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      basic_streambuf<TChar_T, TTraits_T>*
-      basic_ios<TChar_T, TTraits_T>::rdbuf(basic_streambuf<TChar_T, TTraits_T>* sb)
+      inline basic_streambuf<TChar_T, TTraits_T>*
+      __attribute__((always_inline))
+      basic_ios<TChar_T, TTraits_T>::rdbuf(
+          basic_streambuf<TChar_T, TTraits_T>* sb)
       {
         basic_streambuf<TChar_T, TTraits_T>* r = rdbuf();
         m_rdbuf = sb;
@@ -601,8 +580,8 @@ namespace os
     /// Associate the `basic_streambuf` object pointed to by `sb`
     /// with this stream without calling `clear()`.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      void
+      inline void
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::set_rdbuf(
           basic_streambuf<TChar_T, TTraits_T>* sb)
       {
@@ -613,8 +592,8 @@ namespace os
     /// Call `ios_base::imbue(loc)`, and if a stream buffer is associated
     /// with this stream, call that buffer's `pubimbue(loc)`.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      locale
+      inline locale
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::imbue(const locale& loc)
       {
         locale r = getloc();
@@ -637,8 +616,8 @@ namespace os
     ///   use_facet<ctype<TChar_T> >(getloc()).narrow(c,dfault)
     /// \endcode
     template <class TChar_T, class TTraits_T>
-    inline _LIBCPP_INLINE_VISIBILITY
-    char
+    inline char
+    __attribute__((always_inline))
     basic_ios<TChar_T, TTraits_T>::narrow(char_type __c, char __dfault) const
       {
         return use_facet<ctype<char_type> >(getloc()).narrow(__c, __dfault);
@@ -652,8 +631,8 @@ namespace os
     ///   use_facet<ctype<char_type> >(getloc()).widen(c)
     /// \endcode
     template <class TChar_T, class TTraits_T>
-    inline _LIBCPP_INLINE_VISIBILITY
-    TChar_T
+    inline TChar_T
+    __attribute__((always_inline))
     basic_ios<TChar_T, TTraits_T>::widen(char __c) const
       {
         return use_facet<ctype<char_type> >(getloc()).widen(__c);
@@ -664,8 +643,8 @@ namespace os
     // Tiny version, without locales
 
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      char
+      inline char
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::narrow(char_type c, char dfault) const
       {
         // TODO: extend this test according to locale
@@ -680,8 +659,8 @@ namespace os
       }
 
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      TChar_T
+      inline TChar_T
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::widen(char c) const
       {
         return static_cast<TChar_T>(c);
@@ -692,8 +671,8 @@ namespace os
     /// \details
     /// It defaults to a space (' ') in the current locale.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      TChar_T
+      inline TChar_T
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::fill() const
       {
         if (traits_type::eq_int_type(traits_type::eof(), m_fill))
@@ -709,8 +688,8 @@ namespace os
     /// have been requested (e.g., via setw), Q characters are actually
     /// used, and Q<P.  It defaults to a space (' ') in the current locale.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      TChar_T
+      inline TChar_T
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::fill(char_type ch)
       {
         // cast required since m_fill is an int_type
@@ -726,8 +705,8 @@ namespace os
     /// return the same value as it returned before the function call,
     /// and rhs.tie() shall return 0.
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      void
+      inline void
+      __attribute__((always_inline))
       basic_ios<TChar_T, TTraits_T>::move(basic_ios& rhs)
       {
         ios_base::move(rhs);
@@ -743,8 +722,8 @@ namespace os
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
     template<class TChar_T, class TTraits_T>
-    inline _LIBCPP_INLINE_VISIBILITY
-    void
+    inline void
+    __attribute__((always_inline))
     basic_ios<TChar_T, TTraits_T>::move(basic_ios&& rhs)
       {
         move(rhs);
@@ -760,10 +739,9 @@ namespace os
     /// Use the parent swap() than the
     /// namespace function for individual fields
     template<class TChar_T, class TTraits_T>
-      inline _LIBCPP_INLINE_VISIBILITY
-      void
-      basic_ios<TChar_T, TTraits_T>::swap(basic_ios& rhs)
-      _NOEXCEPT
+      inline void
+      __attribute__((always_inline))
+      basic_ios<TChar_T, TTraits_T>::swap(basic_ios& rhs) _NOEXCEPT
       {
         // use the parent function
         ios_base::swap(rhs);
@@ -776,8 +754,8 @@ namespace os
         os::std::swap(m_fill, rhs.m_fill);
       }
 
-  }
-}
+  } // namespace std
+} // namespace os
 
 #endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_BASIC_IOS_H_

@@ -9,7 +9,6 @@
 // References are to ISO/IEC 14882:2011(E) Third edition (2011-09-01).
 //
 
-
 /// \file
 /// \brief Locale (large).
 
@@ -43,7 +42,6 @@
 #elif defined(__GLIBC__) || defined(__APPLE__) || defined(__FreeBSD__) || defined(__sun__)
 # include <xlocale.h>
 #endif  // _WIN32 || __GLIBC__ || __APPLE__ || __FreeBSD_
-
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
 #if _WIN32
@@ -75,24 +73,24 @@ namespace os
   namespace std
   {
 
-    class _LIBCPP_VISIBLE locale;
+    class locale;
 
     template<class _Facet>
-      _LIBCPP_INLINE_VISIBILITY
       bool
-      has_facet(const locale&) _NOEXCEPT;
+      __attribute__((always_inline))
+      has_facet(const locale&) noexcept;
 
     template<class _Facet>
-      _LIBCPP_INLINE_VISIBILITY
       const _Facet&
+      __attribute__((always_inline))
       use_facet(const locale&);
 
-    class _LIBCPP_VISIBLE locale
+    class locale
     {
     public:
       // types:
-      class _LIBCPP_VISIBLE facet;
-      class _LIBCPP_VISIBLE id;
+      class facet;
+      class id;
 
 //#if 1
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
@@ -106,28 +104,28 @@ namespace os
       static const category time = LC_TIME_MASK;
       static const category messages = LC_MESSAGES_MASK;
       static const category all = collate | ctype | monetary | numeric | time
-          | messages;
+      | messages;
 #endif
 
       // construct/copy/destroy:
-      locale() _NOEXCEPT;
+      locale() noexcept;
 
       void
       init(void);
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-      locale(const locale&) _NOEXCEPT;
+      locale(const locale&) noexcept;
       explicit locale(const char*);
       explicit locale(const string&);
       locale(const locale&, const char*, category);
       locale(const locale&, const string&, category);
       template <class _Facet>
-      _LIBCPP_INLINE_VISIBILITY locale(const locale&, _Facet*);
+      __attribute__((always_inline)) locale(const locale&, _Facet*);
       locale(const locale&, const locale&, category);
 
       ~locale();
 
-      const locale& operator=(const locale&) _NOEXCEPT;
+      const locale& operator=(const locale&) noexcept;
 
       template <class _Facet> locale combine(const locale&) const;
 
@@ -155,11 +153,19 @@ namespace os
       static locale& __global();
 #else
 
-      bool has_facet(id&) const;
-      const facet* use_facet(id&) const;
+      bool
+      has_facet(id&) const;
 
-      template <class _Facet> friend bool has_facet(const locale&) _NOEXCEPT;
-      template <class _Facet> friend const _Facet& use_facet(const locale&);
+      const facet*
+      use_facet(id&) const;
+
+      template<class _Facet>
+        friend bool
+        has_facet(const locale&) noexcept;
+
+      template<class _Facet>
+        friend const _Facet&
+        use_facet(const locale&);
 
       // used to satisfy the static_assert in ios_base::imbue()
       void* dummy;
@@ -167,59 +173,60 @@ namespace os
 #endif
     };
 
-
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-  class _LIBCPP_VISIBLE locale::facet
-  : public __shared_count
-    {
-    protected:
-      _LIBCPP_INLINE_VISIBILITY
-      explicit facet(size_t __refs = 0)
-      : __shared_count(static_cast<long>(__refs)-1)
-        {}
+    class locale::facet
+    : public __shared_count
+      {
+      protected:
+        __attribute__((always_inline))
+        explicit facet(size_t __refs = 0)
+        : __shared_count(static_cast<long>(__refs)-1)
+          {}
 
-      virtual ~facet();
+        virtual ~facet();
 
 //    facet(const facet&) = delete;     // effectively done in __shared_count
 //    void operator=(const facet&) = delete;
-    private:
-      virtual void __on_zero_shared() _NOEXCEPT;
-    };
+      private:
+        virtual void __on_zero_shared() noexcept;
+      };
 
-  class _LIBCPP_VISIBLE locale::id
-    {
+    class locale::id
+      {
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-      once_flag __flag_;
+        once_flag __flag_;
 #endif
-      int32_t __id_;
+        int32_t __id_;
 
-      static int32_t __next_id;
-    public:
-      _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR id() :__id_(0)
-        {}
-    private:
-      void __init();
-      void operator=(const id&); // = delete;
-      id(const id&);// = delete;
-    public:// only needed for tests
-      long __get();
+        static int32_t __next_id;
+      public:
+        __attribute__((always_inline)) constexpr id() :__id_(0)
+          {}
+      private:
+        void __init();
+        void operator=(const id&); // = delete;
+        id(const id&);// = delete;
+      public:// only needed for tests
+        long __get();
 
-      friend class locale;
-      friend class locale::__imp;
-    };
+        friend class locale;
+        friend class locale::__imp;
+      };
 
 #else
-  class _LIBCPP_VISIBLE locale::facet
+    class locale::facet
 
     {
     protected:
-      _LIBCPP_INLINE_VISIBILITY
-      explicit facet()
-        {}
+      explicit
+      __attribute__((always_inline))
+      facet()
+      {
+      }
 
     };
 
-  class _LIBCPP_VISIBLE locale::id
+    class locale::id
     {
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
       once_flag __flag_;
@@ -228,16 +235,28 @@ namespace os
 
       static int32_t __next_id;
     public:
-      _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR id() :__id_(0)
-        {}
+      constexpr
+      __attribute__((always_inline))
+      id()
+          : __id_(0)
+      {
+      }
     private:
-      void __init();
-      void operator=(const id&); // = delete;
-      id(const id&);// = delete;
-    public:// only needed for tests
-      long __get();
+      void
+      __init();
+
+      void
+      operator=(const id&); // = delete;
+
+      id(const id&); // = delete;
+
+    public:
+      // only needed for tests
+      long
+      __get();
 
       friend class locale;
+
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
       friend class locale::__imp;
 #endif
@@ -247,211 +266,209 @@ namespace os
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
-  template <class _Facet>
-  inline _LIBCPP_INLINE_VISIBILITY
-  locale::locale(const locale& __other, _Facet* __f)
-    {
-      __install_ctor(__other, __f, __f ? __f->id.__get() : 0);
-    }
+    template <class _Facet>
+    inline __attribute__((always_inline))
+    locale::locale(const locale& __other, _Facet* __f)
+      {
+        __install_ctor(__other, __f, __f ? __f->id.__get() : 0);
+      }
 
-  template <class _Facet>
-  locale
-  locale::combine(const locale& __other) const
-    {
+    template <class _Facet>
+    locale
+    locale::combine(const locale& __other) const
+      {
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-      if (!os::std::has_facet<_Facet>(__other))
-      throw runtime_error("locale::combine: locale missing facet");
+        if (!os::std::has_facet<_Facet>(__other))
+        throw runtime_error("locale::combine: locale missing facet");
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-      return locale(*this, &const_cast<_Facet&>(_VSTD::use_facet<_Facet>(__other)));
-    }
+        return locale(*this, &const_cast<_Facet&>(os::std::use_facet<_Facet>(__other)));
+      }
 #endif
 
-  template <class _Facet>
-  inline _LIBCPP_INLINE_VISIBILITY
-  bool
-  has_facet(const locale& __l) _NOEXCEPT
-    {
-      return __l.has_facet(_Facet::id);
-    }
-
+    template<class _Facet>
+      inline bool
+      __attribute__((always_inline))
+      has_facet(const locale& __l) noexcept
+      {
+        return __l.has_facet(_Facet::id);
+      }
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-  template <class _Facet>
-  inline _LIBCPP_INLINE_VISIBILITY
-  const _Facet&
-  use_facet(const locale& __l)
-    {
-      return static_cast<const _Facet&>(*__l.use_facet(_Facet::id));
-    }
+    template <class _Facet>
+    inline     const _Facet&
+    __attribute__((always_inline))
+    use_facet(const locale& __l)
+      {
+        return static_cast<const _Facet&>(*__l.use_facet(_Facet::id));
+      }
 #else
 
 #if 0
-  // Forward reference, since definition is in locale.h
-  template<class TChar_T, class _OutputIterator = ostreambuf_iterator<TChar_T> >
-    class _LIBCPP_VISIBLE num_put;
+    // Forward reference, since definition is in locale.h
+    template<class TChar_T, class _OutputIterator = ostreambuf_iterator<TChar_T> >
+    class num_put;
 
-  //extern template class num_put<char> ;
+    //extern template class num_put<char> ;
 
-  extern num_put<char> num_put_char_tiny;
+    extern num_put<char> num_put_char_tiny;
 
-  template <class _Facet>
-  inline _LIBCPP_INLINE_VISIBILITY
-  const _Facet&
-  use_facet(const locale& __l __attribute__((unused)))
-    {
-      return static_cast<const _Facet&>(num_put_char_tiny);
-    }
+    template <class _Facet>
+    inline     const _Facet&
+    __attribute__((always_inline))
+    use_facet(const locale& __l __attribute__((unused)))
+      {
+        return static_cast<const _Facet&>(num_put_char_tiny);
+      }
 #endif
 
 #endif
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
- // template <class TChar_T> class collate;
+    // template <class TChar_T> class collate;
 
-  template <class TChar_T>
-  class _LIBCPP_VISIBLE collate
-  : public locale::facet
-    {
-    public:
-      typedef TChar_T char_type;
-      typedef basic_string<char_type> string_type;
+    template <class TChar_T>
+    class collate
+    : public locale::facet
+      {
+      public:
+        typedef TChar_T char_type;
+        typedef basic_string<char_type> string_type;
 
-      _LIBCPP_INLINE_VISIBILITY
-      explicit collate(size_t __refs = 0)
-      : locale::facet(__refs)
-        {}
+        __attribute__((always_inline))
+        explicit collate(size_t __refs = 0)
+        : locale::facet(__refs)
+          {}
 
-      _LIBCPP_INLINE_VISIBILITY
-      int compare(const char_type* __lo1, const char_type* __hi1,
-          const char_type* __lo2, const char_type* __hi2) const
-        {
-          return do_compare(__lo1, __hi1, __lo2, __hi2);
-        }
+        __attribute__((always_inline))
+        int compare(const char_type* __lo1, const char_type* __hi1,
+            const char_type* __lo2, const char_type* __hi2) const
+          {
+            return do_compare(__lo1, __hi1, __lo2, __hi2);
+          }
 
-      _LIBCPP_INLINE_VISIBILITY
-      string_type transform(const char_type* __lo, const char_type* __hi) const
-        {
-          return do_transform(__lo, __hi);
-        }
+        __attribute__((always_inline))
+        string_type transform(const char_type* __lo, const char_type* __hi) const
+          {
+            return do_transform(__lo, __hi);
+          }
 
-      _LIBCPP_INLINE_VISIBILITY
-      long hash(const char_type* __lo, const char_type* __hi) const
-        {
-          return do_hash(__lo, __hi);
-        }
+        __attribute__((always_inline))
+        long hash(const char_type* __lo, const char_type* __hi) const
+          {
+            return do_hash(__lo, __hi);
+          }
 
-      static locale::id id;
+        static locale::id id;
 
-    protected:
-      ~collate();
-      virtual int do_compare(const char_type* __lo1, const char_type* __hi1,
-          const char_type* __lo2, const char_type* __hi2) const;
-      virtual string_type do_transform(const char_type* __lo, const char_type* __hi) const
-        { return string_type(__lo, __hi);}
-      virtual long do_hash(const char_type* __lo, const char_type* __hi) const;
-    };
+      protected:
+        ~collate();
+        virtual int do_compare(const char_type* __lo1, const char_type* __hi1,
+            const char_type* __lo2, const char_type* __hi2) const;
+        virtual string_type do_transform(const char_type* __lo, const char_type* __hi) const
+          { return string_type(__lo, __hi);}
+        virtual long do_hash(const char_type* __lo, const char_type* __hi) const;
+      };
 
-  template <class TChar_T> locale::id collate<TChar_T>::id;
+    template <class TChar_T> locale::id collate<TChar_T>::id;
 
-  template <class TChar_T>
-  collate<TChar_T>::~collate()
-    {
-    }
+    template <class TChar_T>
+    collate<TChar_T>::~collate()
+      {
+      }
 
-  template <class TChar_T>
-  int
-  collate<TChar_T>::do_compare(const char_type* __lo1, const char_type* __hi1,
-      const char_type* __lo2, const char_type* __hi2) const
-    {
-      for (; __lo2 != __hi2; ++__lo1, ++__lo2)
-        {
-          if (__lo1 == __hi1 || *__lo1 < *__lo2)
-          return -1;
-          if (*__lo2 < *__lo1)
-          return 1;
-        }
-      return __lo1 != __hi1;
-    }
+    template <class TChar_T>
+    int
+    collate<TChar_T>::do_compare(const char_type* __lo1, const char_type* __hi1,
+        const char_type* __lo2, const char_type* __hi2) const
+      {
+        for (; __lo2 != __hi2; ++__lo1, ++__lo2)
+          {
+            if (__lo1 == __hi1 || *__lo1 < *__lo2)
+            return -1;
+            if (*__lo2 < *__lo1)
+            return 1;
+          }
+        return __lo1 != __hi1;
+      }
 
-  template <class TChar_T>
-  long
-  collate<TChar_T>::do_hash(const char_type* __lo, const char_type* __hi) const
-    {
-      size_t __h = 0;
-      const size_t __sr = __CHAR_BIT__ * sizeof(size_t) - 8;
-      const size_t __mask = size_t(0xF) << (__sr + 4);
-      for(const char_type* __p = __lo; __p != __hi; ++__p)
-        {
-          __h = (__h << 4) + static_cast<size_t>(*__p);
-          size_t __g = __h & __mask;
-          __h ^= __g | (__g >> __sr);
-        }
-      return static_cast<long>(__h);
-    }
+    template <class TChar_T>
+    long
+    collate<TChar_T>::do_hash(const char_type* __lo, const char_type* __hi) const
+      {
+        size_t __h = 0;
+        const size_t __sr = __CHAR_BIT__ * sizeof(size_t) - 8;
+        const size_t __mask = size_t(0xF) << (__sr + 4);
+        for(const char_type* __p = __lo; __p != __hi; ++__p)
+          {
+            __h = (__h << 4) + static_cast<size_t>(*__p);
+            size_t __g = __h & __mask;
+            __h ^= __g | (__g >> __sr);
+          }
+        return static_cast<long>(__h);
+      }
 
-  _LIBCPP_EXTERN_TEMPLATE(class _LIBCPP_VISIBLE collate<char>)
-  _LIBCPP_EXTERN_TEMPLATE(class _LIBCPP_VISIBLE collate<wchar_t>)
+    _LIBCPP_EXTERN_TEMPLATE(class collate<char>)
+    _LIBCPP_EXTERN_TEMPLATE(class collate<wchar_t>)
 
 // template <class CharT> class collate_byname;
 
-  template <class TChar_T> class _LIBCPP_VISIBLE collate_byname;
+    template <class TChar_T> class collate_byname;
 
-  template <>
-  class _LIBCPP_VISIBLE collate_byname<char>
-  : public collate<char>
-    {
-      locale_t __l;
-    public:
-      typedef char char_type;
-      typedef basic_string<char_type> string_type;
+    template <>
+    class collate_byname<char>
+    : public collate<char>
+      {
+        locale_t __l;
+      public:
+        typedef char char_type;
+        typedef basic_string<char_type> string_type;
 
-      explicit collate_byname(const char* __n, size_t __refs = 0);
-      explicit collate_byname(const string& __n, size_t __refs = 0);
+        explicit collate_byname(const char* __n, size_t __refs = 0);
+        explicit collate_byname(const string& __n, size_t __refs = 0);
 
-    protected:
-      ~collate_byname();
-      virtual int do_compare(const char_type* __lo1, const char_type* __hi1,
-          const char_type* __lo2, const char_type* __hi2) const;
-      virtual string_type do_transform(const char_type* __lo, const char_type* __hi) const;
-    };
+      protected:
+        ~collate_byname();
+        virtual int do_compare(const char_type* __lo1, const char_type* __hi1,
+            const char_type* __lo2, const char_type* __hi2) const;
+        virtual string_type do_transform(const char_type* __lo, const char_type* __hi) const;
+      };
 
-  template <>
-  class _LIBCPP_VISIBLE collate_byname<wchar_t>
-  : public collate<wchar_t>
-    {
-      locale_t __l;
-    public:
-      typedef wchar_t char_type;
-      typedef basic_string<char_type> string_type;
+    template <>
+    class collate_byname<wchar_t>
+    : public collate<wchar_t>
+      {
+        locale_t __l;
+      public:
+        typedef wchar_t char_type;
+        typedef basic_string<char_type> string_type;
 
-      explicit collate_byname(const char* __n, size_t __refs = 0);
-      explicit collate_byname(const string& __n, size_t __refs = 0);
+        explicit collate_byname(const char* __n, size_t __refs = 0);
+        explicit collate_byname(const string& __n, size_t __refs = 0);
 
-    protected:
-      ~collate_byname();
+      protected:
+        ~collate_byname();
 
-      virtual int do_compare(const char_type* __lo1, const char_type* __hi1,
-          const char_type* __lo2, const char_type* __hi2) const;
-      virtual string_type do_transform(const char_type* __lo, const char_type* __hi) const;
-    };
+        virtual int do_compare(const char_type* __lo1, const char_type* __hi1,
+            const char_type* __lo2, const char_type* __hi2) const;
+        virtual string_type do_transform(const char_type* __lo, const char_type* __hi) const;
+      };
 
-  template <class TChar_T, class TTraits_T, class _Allocator>
-  bool
-  locale::operator()(const basic_string<TChar_T, TTraits_T, _Allocator>& __x,
-      const basic_string<TChar_T, TTraits_T, _Allocator>& __y) const
-    {
-      return _VSTD::use_facet<_VSTD::collate<TChar_T> >(*this).compare(
-          __x.data(), __x.data() + __x.size(),
-          __y.data(), __y.data() + __y.size()) < 0;
-    }
+    template <class TChar_T, class TTraits_T, class _Allocator>
+    bool
+    locale::operator()(const basic_string<TChar_T, TTraits_T, _Allocator>& __x,
+        const basic_string<TChar_T, TTraits_T, _Allocator>& __y) const
+      {
+        return os::std::use_facet<os::std::collate<TChar_T> >(*this).compare(
+            __x.data(), __x.data() + __x.size(),
+            __y.data(), __y.data() + __y.size()) < 0;
+      }
 
 #endif
 
+    // template <class charT> class ctype
 
- // template <class charT> class ctype
-
-  class _LIBCPP_VISIBLE ctype_base
+    class ctype_base
     {
     public:
 #if 0 //defined(__GLIBC__)
@@ -508,107 +525,110 @@ namespace os
       static const mask blank = _ISBLANK;
 #else  // __GLIBC__ || _WIN32 || __APPLE__ || __FreeBSD__ || __sun__
       typedef unsigned long mask;
-      static const mask space = 1<<0;
-      static const mask print = 1<<1;
-      static const mask cntrl = 1<<2;
-      static const mask upper = 1<<3;
-      static const mask lower = 1<<4;
-      static const mask alpha = 1<<5;
-      static const mask digit = 1<<6;
-      static const mask punct = 1<<7;
-      static const mask xdigit = 1<<8;
-      static const mask blank = 1<<9;
+      static const mask space = 1 << 0;
+      static const mask print = 1 << 1;
+      static const mask cntrl = 1 << 2;
+      static const mask upper = 1 << 3;
+      static const mask lower = 1 << 4;
+      static const mask alpha = 1 << 5;
+      static const mask digit = 1 << 6;
+      static const mask punct = 1 << 7;
+      static const mask xdigit = 1 << 8;
+      static const mask blank = 1 << 9;
 #endif  // __GLIBC__ || _WIN32 || __APPLE__ || __FreeBSD__
       static const mask alnum = alpha | digit;
       static const mask graph = alnum | punct;
 
-      _LIBCPP_ALWAYS_INLINE ctype_base()
-        {}
+      __attribute__((always_inline))
+      ctype_base()
+      {
+      }
     };
 
-  template <class TChar_T> class _LIBCPP_VISIBLE ctype;
+    template<class TChar_T>
+      class ctype;
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
   template <>
-  class _LIBCPP_VISIBLE ctype<wchar_t>
+  class ctype<wchar_t>
   : public locale::facet,
 public ctype_base
     {
     public:
       typedef wchar_t char_type;
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       explicit ctype(size_t __refs = 0)
       : locale::facet(__refs)
         {}
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       bool is(mask __m, char_type __c) const
         {
           return do_is(__m, __c);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* is(const char_type* __low, const char_type* __high, mask* __vec) const
         {
           return do_is(__low, __high, __vec);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* scan_is(mask __m, const char_type* __low, const char_type* __high) const
         {
           return do_scan_is(__m, __low, __high);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* scan_not(mask __m, const char_type* __low, const char_type* __high) const
         {
           return do_scan_not(__m, __low, __high);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       char_type toupper(char_type __c) const
         {
           return do_toupper(__c);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* toupper(char_type* __low, const char_type* __high) const
         {
           return do_toupper(__low, __high);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       char_type tolower(char_type __c) const
         {
           return do_tolower(__c);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* tolower(char_type* __low, const char_type* __high) const
         {
           return do_tolower(__low, __high);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       char_type widen(char __c) const
         {
           return do_widen(__c);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char* widen(const char* __low, const char* __high, char_type* __to) const
         {
           return do_widen(__low, __high, __to);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       char narrow(char_type __c, char __dfault) const
         {
           return do_narrow(__c, __dfault);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* narrow(const char_type* __low, const char_type* __high, char __dfault, char* __to) const
         {
           return do_narrow(__low, __high, __dfault, __to);
@@ -633,7 +653,7 @@ public ctype_base
     };
 
   template <>
-  class _LIBCPP_VISIBLE ctype<char>
+  class ctype<char>
   : public locale::facet, public ctype_base
     {
       const mask* __tab_;
@@ -643,13 +663,13 @@ public ctype_base
 
       explicit ctype(const mask* __tab = 0, bool __del = false, size_t __refs = 0);
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       bool is(mask __m, char_type __c) const
         {
           return isascii(__c) ? __tab_[static_cast<int>(__c)] & __m : false;
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* is(const char_type* __low, const char_type* __high, mask* __vec) const
         {
           for (; __low != __high; ++__low, ++__vec)
@@ -657,7 +677,7 @@ public ctype_base
           return __low;
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* scan_is (mask __m, const char_type* __low, const char_type* __high) const
         {
           for (; __low != __high; ++__low)
@@ -666,7 +686,7 @@ public ctype_base
           return __low;
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* scan_not(mask __m, const char_type* __low, const char_type* __high) const
         {
           for (; __low != __high; ++__low)
@@ -675,49 +695,49 @@ public ctype_base
           return __low;
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       char_type toupper(char_type __c) const
         {
           return do_toupper(__c);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* toupper(char_type* __low, const char_type* __high) const
         {
           return do_toupper(__low, __high);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       char_type tolower(char_type __c) const
         {
           return do_tolower(__c);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char_type* tolower(char_type* __low, const char_type* __high) const
         {
           return do_tolower(__low, __high);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       char_type widen(char __c) const
         {
           return do_widen(__c);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char* widen(const char* __low, const char* __high, char_type* __to) const
         {
           return do_widen(__low, __high, __to);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       char narrow(char_type __c, char __dfault) const
         {
           return do_narrow(__c, __dfault);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       const char* narrow(const char_type* __low, const char_type* __high, char __dfault, char* __to) const
         {
           return do_narrow(__low, __high, __dfault, __to);
@@ -730,12 +750,12 @@ public ctype_base
 #else
       static const size_t table_size = 256;  // FIXME: Don't hardcode this.
 #endif
-      _LIBCPP_ALWAYS_INLINE const mask* table() const _NOEXCEPT
+      __attribute__((always_inline)) const mask* table() const noexcept
         { return __tab_;}
-      static const mask* classic_table() _NOEXCEPT;
+      static const mask* classic_table() noexcept;
 #if defined(__GLIBC__)
-      static const int* __classic_upper_table() _NOEXCEPT;
-      static const int* __classic_lower_table() _NOEXCEPT;
+      static const int* __classic_upper_table() noexcept;
+      static const int* __classic_lower_table() noexcept;
 #endif
 
     protected:
@@ -750,12 +770,12 @@ public ctype_base
       virtual const char* do_narrow(const char_type* __low, const char_type* __high, char __dfault, char* __to) const;
     };
 
-// template <class CharT> class ctype_byname;
+  // template <class CharT> class ctype_byname;
 
-  template <class TChar_T> class _LIBCPP_VISIBLE ctype_byname;
+  template <class TChar_T> class ctype_byname;
 
   template <>
-  class _LIBCPP_VISIBLE ctype_byname<char>
+  class ctype_byname<char>
   : public ctype<char>
     {
       locale_t __l;
@@ -773,7 +793,7 @@ public ctype_base
     };
 
   template <>
-  class _LIBCPP_VISIBLE ctype_byname<wchar_t>
+  class ctype_byname<wchar_t>
   : public ctype<wchar_t>
     {
       locale_t __l;
@@ -799,7 +819,7 @@ public ctype_base
     };
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   isspace(TChar_T __c, const locale& __loc)
     {
@@ -807,7 +827,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   isprint(TChar_T __c, const locale& __loc)
     {
@@ -815,7 +835,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   iscntrl(TChar_T __c, const locale& __loc)
     {
@@ -823,7 +843,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   isupper(TChar_T __c, const locale& __loc)
     {
@@ -831,7 +851,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   islower(TChar_T __c, const locale& __loc)
     {
@@ -839,7 +859,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   isalpha(TChar_T __c, const locale& __loc)
     {
@@ -847,7 +867,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   isdigit(TChar_T __c, const locale& __loc)
     {
@@ -855,7 +875,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   ispunct(TChar_T __c, const locale& __loc)
     {
@@ -863,7 +883,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   isxdigit(TChar_T __c, const locale& __loc)
     {
@@ -871,7 +891,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   isalnum(TChar_T __c, const locale& __loc)
     {
@@ -879,7 +899,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   bool
   isgraph(TChar_T __c, const locale& __loc)
     {
@@ -887,7 +907,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   TChar_T
   toupper(TChar_T __c, const locale& __loc)
     {
@@ -895,7 +915,7 @@ public ctype_base
     }
 
   template <class TChar_T>
-  inline _LIBCPP_INLINE_VISIBILITY
+  inline __attribute__((always_inline))
   TChar_T
   tolower(TChar_T __c, const locale& __loc)
     {
@@ -904,10 +924,10 @@ public ctype_base
 
 // codecvt_base
 
-  class _LIBCPP_VISIBLE codecvt_base
+  class codecvt_base
     {
     public:
-      _LIBCPP_ALWAYS_INLINE codecvt_base()
+      __attribute__((always_inline)) codecvt_base()
         {}
       enum result
         { ok, partial, error, noconv};
@@ -915,12 +935,12 @@ public ctype_base
 
 // template <class internT, class externT, class stateT> class codecvt;
 
-  template <class _InternT, class _ExternT, class TState_T> class _LIBCPP_VISIBLE codecvt;
+  template <class _InternT, class _ExternT, class TState_T> class codecvt;
 
 // template <> class codecvt<char, char, mbstate_t>
 
   template <>
-  class _LIBCPP_VISIBLE codecvt<char, char, mbstate_t>
+  class codecvt<char, char, mbstate_t>
   : public locale::facet,
 public codecvt_base
     {
@@ -929,12 +949,12 @@ public codecvt_base
       typedef char extern_type;
       typedef mbstate_t state_type;
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       explicit codecvt(size_t __refs = 0)
       : locale::facet(__refs)
         {}
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result out(state_type& __st,
           const intern_type* __frm, const intern_type* __frm_end, const intern_type*& __frm_nxt,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
@@ -942,14 +962,14 @@ public codecvt_base
           return do_out(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result unshift(state_type& __st,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
         {
           return do_unshift(__st, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result in(state_type& __st,
           const extern_type* __frm, const extern_type* __frm_end, const extern_type*& __frm_nxt,
           intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const
@@ -957,26 +977,26 @@ public codecvt_base
           return do_in(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      int encoding() const _NOEXCEPT
+      __attribute__((always_inline))
+      int encoding() const noexcept
         {
           return do_encoding();
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      bool always_noconv() const _NOEXCEPT
+      __attribute__((always_inline))
+      bool always_noconv() const noexcept
         {
           return do_always_noconv();
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       int length(state_type& __st, const extern_type* __frm, const extern_type* __end, size_t __mx) const
         {
           return do_length(__st, __frm, __end, __mx);
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      int max_length() const _NOEXCEPT
+      __attribute__((always_inline))
+      int max_length() const noexcept
         {
           return do_max_length();
         }
@@ -984,7 +1004,7 @@ public codecvt_base
       static locale::id id;
 
     protected:
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       explicit codecvt(const char*, size_t __refs = 0)
       : locale::facet(__refs)
         {}
@@ -999,16 +1019,16 @@ public codecvt_base
           intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const;
       virtual result do_unshift(state_type& __st,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const;
-      virtual int do_encoding() const _NOEXCEPT;
-      virtual bool do_always_noconv() const _NOEXCEPT;
+      virtual int do_encoding() const noexcept;
+      virtual bool do_always_noconv() const noexcept;
       virtual int do_length(state_type& __st, const extern_type* __frm, const extern_type* __end, size_t __mx) const;
-      virtual int do_max_length() const _NOEXCEPT;
+      virtual int do_max_length() const noexcept;
     };
 
 // template <> class codecvt<wchar_t, char, mbstate_t>
 
   template <>
-  class _LIBCPP_VISIBLE codecvt<wchar_t, char, mbstate_t>
+  class codecvt<wchar_t, char, mbstate_t>
   : public locale::facet,
 public codecvt_base
     {
@@ -1020,7 +1040,7 @@ public codecvt_base
 
       explicit codecvt(size_t __refs = 0);
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result out(state_type& __st,
           const intern_type* __frm, const intern_type* __frm_end, const intern_type*& __frm_nxt,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
@@ -1028,14 +1048,14 @@ public codecvt_base
           return do_out(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result unshift(state_type& __st,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
         {
           return do_unshift(__st, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result in(state_type& __st,
           const extern_type* __frm, const extern_type* __frm_end, const extern_type*& __frm_nxt,
           intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const
@@ -1043,26 +1063,26 @@ public codecvt_base
           return do_in(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      int encoding() const _NOEXCEPT
+      __attribute__((always_inline))
+      int encoding() const noexcept
         {
           return do_encoding();
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      bool always_noconv() const _NOEXCEPT
+      __attribute__((always_inline))
+      bool always_noconv() const noexcept
         {
           return do_always_noconv();
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       int length(state_type& __st, const extern_type* __frm, const extern_type* __end, size_t __mx) const
         {
           return do_length(__st, __frm, __end, __mx);
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      int max_length() const _NOEXCEPT
+      __attribute__((always_inline))
+      int max_length() const noexcept
         {
           return do_max_length();
         }
@@ -1082,16 +1102,16 @@ public codecvt_base
           intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const;
       virtual result do_unshift(state_type& __st,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const;
-      virtual int do_encoding() const _NOEXCEPT;
-      virtual bool do_always_noconv() const _NOEXCEPT;
+      virtual int do_encoding() const noexcept;
+      virtual bool do_always_noconv() const noexcept;
       virtual int do_length(state_type&, const extern_type* __frm, const extern_type* __end, size_t __mx) const;
-      virtual int do_max_length() const _NOEXCEPT;
+      virtual int do_max_length() const noexcept;
     };
 
 // template <> class codecvt<char16_t, char, mbstate_t>
 
   template <>
-  class _LIBCPP_VISIBLE codecvt<char16_t, char, mbstate_t>
+  class codecvt<char16_t, char, mbstate_t>
   : public locale::facet,
 public codecvt_base
     {
@@ -1100,12 +1120,12 @@ public codecvt_base
       typedef char extern_type;
       typedef mbstate_t state_type;
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       explicit codecvt(size_t __refs = 0)
       : locale::facet(__refs)
         {}
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result out(state_type& __st,
           const intern_type* __frm, const intern_type* __frm_end, const intern_type*& __frm_nxt,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
@@ -1113,14 +1133,14 @@ public codecvt_base
           return do_out(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result unshift(state_type& __st,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
         {
           return do_unshift(__st, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result in(state_type& __st,
           const extern_type* __frm, const extern_type* __frm_end, const extern_type*& __frm_nxt,
           intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const
@@ -1128,26 +1148,26 @@ public codecvt_base
           return do_in(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      int encoding() const _NOEXCEPT
+      __attribute__((always_inline))
+      int encoding() const noexcept
         {
           return do_encoding();
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      bool always_noconv() const _NOEXCEPT
+      __attribute__((always_inline))
+      bool always_noconv() const noexcept
         {
           return do_always_noconv();
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       int length(state_type& __st, const extern_type* __frm, const extern_type* __end, size_t __mx) const
         {
           return do_length(__st, __frm, __end, __mx);
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      int max_length() const _NOEXCEPT
+      __attribute__((always_inline))
+      int max_length() const noexcept
         {
           return do_max_length();
         }
@@ -1155,7 +1175,7 @@ public codecvt_base
       static locale::id id;
 
     protected:
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       explicit codecvt(const char*, size_t __refs = 0)
       : locale::facet(__refs)
         {}
@@ -1170,16 +1190,16 @@ public codecvt_base
           intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const;
       virtual result do_unshift(state_type& __st,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const;
-      virtual int do_encoding() const _NOEXCEPT;
-      virtual bool do_always_noconv() const _NOEXCEPT;
+      virtual int do_encoding() const noexcept;
+      virtual bool do_always_noconv() const noexcept;
       virtual int do_length(state_type&, const extern_type* __frm, const extern_type* __end, size_t __mx) const;
-      virtual int do_max_length() const _NOEXCEPT;
+      virtual int do_max_length() const noexcept;
     };
 
 // template <> class codecvt<char32_t, char, mbstate_t>
 
   template <>
-  class _LIBCPP_VISIBLE codecvt<char32_t, char, mbstate_t>
+  class codecvt<char32_t, char, mbstate_t>
   : public locale::facet,
 public codecvt_base
     {
@@ -1188,12 +1208,12 @@ public codecvt_base
       typedef char extern_type;
       typedef mbstate_t state_type;
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       explicit codecvt(size_t __refs = 0)
       : locale::facet(__refs)
         {}
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result out(state_type& __st,
           const intern_type* __frm, const intern_type* __frm_end, const intern_type*& __frm_nxt,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
@@ -1201,14 +1221,14 @@ public codecvt_base
           return do_out(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result unshift(state_type& __st,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const
         {
           return do_unshift(__st, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       result in(state_type& __st,
           const extern_type* __frm, const extern_type* __frm_end, const extern_type*& __frm_nxt,
           intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const
@@ -1216,26 +1236,26 @@ public codecvt_base
           return do_in(__st, __frm, __frm_end, __frm_nxt, __to, __to_end, __to_nxt);
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      int encoding() const _NOEXCEPT
+      __attribute__((always_inline))
+      int encoding() const noexcept
         {
           return do_encoding();
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      bool always_noconv() const _NOEXCEPT
+      __attribute__((always_inline))
+      bool always_noconv() const noexcept
         {
           return do_always_noconv();
         }
 
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       int length(state_type& __st, const extern_type* __frm, const extern_type* __end, size_t __mx) const
         {
           return do_length(__st, __frm, __end, __mx);
         }
 
-      _LIBCPP_ALWAYS_INLINE
-      int max_length() const _NOEXCEPT
+      __attribute__((always_inline))
+      int max_length() const noexcept
         {
           return do_max_length();
         }
@@ -1243,7 +1263,7 @@ public codecvt_base
       static locale::id id;
 
     protected:
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       explicit codecvt(const char*, size_t __refs = 0)
       : locale::facet(__refs)
         {}
@@ -1258,24 +1278,24 @@ public codecvt_base
           intern_type* __to, intern_type* __to_end, intern_type*& __to_nxt) const;
       virtual result do_unshift(state_type& __st,
           extern_type* __to, extern_type* __to_end, extern_type*& __to_nxt) const;
-      virtual int do_encoding() const _NOEXCEPT;
-      virtual bool do_always_noconv() const _NOEXCEPT;
+      virtual int do_encoding() const noexcept;
+      virtual bool do_always_noconv() const noexcept;
       virtual int do_length(state_type&, const extern_type* __frm, const extern_type* __end, size_t __mx) const;
-      virtual int do_max_length() const _NOEXCEPT;
+      virtual int do_max_length() const noexcept;
     };
 
 // template <class _InternT, class _ExternT, class TState_T> class codecvt_byname
 
   template <class _InternT, class _ExternT, class TState_T>
-  class _LIBCPP_VISIBLE codecvt_byname
+  class codecvt_byname
   : public codecvt<_InternT, _ExternT, TState_T>
     {
     public:
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       explicit codecvt_byname(const char* __nm, size_t __refs = 0)
       : codecvt<_InternT, _ExternT, TState_T>(__nm, __refs)
         {}
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       explicit codecvt_byname(const string& __nm, size_t __refs = 0)
       : codecvt<_InternT, _ExternT, TState_T>(__nm.c_str(), __refs)
         {}
@@ -1293,7 +1313,7 @@ public codecvt_base
   _LIBCPP_EXTERN_TEMPLATE(class codecvt_byname<char16_t, char, mbstate_t>)
   _LIBCPP_EXTERN_TEMPLATE(class codecvt_byname<char32_t, char, mbstate_t>)
 
-  _LIBCPP_VISIBLE void __throw_runtime_error(const char*);
+  void __throw_runtime_error(const char*);
 
   template <size_t _Np>
   struct __narrow_to_utf8
@@ -1307,7 +1327,7 @@ public codecvt_base
   struct __narrow_to_utf8<8>
     {
       template <class _OutputIterator, class TChar_T>
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       _OutputIterator
       operator()(_OutputIterator __s, const TChar_T* __wb, const TChar_T* __we) const
         {
@@ -1321,14 +1341,14 @@ public codecvt_base
   struct __narrow_to_utf8<16>
   : public codecvt<char16_t, char, mbstate_t>
     {
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       __narrow_to_utf8() : codecvt<char16_t, char, mbstate_t>(1)
         {}
 
       ~__narrow_to_utf8();
 
       template <class _OutputIterator, class TChar_T>
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       _OutputIterator
       operator()(_OutputIterator __s, const TChar_T* __wb, const TChar_T* __we) const
         {
@@ -1356,14 +1376,14 @@ public codecvt_base
   struct __narrow_to_utf8<32>
   : public codecvt<char32_t, char, mbstate_t>
     {
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       __narrow_to_utf8() : codecvt<char32_t, char, mbstate_t>(1)
         {}
 
       ~__narrow_to_utf8();
 
       template <class _OutputIterator, class TChar_T>
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       _OutputIterator
       operator()(_OutputIterator __s, const TChar_T* __wb, const TChar_T* __we) const
         {
@@ -1399,7 +1419,7 @@ public codecvt_base
   struct __widen_from_utf8<8>
     {
       template <class _OutputIterator>
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       _OutputIterator
       operator()(_OutputIterator __s, const char* __nb, const char* __ne) const
         {
@@ -1413,14 +1433,14 @@ public codecvt_base
   struct __widen_from_utf8<16>
   : public codecvt<char16_t, char, mbstate_t>
     {
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       __widen_from_utf8() : codecvt<char16_t, char, mbstate_t>(1)
         {}
 
       ~__widen_from_utf8();
 
       template <class _OutputIterator>
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       _OutputIterator
       operator()(_OutputIterator __s, const char* __nb, const char* __ne) const
         {
@@ -1448,14 +1468,14 @@ public codecvt_base
   struct __widen_from_utf8<32>
   : public codecvt<char32_t, char, mbstate_t>
     {
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       __widen_from_utf8() : codecvt<char32_t, char, mbstate_t>(1)
         {}
 
       ~__widen_from_utf8();
 
       template <class _OutputIterator>
-      _LIBCPP_ALWAYS_INLINE
+      __attribute__((always_inline))
       _OutputIterator
       operator()(_OutputIterator __s, const char* __nb, const char* __ne) const
         {
@@ -1481,10 +1501,10 @@ public codecvt_base
 
 // template <class charT> class numpunct
 
-  template <class TChar_T> class _LIBCPP_VISIBLE numpunct;
+  template <class TChar_T> class numpunct;
 
   template <>
-  class _LIBCPP_VISIBLE numpunct<char>
+  class numpunct<char>
   : public locale::facet
     {
     public:
@@ -1493,15 +1513,15 @@ public codecvt_base
 
       explicit numpunct(size_t __refs = 0);
 
-      _LIBCPP_ALWAYS_INLINE char_type decimal_point() const
+      __attribute__((always_inline)) char_type decimal_point() const
         { return do_decimal_point();}
-      _LIBCPP_ALWAYS_INLINE char_type thousands_sep() const
+      __attribute__((always_inline)) char_type thousands_sep() const
         { return do_thousands_sep();}
-      _LIBCPP_ALWAYS_INLINE string grouping() const
+      __attribute__((always_inline)) string grouping() const
         { return do_grouping();}
-      _LIBCPP_ALWAYS_INLINE string_type truename() const
+      __attribute__((always_inline)) string_type truename() const
         { return do_truename();}
-      _LIBCPP_ALWAYS_INLINE string_type falsename() const
+      __attribute__((always_inline)) string_type falsename() const
         { return do_falsename();}
 
       static locale::id id;
@@ -1520,7 +1540,7 @@ public codecvt_base
     };
 
   template <>
-  class _LIBCPP_VISIBLE numpunct<wchar_t>
+  class numpunct<wchar_t>
   : public locale::facet
     {
     public:
@@ -1529,15 +1549,15 @@ public codecvt_base
 
       explicit numpunct(size_t __refs = 0);
 
-      _LIBCPP_ALWAYS_INLINE char_type decimal_point() const
+      __attribute__((always_inline)) char_type decimal_point() const
         { return do_decimal_point();}
-      _LIBCPP_ALWAYS_INLINE char_type thousands_sep() const
+      __attribute__((always_inline)) char_type thousands_sep() const
         { return do_thousands_sep();}
-      _LIBCPP_ALWAYS_INLINE string grouping() const
+      __attribute__((always_inline)) string grouping() const
         { return do_grouping();}
-      _LIBCPP_ALWAYS_INLINE string_type truename() const
+      __attribute__((always_inline)) string_type truename() const
         { return do_truename();}
-      _LIBCPP_ALWAYS_INLINE string_type falsename() const
+      __attribute__((always_inline)) string_type falsename() const
         { return do_falsename();}
 
       static locale::id id;
@@ -1557,10 +1577,10 @@ public codecvt_base
 
 // template <class charT> class numpunct_byname
 
-  template <class charT> class _LIBCPP_VISIBLE numpunct_byname;
+  template <class charT> class numpunct_byname;
 
   template <>
-  class _LIBCPP_VISIBLE numpunct_byname<char>
+  class numpunct_byname<char>
   : public numpunct<char>
     {
     public:
@@ -1578,7 +1598,7 @@ public codecvt_base
     };
 
   template <>
-  class _LIBCPP_VISIBLE numpunct_byname<wchar_t>
+  class numpunct_byname<wchar_t>
   : public numpunct<wchar_t>
     {
     public:
@@ -1597,7 +1617,7 @@ public codecvt_base
 #endif
 
 //_LIBCPP_END_NAMESPACE_STD
-}
-}
+} // namespace std
+} // namespace os
 
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_LOCALE_H_

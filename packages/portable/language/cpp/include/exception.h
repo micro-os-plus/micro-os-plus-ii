@@ -29,7 +29,7 @@ namespace os
     class exception
     {
     public:
-      __attribute__ ((__always_inline__))
+      __attribute__((always_inline))
       exception() noexcept
       {
       }
@@ -44,7 +44,7 @@ namespace os
     class bad_exception : public exception
     {
     public:
-      __attribute__ ((__always_inline__))
+      __attribute__((always_inline))
       bad_exception() noexcept
       {
       }
@@ -68,7 +68,7 @@ namespace os
     unexpected_handler
     get_unexpected() noexcept;
 
-    void __attribute__ ((noreturn))
+    void __attribute__((noreturn))
     unexpected();
 
     typedef void
@@ -97,23 +97,23 @@ namespace os
     {
       void* __ptr_;
     public:
-      __attribute__ ((__always_inline__)) exception_ptr() noexcept : __ptr_()
+      __attribute__((always_inline)) exception_ptr() noexcept : __ptr_()
         {}
-      __attribute__ ((__always_inline__)) exception_ptr(nullptr_t) noexcept : __ptr_()
+      __attribute__((always_inline)) exception_ptr(nullptr_t) noexcept : __ptr_()
         {}
       exception_ptr(const exception_ptr&) noexcept;
       exception_ptr& operator=(const exception_ptr&) noexcept;
       ~exception_ptr() noexcept;
 
-      __attribute__ ((__always_inline__))
+      __attribute__((always_inline))
       _LIBCPP_EXPLICIT
       operator bool() const noexcept
         { return __ptr_ != nullptr;}
 
-      friend __attribute__ ((__always_inline__))
+      friend __attribute__((always_inline))
       bool operator==(const exception_ptr& __x, const exception_ptr& __y) noexcept
         { return __x.__ptr_ == __y.__ptr_;}
-      friend __attribute__ ((__always_inline__))
+      friend __attribute__((always_inline))
       bool operator!=(const exception_ptr& __x, const exception_ptr& __y) noexcept
         { return !(__x == __y);}
 
@@ -151,7 +151,7 @@ namespace os
 
 // access functions
       _LIBCPP_NORETURN void rethrow_nested() const;
-      __attribute__ ((__always_inline__)) exception_ptr nested_ptr() const noexcept
+      __attribute__((always_inline)) exception_ptr nested_ptr() const noexcept
         { return __ptr_;}
     };
 
@@ -160,7 +160,7 @@ namespace os
   : public _Tp,
 public nested_exception
     {
-      __attribute__ ((__always_inline__)) explicit __nested(const _Tp& __t) : _Tp(__t)
+      __attribute__((always_inline)) explicit __nested(const _Tp& __t) : _Tp(__t)
         {}
     };
 
@@ -203,7 +203,7 @@ public nested_exception
     }
 
   template <class _Ep>
-  inline __attribute__ ((__always_inline__))
+  inline __attribute__((always_inline))
   void
   rethrow_if_nested(const _Ep& __e, typename enable_if<
       is_polymorphic<_Ep>::value
@@ -215,7 +215,7 @@ public nested_exception
     }
 
   template <class _Ep>
-  inline __attribute__ ((__always_inline__))
+  inline __attribute__((always_inline))
   void
   rethrow_if_nested(const _Ep&, typename enable_if<
       !is_polymorphic<_Ep>::value

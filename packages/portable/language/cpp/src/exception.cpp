@@ -61,7 +61,7 @@ namespace os
 #endif
 
     void
-    __attribute__ ((noreturn))
+    __attribute__((noreturn))
     terminate() noexcept
     {
 #if 0

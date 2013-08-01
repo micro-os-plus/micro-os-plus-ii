@@ -37,6 +37,8 @@ using namespace std;
 #include "portable/language/cpp/include/string.h"
 #include "portable/language/cpp/include/climits.h"
 
+#include "portable/language/cpp/include/malloc.h"
+
 using namespace os::std;
 
 #endif

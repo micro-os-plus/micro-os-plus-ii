@@ -31,7 +31,7 @@ namespace os
         const _Ep* __begin_;
         size_t __size_;
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         initializer_list(const _Ep* __b, size_t __s)
 noexcept            //
             : __begin_(__b),
@@ -46,29 +46,29 @@ noexcept            //
             typedef const _Ep* iterator;
             typedef const _Ep* const_iterator;
 
-            __attribute__ ((always_inline))
+            __attribute__((always_inline))
             initializer_list() noexcept : __begin_(nullptr), __size_(0)
               {}
 
             size_t
-            __attribute__ ((always_inline))
+            __attribute__((always_inline))
             size() const noexcept
               { return __size_;}
 
             const _Ep*
-            __attribute__ ((always_inline))
+            __attribute__((always_inline))
             begin() const noexcept
               { return __begin_;}
 
             const _Ep*
-            __attribute__ ((always_inline))
+            __attribute__((always_inline))
             end() const noexcept
               { return __begin_ + __size_;}
           };
 
     template<class _Ep>
       inline const _Ep*
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       begin(initializer_list<_Ep> __il) noexcept
       {
         return __il.begin();
@@ -76,7 +76,7 @@ noexcept            //
 
     template<class _Ep>
       inline const _Ep*
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       end(initializer_list<_Ep> __il) noexcept
       {
         return __il.end();

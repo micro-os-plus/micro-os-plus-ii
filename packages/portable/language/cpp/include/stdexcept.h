@@ -73,12 +73,12 @@ namespace os
     class domain_error : public logic_error
     {
     public:
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       domain_error(const string& __s)
           : logic_error(__s)
       {
       }
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       domain_error(const char* __s)
           : logic_error(__s)
       {
@@ -91,12 +91,12 @@ namespace os
     class invalid_argument : public logic_error
     {
     public:
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       invalid_argument(const string& __s)
           : logic_error(__s)
       {
       }
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       invalid_argument(const char* __s)
           : logic_error(__s)
       {
@@ -109,12 +109,12 @@ namespace os
     class length_error : public logic_error
     {
     public:
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       length_error(const string& __s)
           : logic_error(__s)
       {
       }
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       length_error(const char* __s)
           : logic_error(__s)
       {
@@ -127,12 +127,12 @@ namespace os
     class out_of_range : public logic_error
     {
     public:
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       out_of_range(const string& __s)
           : logic_error(__s)
       {
       }
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       out_of_range(const char* __s)
           : logic_error(__s)
       {
@@ -145,12 +145,12 @@ namespace os
     class range_error : public runtime_error
     {
     public:
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       range_error(const string& __s)
           : runtime_error(__s)
       {
       }
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       range_error(const char* __s)
           : runtime_error(__s)
       {
@@ -163,12 +163,12 @@ namespace os
     class overflow_error : public runtime_error
     {
     public:
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       overflow_error(const string& __s)
           : runtime_error(__s)
       {
       }
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       overflow_error(const char* __s)
           : runtime_error(__s)
       {
@@ -181,12 +181,12 @@ namespace os
     class underflow_error : public runtime_error
     {
     public:
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       underflow_error(const string& __s)
           : runtime_error(__s)
       {
       }
-      __attribute__ ((always_inline)) explicit
+      __attribute__((always_inline)) explicit
       underflow_error(const char* __s)
           : runtime_error(__s)
       {

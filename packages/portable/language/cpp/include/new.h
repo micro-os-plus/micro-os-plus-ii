@@ -222,7 +222,7 @@ operator delete[](void* ptr, const os::std::nothrow_t&) noexcept;
 /// \note A C++ program may not define functions that displace the
 /// versions in the Standard C++ library (17.6.4)
 inline void*
-__attribute__ ((__always_inline__))
+__attribute__((always_inline))
 operator new(os::std::size_t size __attribute__((unused)), void* ptr) noexcept
 {
 return ptr;
@@ -239,7 +239,7 @@ return ptr;
 /// \note A C++ program may not define functions that displace the
 /// versions in the Standard C++ library (17.6.4)
 inline void*
-__attribute__ ((__always_inline__))
+__attribute__((always_inline))
 operator new[](os::std::size_t size __attribute__((unused)), void* ptr) noexcept
 {
 return ptr;
@@ -253,7 +253,7 @@ return ptr;
 /// \note A C++ program may not define functions that displace the
 /// versions in the Standard C++ library (17.6.4)
 inline void
-__attribute__ ((__always_inline__))
+__attribute__((always_inline))
 operator delete(void*, void*) noexcept
 {
 }
@@ -266,7 +266,7 @@ operator delete(void*, void*) noexcept
 /// \note A C++ program may not define functions that displace the
 /// versions in the Standard C++ library (17.6.4)
 inline void
-__attribute__ ((__always_inline__))
+__attribute__((always_inline))
 operator delete[](void*, void*) noexcept
 {
 }

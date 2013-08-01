@@ -93,21 +93,21 @@ namespace os
       virtual string
       message(int __ev) const = 0;
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator==(const error_category& __rhs) const noexcept
       {
         return this == &__rhs;
       }
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator!=(const error_category& __rhs) const noexcept
       {
         return !(*this == __rhs);
       }
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator<(const error_category& __rhs) const noexcept
       {
@@ -149,19 +149,19 @@ noexcept          : //
 
             }
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           error_condition(int __val, const error_category& __cat) noexcept
           : __val_(__val), __cat_(&__cat)
             {}
 
           template <class _Ep>
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           error_condition(_Ep __e,
               typename enable_if<is_error_condition_enum<_Ep>::value>::type* = 0
           ) noexcept
             { *this = make_error_condition(__e);}
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           void assign(int __val, const error_category& __cat) noexcept
             {
               __val_ = __val;
@@ -169,7 +169,7 @@ noexcept          : //
             }
 
           template <class _Ep>
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           typename enable_if
           <
           is_error_condition_enum<_Ep>::value,
@@ -178,23 +178,23 @@ noexcept          : //
           operator=(_Ep __e) noexcept
             { *this = make_error_condition(__e); return *this;}
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           void clear() noexcept
             {
               __val_ = 0;
               __cat_ = &generic_category();
             }
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           int value() const noexcept
             { return __val_;}
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           const error_category& category() const noexcept
             { return *__cat_;}
           string message() const;
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           explicit
           operator bool() const noexcept
             { return __val_ != 0;}
@@ -202,14 +202,14 @@ noexcept          : //
 
 #pragma GCC diagnostic pop
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     error_condition
     make_error_condition(errc __e) noexcept
     {
       return error_condition(static_cast<int>(__e), generic_category());
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator<(const error_condition& __x, const error_condition& __y) noexcept
     {
@@ -228,24 +228,24 @@ noexcept          : //
       int __val_;
       const error_category* __cat_;
     public:
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       error_code()
 noexcept          : __val_(0), __cat_(&system_category())
             {}
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           error_code(int __val, const error_category& __cat) noexcept
           : __val_(__val), __cat_(&__cat)
             {}
 
           template <class _Ep>
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           error_code(_Ep __e,
               typename enable_if<is_error_code_enum<_Ep>::value>::type* = 0
           ) noexcept
             { *this = make_error_code(__e);}
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           void assign(int __val, const error_category& __cat) noexcept
             {
               __val_ = __val;
@@ -253,7 +253,7 @@ noexcept          : __val_(0), __cat_(&system_category())
             }
 
           template <class _Ep>
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           typename enable_if
           <
           is_error_code_enum<_Ep>::value,
@@ -262,28 +262,28 @@ noexcept          : __val_(0), __cat_(&system_category())
           operator=(_Ep __e) noexcept
             { *this = make_error_code(__e); return *this;}
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           void clear() noexcept
             {
               __val_ = 0;
               __cat_ = &system_category();
             }
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           int value() const noexcept
             { return __val_;}
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           const error_category& category() const noexcept
             { return *__cat_;}
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           error_condition default_error_condition() const noexcept
             { return __cat_->default_error_condition(__val_);}
 
           string message() const;
 
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           explicit
           operator bool() const noexcept
             { return __val_ != 0;}
@@ -291,14 +291,14 @@ noexcept          : __val_(0), __cat_(&system_category())
 
 #pragma GCC diagnostic pop
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     error_code
     make_error_code(errc __e) noexcept
     {
       return error_code(static_cast<int>(__e), generic_category());
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator<(const error_code& __x, const error_code& __y) noexcept
     {
@@ -306,14 +306,14 @@ noexcept          : __val_(0), __cat_(&system_category())
           || (__x.category() == __y.category() && __x.value() < __y.value());
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator==(const error_code& __x, const error_code& __y) noexcept
     {
       return __x.category() == __y.category() && __x.value() == __y.value();
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator==(const error_code& __x, const error_condition& __y) noexcept
     {
@@ -321,42 +321,42 @@ noexcept          : __val_(0), __cat_(&system_category())
           || __y.category().equivalent(__x, __y.value());
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator==(const error_condition& __x, const error_code& __y) noexcept
     {
       return __y == __x;
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator==(const error_condition& __x, const error_condition& __y) noexcept
     {
       return __x.category() == __y.category() && __x.value() == __y.value();
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator!=(const error_code& __x, const error_code& __y) noexcept
     {
       return !(__x == __y);
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator!=(const error_code& __x, const error_condition& __y) noexcept
     {
       return !(__x == __y);
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator!=(const error_condition& __x, const error_code& __y) noexcept
     {
       return !(__x == __y);
     }
 
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator!=(const error_condition& __x, const error_condition& __y) noexcept
     {
@@ -366,7 +366,7 @@ noexcept          : __val_(0), __cat_(&system_category())
     template<>
       struct hash<error_code> : public unary_function<error_code, size_t>
       {
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         size_t
         operator()(const error_code& __ec) const noexcept
         {
@@ -390,7 +390,7 @@ noexcept          : __val_(0), __cat_(&system_category())
       system_error(int __ev, const error_category& __ecat);
       ~system_error() noexcept;
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       const error_code&
       code() const noexcept
       {

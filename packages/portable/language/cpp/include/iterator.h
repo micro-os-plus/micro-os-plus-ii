@@ -181,7 +181,7 @@ namespace os
       };
 
     template<class _InputIter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       void
       __advance(_InputIter& __i,
           typename iterator_traits<_InputIter>::difference_type __n,
@@ -192,7 +192,7 @@ namespace os
       }
 
     template<class _BiDirIter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       void
       __advance(_BiDirIter& __i,
           typename iterator_traits<_BiDirIter>::difference_type __n,
@@ -207,7 +207,7 @@ namespace os
       }
 
     template<class _RandIter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       void
       __advance(_RandIter& __i,
           typename iterator_traits<_RandIter>::difference_type __n,
@@ -217,7 +217,7 @@ namespace os
       }
 
     template<class _InputIter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       void
       advance(_InputIter& __i,
           typename iterator_traits<_InputIter>::difference_type __n)
@@ -227,7 +227,7 @@ namespace os
       }
 
     template<class _InputIter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename iterator_traits<_InputIter>::difference_type
       __distance(_InputIter __first, _InputIter __last, input_iterator_tag)
         {
@@ -238,7 +238,7 @@ namespace os
         }
 
     template<class _RandIter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename iterator_traits<_RandIter>::difference_type
       __distance(_RandIter __first, _RandIter __last, random_access_iterator_tag)
         {
@@ -246,7 +246,7 @@ namespace os
         }
 
     template<class _InputIter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename iterator_traits<_InputIter>::difference_type
       distance(_InputIter __first, _InputIter __last)
         {
@@ -254,7 +254,7 @@ namespace os
         }
 
     template<class _ForwardIter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       _ForwardIter
       next(_ForwardIter __x,
           typename iterator_traits<_ForwardIter>::difference_type __n = 1,
@@ -266,7 +266,7 @@ namespace os
       }
 
     template<class _BidiretionalIter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       _BidiretionalIter
       prev(_BidiretionalIter __x,
           typename iterator_traits<_BidiretionalIter>::difference_type __n = 1,
@@ -295,14 +295,14 @@ namespace os
         typedef typename iterator_traits<_Iter>::reference reference;
         typedef typename iterator_traits<_Iter>::pointer pointer;
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         reverse_iterator()
             : current()
         {
 
         }
 
-        __attribute__ ((always_inline)) explicit
+        __attribute__((always_inline)) explicit
         reverse_iterator(_Iter __x)
             : __t(__x), current(__x)
         {
@@ -310,40 +310,40 @@ namespace os
         }
 
         template<class _Up>
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           reverse_iterator(const reverse_iterator<_Up>& __u)
               : __t(__u.base()), current(__u.base())
           {
 
           }
 
-        __attribute__ ((always_inline)) _Iter
+        __attribute__((always_inline)) _Iter
         base() const
         {
           return current;
         }
 
-        __attribute__ ((always_inline)) reference
+        __attribute__((always_inline)) reference
         operator*() const
         {
           __t = current;
           return *--__t;
         }
 
-        __attribute__ ((always_inline)) pointer
+        __attribute__((always_inline)) pointer
         operator->() const
         {
           return &(operator*());
         }
 
-        __attribute__ ((always_inline)) reverse_iterator&
+        __attribute__((always_inline)) reverse_iterator&
         operator++()
         {
           --current;
           return *this;
         }
 
-        __attribute__ ((always_inline)) reverse_iterator
+        __attribute__((always_inline)) reverse_iterator
         operator++(int)
         {
           reverse_iterator __tmp(*this);
@@ -351,14 +351,14 @@ namespace os
           return __tmp;
         }
 
-        __attribute__ ((always_inline)) reverse_iterator&
+        __attribute__((always_inline)) reverse_iterator&
         operator--()
         {
           ++current;
           return *this;
         }
 
-        __attribute__ ((always_inline)) reverse_iterator
+        __attribute__((always_inline)) reverse_iterator
         operator--(int)
         {
           reverse_iterator __tmp(*this);
@@ -366,33 +366,33 @@ namespace os
           return __tmp;
         }
 
-        __attribute__ ((always_inline)) reverse_iterator
+        __attribute__((always_inline)) reverse_iterator
         operator+(difference_type __n) const
         {
           return reverse_iterator(current - __n);
         }
 
-        __attribute__ ((always_inline)) reverse_iterator&
+        __attribute__((always_inline)) reverse_iterator&
         operator+=(difference_type __n)
         {
           current -= __n;
           return *this;
         }
 
-        __attribute__ ((always_inline)) reverse_iterator
+        __attribute__((always_inline)) reverse_iterator
         operator-(difference_type __n) const
         {
           return reverse_iterator(current + __n);
         }
 
-        __attribute__ ((always_inline)) reverse_iterator&
+        __attribute__((always_inline)) reverse_iterator&
         operator-=(difference_type __n)
         {
           current += __n;
           return *this;
         }
 
-        __attribute__ ((always_inline)) reference
+        __attribute__((always_inline)) reference
         operator[](difference_type __n) const
         {
           return current[-__n - 1];
@@ -400,7 +400,7 @@ namespace os
       };
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator==(const reverse_iterator<_Iter1>& __x,
           const reverse_iterator<_Iter2>& __y)
@@ -409,7 +409,7 @@ namespace os
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator<(const reverse_iterator<_Iter1>& __x,
           const reverse_iterator<_Iter2>& __y)
@@ -418,7 +418,7 @@ namespace os
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator!=(const reverse_iterator<_Iter1>& __x,
           const reverse_iterator<_Iter2>& __y)
@@ -427,7 +427,7 @@ namespace os
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator>(const reverse_iterator<_Iter1>& __x,
           const reverse_iterator<_Iter2>& __y)
@@ -436,7 +436,7 @@ namespace os
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator>=(const reverse_iterator<_Iter1>& __x,
           const reverse_iterator<_Iter2>& __y)
@@ -445,7 +445,7 @@ namespace os
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator<=(const reverse_iterator<_Iter1>& __x,
           const reverse_iterator<_Iter2>& __y)
@@ -454,7 +454,7 @@ namespace os
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename reverse_iterator<_Iter1>::difference_type
       operator-(const reverse_iterator<_Iter1>& __x, const reverse_iterator<_Iter2>& __y)
         {
@@ -462,7 +462,7 @@ namespace os
         }
 
     template<class _Iter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       reverse_iterator<_Iter>
       operator+(typename reverse_iterator<_Iter>::difference_type __n,
           const reverse_iterator<_Iter>& __x)
@@ -480,14 +480,14 @@ namespace os
       public:
         typedef _Container container_type;
 
-        __attribute__ ((always_inline)) explicit
+        __attribute__((always_inline)) explicit
         back_insert_iterator(_Container& __x)
             : container(&__x)
         {
           ;
         }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         back_insert_iterator&
         operator=(const typename _Container::value_type& __value_)
         {
@@ -496,7 +496,7 @@ namespace os
         }
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         back_insert_iterator&
         operator=(typename _Container::value_type&& __value_)
           {
@@ -504,21 +504,21 @@ namespace os
             return *this;
           }
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         back_insert_iterator&
         operator*()
         {
           return *this;
         }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         back_insert_iterator&
         operator++()
         {
           return *this;
         }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         back_insert_iterator
         operator++(int)
         {
@@ -527,7 +527,7 @@ namespace os
       };
 
     template<class _Container>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       back_insert_iterator<_Container>
       back_inserter(_Container& __x)
       {
@@ -545,14 +545,14 @@ namespace os
       public:
         typedef _Container container_type;
 
-        __attribute__ ((always_inline)) explicit
+        __attribute__((always_inline)) explicit
         front_insert_iterator(_Container& __x)
             : container(&__x)
         {
           ;
         }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         front_insert_iterator&
         operator=(const typename _Container::value_type& __value_)
         {
@@ -561,7 +561,7 @@ namespace os
         }
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         front_insert_iterator&
         operator=(typename _Container::value_type&& __value_)
           {
@@ -569,21 +569,21 @@ namespace os
             return *this;
           }
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         front_insert_iterator&
         operator*()
         {
           return *this;
         }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         front_insert_iterator&
         operator++()
         {
           return *this;
         }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         front_insert_iterator
         operator++(int)
         {
@@ -592,7 +592,7 @@ namespace os
       };
 
     template<class _Container>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       front_insert_iterator<_Container>
       front_inserter(_Container& __x)
       {
@@ -609,14 +609,14 @@ namespace os
       public:
         typedef _Container container_type;
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         insert_iterator(_Container& __x, typename _Container::iterator __i)
             : container(&__x), iter(__i)
         {
           ;
         }
 
-        __attribute__ ((always_inline)) insert_iterator&
+        __attribute__((always_inline)) insert_iterator&
         operator=(const typename _Container::value_type& __value_)
         {
           iter = container->insert(iter, __value_);
@@ -625,23 +625,23 @@ namespace os
         }
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
-        __attribute__ ((always_inline)) insert_iterator&
+        __attribute__((always_inline)) insert_iterator&
         operator=(typename _Container::value_type&& __value_)
           { iter = container->insert(iter, _VSTD::move(__value_)); ++iter; return *this;}
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-        __attribute__ ((always_inline)) insert_iterator&
+        __attribute__((always_inline)) insert_iterator&
         operator*()
         {
           return *this;
         }
 
-        __attribute__ ((always_inline)) insert_iterator&
+        __attribute__((always_inline)) insert_iterator&
         operator++()
         {
           return *this;
         }
 
-        __attribute__ ((always_inline)) insert_iterator&
+        __attribute__((always_inline)) insert_iterator&
         operator++(int)
         {
           return *this;
@@ -649,7 +649,7 @@ namespace os
       };
 
     template<class _Container>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       insert_iterator<_Container>
       inserter(_Container& __x, typename _Container::iterator __i)
       {
@@ -670,14 +670,14 @@ namespace os
         istream_type* __in_stream_;
         _Tp __value_;
       public:
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         istream_iterator()
         : __in_stream_(0)
           {
             ;
           }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         istream_iterator(istream_type& __s)
         : __in_stream_(&__s)
           {
@@ -685,19 +685,19 @@ namespace os
             __in_stream_ = 0;
           }
 
-        __attribute__ ((always_inline)) const _Tp&
+        __attribute__((always_inline)) const _Tp&
         operator*() const
           {
             return __value_;
           }
 
-        __attribute__ ((always_inline)) const _Tp*
+        __attribute__((always_inline)) const _Tp*
         operator->() const
           {
             return &(operator*());
           }
 
-        __attribute__ ((always_inline)) istream_iterator&
+        __attribute__((always_inline)) istream_iterator&
         operator++()
           {
             if (!(*__in_stream_ >> __value_))
@@ -705,7 +705,7 @@ namespace os
             return *this;
           }
 
-        __attribute__ ((always_inline)) istream_iterator
+        __attribute__((always_inline)) istream_iterator
         operator++(int)
           {
             istream_iterator __t(*this);
@@ -713,14 +713,14 @@ namespace os
             return __t;
           }
 
-        friend __attribute__ ((always_inline))
+        friend __attribute__((always_inline))
         bool
         operator==(const istream_iterator& __x, const istream_iterator& __y)
           {
             return __x.__in_stream_ == __y.__in_stream_;
           }
 
-        friend __attribute__ ((always_inline))
+        friend __attribute__((always_inline))
         bool
         operator!=(const istream_iterator& __x, const istream_iterator& __y)
           {
@@ -742,21 +742,21 @@ namespace os
         ostream_type* __out_stream_;
         const char_type* __delim_;
       public:
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         ostream_iterator(ostream_type& __s)
             : __out_stream_(&__s), __delim_(0)
         {
           ;
         }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         ostream_iterator(ostream_type& __s, const TChar_T* __delimiter)
             : __out_stream_(&__s), __delim_(__delimiter)
         {
           ;
         }
 
-        __attribute__ ((always_inline)) ostream_iterator&
+        __attribute__((always_inline)) ostream_iterator&
         operator=(const _Tp& __value_)
         {
           *__out_stream_ << __value_;
@@ -765,19 +765,19 @@ namespace os
           return *this;
         }
 
-        __attribute__ ((always_inline)) ostream_iterator&
+        __attribute__((always_inline)) ostream_iterator&
         operator*()
         {
           return *this;
         }
 
-        __attribute__ ((always_inline)) ostream_iterator&
+        __attribute__((always_inline)) ostream_iterator&
         operator++()
         {
           return *this;
         }
 
-        __attribute__ ((always_inline)) ostream_iterator&
+        __attribute__((always_inline)) ostream_iterator&
         operator++(int)
         {
           return *this;
@@ -802,7 +802,7 @@ namespace os
         class __proxy
           {
             char_type __keep_;
-            streambuf_type* m_pSbuf;__attribute__ ((always_inline))
+            streambuf_type* m_pSbuf;__attribute__((always_inline))
             __proxy(char_type __c, streambuf_type* __s)
             : __keep_(__c), m_pSbuf(__s)
               {
@@ -811,14 +811,14 @@ namespace os
 
             friend class istreambuf_iterator;
           public:
-            __attribute__ ((always_inline)) char_type
+            __attribute__((always_inline)) char_type
             operator*() const
               {
                 return __keep_;
               }
           };
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         bool
         __test_for_eof() const
           {
@@ -829,64 +829,64 @@ namespace os
           }
 
       public:
-        __attribute__ ((always_inline)) _LIBCPP_CONSTEXPR
+        __attribute__((always_inline)) _LIBCPP_CONSTEXPR
         istreambuf_iterator() noexcept
         : m_pSbuf(0)
           {
             ;
           }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         istreambuf_iterator(istream_type& __s) noexcept
         : m_pSbuf(__s.rdbuf())
           {
             ;
           }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         istreambuf_iterator(streambuf_type* __s) noexcept
         : m_pSbuf(__s)
           {
             ;
           }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         istreambuf_iterator(const __proxy& __p) noexcept
         : m_pSbuf(__p.m_pSbuf)
           {
             ;
           }
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         char_type operator*() const
           {
             return static_cast<char_type>(m_pSbuf->sgetc());
           }
 
-        __attribute__ ((always_inline)) char_type* operator->() const
+        __attribute__((always_inline)) char_type* operator->() const
           {
             return nullptr;
           }
 
-        __attribute__ ((always_inline)) istreambuf_iterator& operator++()
+        __attribute__((always_inline)) istreambuf_iterator& operator++()
           {
             m_pSbuf->sbumpc();
             return *this;
           }
 
-        __attribute__ ((always_inline)) __proxy operator++(int)
+        __attribute__((always_inline)) __proxy operator++(int)
           {
             return __proxy(m_pSbuf->sbumpc(), m_pSbuf);
           }
 
-        __attribute__ ((always_inline)) bool equal(const istreambuf_iterator& __b)const
+        __attribute__((always_inline)) bool equal(const istreambuf_iterator& __b)const
           {
             return __test_for_eof() == __b.__test_for_eof();
           }
       };
 
     template<class TChar_T, class TTraits_T>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator==(const istreambuf_iterator<TChar_T, TTraits_T>& __a,
         const istreambuf_iterator<TChar_T, TTraits_T>& __b)
@@ -895,7 +895,7 @@ namespace os
       }
 
     template<class TChar_T, class TTraits_T>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator!=(const istreambuf_iterator<TChar_T, TTraits_T>& __a,
         const istreambuf_iterator<TChar_T, TTraits_T>& __b)
@@ -953,7 +953,7 @@ namespace os
         ///
         /// \details
         /// Initialise the local pointer to the associated ostream buffer.
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         ostreambuf_iterator(ostream_type& outs)
 noexcept            : m_pSbuf(outs.rdbuf())
               {
@@ -963,7 +963,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
             ///
             /// \details
             /// Initialise the local pointer to the given streambuf pointer.
-            __attribute__ ((always_inline))
+            __attribute__((always_inline))
             ostreambuf_iterator(streambuf_type* pSbuf) noexcept
             : m_pSbuf(pSbuf)
               {
@@ -979,7 +979,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
             /// \details
             /// If the streambuf exists, call its `sputc()`.
             /// In case the call fails, the local pointer is cleared.
-            __attribute__ ((always_inline))
+            __attribute__((always_inline))
             ostreambuf_iterator&
             operator=(TChar_T c)
               {
@@ -997,7 +997,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
             ///
             /// \details
             /// Nothing to do.
-            __attribute__ ((always_inline)) ostreambuf_iterator&
+            __attribute__((always_inline)) ostreambuf_iterator&
             operator*()
               {
                 return *this;
@@ -1007,14 +1007,14 @@ noexcept            : m_pSbuf(outs.rdbuf())
             ///
             /// \details
             /// Nothing to do.
-            __attribute__ ((always_inline)) ostreambuf_iterator&
+            __attribute__((always_inline)) ostreambuf_iterator&
             operator++()
               {
                 return *this;
               }
 
             /// \brief Post-increment operator.
-            __attribute__ ((always_inline)) ostreambuf_iterator&
+            __attribute__((always_inline)) ostreambuf_iterator&
             ///
             /// \details
             /// Nothing to do.
@@ -1041,7 +1041,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
             ///
             /// In case of an error during assignment, this pointer is cleared
             /// and so this function will be able to report the failure.
-            __attribute__ ((always_inline))
+            __attribute__((always_inline))
             bool
             failed() const noexcept
               {
@@ -1079,14 +1079,14 @@ noexcept            : m_pSbuf(outs.rdbuf())
         typedef typename iterator_traits<iterator_type>::reference reference;
 #endif
 
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         move_iterator()
             : __i()
         {
           ;
         }
 
-        __attribute__ ((always_inline)) explicit
+        __attribute__((always_inline)) explicit
         move_iterator(_Iter __x)
             : __i(__x)
         {
@@ -1094,40 +1094,40 @@ noexcept            : m_pSbuf(outs.rdbuf())
         }
 
         template<class _Up>
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           move_iterator(const move_iterator<_Up>& __u)
               : __i(__u.base())
           {
             ;
           }
 
-        __attribute__ ((always_inline)) _Iter
+        __attribute__((always_inline)) _Iter
         base() const
         {
           return __i;
         }
 
-        __attribute__ ((always_inline)) reference
+        __attribute__((always_inline)) reference
         operator*() const
         {
           return static_cast<reference>(*__i);
         }
 
-        __attribute__ ((always_inline)) pointer
+        __attribute__((always_inline)) pointer
         operator->() const
         {
           typename iterator_traits<iterator_type>::reference __ref = *__i;
           return &__ref;
         }
 
-        __attribute__ ((always_inline)) move_iterator&
+        __attribute__((always_inline)) move_iterator&
         operator++()
         {
           ++__i;
           return *this;
         }
 
-        __attribute__ ((always_inline)) move_iterator
+        __attribute__((always_inline)) move_iterator
         operator++(int)
         {
           move_iterator __tmp(*this);
@@ -1135,14 +1135,14 @@ noexcept            : m_pSbuf(outs.rdbuf())
           return __tmp;
         }
 
-        __attribute__ ((always_inline)) move_iterator&
+        __attribute__((always_inline)) move_iterator&
         operator--()
         {
           --__i;
           return *this;
         }
 
-        __attribute__ ((always_inline)) move_iterator
+        __attribute__((always_inline)) move_iterator
         operator--(int)
         {
           move_iterator __tmp(*this);
@@ -1150,33 +1150,33 @@ noexcept            : m_pSbuf(outs.rdbuf())
           return __tmp;
         }
 
-        __attribute__ ((always_inline)) move_iterator
+        __attribute__((always_inline)) move_iterator
         operator+(difference_type __n) const
         {
           return move_iterator(__i + __n);
         }
 
-        __attribute__ ((always_inline)) move_iterator&
+        __attribute__((always_inline)) move_iterator&
         operator+=(difference_type __n)
         {
           __i += __n;
           return *this;
         }
 
-        __attribute__ ((always_inline)) move_iterator
+        __attribute__((always_inline)) move_iterator
         operator-(difference_type __n) const
         {
           return move_iterator(__i - __n);
         }
 
-        __attribute__ ((always_inline)) move_iterator&
+        __attribute__((always_inline)) move_iterator&
         operator-=(difference_type __n)
         {
           __i -= __n;
           return *this;
         }
 
-        __attribute__ ((always_inline)) reference
+        __attribute__((always_inline)) reference
         operator[](difference_type __n) const
         {
           return static_cast<reference>(__i[__n]);
@@ -1184,7 +1184,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
       };
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator==(const move_iterator<_Iter1>& __x,
           const move_iterator<_Iter2>& __y)
@@ -1193,7 +1193,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator<(const move_iterator<_Iter1>& __x,
           const move_iterator<_Iter2>& __y)
@@ -1202,7 +1202,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator!=(const move_iterator<_Iter1>& __x,
           const move_iterator<_Iter2>& __y)
@@ -1211,7 +1211,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator>(const move_iterator<_Iter1>& __x,
           const move_iterator<_Iter2>& __y)
@@ -1220,7 +1220,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator>=(const move_iterator<_Iter1>& __x,
           const move_iterator<_Iter2>& __y)
@@ -1229,7 +1229,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator<=(const move_iterator<_Iter1>& __x,
           const move_iterator<_Iter2>& __y)
@@ -1238,7 +1238,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename move_iterator<_Iter1>::difference_type
       operator-(const move_iterator<_Iter1>& __x, const move_iterator<_Iter2>& __y)
         {
@@ -1246,7 +1246,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
         }
 
     template<class _Iter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       move_iterator<_Iter>
       operator+(typename move_iterator<_Iter>::difference_type __n,
           const move_iterator<_Iter>& __x)
@@ -1255,7 +1255,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
       }
 
     template<class _Iter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       move_iterator<_Iter>
       make_move_iterator(const _Iter& __i)
       {
@@ -1268,71 +1268,71 @@ noexcept            : m_pSbuf(outs.rdbuf())
       class __wrap_iter;
 
     template<class _Iter1, class _Iter2>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator==(const __wrap_iter <_Iter1>&, const __wrap_iter <_Iter2>&)
           noexcept;
 
     template<class _Iter1, class _Iter2>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator<(const __wrap_iter <_Iter1>&, const __wrap_iter <_Iter2>&)
           noexcept;
 
     template<class _Iter1, class _Iter2>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator!=(const __wrap_iter <_Iter1>&, const __wrap_iter <_Iter2>&)
           noexcept;
 
     template<class _Iter1, class _Iter2>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator>(const __wrap_iter <_Iter1>&, const __wrap_iter <_Iter2>&)
           noexcept;
 
     template<class _Iter1, class _Iter2>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator>=(const __wrap_iter <_Iter1>&, const __wrap_iter <_Iter2>&)
           noexcept;
 
     template<class _Iter1, class _Iter2>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator<=(const __wrap_iter <_Iter1>&, const __wrap_iter <_Iter2>&)
           noexcept;
 
     template<class _Iter1, class _Iter2>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       typename __wrap_iter<_Iter1>::difference_type
       operator-(const __wrap_iter <_Iter1>&, const __wrap_iter <_Iter2>&)
       noexcept;
 
     template<class _Iter>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       __wrap_iter<_Iter>
       operator+(typename __wrap_iter<_Iter>::difference_type,
           __wrap_iter <_Iter>) noexcept;
 
     template<class _Ip, class _Op>
-      _Op __attribute__ ((always_inline))
+      _Op __attribute__((always_inline))
       copy(_Ip, _Ip, _Op);
 
     template<class _B1, class _B2>
-      _B2 __attribute__ ((always_inline))
+      _B2 __attribute__((always_inline))
       copy_backward(_B1, _B1, _B2);
 
     template<class _Ip, class _Op>
-      _Op __attribute__ ((always_inline))
+      _Op __attribute__((always_inline))
       move(_Ip, _Ip, _Op);
 
     template<class _B1, class _B2>
-      _B2 __attribute__ ((always_inline))
+      _B2 __attribute__((always_inline))
       move_backward(_B1, _B1, _B2);
 
     template<class _Tp>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       typename enable_if<is_trivially_copy_assignable<_Tp>::value, _Tp*>::type
       __unwrap_iter(__wrap_iter <_Tp*>);
 
@@ -1349,7 +1349,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
       private:
         iterator_type __i;
       public:
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         __wrap_iter() noexcept
         {
 #if _LIBCPP_DEBUG_LEVEL >= 2
@@ -1357,7 +1357,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
 #endif
         }
         template<class _Up>
-          __attribute__ ((always_inline))
+          __attribute__((always_inline))
           __wrap_iter(const __wrap_iter <_Up>& __u,
               typename enable_if<is_convertible<_Up, iterator_type>::value>::type* =
                   0)
@@ -1368,13 +1368,13 @@ noexcept              : __i(__u.base())
 #endif
                 }
 #if _LIBCPP_DEBUG_LEVEL >= 2
-              __attribute__ ((always_inline))
+              __attribute__((always_inline))
               __wrap_iter(const __wrap_iter& __x)
               : __i(__x.base())
                 {
                   __get_db()->__iterator_copy(this, &__x);
                 }
-              __attribute__ ((always_inline))
+              __attribute__((always_inline))
               __wrap_iter& operator=(const __wrap_iter& __x)
                 {
                   if (this != &__x)
@@ -1384,14 +1384,14 @@ noexcept              : __i(__u.base())
                     }
                   return *this;
                 }
-              __attribute__ ((always_inline))
+              __attribute__((always_inline))
               ~__wrap_iter()
                 {
                   __get_db()->__erase_i(this);
                 }
 #endif
 
-              __attribute__ ((always_inline))
+              __attribute__((always_inline))
               reference
               operator*() const noexcept
                 {
@@ -1402,14 +1402,14 @@ noexcept              : __i(__u.base())
                   return *__i;
                 }
 
-              __attribute__ ((always_inline))
+              __attribute__((always_inline))
               pointer
               operator->() const noexcept
                 {
                   return &(operator*());
                 }
 
-              __attribute__ ((always_inline))
+              __attribute__((always_inline))
               __wrap_iter&
               operator++() noexcept
                 {
@@ -1421,7 +1421,7 @@ noexcept              : __i(__u.base())
                   return *this;
                 }
 
-              __attribute__ ((always_inline))
+              __attribute__((always_inline))
               __wrap_iter
               operator++(int) noexcept
                 {
@@ -1429,7 +1429,7 @@ noexcept              : __i(__u.base())
                   return __tmp;
                 }
 
-              __attribute__ ((always_inline))
+              __attribute__((always_inline))
               __wrap_iter&
               operator--() noexcept
                 {
@@ -1441,13 +1441,13 @@ noexcept              : __i(__u.base())
                   return *this;
                 }
 
-              __attribute__ ((always_inline)) __wrap_iter operator--(int) noexcept
+              __attribute__((always_inline)) __wrap_iter operator--(int) noexcept
                 { __wrap_iter __tmp(*this); --(*this); return __tmp;}
 
-              __attribute__ ((always_inline)) __wrap_iter operator+ (difference_type __n) const noexcept
+              __attribute__((always_inline)) __wrap_iter operator+ (difference_type __n) const noexcept
                 { __wrap_iter __w(*this); __w += __n; return __w;}
 
-              __attribute__ ((always_inline)) __wrap_iter& operator+=(difference_type __n) noexcept
+              __attribute__((always_inline)) __wrap_iter& operator+=(difference_type __n) noexcept
                 {
 #if _LIBCPP_DEBUG_LEVEL >= 2
                   _LIBCPP_ASSERT(__get_const_db()->__addable(this, __n),
@@ -1457,13 +1457,13 @@ noexcept              : __i(__u.base())
                   return *this;
                 }
 
-              __attribute__ ((always_inline)) __wrap_iter operator- (difference_type __n) const noexcept
+              __attribute__((always_inline)) __wrap_iter operator- (difference_type __n) const noexcept
                 { return *this + (-__n);}
 
-              __attribute__ ((always_inline)) __wrap_iter& operator-=(difference_type __n) noexcept
+              __attribute__((always_inline)) __wrap_iter& operator-=(difference_type __n) noexcept
                 { *this += -__n; return *this;}
 
-              __attribute__ ((always_inline)) reference operator[](difference_type __n) const noexcept
+              __attribute__((always_inline)) reference operator[](difference_type __n) const noexcept
                 {
 #if _LIBCPP_DEBUG_LEVEL >= 2
                   _LIBCPP_ASSERT(__get_const_db()->__subscriptable(this, __n),
@@ -1472,14 +1472,14 @@ noexcept              : __i(__u.base())
                   return __i[__n];
                 }
 
-              __attribute__ ((always_inline)) iterator_type base() const noexcept
+              __attribute__((always_inline)) iterator_type base() const noexcept
                 { return __i;}
 
             private:
-              __attribute__ ((always_inline)) __wrap_iter(iterator_type __x) noexcept : __i(__x)
+              __attribute__((always_inline)) __wrap_iter(iterator_type __x) noexcept : __i(__x)
                 {}
 #if _LIBCPP_DEBUG_LEVEL >= 2
-              __attribute__ ((always_inline)) __wrap_iter(const void* __p, iterator_type __x) : __i(__x)
+              __attribute__((always_inline)) __wrap_iter(const void* __p, iterator_type __x) : __i(__x)
                 {
                   __get_db()->__insert_ic(this, __p);
                 }
@@ -1545,7 +1545,7 @@ noexcept              : __i(__u.base())
             };
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator==(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter2>& __y) noexcept
@@ -1558,7 +1558,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator<(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter2>& __y) noexcept
@@ -1571,7 +1571,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator!=(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter2>& __y) noexcept
@@ -1580,7 +1580,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator>(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter2>& __y) noexcept
@@ -1589,7 +1589,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator>=(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter2>& __y) noexcept
@@ -1598,7 +1598,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator<=(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter2>& __y) noexcept
@@ -1607,7 +1607,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator!=(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter1>& __y) noexcept
@@ -1616,7 +1616,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator>(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter1>& __y) noexcept
@@ -1625,7 +1625,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator>=(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter1>& __y) noexcept
@@ -1634,7 +1634,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       bool
       operator<=(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter1>& __y) noexcept
@@ -1643,7 +1643,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Iter1, class _Iter2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename __wrap_iter<_Iter1>::difference_type
       operator-(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) noexcept
         {
@@ -1655,7 +1655,7 @@ noexcept              : __i(__u.base())
         }
 
     template<class _Iter>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       __wrap_iter<_Iter>
       operator+(typename __wrap_iter<_Iter>::difference_type __n,
           __wrap_iter <_Iter> __x) noexcept
@@ -1671,42 +1671,42 @@ noexcept              : __i(__u.base())
     template <class _Container, class _Iter> class __debug_iter;
 
     template <class _Container, class _Iter1, class _Iter2>
-    __attribute__ ((always_inline))
+    __attribute__((always_inline))
     bool
     operator==(const __debug_iter<_Container, _Iter1>&, const __debug_iter<_Container, _Iter2>&);
 
     template <class _Container, class _Iter1, class _Iter2>
-    __attribute__ ((always_inline))
+    __attribute__((always_inline))
     bool
     operator<(const __debug_iter<_Container, _Iter1>&, const __debug_iter<_Container, _Iter2>&);
 
     template <class _Container, class _Iter1, class _Iter2>
-    __attribute__ ((always_inline))
+    __attribute__((always_inline))
     bool
     operator!=(const __debug_iter<_Container, _Iter1>&, const __debug_iter<_Container, _Iter2>&);
 
     template <class _Container, class _Iter1, class _Iter2>
-    __attribute__ ((always_inline))
+    __attribute__((always_inline))
     bool
     operator>(const __debug_iter<_Container, _Iter1>&, const __debug_iter<_Container, _Iter2>&);
 
     template <class _Container, class _Iter1, class _Iter2>
-    __attribute__ ((always_inline))
+    __attribute__((always_inline))
     bool
     operator>=(const __debug_iter<_Container, _Iter1>&, const __debug_iter<_Container, _Iter2>&);
 
     template <class _Container, class _Iter1, class _Iter2>
-    __attribute__ ((always_inline))
+    __attribute__((always_inline))
     bool
     operator<=(const __debug_iter<_Container, _Iter1>&, const __debug_iter<_Container, _Iter2>&);
 
     template <class _Container, class _Iter1, class _Iter2>
-    __attribute__ ((always_inline))
+    __attribute__((always_inline))
     typename __debug_iter<_Container, _Iter1>::difference_type
     operator-(const __debug_iter<_Container, _Iter1>&, const __debug_iter<_Container, _Iter2>&);
 
     template <class _Container, class _Iter>
-    __attribute__ ((always_inline))
+    __attribute__((always_inline))
     __debug_iter<_Container, _Iter>
     operator+(typename __debug_iter<_Container, _Iter>::difference_type, const __debug_iter<_Container, _Iter>&);
 
@@ -1727,45 +1727,45 @@ noexcept              : __i(__u.base())
         __container_type* __cont;
 
       public:
-        __attribute__ ((always_inline)) __debug_iter() : __next(0), __cont(0)
+        __attribute__((always_inline)) __debug_iter() : __next(0), __cont(0)
           {}
-        __attribute__ ((always_inline)) __debug_iter(const __debug_iter& __x)
+        __attribute__((always_inline)) __debug_iter(const __debug_iter& __x)
         : __i(__x.base()), __next(0), __cont(0)
           { __set_owner(__x.__cont);}
         __debug_iter& operator=(const __debug_iter& __x);
-        template <class _Up> __attribute__ ((always_inline)) __debug_iter(const __debug_iter<_Container, _Up>& __u,
+        template <class _Up> __attribute__((always_inline)) __debug_iter(const __debug_iter<_Container, _Up>& __u,
             typename enable_if<is_convertible<_Up, iterator_type>::value>::type* = 0)
         : __i(__u.base()), __next(0), __cont(0)
           { __set_owner(__u.__cont);}
-        __attribute__ ((always_inline)) ~__debug_iter()
+        __attribute__((always_inline)) ~__debug_iter()
           { __remove_owner();}
-        __attribute__ ((always_inline)) reference operator*() const
+        __attribute__((always_inline)) reference operator*() const
           { assert(__is_deref()); return *__i;}
-        __attribute__ ((always_inline)) pointer operator->() const
+        __attribute__((always_inline)) pointer operator->() const
           { return &(operator*());}
-        __attribute__ ((always_inline)) __debug_iter& operator++()
+        __attribute__((always_inline)) __debug_iter& operator++()
           { assert(__can_increment()); ++__i; return *this;}
-        __attribute__ ((always_inline)) __debug_iter operator++(int)
+        __attribute__((always_inline)) __debug_iter operator++(int)
           { __debug_iter __tmp(*this); operator++(); return __tmp;}
-        __attribute__ ((always_inline)) __debug_iter& operator--()
+        __attribute__((always_inline)) __debug_iter& operator--()
           { assert(__can_decrement()); --__i; return *this;}
-        __attribute__ ((always_inline)) __debug_iter operator--(int)
+        __attribute__((always_inline)) __debug_iter operator--(int)
           { __debug_iter __tmp(*this); operator--(); return __tmp;}
-        __attribute__ ((always_inline)) __debug_iter operator+ (difference_type __n) const
+        __attribute__((always_inline)) __debug_iter operator+ (difference_type __n) const
           { __debug_iter __t(*this); __t += __n; return __t;}
         __debug_iter& operator+=(difference_type __n);
-        __attribute__ ((always_inline)) __debug_iter operator- (difference_type __n) const
+        __attribute__((always_inline)) __debug_iter operator- (difference_type __n) const
           { __debug_iter __t(*this); __t -= __n; return __t;}
-        __attribute__ ((always_inline)) __debug_iter& operator-=(difference_type __n)
+        __attribute__((always_inline)) __debug_iter& operator-=(difference_type __n)
           { *this += -__n; return *this;}
-        __attribute__ ((always_inline)) reference operator[](difference_type __n) const
+        __attribute__((always_inline)) reference operator[](difference_type __n) const
           { return *(*this + __n);}
 
       private:
-        __attribute__ ((always_inline)) __debug_iter(const __container_type* __c, iterator_type __x)
+        __attribute__((always_inline)) __debug_iter(const __container_type* __c, iterator_type __x)
         : __i(__x), __next(0), __cont(0)
           { __set_owner(__c);}
-        __attribute__ ((always_inline)) iterator_type base() const
+        __attribute__((always_inline)) iterator_type base() const
           { return __i;}
 
         void __set_owner(const __container_type* __c);
@@ -1773,24 +1773,24 @@ noexcept              : __i(__u.base())
         static void __remove_all(__container_type* __c);
         static void swap(__container_type* __x, __container_type* __y);
 
-        __attribute__ ((always_inline)) bool __is_deref() const
+        __attribute__((always_inline)) bool __is_deref() const
           { return __is_deref(__is_random_access_iterator<iterator_type>());}
         bool __is_deref(false_type) const;
         bool __is_deref(true_type) const;
-        __attribute__ ((always_inline)) bool __can_decrement() const
+        __attribute__((always_inline)) bool __can_decrement() const
           { return __can_decrement(integral_constant<int, is_pointer<iterator_type>::value ? 2:
                 __is_random_access_iterator<iterator_type>::value ? 1 : 0>());}
         bool __can_decrement(integral_constant<int, 0>) const;
         bool __can_decrement(integral_constant<int, 1>) const;
         bool __can_decrement(integral_constant<int, 2>) const;
-        __attribute__ ((always_inline)) bool __can_increment() const
+        __attribute__((always_inline)) bool __can_increment() const
           { return __can_increment(integral_constant<int, is_pointer<iterator_type>::value ? 2:
                 __is_random_access_iterator<iterator_type>::value ? 1 : 0>());}
         bool __can_increment(integral_constant<int, 0>) const;
         bool __can_increment(integral_constant<int, 1>) const;
         bool __can_increment(integral_constant<int, 2>) const;
 
-        __attribute__ ((always_inline)) bool __can_add(difference_type __n) const
+        __attribute__((always_inline)) bool __can_add(difference_type __n) const
           { return __can_add(__n, is_pointer<iterator_type>());}
         bool __can_add(difference_type __n, false_type) const;
         bool __can_add(difference_type __n, true_type) const;
@@ -2021,7 +2021,7 @@ noexcept              : __i(__u.base())
       }
 
     template <class _Container, class _Iter1, class _Iter2>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator==(const __debug_iter<_Container, _Iter1>& __x, const __debug_iter<_Container, _Iter2>& __y)
       {
@@ -2030,7 +2030,7 @@ noexcept              : __i(__u.base())
       }
 
     template <class _Container, class _Iter1, class _Iter2>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator!=(const __debug_iter<_Container, _Iter1>& __x, const __debug_iter<_Container, _Iter2>& __y)
       {
@@ -2038,7 +2038,7 @@ noexcept              : __i(__u.base())
       }
 
     template <class _Container, class _Iter1, class _Iter2>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator<(const __debug_iter<_Container, _Iter1>& __x, const __debug_iter<_Container, _Iter2>& __y)
       {
@@ -2047,7 +2047,7 @@ noexcept              : __i(__u.base())
       }
 
     template <class _Container, class _Iter1, class _Iter2>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator>(const __debug_iter<_Container, _Iter1>& __x, const __debug_iter<_Container, _Iter2>& __y)
       {
@@ -2055,7 +2055,7 @@ noexcept              : __i(__u.base())
       }
 
     template <class _Container, class _Iter1, class _Iter2>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator>=(const __debug_iter<_Container, _Iter1>& __x, const __debug_iter<_Container, _Iter2>& __y)
       {
@@ -2063,7 +2063,7 @@ noexcept              : __i(__u.base())
       }
 
     template <class _Container, class _Iter1, class _Iter2>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     bool
     operator<=(const __debug_iter<_Container, _Iter1>& __x, const __debug_iter<_Container, _Iter2>& __y)
       {
@@ -2071,7 +2071,7 @@ noexcept              : __i(__u.base())
       }
 
     template <class _Container, class _Iter1, class _Iter2>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     typename __debug_iter<_Container, _Iter1>::difference_type
     operator-(const __debug_iter<_Container, _Iter1>& __x, const __debug_iter<_Container, _Iter2>& __y)
       {
@@ -2080,7 +2080,7 @@ noexcept              : __i(__u.base())
       }
 
     template <class _Container, class _Iter>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     __debug_iter<_Container, _Iter>
     operator+(typename __debug_iter<_Container, _Iter>::difference_type __n,
         const __debug_iter<_Container, _Iter>& __x)
@@ -2092,7 +2092,7 @@ noexcept              : __i(__u.base())
 #if !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_TRAILING_RETURN)
 
     template<class _Cp>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     auto
     begin(_Cp& __c) -> decltype(__c.begin())
       {
@@ -2100,7 +2100,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Cp>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     auto
     begin(const _Cp& __c) -> decltype(__c.begin())
       {
@@ -2108,7 +2108,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Cp>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     auto
     end(_Cp& __c) -> decltype(__c.end())
       {
@@ -2116,7 +2116,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Cp>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     auto
     end(const _Cp& __c) -> decltype(__c.end())
       {
@@ -2125,7 +2125,7 @@ noexcept              : __i(__u.base())
 
 #else  // !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_TRAILING_RETURN)
     template<class _Cp>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename _Cp::iterator
       begin(_Cp& __c)
         {
@@ -2133,7 +2133,7 @@ noexcept              : __i(__u.base())
         }
 
     template<class _Cp>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename _Cp::const_iterator
       begin(const _Cp& __c)
         {
@@ -2141,7 +2141,7 @@ noexcept              : __i(__u.base())
         }
 
     template<class _Cp>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename _Cp::iterator
       end(_Cp& __c)
         {
@@ -2149,7 +2149,7 @@ noexcept              : __i(__u.base())
         }
 
     template<class _Cp>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename _Cp::const_iterator
       end(const _Cp& __c)
         {
@@ -2158,7 +2158,7 @@ noexcept              : __i(__u.base())
 
 #endif  // !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_TRAILING_RETURN)
     template<class _Tp, size_t _Np>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       _Tp*
       begin(_Tp (&__array)[_Np])
       {
@@ -2166,7 +2166,7 @@ noexcept              : __i(__u.base())
       }
 
     template<class _Tp, size_t _Np>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       _Tp*
       end(_Tp (&__array)[_Np])
       {

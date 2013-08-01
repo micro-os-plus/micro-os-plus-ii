@@ -63,7 +63,7 @@ namespace hal
     /// \ingroup stm32f40xx_irq
     /// \brief STM32F40XX specific interrupt vectors.
     /// \showinitializer
-    __attribute__ ((section(".device_isr_vectors")))
+    __attribute__((section(".device_isr_vectors")))
     interruptVector_t interruptVectors[] =
       { //
         // 81: FPU Global

@@ -372,7 +372,7 @@ namespace hal
     /// \ingroup stm32f4_irq
     /// \showinitializer
     /// \brief STM32F4 specific interrupt vectors.
-    __attribute__ ((section(".family_isr_vectors")))
+    __attribute__((section(".family_isr_vectors")))
     interruptVector_t interruptVectors[] =
       { //
         // 0: Window WatchDog Timer

@@ -34,7 +34,7 @@ namespace os
     protected:
       const char* __type_name;
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       explicit
       type_info(const char* __n)
           : __type_name(__n)
@@ -45,21 +45,21 @@ namespace os
       virtual
       ~type_info();
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       const char*
       name() const noexcept
       {
         return __type_name;
       }
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       before(const type_info& __arg) const noexcept
       {
         return __type_name < __arg.__type_name;
       }
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       size_t
       hash_code() const noexcept
       {
@@ -73,14 +73,14 @@ namespace os
 #pragma GCC diagnostic pop
       }
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator==(const type_info& __arg) const noexcept
       {
         return __type_name == __arg.__type_name;
       }
 
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       bool
       operator!=(const type_info& __arg) const noexcept
       {

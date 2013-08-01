@@ -28,14 +28,14 @@ namespace os
   {
 
     template<class _Arg, class _Result>
-      struct _LIBCPP_VISIBLE unary_function
+      struct unary_function
       {
         typedef _Arg argument_type;
         typedef _Result result_type;
       };
 
     template<class _Arg1, class _Arg2, class _Result>
-      struct _LIBCPP_VISIBLE binary_function
+      struct binary_function
       {
         typedef _Arg1 first_argument_type;
         typedef _Arg2 second_argument_type;
@@ -43,7 +43,7 @@ namespace os
       };
 
     template<class _Tp>
-      struct _LIBCPP_VISIBLE hash;
+      struct hash;
 
     template<class _Tp>
       struct __has_result_type
@@ -55,16 +55,16 @@ namespace os
           char __lxx;
         };
         template<class _Up>
-          static __two        __test(...);
+          static __two         __test(...);
 template          <class _Up> static char __test(typename _Up::result_type* = 0);
         public:
           static const bool value = sizeof(__test<_Tp>(0)) == 1;
         };
 
     template<class _Tp>
-      struct _LIBCPP_VISIBLE less : binary_function<_Tp, _Tp, bool>
+      struct less : binary_function<_Tp, _Tp, bool>
       {
-        _LIBCPP_INLINE_VISIBILITY bool
+        __attribute__((always_inline)) bool
         operator()(const _Tp& __x, const _Tp& __y) const
         {
           return __x < __y;
@@ -87,7 +87,7 @@ template          <class _Up> static char __test(typename _Up::result_type* = 0)
           char __lx;
           char __lxx;
         };
-        static __two __test(...);    //
+        static __two  __test(...);    //
 template        <class _Ap, class _Rp>
         static unary_function<_Ap, _Rp>
         __test(const volatile unary_function<_Ap, _Rp>*);
@@ -105,7 +105,7 @@ template        <class _Ap, class _Rp>
           char __lx;
           char __lxx;
         };
-        static __two        __test(...);
+        static __two         __test(...);
 template        <class _A1, class _A2, class _Rp>
         static binary_function<_A1, _A2, _Rp>
         __test(const volatile binary_function<_A1, _A2, _Rp>*);
@@ -156,7 +156,7 @@ template        <class _A1, class _A2, class _Rp>
       {
       };
 
-// 0 argument case
+    // 0 argument case
 
     template<class _Rp>
       struct __weak_result_type<_Rp
@@ -179,7 +179,7 @@ template        <class _A1, class _A2, class _Rp>
         typedef _Rp result_type;
       };
 
-// 1 argument case
+    // 1 argument case
 
     template<class _Rp, class _A1>
       struct __weak_result_type<_Rp
@@ -224,7 +224,7 @@ template        <class _A1, class _A2, class _Rp>
       {
       };
 
-// 2 argument case
+    // 2 argument case
 
     template<class _Rp, class _A1, class _A2>
       struct __weak_result_type<_Rp
@@ -269,7 +269,7 @@ template        <class _A1, class _A2, class _Rp>
       {
       };
 
-// 3 or more arguments
+    // 3 or more arguments
 
     template<class _Rp, class _A1, class _A2, class _A3, class ..._A4>
       struct __weak_result_type<_Rp
@@ -320,69 +320,72 @@ template        <class _A1, class _A2, class _Rp>
         typedef _Rp result_type;
       };
 
-// __invoke
+    // __invoke
 
-// bullets 1 and 2
+    // bullets 1 and 2
 
     template<class _Fp, class _A0, class ..._Args>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline __attribute__((always_inline))
       auto
       __invoke(_Fp&& __f, _A0&& __a0,
           _Args&& ...__args)
-          -> decltype((_VSTD::forward<_A0>(__a0).*__f)(_VSTD::forward<_Args>(__args)...))
+          -> decltype((os::std::forward<_A0>(__a0).*__f)(os::std::forward<_Args>(__args)...))
       {
-        return (_VSTD::forward<_A0>(__a0).*__f)(_VSTD::forward<_Args>(__args)...);
+        return (os::std::forward<_A0>(__a0).*__f)(
+            os::std::forward<_Args>(__args)...);
       }
 
     template<class _Fp, class _A0, class ..._Args>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline __attribute__((always_inline))
       auto
       __invoke(_Fp&& __f, _A0&& __a0,
           _Args&& ...__args)
-          -> decltype(((*_VSTD::forward<_A0>(__a0)).*__f)(_VSTD::forward<_Args>(__args)...))
+          -> decltype(((*os::std::forward<_A0>(__a0)).*__f)(os::std::forward<_Args>(__args)...))
       {
-        return ((*_VSTD::forward<_A0>(__a0)).*__f)(_VSTD::forward<_Args>(__args)...);
+        return ((*os::std::forward<_A0>(__a0)).*__f)(
+            os::std::forward<_Args>(__args)...);
       }
 
-// bullets 3 and 4
+    // bullets 3 and 4
 
     template<class _Fp, class _A0>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline __attribute__((always_inline))
       auto
       __invoke(_Fp&& __f, _A0&& __a0)
-      -> decltype(_VSTD::forward<_A0>(__a0).*__f)
+      -> decltype(os::std::forward<_A0>(__a0).*__f)
       {
-        return _VSTD::forward<_A0>(__a0).*__f;
+        return os::std::forward<_A0>(__a0).*__f;
       }
 
     template<class _Fp, class _A0>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline __attribute__((always_inline))
       auto
       __invoke(_Fp&& __f, _A0&& __a0)
-      -> decltype((*_VSTD::forward<_A0>(__a0)).*__f)
+      -> decltype((*os::std::forward<_A0>(__a0)).*__f)
       {
-        return (*_VSTD::forward<_A0>(__a0)).*__f;
+        return (*os::std::forward<_A0>(__a0)).*__f;
       }
 
 // bullet 5
 
     template<class _Fp, class ..._Args>
-      inline _LIBCPP_INLINE_VISIBILITY
+      inline __attribute__((always_inline))
       auto
-      __invoke(_Fp&& __f, _Args&& ...__args)
-      -> decltype(_VSTD::forward<_Fp>(__f)(_VSTD::forward<_Args>(__args)...))
+      __invoke(_Fp&& __f,
+          _Args&& ...__args)
+          -> decltype(os::std::forward<_Fp>(__f)(os::std::forward<_Args>(__args)...))
       {
-        return _VSTD::forward<_Fp>(__f)(_VSTD::forward<_Args>(__args)...);
+        return os::std::forward<_Fp>(__f)(os::std::forward<_Args>(__args)...);
       }
 
     template<class _Tp, class ..._Args>
       struct __invoke_return
       {
-        typedef decltype(__invoke(_VSTD::declval<_Tp>(), _VSTD::declval<_Args>()...)) type;
+        typedef decltype(__invoke(os::std::declval<_Tp>(), os::std::declval<_Args>()...)) type;
       };
 
     template<class _Tp>
-      class _LIBCPP_VISIBLE reference_wrapper : public __weak_result_type<_Tp>
+      class reference_wrapper : public __weak_result_type<_Tp>
       {
       public:
         // types
@@ -392,27 +395,27 @@ template        <class _A1, class _A2, class _Rp>
 
       public:
         // construct/copy/destroy
-        _LIBCPP_INLINE_VISIBILITY
+        __attribute__((always_inline))
         reference_wrapper(type& __f)
-_NOEXCEPT            : __f_(&__f)
+noexcept            : __f_(&__f)
               {}
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
           private: reference_wrapper(type&&); public: // = delete; // do not bind to temps
 #endif
 
             // access
-            _LIBCPP_INLINE_VISIBILITY operator type& () const _NOEXCEPT
+            __attribute__((always_inline)) operator type& () const noexcept
               { return *__f_;}
-            _LIBCPP_INLINE_VISIBILITY type& get() const _NOEXCEPT
+            __attribute__((always_inline)) type& get() const noexcept
               { return *__f_;}
 
             // invoke
             template <class... _ArgTypes>
-            _LIBCPP_INLINE_VISIBILITY
+            __attribute__((always_inline))
             typename __invoke_of<type&, _ArgTypes...>::type
             operator() (_ArgTypes&&... __args) const
               {
-                return __invoke(get(), _VSTD::forward<_ArgTypes>(__args)...);
+                return __invoke(get(), os::std::forward<_ArgTypes>(__args)...);
               }
           };
 
@@ -431,33 +434,33 @@ _NOEXCEPT            : __f_(&__f)
       };
 
     template<class _Tp>
-      inline _LIBCPP_INLINE_VISIBILITY
-      reference_wrapper<_Tp>
-      ref(_Tp& __t) _NOEXCEPT
+      inline __attribute__((always_inline))
+       reference_wrapper<_Tp>
+      ref(_Tp& __t) noexcept
       {
         return reference_wrapper<_Tp>(__t);
       }
 
     template<class _Tp>
-      inline _LIBCPP_INLINE_VISIBILITY
-      reference_wrapper<_Tp>
-      ref(reference_wrapper<_Tp> __t) _NOEXCEPT
+      inline __attribute__((always_inline))
+       reference_wrapper<_Tp>
+      ref(reference_wrapper<_Tp> __t) noexcept
       {
         return ref(__t.get());
       }
 
     template<class _Tp>
-      inline _LIBCPP_INLINE_VISIBILITY
-      reference_wrapper<const _Tp>
-      cref(const _Tp& __t) _NOEXCEPT
+      inline __attribute__((always_inline))
+       reference_wrapper<const _Tp>
+      cref(const _Tp& __t) noexcept
       {
         return reference_wrapper<const _Tp>(__t);
       }
 
     template<class _Tp>
-      inline _LIBCPP_INLINE_VISIBILITY
-      reference_wrapper<const _Tp>
-      cref(reference_wrapper<_Tp> __t) _NOEXCEPT
+      inline __attribute__((always_inline))
+       reference_wrapper<const _Tp>
+      cref(reference_wrapper<_Tp> __t) noexcept
       {
         return cref(__t.get());
       }

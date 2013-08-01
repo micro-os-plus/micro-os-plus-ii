@@ -64,7 +64,7 @@ namespace os
       {
         static constexpr _Tp value = __v;
         typedef _Tp value_type;
-        typedef integral_constant type;__attribute__ ((always_inline))
+        typedef integral_constant type;__attribute__((always_inline))
         constexpr
         operator value_type() const
         {
@@ -1863,7 +1863,7 @@ template    <class _Tp> struct  has_virtual_destructor
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     template<class _Tp>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     typename remove_reference<_Tp>::type&&
     move(_Tp&& __t) _NOEXCEPT
       {
@@ -1872,7 +1872,7 @@ template    <class _Tp> struct  has_virtual_destructor
       }
 
     template<class _Tp>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     _Tp&&
     forward(typename os::std::remove_reference<_Tp>::type& __t) _NOEXCEPT
       {
@@ -1880,7 +1880,7 @@ template    <class _Tp> struct  has_virtual_destructor
       }
 
     template<class _Tp>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     _Tp&&
     forward(typename os::std::remove_reference<_Tp>::type&& __t) _NOEXCEPT
       {
@@ -1891,7 +1891,7 @@ template    <class _Tp> struct  has_virtual_destructor
 
 #else  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
     template<class _Tp>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       _Tp&
       move(_Tp& __t)
       {
@@ -1899,7 +1899,7 @@ template    <class _Tp> struct  has_virtual_destructor
       }
 
     template<class _Tp>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       const _Tp&
       move(const _Tp& __t)
       {
@@ -1907,7 +1907,7 @@ template    <class _Tp> struct  has_virtual_destructor
       }
 
     template<class _Tp>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       _Tp&
       forward(typename remove_reference<_Tp>::type& __t) _NOEXCEPT
       {
@@ -1920,13 +1920,13 @@ template    <class _Tp> struct  has_virtual_destructor
         typedef typename remove_reference<_Tp>::type _Trr;
         _Trr& t_;
       public:
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         _Trr*
         operator->()
         {
           return &t_;
         }
-        __attribute__ ((always_inline))
+        __attribute__((always_inline))
         explicit
         __rv(_Trr& __t)
             : t_(__t)
@@ -1950,7 +1950,7 @@ template    <class _Tp> struct  has_virtual_destructor
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
 
     template<class _Tp>
-    inline __attribute__ ((always_inline))
+    inline __attribute__((always_inline))
     typename decay<_Tp>::type
     __decay_copy(_Tp&& __t)
       {
@@ -1960,7 +1960,7 @@ template    <class _Tp> struct  has_virtual_destructor
 #else
 
     template<class _Tp>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       typename decay<_Tp>::type
       __decay_copy(const _Tp& __t)
         {
@@ -3487,13 +3487,13 @@ template    <class _Rp, class _Class>
       // bullets 1 and 2
 
     template<class _Fp, class _A0, class ..._Args>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       auto
       __invoke(_Fp&& __f, _A0&& __a0, _Args&& ...__args)
       -> decltype((os::std::forward<_A0>(__a0).*__f)(os::std::forward<_Args>(__args)...));
 
     template<class _Fp, class _A0, class ..._Args>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       auto
       __invoke(_Fp&& __f, _A0&& __a0, _Args&& ...__args)
       -> decltype(((*os::std::forward<_A0>(__a0)).*__f)(os::std::forward<_Args>(__args)...));
@@ -3501,13 +3501,13 @@ template    <class _Rp, class _Class>
       // bullets 3 and 4
 
     template<class _Fp, class _A0>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       auto
       __invoke(_Fp&& __f, _A0&& __a0)
       -> decltype(os::std::forward<_A0>(__a0).*__f);
 
     template<class _Fp, class _A0>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       auto
       __invoke(_Fp&& __f, _A0&& __a0)
       -> decltype((*os::std::forward<_A0>(__a0)).*__f);
@@ -3515,7 +3515,7 @@ template    <class _Rp, class _Class>
       // bullet 5
 
     template<class _Fp, class ..._Args>
-      __attribute__ ((always_inline))
+      __attribute__((always_inline))
       auto
       __invoke(_Fp&& __f, _Args&& ...__args)
       -> decltype(os::std::forward<_Fp>(__f)(os::std::forward<_Args>(__args)...));
@@ -3565,7 +3565,7 @@ template    <class _Rp, class _Class>
 
 #endif  // _LIBCPP_HAS_NO_VARIADICS
     template<class _Tp>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
 #ifndef _LIBCPP_HAS_NO_ADVANCED_SFINAE
       typename enable_if
       <
@@ -3584,7 +3584,7 @@ template    <class _Rp, class _Class>
       }
 
     template<class _ForwardIterator1, class _ForwardIterator2>
-      inline __attribute__ ((always_inline))
+      inline __attribute__((always_inline))
       void
       iter_swap(_ForwardIterator1 __a, _ForwardIterator2 __b)
       //                                  noexcept (noexcept (swap(*__a, *__b)))
