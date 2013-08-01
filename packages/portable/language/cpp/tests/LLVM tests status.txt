@@ -343,26 +343,26 @@
 │   │   ├── shrink_to_fit.pass.cpp
 │   │   └── size.pass.cpp
 │   ├── string.cons
-│   │   ├── alloc.pass.cpp
-│   │   ├── char_assignment.pass.cpp
-│   │   ├── copy.pass.cpp
-│   │   ├── copy_alloc.pass.cpp
-│   │   ├── copy_assignment.pass.cpp
+│   │   ├── alloc.pass.cpp --- string.cpp --- OK
+│   │   ├── char_assignment.pass.cpp --- string.cpp --- OK
+│   │   ├── copy.pass.cpp --- string.cpp --- OK
+│   │   ├── copy_alloc.pass.cpp --- string.cpp --- OK
+│   │   ├── copy_assignment.pass.cpp --- string.cpp --- OK
 │   │   ├── default_noexcept.pass.cpp
 │   │   ├── dtor_noexcept.pass.cpp
-│   │   ├── initializer_list.pass.cpp
-│   │   ├── initializer_list_assignment.pass.cpp
-│   │   ├── iter_alloc.pass.cpp
+│   │   ├── initializer_list.pass.cpp --- NOT SUPPORTED BY CLANG YET
+│   │   ├── initializer_list_assignment.pass.cpp --- NOT SUPPORTED BY CLANG YET
+│   │   ├── iter_alloc.pass.cpp --- string.cpp --- OK
 │   │   ├── move.pass.cpp
 │   │   ├── move_alloc.pass.cpp
 │   │   ├── move_assign_noexcept.pass.cpp
 │   │   ├── move_assignment.pass.cpp
 │   │   ├── move_noexcept.pass.cpp
-│   │   ├── pointer_alloc.pass.cpp
-│   │   ├── pointer_assignment.pass.cpp
-│   │   ├── pointer_size_alloc.pass.cpp
-│   │   ├── size_char_alloc.pass.cpp
-│   │   └── substr.pass.cpp
+│   │   ├── pointer_alloc.pass.cpp --- string.cpp --- OK
+│   │   ├── pointer_assignment.pass.cpp --- string.cpp --- OK
+│   │   ├── pointer_size_alloc.pass.cpp --- string.cpp --- OK
+│   │   ├── size_char_alloc.pass.cpp --- string.cpp --- OK, partly
+│   │   └── substr.pass.cpp --- string.cpp --- OK
 │   ├── string.iterators
 │   │   ├── begin.pass.cpp
 │   │   ├── cbegin.pass.cpp
