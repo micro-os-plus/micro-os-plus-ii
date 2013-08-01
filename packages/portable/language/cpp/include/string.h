@@ -228,9 +228,13 @@ namespace os
 
         __attribute__((always_inline)) basic_string()
         noexcept (is_nothrow_default_constructible<allocator_type>::value);
+
         __attribute__((always_inline)) explicit basic_string(const allocator_type& __a);
+
         basic_string(const basic_string& __str);
+
         basic_string(const basic_string& __str, const allocator_type& __a);
+
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
         __attribute__((always_inline))
         basic_string(basic_string&& __str)
@@ -239,33 +243,45 @@ namespace os
         basic_string(basic_string&& __str, const allocator_type& __a);
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
         __attribute__((always_inline)) basic_string(const_pointer __s);
+
         __attribute__((always_inline))
         basic_string(const_pointer __s, const allocator_type& __a);
+
         __attribute__((always_inline))
         basic_string(const_pointer __s, size_type __n);
+
         __attribute__((always_inline))
         basic_string(const_pointer __s, size_type __n, const allocator_type& __a);
+
         __attribute__((always_inline))
         basic_string(size_type __n, value_type __c);
+
         __attribute__((always_inline))
         basic_string(size_type __n, value_type __c, const allocator_type& __a);
+
         basic_string(const basic_string& __str, size_type __pos, size_type __n = npos,
         const allocator_type& __a = allocator_type());
+
         template<class _InputIterator>
         __attribute__((always_inline))
         basic_string(_InputIterator __first, _InputIterator __last);
+
         template<class _InputIterator>
         __attribute__((always_inline))
         basic_string(_InputIterator __first, _InputIterator __last, const allocator_type& __a);
+
 #ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
         __attribute__((always_inline))
         basic_string(initializer_list<value_type> __il);
+
         __attribute__((always_inline))
         basic_string(initializer_list<value_type> __il, const allocator_type& __a);
+
 #endif  // _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
         ~basic_string();
 
         basic_string& operator=(const basic_string& __str);
+
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
         __attribute__((always_inline))
         basic_string& operator=(basic_string&& __str)
@@ -274,7 +290,9 @@ namespace os
 #endif
         __attribute__((always_inline)) basic_string& operator=(const_pointer __s)
           { return assign(__s);}
+
         basic_string& operator=(value_type __c);
+
 #ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
         __attribute__((always_inline))
         basic_string& operator=(initializer_list<value_type> __il)
@@ -886,6 +904,11 @@ namespace os
         traits_type::assign(__p[__sz], value_type());
       }
 
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#endif
+
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
       basic_string<_CharT, _Traits, _Allocator>::basic_string(const_pointer __s)
@@ -907,6 +930,8 @@ namespace os
 #endif
         __init(__s, traits_type::length(__s));
       }
+
+#pragma GCC diagnostic pop
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -1052,16 +1077,19 @@ namespace os
           try
             {
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-          for (; __first != __last; ++__first)
-            push_back(*__first);
+              for (; __first != __last; ++__first)
+                push_back(*__first);
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-        }
-      catch (...)
-        {
-          if (__is_long())
-          __alloc_traits::deallocate(__alloc(), __get_long_pointer(), __get_long_cap());
-          throw;
-        }
+            }
+          catch (...)
+            {
+              if (__is_long())
+                {
+                  __alloc_traits::deallocate(__alloc(), __get_long_pointer(),
+                      __get_long_cap());
+                }
+              throw;
+            }
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
         }
 
@@ -1117,18 +1145,18 @@ namespace os
 #ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>::basic_string(
-          initializer_list<value_type> __il)
+    __attribute__((always_inline)) inline
+    basic_string<_CharT, _Traits, _Allocator>::basic_string(
+        initializer_list<value_type> __il)
       {
         __init(__il.begin(), __il.end());
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>::basic_string(
-          initializer_list<value_type> __il, const allocator_type& __a)
-          : __r_(__a)
+    __attribute__((always_inline)) inline
+    basic_string<_CharT, _Traits, _Allocator>::basic_string(
+        initializer_list<value_type> __il, const allocator_type& __a)
+    : __r_(__a)
       {
         __init(__il.begin(), __il.end());
       }
@@ -1207,7 +1235,7 @@ namespace os
         __set_long_cap(__cap + 1);
       }
 
-// assign
+    // assign
 
     template<class _CharT, class _Traits, class _Allocator>
       basic_string<_CharT, _Traits, _Allocator>&
@@ -1369,8 +1397,8 @@ namespace os
         }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>&
+      __attribute__((always_inline))    inline basic_string<_CharT, _Traits,
+          _Allocator>&
       basic_string<_CharT, _Traits, _Allocator>::assign(
           const basic_string& __str)
       {
@@ -1398,7 +1426,7 @@ namespace os
         return assign(__s, traits_type::length(__s));
       }
 
-// append
+    // append
 
     template<class _CharT, class _Traits, class _Allocator>
       basic_string<_CharT, _Traits, _Allocator>&
@@ -1500,8 +1528,8 @@ namespace os
         }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>&
+      __attribute__((always_inline))    inline basic_string<_CharT, _Traits,
+          _Allocator>&
       basic_string<_CharT, _Traits, _Allocator>::append(
           const basic_string& __str)
       {
@@ -1529,7 +1557,7 @@ namespace os
         return append(__s, traits_type::length(__s));
       }
 
-// insert
+    // insert
 
     template<class _CharT, class _Traits, class _Allocator>
       basic_string<_CharT, _Traits, _Allocator>&
@@ -1659,8 +1687,8 @@ namespace os
         }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>&
+      __attribute__((always_inline))    inline basic_string<_CharT, _Traits,
+          _Allocator>&
       basic_string<_CharT, _Traits, _Allocator>::insert(size_type __pos1,
           const basic_string& __str)
       {
@@ -1718,16 +1746,17 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::iterator
-      basic_string<_CharT, _Traits, _Allocator>::insert(const_iterator __pos, size_type __n, value_type __c)
-        {
-          difference_type __p = __pos - begin();
-          insert(static_cast<size_type>(__p), __n, __c);
-          return begin() + __p;
-        }
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::iterator
+      basic_string<_CharT, _Traits, _Allocator>::insert(const_iterator __pos,
+          size_type __n, value_type __c)
+      {
+        difference_type __p = __pos - begin();
+        insert(static_cast<size_type>(__p), __n, __c);
+        return begin() + __p;
+      }
 
-// replace
+    // replace
 
     template<class _CharT, class _Traits, class _Allocator>
       basic_string<_CharT, _Traits, _Allocator>&
@@ -1848,8 +1877,8 @@ namespace os
         }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>&
+      __attribute__((always_inline))    inline basic_string<_CharT, _Traits,
+          _Allocator>&
       basic_string<_CharT, _Traits, _Allocator>::replace(size_type __pos1,
           size_type __n1, const basic_string& __str)
       {
@@ -1881,8 +1910,8 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>&
+      __attribute__((always_inline))    inline basic_string<_CharT, _Traits,
+          _Allocator>&
       basic_string<_CharT, _Traits, _Allocator>::replace(const_iterator __i1,
           const_iterator __i2, const basic_string& __str)
       {
@@ -1891,8 +1920,8 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>&
+      __attribute__((always_inline))    inline basic_string<_CharT, _Traits,
+          _Allocator>&
       basic_string<_CharT, _Traits, _Allocator>::replace(const_iterator __i1,
           const_iterator __i2, const_pointer __s, size_type __n)
       {
@@ -1901,8 +1930,8 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>&
+      __attribute__((always_inline))    inline basic_string<_CharT, _Traits,
+          _Allocator>&
       basic_string<_CharT, _Traits, _Allocator>::replace(const_iterator __i1,
           const_iterator __i2, const_pointer __s)
       {
@@ -1911,8 +1940,8 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>&
+      __attribute__((always_inline))    inline basic_string<_CharT, _Traits,
+          _Allocator>&
       basic_string<_CharT, _Traits, _Allocator>::replace(const_iterator __i1,
           const_iterator __i2, size_type __n, value_type __c)
       {
@@ -1920,7 +1949,7 @@ namespace os
             static_cast<size_type>(__i2 - __i1), __n, __c);
       }
 
-// erase
+    // erase
 
     template<class _CharT, class _Traits, class _Allocator>
       basic_string<_CharT, _Traits, _Allocator>&
@@ -1946,26 +1975,27 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::iterator
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::iterator
       basic_string<_CharT, _Traits, _Allocator>::erase(const_iterator __pos)
-        {
-          iterator __b = begin();
-          size_type __r = static_cast<size_type>(__pos - __b);
-          erase(__r, 1);
-          return __b + static_cast<difference_type>(__r);
-        }
+      {
+        iterator __b = begin();
+        size_type __r = static_cast<size_type>(__pos - __b);
+        erase(__r, 1);
+        return __b + static_cast<difference_type>(__r);
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::iterator
-      basic_string<_CharT, _Traits, _Allocator>::erase(const_iterator __first, const_iterator __last)
-        {
-          iterator __b = begin();
-          size_type __r = static_cast<size_type>(__first - __b);
-          erase(__r, static_cast<size_type>(__last - __first));
-          return __b + static_cast<difference_type>(__r);
-        }
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::iterator
+      basic_string<_CharT, _Traits, _Allocator>::erase(const_iterator __first,
+          const_iterator __last)
+      {
+        iterator __b = begin();
+        size_type __r = static_cast<size_type>(__first - __b);
+        erase(__r, static_cast<size_type>(__last - __first));
+        return __b + static_cast<difference_type>(__r);
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -2040,17 +2070,17 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
       basic_string<_CharT, _Traits, _Allocator>::max_size() const noexcept
-        {
-          size_type __m = __alloc_traits::max_size(__alloc());
+      {
+        size_type __m = __alloc_traits::max_size(__alloc());
 #if _LIBCPP_BIG_ENDIAN
-          return (__m <= ~__long_mask ? __m : __m/2) - 1;
+        return (__m <= ~__long_mask ? __m : __m/2) - 1;
 #else
-          return __m - 1;
+        return __m - 1;
 #endif
-        }
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
       void
@@ -2084,17 +2114,17 @@ namespace os
                     try
                       {
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-                    __new_data = __alloc_traits::allocate(__alloc(),
-                        __res_arg + 1);
+                        __new_data = __alloc_traits::allocate(__alloc(),
+                            __res_arg + 1);
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-                  }
-                catch (...)
-                  {
-                    return;
-                  }
+                      }
+                    catch (...)
+                      {
+                        return;
+                      }
 #else  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
                     if (__new_data == 0)
-                      return;
+                    return;
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
                   }
                 __now_long = true;
@@ -2117,26 +2147,27 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::const_reference
-      basic_string<_CharT, _Traits, _Allocator>::operator[](size_type __pos) const
-        {
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::const_reference
+      basic_string<_CharT, _Traits, _Allocator>::operator[](
+          size_type __pos) const
+      {
 #ifdef __LIBCPP_DEBUG
-          assert(__pos <= size());
+        assert(__pos <= size());
 #endif
-          return *(data() + __pos);
-        }
+        return *(data() + __pos);
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::reference
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::reference
       basic_string<_CharT, _Traits, _Allocator>::operator[](size_type __pos)
-        {
+      {
 #ifdef __LIBCPP_DEBUG
-          assert(__pos < size());
+        assert(__pos < size());
 #endif
-          return *(__get_pointer() + __pos);
-        }
+        return *(__get_pointer() + __pos);
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
       typename basic_string<_CharT, _Traits, _Allocator>::const_reference
@@ -2157,48 +2188,48 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::reference
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::reference
       basic_string<_CharT, _Traits, _Allocator>::front()
-        {
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(!empty());
+        assert(!empty());
 #endif
-          return *__get_pointer();
-        }
+        return *__get_pointer();
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::const_reference
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::const_reference
       basic_string<_CharT, _Traits, _Allocator>::front() const
-        {
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(!empty());
+        assert(!empty());
 #endif
-          return *data();
-        }
+        return *data();
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::reference
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::reference
       basic_string<_CharT, _Traits, _Allocator>::back()
-        {
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(!empty());
+        assert(!empty());
 #endif
-          return *(__get_pointer() + size() - 1);
-        }
+        return *(__get_pointer() + size() - 1);
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::const_reference
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::const_reference
       basic_string<_CharT, _Traits, _Allocator>::back() const
-        {
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(!empty());
+        assert(!empty());
 #endif
-          return *(data() + size() - 1);
-        }
+        return *(data() + size() - 1);
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
       typename basic_string<_CharT, _Traits, _Allocator>::size_type
@@ -2214,8 +2245,8 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      basic_string<_CharT, _Traits, _Allocator>
+      __attribute__((always_inline))    inline basic_string<_CharT, _Traits,
+          _Allocator>
       basic_string<_CharT, _Traits, _Allocator>::substr(size_type __pos,
           size_type __n) const
       {
@@ -2237,7 +2268,7 @@ namespace os
 #endif  // _LIBCPP_DEBUG
       }
 
-// find
+    // find
 
     template<class _Traits>
       struct _LIBCPP_HIDDEN __traits_eq
@@ -2273,25 +2304,25 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
       basic_string<_CharT, _Traits, _Allocator>::find(const basic_string& __str,
           size_type __pos) const noexcept
-        {
-          return find(__str.data(), __pos, __str.size());
-        }
+      {
+        return find(__str.data(), __pos, __str.size());
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
       basic_string<_CharT, _Traits, _Allocator>::find(const_pointer __s,
           size_type __pos) const noexcept
-        {
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(__s != 0);
+        assert(__s != 0);
 #endif
-          return find(__s, __pos, traits_type::length(__s));
-        }
+        return find(__s, __pos, traits_type::length(__s));
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
       typename basic_string<_CharT, _Traits, _Allocator>::size_type
@@ -2308,7 +2339,7 @@ namespace os
         return static_cast<size_type>(__r - __p);
       }
 
-// rfind
+    // rfind
 
     template<class _CharT, class _Traits, class _Allocator>
       typename basic_string<_CharT, _Traits, _Allocator>::size_type
@@ -2333,25 +2364,25 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::rfind(const basic_string& __str,
-          size_type __pos) const noexcept
-        {
-          return rfind(__str.data(), __pos, __str.size());
-        }
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::rfind(
+          const basic_string& __str, size_type __pos) const noexcept
+      {
+        return rfind(__str.data(), __pos, __str.size());
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
       basic_string<_CharT, _Traits, _Allocator>::rfind(const_pointer __s,
           size_type __pos) const noexcept
-        {
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(__s != 0);
+        assert(__s != 0);
 #endif
-          return rfind(__s, __pos, traits_type::length(__s));
-        }
+        return rfind(__s, __pos, traits_type::length(__s));
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
       typename basic_string<_CharT, _Traits, _Allocator>::size_type
@@ -2375,7 +2406,7 @@ namespace os
         return npos;
       }
 
-// find_first_of
+    // find_first_of
 
     template<class _CharT, class _Traits, class _Allocator>
       typename basic_string<_CharT, _Traits, _Allocator>::size_type
@@ -2397,36 +2428,36 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::find_first_of(const basic_string& __str,
-          size_type __pos) const noexcept
-        {
-          return find_first_of(__str.data(), __pos, __str.size());
-        }
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::find_first_of(
+          const basic_string& __str, size_type __pos) const noexcept
+      {
+        return find_first_of(__str.data(), __pos, __str.size());
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::find_first_of(const_pointer __s,
-          size_type __pos) const noexcept
-        {
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::find_first_of(
+          const_pointer __s, size_type __pos) const noexcept
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(__s != 0);
+        assert(__s != 0);
 #endif
-          return find_first_of(__s, __pos, traits_type::length(__s));
-        }
+        return find_first_of(__s, __pos, traits_type::length(__s));
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
       basic_string<_CharT, _Traits, _Allocator>::find_first_of(value_type __c,
           size_type __pos) const noexcept
-        {
-          return find(__c, __pos);
-        }
+      {
+        return find(__c, __pos);
+      }
 
-// find_last_of
+    // find_last_of
 
     template<class _CharT, class _Traits, class _Allocator>
       typename basic_string<_CharT, _Traits, _Allocator>::size_type
@@ -2455,36 +2486,36 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::find_last_of(const basic_string& __str,
-          size_type __pos) const noexcept
-        {
-          return find_last_of(__str.data(), __pos, __str.size());
-        }
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::find_last_of(
+          const basic_string& __str, size_type __pos) const noexcept
+      {
+        return find_last_of(__str.data(), __pos, __str.size());
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
       basic_string<_CharT, _Traits, _Allocator>::find_last_of(const_pointer __s,
           size_type __pos) const noexcept
-        {
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(__s != 0);
+        assert(__s != 0);
 #endif
-          return find_last_of(__s, __pos, traits_type::length(__s));
-        }
+        return find_last_of(__s, __pos, traits_type::length(__s));
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
       basic_string<_CharT, _Traits, _Allocator>::find_last_of(value_type __c,
           size_type __pos) const noexcept
-        {
-          return rfind(__c, __pos);
-        }
+      {
+        return rfind(__c, __pos);
+      }
 
-// find_first_not_of
+    // find_first_not_of
 
     template<class _CharT, class _Traits, class _Allocator>
       typename basic_string<_CharT, _Traits, _Allocator>::size_type
@@ -2507,45 +2538,45 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::find_first_not_of(const basic_string& __str,
-          size_type __pos) const noexcept
-        {
-          return find_first_not_of(__str.data(), __pos, __str.size());
-        }
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::find_first_not_of(
+          const basic_string& __str, size_type __pos) const noexcept
+      {
+        return find_first_not_of(__str.data(), __pos, __str.size());
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::find_first_not_of(const_pointer __s,
-          size_type __pos) const noexcept
-        {
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::find_first_not_of(
+          const_pointer __s, size_type __pos) const noexcept
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(__s != 0);
+        assert(__s != 0);
 #endif
-          return find_first_not_of(__s, __pos, traits_type::length(__s));
-        }
+        return find_first_not_of(__s, __pos, traits_type::length(__s));
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::find_first_not_of(value_type __c,
-          size_type __pos) const noexcept
-        {
-          size_type __sz = size();
-          if (__pos < __sz)
-            {
-              const_pointer __p = data();
-              const_pointer __pe = __p + __sz;
-              for (const_pointer __ps = __p + __pos; __ps != __pe; ++__ps)
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::find_first_not_of(
+          value_type __c, size_type __pos) const noexcept
+      {
+        size_type __sz = size();
+        if (__pos < __sz)
+          {
+            const_pointer __p = data();
+            const_pointer __pe = __p + __sz;
+            for (const_pointer __ps = __p + __pos; __ps != __pe; ++__ps)
               if (!traits_type::eq(*__ps, __c))
-              return static_cast<size_type>(__ps - __p);
-            }
-          return npos;
-        }
+                return static_cast<size_type>(__ps - __p);
+          }
+        return npos;
+      }
 
-// find_last_not_of
+    // find_last_not_of
 
     template<class _CharT, class _Traits, class _Allocator>
       typename basic_string<_CharT, _Traits, _Allocator>::size_type
@@ -2568,45 +2599,45 @@ namespace os
       }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::find_last_not_of(const basic_string& __str,
-          size_type __pos) const noexcept
-        {
-          return find_last_not_of(__str.data(), __pos, __str.size());
-        }
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::find_last_not_of(
+          const basic_string& __str, size_type __pos) const noexcept
+      {
+        return find_last_not_of(__str.data(), __pos, __str.size());
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::find_last_not_of(const_pointer __s,
-          size_type __pos) const noexcept
-        {
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::find_last_not_of(
+          const_pointer __s, size_type __pos) const noexcept
+      {
 #ifdef _LIBCPP_DEBUG
-          assert(__s != 0);
+        assert(__s != 0);
 #endif
-          return find_last_not_of(__s, __pos, traits_type::length(__s));
-        }
+        return find_last_not_of(__s, __pos, traits_type::length(__s));
+      }
 
     template<class _CharT, class _Traits, class _Allocator>
-      __attribute__((always_inline)) inline
-      typename basic_string<_CharT, _Traits, _Allocator>::size_type
-      basic_string<_CharT, _Traits, _Allocator>::find_last_not_of(value_type __c,
-          size_type __pos) const noexcept
-        {
-          size_type __sz = size();
-          if (__pos < __sz)
+      __attribute__((always_inline))    inline typename basic_string<_CharT, _Traits,
+          _Allocator>::size_type
+      basic_string<_CharT, _Traits, _Allocator>::find_last_not_of(
+          value_type __c, size_type __pos) const noexcept
+      {
+        size_type __sz = size();
+        if (__pos < __sz)
           ++__pos;
-          else
+        else
           __pos = __sz;
-          const_pointer __p = data();
-          for (const_pointer __ps = __p + __pos; __ps != __p;)
+        const_pointer __p = data();
+        for (const_pointer __ps = __p + __pos; __ps != __p;)
           if (!traits_type::eq(*--__ps, __c))
-          return static_cast<size_type>(__ps - __p);
-          return npos;
-        }
+            return static_cast<size_type>(__ps - __p);
+        return npos;
+      }
 
-// compare
+    // compare
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -2695,7 +2726,7 @@ namespace os
         return __r;
       }
 
-// __invariants
+    // __invariants
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -2713,7 +2744,7 @@ namespace os
         return true;
       }
 
-// operator==
+    // operator==
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -2743,7 +2774,7 @@ namespace os
         return __lhs.compare(__rhs) == 0;
       }
 
-// operator!=
+    // operator!=
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -2772,7 +2803,7 @@ namespace os
         return !(__lhs == __rhs);
       }
 
-// operator<
+    // operator<
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -2801,7 +2832,7 @@ namespace os
         return __rhs.compare(__lhs) > 0;
       }
 
-// operator>
+    // operator>
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -2830,7 +2861,7 @@ namespace os
         return __rhs < __lhs;
       }
 
-// operator<=
+    // operator<=
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -2859,7 +2890,7 @@ namespace os
         return !(__rhs < __lhs);
       }
 
-// operator>=
+    // operator>=
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
@@ -2888,7 +2919,7 @@ namespace os
         return !(__lhs < __rhs);
       }
 
-// operator +
+    // operator +
 
     template<class _CharT, class _Traits, class _Allocator>
       basic_string<_CharT, _Traits, _Allocator>
@@ -3022,7 +3053,7 @@ namespace os
       }
 
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-// swap
+    // swap
 
     template<class _CharT, class _Traits, class _Allocator>
       __attribute__((always_inline)) inline
