@@ -41,7 +41,8 @@ Toolchain(
         programName='$(PREFIX)g++$(SUFFIX)',
         description='OS X MacPorts GNU G++',
         standard='-std=c++11',
-        options='-fno-rtti -fno-exceptions -Wabi',
+        #options='-fno-rtti -fno-exceptions -Wabi',
+        options='-Wabi',
     ),
           
     asm=Tool(
