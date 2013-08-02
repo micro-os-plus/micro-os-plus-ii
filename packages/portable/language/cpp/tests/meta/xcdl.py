@@ -160,6 +160,27 @@ Package(
             ],
         ),
 
+        Component(
+            id='component.os.portable.language.cpp.tests.exception',
+            name='Test C++ exception',
+            description='Test the exception classes.',
+    
+            category='test',
+    
+            isEnabled=False,
+            sourceFiles=[
+                'exception.cpp',
+            ],
+                  
+            includeFiles=[
+                'exception-config.py',
+            ],
+
+            implements=[
+                'interface.os.artefact',
+            ],
+        ),
+
               
 #        Component(
 #            id='component.os.portable.language.cpp.tests.ostrstream',

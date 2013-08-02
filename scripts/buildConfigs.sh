@@ -222,5 +222,20 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
+
+CONFIG=/portable/language/cpp/tests/meta/exception-linux-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/exception/' \
+-e 's/ARTEFACTDESCRIPTION/C++ exception/' \
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+CONFIG=/portable/language/cpp/tests/meta/exception-osx-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/exception/' \
+-e 's/ARTEFACTDESCRIPTION/C++ exception/' \
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
 echo
 echo '[done]'
