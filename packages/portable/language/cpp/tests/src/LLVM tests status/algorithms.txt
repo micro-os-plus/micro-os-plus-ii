@@ -1,0 +1,203 @@
+[algorithms]
+├── alg.c.library
+│   └── tested_elsewhere.pass.cpp
+├── alg.modifying.operations
+│   ├── alg.copy
+│   │   ├── copy.pass.cpp
+│   │   ├── copy_backward.pass.cpp
+│   │   ├── copy_if.pass.cpp
+│   │   └── copy_n.pass.cpp
+│   ├── alg.fill
+│   │   ├── fill.pass.cpp
+│   │   └── fill_n.pass.cpp
+│   ├── alg.generate
+│   │   ├── generate.pass.cpp
+│   │   └── generate_n.pass.cpp
+│   ├── alg.move
+│   │   ├── move.pass.cpp
+│   │   └── move_backward.pass.cpp
+│   ├── alg.partitions
+│   │   ├── is_partitioned.pass.cpp
+│   │   ├── partition.pass.cpp
+│   │   ├── partition_copy.pass.cpp
+│   │   ├── partition_point.pass.cpp
+│   │   └── stable_partition.pass.cpp
+│   ├── alg.random.shuffle
+│   │   ├── random_shuffle.pass.cpp
+│   │   ├── random_shuffle_rand.pass.cpp
+│   │   └── random_shuffle_urng.pass.cpp
+│   ├── alg.remove
+│   │   ├── remove.pass.cpp
+│   │   ├── remove_copy.pass.cpp
+│   │   ├── remove_copy_if.pass.cpp
+│   │   └── remove_if.pass.cpp
+│   ├── alg.replace
+│   │   ├── replace.pass.cpp
+│   │   ├── replace_copy.pass.cpp
+│   │   ├── replace_copy_if.pass.cpp
+│   │   └── replace_if.pass.cpp
+│   ├── alg.reverse
+│   │   ├── reverse.pass.cpp
+│   │   └── reverse_copy.pass.cpp
+│   ├── alg.rotate
+│   │   ├── rotate.pass.cpp
+│   │   └── rotate_copy.pass.cpp
+│   ├── alg.swap
+│   │   ├── iter_swap.pass.cpp
+│   │   └── swap_ranges.pass.cpp
+│   ├── alg.transform
+│   │   ├── binary_transform.pass.cpp
+│   │   └── unary_transform.pass.cpp
+│   ├── alg.unique
+│   │   ├── unique.pass.cpp
+│   │   ├── unique_copy.pass.cpp
+│   │   ├── unique_copy_pred.pass.cpp
+│   │   └── unique_pred.pass.cpp
+│   └── nothing_to_do.pass.cpp
+├── alg.nonmodifying
+│   ├── alg.adjacent.find
+│   │   ├── adjacent_find.pass.cpp
+│   │   └── adjacent_find_pred.pass.cpp
+│   ├── alg.all_of
+│   │   └── all_of.pass.cpp
+│   ├── alg.any_of
+│   │   └── any_of.pass.cpp
+│   ├── alg.count
+│   │   ├── count.pass.cpp
+│   │   └── count_if.pass.cpp
+│   ├── alg.equal
+│   │   ├── equal.pass.cpp
+│   │   └── equal_pred.pass.cpp
+│   ├── alg.find
+│   │   ├── find.pass.cpp
+│   │   ├── find_if.pass.cpp
+│   │   └── find_if_not.pass.cpp
+│   ├── alg.find.end
+│   │   ├── find_end.pass.cpp
+│   │   └── find_end_pred.pass.cpp
+│   ├── alg.find.first.of
+│   │   ├── find_first_of.pass.cpp
+│   │   └── find_first_of_pred.pass.cpp
+│   ├── alg.foreach
+│   │   └── test.pass.cpp
+│   ├── alg.is_permutation
+│   │   ├── is_permutation.pass.cpp
+│   │   └── is_permutation_pred.pass.cpp
+│   ├── alg.none_of
+│   │   └── none_of.pass.cpp
+│   ├── alg.search
+│   │   ├── search.pass.cpp
+│   │   └── search_pred.pass.cpp
+│   ├── mismatch
+│   │   ├── mismatch.pass.cpp
+│   │   └── mismatch_pred.pass.cpp
+│   └── nothing_to_do.pass.cpp
+├── alg.sorting
+│   ├── alg.binary.search
+│   │   ├── binary.search
+│   │   │   ├── binary_search.pass.cpp
+│   │   │   └── binary_search_comp.pass.cpp
+│   │   ├── equal.range
+│   │   │   ├── equal_range.pass.cpp
+│   │   │   └── equal_range_comp.pass.cpp
+│   │   ├── lower.bound
+│   │   │   ├── lower_bound.pass.cpp
+│   │   │   └── lower_bound_comp.pass.cpp
+│   │   ├── nothing_to_do.pass.cpp
+│   │   └── upper.bound
+│   │       ├── upper_bound.pass.cpp
+│   │       └── upper_bound_comp.pass.cpp
+│   ├── alg.heap.operations
+│   │   ├── is.heap
+│   │   │   ├── is_heap.pass.cpp
+│   │   │   ├── is_heap_comp.pass.cpp
+│   │   │   ├── is_heap_until.pass.cpp
+│   │   │   └── is_heap_until_comp.pass.cpp
+│   │   ├── make.heap
+│   │   │   ├── make_heap.pass.cpp
+│   │   │   └── make_heap_comp.pass.cpp
+│   │   ├── nothing_to_do.pass.cpp
+│   │   ├── pop.heap
+│   │   │   ├── pop_heap.pass.cpp
+│   │   │   └── pop_heap_comp.pass.cpp
+│   │   ├── push.heap
+│   │   │   ├── push_heap.pass.cpp
+│   │   │   └── push_heap_comp.pass.cpp
+│   │   └── sort.heap
+│   │       ├── sort_heap.pass.cpp
+│   │       └── sort_heap_comp.pass.cpp
+│   ├── alg.lex.comparison
+│   │   ├── lexicographical_compare.pass.cpp
+│   │   └── lexicographical_compare_comp.pass.cpp
+│   ├── alg.merge
+│   │   ├── inplace_merge.pass.cpp
+│   │   ├── inplace_merge_comp.pass.cpp
+│   │   ├── merge.pass.cpp
+│   │   └── merge_comp.pass.cpp
+│   ├── alg.min.max
+│   │   ├── max.pass.cpp
+│   │   ├── max_comp.pass.cpp
+│   │   ├── max_element.pass.cpp
+│   │   ├── max_element_comp.pass.cpp
+│   │   ├── max_init_list.pass.cpp
+│   │   ├── max_init_list_comp.pass.cpp
+│   │   ├── min.pass.cpp
+│   │   ├── min_comp.pass.cpp
+│   │   ├── min_element.pass.cpp
+│   │   ├── min_element_comp.pass.cpp
+│   │   ├── min_init_list.pass.cpp
+│   │   ├── min_init_list_comp.pass.cpp
+│   │   ├── minmax.pass.cpp
+│   │   ├── minmax_comp.pass.cpp
+│   │   ├── minmax_element.pass.cpp
+│   │   ├── minmax_element_comp.pass.cpp
+│   │   ├── minmax_init_list.pass.cpp
+│   │   └── minmax_init_list_comp.pass.cpp
+│   ├── alg.nth.element
+│   │   ├── nth_element.pass.cpp
+│   │   └── nth_element_comp.pass.cpp
+│   ├── alg.permutation.generators
+│   │   ├── next_permutation.pass.cpp
+│   │   ├── next_permutation_comp.pass.cpp
+│   │   ├── prev_permutation.pass.cpp
+│   │   └── prev_permutation_comp.pass.cpp
+│   ├── alg.set.operations
+│   │   ├── includes
+│   │   │   ├── includes.pass.cpp
+│   │   │   └── includes_comp.pass.cpp
+│   │   ├── nothing_to_do.pass.cpp
+│   │   ├── set.difference
+│   │   │   ├── set_difference.pass.cpp
+│   │   │   └── set_difference_comp.pass.cpp
+│   │   ├── set.intersection
+│   │   │   ├── set_intersection.pass.cpp
+│   │   │   └── set_intersection_comp.pass.cpp
+│   │   ├── set.symmetric.difference
+│   │   │   ├── set_symmetric_difference.pass.cpp
+│   │   │   └── set_symmetric_difference_comp.pass.cpp
+│   │   └── set.union
+│   │       ├── set_union.pass.cpp
+│   │       └── set_union_comp.pass.cpp
+│   ├── alg.sort
+│   │   ├── is.sorted
+│   │   │   ├── is_sorted.pass.cpp
+│   │   │   ├── is_sorted_comp.pass.cpp
+│   │   │   ├── is_sorted_until.pass.cpp
+│   │   │   └── is_sorted_until_comp.pass.cpp
+│   │   ├── nothing_to_do.pass.cpp
+│   │   ├── partial.sort
+│   │   │   ├── partial_sort.pass.cpp
+│   │   │   └── partial_sort_comp.pass.cpp
+│   │   ├── partial.sort.copy
+│   │   │   ├── partial_sort_copy.pass.cpp
+│   │   │   └── partial_sort_copy_comp.pass.cpp
+│   │   ├── sort
+│   │   │   ├── sort.pass.cpp
+│   │   │   └── sort_comp.pass.cpp
+│   │   └── stable.sort
+│   │       ├── stable_sort.pass.cpp
+│   │       └── stable_sort_comp.pass.cpp
+│   └── nothing_to_do.pass.cpp
+├── algorithms.general
+│   └── nothing_to_do.pass.cpp
+└── version.pass.cpp

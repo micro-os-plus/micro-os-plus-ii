@@ -1,0 +1,298 @@
+[strings]
+├── basic.string
+│   ├── input_iterator.h
+│   ├── string.access
+│   │   ├── at.pass.cpp
+│   │   ├── back.pass.cpp
+│   │   ├── front.pass.cpp
+│   │   └── index.pass.cpp
+│   ├── string.capacity
+│   │   ├── capacity.pass.cpp
+│   │   ├── clear.pass.cpp
+│   │   ├── empty.pass.cpp
+│   │   ├── length.pass.cpp
+│   │   ├── max_size.pass.cpp
+│   │   ├── reserve.pass.cpp
+│   │   ├── resize_size.pass.cpp
+│   │   ├── resize_size_char.pass.cpp
+│   │   ├── shrink_to_fit.pass.cpp
+│   │   └── size.pass.cpp
+│   ├── string.cons
+│   │   ├── alloc.pass.cpp --- string.cpp --- OK
+│   │   ├── char_assignment.pass.cpp --- string.cpp --- OK
+│   │   ├── copy.pass.cpp --- string.cpp --- OK
+│   │   ├── copy_alloc.pass.cpp --- string.cpp --- OK
+│   │   ├── copy_assignment.pass.cpp --- string.cpp --- OK
+│   │   ├── default_noexcept.pass.cpp
+│   │   ├── dtor_noexcept.pass.cpp
+│   │   ├── initializer_list.pass.cpp --- NOT SUPPORTED BY CLANG YET
+│   │   ├── initializer_list_assignment.pass.cpp --- NOT SUPPORTED BY CLANG YET
+│   │   ├── iter_alloc.pass.cpp --- string.cpp --- OK
+│   │   ├── move.pass.cpp
+│   │   ├── move_alloc.pass.cpp
+│   │   ├── move_assign_noexcept.pass.cpp
+│   │   ├── move_assignment.pass.cpp
+│   │   ├── move_noexcept.pass.cpp
+│   │   ├── pointer_alloc.pass.cpp --- string.cpp --- OK
+│   │   ├── pointer_assignment.pass.cpp --- string.cpp --- OK
+│   │   ├── pointer_size_alloc.pass.cpp --- string.cpp --- OK
+│   │   ├── size_char_alloc.pass.cpp --- string.cpp --- OK, partly
+│   │   └── substr.pass.cpp --- string.cpp --- OK
+│   ├── string.iterators
+│   │   ├── begin.pass.cpp
+│   │   ├── cbegin.pass.cpp
+│   │   ├── cend.pass.cpp
+│   │   ├── crbegin.pass.cpp
+│   │   ├── crend.pass.cpp
+│   │   ├── end.pass.cpp
+│   │   ├── rbegin.pass.cpp
+│   │   └── rend.pass.cpp
+│   ├── string.modifiers
+│   │   ├── nothing_to_do.pass.cpp
+│   │   ├── string_append
+│   │   │   ├── initializer_list.pass.cpp
+│   │   │   ├── iterator.pass.cpp
+│   │   │   ├── pointer.pass.cpp
+│   │   │   ├── pointer_size.pass.cpp
+│   │   │   ├── push_back.pass.cpp
+│   │   │   ├── size_char.pass.cpp
+│   │   │   ├── string.pass.cpp
+│   │   │   └── string_size_size.pass.cpp
+│   │   ├── string_assign
+│   │   │   ├── initializer_list.pass.cpp
+│   │   │   ├── iterator.pass.cpp
+│   │   │   ├── pointer.pass.cpp
+│   │   │   ├── pointer_size.pass.cpp
+│   │   │   ├── rv_string.pass.cpp
+│   │   │   ├── size_char.pass.cpp
+│   │   │   ├── string.pass.cpp
+│   │   │   └── string_size_size.pass.cpp
+│   │   ├── string_copy
+│   │   │   └── copy.pass.cpp
+│   │   ├── string_erase
+│   │   │   ├── iter.pass.cpp
+│   │   │   ├── iter_iter.pass.cpp
+│   │   │   ├── pop_back.pass.cpp
+│   │   │   └── size_size.pass.cpp
+│   │   ├── string_insert
+│   │   │   ├── iter_char.pass.cpp
+│   │   │   ├── iter_initializer_list.pass.cpp
+│   │   │   ├── iter_iter_iter.pass.cpp
+│   │   │   ├── iter_size_char.pass.cpp
+│   │   │   ├── size_pointer.pass.cpp
+│   │   │   ├── size_pointer_size.pass.cpp
+│   │   │   ├── size_size_char.pass.cpp
+│   │   │   ├── size_string.pass.cpp
+│   │   │   └── size_string_size_size.pass.cpp
+│   │   ├── string_op_plus_equal
+│   │   │   ├── char.pass.cpp
+│   │   │   ├── initializer_list.pass.cpp
+│   │   │   ├── pointer.pass.cpp
+│   │   │   └── string.pass.cpp
+│   │   ├── string_replace
+│   │   │   ├── iter_iter_initializer_list.pass.cpp
+│   │   │   ├── iter_iter_iter_iter.pass.cpp
+│   │   │   ├── iter_iter_pointer.pass.cpp
+│   │   │   ├── iter_iter_pointer_size.pass.cpp
+│   │   │   ├── iter_iter_size_char.pass.cpp
+│   │   │   ├── iter_iter_string.pass.cpp
+│   │   │   ├── size_size_pointer.pass.cpp
+│   │   │   ├── size_size_pointer_size.pass.cpp
+│   │   │   ├── size_size_size_char.pass.cpp
+│   │   │   ├── size_size_string.pass.cpp
+│   │   │   └── size_size_string_size_size.pass.cpp
+│   │   └── string_swap
+│   │       └── swap.pass.cpp
+│   ├── string.nonmembers
+│   │   ├── nothing_to_do.pass.cpp
+│   │   ├── string.io
+│   │   │   ├── get_line.pass.cpp
+│   │   │   ├── get_line_delim.pass.cpp
+│   │   │   ├── get_line_delim_rv.pass.cpp
+│   │   │   ├── get_line_rv.pass.cpp
+│   │   │   ├── stream_extract.pass.cpp
+│   │   │   └── stream_insert.pass.cpp
+│   │   ├── string.special
+│   │   │   ├── swap.pass.cpp
+│   │   │   └── swap_noexcept.pass.cpp
+│   │   ├── string_op!=
+│   │   │   ├── pointer_string.pass.cpp
+│   │   │   ├── string_pointer.pass.cpp
+│   │   │   └── string_string.pass.cpp
+│   │   ├── string_op+
+│   │   │   ├── char_string.pass.cpp
+│   │   │   ├── pointer_string.pass.cpp
+│   │   │   ├── string_char.pass.cpp
+│   │   │   ├── string_pointer.pass.cpp
+│   │   │   └── string_string.pass.cpp
+│   │   ├── string_operator==
+│   │   │   ├── pointer_string.pass.cpp
+│   │   │   ├── string_pointer.pass.cpp
+│   │   │   └── string_string.pass.cpp
+│   │   ├── string_opgt
+│   │   │   ├── pointer_string.pass.cpp
+│   │   │   ├── string_pointer.pass.cpp
+│   │   │   └── string_string.pass.cpp
+│   │   ├── string_opgt=
+│   │   │   ├── pointer_string.pass.cpp
+│   │   │   ├── string_pointer.pass.cpp
+│   │   │   └── string_string.pass.cpp
+│   │   ├── string_oplt
+│   │   │   ├── pointer_string.pass.cpp
+│   │   │   ├── string_pointer.pass.cpp
+│   │   │   └── string_string.pass.cpp
+│   │   └── string_oplt=
+│   │       ├── pointer_string.pass.cpp
+│   │       ├── string_pointer.pass.cpp
+│   │       └── string_string.pass.cpp
+│   ├── string.ops
+│   │   ├── nothing_to_do.pass.cpp
+│   │   ├── string.accessors
+│   │   │   ├── c_str.pass.cpp
+│   │   │   ├── data.pass.cpp
+│   │   │   └── get_allocator.pass.cpp
+│   │   ├── string_compare
+│   │   │   ├── pointer.pass.cpp
+│   │   │   ├── size_size_pointer.pass.cpp
+│   │   │   ├── size_size_pointer_size.pass.cpp
+│   │   │   ├── size_size_string.pass.cpp
+│   │   │   ├── size_size_string_size_size.pass.cpp
+│   │   │   └── string.pass.cpp
+│   │   ├── string_find
+│   │   │   ├── char_size.pass.cpp
+│   │   │   ├── pointer_size.pass.cpp
+│   │   │   ├── pointer_size_size.pass.cpp
+│   │   │   └── string_size.pass.cpp
+│   │   ├── string_find.first.not.of
+│   │   │   ├── char_size.pass.cpp
+│   │   │   ├── pointer_size.pass.cpp
+│   │   │   ├── pointer_size_size.pass.cpp
+│   │   │   └── string_size.pass.cpp
+│   │   ├── string_find.first.of
+│   │   │   ├── char_size.pass.cpp
+│   │   │   ├── pointer_size.pass.cpp
+│   │   │   ├── pointer_size_size.pass.cpp
+│   │   │   └── string_size.pass.cpp
+│   │   ├── string_find.last.not.of
+│   │   │   ├── char_size.pass.cpp
+│   │   │   ├── pointer_size.pass.cpp
+│   │   │   ├── pointer_size_size.pass.cpp
+│   │   │   └── string_size.pass.cpp
+│   │   ├── string_find.last.of
+│   │   │   ├── char_size.pass.cpp
+│   │   │   ├── pointer_size.pass.cpp
+│   │   │   ├── pointer_size_size.pass.cpp
+│   │   │   └── string_size.pass.cpp
+│   │   ├── string_rfind
+│   │   │   ├── char_size.pass.cpp
+│   │   │   ├── pointer_size.pass.cpp
+│   │   │   ├── pointer_size_size.pass.cpp
+│   │   │   └── string_size.pass.cpp
+│   │   └── string_substr
+│   │       └── substr.pass.cpp
+│   ├── string.require
+│   │   └── nothing_to_do.pass.cpp
+│   ├── test_allocator.h --- included in string.cpp
+│   ├── test_traits.h --- included in string.cpp
+│   └── types.pass.cpp --- string.cpp --- OK
+├── basic.string.hash
+│   └── strings.pass.cpp
+├── c.strings
+│   ├── cctype.pass.cpp
+│   ├── cstring.pass.cpp
+│   ├── cuchar.pass.cpp
+│   ├── cwchar.pass.cpp
+│   ├── cwctype.pass.cpp
+│   ├── version_cctype.pass.cpp
+│   ├── version_cstring.pass.cpp
+│   ├── version_cuchar.pass.cpp
+│   ├── version_cwchar.pass.cpp
+│   └── version_cwctype.pass.cpp
+├── char.traits
+│   ├── char.traits.require
+│   │   └── nothing_to_do.pass.cpp
+│   ├── char.traits.specializations
+│   │   ├── char.traits.specializations.char
+│   │   │   ├── assign2.pass.cpp
+│   │   │   ├── assign3.pass.cpp
+│   │   │   ├── compare.pass.cpp
+│   │   │   ├── copy.pass.cpp
+│   │   │   ├── eof.pass.cpp
+│   │   │   ├── eq.pass.cpp
+│   │   │   ├── eq_int_type.pass.cpp
+│   │   │   ├── find.pass.cpp
+│   │   │   ├── length.pass.cpp
+│   │   │   ├── lt.pass.cpp
+│   │   │   ├── move.pass.cpp
+│   │   │   ├── not_eof.pass.cpp
+│   │   │   ├── to_char_type.pass.cpp
+│   │   │   ├── to_int_type.pass.cpp
+│   │   │   └── types.pass.cpp
+│   │   ├── char.traits.specializations.char16_t
+│   │   │   ├── assign2.pass.cpp
+│   │   │   ├── assign3.pass.cpp
+│   │   │   ├── compare.pass.cpp
+│   │   │   ├── copy.pass.cpp
+│   │   │   ├── eof.pass.cpp
+│   │   │   ├── eq.pass.cpp
+│   │   │   ├── eq_int_type.pass.cpp
+│   │   │   ├── find.pass.cpp
+│   │   │   ├── length.pass.cpp
+│   │   │   ├── lt.pass.cpp
+│   │   │   ├── move.pass.cpp
+│   │   │   ├── not_eof.pass.cpp
+│   │   │   ├── to_char_type.pass.cpp
+│   │   │   ├── to_int_type.pass.cpp
+│   │   │   └── types.pass.cpp
+│   │   ├── char.traits.specializations.char32_t
+│   │   │   ├── assign2.pass.cpp
+│   │   │   ├── assign3.pass.cpp
+│   │   │   ├── compare.pass.cpp
+│   │   │   ├── copy.pass.cpp
+│   │   │   ├── eof.pass.cpp
+│   │   │   ├── eq.pass.cpp
+│   │   │   ├── eq_int_type.pass.cpp
+│   │   │   ├── find.pass.cpp
+│   │   │   ├── length.pass.cpp
+│   │   │   ├── lt.pass.cpp
+│   │   │   ├── move.pass.cpp
+│   │   │   ├── not_eof.pass.cpp
+│   │   │   ├── to_char_type.pass.cpp
+│   │   │   ├── to_int_type.pass.cpp
+│   │   │   └── types.pass.cpp
+│   │   ├── char.traits.specializations.wchar.t
+│   │   │   ├── assign2.pass.cpp
+│   │   │   ├── assign3.pass.cpp
+│   │   │   ├── compare.pass.cpp
+│   │   │   ├── copy.pass.cpp
+│   │   │   ├── eof.pass.cpp
+│   │   │   ├── eq.pass.cpp
+│   │   │   ├── eq_int_type.pass.cpp
+│   │   │   ├── find.pass.cpp
+│   │   │   ├── length.pass.cpp
+│   │   │   ├── lt.pass.cpp
+│   │   │   ├── move.pass.cpp
+│   │   │   ├── not_eof.pass.cpp
+│   │   │   ├── to_char_type.pass.cpp
+│   │   │   ├── to_int_type.pass.cpp
+│   │   │   └── types.pass.cpp
+│   │   └── nothing_to_do.pass.cpp
+│   ├── char.traits.typedefs
+│   │   └── nothing_to_do.pass.cpp
+│   └── nothing_to_do.pass.cpp
+├── string.classes
+│   └── typedefs.pass.cpp
+├── string.conversions
+│   ├── stod.pass.cpp
+│   ├── stof.pass.cpp
+│   ├── stoi.pass.cpp
+│   ├── stol.pass.cpp
+│   ├── stold.pass.cpp
+│   ├── stoll.pass.cpp
+│   ├── stoul.pass.cpp
+│   ├── stoull.pass.cpp
+│   ├── to_string.pass.cpp
+│   └── to_wstring.pass.cpp
+├── strings.general
+│   └── nothing_to_do.pass.cpp
+└── version.pass.cpp

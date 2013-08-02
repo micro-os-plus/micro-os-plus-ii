@@ -1,0 +1,264 @@
+[iterators]
+├── iterator.primitives
+│   ├── iterator.basic
+│   │   └── iterator.pass.cpp
+│   ├── iterator.operations
+│   │   ├── advance.pass.cpp
+│   │   ├── distance.pass.cpp
+│   │   ├── next.pass.cpp
+│   │   └── prev.pass.cpp
+│   ├── iterator.traits
+│   │   ├── const_pointer.pass.cpp
+│   │   ├── empty.pass.cpp
+│   │   ├── iterator.pass.cpp
+│   │   └── pointer.pass.cpp
+│   ├── nothing_to_do.pass.cpp
+│   └── std.iterator.tags
+│       ├── bidirectional_iterator_tag.pass.cpp
+│       ├── forward_iterator_tag.pass.cpp
+│       ├── input_iterator_tag.pass.cpp
+│       ├── output_iterator_tag.pass.cpp
+│       └── random_access_iterator_tag.pass.cpp
+├── iterator.requirements
+│   ├── bidirectional.iterators
+│   │   └── nothing_to_do.pass.cpp
+│   ├── forward.iterators
+│   │   └── nothing_to_do.pass.cpp
+│   ├── input.iterators
+│   │   └── nothing_to_do.pass.cpp
+│   ├── iterator.iterators
+│   │   └── nothing_to_do.pass.cpp
+│   ├── iterator.requirements.general
+│   │   └── nothing_to_do.pass.cpp
+│   ├── nothing_to_do.pass.cpp
+│   ├── output.iterators
+│   │   └── nothing_to_do.pass.cpp
+│   └── random.access.iterators
+│       └── nothing_to_do.pass.cpp
+├── iterator.synopsis
+│   └── nothing_to_do.pass.cpp
+├── iterators.general
+│   └── nothing_to_do.pass.cpp
+├── predef.iterators
+│   ├── insert.iterators
+│   │   ├── back.insert.iter.ops
+│   │   │   ├── back.insert.iter.cons
+│   │   │   │   ├── container.fail.cpp
+│   │   │   │   └── container.pass.cpp
+│   │   │   ├── back.insert.iter.op++
+│   │   │   │   ├── post.pass.cpp
+│   │   │   │   └── pre.pass.cpp
+│   │   │   ├── back.insert.iter.op=
+│   │   │   │   ├── lv_value.pass.cpp
+│   │   │   │   └── rv_value.pass.cpp
+│   │   │   ├── back.insert.iter.op_astrk
+│   │   │   │   └── test.pass.cpp
+│   │   │   ├── back.inserter
+│   │   │   │   └── test.pass.cpp
+│   │   │   └── nothing_to_do.pass.cpp
+│   │   ├── back.insert.iterator
+│   │   │   └── types.pass.cpp
+│   │   ├── front.insert.iter.ops
+│   │   │   ├── front.insert.iter.cons
+│   │   │   │   ├── container.fail.cpp
+│   │   │   │   └── container.pass.cpp
+│   │   │   ├── front.insert.iter.op++
+│   │   │   │   ├── post.pass.cpp
+│   │   │   │   └── pre.pass.cpp
+│   │   │   ├── front.insert.iter.op=
+│   │   │   │   ├── lv_value.pass.cpp
+│   │   │   │   └── rv_value.pass.cpp
+│   │   │   ├── front.insert.iter.op_astrk
+│   │   │   │   └── test.pass.cpp
+│   │   │   ├── front.inserter
+│   │   │   │   └── test.pass.cpp
+│   │   │   └── nothing_to_do.pass.cpp
+│   │   ├── front.insert.iterator
+│   │   │   └── types.pass.cpp
+│   │   ├── insert.iter.ops
+│   │   │   ├── insert.iter.cons
+│   │   │   │   └── test.pass.cpp
+│   │   │   ├── insert.iter.op++
+│   │   │   │   ├── post.pass.cpp
+│   │   │   │   └── pre.pass.cpp
+│   │   │   ├── insert.iter.op=
+│   │   │   │   ├── lv_value.pass.cpp
+│   │   │   │   └── rv_value.pass.cpp
+│   │   │   ├── insert.iter.op_astrk
+│   │   │   │   └── test.pass.cpp
+│   │   │   ├── inserter
+│   │   │   │   └── test.pass.cpp
+│   │   │   └── nothing_to_do.pass.cpp
+│   │   ├── insert.iterator
+│   │   │   └── types.pass.cpp
+│   │   └── nothing_to_do.pass.cpp
+│   ├── move.iterators
+│   │   ├── move.iter.ops
+│   │   │   ├── move.iter.nonmember
+│   │   │   │   ├── make_move_iterator.pass.cpp
+│   │   │   │   ├── minus.pass.cpp
+│   │   │   │   └── plus.pass.cpp
+│   │   │   ├── move.iter.op.+
+│   │   │   │   └── difference_type.pass.cpp
+│   │   │   ├── move.iter.op.+=
+│   │   │   │   └── difference_type.pass.cpp
+│   │   │   ├── move.iter.op.-
+│   │   │   │   └── difference_type.pass.cpp
+│   │   │   ├── move.iter.op.-=
+│   │   │   │   └── difference_type.pass.cpp
+│   │   │   ├── move.iter.op.comp
+│   │   │   │   ├── op_eq.pass.cpp
+│   │   │   │   ├── op_gt.pass.cpp
+│   │   │   │   ├── op_gte.pass.cpp
+│   │   │   │   ├── op_lt.pass.cpp
+│   │   │   │   ├── op_lte.pass.cpp
+│   │   │   │   └── op_neq.pass.cpp
+│   │   │   ├── move.iter.op.const
+│   │   │   │   ├── convert.fail.cpp
+│   │   │   │   ├── convert.pass.cpp
+│   │   │   │   ├── default.pass.cpp
+│   │   │   │   ├── iter.fail.cpp
+│   │   │   │   └── iter.pass.cpp
+│   │   │   ├── move.iter.op.conv
+│   │   │   │   └── tested_elsewhere.pass.cpp
+│   │   │   ├── move.iter.op.decr
+│   │   │   │   ├── post.pass.cpp
+│   │   │   │   └── pre.pass.cpp
+│   │   │   ├── move.iter.op.incr
+│   │   │   │   ├── post.pass.cpp
+│   │   │   │   └── pre.pass.cpp
+│   │   │   ├── move.iter.op.index
+│   │   │   │   └── difference_type.pass.cpp
+│   │   │   ├── move.iter.op.ref
+│   │   │   │   └── op_arrow.pass.cpp
+│   │   │   ├── move.iter.op.star
+│   │   │   │   └── op_star.pass.cpp
+│   │   │   ├── move.iter.op=
+│   │   │   │   ├── move_iterator.fail.cpp
+│   │   │   │   └── move_iterator.pass.cpp
+│   │   │   └── nothing_to_do.pass.cpp
+│   │   ├── move.iter.requirements
+│   │   │   └── nothing_to_do.pass.cpp
+│   │   ├── move.iterator
+│   │   │   └── types.pass.cpp
+│   │   └── nothing_to_do.pass.cpp
+│   ├── nothing_to_do.pass.cpp
+│   └── reverse.iterators
+│       ├── nothing_to_do.pass.cpp
+│       ├── reverse.iter.ops
+│       │   ├── nothing_to_do.pass.cpp
+│       │   ├── reverse.iter.cons
+│       │   │   ├── default.pass.cpp
+│       │   │   ├── iter.fail.cpp
+│       │   │   ├── iter.pass.cpp
+│       │   │   ├── reverse_iterator.fail.cpp
+│       │   │   └── reverse_iterator.pass.cpp
+│       │   ├── reverse.iter.conv
+│       │   │   └── tested_elsewhere.pass.cpp
+│       │   ├── reverse.iter.op!=
+│       │   │   └── test.pass.cpp
+│       │   ├── reverse.iter.op+
+│       │   │   └── difference_type.pass.cpp
+│       │   ├── reverse.iter.op++
+│       │   │   ├── post.pass.cpp
+│       │   │   └── pre.pass.cpp
+│       │   ├── reverse.iter.op+=
+│       │   │   └── difference_type.pass.cpp
+│       │   ├── reverse.iter.op-
+│       │   │   └── difference_type.pass.cpp
+│       │   ├── reverse.iter.op--
+│       │   │   ├── post.pass.cpp
+│       │   │   └── pre.pass.cpp
+│       │   ├── reverse.iter.op-=
+│       │   │   └── difference_type.pass.cpp
+│       │   ├── reverse.iter.op.star
+│       │   │   └── op_star.pass.cpp
+│       │   ├── reverse.iter.op=
+│       │   │   ├── reverse_iterator.fail.cpp
+│       │   │   └── reverse_iterator.pass.cpp
+│       │   ├── reverse.iter.op==
+│       │   │   └── test.pass.cpp
+│       │   ├── reverse.iter.opdiff
+│       │   │   └── test.pass.cpp
+│       │   ├── reverse.iter.opgt
+│       │   │   └── test.pass.cpp
+│       │   ├── reverse.iter.opgt=
+│       │   │   └── test.pass.cpp
+│       │   ├── reverse.iter.opindex
+│       │   │   └── difference_type.pass.cpp
+│       │   ├── reverse.iter.oplt
+│       │   │   └── test.pass.cpp
+│       │   ├── reverse.iter.oplt=
+│       │   │   └── test.pass.cpp
+│       │   ├── reverse.iter.opref
+│       │   │   └── op_arrow.pass.cpp
+│       │   └── reverse.iter.opsum
+│       │       └── difference_type.pass.cpp
+│       ├── reverse.iter.requirements
+│       │   └── nothing_to_do.pass.cpp
+│       └── reverse.iterator
+│           └── types.pass.cpp
+├── stream.iterators
+│   ├── istream.iterator
+│   │   ├── istream.iterator.cons
+│   │   │   ├── copy.pass.cpp
+│   │   │   ├── default.pass.cpp
+│   │   │   └── istream.pass.cpp
+│   │   ├── istream.iterator.ops
+│   │   │   ├── arrow.pass.cpp
+│   │   │   ├── dereference.pass.cpp
+│   │   │   ├── equal.pass.cpp
+│   │   │   ├── post_increment.pass.cpp
+│   │   │   └── pre_increment.pass.cpp
+│   │   └── types.pass.cpp
+│   ├── istreambuf.iterator
+│   │   ├── istreambuf.iterator.cons
+│   │   │   ├── default.pass.cpp
+│   │   │   ├── istream.pass.cpp
+│   │   │   ├── proxy.pass.cpp
+│   │   │   └── streambuf.pass.cpp
+│   │   ├── istreambuf.iterator_equal
+│   │   │   └── equal.pass.cpp
+│   │   ├── istreambuf.iterator_op!=
+│   │   │   └── not_equal.pass.cpp
+│   │   ├── istreambuf.iterator_op++
+│   │   │   └── dereference.pass.cpp
+│   │   ├── istreambuf.iterator_op==
+│   │   │   └── equal.pass.cpp
+│   │   ├── istreambuf.iterator_op_astrk
+│   │   │   ├── arrow.pass.cpp
+│   │   │   ├── post_increment.pass.cpp
+│   │   │   └── pre_increment.pass.cpp
+│   │   ├── istreambuf.iterator_proxy
+│   │   │   └── proxy.pass.cpp
+│   │   └── types.pass.cpp
+│   ├── iterator.range
+│   │   ├── begin_array.pass.cpp
+│   │   ├── begin_const.pass.cpp
+│   │   ├── begin_non_const.pass.cpp
+│   │   ├── end_array.pass.cpp
+│   │   ├── end_const.pass.cpp
+│   │   └── end_non_const.pass.cpp
+│   ├── nothing_to_do.pass.cpp
+│   ├── ostream.iterator
+│   │   ├── ostream.iterator.cons.des
+│   │   │   ├── copy.pass.cpp
+│   │   │   ├── ostream.pass.cpp
+│   │   │   └── ostream_delem.pass.cpp
+│   │   ├── ostream.iterator.ops
+│   │   │   ├── assign_t.pass.cpp
+│   │   │   ├── dereference.pass.cpp
+│   │   │   └── increment.pass.cpp
+│   │   └── types.pass.cpp
+│   └── ostreambuf.iterator
+│       ├── ostreambuf.iter.cons
+│       │   ├── ostream.pass.cpp
+│       │   └── streambuf.pass.cpp
+│       ├── ostreambuf.iter.ops
+│       │   ├── assign_c.pass.cpp
+│       │   ├── deref.pass.cpp
+│       │   ├── failed.pass.cpp
+│       │   └── increment.pass.cpp
+│       └── types.pass.cpp
+└── version.pass.cpp
+
