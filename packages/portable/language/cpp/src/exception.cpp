@@ -17,6 +17,37 @@
 #include "portable/language/cpp/include/exception.h"
 #include "portable/language/cpp/include/abort.h"
 
+#ifndef __has_include
+#define __has_include(inc) 0
+#endif
+
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+
+#if __APPLE__
+  #include <cxxabi.h>
+
+  using namespace __cxxabiv1;
+  //#define HAVE_DEPENDENT_EH_ABI 1
+  #ifndef _LIBCPPABI_VERSION
+    using namespace __cxxabiapple;
+    // On Darwin, there are two STL shared libraries and a lower level ABI
+    // shared libray.  The globals holding the current terminate handler and
+    // current unexpected handler are in the ABI library.
+    //#define __terminate_handler  __cxxabiapple::__cxa_terminate_handler
+    //#define __unexpected_handler __cxxabiapple::__cxa_unexpected_handler
+  #endif  // _LIBCPPABI_VERSION
+#elif defined(LIBCXXRT) || __has_include(<cxxabi.h>)
+  #include <cxxabi.h>
+  using namespace __cxxabiv1;
+  #if defined(LIBCXXRT) || defined(_LIBCPPABI_VERSION)
+    #define HAVE_DEPENDENT_EH_ABI 1
+  #endif
+#elif !defined(__GLIBCXX__) // __has_include(<cxxabi.h>)
+  static std::terminate_handler  __terminate_handler;
+  static std::unexpected_handler __unexpected_handler;
+#endif // __has_include(<cxxabi.h>)
+
+#endif
 
 namespace os
 {
@@ -87,51 +118,65 @@ namespace os
 #endif
     }
 
+#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS) || defined(__DOXYGEN__)
 
-#if 0
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
 
-  bool uncaught_exception() noexcept
-    {
-#if __APPLE__ || defined(_LIBCPPABI_VERSION)
-      // on Darwin, there is a helper function so __cxa_get_globals is private
-      return __cxa_uncaught_exception();
+    bool uncaught_exception() noexcept
+      {
+#if defined(__APPLE__) || defined(_LIBCPPABI_VERSION)
+        // on Darwin, there is a helper function so __cxa_get_globals is private
+        return __cxa_uncaught_exception();
 #else  // __APPLE__
 #warning uncaught_exception not yet implemented
-      ::abort();
+        ::abort();
 #endif  // __APPLE__
-    }
+      }
+#endif // OS_SKIP_NOT_YET_IMPLEMENTED
 
-#endif
+    // ========================================================================
 
-#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-
-  exception::~exception() noexcept
+    /// \details
+    /// Destroy an object of class exception.
+    exception::~exception() noexcept
     {
     }
 
-  const char* exception::what() const noexcept
+    /// \details
+    /// The message may be a null-terminated multibyte string (17.5.2.1.4.2),
+    /// suitable for conversion and display as a wstring (21.3, 22.4.1.4).
+    /// The return value remains valid until the exception object from
+    /// which it is obtained is destroyed or a non-const member function
+    /// of the exception object is called.
+    const char*
+    exception::what() const noexcept
     {
       return "os::std::exception";
     }
 
-#endif
+    // ========================================================================
 
-// --------
-
-#if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-
-  bad_exception::~bad_exception() noexcept
+    /// \details
+    /// Destroy an object of class bad_exception.
+    bad_exception::~bad_exception() noexcept
     {
     }
 
-  const char* bad_exception::what() const noexcept
+    /// \details
+    /// The message may be a null-terminated multibyte string (17.5.2.1.4.2),
+    /// suitable for conversion and display as a wstring (21.3, 22.4.1.4).
+    const char*
+    bad_exception::what() const noexcept
     {
       return "os::std::bad_exception";
     }
 
+    // ========================================================================
+
 #endif
 
-#if 0
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+
   exception_ptr::~exception_ptr() noexcept
     {
 #if 0 //HAVE_DEPENDENT_EH_ABI
@@ -169,9 +214,6 @@ namespace os
 #endif  // __APPLE__
     }
 
-#endif
-
-#if 0
   nested_exception::nested_exception() noexcept
   : __ptr_(current_exception())
     {
@@ -190,9 +232,7 @@ namespace os
       rethrow_exception(__ptr_);
     }
 
-#endif
 
-#if 0
   exception_ptr current_exception() noexcept
     {
 #if HAVE_DEPENDENT_EH_ABI
@@ -221,8 +261,8 @@ namespace os
 #endif  // __APPLE__
     }
 
-#endif
+#endif // OS_SKIP_NOT_YET_IMPLEMENTED
 
 }
- // namespace std
-}// namespace os
+      // namespace std
+}     // namespace os

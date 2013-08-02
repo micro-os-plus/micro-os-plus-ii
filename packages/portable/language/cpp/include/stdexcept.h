@@ -39,6 +39,7 @@ namespace os
       logic_error(const char*);
 
       logic_error(const logic_error&) noexcept;
+
       logic_error&
       operator=(const logic_error&) noexcept;
 

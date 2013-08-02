@@ -63,7 +63,11 @@ Package(
                 'stdexcept.cpp',
                 'system_error.cpp',
             ],
-                  
+              
+            requirements=[
+                'enable("component.os.portable.language.cpp.string")',
+            ],
+                
             children=[
                 Option(
                     id='option.os.portable.language.cpp.exceptions.handlers',

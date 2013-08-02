@@ -59,7 +59,7 @@ namespace os
 #endif
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-    class _LIBCPP_HIDDEN __iostream_category : public __do_message
+    class __iostream_category : public __do_message
     {
     public:
       virtual const char*
@@ -117,7 +117,6 @@ namespace os
     }
 
 #endif // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-
     // ios_base locale
     const ios_base::fmtflags ios_base::boolalpha;
     const ios_base::fmtflags ios_base::dec;

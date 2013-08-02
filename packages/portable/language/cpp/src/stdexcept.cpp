@@ -122,7 +122,7 @@ namespace os
       ::new(&s) __libcpp_nmstr(msg);
     }
 
-    logic_error::logic_error(const logic_error& le) noexcept
+    logic_error::logic_error(const logic_error& le) noexcept : exception(le)
     {
       __libcpp_nmstr& s = (__libcpp_nmstr&)__imp_;
       ::new(&s) __libcpp_nmstr((const __libcpp_nmstr&)le.__imp_);
@@ -166,7 +166,7 @@ namespace os
       ::new(&s) __libcpp_nmstr(msg);
     }
 
-    runtime_error::runtime_error(const runtime_error& le) noexcept
+    runtime_error::runtime_error(const runtime_error& le) noexcept : exception(le)
     {
       __libcpp_nmstr& s = (__libcpp_nmstr&)__imp_;
       ::new(&s) __libcpp_nmstr((const __libcpp_nmstr&)le.__imp_);
