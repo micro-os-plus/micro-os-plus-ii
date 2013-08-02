@@ -54,6 +54,7 @@ Toolchain(
     ld=Tool(
         programName='clang++',
         description='Apple LLVM Clang++ Linker',
+        # options='-lc++abi',        
     ),
     
     children=[
