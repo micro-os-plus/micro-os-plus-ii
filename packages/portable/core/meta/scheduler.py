@@ -17,6 +17,7 @@ Component(
          'IdleThread.cpp',
          'TimerBase.cpp',
          'TimerTicks.cpp',
+         'Mutex.cpp',
      ],
 
      headerDefinition='OS_INCLUDE_PORTABLE_CORE_SCHEDULER',
