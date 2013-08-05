@@ -15,6 +15,8 @@ namespace os
   {
     // ========================================================================
 
+    constexpr char ANONYMOUS[] = "-";
+
     /// \headerfile NamedObject.h "portable/core/include/NamedObject.h"
     /// \ingroup core
     /// \nosubgrouping
@@ -27,8 +29,15 @@ namespace os
     class NamedObject
     {
     public:
+
       /// \name Constructors/destructor
       /// @{
+
+      /// \brief Default constructor.
+      ///
+      /// \par Parameters
+      ///    None.
+      NamedObject(void);
 
       /// \brief Constructor.
       ///
@@ -63,6 +72,16 @@ namespace os
     };
 
     // ------------------------------------------------------------------------
+
+    /// \details
+    /// Create an anonymous object. Provided for classes
+    /// that require to be DefaultConstructible
+    inline
+    __attribute__((always_inline))
+    NamedObject::NamedObject(void)
+        : m_pName(ANONYMOUS)
+    {
+    }
 
     /// \details
     /// Store the pointer to the constant name
