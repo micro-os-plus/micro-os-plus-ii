@@ -101,5 +101,27 @@ Package(
 
         ),
               
+        Component(
+            id='component.os.portable.core.tests.mutexstress',
+            name='Test mutex stress configuration',
+            description='Test mutex stress application.',
+    
+            category='test',
+    
+            isEnabled=False,
+            sourceFiles=[
+                'mutexStress.cpp',
+            ],
+                  
+            includeFiles=[
+                'mutexStress-config.py',
+            ],
+                  
+            implements=[
+                'interface.os.artefact',
+            ],
+
+        ),
+              
     ],
 )

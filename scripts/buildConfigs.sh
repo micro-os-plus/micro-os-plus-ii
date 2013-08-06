@@ -118,6 +118,21 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+CONFIG=/portable/core/tests/meta/mutexstress-linux-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/mutexstress/' \
+-e 's/ARTEFACTDESCRIPTION/Mutex Stress/' \
+linux-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+CONFIG=/portable/core/tests/meta/mutexstress-osx-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/mutexstress/' \
+-e 's/ARTEFACTDESCRIPTION/Mutex Stress/' \
+osx-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+
 CONFIG=/portable/language/cpp/tests/meta/basic_ios-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/basic_ios/' \
