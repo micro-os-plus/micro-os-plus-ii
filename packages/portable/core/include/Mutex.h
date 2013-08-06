@@ -5,6 +5,13 @@
 
 /// \file
 /// \brief Core mutex.
+///
+/// \details
+/// A mutex object facilitates protection against data races and
+/// allows safe synchronisation of data between execution agents
+/// (30.2.5). An execution agent owns a mutex from the time it
+/// successfully calls one of the lock functions until it calls
+/// unlock.
 
 #ifndef OS_PORTABLE_CORE_MUTEX_H_
 #define OS_PORTABLE_CORE_MUTEX_H_
@@ -19,20 +26,458 @@
 
 #include "portable/core/include/NamedObject.h"
 //#include "portable/core/include/Stack.h"
-//#include "portable/core/include/Scheduler.h"
+#include "portable/core/include/Scheduler.h"
 #include "portable/core/include/TimerBase.h"
 #include "portable/core/include/TimerTicks.h"
 #include "portable/core/include/CriticalSections.h"
+#include "portable/language/cpp/include/climits.h"
 
 namespace os
 {
   namespace core
   {
+    namespace mutex
+    {
+
+      // ========================================================================
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
+      /// \class TNotifier Mutex.h "portable/core/include/Mutex.h"
+      /// \ingroup core
+      /// \nosubgrouping
+      ///
+      /// \brief Mutex notifier.
+      template<int Size_T = os::core::scheduler::MAX_USER_THREADS>
+        class TNotifier
+        {
+        public:
+          /// \name Types and constants
+          /// @{
+
+          typedef int count_t;
+
+          static constexpr int NOTIFY_ARRAY_SIZE = Size_T;
+
+          class Element
+          {
+          public:
+            Thread* volatile pThread;
+
+            Element()
+            {
+              pThread = nullptr;
+            }
+
+            Element(volatile Element& e)
+            {
+              pThread = e.pThread;
+            }
+          };
+
+          /// @} end of name Types and constants
+
+          /// \name Constructors/destructor
+          /// @{
+
+          /// \brief Default constructor.
+          ///
+          /// \par Parameters
+          ///    None.
+          TNotifier(void);
+
+          /// \brief Destructor.
+          ~TNotifier();
+
+          /// \brief Deleted copy constructor.
+          TNotifier(const TNotifier&) = delete;
+
+          /// @} end of name Constructors/destructor
+
+          /// \name Operators
+          /// @{
+
+          /// \brief Deleted assignment operator.
+          TNotifier&
+          operator=(const TNotifier&) = delete;
+
+          /// \brief Subscripting operator.
+          ///
+          /// \param [in] index           The position of the element to return, starting from 0.
+          /// \return                     The array element.
+          Element&
+          operator[](int index);
+
+          /// @} end of name Operators
+
+          /// \name Public member functions
+          /// @{
+
+          /// \brief Clear array.
+          ///
+          /// \par Parameters
+          ///    None.
+          /// \par Return
+          ///   Nothing.
+          void
+          clear(void);
+
+          /// \brief Get count.
+          ///
+          /// \par Parameters
+          ///    None.
+          /// \return                   The number of threads in the array.
+          count_t
+          getCount(void);
+
+          /// \brief Add thread at the end of the array.
+          ///
+          /// \par Parameters
+          ///    None.
+          /// \retval true              The element was added.
+          /// \retval false             There is no more space.
+          bool
+          pushBack(Thread* pThread);
+
+          /// \brief Check if the thread is present in the array.
+          ///
+          /// \par Parameters
+          ///    None.
+          /// \retval true              The element is in the array.
+          /// \retval false             Otherwise.
+          bool
+          hasElement(Thread* pThread);
+
+          /// \brief Resume all threads present in the array.
+          ///
+          /// \par Parameters
+          ///    None.
+          /// \par Return
+          ///   Nothing.
+          void
+          resumeAll(void);
+
+          /// @} end of Public member functions
+
+          /// \name Iterators
+          /// @{
+
+          /// \brief Iterator begin.
+          ///
+          /// \par Parameters
+          ///    None.
+          /// \return                     A pointer to the first element.
+          Element volatile*
+          begin(void);
+
+          /// \brief Iterator end.
+          ///
+          /// \par Parameters
+          ///    None.
+          /// \return                     A pointer <b>after</b> the last element.
+          Element volatile*
+          end(void);
+
+          /// @} end of Iterators
+
+        protected:
+
+          /// \name Private friends
+          /// @{
+
+          //friend Thread;
+
+          /// @} end of Private friends
+
+          /// \name Private member functions
+          /// @{
+
+          /// @} end of Private member functions
+
+          /// \name Private member variables
+          /// @{
+
+          /// \brief Array of pointer to threads waiting to acquire mutex.
+          Element volatile m_array[NOTIFY_ARRAY_SIZE];
+
+          /// \brief Counter for the threads waiting to acquire mutex.
+          count_t volatile m_count;
+
+          /// @} end of Private member variables
+
+        };
+
+#pragma GCC diagnostic pop
+
+      // ------------------------------------------------------------------------
+
+      template<int Size_T>
+        inline
+        __attribute__((always_inline))
+        TNotifier<Size_T>::TNotifier(void)
+        {
+          m_count = 0;
+        }
+
+      template<int Size_T>
+        inline
+        __attribute__((always_inline))
+        TNotifier<Size_T>::~TNotifier()
+        {
+        }
+
+      template<int Size_T>
+        inline void
+        __attribute__((always_inline))
+        TNotifier<Size_T>::clear(void)
+        {
+          m_count = 0;
+        }
+
+      /// \details
+      /// Return the actual number of elements in the array.
+      template<int Size_T>
+        inline typename TNotifier<Size_T>::count_t
+        __attribute__((always_inline))
+        TNotifier<Size_T>::getCount(void)
+        {
+          return m_count;
+        }
+
+      /// \details
+      /// Return a reference to the i-th element of the array.
+      template<int Size_T>
+        inline typename TNotifier<Size_T>::Element&
+        __attribute__((always_inline))
+        TNotifier<Size_T>::operator[](int index)
+        {
+          return m_array[index];
+        }
+
+      /// \details
+      /// Return the beginning of the array.
+      template<int Size_T>
+        inline typename TNotifier<Size_T>::Element volatile*
+        __attribute__((always_inline))
+        TNotifier<Size_T>::begin(void)
+        {
+          return &m_array[0];
+        }
+
+      /// \details
+      /// Return the end of the array.
+      /// The end is given by the actual content, not by the array size.
+      template<int Size_T>
+        inline typename TNotifier<Size_T>::Element volatile*
+        __attribute__((always_inline))
+        TNotifier<Size_T>::end(void)
+        {
+          return &m_array[m_count];
+        }
+
+      template<int Size_T>
+        bool
+        TNotifier<Size_T>::pushBack(Thread* pThread)
+        {
+          // Add pThread to the list of suspended threads
+          if (m_count >= NOTIFY_ARRAY_SIZE)
+            {
+              return false;
+            }
+
+          m_array[m_count].pThread = pThread;
+          ++m_count;
+
+          return true;
+        }
+
+      template<int Size_T>
+        bool
+        TNotifier<Size_T>::hasElement(Thread* pThread)
+        {
+#if 1
+          // Note: object copy constructor
+          for (Element element : *this)
+            {
+              if (element.pThread == pThread)
+                return true;
+            }
+#else
+          count_t i;
+          for (i = 0; i < m_count; ++i)
+            {
+              // check if the thread is already in the list
+              if (m_array[m_count].pThread == pThread)
+              return true;
+            }
+#endif
+          return false;
+        }
+
+      template<int Size_T>
+        void
+        TNotifier<Size_T>::resumeAll(void)
+        {
+          // Resume all waiting threads
+#if 1
+          for (Element element : *this)
+            {
+              element.pThread->resume();
+            }
+
+#else
+          for (count_t i = 0; i < m_count; ++i)
+            {
+              // no context switches will happen inside critical section
+              m_array[m_count].pThread->resume();
+            }
+#endif
+        }
+
+    // ========================================================================
+
+    }// namespace mutex
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
+    /// \class TMutex Mutex.h "portable/core/include/Mutex.h"
+    /// \ingroup core
+    /// \nosubgrouping
+    ///
+    /// \brief Core  mutex template.
+    /// \tparam CriticalSectionLock_T   Type of the critical section lock.
+    /// \tparam Notifier_T              Type of the thread notifier.
+    ///
+    /// \details
+    /// The TMutex template provides a non-recursive mutex with
+    /// exclusive ownership semantics. If one thread owns a TMutex
+    /// object, attempts by another thread to acquire ownership of
+    /// that object will fail (for tryLock()) or block (for lock())
+    /// until the owning thread has released ownership with a
+    /// call to unlock().
+    ///
+    /// The behaviour of a program is undefined if:
+    /// - it destroys a TMutex object owned by any thread or
+    /// - a thread terminates while owning a TMutex object.
+    template<class CriticalSectionLock_T, class Notifier_T>
+      class TMutex : public NamedObject
+      {
+      public:
+        /// \name Types and constants
+        /// @{
+
+        typedef CriticalSectionLock_T CriticalSectionLock;
+
+        typedef Notifier_T Notifier;
+
+        typedef int count_t;
+
+        /// @} end of name Types and constants
+
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief Default constructor.
+        ///
+        /// \par Parameters
+        ///    None.
+        TMutex(void);
+
+        /// \brief Constructor.
+        ///
+        /// \param [in] pName             Pointer to the null terminated mutex name.
+        TMutex(const char* const pName);
+
+        /// \brief Destructor.
+        ~TMutex();
+
+        /// \brief Deleted copy constructor.
+        TMutex(const TMutex&) = delete;
+
+        /// @} end of name Constructors/destructor
+
+        /// \name Operators
+        /// @{
+
+        /// \brief Deleted assignment operator.
+
+        TMutex&
+        operator=(const TMutex&) = delete;
+
+        /// @} end of name Operators
+
+        /// \name Public member functions
+        /// @{
+
+        /// \brief Lock the mutex.
+        void
+        lock(void);
+
+        /// \brief Unlock the mutex.
+        void
+        unlock(void) noexcept;
+
+        /// \brief Try to lock the mutex immediately.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval true        If the ownership of the mutex was
+        ///                     obtained for the calling thread.
+        /// \retval false       Otherwise.
+        bool
+        tryLock(void) noexcept;
+
+        /// \brief Try to lock the mutex in a given period of time.
+        ///
+        /// \param [in] ticks   The number of counter ticks.
+        /// \param [in] timer   The timer to use.
+        /// \retval true        If the ownership of the mutex was
+        ///                     obtained for the calling thread.
+        /// \retval false       Otherwise.
+        bool
+        tryLockFor(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
+
+        /// @} end of Public member functions
+
+      private:
+
+        /// \name Private friends
+        /// @{
+
+        //friend Thread;
+
+        /// @} end of Private friends
+
+        /// \name Private member functions
+        /// @{
+
+        /// @} end of Private member functions
+
+        /// \name Private member variables
+        /// @{
+
+        /// \brief Pointer to the owner of the mutex or nullptr.
+        Thread* volatile m_owningThread = nullptr;
+
+        Notifier m_notifier;
+
+        /// @} end of Private member variables
+
+      };
+
+#pragma GCC diagnostic pop
+
     // ========================================================================
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
-//#pragma clang diagnostic ignored "-Wpadded"
+#pragma clang diagnostic ignored "-Wpadded"
 #endif
 
     /// \class TRecursiveMutex Mutex.h "portable/core/include/Mutex.h"
@@ -40,20 +485,17 @@ namespace os
     /// \nosubgrouping
     ///
     /// \brief Core recursive mutex template.
-    /// \tparam CriticalSectionLock_T  Type of the critical section lock.
+    /// \tparam CriticalSectionLock_T   Type of the critical section lock.
+    /// \tparam NotifySize_T            Maximum number of waiting threads.
     ///
     /// \details
-    /// A mutex object facilitates protection against data races and
-    /// allows safe synchronisation of data between execution agents
-    /// (30.2.5). An execution agent owns a mutex from the time it
-    /// successfully calls one of the lock functions until it calls
-    /// unlock. The TRecursiveMutex template provides a recursive mutex with
+    /// The TRecursiveMutex template provides a recursive mutex with
     /// exclusive ownership semantics. If one thread owns a TRecursiveMutex
     /// object, attempts by another thread to acquire ownership of
     /// that object will fail (for tryLock()) or block (for lock())
     /// until the first thread has completely released ownership.
     ///
-    /// A thread that owns a recursive_mutex object may acquire
+    /// A thread that owns a TRecursiveMutex object may acquire
     /// additional levels of ownership by calling lock() or tryLock()
     /// on that object. It is unspecified how many levels of ownership
     /// may be acquired by a single thread. A thread shall call unlock()
@@ -64,12 +506,21 @@ namespace os
     /// The behaviour of a program is undefined if:
     /// - it destroys a TRecursiveMutex object owned by any thread or
     /// - a thread terminates while owning a TRecursiveMutex object.
-    template<class CriticalSectionLock_T>
+    template<class CriticalSectionLock_T, int NotifySize_T =
+        os::core::scheduler::MAX_USER_THREADS>
       class TRecursiveMutex : public NamedObject
       {
       public:
         /// \name Types and constants
         /// @{
+
+        typedef CriticalSectionLock_T CriticalSectionLock;
+
+        typedef int count_t;
+
+        static constexpr count_t MAX_COUNT = INT_MAX;
+
+        static constexpr int NOTIFY_ARRAY_SIZE = NotifySize_T;
 
         /// @} end of name Types and constants
 
@@ -84,7 +535,7 @@ namespace os
 
         /// \brief Constructor.
         ///
-        /// \param [in] pName             Pointer to the null terminated mutex name.
+        /// \param [in] pName           Pointer to the null terminated mutex name.
         TRecursiveMutex(const char* const pName);
 
         /// \brief Destructor.
@@ -116,11 +567,23 @@ namespace os
         void
         unlock(void) noexcept;
 
-        /// \brief Try to lock the mutex indefinitely.
-        void
+        /// \brief Try to lock the mutex immediately.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval true        If the ownership of the mutex was
+        ///                     obtained for the calling thread.
+        /// \retval false       Otherwise.
+        bool
         tryLock(void) noexcept;
 
-        /// \brief Try to lock the mutex for a given period of time.
+        /// \brief Try to lock the mutex in a given period of time.
+        ///
+        /// \param [in] ticks   The number of counter ticks.
+        /// \param [in] timer   The timer to use.
+        /// \retval true        If the ownership of the mutex was
+        ///                     obtained for the calling thread.
+        /// \retval false       Otherwise.
         bool
         tryLockFor(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
 
@@ -131,7 +594,7 @@ namespace os
         /// \name Private friends
         /// @{
 
-        //friend Scheduler;
+        friend Thread;
 
         /// @} end of Private friends
 
@@ -142,6 +605,23 @@ namespace os
 
         /// \name Private member variables
         /// @{
+
+        /// \brief Pointer to the owner of the mutex or nullptr.
+        Thread* volatile m_owningThread = nullptr;
+
+        typedef struct
+        {
+          Thread* pThread;
+        } element_t;
+
+        /// \brief Array of pointer to threads waiting to acquire mutex.
+        element_t volatile m_notifyArray[NOTIFY_ARRAY_SIZE];
+
+        /// \brief Counter for the threads waiting to acquire mutex.
+        count_t volatile m_notifyCount;
+
+        /// \brief Counter for the recursion depth.
+        count_t volatile m_count = 0;
 
         /// @} end of Private member variables
 
@@ -285,8 +765,19 @@ namespace os
 
     // ========================================================================
 
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
     // Declare the template instantiation
+
+    extern template class TMutex<scheduler::CriticalSection, mutex::TNotifier<> > ;
     extern template class TRecursiveMutex<scheduler::CriticalSection> ;
+
+#pragma GCC diagnostic pop
+
+    using Mutex = TMutex<scheduler::CriticalSection, mutex::TNotifier<> >;
 
   // ========================================================================
 
