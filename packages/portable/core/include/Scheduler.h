@@ -193,7 +193,7 @@ namespace os
         /// \name Operators
         /// @{
 
-        /// \brief Index operator.
+        /// \brief Subscripting operator.
         ///
         /// \param [in] index           The position of the element to return, starting from 0.
         /// \return                     Pointer to the thread.
