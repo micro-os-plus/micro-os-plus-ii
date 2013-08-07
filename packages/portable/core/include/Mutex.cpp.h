@@ -36,6 +36,9 @@ namespace os
       TMutex<CriticalSectionLock_T, Notifier_T>::TMutex(void)
           : NamedObject()
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndAddress("os::core::TMutex::TMutex()", this);
+#endif
         m_owningThread = nullptr;
 
         m_notifier.clear();
@@ -44,10 +47,13 @@ namespace os
     /// \details
     /// Construct a named mutex.
     template<class CriticalSectionLock_T, class Notifier_T>
-      TMutex<CriticalSectionLock_T, Notifier_T>::TMutex(
-          const char* const pName)
+      TMutex<CriticalSectionLock_T, Notifier_T>::TMutex(const char* const pName)
           : NamedObject(pName)
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndAddress("os::core::TMutex::TMutex()", this,
+            pName);
+#endif
         m_owningThread = nullptr;
 
         m_notifier.clear();
@@ -56,12 +62,19 @@ namespace os
     template<class CriticalSectionLock_T, class Notifier_T>
       TMutex<CriticalSectionLock_T, Notifier_T>::~TMutex()
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndAddress("os::core::TMutex::~TMutex()", this,
+            getName());
+#endif
       }
 
     template<class CriticalSectionLock_T, class Notifier_T>
       void
       TMutex<CriticalSectionLock_T, Notifier_T>::lock(void)
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndName("os::core::TMutex::lock()", getName());
+#endif
         Thread* pThread = os::scheduler.getCurrentThread();
 
           {
@@ -128,6 +141,10 @@ namespace os
       bool
       TMutex<CriticalSectionLock_T, Notifier_T>::tryLock(void) noexcept
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndName("os::core::TMutex::tryLock()",
+            getName());
+#endif
         Thread* pThread = os::scheduler.getCurrentThread();
 
           {
@@ -164,13 +181,17 @@ namespace os
       void
       TMutex<CriticalSectionLock_T, Notifier_T>::unlock(void) noexcept
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndName("os::core::TMutex::unlock()",
+            getName());
+#endif
         Thread* pThread = os::scheduler.getCurrentThread();
 
           {
             // ----- critical section begin -----------------------------------
             CriticalSectionLock cs;
 
-            if (m_owningThread == pThread)
+            if (m_owningThread != pThread)
               {
                 // Error, not owner
                 return;
@@ -181,7 +202,7 @@ namespace os
 
             // Resume waiting threads
             m_notifier.resumeAll();
-            m_notifier.clear()  ;
+            m_notifier.clear();
 
             // ----- critical section end -------------------------------------
           }
@@ -196,6 +217,10 @@ namespace os
           timer::ticks_t ticks __attribute__((unused)),
           TimerBase& timer __attribute__((unused)))
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndName("os::core::TMutex::tryLockFor()",
+            getName());
+#endif
         return true;
       }
 
