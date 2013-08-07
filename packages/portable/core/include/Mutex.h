@@ -39,7 +39,11 @@ namespace os
     namespace mutex
     {
 
-      // ========================================================================
+      // ======================================================================
+
+      typedef int count_t;
+
+      // ======================================================================
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -341,6 +345,336 @@ namespace os
 #endif
         }
 
+      // ========================================================================
+
+      /// \class RecursivePolicy Mutex.h "portable/core/include/Mutex.h"
+      /// \ingroup core
+      /// \nosubgrouping
+      ///
+      /// \brief Policy used to implement a recursive mutex.
+      class RecursivePolicy
+      {
+      public:
+        static constexpr count_t MAX_COUNT = INT_MAX;
+
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief Default constructor.
+        ///
+        /// \par Parameters
+        ///    None.
+        RecursivePolicy(void);
+
+        /// \brief Destructor.
+        ~RecursivePolicy() = default;
+
+        /// \brief Deleted copy constructor.
+        RecursivePolicy(const RecursivePolicy&) = delete;
+
+        /// @} end of name Constructors/destructor
+
+        /// \name Operators
+        /// @{
+
+        /// \brief Deleted assignment operator.
+        RecursivePolicy&
+        operator=(const RecursivePolicy&) = delete;
+
+        /// @} end of name Operators
+
+        /// \name Public member functions
+        /// @{
+
+        /// \brief Initialise embedded lock counter.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Return
+        ///   Nothing.
+        void
+        initialise(void);
+
+        /// \brief Check if lock() is possible.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval true              The embedded lock() is possible.
+        /// \retval false             Otherwise.
+        bool
+        isRecursiveLockPossible(void);
+
+        /// \brief Perform the recursive lock().
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Return
+        ///   Nothing.
+        void
+        recursiveLock(void);
+
+        /// \brief Check if unlock() is possible.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval true              The embedded unlock() is possible.
+        /// \retval false             Otherwise.
+        bool
+        isRecursiveUnlockPossible(void);
+
+        /// \brief Perform the recursive unlock().
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Return
+        ///   Nothing.
+        void
+        recursiveUnlock(void);
+
+        /// \brief Check if unlock() is complete.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval true              The embedded unlock() is complete.
+        /// \retval false             Otherwise.
+        bool
+        isRecursiveUnlockComplete(void);
+
+      private:
+
+        /// \name Private member variables
+        /// @{
+
+        /// \brief Counter for the recursion depth.
+        count_t volatile m_count;
+
+        /// @} end of Private member variables
+
+      };
+
+      inline
+      __attribute__((always_inline))
+      RecursivePolicy::RecursivePolicy(void)
+      {
+        m_count = 0;
+      }
+
+      inline
+      void
+      __attribute__((always_inline))
+      RecursivePolicy::initialise(void)
+      {
+        m_count = 0;
+      }
+
+      inline
+      bool
+      __attribute__((always_inline))
+      RecursivePolicy::isRecursiveLockPossible(void)
+      {
+        if (m_count != MAX_COUNT)
+          {
+            return true;
+          }
+        return false;
+      }
+
+      inline
+      void
+      __attribute__((always_inline))
+      RecursivePolicy::recursiveLock(void)
+      {
+        m_count++;
+      }
+
+      inline
+      bool
+      __attribute__((always_inline))
+      RecursivePolicy::isRecursiveUnlockPossible(void)
+      {
+        if (m_count == 0)
+          {
+            // Error, counter out of sync
+            return false;
+          }
+        return true;
+      }
+
+      inline
+      void
+      __attribute__((always_inline))
+      RecursivePolicy::recursiveUnlock(void)
+      {
+        --m_count;
+      }
+
+      inline
+      bool
+      __attribute__((always_inline))
+      RecursivePolicy::isRecursiveUnlockComplete(void)
+      {
+        if (m_count == 0)
+          {
+            return true;
+          }
+
+        // More levels of ownership to be released
+        return false;
+      }
+
+      // ========================================================================
+
+      /// \class NonRecursivePolicy Mutex.h "portable/core/include/Mutex.h"
+      /// \ingroup core
+      /// \nosubgrouping
+      ///
+      /// \brief Policy used to implement a recursive mutex.
+      class NonRecursivePolicy
+      {
+      public:
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief Default constructor.
+        ///
+        /// \par Parameters
+        ///    None.
+        NonRecursivePolicy(void);
+
+        /// \brief Destructor.
+        ~NonRecursivePolicy() = default;
+
+        /// \brief Deleted copy constructor.
+        NonRecursivePolicy(const NonRecursivePolicy&) = delete;
+
+        /// @} end of name Constructors/destructor
+
+        /// \name Operators
+        /// @{
+
+        /// \brief Deleted assignment operator.
+        NonRecursivePolicy&
+        operator=(const NonRecursivePolicy&) = delete;
+
+        /// @} end of name Operators
+
+        /// \name Public member functions
+        /// @{
+
+        /// \brief Initialise embedded lock counter.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Return
+        ///   Nothing.
+        void
+        initialise(void);
+
+        /// \brief Check if lock() is possible.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval true              The embedded lock() is possible.
+        /// \retval false             Otherwise.
+        bool
+        isRecursiveLockPossible(void);
+
+        /// \brief Perform the recursive lock().
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Return
+        ///   Nothing.
+        void
+        recursiveLock(void);
+
+        /// \brief Check if unlock() is possible.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval true              The embedded unlock() is possible.
+        /// \retval false             Otherwise.
+        bool
+        isRecursiveUnlockPossible(void);
+
+        /// \brief Perform the recursive unlock().
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Return
+        ///   Nothing.
+        void
+        recursiveUnlock(void);
+
+        /// \brief Check if unlock() is complete.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval true              The embedded unlock() is complete.
+        /// \retval false             Otherwise.
+        bool
+        isRecursiveUnlockComplete(void);
+
+      private:
+
+        /// \name Private member variables
+        /// @{
+
+        /// @} end of Private member variables
+
+      };
+
+      inline
+      __attribute__((always_inline))
+      NonRecursivePolicy::NonRecursivePolicy(void)
+      {
+      }
+
+      inline
+      void
+      __attribute__((always_inline))
+      NonRecursivePolicy::initialise(void)
+      {
+      }
+
+      inline
+      bool
+      __attribute__((always_inline))
+      NonRecursivePolicy::isRecursiveLockPossible(void)
+      {
+        return false;
+      }
+
+      inline
+      void
+      __attribute__((always_inline))
+      NonRecursivePolicy::recursiveLock(void)
+      {
+      }
+
+      inline
+      bool
+      __attribute__((always_inline))
+      NonRecursivePolicy::isRecursiveUnlockPossible(void)
+      {
+        return true;
+      }
+
+      inline
+      void
+      __attribute__((always_inline))
+      NonRecursivePolicy::recursiveUnlock(void)
+      {
+      }
+
+      inline
+      bool
+      __attribute__((always_inline))
+      NonRecursivePolicy::isRecursiveUnlockComplete(void)
+      {
+        return true;
+      }
+
     // ========================================================================
 
     }// namespace mutex
@@ -629,6 +963,146 @@ namespace os
 
     // ========================================================================
 
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
+    /// \class TGenericMutex Mutex.h "portable/core/include/Mutex.h"
+    /// \ingroup core
+    /// \nosubgrouping
+    ///
+    /// \brief Core recursive mutex template.
+    /// \tparam CriticalSectionLock_T   Type of the critical section lock.
+    /// \tparam Notifier_T              Type of the thread notifier.
+    /// \tparam Policy_T                Type of the policy used to implement recursion.
+    ///
+    /// \details
+    /// The TGenericMutex template provides a generic
+    /// recursive/non-recursive mutex with
+    /// exclusive ownership semantics. The recursive/non-recursive
+    /// behaviour is implemented as a separate policy class.
+    ///
+    /// If one thread owns a TGenericMutex
+    /// object, attempts by another thread to acquire ownership of
+    /// that object will fail (for tryLock()) or block (for lock())
+    /// until the first thread has completely released ownership.
+    ///
+    /// A thread that owns a recursive TGenericMutex may acquire
+    /// additional levels of ownership by calling lock() or tryLock()
+    /// on that object. It is unspecified how many levels of ownership
+    /// may be acquired by a single thread. A thread shall call unlock()
+    /// once for each level of ownership acquired by calls to lock()
+    /// and tryLock(). Only when all levels of ownership have been
+    /// released may ownership be acquired by another thread.
+    ///
+    /// The behaviour of a program is undefined if:
+    /// - it destroys a TRecursiveMutex object owned by any thread or
+    /// - a thread terminates while owning a TRecursiveMutex object.
+    template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
+      class TGenericMutex : public NamedObject
+      {
+      public:
+        /// \name Types and constants
+        /// @{
+
+        typedef CriticalSectionLock_T CriticalSectionLock;
+
+        typedef Notifier_T Notifier;
+
+        typedef Policy_T Policy;
+
+        /// @} end of name Types and constants
+
+        /// \name Constructors/destructor
+        /// @{
+
+        /// \brief Default constructor.
+        ///
+        /// \par Parameters
+        ///    None.
+        TGenericMutex(void);
+
+        /// \brief Constructor.
+        ///
+        /// \param [in] pName           Pointer to the null terminated mutex name.
+        TGenericMutex(const char* const pName);
+
+        /// \brief Destructor.
+        ~TGenericMutex();
+
+        /// \brief Deleted copy constructor.
+        TGenericMutex(const TGenericMutex&) = delete;
+
+        /// @} end of name Constructors/destructor
+
+        /// \name Operators
+        /// @{
+
+        /// \brief Deleted assignment operator.
+
+        TGenericMutex&
+        operator=(const TGenericMutex&) = delete;
+
+        /// @} end of name Operators
+
+        /// \name Public member functions
+        /// @{
+
+        /// \brief Lock the mutex.
+        void
+        lock(void);
+
+        /// \brief Unlock the mutex.
+        void
+        unlock(void) noexcept;
+
+        /// \brief Try to lock the mutex immediately.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \retval true        If the ownership of the mutex was
+        ///                     obtained for the calling thread.
+        /// \retval false       Otherwise.
+        bool
+        tryLock(void) noexcept;
+
+        /// \brief Try to lock the mutex in a given period of time.
+        ///
+        /// \param [in] ticks   The number of counter ticks.
+        /// \param [in] timer   The timer to use.
+        /// \retval true        If the ownership of the mutex was
+        ///                     obtained for the calling thread.
+        /// \retval false       Otherwise.
+        bool
+        tryLockFor(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
+
+        /// @} end of Public member functions
+
+      private:
+
+        /// \name Private member variables
+        /// @{
+
+        /// \brief Pointer to the owner of the mutex or nullptr.
+        Thread* volatile m_owningThread = nullptr;
+
+        Notifier m_notifier;
+
+        Policy m_policy;
+
+        /// @} end of Private member variables
+
+      };
+
+#pragma GCC diagnostic pop
+
+    // ------------------------------------------------------------------------
+
+    // inlines
+
+    // ========================================================================
+
     struct defer_lock_t
     {
     };
@@ -767,12 +1241,19 @@ namespace os
     // Declare the template instantiation
 
     extern template class TMutex<scheduler::CriticalSection, mutex::TNotifier<> > ;
-    extern template class TRecursiveMutex<scheduler::CriticalSection, mutex::TNotifier<> > ;
+    extern template class TRecursiveMutex<scheduler::CriticalSection,
+        mutex::TNotifier<> > ;
+    extern template class TGenericMutex<scheduler::CriticalSection,
+        mutex::TNotifier<>, mutex::RecursivePolicy> ;
+    extern template class TGenericMutex<scheduler::CriticalSection,
+        mutex::TNotifier<>, mutex::NonRecursivePolicy> ;
 
 #pragma GCC diagnostic pop
 
-    using Mutex = TMutex<scheduler::CriticalSection, mutex::TNotifier<> >;
-    using RecursiveMutex = TRecursiveMutex<scheduler::CriticalSection, mutex::TNotifier<> >;
+    //using Mutex = TMutex<scheduler::CriticalSection, mutex::TNotifier<> >;
+    using Mutex = TGenericMutex<scheduler::CriticalSection, mutex::TNotifier<>, mutex::NonRecursivePolicy>;
+    //using RecursiveMutex = TRecursiveMutex<scheduler::CriticalSection, mutex::TNotifier<> >;
+    using RecursiveMutex = TGenericMutex<scheduler::CriticalSection, mutex::TNotifier<>, mutex::RecursivePolicy>;
 
   // ========================================================================
 

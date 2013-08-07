@@ -29,6 +29,11 @@ namespace os
     template class TRecursiveMutex<scheduler::CriticalSection,
         mutex::TNotifier<> > ;
 
+    template class TGenericMutex<scheduler::CriticalSection, mutex::TNotifier<>,
+        mutex::RecursivePolicy> ;
+    template class TGenericMutex<scheduler::CriticalSection, mutex::TNotifier<>,
+        mutex::NonRecursivePolicy> ;
+
   // ------------------------------------------------------------------------
   }// namespace core
 } //namespace os
