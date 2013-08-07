@@ -92,7 +92,7 @@ public:
   uint32_t
   getCount(void);
 
-  os::core::timer::ticks_t
+  uint32_t
   getTicks(void);
 
   os::core::timer::ticks_t
@@ -100,15 +100,6 @@ public:
 
   os::core::timer::ticks_t
   getMinTicks(void);
-
-  void
-  resetCount(void);
-
-  void
-  resetTicks(void);
-
-  int32_t
-  getDelta(void);
 
 private:
   os::core::AllocatedStack m_stack;
@@ -121,10 +112,8 @@ private:
   uint16_t m_maxTicks;
 
   uint32_t m_count;
-  os::core::timer::ticks_t m_ticks;
 
-  uint32_t m_averageCount;
-  os::core::timer::ticks_t m_averageTicksSum;
+  os::core::timer::ticks_t m_ticks;
 
   static uint32_t ms_rand;
   static uint32_t ms_lineLength;
@@ -149,8 +138,6 @@ Task::Task(const char* pName, os::core::stack::size_t stackSizeBytes,
 
   m_count = 0;
   m_ticks = 0;
-  m_averageCount = 0;
-  m_averageTicksSum = 0;
 
   m_minMicros = minMicros;
   m_maxMicros = maxMicros;
@@ -196,28 +183,6 @@ Task::getMinTicks(void)
 }
 
 void
-Task::resetCount(void)
-{
-  m_count = 0;
-}
-
-void
-Task::resetTicks(void)
-{
-  m_ticks = 0;
-}
-
-int32_t
-Task::getDelta(void)
-{
-  if (m_averageCount == 0)
-    return 0;
-
-  int ret = (int32_t) (m_averageTicksSum / m_averageCount);
-  return ret - (m_maxTicks - m_minTicks) / 2;
-}
-
-void
 Task::threadMain(void)
 {
 #if defined(DEBUG)
@@ -227,22 +192,29 @@ Task::threadMain(void)
   // thread endless loop
   for (;;)
     {
+      uint16_t nBusy = (rand() % (m_maxMicros - m_minMicros)) + m_minMicros;
+      uint16_t nSleep = (rand() % (m_maxTicks - m_minTicks)) + m_minTicks;
+
+      // simulate a period of intense activity
+      os::architecture.busyWaitMicros(nBusy);
+
+      // simulate a period of waiting for an external event
+      os::timerTicks.sleep(nSleep);
+      m_ticks += nSleep;
+
       mutex.lock();
         {
-          uint16_t nBusy = (rand() % (m_maxMicros - m_minMicros)) + m_minMicros;
-          uint16_t nSleep = (rand() % (m_maxTicks - m_minTicks)) + m_minTicks;
+          nBusy = (rand() % (m_maxMicros - m_minMicros)) + m_minMicros;
+          nSleep = (rand() % (m_maxTicks - m_minTicks)) + m_minTicks;
 
           // simulate a period of intense activity
           os::architecture.busyWaitMicros(nBusy);
 
           // simulate a period of waiting for an external event
           os::timerTicks.sleep(nSleep);
-
-          m_count++;
           m_ticks += nSleep;
 
-          m_averageCount += m_count;
-          m_averageTicksSum += m_ticks;
+          m_count++;
         }
       mutex.unlock();
     }
@@ -355,59 +327,83 @@ TaskPeriodic::threadMain(void)
           // ----- begin of critical section -----------------------------------
           os::core::scheduler::CriticalSection cs;
 
+          int sum = 0;
           for (auto pTask : taskArray)
             {
-              os::core::timer::ticks_t ratio;
-              if (pTask->getCount() == 0)
-                ratio = 0;
-              else
-                ratio = pTask->getTicks() / pTask->getCount();
+              uint32_t cnt = pTask->getCount();
+              sum += cnt;
 
-              ts << pTask->getName() << ':' << pTask->getTicks() << '/'
-                  << pTask->getCount() << '='
-                  << ratio << '('
-                  << pTask->getDelta() << ')' << '\t';
+              //os::core::timer::ticks_t ticks = pTask->getTicks();
 
-              pTask->resetCount();
-              pTask->resetTicks();
+              ts << pTask->getName() << ':';
+              //ts << ticks << "/" ;
+              ts << cnt << '\t';
+
             }
+          ts << "sum=" << sum;
+          int average = (sum
+              + (((int) (sizeof(taskArray) / sizeof(taskArray[0]))) / 2))
+              / ((int) (sizeof(taskArray) / sizeof(taskArray[0])));
+
+          ts << " avg=" << average;
+
+          int min = 0;
+          int max = 0;
+
+          for (auto pTask : taskArray)
+            {
+              int delta = (int) pTask->getCount();
+              delta -= average;
+
+              if (delta < min)
+                min = delta;
+
+              if (delta > max)
+                max = delta;
+            }
+
+          ts << " delta in [" << min << "," << max << "]";
+          ts << " [" << (min * 100 + average / 2) / average << "%,"
+              << (max * 100 + average / 2) / average << "%]";
+
           ts << os::std::endl;
+
           // ----- end of critical section -------------------------------------
         }
     }
 
+  os::core::scheduler::CriticalSection cs;
+
+  ts.setFunctionNameOrPrefix("lock()/unlock()");
+
+  int sum = 0;
+  for (auto pTask : taskArray)
     {
-      // ----- begin of critical section ---------------------------------------
-      os::core::scheduler::CriticalSection cs;
-
-      for (auto pTask : taskArray)
-        {
-          int proc = (pTask->getDelta() * 100)
-              / ((int) (pTask->getMinTicks() + pTask->getMaxTicks()) / 2);
-
-          ts << pTask->getName() << ':' << pTask->getDelta() << '/'
-              << ((pTask->getMinTicks() + pTask->getMaxTicks()) / 2) << '='
-              << proc << "%" << '\t';
-
-        }
-      ts << os::std::endl;
-      // ----- end of critical section -----------------------------------------
+      uint32_t cnt = pTask->getCount();
+      sum += cnt;
     }
 
-  ts.setFunctionNameOrPrefix("sleep()");
+  int average = (sum + (((int) (sizeof(taskArray) / sizeof(taskArray[0]))) / 2))
+      / ((int) (sizeof(taskArray) / sizeof(taskArray[0])));
+
+  ts << "average=" << average << os::std::endl;
 
   for (auto pTask : taskArray)
     {
-      int proc = (pTask->getDelta() * 100)
-          / ((int) (pTask->getMinTicks() + pTask->getMaxTicks()) / 2);
 
-      if (proc < 0)
-        {
-          proc = -proc;
-        }
+      int delta = (int) pTask->getCount();
+      delta -= average;
+
+      int deltaProcent = (delta * 100 + average / 2) / average;
+
+      ts << pTask->getName() << ':' << delta << " " << deltaProcent << "%"
+          << '\t';
+
       ts.setPreconditions(pTask->getName());
-      ts.assertCondition(proc <= 30);
+      ts.assertCondition((-33 <= deltaProcent && deltaProcent <= 33));
     }
+  ts << os::std::endl;
+
 }
 
 // ============================================================================
@@ -426,38 +422,39 @@ runTestStress()
   Task::seed((uint16_t) time(NULL));
 
   TaskPeriodic taskP("P", hal::arch::MIN_STACK_SIZE);
-  Task task0("0", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
-  Task task1("1", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
-  Task task2("2", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
-  Task task3("3", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 200);
-  Task task4("4", hal::arch::MIN_STACK_SIZE, 500, 2500, 1, 200);
-  Task task5("5", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 100);
-  Task task6("6", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
-  Task task7("7", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 400);
-  Task task8("8", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
-  Task task9("9", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
+
+  Task task0("t0", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
+  Task task1("t1", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
+  Task task2("t2", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
+  Task task3("t3", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 200);
+  Task task4("t4", hal::arch::MIN_STACK_SIZE, 500, 2500, 1, 200);
+  Task task5("t5", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 100);
+  Task task6("t6", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
+  Task task7("t7", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 400);
+  Task task8("t8", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
+  Task task9("t9", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
+
+  taskArray[0] = &task0;
+  taskArray[1] = &task1;
+  taskArray[2] = &task2;
+  taskArray[3] = &task3;
+  taskArray[4] = &task4;
+  taskArray[5] = &task5;
+  taskArray[7] = &task7;
+  taskArray[8] = &task8;
+  taskArray[9] = &task9;
 
   taskP.getThread().start();
 
-  taskArray[0] = &task0;
   task0.getThread().start();
-  taskArray[1] = &task1;
   task1.getThread().start();
-  taskArray[2] = &task2;
   task2.getThread().start();
-  taskArray[3] = &task3;
   task3.getThread().start();
-  taskArray[4] = &task4;
   task4.getThread().start();
-  taskArray[5] = &task5;
   task5.getThread().start();
-  taskArray[6] = &task6;
   task6.getThread().start();
-  taskArray[7] = &task7;
   task7.getThread().start();
-  taskArray[8] = &task8;
   task8.getThread().start();
-  taskArray[9] = &task9;
   task9.getThread().start();
 
   // after MAX_RUN_SECONDS, the periodic thread terminates
