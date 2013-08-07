@@ -67,11 +67,15 @@ namespace os
           public:
             Thread* volatile pThread;
 
+            inline
+            __attribute__((always_inline))
             Element()
             {
               pThread = nullptr;
             }
 
+            inline
+            __attribute__((always_inline))
             Element(volatile Element& e)
             {
               pThread = e.pThread;
@@ -310,7 +314,7 @@ namespace os
           for (i = 0; i < m_count; ++i)
             {
               // check if the thread is already in the list
-              if (m_array[m_count].pThread == pThread)
+              if (m_array[i].pThread == pThread)
               return true;
             }
 #endif
@@ -332,7 +336,7 @@ namespace os
           for (count_t i = 0; i < m_count; ++i)
             {
               // no context switches will happen inside critical section
-              m_array[m_count].pThread->resume();
+              m_array[i].pThread->resume();
             }
 #endif
         }
