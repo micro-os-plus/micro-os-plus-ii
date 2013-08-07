@@ -238,7 +238,8 @@ namespace os
           : Stack(m_stackArray, sizeof(m_stackArray))
       {
 #if defined(DEBUG)
-        os::diag::trace.putConstructor();
+        os::diag::trace.putStringAndAddress(
+            "os::core::TStaticStack::TStaticStack()", this);
 #endif
       }
 
@@ -250,7 +251,8 @@ namespace os
       TStaticStack<SizeBytes_T>::~TStaticStack()
       {
 #if defined(DEBUG)
-        os::diag::trace.putDestructor();
+        os::diag::trace.putStringAndAddress(
+            "os::core::TStaticStack::~TStaticStack()", this);
 #endif
       }
 
@@ -294,7 +296,8 @@ namespace os
         /// \brief Constructor.
         ///
         /// \param [in] sizeBytes         Size of stack in bytes.
-        TAllocatedStack(stack::size_t const sizeBytes);
+        TAllocatedStack(stack::size_t const sizeBytes =
+            hal::arch::MIN_STACK_SIZE);
 
         /// \brief Destructor.
         ~TAllocatedStack();
@@ -325,7 +328,8 @@ namespace os
               sizeBytes)
       {
 #if defined(DEBUG)
-        os::diag::trace.putConstructor();
+        os::diag::trace.putStringAndAddress(
+            "os::core::TAllocatedStack::TAllocatedStack()", this);
 #endif
       }
 
@@ -336,7 +340,8 @@ namespace os
       TAllocatedStack<Allocator_T>::~TAllocatedStack()
       {
 #if defined(DEBUG)
-        os::diag::trace.putDestructor();
+        os::diag::trace.putStringAndAddress(
+            "os::core::TAllocatedStack::~TAllocatedStack()", this);
 #endif
         m_allocator.deallocate(getStart(),
             getSizeBytes() / sizeof(stack::element_t));
