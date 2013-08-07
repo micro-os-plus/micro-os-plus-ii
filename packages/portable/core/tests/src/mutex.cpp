@@ -36,7 +36,6 @@ static os::infra::TestSuiteOstream ts;
 
 #include <sys/time.h>
 
-
 // ----------------------------------------------------------------------------
 
 namespace thread
@@ -50,41 +49,77 @@ namespace thread
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-    os::core::Mutex m("m1");
+    os::core::Mutex m1("m1");
+
+    os::core::Mutex m2("m2");
 
 #pragma GCC diagnostic pop
 
     constexpr os::core::timer::ticks_t INTERVAL = 100;
 
-    void f(void);
+    void
+    f(void);
 
     void
     f(void)
     {
 #if defined(DEBUG)
-  os::diag::trace.putString(__PRETTY_FUNCTION__);
-  os::diag::trace.putNewLine();
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
 #endif
       os::core::timer::ticks_t t0 = os::timerTicks.getTicks();
 
-      m.lock();
+      m1.lock();
 
       os::core::timer::ticks_t t1 = os::timerTicks.getTicks();
 
-      m.unlock();
+      m1.unlock();
 
-      os::core::timer::ticks_t d = t1-t0 ;
+      os::core::timer::ticks_t d = t1 - t0;
       if (d >= INTERVAL)
         d -= INTERVAL;
       else
         d = (INTERVAL - d);
 
+      int proc = (d * 100 + INTERVAL / 2) / INTERVAL;
+
       //ts << d << os::std::endl;
 
-      ts.setFunctionNameOrPrefix("unlock()");
-      ts.assertCondition(d < (INTERVAL/10));
+      ts.setFunctionNameOrPrefix("lock()");
+      ts.assertCondition(proc < 10);
     }
 
+    void
+    fTry(void);
+
+    void
+    fTry(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
+#endif
+      os::core::timer::ticks_t t0 = os::timerTicks.getTicks();
+
+      while (!m2.tryLock())
+        os::timerTicks.sleep(1);
+
+      os::core::timer::ticks_t t1 = os::timerTicks.getTicks();
+
+      m2.unlock();
+
+      os::core::timer::ticks_t d = t1 - t0;
+      if (d >= INTERVAL)
+        d -= INTERVAL;
+      else
+        d = (INTERVAL - d);
+
+      int proc = (d * 100 + INTERVAL / 2) / INTERVAL;
+      //ts << d << os::std::endl;
+
+      ts.setFunctionNameOrPrefix("tryLock()");
+      ts.assertCondition(proc < 10);
+    }
 
   }
 }
@@ -101,18 +136,36 @@ runTestMutex()
 
   ts.setClassName("os::core::Mutex");
 
-  os::core::AllocatedStack stack;
-  os::core::Thread th1("t1", thread::mutex::f, stack);
+    {
+      os::core::AllocatedStack stack;
+      os::core::Thread th1("t1", thread::mutex::f, stack);
 
-  thread::mutex::m.lock();
+      thread::mutex::m1.lock();
 
-  th1.start();
+      th1.start();
 
-  os::timerTicks.sleep(thread::mutex::INTERVAL);
+      os::timerTicks.sleep(thread::mutex::INTERVAL);
 
-  thread::mutex::m.unlock();
+      thread::mutex::m1.unlock();
 
-  th1.join();
+      th1.join();
+    }
+
+    {
+      os::core::AllocatedStack stack;
+      os::core::Thread th2("t2", thread::mutex::fTry, stack);
+
+      thread::mutex::m2.lock();
+
+      th2.start();
+
+      os::timerTicks.sleep(thread::mutex::INTERVAL);
+
+      thread::mutex::m2.unlock();
+
+      th2.join();
+    }
+
 }
 
 // ----------------------------------------------------------------------------
@@ -128,39 +181,75 @@ namespace thread
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-    os::core::RecursiveMutex rm("rm1");
+    os::core::RecursiveMutex rm1("rm1");
+
+    os::core::RecursiveMutex rm2("rm2");
 
 #pragma GCC diagnostic pop
 
     constexpr os::core::timer::ticks_t INTERVAL = 100;
 
-    void f(void);
+    void
+    f(void);
 
     void
     f(void)
     {
 #if defined(DEBUG)
-  os::diag::trace.putString(__PRETTY_FUNCTION__);
-  os::diag::trace.putNewLine();
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
 #endif
       os::core::timer::ticks_t t0 = os::timerTicks.getTicks();
 
-      rm.lock();
+      rm1.lock();
 
       os::core::timer::ticks_t t1 = os::timerTicks.getTicks();
 
-      rm.unlock();
+      rm1.unlock();
 
-      os::core::timer::ticks_t d = t1-t0 ;
+      os::core::timer::ticks_t d = t1 - t0;
       if (d >= INTERVAL)
         d -= INTERVAL;
       else
         d = (INTERVAL - d);
 
+      int proc = (d * 100 + INTERVAL / 2) / INTERVAL;
       //ts << d << os::std::endl;
 
-      ts.setFunctionNameOrPrefix("unlock()");
-      ts.assertCondition(d < (INTERVAL/10));
+      ts.setFunctionNameOrPrefix("lock()");
+      ts.assertCondition(proc < 10);
+    }
+
+    void
+    fTry(void);
+
+    void
+    fTry(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
+#endif
+      os::core::timer::ticks_t t0 = os::timerTicks.getTicks();
+
+      while (!rm2.tryLock())
+        os::timerTicks.sleep(1);
+
+      os::core::timer::ticks_t t1 = os::timerTicks.getTicks();
+
+      rm2.unlock();
+
+      os::core::timer::ticks_t d = t1 - t0;
+      if (d >= INTERVAL)
+        d -= INTERVAL;
+      else
+        d = (INTERVAL - d);
+
+      int proc = (d * 100 + INTERVAL / 2) / INTERVAL;
+      //ts << d << " " << proc << os::std::endl;
+
+      ts.setFunctionNameOrPrefix("tryLock()");
+      ts.assertCondition(proc < 10);
     }
 
   }
@@ -178,30 +267,60 @@ runTestRecursiveMutex()
 
   ts.setClassName("os::core::RecursiveMutex");
 
-  os::core::AllocatedStack stack;
-  os::core::Thread th1("tr1", thread::recursivemutex::f, stack);
+    {
+      os::core::AllocatedStack stack;
+      os::core::Thread th1("tr1", thread::recursivemutex::f, stack);
 
-  // first lock
-  thread::recursivemutex::rm.lock();
+      // first lock
+      thread::recursivemutex::rm1.lock();
 
-  th1.start();
+      th1.start();
 
-  os::timerTicks.sleep(thread::recursivemutex::INTERVAL/3);
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
 
-  // second lock
-  thread::recursivemutex::rm.lock();
+      // second lock
+      thread::recursivemutex::rm1.lock();
 
-  os::timerTicks.sleep(thread::recursivemutex::INTERVAL/3);
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
 
-  // first unlock
-  thread::recursivemutex::rm.unlock();
+      // first unlock
+      thread::recursivemutex::rm1.unlock();
 
-  os::timerTicks.sleep(thread::recursivemutex::INTERVAL/3);
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
 
-  // second unlock
-  thread::recursivemutex::rm.unlock();
+      // second unlock
+      thread::recursivemutex::rm1.unlock();
 
-  th1.join();
+      th1.join();
+    }
+
+    {
+      os::core::AllocatedStack stack;
+      os::core::Thread th2("tr2", thread::recursivemutex::fTry, stack);
+
+      // first lock
+      thread::recursivemutex::rm2.lock();
+
+      th2.start();
+
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+
+      // second lock
+      thread::recursivemutex::rm2.lock();
+
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+
+      // first unlock
+      thread::recursivemutex::rm2.unlock();
+
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+
+      // second unlock
+      thread::recursivemutex::rm2.unlock();
+
+      th2.join();
+    }
+
 }
 
 // ----------------------------------------------------------------------------
