@@ -38,6 +38,26 @@ static os::infra::TestSuiteOstream ts;
 
 // ----------------------------------------------------------------------------
 
+int
+computeAbsoluteProcent(os::core::timer::ticks_t beginTs,
+    os::core::timer::ticks_t endTs, os::core::timer::ticks_t interval);
+
+int
+computeAbsoluteProcent(os::core::timer::ticks_t beginTs,
+    os::core::timer::ticks_t endTs, os::core::timer::ticks_t interval)
+{
+  os::core::timer::ticks_t d = endTs - beginTs;
+
+  if (d >= interval)
+    d -= interval;
+  else
+    d = (interval - d);
+
+  int proc = (int)((d * 100 + interval / 2) / interval);
+
+  return proc;
+}
+
 namespace thread
 {
   namespace mutex
@@ -75,14 +95,7 @@ namespace thread
 
       m1.unlock();
 
-      os::core::timer::ticks_t d = t1 - t0;
-      if (d >= INTERVAL)
-        d -= INTERVAL;
-      else
-        d = (INTERVAL - d);
-
-      int proc = (d * 100 + INTERVAL / 2) / INTERVAL;
-
+      int proc = computeAbsoluteProcent(t0, t1, INTERVAL);
       //ts << d << os::std::endl;
 
       ts.setFunctionNameOrPrefix("lock()");
@@ -108,13 +121,7 @@ namespace thread
 
       m2.unlock();
 
-      os::core::timer::ticks_t d = t1 - t0;
-      if (d >= INTERVAL)
-        d -= INTERVAL;
-      else
-        d = (INTERVAL - d);
-
-      int proc = (d * 100 + INTERVAL / 2) / INTERVAL;
+      int proc = computeAbsoluteProcent(t0, t1, INTERVAL);
       //ts << d << os::std::endl;
 
       ts.setFunctionNameOrPrefix("tryLock()");
@@ -207,13 +214,7 @@ namespace thread
 
       rm1.unlock();
 
-      os::core::timer::ticks_t d = t1 - t0;
-      if (d >= INTERVAL)
-        d -= INTERVAL;
-      else
-        d = (INTERVAL - d);
-
-      int proc = (d * 100 + INTERVAL / 2) / INTERVAL;
+      int proc = computeAbsoluteProcent(t0, t1, INTERVAL);
       //ts << d << os::std::endl;
 
       ts.setFunctionNameOrPrefix("lock()");
@@ -239,13 +240,7 @@ namespace thread
 
       rm2.unlock();
 
-      os::core::timer::ticks_t d = t1 - t0;
-      if (d >= INTERVAL)
-        d -= INTERVAL;
-      else
-        d = (INTERVAL - d);
-
-      int proc = (d * 100 + INTERVAL / 2) / INTERVAL;
+      int proc = computeAbsoluteProcent(t0, t1, INTERVAL);
       //ts << d << " " << proc << os::std::endl;
 
       ts.setFunctionNameOrPrefix("tryLock()");
