@@ -142,7 +142,7 @@ namespace os
                 {
                   if (pThread->getPriority() == pri)
                     {
-                      os::core::threadEntryPoint_t p =
+                      os::core::threadEntryPoint1_t p =
                           pThread->getEntryPointAddress();
                       if (p != nullptr)
                         {

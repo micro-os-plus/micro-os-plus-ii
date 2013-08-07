@@ -20,7 +20,10 @@ namespace os
     // Common definitions for all architectures
 
     typedef void
-    (*threadEntryPoint_t)(void*);
+    (*threadEntryPoint0_t)(void);
+
+    typedef void
+    (*threadEntryPoint1_t)(void*);
 
     typedef void
     (*trampoline3_t)(void*, void*, void*);
