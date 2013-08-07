@@ -84,10 +84,19 @@ namespace os
       ///
       /// \param [in] pName             Pointer to the null terminated thread name.
       /// \param [in] entryPoint        Pointer to the thread code.
+      /// \param [in] stack             Reference to the stack object.
+      /// \param [in] priority          Initial priority.
+      Thread(const char* const pName, threadEntryPoint0_t entryPoint,
+          Stack& stack, priority_t priority = scheduler::DEFAULT_PRIORITY);
+
+      /// \brief Constructor.
+      ///
+      /// \param [in] pName             Pointer to the null terminated thread name.
+      /// \param [in] entryPoint        Pointer to the thread code.
       /// \param [in] pParameters       Pointer to the parameters passed to the thread.
       /// \param [in] stack             Reference to the stack object.
       /// \param [in] priority          Initial priority.
-      Thread(const char* const pName, threadEntryPoint_t entryPoint,
+      Thread(const char* const pName, threadEntryPoint1_t entryPoint,
           void* pParameters, Stack& stack, priority_t priority =
               scheduler::DEFAULT_PRIORITY);
 
@@ -147,7 +156,7 @@ namespace os
       /// \par Parameters
       ///    None.
       /// \return The thread entry point address.
-      threadEntryPoint_t
+      threadEntryPoint1_t
       getEntryPointAddress(void) const;
 
       /// \brief Get the thread entry point parameter.
@@ -261,7 +270,7 @@ namespace os
       ///                               to the thread code.
       /// \param [in] pThread           Pointer to the thread object.
       static void
-      trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
+      trampoline3(threadEntryPoint1_t entryPoint, void* pParameters,
           Thread* pThread);
 
       /// @} end of Public member functions
@@ -285,7 +294,7 @@ namespace os
       ///                               to the thread code.
       /// \param [in] priority          Initial priority.
       void
-      initialise(threadEntryPoint_t entryPoint, void* pParameters,
+      initialise(threadEntryPoint1_t entryPoint, void* pParameters,
           priority_t priority);
 
       /// \brief Clean thread object after code completed.
@@ -335,7 +344,7 @@ namespace os
       id_t m_id;
 
       /// \brief The address of entry point to call for execution.
-      threadEntryPoint_t m_entryPointAddress;
+      threadEntryPoint1_t m_entryPointAddress;
 
       /// \brief The parameter passed when calling the entry point.
       void* m_entryPointParameter;
@@ -375,7 +384,7 @@ namespace os
         os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
             pName);
 #endif
-        initialise(reinterpret_cast<threadEntryPoint_t>(*function),
+        initialise(reinterpret_cast<threadEntryPoint1_t>(*function),
             static_cast<void*>(pObject), priority);
 
       }
@@ -432,7 +441,7 @@ namespace os
 
     /// \details
     /// Return the address of the code used for the thread.
-    inline threadEntryPoint_t
+    inline threadEntryPoint1_t
     __attribute__((always_inline))
     Thread::getEntryPointAddress(void) const
     {
@@ -472,7 +481,6 @@ namespace os
     }
 
   // ==========================================================================
-
 
   // ========================================================================
 

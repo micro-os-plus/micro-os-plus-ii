@@ -17,6 +17,8 @@
 //#include "portable/core/include/PlatformBase.h"
 //#include "portable/core/include/Architecture.h"
 
+//#define OS_DEBUG_THREAD         (1)
+
 namespace os
 {
   namespace core
@@ -27,7 +29,25 @@ namespace os
     /// Store the stack reference and the priority
     /// in the private member variables.
     /// \warning Do not use the stack yet! (see initialise())
-    Thread::Thread(const char* const pName, threadEntryPoint_t entryPoint,
+    Thread::Thread(const char* const pName, threadEntryPoint0_t entryPoint,
+        Stack& stack, priority_t priority)
+        : NamedObject(pName), //
+        m_stack(stack) // copy reference
+    {
+#if defined(DEBUG)
+      os::diag::trace.putStringAndAddress("os::core::Thread::Thread()", this,
+          pName);
+#endif
+
+      initialise(reinterpret_cast<threadEntryPoint1_t>(entryPoint), nullptr,
+          priority);
+    }
+
+    /// \details
+    /// Store the stack reference and the priority
+    /// in the private member variables.
+    /// \warning Do not use the stack yet! (see initialise())
+    Thread::Thread(const char* const pName, threadEntryPoint1_t entryPoint,
         void* pParameters, Stack& stack, priority_t priority)
         : NamedObject(pName), //
         m_stack(stack) // copy reference
@@ -60,7 +80,7 @@ namespace os
     /// constructed after the base class, so at this moment the reference
     /// may be to an object not yet constructed.
     void
-    Thread::initialise(threadEntryPoint_t entryPoint, void* pParameters,
+    Thread::initialise(threadEntryPoint1_t entryPoint, void* pParameters,
         priority_t priority)
     {
       m_id = scheduler::NO_ID;
@@ -114,6 +134,9 @@ namespace os
           os::diag::trace.putNewLine();
         }
 #endif
+
+      os::scheduler.yield();
+
       return wasRegistered;
     }
 
@@ -223,7 +246,7 @@ namespace os
     ///
     /// \note Must be public, to be accessible from custom schedulers.
     void
-    Thread::trampoline3(threadEntryPoint_t entryPoint, void* pParameters,
+    Thread::trampoline3(threadEntryPoint1_t entryPoint, void* pParameters,
         Thread* pThread)
     {
       // call the actual thread code
