@@ -17,6 +17,8 @@
 //#include "portable/core/include/PlatformBase.h"
 #include "portable/core/include/Architecture.h"
 
+//#define OS_DEBUG_TIMERBASE	(1)
+
 namespace os
 {
   namespace core
