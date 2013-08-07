@@ -15,8 +15,9 @@
 
 // ----------------------------------------------------------------------------
 
-constexpr int MAX_RUN_SECONDS = 30;
-//constexpr int MAX_RUN_SECONDS = 0;
+//constexpr int MAX_RUN_SECONDS = 30;
+constexpr int MAX_RUN_SECONDS = 60;
+//constexpr int MAX_RUN_SECONDS = 999999999;
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -51,6 +52,7 @@ static os::infra::TestSuiteOstream ts;
 #endif
 
 os::core::Mutex mutex;
+//os::core::RecursiveMutex mutex;
 
 #pragma GCC diagnostic pop
 
@@ -314,6 +316,11 @@ TaskPeriodic::threadMain(void)
   os::diag::trace.putMemberFunctionWithName();
 #endif
 
+  for (auto pTask : taskArray)
+    {
+      ts.assertCondition(pTask != 0);
+    }
+
   // thread endless loop
   int t = 0;
   for (;;)
@@ -338,7 +345,6 @@ TaskPeriodic::threadMain(void)
               ts << pTask->getName() << ':';
               //ts << ticks << "/" ;
               ts << cnt << '\t';
-
             }
           ts << "sum=" << sum;
           int average = (sum
@@ -390,7 +396,6 @@ TaskPeriodic::threadMain(void)
 
   for (auto pTask : taskArray)
     {
-
       int delta = (int) pTask->getCount();
       delta -= average;
 
@@ -440,6 +445,7 @@ runTestStress()
   taskArray[3] = &task3;
   taskArray[4] = &task4;
   taskArray[5] = &task5;
+  taskArray[6] = &task6;
   taskArray[7] = &task7;
   taskArray[8] = &task8;
   taskArray[9] = &task9;

@@ -62,10 +62,10 @@ namespace os
           /// \name Types and constants
           /// @{
 
-          typedef int count_t;
-
+        /// \brief The size of the internal array.
           static constexpr int NOTIFY_ARRAY_SIZE = Size_T;
 
+          /// \brief Embedded class for storage elements.
           class Element
           {
           public:
@@ -193,18 +193,6 @@ namespace os
 
         protected:
 
-          /// \name Private friends
-          /// @{
-
-          //friend Thread;
-
-          /// @} end of Private friends
-
-          /// \name Private member functions
-          /// @{
-
-          /// @} end of Private member functions
-
           /// \name Private member variables
           /// @{
 
@@ -248,7 +236,7 @@ namespace os
       /// \details
       /// Return the actual number of elements in the array.
       template<int Size_T>
-        inline typename TNotifier<Size_T>::count_t
+        inline mutex::count_t
         __attribute__((always_inline))
         TNotifier<Size_T>::getCount(void)
         {
@@ -286,6 +274,8 @@ namespace os
           return &m_array[m_count];
         }
 
+      /// \details
+      /// Add an element at the end of the array, if not full.
       template<int Size_T>
         bool
         TNotifier<Size_T>::pushBack(Thread* pThread)
@@ -302,6 +292,9 @@ namespace os
           return true;
         }
 
+      /// \details
+      /// Iterate the active part of the array and try to identify
+      /// the thread.
       template<int Size_T>
         bool
         TNotifier<Size_T>::hasElement(Thread* pThread)
@@ -325,6 +318,9 @@ namespace os
           return false;
         }
 
+      /// \details
+      /// Iterate the active part of the array and resume all
+      /// threads waiting to acquire the mutex.
       template<int Size_T>
         void
         TNotifier<Size_T>::resumeAll(void)
@@ -352,6 +348,8 @@ namespace os
       /// \nosubgrouping
       ///
       /// \brief Policy used to implement a recursive mutex.
+      ///
+      /// Basically a managed counter, to keep track of the recursion depth.
       class RecursivePolicy
       {
       public:
@@ -386,7 +384,7 @@ namespace os
         /// \name Public member functions
         /// @{
 
-        /// \brief Initialise embedded lock counter.
+        /// \brief Initialise the recursion depth counter.
         ///
         /// \par Parameters
         ///    None.
@@ -459,6 +457,8 @@ namespace os
         m_count = 0;
       }
 
+      /// \details
+      /// Reset the counter to zero.
       inline
       void
       __attribute__((always_inline))
@@ -467,6 +467,8 @@ namespace os
         m_count = 0;
       }
 
+      /// \details
+      /// If the counter reached the maximum allowed value, return false.
       inline
       bool
       __attribute__((always_inline))
@@ -479,6 +481,8 @@ namespace os
         return false;
       }
 
+      /// \details
+      /// Increment the recursion counter.
       inline
       void
       __attribute__((always_inline))
@@ -487,6 +491,8 @@ namespace os
         m_count++;
       }
 
+      /// \details
+      /// Validate the configuration, the counter should not be zero.
       inline
       bool
       __attribute__((always_inline))
@@ -500,6 +506,8 @@ namespace os
         return true;
       }
 
+      /// \details
+      /// Decrement the recursion counter.
       inline
       void
       __attribute__((always_inline))
@@ -508,6 +516,8 @@ namespace os
         --m_count;
       }
 
+      /// \details
+      /// The recursion ends when the counter returns to zero.
       inline
       bool
       __attribute__((always_inline))
@@ -528,7 +538,10 @@ namespace os
       /// \ingroup core
       /// \nosubgrouping
       ///
-      /// \brief Policy used to implement a recursive mutex.
+      /// \brief Policy used to implement a non-recursive mutex.
+      ///
+      /// \details
+      /// Basically an empty class.
       class NonRecursivePolicy
       {
       public:
@@ -561,7 +574,7 @@ namespace os
         /// \name Public member functions
         /// @{
 
-        /// \brief Initialise embedded lock counter.
+        /// \brief Initialise the recursion depth counter.
         ///
         /// \par Parameters
         ///    None.
@@ -679,288 +692,6 @@ namespace os
 
     }// namespace mutex
 
-#pragma GCC diagnostic push
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wpadded"
-#endif
-
-    /// \class TMutex Mutex.h "portable/core/include/Mutex.h"
-    /// \ingroup core
-    /// \nosubgrouping
-    ///
-    /// \brief Core  mutex template.
-    /// \tparam CriticalSectionLock_T   Type of the critical section lock.
-    /// \tparam Notifier_T              Type of the thread notifier.
-    ///
-    /// \details
-    /// The TMutex template provides a non-recursive mutex with
-    /// exclusive ownership semantics. If one thread owns a TMutex
-    /// object, attempts by another thread to acquire ownership of
-    /// that object will fail (for tryLock()) or block (for lock())
-    /// until the owning thread has released ownership with a
-    /// call to unlock().
-    ///
-    /// The behaviour of a program is undefined if:
-    /// - it destroys a TMutex object owned by any thread or
-    /// - a thread terminates while owning a TMutex object.
-    template<class CriticalSectionLock_T, class Notifier_T>
-      class TMutex : public NamedObject
-      {
-      public:
-        /// \name Types and constants
-        /// @{
-
-        typedef CriticalSectionLock_T CriticalSectionLock;
-
-        typedef Notifier_T Notifier;
-
-        typedef int count_t;
-
-        /// @} end of name Types and constants
-
-        /// \name Constructors/destructor
-        /// @{
-
-        /// \brief Default constructor.
-        ///
-        /// \par Parameters
-        ///    None.
-        TMutex(void);
-
-        /// \brief Constructor.
-        ///
-        /// \param [in] pName             Pointer to the null terminated mutex name.
-        TMutex(const char* const pName);
-
-        /// \brief Destructor.
-        ~TMutex();
-
-        /// \brief Deleted copy constructor.
-        TMutex(const TMutex&) = delete;
-
-        /// @} end of name Constructors/destructor
-
-        /// \name Operators
-        /// @{
-
-        /// \brief Deleted assignment operator.
-
-        TMutex&
-        operator=(const TMutex&) = delete;
-
-        /// @} end of name Operators
-
-        /// \name Public member functions
-        /// @{
-
-        /// \brief Lock the mutex.
-        void
-        lock(void);
-
-        /// \brief Unlock the mutex.
-        void
-        unlock(void) noexcept;
-
-        /// \brief Try to lock the mutex immediately.
-        ///
-        /// \par Parameters
-        ///    None.
-        /// \retval true        If the ownership of the mutex was
-        ///                     obtained for the calling thread.
-        /// \retval false       Otherwise.
-        bool
-        tryLock(void) noexcept;
-
-        /// \brief Try to lock the mutex in a given period of time.
-        ///
-        /// \param [in] ticks   The number of counter ticks.
-        /// \param [in] timer   The timer to use.
-        /// \retval true        If the ownership of the mutex was
-        ///                     obtained for the calling thread.
-        /// \retval false       Otherwise.
-        bool
-        tryLockFor(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
-
-        /// @} end of Public member functions
-
-      private:
-
-        /// \name Private friends
-        /// @{
-
-        //friend Thread;
-
-        /// @} end of Private friends
-
-        /// \name Private member functions
-        /// @{
-
-        /// @} end of Private member functions
-
-        /// \name Private member variables
-        /// @{
-
-        /// \brief Pointer to the owner of the mutex or nullptr.
-        Thread* volatile m_owningThread = nullptr;
-
-        Notifier m_notifier;
-
-        /// @} end of Private member variables
-
-      };
-
-#pragma GCC diagnostic pop
-
-    // ========================================================================
-
-#pragma GCC diagnostic push
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wpadded"
-#endif
-
-    /// \class TRecursiveMutex Mutex.h "portable/core/include/Mutex.h"
-    /// \ingroup core
-    /// \nosubgrouping
-    ///
-    /// \brief Core recursive mutex template.
-    /// \tparam CriticalSectionLock_T   Type of the critical section lock.
-    /// \tparam Notifier_T              Type of the thread notifier.
-    ///
-    /// \details
-    /// The TRecursiveMutex template provides a recursive mutex with
-    /// exclusive ownership semantics. If one thread owns a TRecursiveMutex
-    /// object, attempts by another thread to acquire ownership of
-    /// that object will fail (for tryLock()) or block (for lock())
-    /// until the first thread has completely released ownership.
-    ///
-    /// A thread that owns a TRecursiveMutex object may acquire
-    /// additional levels of ownership by calling lock() or tryLock()
-    /// on that object. It is unspecified how many levels of ownership
-    /// may be acquired by a single thread. A thread shall call unlock()
-    /// once for each level of ownership acquired by calls to lock()
-    /// and tryLock(). Only when all levels of ownership have been
-    /// released may ownership be acquired by another thread.
-    ///
-    /// The behaviour of a program is undefined if:
-    /// - it destroys a TRecursiveMutex object owned by any thread or
-    /// - a thread terminates while owning a TRecursiveMutex object.
-    template<class CriticalSectionLock_T, class Notifier_T>
-      class TRecursiveMutex : public NamedObject
-      {
-      public:
-        /// \name Types and constants
-        /// @{
-
-        typedef CriticalSectionLock_T CriticalSectionLock;
-
-        typedef Notifier_T Notifier;
-
-        typedef int count_t;
-
-        static constexpr count_t MAX_COUNT = INT_MAX;
-
-        /// @} end of name Types and constants
-
-        /// \name Constructors/destructor
-        /// @{
-
-        /// \brief Default constructor.
-        ///
-        /// \par Parameters
-        ///    None.
-        TRecursiveMutex(void);
-
-        /// \brief Constructor.
-        ///
-        /// \param [in] pName           Pointer to the null terminated mutex name.
-        TRecursiveMutex(const char* const pName);
-
-        /// \brief Destructor.
-        ~TRecursiveMutex();
-
-        /// \brief Deleted copy constructor.
-        TRecursiveMutex(const TRecursiveMutex&) = delete;
-
-        /// @} end of name Constructors/destructor
-
-        /// \name Operators
-        /// @{
-
-        /// \brief Deleted assignment operator.
-
-        TRecursiveMutex&
-        operator=(const TRecursiveMutex&) = delete;
-
-        /// @} end of name Operators
-
-        /// \name Public member functions
-        /// @{
-
-        /// \brief Lock the mutex.
-        void
-        lock(void);
-
-        /// \brief Unlock the mutex.
-        void
-        unlock(void) noexcept;
-
-        /// \brief Try to lock the mutex immediately.
-        ///
-        /// \par Parameters
-        ///    None.
-        /// \retval true        If the ownership of the mutex was
-        ///                     obtained for the calling thread.
-        /// \retval false       Otherwise.
-        bool
-        tryLock(void) noexcept;
-
-        /// \brief Try to lock the mutex in a given period of time.
-        ///
-        /// \param [in] ticks   The number of counter ticks.
-        /// \param [in] timer   The timer to use.
-        /// \retval true        If the ownership of the mutex was
-        ///                     obtained for the calling thread.
-        /// \retval false       Otherwise.
-        bool
-        tryLockFor(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
-
-        /// @} end of Public member functions
-
-      private:
-
-        /// \name Private friends
-        /// @{
-
-        //friend Thread;
-
-        /// @} end of Private friends
-
-        /// \name Private member functions
-        /// @{
-
-        /// @} end of Private member functions
-
-        /// \name Private member variables
-        /// @{
-
-        /// \brief Pointer to the owner of the mutex or nullptr.
-        Thread* volatile m_owningThread = nullptr;
-
-        Notifier m_notifier;
-
-        /// \brief Counter for the recursion depth.
-        count_t volatile m_count = 0;
-
-        /// @} end of Private member variables
-
-      };
-
-#pragma GCC diagnostic pop
-
-    // ------------------------------------------------------------------------
-
-    // inlines
-
     // ========================================================================
 
 #pragma GCC diagnostic push
@@ -980,7 +711,7 @@ namespace os
     /// \details
     /// The TGenericMutex template provides a generic
     /// recursive/non-recursive mutex with
-    /// exclusive ownership semantics. The recursive/non-recursive
+    /// exclusive ownership semantics. The specific recursive/non-recursive
     /// behaviour is implemented as a separate policy class.
     ///
     /// If one thread owns a TGenericMutex
@@ -1087,8 +818,10 @@ namespace os
         /// \brief Pointer to the owner of the mutex or nullptr.
         Thread* volatile m_owningThread = nullptr;
 
+        /// \brief The object used to keep track of the threads.
         Notifier m_notifier;
 
+        /// \brief Specific recursive/non-recursive policy.
         Policy m_policy;
 
         /// @} end of Private member variables
@@ -1188,6 +921,7 @@ namespace os
         /// \name Private member variables
         /// @{
 
+        /// \brief A reference to the lockable object.
         Lockable& m_lockable;
 
         /// @} end of Private member variables
@@ -1240,9 +974,6 @@ namespace os
 
     // Declare the template instantiation
 
-    extern template class TMutex<scheduler::CriticalSection, mutex::TNotifier<> > ;
-    extern template class TRecursiveMutex<scheduler::CriticalSection,
-        mutex::TNotifier<> > ;
     extern template class TGenericMutex<scheduler::CriticalSection,
         mutex::TNotifier<>, mutex::RecursivePolicy> ;
     extern template class TGenericMutex<scheduler::CriticalSection,
@@ -1250,10 +981,15 @@ namespace os
 
 #pragma GCC diagnostic pop
 
-    //using Mutex = TMutex<scheduler::CriticalSection, mutex::TNotifier<> >;
-    using Mutex = TGenericMutex<scheduler::CriticalSection, mutex::TNotifier<>, mutex::NonRecursivePolicy>;
-    //using RecursiveMutex = TRecursiveMutex<scheduler::CriticalSection, mutex::TNotifier<> >;
-    using RecursiveMutex = TGenericMutex<scheduler::CriticalSection, mutex::TNotifier<>, mutex::RecursivePolicy>;
+    /// \brief Common non-recursive mutex instantiation.
+    /// \ingroup core
+    using Mutex = TGenericMutex<scheduler::CriticalSection,
+    mutex::TNotifier<>, mutex::NonRecursivePolicy>;
+
+    /// \brief Common recursive mutex instantiation
+    /// \ingroup core
+    using RecursiveMutex = TGenericMutex<scheduler::CriticalSection,
+    mutex::TNotifier<>, mutex::RecursivePolicy>;
 
   // ========================================================================
 
