@@ -14,10 +14,7 @@
 #include "portable/core/include/Thread.h"
 #include "portable/core/include/Scheduler.h"
 
-//#include "portable/core/include/CriticalSections.h"
-
-//#include "portable/core/include/PlatformBase.h"
-//#include "portable/core/include/Architecture.h"
+//#define OS_DEBUG_MUTEX          (1)
 
 namespace os
 {
@@ -72,10 +69,16 @@ namespace os
       void
       TMutex<CriticalSectionLock_T, Notifier_T>::lock(void)
       {
-#if defined(DEBUG)
-        os::diag::trace.putStringAndName("os::core::TMutex::lock()", getName());
-#endif
         Thread* pThread = os::scheduler.getCurrentThread();
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+        os::diag::trace.putString("os::core::TMutex::lock()");
+        os::diag::trace.putString(" \"");
+        os::diag::trace.putString(getName());
+        os::diag::trace.putString("\" by \"");
+        os::diag::trace.putString(pThread->getName());
+        os::diag::trace.putChar('"');
+        os::diag::trace.putNewLine();
+#endif
 
           {
             // ----- critical section begin -----------------------------------
@@ -87,10 +90,28 @@ namespace os
                 m_owningThread = pThread;
                 m_notifier.clear();
 
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+                os::diag::trace.putString("os::core::TMutex::lock()");
+                os::diag::trace.putString(" \"");
+                os::diag::trace.putString(getName());
+                os::diag::trace.putString("\" acquired by \"");
+                os::diag::trace.putString(pThread->getName());
+                os::diag::trace.putChar('"');
+                os::diag::trace.putNewLine();
+#endif
                 return;
               }
             else if (m_owningThread == pThread)
               {
+#if defined(DEBUG)
+                os::diag::trace.putString("os::core::TMutex::lock()");
+                os::diag::trace.putString(" \"");
+                os::diag::trace.putString(getName());
+                os::diag::trace.putString("\" by \"");
+                os::diag::trace.putString(pThread->getName());
+                os::diag::trace.putString("\" recursion not allowed");
+                os::diag::trace.putNewLine();
+#endif
                 // Error,
                 return;
               }
@@ -98,6 +119,15 @@ namespace os
               {
                 if (!m_notifier.pushBack(pThread))
                   {
+#if defined(DEBUG)
+                    os::diag::trace.putString("os::core::TMutex::lock()");
+                    os::diag::trace.putString(" \"");
+                    os::diag::trace.putString(getName());
+                    os::diag::trace.putString("\" by \"");
+                    os::diag::trace.putString(pThread->getName());
+                    os::diag::trace.putString("\" size exceeded");
+                    os::diag::trace.putNewLine();
+#endif
                     // TODO: error, array exceeded
                   }
               }
@@ -117,6 +147,15 @@ namespace os
                 m_owningThread = pThread;
                 m_notifier.clear();
 
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+                os::diag::trace.putString("os::core::TMutex::lock()");
+                os::diag::trace.putString(" \"");
+                os::diag::trace.putString(getName());
+                os::diag::trace.putString("\" acquired by \"");
+                os::diag::trace.putString(pThread->getName());
+                os::diag::trace.putChar('"');
+                os::diag::trace.putNewLine();
+#endif
                 return;
               }
 
@@ -126,6 +165,15 @@ namespace os
               {
                 if (!m_notifier.pushBack(pThread))
                   {
+#if defined(DEBUG)
+                    os::diag::trace.putString("os::core::TMutex::lock()");
+                    os::diag::trace.putString(" \"");
+                    os::diag::trace.putString(getName());
+                    os::diag::trace.putString("\" by \"");
+                    os::diag::trace.putString(pThread->getName());
+                    os::diag::trace.putString("\" size exceeded");
+                    os::diag::trace.putNewLine();
+#endif
                     // TODO: error, array exceeded
                   }
               }
@@ -181,11 +229,16 @@ namespace os
       void
       TMutex<CriticalSectionLock_T, Notifier_T>::unlock(void) noexcept
       {
-#if defined(DEBUG)
-        os::diag::trace.putStringAndName("os::core::TMutex::unlock()",
-            getName());
-#endif
         Thread* pThread = os::scheduler.getCurrentThread();
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+        os::diag::trace.putString("os::core::TMutex::unlock()");
+        os::diag::trace.putString(" \"");
+        os::diag::trace.putString(getName());
+        os::diag::trace.putString("\" by \"");
+        os::diag::trace.putString(pThread->getName());
+        os::diag::trace.putChar('"');
+        os::diag::trace.putNewLine();
+#endif
 
           {
             // ----- critical section begin -----------------------------------
@@ -193,6 +246,16 @@ namespace os
 
             if (m_owningThread != pThread)
               {
+#if defined(DEBUG)
+                os::diag::trace.putString(
+                    "os::core::TRecursiveMutex::unlock()");
+                os::diag::trace.putString(" \"");
+                os::diag::trace.putString(getName());
+                os::diag::trace.putString("\" by \"");
+                os::diag::trace.putString(pThread->getName());
+                os::diag::trace.putString("\" not owner");
+                os::diag::trace.putNewLine();
+#endif
                 // Error, not owner
                 return;
               }
@@ -207,6 +270,15 @@ namespace os
             // ----- critical section end -------------------------------------
           }
 
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+        os::diag::trace.putString("os::core::TMutex::unlock()");
+        os::diag::trace.putString(" \"");
+        os::diag::trace.putString(getName());
+        os::diag::trace.putString("\" released by \"");
+        os::diag::trace.putString(pThread->getName());
+        os::diag::trace.putChar('"');
+        os::diag::trace.putNewLine();
+#endif
         // Finally give the next thread waiting for the mutex a chance to run.
         os::scheduler.yield();
       }
@@ -233,42 +305,61 @@ namespace os
     /// that the mutex type shall be DefaultConstructible.
     /// Not recommended for regular applications, use the named
     /// constructor instead.
-    template<class CriticalSectionLock_T, int NotifySize_T>
-      TRecursiveMutex<CriticalSectionLock_T, NotifySize_T>::TRecursiveMutex(
-          void)
+    template<class CriticalSectionLock_T, class Notifier_T>
+      TRecursiveMutex<CriticalSectionLock_T, Notifier_T>::TRecursiveMutex(void)
           : NamedObject()
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndAddress(
+            "os::core::TRecursiveMutex::TRecursiveMutex()", this);
+#endif
         m_owningThread = nullptr;
-
         m_count = 0;
 
-        m_notifyCount = 0;
+        m_notifier.clear();
       }
 
     /// \details
     /// Construct a named mutex.
-    template<class CriticalSectionLock_T, int NotifySize_T>
-      TRecursiveMutex<CriticalSectionLock_T, NotifySize_T>::TRecursiveMutex(
+    template<class CriticalSectionLock_T, class Notifier_T>
+      TRecursiveMutex<CriticalSectionLock_T, Notifier_T>::TRecursiveMutex(
           const char* const pName)
           : NamedObject(pName)
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndAddress(
+            "os::core::TRecursiveMutex::TRecursiveMutex()", this, pName);
+#endif
         m_owningThread = nullptr;
-
         m_count = 0;
 
-        m_notifyCount = 0;
+        m_notifier.clear();
       }
 
-    template<class CriticalSectionLock_T, int NotifySize_T>
-      TRecursiveMutex<CriticalSectionLock_T, NotifySize_T>::~TRecursiveMutex()
+    template<class CriticalSectionLock_T, class Notifier_T>
+      TRecursiveMutex<CriticalSectionLock_T, Notifier_T>::~TRecursiveMutex()
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndAddress(
+            "os::core::TRecursiveMutex::~TRecursiveMutex()", this, getName());
+#endif
       }
 
-    template<class CriticalSectionLock_T, int NotifySize_T>
+    template<class CriticalSectionLock_T, class Notifier_T>
       void
-      TRecursiveMutex<CriticalSectionLock_T, NotifySize_T>::lock(void)
+      TRecursiveMutex<CriticalSectionLock_T, Notifier_T>::lock(void)
       {
         Thread* pThread = os::scheduler.getCurrentThread();
+
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+        os::diag::trace.putString("os::core::TRecursiveMutex::lock()");
+        os::diag::trace.putString(" \"");
+        os::diag::trace.putString(getName());
+        os::diag::trace.putString("\" by \"");
+        os::diag::trace.putString(pThread->getName());
+        os::diag::trace.putChar('"');
+        os::diag::trace.putNewLine();
+#endif
 
           {
             // ----- critical section begin -----------------------------------
@@ -278,9 +369,18 @@ namespace os
               {
                 // The mutex is not owned, get it
                 m_owningThread = pThread;
-                m_count = 0;
-                m_notifyCount = 0;
+                m_count = 1;
+                m_notifier.clear();
 
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+                os::diag::trace.putString("os::core::TRecursiveMutex::lock()");
+                os::diag::trace.putString(" \"");
+                os::diag::trace.putString(getName());
+                os::diag::trace.putString("\" acquired by \"");
+                os::diag::trace.putString(pThread->getName());
+                os::diag::trace.putChar('"');
+                os::diag::trace.putNewLine();
+#endif
                 return;
               }
             else if (m_owningThread == pThread)
@@ -292,20 +392,35 @@ namespace os
                   }
                 else
                   {
+#if defined(DEBUG)
+                    os::diag::trace.putString(
+                        "os::core::TRecursiveMutex::lock()");
+                    os::diag::trace.putString(" \"");
+                    os::diag::trace.putString(getName());
+                    os::diag::trace.putString("\" by \"");
+                    os::diag::trace.putString(pThread->getName());
+                    os::diag::trace.putString("\" depth exceeded");
+                    os::diag::trace.putNewLine();
+#endif
                     // Error,
                   }
                 return;
               }
             else
               {
-                if (m_notifyCount < NOTIFY_ARRAY_SIZE)
+                if (!m_notifier.pushBack(pThread))
                   {
-                    m_notifyArray[m_notifyCount].pThread = pThread;
-                    ++m_notifyCount;
-                  }
-                else
-                  {
-                    // TODO: error, array exceeded
+#if defined(DEBUG)
+                    os::diag::trace.putString(
+                        "os::core::TRecursiveMutex::lock()");
+                    os::diag::trace.putString(" \"");
+                    os::diag::trace.putString(getName());
+                    os::diag::trace.putString("\" by \"");
+                    os::diag::trace.putString(pThread->getName());
+                    os::diag::trace.putString("\" size exceeded");
+                    os::diag::trace.putNewLine();
+#endif
+                    // TODO: error, array size exceeded
                   }
               }
             // ----- critical section end -------------------------------------
@@ -322,32 +437,37 @@ namespace os
               {
                 // The mutex is not owned, get it
                 m_owningThread = pThread;
-                m_count = 0;
-                m_notifyCount = 0;
+                m_count = 1;
+                m_notifier.clear();
 
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+                os::diag::trace.putString("os::core::TRecursiveMutex::lock()");
+                os::diag::trace.putString(" \"");
+                os::diag::trace.putString(getName());
+                os::diag::trace.putString("\" acquired by \"");
+                os::diag::trace.putString(pThread->getName());
+                os::diag::trace.putChar('"');
+                os::diag::trace.putNewLine();
+#endif
                 return;
               }
 
             // TODO: check attention requests
 
-            count_t i;
-            for (i = 0; i < m_notifyCount; ++i)
+            if (!m_notifier.hasElement(pThread))
               {
-                // check if the thread is already in the list
-                if (m_notifyArray[m_notifyCount].pThread == pThread)
-                  break;
-              }
-
-            if (i == m_notifyCount)
-              {
-                // Add pThread to the list of suspended threads
-                if (m_notifyCount < NOTIFY_ARRAY_SIZE)
+                if (!m_notifier.pushBack(pThread))
                   {
-                    m_notifyArray[m_notifyCount].pThread = pThread;
-                    ++m_notifyCount;
-                  }
-                else
-                  {
+#if defined(DEBUG)
+                    os::diag::trace.putString(
+                        "os::core::TRecursiveMutex::lock()");
+                    os::diag::trace.putString(" \"");
+                    os::diag::trace.putString(getName());
+                    os::diag::trace.putString("\" by \"");
+                    os::diag::trace.putString(pThread->getName());
+                    os::diag::trace.putString("\" size exceeded");
+                    os::diag::trace.putNewLine();
+#endif
                     // TODO: error, array exceeded
                   }
               }
@@ -359,10 +479,14 @@ namespace os
     /// Attempts to obtain ownership of the mutex for the calling thread
     /// without blocking. If ownership is not obtained, there is no
     /// effect and tryLock() immediately returns.
-    template<class CriticalSectionLock_T, int NotifySize_T>
+    template<class CriticalSectionLock_T, class Notifier_T>
       bool
-      TRecursiveMutex<CriticalSectionLock_T, NotifySize_T>::tryLock(void) noexcept
+      TRecursiveMutex<CriticalSectionLock_T, Notifier_T>::tryLock(void) noexcept
       {
+#if defined(DEBUG)
+        os::diag::trace.putStringAndName("os::core::TRecursiveMutex::tryLock()",
+            getName());
+#endif
         Thread* pThread = os::scheduler.getCurrentThread();
 
           {
@@ -374,7 +498,7 @@ namespace os
                 // The mutex is not owned, get it
                 m_owningThread = pThread;
                 m_count = 1;
-                m_notifyCount = 0;
+                m_notifier.clear();
 
                 return true;
               }
@@ -401,24 +525,53 @@ namespace os
     ///
     /// This operation synchronises with (1.10) subsequent lock
     /// operations that obtain ownership on the same object.
-    template<class CriticalSectionLock_T, int NotifySize_T>
+    template<class CriticalSectionLock_T, class Notifier_T>
       void
-      TRecursiveMutex<CriticalSectionLock_T, NotifySize_T>::unlock(void) noexcept
+      TRecursiveMutex<CriticalSectionLock_T, Notifier_T>::unlock(void) noexcept
       {
         Thread* pThread = os::scheduler.getCurrentThread();
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+        os::diag::trace.putString("os::core::TRecursiveMutex::unlock()");
+        os::diag::trace.putString(" \"");
+        os::diag::trace.putString(getName());
+        os::diag::trace.putString("\" by \"");
+        os::diag::trace.putString(pThread->getName());
+        os::diag::trace.putChar('"');
+        os::diag::trace.putNewLine();
+#endif
 
           {
             // ----- critical section begin -----------------------------------
             CriticalSectionLock cs;
 
-            if (m_owningThread == pThread)
+            if (m_owningThread != pThread)
               {
+#if defined(DEBUG)
+                os::diag::trace.putString(
+                    "os::core::TRecursiveMutex::unlock()");
+                os::diag::trace.putString(" \"");
+                os::diag::trace.putString(getName());
+                os::diag::trace.putString("\" by \"");
+                os::diag::trace.putString(pThread->getName());
+                os::diag::trace.putString("\" not owner");
+                os::diag::trace.putNewLine();
+#endif
                 // Error, not owner
                 return;
               }
 
             if (m_count == 0)
               {
+#if defined(DEBUG)
+                os::diag::trace.putString(
+                    "os::core::TRecursiveMutex::unlock()");
+                os::diag::trace.putString(" \"");
+                os::diag::trace.putString(getName());
+                os::diag::trace.putString("\" by \"");
+                os::diag::trace.putString(pThread->getName());
+                os::diag::trace.putString("\" out of sync");
+                os::diag::trace.putNewLine();
+#endif
                 // Error, counter out of sync
                 return;
               }
@@ -433,24 +586,29 @@ namespace os
             m_owningThread = nullptr;
 
             // Resume waiting threads
-            for (count_t i = 0; i < m_notifyCount; ++i)
-              {
-                // no context switches will happen inside critical section
-                m_notifyArray[m_notifyCount].pThread->resume();
-              }
-
-            m_notifyCount = 0;
+            m_notifier.resumeAll();
+            m_notifier.clear();
 
             // ----- critical section end -------------------------------------
           }
+
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+        os::diag::trace.putString("os::core::TRecursiveMutex::unlock()");
+        os::diag::trace.putString(" \"");
+        os::diag::trace.putString(getName());
+        os::diag::trace.putString("\" released by \"");
+        os::diag::trace.putString(pThread->getName());
+        os::diag::trace.putChar('"');
+        os::diag::trace.putNewLine();
+#endif
 
         // Finally give the next thread waiting for the mutex a chance to run.
         os::scheduler.yield();
       }
 
-    template<class CriticalSectionLock_T, int NotifySize_T>
+    template<class CriticalSectionLock_T, class Notifier_T>
       bool
-      TRecursiveMutex<CriticalSectionLock_T, NotifySize_T>::tryLockFor(
+      TRecursiveMutex<CriticalSectionLock_T, Notifier_T>::tryLockFor(
           timer::ticks_t ticks __attribute__((unused)),
           TimerBase& timer __attribute__((unused)))
       {

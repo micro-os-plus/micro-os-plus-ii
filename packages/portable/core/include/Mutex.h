@@ -490,7 +490,7 @@ namespace os
     ///
     /// \brief Core recursive mutex template.
     /// \tparam CriticalSectionLock_T   Type of the critical section lock.
-    /// \tparam NotifySize_T            Maximum number of waiting threads.
+    /// \tparam Notifier_T              Type of the thread notifier.
     ///
     /// \details
     /// The TRecursiveMutex template provides a recursive mutex with
@@ -510,8 +510,7 @@ namespace os
     /// The behaviour of a program is undefined if:
     /// - it destroys a TRecursiveMutex object owned by any thread or
     /// - a thread terminates while owning a TRecursiveMutex object.
-    template<class CriticalSectionLock_T, int NotifySize_T =
-        os::core::scheduler::MAX_USER_THREADS>
+    template<class CriticalSectionLock_T, class Notifier_T>
       class TRecursiveMutex : public NamedObject
       {
       public:
@@ -520,11 +519,11 @@ namespace os
 
         typedef CriticalSectionLock_T CriticalSectionLock;
 
+        typedef Notifier_T Notifier;
+
         typedef int count_t;
 
         static constexpr count_t MAX_COUNT = INT_MAX;
-
-        static constexpr int NOTIFY_ARRAY_SIZE = NotifySize_T;
 
         /// @} end of name Types and constants
 
@@ -598,7 +597,7 @@ namespace os
         /// \name Private friends
         /// @{
 
-        friend Thread;
+        //friend Thread;
 
         /// @} end of Private friends
 
@@ -613,16 +612,7 @@ namespace os
         /// \brief Pointer to the owner of the mutex or nullptr.
         Thread* volatile m_owningThread = nullptr;
 
-        typedef struct
-        {
-          Thread* pThread;
-        } element_t;
-
-        /// \brief Array of pointer to threads waiting to acquire mutex.
-        element_t volatile m_notifyArray[NOTIFY_ARRAY_SIZE];
-
-        /// \brief Counter for the threads waiting to acquire mutex.
-        count_t volatile m_notifyCount;
+        Notifier m_notifier;
 
         /// \brief Counter for the recursion depth.
         count_t volatile m_count = 0;
@@ -777,11 +767,12 @@ namespace os
     // Declare the template instantiation
 
     extern template class TMutex<scheduler::CriticalSection, mutex::TNotifier<> > ;
-    extern template class TRecursiveMutex<scheduler::CriticalSection> ;
+    extern template class TRecursiveMutex<scheduler::CriticalSection, mutex::TNotifier<> > ;
 
 #pragma GCC diagnostic pop
 
     using Mutex = TMutex<scheduler::CriticalSection, mutex::TNotifier<> >;
+    using RecursiveMutex = TRecursiveMutex<scheduler::CriticalSection, mutex::TNotifier<> >;
 
   // ========================================================================
 

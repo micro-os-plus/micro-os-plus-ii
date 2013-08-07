@@ -26,7 +26,8 @@ namespace os
 
     // explicit templates instantiations
     template class TMutex<scheduler::CriticalSection, mutex::TNotifier<> > ;
-    template class TRecursiveMutex<scheduler::CriticalSection> ;
+    template class TRecursiveMutex<scheduler::CriticalSection,
+        mutex::TNotifier<> > ;
 
   // ------------------------------------------------------------------------
   }// namespace core
