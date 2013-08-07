@@ -73,10 +73,15 @@ namespace thread
 
       m.unlock();
 
-      os::core::timer::ticks_t d = t1-t0 - INTERVAL;
+      os::core::timer::ticks_t d = t1-t0 ;
+      if (d >= INTERVAL)
+        d -= INTERVAL;
+      else
+        d = (INTERVAL - d);
 
       //ts << d << os::std::endl;
 
+      ts.setFunctionNameOrPrefix("unlock()");
       ts.assertCondition(d < (INTERVAL/10));
     }
 
@@ -94,6 +99,8 @@ runTestMutex()
   os::diag::trace.putNewLine();
 #endif
 
+  ts.setClassName("os::core::Mutex");
+
   os::core::AllocatedStack stack;
   os::core::Thread th1("t1", thread::mutex::f, stack);
 
@@ -104,6 +111,95 @@ runTestMutex()
   os::timerTicks.sleep(thread::mutex::INTERVAL);
 
   thread::mutex::m.unlock();
+
+  th1.join();
+}
+
+// ----------------------------------------------------------------------------
+
+namespace thread
+{
+  namespace recursivemutex
+  {
+
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+#pragma clang diagnostic ignored "-Wexit-time-destructors"
+#endif
+
+    os::core::RecursiveMutex rm("rm1");
+
+#pragma GCC diagnostic pop
+
+    constexpr os::core::timer::ticks_t INTERVAL = 100;
+
+    void f(void);
+
+    void
+    f(void)
+    {
+#if defined(DEBUG)
+  os::diag::trace.putString(__PRETTY_FUNCTION__);
+  os::diag::trace.putNewLine();
+#endif
+      os::core::timer::ticks_t t0 = os::timerTicks.getTicks();
+
+      rm.lock();
+
+      os::core::timer::ticks_t t1 = os::timerTicks.getTicks();
+
+      rm.unlock();
+
+      os::core::timer::ticks_t d = t1-t0 ;
+      if (d >= INTERVAL)
+        d -= INTERVAL;
+      else
+        d = (INTERVAL - d);
+
+      //ts << d << os::std::endl;
+
+      ts.setFunctionNameOrPrefix("unlock()");
+      ts.assertCondition(d < (INTERVAL/10));
+    }
+
+  }
+}
+void
+runTestRecursiveMutex();
+
+void
+runTestRecursiveMutex()
+{
+#if defined(DEBUG)
+  os::diag::trace.putString(__PRETTY_FUNCTION__);
+  os::diag::trace.putNewLine();
+#endif
+
+  ts.setClassName("os::core::RecursiveMutex");
+
+  os::core::AllocatedStack stack;
+  os::core::Thread th1("tr1", thread::recursivemutex::f, stack);
+
+  // first lock
+  thread::recursivemutex::rm.lock();
+
+  th1.start();
+
+  os::timerTicks.sleep(thread::recursivemutex::INTERVAL/3);
+
+  // second lock
+  thread::recursivemutex::rm.lock();
+
+  os::timerTicks.sleep(thread::recursivemutex::INTERVAL/3);
+
+  // first unlock
+  thread::recursivemutex::rm.unlock();
+
+  os::timerTicks.sleep(thread::recursivemutex::INTERVAL/3);
+
+  // second unlock
+  thread::recursivemutex::rm.unlock();
 
   th1.join();
 }
@@ -122,6 +218,8 @@ main(int argc, char* argv[])
   os::scheduler.start();
 
   runTestMutex();
+
+  runTestRecursiveMutex();
 
   os::scheduler.stop();
 
