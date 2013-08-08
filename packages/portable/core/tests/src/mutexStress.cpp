@@ -73,9 +73,9 @@ public:
   static constexpr unsigned int SUM = (TO - FROM + 1) * (FROM + TO) / 2
       * REPEAT;
 
-  Task(const char* pName, os::core::stack::size_t stackSizeBytes,
-      uint16_t minMicros, uint16_t maxMicros, uint16_t minTicks,
-      uint16_t maxTicks);
+  Task(const char* pName, os::core::stack::size_t stackSizeBytes =
+      hal::arch::MIN_STACK_SIZE, uint16_t minMicros = 10, uint16_t maxMicros =
+      90, uint16_t minTicks = 10, uint16_t maxTicks = 200);
 
   ~Task();
 
@@ -206,8 +206,10 @@ Task::threadMain(void)
 
       mutex.lock();
         {
-          nBusy = (rand() % (m_maxMicros - m_minMicros)) + m_minMicros;
-          nSleep = (rand() % (m_maxTicks - m_minTicks)) + m_minTicks;
+          nBusy = (rand() % (m_maxMicros / 10 - m_minMicros / 10))
+              + m_minMicros / 10;
+          nSleep = (rand() % (m_maxTicks / 10 - m_minTicks / 10))
+              + m_minTicks / 10;
 
           // simulate a period of intense activity
           os::architecture.busyWaitMicros(nBusy);
@@ -261,7 +263,8 @@ Task::rand(void)
 class TaskPeriodic : public os::core::NamedObject
 {
 public:
-  TaskPeriodic(const char* pName, os::core::stack::size_t stackSizeBytes);
+  TaskPeriodic(const char* pName, os::core::stack::size_t stackSizeBytes =
+      hal::arch::MIN_STACK_SIZE);
 
   ~TaskPeriodic();
 
@@ -426,18 +429,18 @@ runTestStress()
 
   Task::seed((uint16_t) time(NULL));
 
-  TaskPeriodic taskP("P", hal::arch::MIN_STACK_SIZE);
+  TaskPeriodic taskP("P");
 
-  Task task0("t0", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
-  Task task1("t1", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
-  Task task2("t2", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
-  Task task3("t3", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 200);
-  Task task4("t4", hal::arch::MIN_STACK_SIZE, 500, 2500, 1, 200);
-  Task task5("t5", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 100);
-  Task task6("t6", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
-  Task task7("t7", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 400);
-  Task task8("t8", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
-  Task task9("t9", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
+  Task task0("t0");
+  Task task1("t1");
+  Task task2("t2");
+  Task task3("t3");
+  Task task4("t4");
+  Task task5("t5");
+  Task task6("t6");
+  Task task7("t7");
+  Task task8("t8");
+  Task task9("t9");
 
   taskArray[0] = &task0;
   taskArray[1] = &task1;
