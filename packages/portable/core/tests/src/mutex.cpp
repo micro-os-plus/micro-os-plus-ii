@@ -53,7 +53,7 @@ computeAbsoluteProcent(os::core::timer::ticks_t beginTs,
   else
     d = (interval - d);
 
-  int proc = (int)((d * 100 + interval / 2) / interval);
+  int proc = (int) ((d * 100 + interval / 2) / interval);
 
   return proc;
 }
@@ -73,25 +73,32 @@ namespace thread
 
     os::core::Mutex m2("m2");
 
+    os::core::Mutex m3("m3");
+
+    os::core::Mutex m4("m4");
+
 #pragma GCC diagnostic pop
 
     constexpr os::core::timer::ticks_t INTERVAL = 100;
 
-    void
-    f(void);
+    constexpr os::core::timer::ticks_t INTERVAL_SHORT = 100;
+    constexpr os::core::timer::ticks_t INTERVAL_LONG = INTERVAL_SHORT + 50;
 
     void
-    f(void)
+    fLock(void);
+
+    void
+    fLock(void)
     {
 #if defined(DEBUG)
       os::diag::trace.putString(__PRETTY_FUNCTION__);
       os::diag::trace.putNewLine();
 #endif
-      os::core::timer::ticks_t t0 = os::timerTicks.getTicks();
+      os::core::timer::ticks_t t0 = os::timerTicks.getCurrentTicks();
 
       m1.lock();
 
-      os::core::timer::ticks_t t1 = os::timerTicks.getTicks();
+      os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
 
       m1.unlock();
 
@@ -103,21 +110,25 @@ namespace thread
     }
 
     void
-    fTry(void);
+    fTryLock(void);
 
     void
-    fTry(void)
+    fTryLock(void)
     {
 #if defined(DEBUG)
       os::diag::trace.putString(__PRETTY_FUNCTION__);
       os::diag::trace.putNewLine();
 #endif
-      os::core::timer::ticks_t t0 = os::timerTicks.getTicks();
+      os::core::timer::ticks_t t0 = os::timerTicks.getCurrentTicks();
+
+      // initially should not lock
+      ts.assertCondition(m2.tryLock() == false);
+      ts.assertCondition(m2.tryLock() == false);
 
       while (!m2.tryLock())
         os::timerTicks.sleep(1);
 
-      os::core::timer::ticks_t t1 = os::timerTicks.getTicks();
+      os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
 
       m2.unlock();
 
@@ -125,6 +136,62 @@ namespace thread
       //ts << d << os::std::endl;
 
       ts.setFunctionNameOrPrefix("tryLock()");
+      ts.assertCondition(proc < 10);
+    }
+
+    void
+    fTryForNoTimeout(void);
+
+    void
+    fTryForNoTimeout(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
+#endif
+      os::core::timer::ticks_t t0 = os::timerTicks.getCurrentTicks();
+
+      ts.assertCondition((m3.tryLock() == false));
+
+      // try for more than INTERVAL_SHORT ticks, should succeed
+      ts.assertCondition((m3.tryLockFor(INTERVAL_LONG) == true));
+
+      os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
+      m3.unlock();
+
+      int proc = computeAbsoluteProcent(t0, t1, INTERVAL_SHORT);
+
+      //ts << (t1-t0) << os::std::endl;
+
+      ts.setFunctionNameOrPrefix("tryLockFor()");
+      ts.setPreconditions("no timeout");
+      ts.assertCondition(proc < 10);
+    }
+
+    void
+    fTryForTimeout(void);
+
+    void
+    fTryForTimeout(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
+#endif
+      os::core::timer::ticks_t t0 = os::timerTicks.getCurrentTicks();
+
+      ts.assertCondition((m4.tryLock() == false));
+
+      // try less than INTERVAL_LONG ticks, should not succeed
+      ts.assertCondition((m4.tryLockFor(INTERVAL_SHORT) == false));
+
+      os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
+      int proc = computeAbsoluteProcent(t0, t1, INTERVAL_SHORT);
+
+      //ts << (t1-t0) << os::std::endl;
+
+      ts.setFunctionNameOrPrefix("tryLockFor()");
+      ts.setPreconditions("with timeout");
       ts.assertCondition(proc < 10);
     }
 
@@ -145,7 +212,7 @@ runTestMutex()
 
     {
       os::core::AllocatedStack stack;
-      os::core::Thread th1("t1", thread::mutex::f, stack);
+      os::core::Thread th1("t1", thread::mutex::fLock, stack);
 
       thread::mutex::m1.lock();
 
@@ -160,7 +227,7 @@ runTestMutex()
 
     {
       os::core::AllocatedStack stack;
-      os::core::Thread th2("t2", thread::mutex::fTry, stack);
+      os::core::Thread th2("t2", thread::mutex::fTryLock, stack);
 
       thread::mutex::m2.lock();
 
@@ -171,6 +238,34 @@ runTestMutex()
       thread::mutex::m2.unlock();
 
       th2.join();
+    }
+
+    {
+      os::core::AllocatedStack stack;
+      os::core::Thread th3("t3", thread::mutex::fTryForNoTimeout, stack);
+
+      thread::mutex::m3.lock();
+      th3.start();
+
+      // sleep less than tryLockFor(INTERVAL_LONG)
+      os::timerTicks.sleep(thread::mutex::INTERVAL_SHORT);
+
+      thread::mutex::m3.unlock();
+      th3.join();
+    }
+
+    {
+      os::core::AllocatedStack stack;
+      os::core::Thread th4("t4", thread::mutex::fTryForTimeout, stack);
+
+      thread::mutex::m4.lock();
+      th4.start();
+
+      // sleep longer than tryLock(INTERVAL_SHORT)
+      os::timerTicks.sleep(thread::mutex::INTERVAL_LONG);
+
+      thread::mutex::m4.unlock();
+      th4.join();
     }
 
 }
@@ -192,25 +287,32 @@ namespace thread
 
     os::core::RecursiveMutex rm2("rm2");
 
+    os::core::RecursiveMutex rm3("rm3");
+
+    os::core::RecursiveMutex rm4("rm4");
+
 #pragma GCC diagnostic pop
 
     constexpr os::core::timer::ticks_t INTERVAL = 100;
 
-    void
-    f(void);
+    constexpr os::core::timer::ticks_t INTERVAL_SHORT = 100;
+    constexpr os::core::timer::ticks_t INTERVAL_LONG = INTERVAL_SHORT + 50;
 
     void
-    f(void)
+    fLock(void);
+
+    void
+    fLock(void)
     {
 #if defined(DEBUG)
       os::diag::trace.putString(__PRETTY_FUNCTION__);
       os::diag::trace.putNewLine();
 #endif
-      os::core::timer::ticks_t t0 = os::timerTicks.getTicks();
+      os::core::timer::ticks_t t0 = os::timerTicks.getCurrentTicks();
 
       rm1.lock();
 
-      os::core::timer::ticks_t t1 = os::timerTicks.getTicks();
+      os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
 
       rm1.unlock();
 
@@ -222,22 +324,31 @@ namespace thread
     }
 
     void
-    fTry(void);
+    fTryLock(void);
 
     void
-    fTry(void)
+    fTryLock(void)
     {
 #if defined(DEBUG)
       os::diag::trace.putString(__PRETTY_FUNCTION__);
       os::diag::trace.putNewLine();
 #endif
-      os::core::timer::ticks_t t0 = os::timerTicks.getTicks();
+      os::core::timer::ticks_t t0 = os::timerTicks.getCurrentTicks();
+
+      // initially should not lock
+      ts.assertCondition(rm2.tryLock() == false);
+      ts.assertCondition(rm2.tryLock() == false);
+      ts.assertCondition(rm2.tryLock() == false);
 
       while (!rm2.tryLock())
         os::timerTicks.sleep(1);
 
-      os::core::timer::ticks_t t1 = os::timerTicks.getTicks();
+      os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
 
+      // this time it should lock
+      ts.assertCondition(rm2.tryLock() == true);
+
+      rm2.unlock();
       rm2.unlock();
 
       int proc = computeAbsoluteProcent(t0, t1, INTERVAL);
@@ -247,6 +358,65 @@ namespace thread
       ts.assertCondition(proc < 10);
     }
 
+    void
+    fTryForNoTimeout(void);
+
+    void
+    fTryForNoTimeout(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
+#endif
+      os::core::timer::ticks_t t0 = os::timerTicks.getCurrentTicks();
+
+      ts.assertCondition((rm3.tryLock() == false));
+
+      // try for more than INTERVAL_SHORT ticks, should succeed
+      ts.assertCondition((rm3.tryLockFor(INTERVAL_LONG) == true));
+
+      os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
+
+      ts.assertCondition((rm3.tryLock() == true));
+
+      rm3.unlock();
+      rm3.unlock();
+
+      int proc = computeAbsoluteProcent(t0, t1, INTERVAL_SHORT);
+
+      //ts << (t1-t0) << os::std::endl;
+
+      ts.setFunctionNameOrPrefix("tryLockFor()");
+      ts.setPreconditions("no timeout");
+      ts.assertCondition(proc < 10);
+    }
+
+    void
+    fTryForTimeout(void);
+
+    void
+    fTryForTimeout(void)
+    {
+#if defined(DEBUG)
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
+#endif
+      os::core::timer::ticks_t t0 = os::timerTicks.getCurrentTicks();
+
+      ts.assertCondition((rm4.tryLock() == false));
+
+      // try less than INTERVAL_LONG ticks, should not succeed
+      ts.assertCondition((rm4.tryLockFor(INTERVAL_SHORT) == false));
+
+      os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
+      int proc = computeAbsoluteProcent(t0, t1, INTERVAL_SHORT);
+
+      //ts << (t1-t0) << os::std::endl;
+
+      ts.setFunctionNameOrPrefix("tryLockFor()");
+      ts.setPreconditions("with timeout");
+      ts.assertCondition(proc < 10);
+    }
   }
 }
 void
@@ -264,7 +434,7 @@ runTestRecursiveMutex()
 
     {
       os::core::AllocatedStack stack;
-      os::core::Thread th1("tr1", thread::recursivemutex::f, stack);
+      os::core::Thread th1("tr1", thread::recursivemutex::fLock, stack);
 
       // first lock
       thread::recursivemutex::rm1.lock();
@@ -272,15 +442,15 @@ runTestRecursiveMutex()
       th1.start();
 
       os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+        {
+          // second lock
+          thread::recursivemutex::rm1.lock();
 
-      // second lock
-      thread::recursivemutex::rm1.lock();
+          os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
 
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
-
-      // first unlock
-      thread::recursivemutex::rm1.unlock();
-
+          // first unlock
+          thread::recursivemutex::rm1.unlock();
+        }
       os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
 
       // second unlock
@@ -291,7 +461,7 @@ runTestRecursiveMutex()
 
     {
       os::core::AllocatedStack stack;
-      os::core::Thread th2("tr2", thread::recursivemutex::fTry, stack);
+      os::core::Thread th2("tr2", thread::recursivemutex::fTryLock, stack);
 
       // first lock
       thread::recursivemutex::rm2.lock();
@@ -299,15 +469,15 @@ runTestRecursiveMutex()
       th2.start();
 
       os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+        {
+          // second lock
+          thread::recursivemutex::rm2.lock();
 
-      // second lock
-      thread::recursivemutex::rm2.lock();
+          os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
 
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
-
-      // first unlock
-      thread::recursivemutex::rm2.unlock();
-
+          // first unlock
+          thread::recursivemutex::rm2.unlock();
+        }
       os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
 
       // second unlock
@@ -316,6 +486,61 @@ runTestRecursiveMutex()
       th2.join();
     }
 
+    {
+      os::core::AllocatedStack stack;
+      os::core::Thread th3("tr3", thread::recursivemutex::fTryForNoTimeout,
+          stack);
+
+      // first lock
+      thread::recursivemutex::rm3.lock();
+
+      th3.start();
+
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
+        {
+          // second lock
+          thread::recursivemutex::rm3.lock();
+
+          os::timerTicks.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
+
+          // first unlock
+          thread::recursivemutex::rm3.unlock();
+        }
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
+
+      // second unlock
+      thread::recursivemutex::rm3.unlock();
+
+      th3.join();
+    }
+
+    {
+      os::core::AllocatedStack stack;
+      os::core::Thread th4("tr4", thread::recursivemutex::fTryForTimeout,
+          stack);
+
+      // first lock
+      thread::recursivemutex::rm4.lock();
+
+      th4.start();
+
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
+        {
+          // second lock
+          thread::recursivemutex::rm4.lock();
+
+          os::timerTicks.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
+
+          // first unlock
+          thread::recursivemutex::rm4.unlock();
+        }
+      os::timerTicks.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
+
+      // second unlock
+      thread::recursivemutex::rm4.unlock();
+
+      th4.join();
+    }
 }
 
 // ----------------------------------------------------------------------------
