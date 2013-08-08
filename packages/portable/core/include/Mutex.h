@@ -62,7 +62,7 @@ namespace os
           /// \name Types and constants
           /// @{
 
-        /// \brief The size of the internal array.
+          /// \brief The size of the internal array.
           static constexpr int NOTIFY_ARRAY_SIZE = Size_T;
 
           /// \brief Embedded class for storage elements.
@@ -83,6 +83,14 @@ namespace os
             Element(volatile Element& e)
             {
               pThread = e.pThread;
+            }
+
+            inline Element&
+            __attribute__((always_inline))
+            operator=(const Element& e)
+            {
+              pThread = e.pThread;
+              return *this;
             }
           };
 
@@ -149,6 +157,15 @@ namespace os
           /// \retval false             There is no more space.
           bool
           pushBack(Thread* pThread);
+
+          /// \brief Remove the thread from the array.
+          ///
+          /// \par Parameters
+          ///    None.
+          /// \par Return
+          ///   Nothing.
+          void
+          remove(Thread* pThread);
 
           /// \brief Check if the thread is present in the array.
           ///
@@ -290,6 +307,59 @@ namespace os
           ++m_count;
 
           return true;
+        }
+
+      template<int Size_T>
+        void
+        TNotifier<Size_T>::remove(Thread* pThread)
+        {
+
+          timer::count_t count = m_count;
+
+          // Check if there are any elements in the array
+          if (count == 0)
+            {
+              // There are not, nothing to do
+              return;
+            }
+
+          // Try to find the location of the thread in the array
+          // volatile does not matter here, we are ina critical region
+          Element* p = const_cast<Element*>(&m_array[0]);
+
+          int index;
+          for (index = 0; index < count; ++index, ++p)
+            {
+              if (pThread == p->pThread)
+                {
+                  // Got it, index remembers the position
+                  break;
+                }
+            }
+
+          // If we reached the end of the world, the thread is not in,
+          // so nothing to remove
+          if (index == count)
+            return;
+
+          if (count > 1)
+            {
+              // If at least two elements, we might need to move
+              // part of the array
+
+              // The search left the pointer on the element we
+              // want to remove, p = &m_pArray[index];
+
+              for (; index < count - 1; index++, p++)
+                {
+                  // Move remaining elements one step to the left
+                  *p = *(p + 1);
+                }
+            }
+
+          // We removed one element, the count is decremented
+          m_count--;
+
         }
 
       /// \details
