@@ -92,7 +92,7 @@ namespace os
 #endif
 
           {
-            // ----- critical section begin -----------------------------------
+            // ----- Critical section begin -----------------------------------
             CriticalSectionLock cs;
 
             if (m_owningThread == nullptr)
@@ -157,14 +157,14 @@ namespace os
                     // TODO: error, array size exceeded
                   }
               }
-            // ----- critical section end -------------------------------------
+            // ----- Critical section end -------------------------------------
           }
 
         for (;;)
           {
             pThread->suspend();
 
-            // ----- critical section begin -----------------------------------
+            // ----- Critical section begin -----------------------------------
             CriticalSectionLock cs;
 
             if (m_owningThread == nullptr)
@@ -208,7 +208,7 @@ namespace os
                     // TODO: error, array exceeded
                   }
               }
-            // ----- critical section end -------------------------------------
+            // ----- Critical section end -------------------------------------
           }
       }
 
@@ -233,7 +233,7 @@ namespace os
 #endif
 
           {
-            // ----- critical section begin -----------------------------------
+            // ----- Critical section begin -----------------------------------
             CriticalSectionLock cs;
 
             if (m_owningThread == nullptr)
@@ -294,7 +294,7 @@ namespace os
 #endif
               }
 
-            // ----- critical section end -------------------------------------
+            // ----- Critical section end -------------------------------------
           }
 
         return false;
@@ -322,7 +322,7 @@ namespace os
 #endif
 
           {
-            // ----- critical section begin -----------------------------------
+            // ----- Critical section begin -----------------------------------
             CriticalSectionLock cs;
 
             if (m_owningThread != pThread)
@@ -372,7 +372,7 @@ namespace os
             m_notifier.resumeAll();
             m_notifier.clear();
 
-            // ----- critical section end -------------------------------------
+            // ----- Critical section end -------------------------------------
           }
 
 #if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
@@ -397,10 +397,78 @@ namespace os
     template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
       bool
       TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::tryLockFor(
-          timer::ticks_t ticks __attribute__((unused)),
-          TimerBase& timer __attribute__((unused)))
+          timer::ticks_t ticks, TimerBase& timer)
       {
-        // TODO: implement
+        Thread* pThread = os::scheduler.getCurrentThread();
+
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+        os::diag::trace.putString("os::core::TGenericMutex::tryLockFor()");
+        os::diag::trace.putString(" \"");
+        os::diag::trace.putString(getName());
+        os::diag::trace.putString("\" by \"");
+        os::diag::trace.putString(pThread->getName());
+        os::diag::trace.putChar('"');
+        os::diag::trace.putNewLine();
+#endif
+
+        // Remember the time when we entered this function
+        os::core::timer::ticks_t beginTicks = timer.getCurrentTicks();
+
+        for (;;)
+          {
+            if (tryLock())
+              return true;
+
+            os::core::timer::ticks_t nowTicks = timer.getCurrentTicks();
+
+            if ((nowTicks - beginTicks) >= ticks)
+              {
+                // timeout expired, mutex not acquired
+                return false;
+              }
+
+            // check attention
+            if (pThread->isAttentionRequested())
+              {
+                // Return immediately if attention was requested
+                return false;
+              }
+
+              {
+                // ----- Critical section begin -------------------------------
+                CriticalSectionLock cs;
+
+                if (!m_notifier.hasElement(pThread))
+                  {
+                    if (!m_notifier.pushBack(pThread))
+                      {
+#if defined(DEBUG)
+                        os::diag::trace.putString(
+                            "os::core::TGenericMutex::lock()");
+                        os::diag::trace.putString(" \"");
+                        os::diag::trace.putString(getName());
+                        os::diag::trace.putString("\" by \"");
+                        os::diag::trace.putString(pThread->getName());
+                        os::diag::trace.putString("\" size exceeded");
+                        os::diag::trace.putNewLine();
+#endif
+                        // TODO: error, array exceeded
+                      }
+                  }
+                // ----- Critical section end ---------------------------------
+              }
+
+            pThread->suspendWithTimeout(ticks - (nowTicks - beginTicks), timer);
+
+              {
+                // ----- Critical section begin -------------------------------
+                CriticalSectionLock cs;
+
+                m_notifier.remove(pThread);
+                // ----- Critical section end ---------------------------------
+              }
+          }
+
         return false;
       }
 
