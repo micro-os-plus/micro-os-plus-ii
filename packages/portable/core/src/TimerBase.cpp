@@ -14,6 +14,8 @@
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/CriticalSections.h"
 
+#include "portable/core/include/Thread.h"
+
 //#include "portable/core/include/PlatformBase.h"
 #include "portable/core/include/Architecture.h"
 
@@ -23,7 +25,7 @@ namespace os
 {
   namespace core
   {
-    // ------------------------------------------------------------------------
+    // ========================================================================
 
     /// \details
     /// Insert the current thread with the given number of ticks in the
@@ -47,12 +49,12 @@ namespace os
       if (ticks == 0)
         return;
 
-      timer::ticks_t beginTicks = getTicks();
+      timer::ticks_t beginTicks = getCurrentTicks();
 
       if (os::scheduler.isLocked())
         {
           // If the scheduler is locked we can only busy wait for the ticks
-          while ((getTicks() - beginTicks) < ticks)
+          while ((getCurrentTicks() - beginTicks) < ticks)
             {
               os::architecture.resetWatchdog();
             }
@@ -62,66 +64,46 @@ namespace os
 
       Thread* pThread = os::scheduler.getCurrentThread();
 
-      if (pThread->isAttentionRequested())
+      for (;;)
         {
-          // Return immediately if attention was requested
-          return;
-        }
-
-        {
-          // ----- Critical section begin -------------------------------------
-          os::core::scheduler::InterruptsCriticalSection cs;
-
-          int index = find(pThread);
-          if (index >= 0)
+          timer::ticks_t nowTicks = getCurrentTicks();
+          if ((nowTicks - beginTicks) >= ticks)
             {
-              // Normally the entry should not be there, but for just in case
-              remove(index);
-#if defined(DEBUG)
-              os::diag::trace.putString(" snrt sleep() ");
-#endif
+              return;
             }
-
-          insert(ticks, pThread);
-          // ----- Critical section end ---------------------------------------
-        }
-
-      // Wait for the ticks to elapse, possibly with multiple suspend calls
-      while ((getTicks() - beginTicks) < ticks)
-        {
-          pThread->suspend();
 
           if (pThread->isAttentionRequested())
             {
               // Return immediately if attention was requested
               return;
             }
-        }
 
-      return;
+          pThread->suspendWithTimeout(ticks - (nowTicks - beginTicks), *this);
+        }
     }
 
+#if 0
     /// \details
     /// Iterate through the array and return the index in case the
     /// thread is found.
     int
     TimerBase::find(Thread* pThread)
-    {
-      timer::count_t count = m_count;
+      {
+        timer::count_t count = m_count;
 
-      timer::Element* p;
-      p = m_pArray;
+        timer::Element* p;
+        p = m_pArray;
 
-      for (int i = 0; i < count; ++i, ++p)
-        {
-          if (pThread == p->pThread)
-            {
-              return i;
-            }
-        }
+        for (int i = 0; i < count; ++i, ++p)
+          {
+            if (pThread == p->pThread)
+              {
+                return i;
+              }
+          }
 
-      return -1;
-    }
+        return -1;
+      }
 
     /// \details
     /// Move all subsequent elements one step to the left. This is not
@@ -129,23 +111,122 @@ namespace os
     /// but with just a few entries in the array it should be ok.
     void
     TimerBase::remove(int index)
+      {
+        if (index < 0)
+        return;
+
+        timer::count_t count = m_count;
+        if (index >= count)
+          {
+#if defined(DEBUG) && defined(OS_DEBUG_TIMERBASE)
+            os::diag::trace.putString("TimerBase::remove() out of range");
+            os::diag::trace.putNewLine();
+#endif
+            return;
+          }
+
+        if (count > 0)
+          {
+            if (count > 1)
+              {
+                timer::Element* p;
+                p = &m_pArray[index];
+
+                for (; index < count - 1; index++, p++)
+                  {
+                    *p = *(p + 1);
+                  }
+              }
+            m_count--;
+          }
+      }
+
+#else
+
+    /// \details
+    /// Move all subsequent elements one step to the left. This is not
+    /// particularly efficient,
+    /// but with just a few entries in the array it should be ok.
+    void
+    TimerBase::removeFirst(void)
     {
       timer::count_t count = m_count;
+
       if (count > 0)
         {
           if (count > 1)
             {
-              timer::Element* p;
-              p = &m_pArray[index];
+              // If at least two elements are present, we have to move
+              // the array elements
 
-              for (; index < count - 1; index++, p++)
+              timer::Element* p = m_pArray;
+
+              for (int index = 0; index < count - 1; index++, p++)
                 {
+                  // Move remaining elements one step to the left
                   *p = *(p + 1);
                 }
             }
+
+          // We removed one element, the count is decremented
           m_count--;
         }
     }
+
+    /// \details
+    /// Find the position of the thread in the array and remove it
+    /// by moving all following elements one step to the left.
+    void
+    TimerBase::remove(Thread* pThread)
+    {
+      timer::count_t count = m_count;
+
+      // Check if there are any elements in the array
+      if (count == 0)
+        {
+          // There are not, nothing to do
+          return;
+        }
+
+      // Try to find the location of the thread in the array
+      timer::Element* p = m_pArray;
+
+      int index;
+      for (index = 0; index < count; ++index, ++p)
+        {
+          if (pThread == p->pThread)
+            {
+              // Got it, index remembers the position
+              break;
+            }
+        }
+
+      // If we reached the end of the world, the thread is not in,
+      // so nothing to remove
+      if (index == count)
+        return;
+
+      if (count > 1)
+        {
+          // If at least two elements, we might need to move
+          // part of the array
+
+          // The search left the pointer on the element we
+          // want to remove, p = &m_pArray[index];
+
+          for (; index < count - 1; index++, p++)
+            {
+              // Move remaining elements one step to the left
+              *p = *(p + 1);
+            }
+        }
+
+      // We removed one element, the count is decremented
+      m_count--;
+
+    }
+
+#endif
 
     /// \details
     /// Insert a new element in a position so that the ticks used to
@@ -280,9 +361,10 @@ namespace os
                   p->pThread->resumeFromInterrupt();
 
                   // Remove the top element from the array
-                  // MANDATORY, otherwise the routine hangs with
+
+                  // MANDATORY, otherwise this routine hangs with
                   // an infinite loop!
-                  remove(0);
+                  removeFirst();
                 }
               while ((p->ticks == 0) && (m_count > 0));
             }
@@ -293,7 +375,36 @@ namespace os
 #endif // defined(DEBUG) && defined(OS_DEBUG_TIMERBASE_INTERRUPTTICK)
     }
 
-  // --------------------------------------------------------------------------
+    // ========================================================================
+
+    TimeoutGuard::TimeoutGuard(timer::ticks_t ticks, TimerBase& timer)
+        : m_timer(timer)
+    {
+      // ----- Critical section begin -----------------------------------------
+      os::core::scheduler::InterruptsCriticalSection cs;
+
+      Thread* pThread = os::scheduler.getCurrentThread();
+
+      // Normally the entry should not be there, but for just in case
+      timer.remove(pThread);
+
+      timer.insert(ticks, pThread);
+      // ----- Critical section end -------------------------------------------
+    }
+
+    TimeoutGuard::~TimeoutGuard()
+    {
+      // ----- Critical section begin -----------------------------------------
+      os::core::scheduler::InterruptsCriticalSection cs;
+
+      Thread* pThread = os::scheduler.getCurrentThread();
+
+      m_timer.remove(pThread);
+      // ----- Critical section end -------------------------------------------
+    }
+
+  // ==========================================================================
+
   }// namespace core
 } //namespace os
 

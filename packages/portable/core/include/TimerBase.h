@@ -17,12 +17,14 @@
 
 #include "portable/diagnostics/include/Trace.h"
 
-#include "portable/core/include/Thread.h"
+//#include "portable/core/include/Thread.h"
 
 namespace os
 {
   namespace core
   {
+    class Thread;
+
     namespace timer
     {
       /// \name Types and constants
@@ -52,6 +54,7 @@ namespace os
     /// @} end of name Types and constants
 
     }// namespace timer
+
 
     // ========================================================================
 
@@ -105,7 +108,7 @@ namespace os
       ///    None.
       /// \return               An integer with the number of ticks.
       timer::ticks_t
-      getTicks(void) const;
+      getCurrentTicks(void) const;
 
       /// \brief Sleep a number of ticks.
       ///
@@ -128,9 +131,17 @@ namespace os
 
     protected:
 
+      /// \name Friends
+      /// @{
+
+      friend class TimeoutGuard;
+
+      /// @} end of Friends
+
       /// \name Protected member functions
       /// @{
 
+#if 0
       /// \brief Find the index of a thread in the timer array.
       ///
       /// \param [in] pThread   Pointer to the thread.
@@ -146,7 +157,26 @@ namespace os
       ///    Nothing.
       void
       remove(int index);
+#else
 
+      /// \brief Remove the thread from the timer array.
+      ///
+      /// \param [in] pThread   Pointer to the thread.
+      /// \par Returns
+      ///    Nothing.
+      void
+      remove(Thread* pThread);
+
+      /// \brief Remove the first element in the array.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      void
+      removeFirst(void);
+
+#endif
       /// \brief Insert an element associated with a thread.
       ///
       /// \param [in] ticks     The number of ticks to sleep.
@@ -173,12 +203,18 @@ namespace os
 
     private:
 
+      /// \name Private member variables
+      /// @{
+
       /// \brief The current number of ticks counted by the timer.
       ///
       /// \details
       /// A 32 bit unsigned will hold about 49 days at 1000 ticks/second
       /// and then will roll over to 0.
       timer::ticks_t volatile m_ticks;
+
+      /// @} end of Private member variables
+
     };
 
 #pragma GCC diagnostic pop
@@ -220,10 +256,52 @@ namespace os
 
     inline timer::ticks_t
     __attribute__((always_inline))
-    TimerBase::getTicks(void) const
+    TimerBase::getCurrentTicks(void) const
     {
       return m_ticks;
     }
+
+    // ========================================================================
+
+    /// \class TimeoutGuard Stack.h "portable/core/include/TimerBase.h"
+    /// \ingroup core
+    /// \nosubgrouping
+    ///
+    /// \brief Timeout guard.
+    ///
+    /// \details
+    /// Provide a safe timeout facility, using RAII.
+    ///
+    /// Insert a timer event on the constructor and remove it, if still there,
+    /// on the constructor.
+    class TimeoutGuard
+    {
+    public:
+      /// \name Constructors/destructor
+      /// @{
+
+      /// \brief Constructor.
+      ///
+      /// \param [in] ticks   The number of counter ticks.
+      /// \param [in] timer   The timer to use.
+      TimeoutGuard(timer::ticks_t ticks, TimerBase& timer);
+
+      /// \brief Destructor
+      ~TimeoutGuard();
+
+      /// @} end of name Constructors/destructor
+
+    private:
+
+      /// \name Private member variables
+      /// @{
+
+      /// \brief The timer object used in the constructor.
+      TimerBase& m_timer;
+
+      /// @} end of Private member variables
+
+    };
 
   // ==========================================================================
 
