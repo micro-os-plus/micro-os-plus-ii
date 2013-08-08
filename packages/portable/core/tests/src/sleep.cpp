@@ -54,14 +54,14 @@ runTestAccuracy()
 
   os::timerTicks.sleep(1);
 
-  os::core::timer::ticks_t ticksBegin = os::timerTicks.getTicks();
+  os::core::timer::ticks_t ticksBegin = os::timerTicks.getCurrentTicks();
 
   timeval begTime;
   gettimeofday(&begTime, 0);
 
   os::timerTicks.sleep(os::core::scheduler::TICKS_PER_SECOND);
 
-  os::core::timer::ticks_t ticksEnd = os::timerTicks.getTicks();
+  os::core::timer::ticks_t ticksEnd = os::timerTicks.getCurrentTicks();
 
   timeval endTime;
   gettimeofday(&endTime, 0);
@@ -193,7 +193,7 @@ Task::threadMain(void)
 
   os::timerTicks.sleep(10);
 
-  os::core::timer::ticks_t ticksBegin = os::timerTicks.getTicks();
+  os::core::timer::ticks_t ticksBegin = os::timerTicks.getCurrentTicks();
 
   os::core::timer::ticks_t cnt;
   for (cnt = 1; cnt <= REPEAT; cnt++)
@@ -207,7 +207,7 @@ Task::threadMain(void)
         }
     }
 
-  os::core::timer::ticks_t ticksEnd = os::timerTicks.getTicks();
+  os::core::timer::ticks_t ticksEnd = os::timerTicks.getCurrentTicks();
 
   m_deltaTicks = ticksEnd - ticksBegin;
 
