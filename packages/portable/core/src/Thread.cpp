@@ -14,6 +14,8 @@
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/CriticalSections.h"
 
+#include "portable/core/include/TimerBase.h"
+
 //#include "portable/core/include/PlatformBase.h"
 //#include "portable/core/include/Architecture.h"
 
@@ -183,6 +185,20 @@ namespace os
       // from the active list, otherwise loops waiting for a condition
       // will hang
       os::scheduler.yield();
+    }
+
+    void
+    Thread::suspendWithTimeout(timer::ticks_t ticks, TimerBase& timer)
+    {
+#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
+      os::diag::trace.putMemberFunctionWithName();
+#endif
+
+      // ----- Timeout guard begin --------------------------------------------
+      TimeoutGuard tg(ticks, timer);
+
+      suspend();
+      // ----- Timeout guard end ----------------------------------------------
     }
 
     /// \details

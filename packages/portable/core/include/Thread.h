@@ -20,6 +20,7 @@
 #include "portable/core/include/NamedObject.h"
 #include "portable/core/include/Stack.h"
 #include "portable/core/include/Scheduler.h"
+#include "portable/core/include/TimerBase.h"
 
 namespace os
 {
@@ -202,6 +203,15 @@ namespace os
       ///    Nothing.
       void
       suspend(void);
+
+      /// \brief Suspend the thread with timeout.
+      ///
+      /// \param [in] ticks   The number of counter ticks.
+      /// \param [in] timer   The timer to use.
+      /// \par Returns
+      ///    Nothing.
+      void
+      suspendWithTimeout(timer::ticks_t ticks, TimerBase& timer);
 
       /// \brief Resume the thread from an interrupt.
       ///
