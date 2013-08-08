@@ -13,6 +13,8 @@
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
+#include "portable/core/include/XCDL_SchedulerDefines.h"
+
 #include "portable/core/include/TimerBase.h"
 
 #include "portable/core/include/Architecture.h"
