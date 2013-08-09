@@ -22,6 +22,8 @@
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/TimerBase.h"
 
+#include "portable/core/include/Error.h"
+
 namespace os
 {
   namespace core
@@ -297,6 +299,22 @@ namespace os
       trampoline3(threadEntryPoint1_t entryPoint, void* pParameters,
           Thread* pThread);
 
+      /// \brief Get error number.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return       A negative integer or zero.
+      errorNumber_t
+      getError(void);
+
+      /// \brief Set error number.
+      ///
+      /// \param [in] error   A negative integer or zero.
+      /// \par Returns
+      ///    Nothing.
+      void
+      setError(errorNumber_t error);
+
       /// @} end of Public member functions
 
     private:
@@ -363,6 +381,9 @@ namespace os
 
       /// \brief A bitmask detailing the resume condition.
       resumeDetails_t m_resumeDetails;
+
+      /// \brief A negative number or zero.
+      errorNumber_t m_error;
 
       /// \brief The ID used by the scheduler to identify the thread.
       ///
@@ -507,9 +528,21 @@ namespace os
       return m_isAttentionRequested;
     }
 
-  // ==========================================================================
+    inline errorNumber_t
+    __attribute__((always_inline))
+    Thread::getError(void)
+    {
+      return m_error;
+    }
 
-  // ========================================================================
+    inline void
+    __attribute__((always_inline))
+    Thread::setError(errorNumber_t error)
+    {
+      m_error = error;
+    }
+
+  // ==========================================================================
 
   }// namespace core
 } // namespace os
