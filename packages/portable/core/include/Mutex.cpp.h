@@ -13,6 +13,7 @@
 #include "portable/core/include/Mutex.h"
 #include "portable/core/include/Thread.h"
 #include "portable/core/include/Scheduler.h"
+#include "portable/core/include/Error.h"
 
 //#define OS_DEBUG_MUTEX          (1)
 
@@ -81,6 +82,8 @@ namespace os
       {
         Thread* pThread = os::scheduler.getCurrentThread();
 
+        pThread->setError(Error::UNKNOWN);
+
 #if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
         os::diag::trace.putString("os::core::TGenericMutex::lock()");
         os::diag::trace.putString(" \"");
@@ -90,6 +93,15 @@ namespace os
         os::diag::trace.putChar('"');
         os::diag::trace.putNewLine();
 #endif
+
+        // check attention
+        if (pThread->isAttentionRequested())
+          {
+            // Return immediately if attention was requested
+            pThread->setError(Error::ATTENTION_REQUESTED);
+
+            return;
+          }
 
           {
             // ----- Critical section begin -----------------------------------
@@ -114,6 +126,9 @@ namespace os
                 os::diag::trace.putChar('"');
                 os::diag::trace.putNewLine();
 #endif
+
+                pThread->setError(Error::NONE);
+
                 return;
               }
             else if (m_owningThread == pThread)
@@ -123,6 +138,8 @@ namespace os
                 if (m_policy.isRecursiveLockPossible())
                   {
                     m_policy.recursiveLock();
+
+                    pThread->setError(Error::NONE);
                   }
                 else
                   {
@@ -136,12 +153,14 @@ namespace os
                     os::diag::trace.putString("\" too many embedded locks");
                     os::diag::trace.putNewLine();
 #endif
-                    // Error,
+                    pThread->setError(Error::RECURSION_DEPTH_EXCEEDED);
                   }
+
                 return;
               }
             else
               {
+                // try to add waiting thread to the list
                 if (!m_notifier.pushBack(pThread))
                   {
 #if defined(DEBUG)
@@ -154,22 +173,38 @@ namespace os
                     os::diag::trace.putString("\" size exceeded");
                     os::diag::trace.putNewLine();
 #endif
-                    // TODO: error, array size exceeded
+                    pThread->setError(Error::INTERNAL_SIZE_EXCEEDED);
+
+                    return;
                   }
               }
             // ----- Critical section end -------------------------------------
           }
 
+        // The mutex is busy, we have to wait for another thread to
+        // release it; the current thread is in the notification list,
+        // we can suspend
+
         for (;;)
           {
             pThread->suspend();
+            // The resume details are not used here
+
+            // check attention
+            if (pThread->isAttentionRequested())
+              {
+                // Return immediately if attention was requested
+                pThread->setError(Error::ATTENTION_REQUESTED);
+
+                return;
+              }
 
             // ----- Critical section begin -----------------------------------
             CriticalSectionLock cs;
 
             if (m_owningThread == nullptr)
               {
-                // The mutex is not owned, get it
+                // The mutex is free, acquire it
                 m_owningThread = pThread;
 
                 m_policy.initialise();
@@ -186,10 +221,11 @@ namespace os
                 os::diag::trace.putChar('"');
                 os::diag::trace.putNewLine();
 #endif
+
+                pThread->setError(Error::NONE);
+
                 return;
               }
-
-            // TODO: check attention requests
 
             if (!m_notifier.hasElement(pThread))
               {
@@ -205,11 +241,13 @@ namespace os
                     os::diag::trace.putString("\" size exceeded");
                     os::diag::trace.putNewLine();
 #endif
-                    // TODO: error, array exceeded
+                    pThread->setError(Error::INTERNAL_SIZE_EXCEEDED);
+
+                    return;
                   }
               }
             // ----- Critical section end -------------------------------------
-          }
+          } // loop
       }
 
     /// \details
@@ -222,6 +260,8 @@ namespace os
       {
         Thread* pThread = os::scheduler.getCurrentThread();
 
+        pThread->setError(Error::UNKNOWN);
+
 #if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
         os::diag::trace.putString("os::core::TGenericMutex::tryLock()");
         os::diag::trace.putString(" \"");
@@ -231,6 +271,15 @@ namespace os
         os::diag::trace.putChar('"');
         os::diag::trace.putNewLine();
 #endif
+
+        // check attention
+        if (pThread->isAttentionRequested())
+          {
+            // Return immediately if attention was requested
+            pThread->setError(Error::ATTENTION_REQUESTED);
+
+            return false;
+          }
 
           {
             // ----- Critical section begin -----------------------------------
@@ -255,6 +304,8 @@ namespace os
                 os::diag::trace.putChar('"');
                 os::diag::trace.putNewLine();
 #endif
+                pThread->setError(Error::NONE);
+
                 return true;
               }
             else if (m_owningThread == pThread)
@@ -263,6 +314,9 @@ namespace os
                 if (m_policy.isRecursiveLockPossible())
                   {
                     m_policy.recursiveLock();
+
+                    pThread->setError(Error::NONE);
+
                     return true;
                   }
                 else
@@ -277,6 +331,8 @@ namespace os
                     os::diag::trace.putString("\" too many embedded locks");
                     os::diag::trace.putNewLine();
 #endif
+                    pThread->setError(Error::RECURSION_DEPTH_EXCEEDED);
+
                   }
               }
             else
@@ -292,6 +348,9 @@ namespace os
                 os::diag::trace.putString("\"");
                 os::diag::trace.putNewLine();
 #endif
+
+                pThread->setError(Error::BUSY);
+
               }
 
             // ----- Critical section end -------------------------------------
@@ -311,6 +370,9 @@ namespace os
       TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::unlock(void) noexcept
       {
         Thread* pThread = os::scheduler.getCurrentThread();
+
+        pThread->setError(Error::UNKNOWN);
+
 #if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
         os::diag::trace.putString("os::core::TGenericMutex::unlock()");
         os::diag::trace.putString(" \"");
@@ -336,7 +398,8 @@ namespace os
                 os::diag::trace.putString("\" not owner");
                 os::diag::trace.putNewLine();
 #endif
-                // Error, not owner
+                pThread->setError(Error::NOT_OWNER);
+
                 return;
               }
 
@@ -347,6 +410,8 @@ namespace os
                 if (!m_policy.isRecursiveUnlockComplete())
                   {
                     // More levels of ownership to be released
+                    pThread->setError(Error::NONE);
+
                     return;
                   }
               }
@@ -361,7 +426,8 @@ namespace os
                 os::diag::trace.putString("\" out of sync");
                 os::diag::trace.putNewLine();
 #endif
-                // Error, counter out of sync
+                pThread->setError(Error::OUT_OF_SYNC);
+
                 return;
               }
 
@@ -387,6 +453,8 @@ namespace os
 
         // Finally give the next thread waiting for the mutex a chance to run.
         os::scheduler.yield();
+
+        pThread->setError(Error::NONE);
       }
 
     /// \details
@@ -400,6 +468,8 @@ namespace os
           timer::ticks_t ticks, TimerBase& timer)
       {
         Thread* pThread = os::scheduler.getCurrentThread();
+
+        pThread->setError(Error::UNKNOWN);
 
 #if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
         os::diag::trace.putString("os::core::TGenericMutex::tryLockFor()");
@@ -417,13 +487,19 @@ namespace os
         for (;;)
           {
             if (tryLock())
-              return true;
+              {
+                // Got it!
 
+                // Error already set by tryLock() to NONE
+                return true;
+              }
             os::core::timer::ticks_t nowTicks = timer.getCurrentTicks();
 
             if ((nowTicks - beginTicks) >= ticks)
               {
                 // timeout expired, mutex not acquired
+                pThread->setError(Error::TIMEOUT);
+
                 return false;
               }
 
@@ -431,6 +507,8 @@ namespace os
             if (pThread->isAttentionRequested())
               {
                 // Return immediately if attention was requested
+                pThread->setError(Error::ATTENTION_REQUESTED);
+
                 return false;
               }
 
@@ -452,7 +530,9 @@ namespace os
                         os::diag::trace.putString("\" size exceeded");
                         os::diag::trace.putNewLine();
 #endif
-                        // TODO: error, array exceeded
+                        pThread->setError(Error::INTERNAL_SIZE_EXCEEDED);
+
+                        return false;
                       }
                   }
                 // ----- Critical section end ---------------------------------
@@ -467,9 +547,7 @@ namespace os
                 m_notifier.remove(pThread);
                 // ----- Critical section end ---------------------------------
               }
-          }
-
-        return false;
+          } // loop
       }
 
   // ==========================================================================
