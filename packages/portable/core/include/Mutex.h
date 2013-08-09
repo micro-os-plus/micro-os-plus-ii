@@ -25,7 +25,7 @@
 //#include "portable/core/include/Architecture.h"
 
 #include "portable/core/include/NamedObject.h"
-//#include "portable/core/include/Stack.h"
+#include "portable/core/include/Thread.h"
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/TimerBase.h"
 #include "portable/core/include/TimerTicks.h"
@@ -63,7 +63,7 @@ namespace os
           /// @{
 
           /// \brief The size of the internal array.
-          static constexpr int NOTIFY_ARRAY_SIZE = Size_T;
+          static constexpr int NOTIFY_ARRAY_SIZE = (Size_T > 0) ? Size_T : 1;
 
           /// \brief Embedded class for storage elements.
           class Element
@@ -399,14 +399,15 @@ namespace os
 #if 1
           for (Element element : *this)
             {
-              element.pThread->resume();
+              element.pThread->resume(
+                  ResumeDetails::REGULAR | ResumeDetails::MUTEX);
             }
 
 #else
           for (count_t i = 0; i < m_count; ++i)
             {
               // no context switches will happen inside critical section
-              m_array[i].pThread->resume();
+              m_array[i].pThread->resume(ResumeDetails::REGULAR | ResumeDetails::MUTEX);
             }
 #endif
         }

@@ -28,6 +28,20 @@ namespace os
   {
     // ========================================================================
 
+    typedef unsigned int resumeDetails_t;
+
+    class ResumeDetails
+    {
+    public:
+      static constexpr resumeDetails_t REGULAR = (1 << 0);
+      static constexpr resumeDetails_t TIMER = (1 << 1);
+      static constexpr resumeDetails_t ATTENTION = (1 << 2);
+      // Even more details, in addition to REGULAR
+      static constexpr resumeDetails_t MUTEX = (1 << 8);
+    };
+
+    // ========================================================================
+
 #pragma GCC diagnostic push
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wpadded"
@@ -199,18 +213,16 @@ namespace os
       ///
       /// \par Parameters
       ///    None.
-      /// \par Returns
-      ///    Nothing.
-      void
+      /// \return The resume detail flags.
+      resumeDetails_t
       suspend(void);
 
       /// \brief Suspend the thread with timeout.
       ///
       /// \param [in] ticks   The number of counter ticks.
       /// \param [in] timer   The timer to use.
-      /// \par Returns
-      ///    Nothing.
-      void
+      /// \return The resume detail flags.
+      resumeDetails_t
       suspendWithTimeout(timer::ticks_t ticks, TimerBase& timer);
 
       /// \brief Resume the thread from an interrupt.
@@ -220,7 +232,7 @@ namespace os
       /// \par Returns
       ///    Nothing.
       void
-      resumeFromInterrupt(void);
+      resumeFromInterrupt(resumeDetails_t detail = ResumeDetails::REGULAR);
 
       /// \brief Resume the thread.
       ///
@@ -229,13 +241,14 @@ namespace os
       /// \par Returns
       ///    Nothing.
       void
-      resume(void);
+      resume(resumeDetails_t detail = ResumeDetails::REGULAR);
 
       /// \brief Check if the thread is suspended.
       ///
       /// \par Parameters
       ///    None.
-      /// \return True if the thread is suspended.
+      /// \retval true          The thread is suspended.
+      /// \retval false         Otherwise.
       bool
       isSuspended(void) const;
 
@@ -243,7 +256,8 @@ namespace os
       ///
       /// \par Parameters
       ///    None.
-      /// \return True if the thread is waiting for attention.
+      /// \retval true          The thread is waiting for attention.
+      /// \retval false         Otherwise.
       bool
       isAttentionRequested(void) const;
 
@@ -346,6 +360,9 @@ namespace os
 
       /// \brief The initial priority given via the constructor.
       priority_t volatile m_initialPriority;
+
+      /// \brief A bitmask detailing the resume condition.
+      resumeDetails_t m_resumeDetails;
 
       /// \brief The ID used by the scheduler to identify the thread.
       ///

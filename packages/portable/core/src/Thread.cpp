@@ -91,6 +91,8 @@ namespace os
       m_isSuspended = true;
       m_isAttentionRequested = false;
 
+      m_resumeDetails = 0;
+
       // Normally not used directly, added for completeness
       m_entryPointAddress = entryPoint;
       m_entryPointParameter = pParameters;
@@ -173,7 +175,7 @@ namespace os
 
     /// \details
     /// Suspend the thread and remove it from the ready list.
-    void
+    resumeDetails_t
     Thread::suspend(void)
     {
 #if defined(DEBUG) && defined(OS_DEBUG_THREAD)
@@ -181,13 +183,18 @@ namespace os
 #endif
       m_isSuspended = true;
 
+      // Clear the detail flags
+      m_resumeDetails = 0;
+
       // suspend should always yield, to remove the current thread
       // from the active list, otherwise loops waiting for a condition
       // will hang
       os::scheduler.yield();
+
+      return m_resumeDetails;
     }
 
-    void
+    resumeDetails_t
     Thread::suspendWithTimeout(timer::ticks_t ticks, TimerBase& timer)
     {
 #if defined(DEBUG) && defined(OS_DEBUG_THREAD)
@@ -197,30 +204,34 @@ namespace os
       // ----- Timeout guard begin --------------------------------------------
       TimeoutGuard tg(ticks, timer);
 
-      suspend();
+      return suspend();
       // ----- Timeout guard end ----------------------------------------------
     }
 
     /// \details
     /// Resume the thread by inserting it into the ready list.
     void
-    Thread::resumeFromInterrupt(void)
+    Thread::resumeFromInterrupt(resumeDetails_t detail)
     {
 #if defined(DEBUG) && defined(OS_DEBUG_THREAD)
       os::diag::trace.putMemberFunctionWithName();
 #endif
       m_isSuspended = false;
+
+      // Add the detail flags
+      m_resumeDetails |= detail;
+
       os::scheduler.resumeThreadFromInterrupt(this);
     }
 
     /// \details
     /// Resume the thread by inserting it into the ready list.
     void
-    Thread::resume(void)
+    Thread::resume(resumeDetails_t detail)
     {
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
-      resumeFromInterrupt();
+      resumeFromInterrupt(detail);
       // ----- Critical section end -------------------------------------------
     }
 

@@ -358,7 +358,7 @@ namespace os
                   os::diag::trace.putNewLine();
 #endif // defined(DEBUG) && defined(OS_DEBUG_TIMERBASE_INTERRUPTTICK)
                   // sleep period completed, resume the thread
-                  p->pThread->resumeFromInterrupt();
+                  p->pThread->resumeFromInterrupt(ResumeDetails::TIMER);
 
                   // Remove the top element from the array
 
