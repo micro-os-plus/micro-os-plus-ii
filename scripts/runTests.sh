@@ -13,7 +13,7 @@ DEST=build
 declare -a testNamesDefault=( 'trace' )
 testNamesDefault=("${testNamesDefault[@]}" 'fpos' 'ios_base' 'basic_ios' 'streambuf' 'ostream' 'ostreamconv' )
 testNamesDefault=("${testNamesDefault[@]}" 'minimal' )
-testNamesDefault=("${testNamesDefault[@]}" 'threads' 'yields' 'sleep' )
+testNamesDefault=("${testNamesDefault[@]}" 'threads' 'yields' 'sleep' 'mutex' )
 
 # empty array
 declare -a testNames=(  )
