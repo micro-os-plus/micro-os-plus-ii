@@ -79,6 +79,13 @@ namespace os
       constexpr threadPriority_t DEFAULT_PRIORITY = ((MAX_PRIORITY
           - MIN_PRIORITY) / 2 + 1);
 
+      /// \brief Count of threads.
+      typedef int threadCount_t;
+
+      /// \brief Constant with the maximum number of user threads.
+      constexpr threadCount_t MAX_USER_THREADS =
+          OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS;
+
     }
 
     // ========================================================================
@@ -258,7 +265,8 @@ namespace os
     }
 
     inline void
-    FakeScheduler::resumeThreadFromInterrupt(Thread* pThread __attribute__((unused)))
+    FakeScheduler::resumeThreadFromInterrupt(
+        Thread* pThread __attribute__((unused)))
     {
 
     }
@@ -272,7 +280,7 @@ namespace os
     // ========================================================================
 
     // Make this the default scheduler
-    using Scheduler = os::core::FakeScheduler ;
+    using Scheduler = os::core::FakeScheduler;
 
   } // namespace core
 } // namespace os
