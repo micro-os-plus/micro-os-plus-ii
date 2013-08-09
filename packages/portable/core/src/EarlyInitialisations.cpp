@@ -19,6 +19,8 @@
 #include "portable/core/include/IdleThread.h"
 #include "portable/core/include/TimerTicks.h"
 
+#include "portable/core/include/Error.h"
+
 namespace os
 {
   namespace core
@@ -293,6 +295,9 @@ namespace os
 
   /// \brief The timer counting scheduler ticks.
   os::core::TimerTicks timerTicks;
+
+  /// \brief A redirection to the current thread error code.
+  os::core::Error error;
 
 #pragma GCC diagnostic pop
 
