@@ -218,7 +218,7 @@ namespace os
 #endif
       m_isSuspended = false;
 
-      // Add the detail flags
+      // Add the detail flags. Be sure it is atomic.
       m_resumeDetails |= detail;
 
       os::scheduler.resumeThreadFromInterrupt(this);
@@ -231,6 +231,7 @@ namespace os
     {
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
+
       resumeFromInterrupt(detail);
       // ----- Critical section end -------------------------------------------
     }
