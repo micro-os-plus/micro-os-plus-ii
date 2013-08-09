@@ -8,7 +8,9 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#include "portable/core/include/Thread.h"
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
+#include "portable/core/include/Error.h"
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/Thread.h"
 
@@ -42,10 +44,11 @@ namespace os
     bool
     Error::operator!=(errorNumber_t error)
     {
-      return (os::scheduler.getCurrentThread()->getError() == error);
+      return (os::scheduler.getCurrentThread()->getError() != error);
     }
 
   // ------------------------------------------------------------------------
   }// namespace core
 } //namespace os
 
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)

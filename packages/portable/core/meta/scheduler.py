@@ -18,6 +18,7 @@ Component(
          'TimerBase.cpp',
          'TimerTicks.cpp',
          'Mutex.cpp',
+         'Error.cpp',
      ],
 
      headerDefinition='OS_INCLUDE_PORTABLE_CORE_SCHEDULER',
@@ -35,7 +36,7 @@ Component(
              headerDefinition='OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS',
              
              valueType='int',
-             defaultValue='0',                    
+             defaultValue='0',
          ),
 
          Option(
@@ -49,7 +50,7 @@ Component(
              headerDefinition='OS_INTEGER_CORE_SCHEDULER_SYSTEMTHREADS',
              
              valueType='int',
-             defaultValue='2',                    
+             defaultValue='2',
          ),
 
          Option(
@@ -63,7 +64,7 @@ Component(
              headerDefinition='OS_INTEGER_CORE_SCHEDULER_TIMERTICKSSIZE',
              
              valueType='int',
-             defaultValue='valueOf("OS_INTEGER_CORE_SCHEDULER_SYSTEMTHREADS")+valueOf("OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS")',                    
+             defaultValue='valueOf("OS_INTEGER_CORE_SCHEDULER_SYSTEMTHREADS")+valueOf("OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS")',
          ),
 
          Option(
@@ -77,7 +78,7 @@ Component(
              headerDefinition='OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND',
              
              valueType='int',
-             defaultValue='1000',                    
+             defaultValue='1000',
          ),
 
          Component(
@@ -101,7 +102,7 @@ Component(
                      headerDefinition='OS_STRING_CORE_SCHEDULER_CUSTOM_HEADER',
                      
                      valueType='string',
-                     defaultValue='must be set',                    
+                     defaultValue='must be set',
                  ),
                        
              ],

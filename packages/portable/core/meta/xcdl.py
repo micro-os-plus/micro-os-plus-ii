@@ -10,7 +10,6 @@ Package(
     
     sourceFiles=[
         'PlatformBase.cpp',
-        'Error.cpp',
     ],
         
     includeFiles=[
