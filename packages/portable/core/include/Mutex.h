@@ -793,13 +793,14 @@ namespace os
     /// A thread that owns a recursive TGenericMutex may acquire
     /// additional levels of ownership by calling lock() or tryLock()
     /// on that object. It is unspecified how many levels of ownership
-    /// may be acquired by a single thread. A thread shall call unlock()
+    /// may be acquired by a single thread. However this limit is specified
+    /// in the Policy_T implementation. A thread shall call unlock()
     /// once for each level of ownership acquired by calls to lock()
     /// and tryLock(). Only when all levels of ownership have been
     /// released may ownership be acquired by another thread.
     ///
     /// The behaviour of a program is undefined if:
-    /// - it destroys a TRecursiveMutex object owned by any thread or
+    /// - it destroys a TRecursiveMutex object owned/locked by any thread or
     /// - a thread terminates while owning a TRecursiveMutex object.
     template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
       class TGenericMutex : public NamedObject
@@ -852,32 +853,67 @@ namespace os
         /// @{
 
         /// \brief Lock the mutex.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Return
+        ///   Nothing.
+        /// \par Errors
+        ///     - SUCCEEDED - the mutex was acquired.
+        ///     - CANCELLED - the operation was cancelled due
+        ///                   to an attention request.
+        ///     - RECURSION_DEPTH_EXCEEDED - too many recursive calls.
+        ///     - INTERNAL_SIZE_EXCEEDED - the size of the array to store
+        ///                                threads to notify was exceeded.
         void
         lock(void);
 
-        /// \brief Unlock the mutex.
-        void
-        unlock(void) noexcept;
-
-        /// \brief Try to lock the mutex immediately.
+        /// \brief Try to lock the mutex and return immediately.
         ///
         /// \par Parameters
         ///    None.
         /// \retval true        If the ownership of the mutex was
         ///                     obtained for the calling thread.
         /// \retval false       Otherwise.
+        /// \par Errors
+        ///     - SUCCEEDED - the mutex was acquired.
+        ///     - BUSY - the mutex is owned by another thread.
+        ///     - CANCELLED - the operation was cancelled due
+        ///                   to an attention request.
+        ///     - RECURSION_DEPTH_EXCEEDED - too many recursive calls.
         bool
         tryLock(void) noexcept;
 
-        /// \brief Try to lock the mutex in a given period of time.
+        /// \brief Try to lock the mutex, blocking for a period of time.
         ///
         /// \param [in] ticks   The number of counter ticks.
-        /// \param [in] timer   The timer to use.
+        /// \param [in] timer   The timer to use (default the ticks timer).
         /// \retval true        If the ownership of the mutex was
         ///                     obtained for the calling thread.
         /// \retval false       Otherwise.
+        /// \par Errors
+        ///     - SUCCEEDED - the mutex was acquired.
+        ///     - TIMEOUT - the mutex could not be acquired in the given period.
+        ///     - CANCELLED - the operation was cancelled due
+        ///                   to an attention request.
+        ///     - RECURSION_DEPTH_EXCEEDED - too many recursive calls.
+        ///     - INTERNAL_SIZE_EXCEEDED - the size of the array to store
+        ///                                threads to notify was exceeded.
         bool
         tryLockFor(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
+
+        /// \brief Unlock the mutex.
+        ///
+        /// \par Parameters
+        ///    None.
+        /// \par Return
+        ///   Nothing.
+        /// \par Errors
+        ///     - SUCCEEDED - the mutex was acquired.
+        ///     - NOT_OWNER - the mutex is now owned by the current thread.
+        ///     - OUT_OF_SYNC - validity recursion checks failed.
+        void
+        unlock(void) noexcept;
 
         /// @} end of Public member functions
 
@@ -889,7 +925,8 @@ namespace os
         /// \brief Pointer to the owner of the mutex or nullptr.
         Thread* volatile m_owningThread = nullptr;
 
-        /// \brief The object used to keep track of the threads.
+        /// \brief The object used to keep track of the threads waiting to
+        /// acquire the mutex, in the call order.
         Notifier m_notifier;
 
         /// \brief Specific recursive/non-recursive policy.

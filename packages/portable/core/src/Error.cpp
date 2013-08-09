@@ -23,7 +23,7 @@ namespace os
     void
     Error::clear(void)
     {
-      os::scheduler.getCurrentThread()->setError(NONE);
+      os::scheduler.getCurrentThread()->setError(SUCCEEDED);
     }
 
     Error&

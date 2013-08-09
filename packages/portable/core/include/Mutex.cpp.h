@@ -75,7 +75,15 @@ namespace os
 
     /// \details
     /// If the mutex is free, acquire it. Otherwise suspend
-    /// until notified by another task at unlock().
+    /// until the thread that owns the mutex calls unlock(),
+    /// which will resume all waiting threads.
+    ///
+    /// For a non-recursive mutex, the second lock() from the same thread
+    /// will fail with RECURSION_DEPTH_EXCEEDED.
+    ///
+    /// A recursive mutex allows multiple lock() calls from the same thread,
+    /// but after a certain limit (currently MAX_INT) will also fail with
+    /// RECURSION_DEPTH_EXCEEDED.
     template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
       void
       TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::lock(void)
@@ -98,7 +106,7 @@ namespace os
         if (pThread->isAttentionRequested())
           {
             // Return immediately if attention was requested
-            pThread->setError(Error::ATTENTION_REQUESTED);
+            pThread->setError(Error::CANCELLED);
 
             return;
           }
@@ -127,7 +135,7 @@ namespace os
                 os::diag::trace.putNewLine();
 #endif
 
-                pThread->setError(Error::NONE);
+                pThread->setError(Error::SUCCEEDED);
 
                 return;
               }
@@ -139,7 +147,7 @@ namespace os
                   {
                     m_policy.recursiveLock();
 
-                    pThread->setError(Error::NONE);
+                    pThread->setError(Error::SUCCEEDED);
                   }
                 else
                   {
@@ -194,7 +202,7 @@ namespace os
             if (pThread->isAttentionRequested())
               {
                 // Return immediately if attention was requested
-                pThread->setError(Error::ATTENTION_REQUESTED);
+                pThread->setError(Error::CANCELLED);
 
                 return;
               }
@@ -222,7 +230,7 @@ namespace os
                 os::diag::trace.putNewLine();
 #endif
 
-                pThread->setError(Error::NONE);
+                pThread->setError(Error::SUCCEEDED);
 
                 return;
               }
@@ -253,7 +261,8 @@ namespace os
     /// \details
     /// Attempt to obtain ownership of the mutex for the calling thread
     /// without blocking. If ownership is not obtained, there is no
-    /// effect and tryLock() immediately returns.
+    /// effect and tryLock() returns with BUSY. One way or another,
+    /// it always returns immediately.
     template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
       bool
       TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::tryLock(void) noexcept
@@ -276,7 +285,7 @@ namespace os
         if (pThread->isAttentionRequested())
           {
             // Return immediately if attention was requested
-            pThread->setError(Error::ATTENTION_REQUESTED);
+            pThread->setError(Error::CANCELLED);
 
             return false;
           }
@@ -304,7 +313,7 @@ namespace os
                 os::diag::trace.putChar('"');
                 os::diag::trace.putNewLine();
 #endif
-                pThread->setError(Error::NONE);
+                pThread->setError(Error::SUCCEEDED);
 
                 return true;
               }
@@ -315,7 +324,7 @@ namespace os
                   {
                     m_policy.recursiveLock();
 
-                    pThread->setError(Error::NONE);
+                    pThread->setError(Error::SUCCEEDED);
 
                     return true;
                   }
@@ -357,6 +366,108 @@ namespace os
           }
 
         return false;
+      }
+    /// \details
+    /// Attempt to obtain ownership of the mutex for the calling thread.
+    /// If the mutex is free, acquire it and return true immediately.
+    /// Otherwise block for
+    /// a limited period of time. If during this period the mutex is
+    /// freed, acquire it and return true. Otherwise return false.
+    ///
+    /// The period of time is always given in ticks specific to the
+    /// timer used (for example the ticks timer counts scheduler ticks,
+    /// the RTC timer counts seconds).
+    template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
+      bool
+      TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::tryLockFor(
+          timer::ticks_t ticks, TimerBase& timer)
+      {
+        Thread* pThread = os::scheduler.getCurrentThread();
+
+        pThread->setError(Error::UNKNOWN);
+
+#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
+        os::diag::trace.putString("os::core::TGenericMutex::tryLockFor()");
+        os::diag::trace.putString(" \"");
+        os::diag::trace.putString(getName());
+        os::diag::trace.putString("\" by \"");
+        os::diag::trace.putString(pThread->getName());
+        os::diag::trace.putChar('"');
+        os::diag::trace.putNewLine();
+#endif
+
+        // Remember the time when we entered this function
+        os::core::timer::ticks_t beginTicks = timer.getCurrentTicks();
+
+        for (;;)
+          {
+            if (tryLock())
+              {
+                // Got it!
+
+                // Error already set by tryLock() to SUCCEEDED
+                return true;
+              }
+            if (pThread->getError() != Error::BUSY)
+              {
+                return false;
+              }
+            os::core::timer::ticks_t nowTicks = timer.getCurrentTicks();
+
+            if ((nowTicks - beginTicks) >= ticks)
+              {
+                // timeout expired, mutex not acquired
+                pThread->setError(Error::TIMEOUT);
+
+                return false;
+              }
+
+            // check attention
+            if (pThread->isAttentionRequested())
+              {
+                // Return immediately if attention was requested
+                pThread->setError(Error::CANCELLED);
+
+                return false;
+              }
+
+              {
+                // ----- Critical section begin -------------------------------
+                CriticalSectionLock cs;
+
+                if (!m_notifier.hasElement(pThread))
+                  {
+                    if (!m_notifier.pushBack(pThread))
+                      {
+#if defined(DEBUG)
+                        os::diag::trace.putString(
+                            "os::core::TGenericMutex::lock()");
+                        os::diag::trace.putString(" \"");
+                        os::diag::trace.putString(getName());
+                        os::diag::trace.putString("\" by \"");
+                        os::diag::trace.putString(pThread->getName());
+                        os::diag::trace.putString("\" size exceeded");
+                        os::diag::trace.putNewLine();
+#endif
+                        pThread->setError(Error::INTERNAL_SIZE_EXCEEDED);
+
+                        return false;
+                      }
+                  }
+                // ----- Critical section end ---------------------------------
+              }
+
+            pThread->suspendWithTimeout(ticks - (nowTicks - beginTicks), timer);
+            // the resume details are not used here
+
+              {
+                // ----- Critical section begin -------------------------------
+                CriticalSectionLock cs;
+
+                m_notifier.remove(pThread);
+                // ----- Critical section end ---------------------------------
+              }
+          } // loop
       }
 
     /// \details
@@ -410,7 +521,7 @@ namespace os
                 if (!m_policy.isRecursiveUnlockComplete())
                   {
                     // More levels of ownership to be released
-                    pThread->setError(Error::NONE);
+                    pThread->setError(Error::SUCCEEDED);
 
                     return;
                   }
@@ -454,100 +565,7 @@ namespace os
         // Finally give the next thread waiting for the mutex a chance to run.
         os::scheduler.yield();
 
-        pThread->setError(Error::NONE);
-      }
-
-    /// \details
-    /// Attempt to obtain ownership of the mutex for the calling thread.
-    /// If the mutex is free, return immediately. Otherwise block for
-    /// a limited period of time. If during this period the mutex is
-    /// freed, acquire it and return true. Otherwise return false.
-    template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
-      bool
-      TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::tryLockFor(
-          timer::ticks_t ticks, TimerBase& timer)
-      {
-        Thread* pThread = os::scheduler.getCurrentThread();
-
-        pThread->setError(Error::UNKNOWN);
-
-#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
-        os::diag::trace.putString("os::core::TGenericMutex::tryLockFor()");
-        os::diag::trace.putString(" \"");
-        os::diag::trace.putString(getName());
-        os::diag::trace.putString("\" by \"");
-        os::diag::trace.putString(pThread->getName());
-        os::diag::trace.putChar('"');
-        os::diag::trace.putNewLine();
-#endif
-
-        // Remember the time when we entered this function
-        os::core::timer::ticks_t beginTicks = timer.getCurrentTicks();
-
-        for (;;)
-          {
-            if (tryLock())
-              {
-                // Got it!
-
-                // Error already set by tryLock() to NONE
-                return true;
-              }
-            os::core::timer::ticks_t nowTicks = timer.getCurrentTicks();
-
-            if ((nowTicks - beginTicks) >= ticks)
-              {
-                // timeout expired, mutex not acquired
-                pThread->setError(Error::TIMEOUT);
-
-                return false;
-              }
-
-            // check attention
-            if (pThread->isAttentionRequested())
-              {
-                // Return immediately if attention was requested
-                pThread->setError(Error::ATTENTION_REQUESTED);
-
-                return false;
-              }
-
-              {
-                // ----- Critical section begin -------------------------------
-                CriticalSectionLock cs;
-
-                if (!m_notifier.hasElement(pThread))
-                  {
-                    if (!m_notifier.pushBack(pThread))
-                      {
-#if defined(DEBUG)
-                        os::diag::trace.putString(
-                            "os::core::TGenericMutex::lock()");
-                        os::diag::trace.putString(" \"");
-                        os::diag::trace.putString(getName());
-                        os::diag::trace.putString("\" by \"");
-                        os::diag::trace.putString(pThread->getName());
-                        os::diag::trace.putString("\" size exceeded");
-                        os::diag::trace.putNewLine();
-#endif
-                        pThread->setError(Error::INTERNAL_SIZE_EXCEEDED);
-
-                        return false;
-                      }
-                  }
-                // ----- Critical section end ---------------------------------
-              }
-
-            pThread->suspendWithTimeout(ticks - (nowTicks - beginTicks), timer);
-
-              {
-                // ----- Critical section begin -------------------------------
-                CriticalSectionLock cs;
-
-                m_notifier.remove(pThread);
-                // ----- Critical section end ---------------------------------
-              }
-          } // loop
+        pThread->setError(Error::SUCCEEDED);
       }
 
   // ==========================================================================

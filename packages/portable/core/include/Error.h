@@ -22,7 +22,7 @@ namespace os
     class Error
     {
     public:
-      static constexpr errorNumber_t NONE = 0;
+      static constexpr errorNumber_t SUCCEEDED = 0;
       static constexpr errorNumber_t UNKNOWN = -1;
       static constexpr errorNumber_t INTERNAL_SIZE_EXCEEDED = -2;
       static constexpr errorNumber_t RECURSION_DEPTH_EXCEEDED = -3;
@@ -30,7 +30,7 @@ namespace os
       static constexpr errorNumber_t NOT_OWNER = -5;
       static constexpr errorNumber_t OUT_OF_SYNC = -6;
       static constexpr errorNumber_t TIMEOUT = -7;
-      static constexpr errorNumber_t ATTENTION_REQUESTED = -8;
+      static constexpr errorNumber_t CANCELLED = -8;
 
       Error(void) = default;
       ~Error() = default;
