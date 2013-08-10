@@ -1,7 +1,27 @@
 /**
 
 \defgroup core Core
+System core definitions.
+ 
+    \defgroup core_thread Threads
+    \ingroup core
+    Definitions related to threads and stacks.
 
+    \defgroup core_synchro Synchronisation
+    \ingroup core
+	Definitions related to multi-threading synchronisation.
+
+    \defgroup core_timer Timers
+    \ingroup core
+	Definitions related to timers.
+
+    \defgroup core_sched Scheduler
+    \ingroup core
+	Definitions related to the scheduler.
+
+    \defgroup core_port Portability
+    \ingroup core
+	Definitions related to portability.
 
 \defgroup infra Infrastructure
 Infrastructure support includes startup code, test suite code,
