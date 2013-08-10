@@ -51,7 +51,7 @@ namespace os
 #endif
 
       /// \class TNotifier Mutex.h "portable/core/include/Mutex.h"
-      /// \ingroup core
+      /// \ingroup core_synchro
       /// \nosubgrouping
       ///
       /// \brief Mutex notifier.
@@ -415,7 +415,7 @@ namespace os
       // ========================================================================
 
       /// \class RecursivePolicy Mutex.h "portable/core/include/Mutex.h"
-      /// \ingroup core
+      /// \ingroup core_synchro
       /// \nosubgrouping
       ///
       /// \brief Policy used to implement a recursive mutex.
@@ -606,7 +606,7 @@ namespace os
       // ========================================================================
 
       /// \class NonRecursivePolicy Mutex.h "portable/core/include/Mutex.h"
-      /// \ingroup core
+      /// \ingroup core_synchro
       /// \nosubgrouping
       ///
       /// \brief Policy used to implement a non-recursive mutex.
@@ -771,7 +771,7 @@ namespace os
 #endif
 
     /// \class TGenericMutex Mutex.h "portable/core/include/Mutex.h"
-    /// \ingroup core
+    /// \ingroup core_synchro
     /// \nosubgrouping
     ///
     /// \brief Core recursive mutex template.
@@ -956,14 +956,24 @@ namespace os
     {
     };
 
+    /// \ingroup core_synchro
+    /// @{
+
+    /// \brief Tag to defer lock.
     constexpr defer_lock_t defer_lock = defer_lock_t();
+
+    /// \brief Tag to try to lock.
     constexpr try_to_lock_t try_to_lock = try_to_lock_t();
+
+    /// \brief Tag to adopt an existing lock.
     constexpr adopt_lock_t adopt_lock = adopt_lock_t();
+
+    /// @} end of ingroup core_synchro
 
     // ------------------------------------------------------------------------
 
     /// \class TLockGuard Mutex.h "portable/core/include/Mutex.h"
-    /// \ingroup core
+    /// \ingroup core_synchro
     /// \nosubgrouping
     ///
     /// \brief Lock guard template.
@@ -1090,12 +1100,12 @@ namespace os
 #pragma GCC diagnostic pop
 
     /// \brief Common non-recursive mutex instantiation.
-    /// \ingroup core
+    /// \ingroup core_synchro
     using Mutex = TGenericMutex<scheduler::CriticalSection,
     mutex::TNotifier<>, mutex::NonRecursivePolicy>;
 
     /// \brief Common recursive mutex instantiation
-    /// \ingroup core
+    /// \ingroup core_synchro
     using RecursiveMutex = TGenericMutex<scheduler::CriticalSection,
     mutex::TNotifier<>, mutex::RecursivePolicy>;
 

@@ -256,7 +256,7 @@ namespace os
 {
   // The order might be important, first architecture, then platform.
 
-  /// \ingroup core
+  /// \ingroup core_port
   /// @{
 
   /// \brief The portable `architecture` object. Use it even if
@@ -267,6 +267,8 @@ namespace os
   /// on most platforms the functions are static.
   hal::platform::PlatformImplementation platform;
 
+  /// @} end of ingroup core_port
+
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
 #pragma GCC diagnostic push
@@ -274,6 +276,9 @@ namespace os
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
+
+  /// \ingroup core
+  /// @{
 
   /// \brief The scheduler object.
   /// \note Since the scheduler is used in Thread constructors/destructors to
@@ -299,10 +304,11 @@ namespace os
   /// \brief A redirection to the current thread error code.
   os::core::Error error;
 
+  /// @} end of ingroup core
+
 #pragma GCC diagnostic pop
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-/// @} end of ingroup core
 }// namespace os
 
 // ----------------------------------------------------------------------------

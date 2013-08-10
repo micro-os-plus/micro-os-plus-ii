@@ -27,7 +27,7 @@ namespace os
 #endif
 
     /// \headerfile MainThread.h "portable/core/include/MainThread.h"
-    /// \ingroup core
+    /// \ingroup core_thread
     /// \nosubgrouping
     ///
     /// \brief Main thread.

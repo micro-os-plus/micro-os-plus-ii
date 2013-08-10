@@ -20,7 +20,7 @@ namespace os
     // ========================================================================
 
     /// \headerfile PlatformBase.h "portable/core/include/PlatformBase.h"
-    /// \ingroup core
+    /// \ingroup core_port
     /// \nosubgrouping
     ///
     /// \brief Base for all platform implementation classes.

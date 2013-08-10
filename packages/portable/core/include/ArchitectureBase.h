@@ -31,7 +31,7 @@ namespace os
     // ========================================================================
 
     /// \headerfile ArchitectureBase.h "portable/core/include/ArchitectureBase.h"
-    /// \ingroup core
+    /// \ingroup core_port
     /// \nosubgrouping
     ///
     /// \brief Base for all architecture implementation classes.

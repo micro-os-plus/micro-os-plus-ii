@@ -28,6 +28,9 @@ namespace os
       /// \name Types and constants
       /// @{
 
+      /// \ingroup core_thread
+      /// @{
+
       /// \brief Stack element type.
       ///
       /// \details
@@ -40,8 +43,9 @@ namespace os
       /// Portable redefinition, based on architecture definitions.
       typedef hal::arch::stackSize_t size_t;
 
-    /// @} end of name Types and constants
+    /// @} end of ingroup core_thread
 
+    /// @} end of name Types and constants
     }
     // ========================================================================
 
@@ -51,7 +55,7 @@ namespace os
 #endif
 
     /// \class Stack Stack.h "portable/core/include/Stack.h"
-    /// \ingroup core
+    /// \ingroup core_thread
     /// \nosubgrouping
     ///
     /// \brief Thread stack.
@@ -189,7 +193,7 @@ namespace os
 #endif
 
     /// \headerfile Stack.h "portable/core/include/Stack.h"
-    /// \ingroup core
+    /// \ingroup core_thread
     /// \nosubgrouping
     ///
     /// \brief A statically allocated stack.
@@ -266,7 +270,7 @@ namespace os
 #endif
 
     /// \headerfile Stack.h "portable/core/include/Stack.h"
-    /// \ingroup core
+    /// \ingroup core_thread
     /// \nosubgrouping
     ///
     /// \brief A stack with dynamic allocation.
@@ -349,7 +353,7 @@ namespace os
 
     // ========================================================================
 
-    /// \ingroup core
+    /// \ingroup core_thread
     /// \brief Stack allocated via the default allocator.
     using AllocatedStack = TAllocatedStack<>;
 

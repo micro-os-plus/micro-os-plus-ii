@@ -118,7 +118,7 @@ namespace os
 #endif
 
       /// \headerfile Scheduler.h "portable/core/include/Scheduler.h"
-      /// \ingroup core
+      /// \ingroup core_sched
       /// \nosubgrouping
       ///
       /// \brief Registered threads.
@@ -300,7 +300,7 @@ namespace os
 #endif
 
       /// \headerfile Scheduler.h "portable/core/include/Scheduler.h"
-      /// \ingroup core
+      /// \ingroup core_sched
       /// \nosubgrouping
       ///
       /// \brief Active threads.
@@ -439,7 +439,7 @@ namespace os
 #endif
 
     /// \headerfile Scheduler.h "portable/core/include/Scheduler.h"
-    /// \ingroup core
+    /// \ingroup core_sched
     /// \nosubgrouping
     ///
     /// \brief The system scheduler.
@@ -563,6 +563,9 @@ namespace os
 
     private:
 
+      /// \name Friends
+      /// @{
+
       friend class MainThread;
 
       friend class Thread;
@@ -571,6 +574,8 @@ namespace os
       // Doxygen complains "no uniquely matching class member found"
       friend hal::arch::ArchitectureImplementation;
 #endif
+
+      /// @} end of name Friends
 
       /// \name Private member functions
       /// @{

@@ -63,7 +63,7 @@ namespace os
       /// \name Private member variables
       /// @{
 
-      /// \brief Pointer to the null terminated character array,
+      /// \brief Pointer to the null terminated name character array,
       /// filled in by the constructor.
       const char* const m_pName;
 

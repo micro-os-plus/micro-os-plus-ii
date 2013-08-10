@@ -27,7 +27,7 @@ namespace os
 #endif
 
     /// \headerfile IdleThread.h "portable/core/include/IdleThread.h"
-    /// \ingroup core
+    /// \ingroup core_thread
     /// \nosubgrouping
     ///
     /// \brief Idle thread.

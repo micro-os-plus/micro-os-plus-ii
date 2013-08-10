@@ -31,9 +31,11 @@ namespace os
       /// @{
 
       /// \brief Count of elements and size. Must be signed.
+      /// \ingroup core_timer
       typedef int count_t;
 
       /// \brief Count of timer ticks.
+      /// \ingroup core_timer
       typedef uint32_t ticks_t;
 
 #pragma GCC diagnostic push
@@ -42,6 +44,7 @@ namespace os
 #endif
 
       /// \brief The timer will keep an array of such elements.
+      /// \ingroup core_timer
       typedef struct
       {
         ticks_t volatile ticks;
@@ -64,7 +67,7 @@ namespace os
 #endif
 
     /// \class TimerBase Stack.h "portable/core/include/TimerBase.h"
-    /// \ingroup core
+    /// \ingroup core_timer
     /// \nosubgrouping
     ///
     /// \brief System timers base.
@@ -264,7 +267,7 @@ namespace os
     // ========================================================================
 
     /// \class TimeoutGuard Stack.h "portable/core/include/TimerBase.h"
-    /// \ingroup core
+    /// \ingroup core_timer
     /// \nosubgrouping
     ///
     /// \brief Timeout guard.

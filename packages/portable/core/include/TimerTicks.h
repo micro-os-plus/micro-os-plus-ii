@@ -31,7 +31,7 @@ namespace os
 #endif
 
     /// \class TimerTicks TimerTicks.h "portable/core/include/TimerTicks.h"
-    /// \ingroup core
+    /// \ingroup core_timer
     /// \nosubgrouping
     ///
     /// \brief System ticks timer.

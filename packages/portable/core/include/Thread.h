@@ -50,7 +50,7 @@ namespace os
 #endif
 
     /// \class Thread Thread.h "portable/core/include/Thread.h"
-    /// \ingroup core
+    /// \ingroup core_thread
     /// \nosubgrouping
     ///
     /// \brief Core thread.

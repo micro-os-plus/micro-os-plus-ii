@@ -25,7 +25,7 @@ namespace os
       // ======================================================================
 
       /// \class CriticalSection CriticalSections.h "portable/core/include/CriticalSections.h"
-      /// \ingroup core
+      /// \ingroup core_synchro
       /// \nosubgrouping
       ///
       /// \brief Scheduler critical section.
@@ -86,7 +86,9 @@ namespace os
 
       // TODO: make an empty instance available always
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
-      typedef hal::arch::InterruptsCriticalSection InterruptsCriticalSection;
+      /// \ingroup core_synchro
+      /// \brief Critical section with interrupts disable/enable
+      using InterruptsCriticalSection = hal::arch::InterruptsCriticalSection;
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
     // ========================================================================
