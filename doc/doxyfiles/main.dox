@@ -25,11 +25,28 @@ The configuration metadata is documented in the
 As most Doxygen based documentations, this site is fully generated from 
 files located in the µOS++ repository only.
 
-Here are direct links to some useful pages:
+### Browsing the project ###
+
+For browsing the project, the recommended starting point is the 
+[Modules](modules.html) hierarchy (also available in the left pane),
+that groups the definitions by subject, regardless of the physical location.
+In addition, the same information can be viewed as [Classes](annotated.html) 
+by the position
+of classes in the namespaces hierachy, or by [Files](files.html) 
+by the position in 
+the file system hierarchy.
+
+### The User Manual ###
+
+In addition to the detailed references available in the project source
+files, a separate section containing a \ref uman was aded (currently it 
+is work in progress).
+ 
+### Other links ###
+
+For your convenience, here are some other direct links to useful pages:
 - \subpage downloads
 - \subpage support
 - \subpage jtag
-
-- \ref uman
 
 */
