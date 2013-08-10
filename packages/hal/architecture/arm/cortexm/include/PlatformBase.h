@@ -24,7 +24,7 @@ namespace hal
     // ========================================================================
 
     /// \headerfile PlatformBase.h "hal/architecture/arm/cortexm/include/PlatformBase.h"
-    /// \ingroup core
+    /// \ingroup arm_cm
     /// \nosubgrouping
     ///
     /// \brief Base for all Cortex-M platform implementation classes.
