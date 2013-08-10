@@ -334,8 +334,8 @@ namespace os
           ///
           /// \par Parameters
           ///    None.
-          /// \retval True        ACK bit received.
-          /// \retval False       NACK bit received.
+          /// \retval true        ACK bit received.
+          /// \retval false       NACK bit received.
           static
           bool
           receiveAck(void);

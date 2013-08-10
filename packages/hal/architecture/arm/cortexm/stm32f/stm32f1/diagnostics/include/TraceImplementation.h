@@ -95,8 +95,8 @@ namespace hal
         ///
         /// \par Parameters
         ///     None.
-        /// \retval True        Device present.
-        /// \retval False       Device not present.
+        /// \retval true        Device present.
+        /// \retval false       Device not present.
         static bool
         isDevicePresent(void);
 

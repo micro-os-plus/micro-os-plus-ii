@@ -56,8 +56,63 @@ namespace os
     /// \brief Core thread.
     ///
     /// \details
-    /// This is the definition of the core thread, used by the
-    /// scheduler(s).
+    /// The class Thread provides a mechanism to create a new
+    /// thread of execution, to join with a thread
+    /// (i.e., wait for a thread to complete), and to
+    /// perform other operations that manage and
+    /// query the state of a thread. A thread object
+    /// uniquely represents a particular thread of execution.
+    ///
+    /// Similarly to standard C++11 threads, µOS++ threads have a user
+    /// defined function that performs the thread specific actions.
+    /// If this function is reentrant, it can be used for several
+    /// threads at the same time. To differentiate between threads,
+    /// this function
+    /// must have a single pointer parameter, and the Thread
+    /// constructor should be able to pass different pointers to
+    /// different threads.
+    ///
+    /// In addition to the standard C+11 threads, µOS++ threads
+    /// must have an explicit stack, stored either in a static memory
+    /// area or in an area dynamically allocated on the heap.
+    ///
+    /// For a better control, after construction µOS++ threads
+    /// remain in a stopped state until an explicit call to
+    /// the start() member function is performed.
+    ///
+    /// During the active life span of a thread, it can be either
+    /// running or sleeping. Running threads are in the scheduler
+    /// active threads list, and compete, based on priority and
+    /// scheduler policies (like round-robin) for the processor.
+    /// Sleeping threads are suspended from active duty, by calling
+    /// the suspend() member function, usually waiting
+    /// for an external event to occur, event that should call the
+    /// resume() member function.
+    ///
+    /// Also specific to µOS++ threads is an out of band mechanism
+    /// allowing to notify the thread that special attention is
+    /// required for various user defined reasons (for
+    /// example a cancellation request).
+    ///
+    /// The scheduler allocates the CPU to threads based on a
+    /// priority, currently static (i.e. does not change by itself
+    /// in time), with higher values meaning more likely to get the
+    /// CPU.
+    ///
+    /// In addition to user threads, there are two system threads,
+    /// - the os::mainThread, to perform the code in the main() function
+    /// - the os::idleThread, a thread with the lowest possible
+    /// priority, to be executed when
+    /// no other thread is active.
+    ///
+    /// For identification reasons, each thread has a unique ID,
+    /// allocated by the scheduler when the thread is started, and
+    /// cleared when the thread is terminated or stopped.
+    ///
+    /// Like other system objects in µOS++, the Thread object is
+    /// derived from NamedObject, which makes possible to assign a
+    /// name to each thread, making threads even easier to identify,
+    /// for example during debugging sessions.
     ///
     /// \example portable/core/tests/src/threads.cpp
     /// \example portable/core/tests/include/FakeScheduler.h
@@ -89,6 +144,12 @@ namespace os
       typedef hal::arch::ThreadContext Context;
 
       /// \brief Pointer to trampoline function.
+      ///
+      /// \details
+      /// The three parameters are
+      /// - the entry point address
+      /// - the parameter to be used when calling the entry point
+      /// - the associated thread.
       typedef void
       (*trampoline3_t)(void*, void*, void*);
 
@@ -136,7 +197,7 @@ namespace os
       /// \name Public member functions
       /// @{
 
-      /// \brief Get the thread stack.
+      /// \brief Get the thread stack object.
       ///
       /// \par Parameters
       ///    None.
@@ -164,7 +225,8 @@ namespace os
       ///
       /// \par Parameters
       ///    None.
-      /// \return The current thread ID.
+      /// \retval NO_ID         The thread was terminated or stopped.
+      /// \retval value         The current thread ID.
       id_t
       getId(void) const;
 
@@ -188,8 +250,8 @@ namespace os
       ///
       /// \par Parameters
       ///    None.
-      /// \retval True          The thread was started.
-      /// \retval False         The thread was not started.
+      /// \retval true          The thread was started.
+      /// \retval false         Otherwise.
       bool
       start(void);
 
@@ -227,7 +289,7 @@ namespace os
       resumeDetails_t
       suspendWithTimeout(timer::ticks_t ticks, TimerBase& timer);
 
-      /// \brief Resume the thread from an interrupt.
+      /// \brief Resume the thread from an interrupt service routine.
       ///
       /// \par Parameters
       ///    None.
@@ -281,11 +343,11 @@ namespace os
       void
       acknowledgeAttention(void);
 
-      /// \brief Get context
+      /// \brief Get the context object.
       ///
       /// \par Parameters
       ///    None.
-      /// \return Reference to context (architecture dependent content).
+      /// \return Reference to the context (architecture dependent content).
       Context&
       getContext(void);
 
@@ -299,15 +361,16 @@ namespace os
       trampoline3(threadEntryPoint1_t entryPoint, void* pParameters,
           Thread* pThread);
 
-      /// \brief Get error number.
+      /// \brief Get the error number.
       ///
       /// \par Parameters
       ///    None.
-      /// \return       A negative integer or zero.
+      /// \retval 0     Success.
+      /// \retval <0    Failure, a negative integer to identify the error.
       errorNumber_t
       getError(void);
 
-      /// \brief Set error number.
+      /// \brief Set the error number.
       ///
       /// \param [in] error   A negative integer or zero.
       /// \par Returns
@@ -329,7 +392,7 @@ namespace os
       /// \name Private member functions
       /// @{
 
-      /// \brief Initialise thread.
+      /// \brief Initialise the thread.
       ///
       /// \param [in] entryPoint        Pointer to the thread code.
       /// \param [in] pParameters       Pointer to the parameters passed
@@ -339,7 +402,7 @@ namespace os
       initialise(threadEntryPoint1_t entryPoint, void* pParameters,
           priority_t priority);
 
-      /// \brief Clean thread object after code completed.
+      /// \brief Clean thread internals after the code is terminated.
       ///
       /// \par Parameters
       ///    None.
@@ -382,16 +445,18 @@ namespace os
       /// \brief A bitmask detailing the resume condition.
       resumeDetails_t m_resumeDetails;
 
-      /// \brief A negative number or zero.
+      /// \brief The error code provided by the last call.
+      /// Can indicate success or one of the multiple failure reasons.
       errorNumber_t m_error;
 
       /// \brief The ID used by the scheduler to identify the thread.
       ///
       /// \details
-      /// After construction it is
+      /// It is set to a unique value only between start() and
+      /// stop() (or thread termination).
       id_t m_id;
 
-      /// \brief The address of entry point to call for execution.
+      /// \brief The address of the function to call for execution.
       threadEntryPoint1_t m_entryPointAddress;
 
       /// \brief The parameter passed when calling the entry point.
@@ -421,7 +486,9 @@ namespace os
     ///   ...
     /// }
     /// \endcode
-    /// \warning Do not use the stack yet! (see initialise())
+    ///
+    /// \warning Be sure that the stack methods are not called from this
+    /// constructor! (see initialise())
     template<class Lambda_T, class Object_T>
       Thread::Thread(const char* const pName, Lambda_T function,
           Object_T* pObject, Stack& stack, priority_t priority)
@@ -469,7 +536,8 @@ namespace os
 
     /// \details
     /// Return the current thread ID, as assigned by the scheduler
-    /// when the thread was registered.
+    /// when the thread was registered. Threads are registered each time
+    /// they are started, and deregistered when terminated or  stopped.
     inline Thread::id_t
     __attribute__((always_inline))
     Thread::getId(void) const
@@ -489,6 +557,10 @@ namespace os
 
     /// \details
     /// Return the address of the code used for the thread.
+    ///
+    /// \note This
+    /// value is set at construct time and there is no
+    /// public method to change it during the life span of the thread.
     inline threadEntryPoint1_t
     __attribute__((always_inline))
     Thread::getEntryPointAddress(void) const
@@ -497,9 +569,14 @@ namespace os
     }
 
     /// \details
-    /// Return the parameter used when calling the thread code. For
-    /// Threads implemented with C++ classes, this is typically a
+    /// Return the parameter used when calling the thread code. When
+    /// the thread entry point is a member function of
+    /// of another C++ class, this is typically a
     /// pointer to the actual object.
+    ///
+    /// \note This
+    /// value is set at construct time and there is no
+    /// public method to change it during the life span of the thread.
     inline void*
     __attribute__((always_inline))
     Thread::getEntryPointParameter(void) const
@@ -528,6 +605,8 @@ namespace os
       return m_isAttentionRequested;
     }
 
+    /// \details
+    /// The actual error codes are defined in the os::core::Error class.
     inline errorNumber_t
     __attribute__((always_inline))
     Thread::getError(void)
@@ -535,6 +614,8 @@ namespace os
       return m_error;
     }
 
+    /// \details
+    /// The actual error codes are defined in the os::core::Error class.
     inline void
     __attribute__((always_inline))
     Thread::setError(errorNumber_t error)

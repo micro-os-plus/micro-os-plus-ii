@@ -117,8 +117,8 @@ namespace hal
           ///
           /// \par Parameters
           ///     None.
-          /// \retval True        Pin is low.
-          /// \retval False       Pin is high.
+          /// \retval true        Pin is low.
+          /// \retval false       Pin is high.
           static bool
           isLow(void);
 
@@ -126,8 +126,8 @@ namespace hal
           ///
           /// \par Parameters
           ///     None.
-          /// \retval True        Pin is high.
-          /// \retval False       Pin is low.
+          /// \retval true        Pin is high.
+          /// \retval false       Pin is low.
           static bool
           isHigh(void);
 

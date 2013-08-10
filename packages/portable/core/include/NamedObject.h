@@ -25,7 +25,8 @@ namespace os
     ///
     /// \details
     /// Provide common support for all objects that have a name,
-    /// used mainly to identify the objects.
+    /// used mainly to identify the objects, for example during
+    /// debugging sessions.
     class NamedObject
     {
     public:

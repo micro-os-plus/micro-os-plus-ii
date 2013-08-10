@@ -1033,8 +1033,8 @@ noexcept            : m_pSbuf(outs.rdbuf())
             ///
             /// \par Parameters
             ///     None.
-            /// \return
-            ///     True if the pointer is null.
+            /// \retval true    The pointer is null.
+            /// \retval  false       Otherwise.
             ///
             /// \details
             /// Normally the pointer is assigned during construction and is

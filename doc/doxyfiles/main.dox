@@ -8,45 +8,46 @@ is the second iteration of <b>µOS++</b>, a
 system intended for 8/16/32/64 bit embedded systems</b>. It is based on a simple 
 preemptive scheduler specifically designed for ARM Cortex M devices and also 
 (for historical reasons) ported on AVR8 devices. Being carefully 
-written in a subset of C++, 
-it is elegant, convenient to use, easy to maintain, yet efficient and with 
+written in a subset of C++11, 
+it is modern, convenient to use, easy to maintain, yet efficient and with 
 a small footprint.
 
-The authoritative µOS++ reference documents can be found in these 
-Doxygen generated pages, with additional documents in the
-[project wiki](http://micro-os-plus.livius.net/wiki/Main_Page). 
+### Browsing the project ###
+
+For browsing the project, the recommended starting point is <b>the 
+[Modules](modules.html) hierarchy</b> (also available in the left pane),
+that groups the definitions by subject, regardless of the physical location.
+In addition, the same information can be viewed as [Classes](annotated.html) 
+by the position
+of the class in the namespaces hierachy, or as [Files](files.html) 
+by the position in 
+the file system hierarchy.
+
 The source code itself, publicly available for browsing via the web 
 [Git Browse](http://sourceforge.net/p/micro-os-plus/second/) 
-interface is another good source of information. (Additional resources 
+interface is another good source of information, 
+althought the [Files](files.html) view may be easier to use. 
+(Additional resources 
 can be found in the SourceForge trackers mentioned in the Support page). 
 The configuration metadata is documented in the 
 [XCDL wiki](http://xcdl.livius.net/wiki).
 
-As most Doxygen based documentations, this site is fully generated from 
-files located in the µOS++ repository only.
+### The User Manual and the Wiki pages ###
 
-### Browsing the project ###
+In addition to the authoritative µOS++ reference documents (generated 
+from the project source
+files), more information is available from:
+- the \ref uman  (currently work in progress).
+- the [project wiki](http://micro-os-plus.livius.net/wiki/Main_Page). 
 
-For browsing the project, the recommended starting point is the 
-[Modules](modules.html) hierarchy (also available in the left pane),
-that groups the definitions by subject, regardless of the physical location.
-In addition, the same information can be viewed as [Classes](annotated.html) 
-by the position
-of classes in the namespaces hierachy, or by [Files](files.html) 
-by the position in 
-the file system hierarchy.
-
-### The User Manual ###
-
-In addition to the detailed references available in the project source
-files, a separate section containing a \ref uman was aded (currently it 
-is work in progress).
- 
 ### Other links ###
 
 For your convenience, here are some other direct links to useful pages:
 - \subpage downloads
 - \subpage support
 - \subpage jtag
+
+<small>[As most Doxygen based documentations, this site is fully generated from 
+files located in the µOS++ repository only].</small>
 
 */

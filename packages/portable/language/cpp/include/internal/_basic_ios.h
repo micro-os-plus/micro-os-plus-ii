@@ -115,7 +115,8 @@ namespace os
         ///
         /// \par Parameters
         /// None.
-        /// \return  True if no error flags are set.
+        /// \retval  true       No error flags are set.
+        /// \retval  false       Otherwise.
         bool
         good() const;
 
@@ -123,7 +124,8 @@ namespace os
         ///
         /// \par Parameters
         /// None.
-        /// \return  True if the `eofbit` is set.
+        /// \retval  true       The `eofbit` is set.
+        /// \retval  false       Otherwise.
         bool
         eof() const;
 
@@ -131,7 +133,8 @@ namespace os
         ///
         /// \par Parameters
         /// None.
-        /// \return  True if either the `badbit` or the `failbit` is set.
+        /// \retval  true       Either the `badbit` or the `failbit` is set.
+        /// \retval  false       Otherwise.
         bool
         fail() const;
 
@@ -139,7 +142,8 @@ namespace os
         ///
         /// \par Parameters
         /// None.
-        /// \return  True if the `badbit` is set.
+        /// \retval  true       The `badbit` is set.
+        /// \retval  false       Otherwise.
         bool
         bad() const;
 

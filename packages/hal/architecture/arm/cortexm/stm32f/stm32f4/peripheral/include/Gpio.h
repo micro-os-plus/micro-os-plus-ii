@@ -188,7 +188,7 @@ namespace hal
         ///
         /// \par Parameters
         ///    None.
-        /// \return True if the pin level is high.
+        /// \return true if the pin level is high.
         static bool
         isPinHigh(void);
 
@@ -196,7 +196,7 @@ namespace hal
         ///
         /// \par Parameters
         ///    None.
-        /// \return True if the pin level is low.
+        /// \return true if the pin level is low.
         static bool
         isPinLow(void);
 
@@ -676,7 +676,7 @@ namespace hal
       ///
       /// \par Parameters
       ///    None.
-      /// \return True if the pin level is high.
+      /// \return true if the pin level is high.
       bool
       isPinHigh(void);
 
@@ -684,7 +684,7 @@ namespace hal
       ///
       /// \par Parameters
       ///    None.
-      /// \return True if the pin level is low.
+      /// \return true if the pin level is low.
       bool
       isPinLow(void);
 

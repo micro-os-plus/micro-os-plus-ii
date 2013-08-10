@@ -30,7 +30,9 @@ namespace os
     /// \details
     /// Store the stack reference and the priority
     /// in the private member variables.
-    /// \warning Do not use the stack yet! (see initialise())
+    ///
+    /// \warning Be sure that the stack methods are not called from this
+    /// constructor! (see initialise())
     Thread::Thread(const char* const pName, threadEntryPoint0_t entryPoint,
         Stack& stack, priority_t priority)
         : NamedObject(pName), //
@@ -48,7 +50,9 @@ namespace os
     /// \details
     /// Store the stack reference and the priority
     /// in the private member variables.
-    /// \warning Do not use the stack yet! (see initialise())
+    ///
+    /// \warning Be sure that the stack methods are not called from this
+    /// constructor! (see initialise())
     Thread::Thread(const char* const pName, threadEntryPoint1_t entryPoint,
         void* pParameters, Stack& stack, priority_t priority)
         : NamedObject(pName), //
@@ -74,10 +78,11 @@ namespace os
     }
 
     /// \details
-    /// Initialise all member functions.
+    /// Initialise all member variables.
     ///
     /// \warning Do not use the stack yet! Due to the C++
-    /// initialisation order, if the Stack object is a member of
+    /// initialisation order, in the (not recommended) case when
+    /// the Stack object is a member of
     /// the derived class, it is
     /// constructed after the base class, so at this moment the reference
     /// may be to an object not yet constructed.
@@ -145,8 +150,8 @@ namespace os
     }
 
     /// \details
-    /// Forces the thread to terminate abruptly, without any notification
-    /// to the thread code.
+    /// Force the thread to terminate abruptly, without any notification
+    /// to the application code.
     void
     Thread::stop(void)
     {
@@ -157,6 +162,9 @@ namespace os
       // TODO: add code
     }
 
+    /// \details
+    /// Deregister the thread from the scheduler and clear the
+    /// internal ID.
     void
     Thread::cleanup()
     {
@@ -174,7 +182,11 @@ namespace os
     }
 
     /// \details
-    /// Suspend the thread and remove it from the ready list.
+    /// Suspend the thread, remove it from the active list and
+    /// yield to the next thread.
+    ///
+    /// \warning Currently cannot be called from interrupt contexts.
+    /// \todo Check if interrupt context and call yield only if not.
     resumeDetails_t
     Thread::suspend(void)
     {
@@ -209,7 +221,10 @@ namespace os
     }
 
     /// \details
-    /// Resume the thread by inserting it into the ready list.
+    /// Resume the thread by inserting it into the active list.
+    ///
+    /// It assumes it is called from an interrupt context, and
+    /// no other synchronisations are performed.
     void
     Thread::resumeFromInterrupt(resumeDetails_t detail)
     {
@@ -225,7 +240,10 @@ namespace os
     }
 
     /// \details
-    /// Resume the thread by inserting it into the ready list.
+    /// Resume the thread by inserting it into the active list.
+    ///
+    /// It assumes it is called from a thread context, so it
+    /// disables/enables interrupts.
     void
     Thread::resume(resumeDetails_t detail)
     {
@@ -237,7 +255,7 @@ namespace os
     }
 
     /// \details
-    /// Block until the thread has completed.
+    /// Block until the thread code has completed.
     void
     Thread::join(void)
     {
@@ -262,6 +280,8 @@ namespace os
 
       while (m_id != scheduler::NO_ID)
         {
+          // TODO: Study if we should consider attention requests. How?
+
           // Suspend the thread calling join(), not the thread
           // to be joined!
           os::scheduler.getCurrentThread()->suspend();
@@ -277,7 +297,8 @@ namespace os
     Thread::trampoline3(threadEntryPoint1_t entryPoint, void* pParameters,
         Thread* pThread)
     {
-      // call the actual thread code
+      // call the actual thread code, with the pointer to the
+      // thread data.
       (*entryPoint)(pParameters);
 
         { // ----- Critical section begin -------------------------------------
@@ -287,6 +308,8 @@ namespace os
           if (pJoiner != nullptr)
             {
               // Resume thread waiting to join, if any
+              // Use the interrupt version, since we already are
+              // with interrupts disabled.
               pJoiner->resumeFromInterrupt();
             }
           // deregister the given thread and make sure it'll never be used
@@ -298,12 +321,35 @@ namespace os
       os::scheduler.yield();
     }
 
+    /// \details
+    /// A typical case when a thread is requested special
+    /// attention is when a monitoring thread decides that
+    /// an action should be cancelled. Setting this flag informs
+    /// well behaved synchronisation objects that they should
+    /// not block, or break an existing block.
+    /// Normally after requesting
+    /// attention from a thread, that thread should also be resumed,
+    /// with an explicit call to resume(),
+    /// to break a possible long wait.
+    ///
+    /// This terminating effect on blocking calls remains active
+    /// as long as this flag is set, so the destination thread
+    /// should call acknowledgeAttention() to cancel it as soon as
+    /// it is aware of this condition
+    /// and took the appropriate measures.
     void
     Thread::requestAttention(void)
     {
       m_isAttentionRequested = true;
     }
 
+    /// \details
+    /// This function clears the flag and resumes normal processing
+    /// of blocking calls.
+    ///
+    /// It must be issued by the thread that was requested
+    /// attention, as soon as it is aware of this condition
+    /// and took the appropriate measures.
     void
     Thread::acknowledgeAttention(void)
     {

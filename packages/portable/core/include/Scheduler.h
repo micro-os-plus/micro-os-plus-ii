@@ -151,16 +151,16 @@ namespace os
         /// \brief Add a thread to the end of the array.
         ///
         /// \param [in] pThread         Pointer to the thread.
-        /// \retval True                The thread was added.
-        /// \retval False               The thread was not added.
+        /// \retval true                The thread was added.
+        /// \retval false               The thread was not added.
         bool
         pushBack(Thread* pThread);
 
         /// \brief Remove the thread from the array.
         ///
         /// \param [in] pThread         Pointer to the thread.
-        /// \retval True                The thread was removed.
-        /// \retval False               The thread was not removed.
+        /// \retval true                The thread was removed.
+        /// \retval false               The thread was not removed.
         bool
         remove(Thread* pThread);
 
@@ -183,8 +183,8 @@ namespace os
         /// \brief Check if an ID is already in use by a registered thread.
         ///
         /// \param [in] id              The ID to check.
-        /// \retval True                The ID is in use or NO_ID.
-        /// \retval False               The ID can be used for a new thread.
+        /// \retval true                The ID is in use or NO_ID.
+        /// \retval false               The ID can be used for a new thread.
         bool
         isIdInUse(threadId_t id);
 
@@ -343,8 +343,8 @@ namespace os
         /// \brief Remove the thread from the array.
         ///
         /// \param [in] pThread         Pointer to the thread.
-        /// \retval True                The thread was removed.
-        /// \retval False               The thread was not removed.
+        /// \retval true                The thread was removed.
+        /// \retval false               The thread was not removed.
         void
         remove(Thread* pThread);
 
@@ -508,8 +508,8 @@ namespace os
       ///
       /// \par Parameters
       ///    None.
-      /// \retval True                The scheduler was started.
-      /// \retval False               The scheduler is stopped.
+      /// \retval true                The scheduler was started.
+      /// \retval false               The scheduler is stopped.
       bool
       isRunning(void) const;
 
@@ -552,8 +552,8 @@ namespace os
       ///
       /// \par Parameters
       ///    None.
-      /// \retval True                The scheduler is locked.
-      /// \retval False               The scheduler is not locked.
+      /// \retval true                The scheduler is locked.
+      /// \retval false               The scheduler is not locked.
       bool
       isLocked(void) const;
 
@@ -583,16 +583,16 @@ namespace os
       /// \brief Register a thread to the scheduler.
       ///
       /// \param [in] pThread   Pointer to the thread.
-      /// \retval True          The thread was registered.
-      /// \retval False         The thread was not registered.
+      /// \retval true          The thread was registered.
+      /// \retval false         The thread was not registered.
       bool
       registerThread(Thread* pThread);
 
       /// \brief Deregister a thread from the scheduler lists.
       ///
       /// \param [in] pThread   Pointer to the thread.
-      /// \retval True          The thread was deregistered.
-      /// \retval False         The thread was not deregistered.
+      /// \retval true          The thread was deregistered.
+      /// \retval false         The thread was not deregistered.
       bool
       deregisterThread(Thread* pThread);
 
