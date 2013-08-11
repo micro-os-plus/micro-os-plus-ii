@@ -59,7 +59,7 @@ namespace hal
       /// \ingroup stm32f4_diag
       /// \nosubgrouping
       ///
-      /// \brief Open drain pin template class.
+      /// \brief Open drain pin class template.
       template<class WatchDog_T, unsigned int Port_T, int Bit_T>
         class TPinOpenDrain
         {

@@ -37,7 +37,7 @@ namespace os
     /// \ingroup std_io
     /// \nosubgrouping
     ///
-    /// \brief Template class basic_ios, virtual base class for
+    /// \brief Class template basic_ios, virtual base class for
     /// input and output streams.
     ///
     /// \tparam TChar_T  Type of character stream.
