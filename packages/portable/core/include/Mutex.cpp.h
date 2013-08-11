@@ -28,8 +28,8 @@ namespace os
     ///
     /// \note Provided only to meet the C++11 requirement
     /// that the mutex type shall be DefaultConstructible.
-    /// Not recommended for regular applications, use the named
-    /// constructor instead.
+    /// Not recommended for regular applications (use the named
+    /// constructor instead).
     template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
       TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::TGenericMutex(
           void)
@@ -82,7 +82,7 @@ namespace os
     /// will fail with RECURSION_DEPTH_EXCEEDED.
     ///
     /// A recursive mutex allows multiple lock() calls from the same thread,
-    /// but after a certain limit (currently MAX_INT) will also fail with
+    /// but after a certain limit (currently MAX_INT) it will also fail with
     /// RECURSION_DEPTH_EXCEEDED.
     template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
       void
@@ -262,7 +262,14 @@ namespace os
     /// Attempt to obtain ownership of the mutex for the calling thread
     /// without blocking. If ownership is not obtained, there is no
     /// effect and tryLock() returns with BUSY. One way or another,
-    /// it always returns immediately.
+    /// tryLock() always returns immediately.
+    ///
+    /// For a non-recursive mutex, attempts to tryLock() again from
+    /// the same thread fail with RECURSION_DEPTH_EXCEEDED. Similarly
+    /// for a recursive mutex, attempts to tryLock() again from the
+    /// same thread but past a certain limit, will fail with
+    /// RECURSION_DEPTH_EXCEEDED.
+
     template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
       bool
       TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::tryLock(void) noexcept
@@ -471,8 +478,9 @@ namespace os
       }
 
     /// \details
-    /// Release the calling thread’s ownership of the mutex. Requires that
-    /// the calling thread owns the mutex.
+    /// Release the calling thread’s ownership of the mutex. If
+    /// the calling thread does not own the mutex, the NOT_OWNER error
+    /// is returned.
     ///
     /// This operation synchronises with (1.10) subsequent lock
     /// operations that obtain ownership on the same object.

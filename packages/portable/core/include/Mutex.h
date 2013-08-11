@@ -41,6 +41,7 @@ namespace os
 
       // ======================================================================
 
+      /// \brief Generic signed counter.
       typedef int count_t;
 
       // ======================================================================
@@ -54,7 +55,39 @@ namespace os
       /// \ingroup core_synchro
       /// \nosubgrouping
       ///
-      /// \brief Mutex notifier.
+      /// \brief Generic thread notifier.
+      ///
+      /// \details
+      /// Synchronising multiple threads on a single resource usually
+      /// means that while one thread has exclusive access to the resource,
+      /// the other threads are suspended. When the first thread no
+      /// longer needs the resource, the sleeping threads should be
+      /// resumed, and one of them will get exclusive rights and so on.
+      ///
+      /// In order to be able to resume the sleeping threads, each time
+      /// a thread is suspended, it must be remembered in a list.
+      ///
+      /// To give threads with equal priorities a fair chance
+      /// to access the resource, the order in which accesses were
+      /// issued is preserved, and usually the first that requested
+      /// access will be the first to be resumed. If multiple threads
+      /// want to access the same resource, eventually all of them
+      /// will be resumed, only to detect that the resource is
+      /// still busy, and be suspended again, but with better
+      /// chances to be the lucky ones next time.
+      ///
+      /// This class template implements a simple ordered list
+      /// using a statically allocated array, whose size is
+      /// specified with the template parameter. The number of
+      /// threads waiting for a resource cannot be higher than
+      /// the number of user threads in the system.
+      ///
+      /// To allow further additions, the array is made of
+      /// generic Elements, but for now only the thread
+      /// pointer is stored in an Element.
+      ///
+      /// TNotifier is currently used inside the TGenericMutex class,
+      /// to keep track of threads waiting to lock().
       template<int Size_T = os::core::scheduler::MAX_USER_THREADS>
         class TNotifier
         {
@@ -122,8 +155,8 @@ namespace os
 
           /// \brief Subscripting operator.
           ///
-          /// \param [in] index           The position of the element to return, starting from 0.
-          /// \return                     The array element.
+          /// \param [in] index           The position of the Element to return, starting from 0.
+          /// \return                     The array Element.
           Element&
           operator[](int index);
 
@@ -132,7 +165,7 @@ namespace os
           /// \name Public member functions
           /// @{
 
-          /// \brief Clear array.
+          /// \brief Clear the array.
           ///
           /// \par Parameters
           ///    None.
@@ -145,15 +178,15 @@ namespace os
           ///
           /// \par Parameters
           ///    None.
-          /// \return                   The number of threads in the array.
+          /// \return                   The number of Elements in the array.
           count_t
           getCount(void);
 
-          /// \brief Add thread at the end of the array.
+          /// \brief Add the thread at the end of the array.
           ///
           /// \par Parameters
           ///    None.
-          /// \retval true              The element was added.
+          /// \retval true              The Element was added.
           /// \retval false             There is no more space.
           bool
           pushBack(Thread* pThread);
@@ -171,7 +204,7 @@ namespace os
           ///
           /// \par Parameters
           ///    None.
-          /// \retval true              The element is in the array.
+          /// \retval true              The thread is in the array.
           /// \retval false             Otherwise.
           bool
           hasElement(Thread* pThread);
@@ -194,7 +227,7 @@ namespace os
           ///
           /// \par Parameters
           ///    None.
-          /// \return                     A pointer to the first element.
+          /// \return                     A pointer to the first Element.
           Element volatile*
           begin(void);
 
@@ -202,7 +235,7 @@ namespace os
           ///
           /// \par Parameters
           ///    None.
-          /// \return                     A pointer <b>after</b> the last element.
+          /// \return                     A pointer <b>after</b> the last Element.
           Element volatile*
           end(void);
 
@@ -213,10 +246,10 @@ namespace os
           /// \name Private member variables
           /// @{
 
-          /// \brief Array of pointer to threads waiting to acquire mutex.
+          /// \brief Array of pointer to threads waiting to be notified.
           Element volatile m_array[NOTIFY_ARRAY_SIZE];
 
-          /// \brief Counter for the threads waiting to acquire mutex.
+          /// \brief Counter of threads waiting to be notified.
           count_t volatile m_count;
 
           /// @} end of Private member variables
@@ -242,6 +275,9 @@ namespace os
         {
         }
 
+      /// \details
+      /// Do not actually clear the array content, just
+      /// reset the counter to make the array appear empty.
       template<int Size_T>
         inline void
         __attribute__((always_inline))
@@ -251,7 +287,7 @@ namespace os
         }
 
       /// \details
-      /// Return the actual number of elements in the array.
+      /// Return the actual number of Elements in the array.
       template<int Size_T>
         inline mutex::count_t
         __attribute__((always_inline))
@@ -261,7 +297,7 @@ namespace os
         }
 
       /// \details
-      /// Return a reference to the i-th element of the array.
+      /// Return a reference to the i-th Element of the array.
       template<int Size_T>
         inline typename TNotifier<Size_T>::Element&
         __attribute__((always_inline))
@@ -292,7 +328,7 @@ namespace os
         }
 
       /// \details
-      /// Add an element at the end of the array, if not full.
+      /// Add an Element at the end of the array, if not full.
       template<int Size_T>
         bool
         TNotifier<Size_T>::pushBack(Thread* pThread)
@@ -309,6 +345,9 @@ namespace os
           return true;
         }
 
+      /// \details
+      /// Identify the index of the thread in the array and move all
+      /// subsequent Elements one step to the left.
       template<int Size_T>
         void
         TNotifier<Size_T>::remove(Thread* pThread)
@@ -316,7 +355,7 @@ namespace os
 
           timer::count_t count = m_count;
 
-          // Check if there are any elements in the array
+          // Check if there are any Elements in the array
           if (count == 0)
             {
               // There are not, nothing to do
@@ -344,20 +383,20 @@ namespace os
 
           if (count > 1)
             {
-              // If at least two elements, we might need to move
+              // If at least two Elements, we might need to move
               // part of the array
 
-              // The search left the pointer on the element we
+              // The search left the pointer on the Element we
               // want to remove, p = &m_pArray[index];
 
               for (; index < count - 1; index++, p++)
                 {
-                  // Move remaining elements one step to the left
+                  // Move remaining Elements one step to the left
                   *p = *(p + 1);
                 }
             }
 
-          // We removed one element, the count is decremented
+          // We removed one Element, the count is decremented
           m_count--;
 
         }
@@ -390,7 +429,7 @@ namespace os
 
       /// \details
       /// Iterate the active part of the array and resume all
-      /// threads waiting to acquire the mutex.
+      /// threads waiting.
       template<int Size_T>
         void
         TNotifier<Size_T>::resumeAll(void)
@@ -421,6 +460,9 @@ namespace os
       /// \brief Policy used to implement a recursive mutex.
       ///
       /// Basically a managed counter, to keep track of the recursion depth.
+      /// Each time the mutex is lock, the counter is incremented, and each
+      /// time the mutex is unlocked, the counter is decremented. When the
+      /// counter is zero, the mutex is not in use, and can be acquired.
       class RecursivePolicy
       {
       public:
@@ -504,7 +546,7 @@ namespace os
         ///
         /// \par Parameters
         ///    None.
-        /// \retval true              The embedded unlock() is complete.
+        /// \retval true              The recursive unlock() is complete, the resource is free.
         /// \retval false             Otherwise.
         bool
         isRecursiveUnlockComplete(void);
@@ -780,7 +822,7 @@ namespace os
     /// \tparam Policy_T                Type of the policy used to implement recursion.
     ///
     /// \details
-    /// The TGenericMutex template provides a generic
+    /// The TGenericMutex class template provides a generic
     /// recursive/non-recursive mutex with
     /// exclusive ownership semantics. The specific recursive/non-recursive
     /// behaviour is implemented as a separate policy class.
@@ -790,11 +832,13 @@ namespace os
     /// that object will fail (for tryLock()) or block (for lock())
     /// until the first thread has completely released ownership.
     ///
-    /// A thread that owns a recursive TGenericMutex may acquire
+    /// A thread that owns a recursive instance of the
+    /// TGenericMutex may acquire
     /// additional levels of ownership by calling lock() or tryLock()
     /// on that object. It is unspecified how many levels of ownership
     /// may be acquired by a single thread. However this limit is specified
-    /// in the Policy_T implementation. A thread shall call unlock()
+    /// in the Policy_T implementation (usually very large, like MAX_INT).
+    /// A thread shall call unlock()
     /// once for each level of ownership acquired by calls to lock()
     /// and tryLock(). Only when all levels of ownership have been
     /// released may ownership be acquired by another thread.
@@ -922,7 +966,7 @@ namespace os
         /// \name Private member variables
         /// @{
 
-        /// \brief Pointer to the owner of the mutex or nullptr.
+        /// \brief Pointer to the thread owning the mutex or nullptr if free.
         Thread* volatile m_owningThread = nullptr;
 
         /// \brief The object used to keep track of the threads waiting to
@@ -987,7 +1031,8 @@ namespace os
     /// lifetime (3.8). The behavior of a program is undefined if
     /// the lockable object referenced by m_lockable does not exist for
     /// the entire lifetime of the lock_guard object. The supplied
-    /// Lockable_T type shall meet the BasicLockable requirements (30.2.5.2).
+    /// Lockable_T type shall meet the BasicLockable requirements (30.2.5.2),
+    /// i.e. to have the lock()/unlock() member functions defined.
     /// \note This template is based on the standard C++11 lock_guard template.
     template<class Lockable_T>
       class TLockGuard
