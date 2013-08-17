@@ -260,11 +260,11 @@ namespace os
   /// @{
 
   /// \brief The portable `architecture` object. Use it even if
-  /// on most architectures the functions are static.
+  /// on most architectures its functions are static.
   hal::arch::ArchitectureImplementation architecture;
 
-  /// \brief The portable `platform` abject. Use it even if
-  /// on most platforms the functions are static.
+  /// \brief The portable `platform` object. Use it even if
+  /// on most platforms its functions are static.
   hal::platform::PlatformImplementation platform;
 
   /// @} end of ingroup core_port
