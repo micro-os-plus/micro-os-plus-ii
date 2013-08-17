@@ -27,6 +27,7 @@ namespace os
   {
     // ========================================================================
 
+#if 0
     /// \details
     /// Insert the current thread with the given number of ticks in the
     /// timer counters storage, and suspend the current thread repeately
@@ -81,6 +82,7 @@ namespace os
           pThread->suspendWithTimeout(ticks - (nowTicks - beginTicks), *this);
         }
     }
+#endif
 
 #if 0
     /// \details
@@ -233,7 +235,7 @@ namespace os
     /// sleep are ordered ascending. The value stored for the ticks is
     /// relative to the previous element.
     ///
-    /// In case two threads need to be resumed at the same time, the
+    /// In case two threads need to be waked-up at the same time, the
     /// second one inserted will have a ticks value of 0, and the
     /// ticks interrupt routine must process all elements until
     /// a non zero is encountered.
@@ -323,13 +325,13 @@ namespace os
 
     /// \details
     /// This routine is called from the timer interrupt service routine
-    /// to count ticks and to resume the suspended threads when their
+    /// to count ticks and to wake-up the sleeping threads when their
     /// associated counters reach zero.
     ///
     /// Due to the way ticks are stored relatively to the previous element,
     /// only the top counter needs to be decremented. When zero is
     /// reached, the thread related to the current element and the threads
-    /// related to all following elements with ticks=0 will be resumed.
+    /// related to all following elements with ticks=0 will be waked-up.
     void
     TimerBase::processTickFromInterrupt(void)
     {
@@ -338,7 +340,7 @@ namespace os
 #endif // defined(DEBUG) && defined(OS_DEBUG_TIMERBASE_INTERRUPTTICK)
       m_ticks++;
 
-      // decrement timer and eventually resume thread
+      // decrement timer and eventually wake-up thread
       if (m_count > 0) // is there anything in the list?
         {
 #if defined(DEBUG) && defined(OS_DEBUG_TIMERBASE_INTERRUPTTICK)
@@ -358,7 +360,8 @@ namespace os
                   os::diag::trace.putNewLine();
 #endif // defined(DEBUG) && defined(OS_DEBUG_TIMERBASE_INTERRUPTTICK)
                   // sleep period completed, resume the thread
-                  p->pThread->resumeFromInterrupt(ResumeDetails::TIMER);
+                  //p->pThread->resumeFromInterrupt(ResumeDetails::TIMER);
+                  p->pThread->wakeup(thread::WakeupDetails::TIMER);
 
                   // Remove the top element from the array
 

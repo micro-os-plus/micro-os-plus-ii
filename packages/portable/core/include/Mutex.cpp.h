@@ -195,7 +195,7 @@ namespace os
 
         for (;;)
           {
-            pThread->suspend();
+            pThread->sleep();
             // The resume details are not used here
 
             // check attention
@@ -464,7 +464,7 @@ namespace os
                 // ----- Critical section end ---------------------------------
               }
 
-            pThread->suspendWithTimeout(ticks - (nowTicks - beginTicks), timer);
+            pThread->sleep(ticks - (nowTicks - beginTicks), timer);
             // the resume details are not used here
 
               {
@@ -553,8 +553,8 @@ namespace os
             // Counter reached 0, release ownership
             m_owningThread = nullptr;
 
-            // Resume waiting threads
-            m_notifier.resumeAll();
+            // Wake-up sleeping threads
+            m_notifier.wakeupAll();
             m_notifier.clear();
 
             // ----- Critical section end -------------------------------------

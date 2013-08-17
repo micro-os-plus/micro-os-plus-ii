@@ -31,6 +31,7 @@ static os::infra::TestSuiteOstream ts;
 #include "portable/core/include/TimerTicks.h"
 #include "portable/core/include/CriticalSections.h"
 #include "portable/core/include/Mutex.h"
+#include "portable/core/include/MainThread.h"
 
 // ----------------------------------------------------------------------------
 
@@ -125,8 +126,10 @@ namespace thread
       ts.assertCondition(m2.tryLock() == false);
       ts.assertCondition(m2.tryLock() == false);
 
+      os::core::Thread& thread = os::mainThread;
+
       while (!m2.tryLock())
-        os::timerTicks.sleep(1);
+        thread.sleep(1);
 
       os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
 
@@ -218,7 +221,8 @@ runTestMutex()
 
       th1.start();
 
-      os::timerTicks.sleep(thread::mutex::INTERVAL);
+      os::core::Thread& thread = os::mainThread;
+      thread.sleep(thread::mutex::INTERVAL);
 
       thread::mutex::m1.unlock();
 
@@ -233,7 +237,8 @@ runTestMutex()
 
       th2.start();
 
-      os::timerTicks.sleep(thread::mutex::INTERVAL);
+      os::core::Thread& thread = os::mainThread;
+      thread.sleep(thread::mutex::INTERVAL);
 
       thread::mutex::m2.unlock();
 
@@ -248,7 +253,8 @@ runTestMutex()
       th3.start();
 
       // sleep less than tryLockFor(INTERVAL_LONG)
-      os::timerTicks.sleep(thread::mutex::INTERVAL_SHORT);
+      os::core::Thread& thread = os::mainThread;
+            thread.sleep(thread::mutex::INTERVAL_SHORT);
 
       thread::mutex::m3.unlock();
       th3.join();
@@ -262,7 +268,8 @@ runTestMutex()
       th4.start();
 
       // sleep longer than tryLock(INTERVAL_SHORT)
-      os::timerTicks.sleep(thread::mutex::INTERVAL_LONG);
+      os::core::Thread& thread = os::mainThread;
+            thread.sleep(thread::mutex::INTERVAL_LONG);
 
       thread::mutex::m4.unlock();
       th4.join();
@@ -340,8 +347,11 @@ namespace thread
       ts.assertCondition(rm2.tryLock() == false);
       ts.assertCondition(rm2.tryLock() == false);
 
-      while (!rm2.tryLock())
-        os::timerTicks.sleep(1);
+      os::core::Thread& thread = os::mainThread;
+
+      while (!rm2.tryLock()){
+              thread.sleep(1);
+      }
 
       os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
 
@@ -441,17 +451,18 @@ runTestRecursiveMutex()
 
       th1.start();
 
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+      os::core::Thread& thread = os::mainThread;
+            thread.sleep(thread::recursivemutex::INTERVAL / 3);
         {
           // second lock
           thread::recursivemutex::rm1.lock();
 
-          os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+          thread.sleep(thread::recursivemutex::INTERVAL / 3);
 
           // first unlock
           thread::recursivemutex::rm1.unlock();
         }
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+        thread.sleep(thread::recursivemutex::INTERVAL / 3);
 
       // second unlock
       thread::recursivemutex::rm1.unlock();
@@ -468,17 +479,18 @@ runTestRecursiveMutex()
 
       th2.start();
 
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+      os::core::Thread& thread = os::mainThread;
+      thread.sleep(thread::recursivemutex::INTERVAL / 3);
         {
           // second lock
           thread::recursivemutex::rm2.lock();
 
-          os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+          thread.sleep(thread::recursivemutex::INTERVAL / 3);
 
           // first unlock
           thread::recursivemutex::rm2.unlock();
         }
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL / 3);
+        thread.sleep(thread::recursivemutex::INTERVAL / 3);
 
       // second unlock
       thread::recursivemutex::rm2.unlock();
@@ -496,17 +508,18 @@ runTestRecursiveMutex()
 
       th3.start();
 
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
+      os::core::Thread& thread = os::mainThread;
+      thread.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
         {
           // second lock
           thread::recursivemutex::rm3.lock();
 
-          os::timerTicks.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
+          thread.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
 
           // first unlock
           thread::recursivemutex::rm3.unlock();
         }
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
+        thread.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
 
       // second unlock
       thread::recursivemutex::rm3.unlock();
@@ -524,17 +537,18 @@ runTestRecursiveMutex()
 
       th4.start();
 
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
+      os::core::Thread& thread = os::mainThread;
+      thread.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
         {
           // second lock
           thread::recursivemutex::rm4.lock();
 
-          os::timerTicks.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
+          thread.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
 
           // first unlock
           thread::recursivemutex::rm4.unlock();
         }
-      os::timerTicks.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
+        thread.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
 
       // second unlock
       thread::recursivemutex::rm4.unlock();

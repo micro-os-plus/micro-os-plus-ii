@@ -108,7 +108,7 @@ namespace os
       // activate all non suspended threads
       for (auto pThread : m_registered)
         {
-          if (!pThread->isSuspended())
+          if (pThread->getState() != thread::State::SUSPENDED)
             {
               m_active.insert(pThread);
             }
@@ -200,15 +200,17 @@ namespace os
       os::diag::trace.putString(pThread->getName());
 #endif
 
+      // TODO: eventually optimise, skip remove/insert if the second
+      // thread priority is not the same
+
       // Remove the running thread from the top of the active list
       m_active.remove(pThread);
 
       // Eventually reinsert it at the end of the list (round robin)
 
-      if ((!pThread->isSuspended()) && (pThread->getId() != scheduler::NO_ID))
+      if (pThread->getState() == thread::State::RUNNING)
         {
-          // If not suspended and not terminated, insert again
-          // Th
+          // If running, insert again
           m_active.insert(pThread);
         }
 
@@ -249,7 +251,8 @@ namespace os
 
           if (os::scheduler.isRunning())
             {
-              // if the scheduler is running, all new threads are active
+              // if the scheduler is running, all new threads
+              // are automatically active
               m_active.insert(pThread);
             }
         }

@@ -62,17 +62,17 @@ namespace os
       /// means that while one thread has exclusive access to the resource,
       /// the other threads are suspended. When the first thread no
       /// longer needs the resource, the sleeping threads should be
-      /// resumed, and one of them will get exclusive rights and so on.
+      /// wake-up, and one of them will get exclusive rights and so on.
       ///
-      /// In order to be able to resume the sleeping threads, each time
-      /// a thread is suspended, it must be remembered in a list.
+      /// In order to be able to wake-up the sleeping threads, each time
+      /// a thread goes to sleep, it must be remembered in a list.
       ///
       /// To give threads with equal priorities a fair chance
       /// to access the resource, the order in which accesses were
       /// issued is preserved, and usually the first that requested
-      /// access will be the first to be resumed. If multiple threads
+      /// access will be the first to be waked-up. If multiple threads
       /// want to access the same resource, eventually all of them
-      /// will be resumed, only to detect that the resource is
+      /// will be waked-up, only to detect that the resource is
       /// still busy, and be suspended again, but with better
       /// chances to be the lucky ones next time.
       ///
@@ -209,14 +209,14 @@ namespace os
           bool
           hasElement(Thread* pThread);
 
-          /// \brief Resume all threads present in the array.
+          /// \brief Wake-up all threads present in the array.
           ///
           /// \par Parameters
           ///    None.
           /// \par Return
           ///   Nothing.
           void
-          resumeAll(void);
+          wakeupAll(void);
 
           /// @} end of Public member functions
 
@@ -428,25 +428,25 @@ namespace os
         }
 
       /// \details
-      /// Iterate the active part of the array and resume all
-      /// threads waiting.
+      /// Iterate the active part of the array and wake-up all
+      /// sleeping threads.
       template<int Size_T>
         void
-        TNotifier<Size_T>::resumeAll(void)
+        TNotifier<Size_T>::wakeupAll(void)
         {
           // Resume all waiting threads
 #if 1
           for (Element element : *this)
             {
-              element.pThread->resume(
-                  ResumeDetails::REGULAR | ResumeDetails::MUTEX);
+              element.pThread->wakeup(
+                  thread::WakeupDetails::REGULAR | thread::WakeupDetails::MUTEX);
             }
 
 #else
           for (count_t i = 0; i < m_count; ++i)
             {
               // no context switches will happen inside critical section
-              m_array[i].pThread->resume(ResumeDetails::REGULAR | ResumeDetails::MUTEX);
+              m_array[i].pThread->wakeup(ResumeDetails::REGULAR | ResumeDetails::MUTEX);
             }
 #endif
         }

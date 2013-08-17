@@ -21,6 +21,7 @@
 #include "portable/core/include/Stack.h"
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/TimerBase.h"
+#include "portable/core/include/TimerTicks.h"
 
 #include "portable/core/include/Error.h"
 
@@ -30,6 +31,7 @@ namespace os
   {
     // ========================================================================
 
+#if 0
     typedef unsigned int resumeDetails_t;
 
     class ResumeDetails
@@ -41,7 +43,38 @@ namespace os
       // Even more details, in addition to REGULAR
       static constexpr resumeDetails_t MUTEX = (1 << 8);
     };
+#endif
 
+    namespace thread
+    {
+      typedef unsigned int state_t;
+
+      class State
+      {
+      public:
+        static constexpr state_t NOT_STARTED = 0;
+        static constexpr state_t RUNNING = (1 << 0);
+        static constexpr state_t SLEEPING = (1 << 1);
+        static constexpr state_t SUSPENDED = (1 << 2);
+        static constexpr state_t TERMINATED = (1 << 3);
+
+        State(void) = delete;
+      };
+
+      typedef unsigned int wakeupDetails_t;
+
+      class WakeupDetails
+      {
+      public:
+        static constexpr wakeupDetails_t REGULAR = (1 << 0);
+        static constexpr wakeupDetails_t TIMER = (1 << 1);
+        static constexpr wakeupDetails_t ATTENTION = (1 << 2);
+        // Even more details, in addition to REGULAR
+        static constexpr wakeupDetails_t MUTEX = (1 << 8);
+
+        WakeupDetails(void) = delete;
+      };
+    }
     // ========================================================================
 
 #pragma GCC diagnostic push
@@ -273,6 +306,34 @@ namespace os
       void
       join(void);
 
+      /// \brief Get state.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return The thread state.
+      thread::state_t
+      getState(void);
+
+#if 1
+      /// \brief Suspend the thread.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      void
+      suspend(void);
+
+      /// \brief Resume the thread.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      void
+      resume(void);
+
+#else
       /// \brief Suspend the thread.
       ///
       /// \par Parameters
@@ -306,7 +367,9 @@ namespace os
       ///    Nothing.
       void
       resume(resumeDetails_t detail = ResumeDetails::REGULAR);
+#endif
 
+#if 0
       /// \brief Check if the thread is suspended.
       ///
       /// \par Parameters
@@ -315,6 +378,16 @@ namespace os
       /// \retval false         Otherwise.
       bool
       isSuspended(void) const;
+
+      /// \brief Check if the thread is sleeping.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \retval true          The thread is sleeping.
+      /// \retval false         Otherwise.
+      bool
+      isSleeping(void) const;
+#endif
 
       /// \brief Check if the thread is waiting for attention.
       ///
@@ -378,6 +451,32 @@ namespace os
       void
       setError(errorNumber_t error);
 
+      /// \brief Sleep.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return The wakeup() detailed flags.
+      ///    Nothing.
+      thread::wakeupDetails_t
+      sleep(void);
+
+      /// \brief Sleep a number of ticks.
+      ///
+      /// \param [in] ticks   The number of counter ticks to sleep.
+      /// \param [in] timer   The timer to use.
+      /// \return The wakeup() detailed flags.
+      ///    Nothing.
+      thread::wakeupDetails_t
+      sleep(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
+
+      /// \brief Wakeup the thread.
+      ///
+      /// \param [in] detail   A negative integer or zero.
+      /// \par Returns
+      ///    Nothing.
+      void
+      wakeup(thread::wakeupDetails_t detail = thread::WakeupDetails::REGULAR);
+
       /// @} end of Public member functions
 
     private:
@@ -424,8 +523,16 @@ namespace os
       /// \name Private member variables
       /// @{
 
+      /// \brief Thread state.
+      thread::state_t volatile m_state;
+
+#if 0
       /// \brief Boolean to remember when the thread is suspended.
       bool volatile m_isSuspended;
+
+      /// \brief Boolean to remember when the thread is sleeping.
+      bool volatile m_isSleeping;
+#endif
 
       /// \brief Boolean to remember when special attention is requested.
       bool volatile m_isAttentionRequested;
@@ -443,7 +550,10 @@ namespace os
       priority_t volatile m_initialPriority;
 
       /// \brief A bitmask detailing the resume condition.
-      resumeDetails_t m_resumeDetails;
+      //resumeDetails_t m_resumeDetails;
+
+      /// \brief A bitmask detailing the wakeup() condition.
+      thread::wakeupDetails_t m_wakeupDetails;
 
       /// \brief The error code provided by the last call.
       /// Can indicate success or one of the multiple failure reasons.
@@ -591,12 +701,28 @@ namespace os
       return m_context;
     }
 
+    inline thread::state_t
+    __attribute__((always_inline))
+    Thread::getState(void)
+    {
+      return m_state;
+    }
+
+#if 0
     inline bool
     __attribute__((always_inline))
     Thread::isSuspended(void) const
     {
       return m_isSuspended;
     }
+
+    inline bool
+    __attribute__((always_inline))
+    Thread::isSleeping(void) const
+    {
+      return m_isSleeping;
+    }
+#endif
 
     inline bool
     __attribute__((always_inline))

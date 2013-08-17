@@ -113,6 +113,7 @@ namespace os
       timer::ticks_t
       getCurrentTicks(void) const;
 
+#if 0
       /// \brief Sleep a number of ticks.
       ///
       /// \param [in] ticks     The number of ticks to sleep.
@@ -120,6 +121,7 @@ namespace os
       ///    Nothing.
       void
       sleep(timer::ticks_t ticks);
+#endif
 
       /// \brief The tick interrupt routine.
       ///

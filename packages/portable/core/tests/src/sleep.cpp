@@ -9,7 +9,7 @@
 
 #include "portable/infrastructure/include/TestSuite.h"
 
-// This test exercises the timerTicks.sleep() call.
+// This test exercises the thread.sleep() call using timerTicks.
 
 // ----------------------------------------------------------------------------
 
@@ -30,6 +30,7 @@ static os::infra::TestSuiteOstream ts;
 #include "portable/core/include/Thread.h"
 #include "portable/core/include/TimerTicks.h"
 #include "portable/core/include/CriticalSections.h"
+#include "portable/core/include/MainThread.h"
 
 // ----------------------------------------------------------------------------
 
@@ -49,17 +50,21 @@ runTestAccuracy()
   os::diag::trace.putNewLine();
 #endif
 
-  ts.setClassName("os::core::TimerTicks");
+  ts.setClassName("os::core::Thread");
   ts.setFunctionNameOrPrefix("sleep()");
 
-  os::timerTicks.sleep(1);
+  os::core::Thread& thread = os::mainThread;
+
+  //os::timerTicks.sleep(1);
+  thread.sleep(1);
 
   os::core::timer::ticks_t ticksBegin = os::timerTicks.getCurrentTicks();
 
   timeval begTime;
   gettimeofday(&begTime, 0);
 
-  os::timerTicks.sleep(os::core::scheduler::TICKS_PER_SECOND);
+  //os::timerTicks.sleep(os::core::scheduler::TICKS_PER_SECOND);
+  thread.sleep(os::core::scheduler::TICKS_PER_SECOND);
 
   os::core::timer::ticks_t ticksEnd = os::timerTicks.getCurrentTicks();
 
@@ -191,7 +196,8 @@ Task::threadMain(void)
   os::diag::trace.putMemberFunctionWithName();
 #endif
 
-  os::timerTicks.sleep(10);
+  //os::timerTicks.sleep(10);
+  m_thread.sleep(10);
 
   os::core::timer::ticks_t ticksBegin = os::timerTicks.getCurrentTicks();
 
@@ -201,7 +207,9 @@ Task::threadMain(void)
       os::core::timer::ticks_t i;
       for (i = FROM; i <= TO; i++)
         {
-          os::timerTicks.sleep(i);
+          //os::timerTicks.sleep(i);
+          m_thread.sleep(i);
+
           m_count += i;
           ++m_sleepCalls;
         }
@@ -211,7 +219,8 @@ Task::threadMain(void)
 
   m_deltaTicks = ticksEnd - ticksBegin;
 
-  os::timerTicks.sleep(50);
+  //os::timerTicks.sleep(50);
+  m_thread.sleep(50);
 
   ts << "Multiple sleeps of " << SUM << " ticks took " << m_deltaTicks
       << " counted ticks, \"" << getThread().getName() << "\"" << os::std::endl;
@@ -237,7 +246,7 @@ runTestMulti()
   os::diag::trace.putNewLine();
 #endif
 
-  ts.setClassName("os::core::TimerTicks");
+  ts.setClassName("os::core::Thread");
   ts.setFunctionNameOrPrefix("sleep()");
 
   Task task1("T1", hal::arch::MIN_STACK_SIZE);
@@ -249,7 +258,6 @@ runTestMulti()
   Task* taskArray[5] =
     { &task1, &task2, &task3, &task4, &task5 };
 
-  ts.setFunctionNameOrPrefix("sleep()");
 
   for (auto pTask : taskArray)
     {

@@ -7,7 +7,7 @@
 
 #include "portable/infrastructure/include/TestSuite.h"
 
-// This stress test exercises the timerTicks.sleep() call and if the
+// This stress test exercises the Thread::sleep() call and if the
 // scheduler and timer internal structures are properly protected by
 // critical sections.
 
@@ -222,7 +222,8 @@ Task::threadMain(void)
       os::architecture.busyWaitMicros(nBusy);
 
       // simulate a period of waiting for an external event
-      os::timerTicks.sleep(nSleep);
+      //os::timerTicks.sleep(nSleep);
+      getThread().sleep(nSleep);
 
       m_count++;
       m_ticks += nSleep;
@@ -330,7 +331,9 @@ TaskPeriodic::threadMain(void)
   int t = 0;
   for (;;)
     {
-      os::timerTicks.sleep(5000);
+      //os::timerTicks.sleep(5000);
+      getThread().sleep(5000);
+
       t += 5;
       if (MAX_RUN_SECONDS != 0 and t > MAX_RUN_SECONDS)
         break;
