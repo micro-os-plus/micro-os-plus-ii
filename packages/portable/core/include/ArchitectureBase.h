@@ -99,6 +99,15 @@ namespace os
       static void
       busyWaitMicros(uint32_t micros);
 
+      /// \brief Check if in interrupt context.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \retval true          Running in interrupt context.
+      /// \retval false         Otherwise.
+      static bool
+      isInterruptContext(void);
+
       /// @} end of Public member functions
 
     };
@@ -155,6 +164,13 @@ namespace os
     __attribute__((always_inline))
     ArchitectureBase::busyWaitMicros(uint32_t micros __attribute__((unused)))
     {
+    }
+
+    inline bool
+    __attribute__((always_inline))
+    ArchitectureBase::isInterruptContext(void)
+    {
+      return false;
     }
 
   // ========================================================================
