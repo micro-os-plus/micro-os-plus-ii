@@ -278,7 +278,7 @@ namespace hal
     using InterruptsCriticalSection = hal::posix::InterruptsCriticalSection;
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-  }
+  } // namespace arch
 
 // ============================================================================
 
