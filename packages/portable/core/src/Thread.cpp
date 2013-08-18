@@ -339,24 +339,16 @@ namespace os
           return;
         }
 #endif
-#if 1
+
       Thread* pThread = os::scheduler.getCurrentThread();
 
+      // Wait for the thread to be terminated
       pThread->sleepWhile([=]()
         {
-          return (m_id != scheduler::NO_ID);
+          // lambda return
+          return (m_state != thread::State::TERMINATED);
         });
-#else
-      // TODO: change to sleepWhile()
-      while (m_id != scheduler::NO_ID)
-        {
-          // TODO: Study if we should consider attention requests. How?
 
-          // Suspend the thread calling join(), not the thread
-          // to be joined!
-          os::scheduler.getCurrentThread()->sleepFor(1);
-        }
-#endif
     }
 
     /// \details
