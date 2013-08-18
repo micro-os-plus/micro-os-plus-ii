@@ -35,14 +35,14 @@ namespace os
     typedef unsigned int resumeDetails_t;
 
     class ResumeDetails
-    {
-    public:
-      static constexpr resumeDetails_t REGULAR = (1 << 0);
-      static constexpr resumeDetails_t TIMER = (1 << 1);
-      static constexpr resumeDetails_t ATTENTION = (1 << 2);
-      // Even more details, in addition to REGULAR
-      static constexpr resumeDetails_t MUTEX = (1 << 8);
-    };
+      {
+      public:
+        static constexpr resumeDetails_t REGULAR = (1 << 0);
+        static constexpr resumeDetails_t TIMER = (1 << 1);
+        static constexpr resumeDetails_t ATTENTION = (1 << 2);
+        // Even more details, in addition to REGULAR
+        static constexpr resumeDetails_t MUTEX = (1 << 8);
+      };
 #endif
 
     namespace thread
@@ -450,7 +450,7 @@ namespace os
       ///    Nothing.
       void
       setError(errorNumber_t error);
-
+#if 0
       /// \brief Sleep.
       ///
       /// \par Parameters
@@ -459,15 +459,27 @@ namespace os
       ///    Nothing.
       thread::wakeupDetails_t
       sleep(void);
-
-      /// \brief Sleep a number of ticks.
+#endif
+      /// \brief Sleep for a number of ticks.
       ///
       /// \param [in] ticks   The number of counter ticks to sleep.
       /// \param [in] timer   The timer to use.
       /// \return The wakeup() detailed flags.
       ///    Nothing.
       thread::wakeupDetails_t
-      sleep(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
+      sleepFor(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
+
+      /// \brief Sleep while a condition is met, up to a number of ticks.
+      ///
+      /// \param [in] predicate   The condition to test.
+      /// \param [in] ticks       The number of counter ticks to sleep.
+      /// \param [in] timer       The timer to use.
+      /// \return The wakeup() detailed flags.
+      ///    Nothing.
+      template<class Predicate_T>
+        thread::wakeupDetails_t
+        sleepWhile(Predicate_T predicate, timer::ticks_t ticks = 0,
+            TimerBase& timer = os::timerTicks);
 
       /// \brief Wakeup the thread.
       ///
@@ -517,6 +529,15 @@ namespace os
       ///    Nothing.
       void
       setId(id_t id);
+
+      /// \brief Sleep, possibly with timeout
+      ///
+      /// \param [in] ticks       The number of counter ticks to sleep.
+      /// \param [in] timer       The timer to use.
+      /// \param [in] beginTicks       The number of ticks at the beginning.
+      bool
+      didSleepTimeout(timer::ticks_t ticks, TimerBase& timer,
+          timer::ticks_t beginTicks);
 
       /// @} end of Private member functions
 
@@ -712,16 +733,16 @@ namespace os
     inline bool
     __attribute__((always_inline))
     Thread::isSuspended(void) const
-    {
-      return m_isSuspended;
-    }
+      {
+        return m_isSuspended;
+      }
 
     inline bool
     __attribute__((always_inline))
     Thread::isSleeping(void) const
-    {
-      return m_isSleeping;
-    }
+      {
+        return m_isSleeping;
+      }
 #endif
 
     inline bool
@@ -748,6 +769,79 @@ namespace os
     {
       m_error = error;
     }
+
+    template<class Predicate_T>
+      inline thread::wakeupDetails_t
+      __attribute__((always_inline))
+      Thread::sleepWhile(Predicate_T predicate, timer::ticks_t ticks,
+          TimerBase& timer)
+      {
+        // Clear the detail flags
+        m_wakeupDetails = 0;
+
+#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
+        os::diag::trace.putString("Thread::sleepWhile()");
+        os::diag::trace.putNewLine();
+#endif
+
+        if (m_state != thread::State::RUNNING)
+          {
+            return m_wakeupDetails;
+          }
+
+        timer::ticks_t beginTicks = timer.getCurrentTicks();
+
+        // TODO: make it run when the scheduler is disabled
+
+        for (;;)
+          {
+            if (!predicate())
+              {
+                // If the condition is no longer true, return
+                return m_wakeupDetails;
+              }
+
+#if 1
+            if (!didSleepTimeout(ticks, timer, beginTicks))
+              {
+                return m_wakeupDetails;
+              }
+#else
+            if (isAttentionRequested())
+              {
+                // Quit everything if attention was requested
+                return m_wakeupDetails;
+              }
+
+            // If the condition is still true, we must sleep,
+            // either indefinitely or for a limited number of ticks
+            if (ticks != 0)
+              {
+                timer::ticks_t nowTicks = timer.getCurrentTicks();
+                if ((nowTicks - beginTicks) >= ticks)
+                  {
+                    return m_wakeupDetails;
+                  }
+
+                  {
+                    // ----- Timeout guard begin --------------------------------------------
+                    TimeoutGuard tg(ticks - (nowTicks - beginTicks), timer);
+
+                    m_state = thread::State::SLEEPING;
+
+                    os::scheduler.yield();
+                    // ----- Timeout guard end ----------------------------------------------
+                  }
+              }
+            else
+              {
+                m_state = thread::State::SLEEPING;
+
+                os::scheduler.yield();
+              }
+#endif
+          }
+      }
 
   // ==========================================================================
 

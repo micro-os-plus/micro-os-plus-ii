@@ -339,7 +339,14 @@ namespace os
           return;
         }
 #endif
+#if 1
+      Thread* pThread = os::scheduler.getCurrentThread();
 
+      pThread->sleepWhile([=]()
+        {
+          return (m_id != scheduler::NO_ID);
+        });
+#else
       // TODO: change to sleepWhile()
       while (m_id != scheduler::NO_ID)
         {
@@ -347,8 +354,9 @@ namespace os
 
           // Suspend the thread calling join(), not the thread
           // to be joined!
-          os::scheduler.getCurrentThread()->sleep(1);
+          os::scheduler.getCurrentThread()->sleepFor(1);
         }
+#endif
     }
 
     /// \details
@@ -417,39 +425,41 @@ namespace os
       m_isAttentionRequested = false;
     }
 
+#if 0
     thread::wakeupDetails_t
     Thread::sleep(void)
-    {
-      // Clear the detail flags
-      m_wakeupDetails = 0;
+      {
+        // Clear the detail flags
+        m_wakeupDetails = 0;
 
 #if defined(DEBUG) && defined(OS_DEBUG_THREAD)
-      os::diag::trace.putString("Thread::sleep()");
-      os::diag::trace.putNewLine();
+        os::diag::trace.putString("Thread::sleep()");
+        os::diag::trace.putNewLine();
 #endif
 
-      if (m_state != thread::State::RUNNING)
-        {
-          return m_wakeupDetails;
-        }
+        if (m_state != thread::State::RUNNING)
+          {
+            return m_wakeupDetails;
+          }
 
-      if (isAttentionRequested())
-        {
-          // Return immediately if attention was requested
-          return m_wakeupDetails;
-        }
+        if (isAttentionRequested())
+          {
+            // Return immediately if attention was requested
+            return m_wakeupDetails;
+          }
 
 #if 0
-      m_isSuspended = true;
-      m_isSleeping = true;
+        m_isSuspended = true;
+        m_isSleeping = true;
 #endif
 
-      m_state = thread::State::SLEEPING;
+        m_state = thread::State::SLEEPING;
 
-      os::scheduler.yield();
+        os::scheduler.yield();
 
-      return m_wakeupDetails;
-    }
+        return m_wakeupDetails;
+      }
+#endif
 
     /// \details
     /// Insert the current thread with the given number of ticks in the
@@ -462,13 +472,13 @@ namespace os
     /// If the scheduler is locked, this call is still functional, but
     /// using a busy wait until the ticks elapse.
     thread::wakeupDetails_t
-    Thread::sleep(timer::ticks_t ticks, TimerBase& timer)
+    Thread::sleepFor(timer::ticks_t ticks, TimerBase& timer)
     {
       // Clear the detail flags
       m_wakeupDetails = 0;
 
 #if defined(DEBUG) && defined(OS_DEBUG_THREAD)
-      os::diag::trace.putString("Thread::sleep(");
+      os::diag::trace.putString("Thread::sleepFor(");
       os::diag::trace.putDec(ticks);
       os::diag::trace.putString(")");
       os::diag::trace.putNewLine();
@@ -498,6 +508,12 @@ namespace os
 
       for (;;)
         {
+#if 1
+          if (didSleepTimeout(ticks, timer, beginTicks))
+            {
+              return m_wakeupDetails;
+            }
+#else
           timer::ticks_t nowTicks = timer.getCurrentTicks();
           if ((nowTicks - beginTicks) >= ticks)
             {
@@ -519,6 +535,7 @@ namespace os
               os::scheduler.yield();
               // ----- Timeout guard end ----------------------------------------------
             }
+#endif
         }
     }
 
@@ -551,6 +568,46 @@ namespace os
           os::scheduler.resumeThreadFromInterrupt(this);
           // ----- Critical section end ---------------------------------------
         }
+    }
+
+    bool
+    Thread::didSleepTimeout(timer::ticks_t ticks, TimerBase& timer,
+        timer::ticks_t beginTicks)
+    {
+      if (isAttentionRequested())
+        {
+          // Quit everything if attention was requested
+          return false;
+        }
+
+      // If the condition is still true, we must sleep,
+      // either indefinitely or for a limited number of ticks
+      if (ticks != 0)
+        {
+          timer::ticks_t nowTicks = timer.getCurrentTicks();
+          if ((nowTicks - beginTicks) >= ticks)
+            {
+              return false;
+            }
+
+            {
+              // ----- Timeout guard begin --------------------------------------------
+              TimeoutGuard tg(ticks - (nowTicks - beginTicks), timer);
+
+              m_state = thread::State::SLEEPING;
+
+              os::scheduler.yield();
+              // ----- Timeout guard end ----------------------------------------------
+            }
+        }
+      else
+        {
+          m_state = thread::State::SLEEPING;
+
+          os::scheduler.yield();
+        }
+
+      return true;
     }
 
   // ------------------------------------------------------------------------
