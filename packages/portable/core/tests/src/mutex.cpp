@@ -59,8 +59,10 @@ computeAbsoluteProcent(os::core::timer::ticks_t beginTs,
 
   int proc = (int) ((abs * 100 + interval / 2) / interval);
 
+#if 0
   ts << endTs << "-" << beginTs << "=" << delta << " abs=" << abs << " " << proc
       << "% of " << interval << os::std::endl;
+#endif
 
   return proc;
 }
