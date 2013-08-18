@@ -47,14 +47,20 @@ int
 computeAbsoluteProcent(os::core::timer::ticks_t beginTs,
     os::core::timer::ticks_t endTs, os::core::timer::ticks_t interval)
 {
-  os::core::timer::ticks_t d = endTs - beginTs;
+  os::core::timer::ticks_t delta = endTs - beginTs;
 
-  if (d >= interval)
-    d -= interval;
+  os::core::timer::ticks_t abs;
+
+  // compute abs(d-interval)
+  if (delta >= interval)
+    abs = delta - interval;
   else
-    d = (interval - d);
+    abs = (interval - delta);
 
-  int proc = (int) ((d * 100 + interval / 2) / interval);
+  int proc = (int) ((abs * 100 + interval / 2) / interval);
+
+  ts << endTs << "-" << beginTs << "=" << delta << " abs=" << abs << " " << proc
+      << "% of " << interval << os::std::endl;
 
   return proc;
 }
@@ -126,17 +132,17 @@ namespace thread
       ts.assertCondition(m2.tryLock() == false);
       ts.assertCondition(m2.tryLock() == false);
 
-      os::core::Thread& thread = os::mainThread;
+      os::core::Thread* thread = os::scheduler.getCurrentThread();
 
       while (!m2.tryLock())
-        thread.sleep(1);
-
+      {
+        thread->sleepFor(1);
+      }
       os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
 
       m2.unlock();
 
       int proc = computeAbsoluteProcent(t0, t1, INTERVAL);
-      //ts << d << os::std::endl;
 
       ts.setFunctionNameOrPrefix("tryLock()");
       ts.assertCondition(proc < 10);
@@ -222,7 +228,7 @@ runTestMutex()
       th1.start();
 
       os::core::Thread& thread = os::mainThread;
-      thread.sleep(thread::mutex::INTERVAL);
+      thread.sleepFor(thread::mutex::INTERVAL);
 
       thread::mutex::m1.unlock();
 
@@ -238,7 +244,7 @@ runTestMutex()
       th2.start();
 
       os::core::Thread& thread = os::mainThread;
-      thread.sleep(thread::mutex::INTERVAL);
+      thread.sleepFor(thread::mutex::INTERVAL);
 
       thread::mutex::m2.unlock();
 
@@ -254,7 +260,7 @@ runTestMutex()
 
       // sleep less than tryLockFor(INTERVAL_LONG)
       os::core::Thread& thread = os::mainThread;
-            thread.sleep(thread::mutex::INTERVAL_SHORT);
+      thread.sleepFor(thread::mutex::INTERVAL_SHORT);
 
       thread::mutex::m3.unlock();
       th3.join();
@@ -269,7 +275,7 @@ runTestMutex()
 
       // sleep longer than tryLock(INTERVAL_SHORT)
       os::core::Thread& thread = os::mainThread;
-            thread.sleep(thread::mutex::INTERVAL_LONG);
+      thread.sleepFor(thread::mutex::INTERVAL_LONG);
 
       thread::mutex::m4.unlock();
       th4.join();
@@ -347,11 +353,12 @@ namespace thread
       ts.assertCondition(rm2.tryLock() == false);
       ts.assertCondition(rm2.tryLock() == false);
 
-      os::core::Thread& thread = os::mainThread;
+      os::core::Thread* thread = os::scheduler.getCurrentThread();
 
-      while (!rm2.tryLock()){
-              thread.sleep(1);
-      }
+      while (!rm2.tryLock())
+        {
+          thread->sleepFor(1);
+        }
 
       os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
 
@@ -452,17 +459,17 @@ runTestRecursiveMutex()
       th1.start();
 
       os::core::Thread& thread = os::mainThread;
-            thread.sleep(thread::recursivemutex::INTERVAL / 3);
+      thread.sleepFor(thread::recursivemutex::INTERVAL / 3);
         {
           // second lock
           thread::recursivemutex::rm1.lock();
 
-          thread.sleep(thread::recursivemutex::INTERVAL / 3);
+          thread.sleepFor(thread::recursivemutex::INTERVAL / 3);
 
           // first unlock
           thread::recursivemutex::rm1.unlock();
         }
-        thread.sleep(thread::recursivemutex::INTERVAL / 3);
+      thread.sleepFor(thread::recursivemutex::INTERVAL / 3);
 
       // second unlock
       thread::recursivemutex::rm1.unlock();
@@ -480,17 +487,17 @@ runTestRecursiveMutex()
       th2.start();
 
       os::core::Thread& thread = os::mainThread;
-      thread.sleep(thread::recursivemutex::INTERVAL / 3);
+      thread.sleepFor(thread::recursivemutex::INTERVAL / 3);
         {
           // second lock
           thread::recursivemutex::rm2.lock();
 
-          thread.sleep(thread::recursivemutex::INTERVAL / 3);
+          thread.sleepFor(thread::recursivemutex::INTERVAL / 3);
 
           // first unlock
           thread::recursivemutex::rm2.unlock();
         }
-        thread.sleep(thread::recursivemutex::INTERVAL / 3);
+      thread.sleepFor(thread::recursivemutex::INTERVAL / 3);
 
       // second unlock
       thread::recursivemutex::rm2.unlock();
@@ -509,17 +516,17 @@ runTestRecursiveMutex()
       th3.start();
 
       os::core::Thread& thread = os::mainThread;
-      thread.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
+      thread.sleepFor(thread::recursivemutex::INTERVAL_SHORT / 3);
         {
           // second lock
           thread::recursivemutex::rm3.lock();
 
-          thread.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
+          thread.sleepFor(thread::recursivemutex::INTERVAL_SHORT / 3);
 
           // first unlock
           thread::recursivemutex::rm3.unlock();
         }
-        thread.sleep(thread::recursivemutex::INTERVAL_SHORT / 3);
+      thread.sleepFor(thread::recursivemutex::INTERVAL_SHORT / 3);
 
       // second unlock
       thread::recursivemutex::rm3.unlock();
@@ -538,17 +545,17 @@ runTestRecursiveMutex()
       th4.start();
 
       os::core::Thread& thread = os::mainThread;
-      thread.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
+      thread.sleepFor(thread::recursivemutex::INTERVAL_LONG / 3);
         {
           // second lock
           thread::recursivemutex::rm4.lock();
 
-          thread.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
+          thread.sleepFor(thread::recursivemutex::INTERVAL_LONG / 3);
 
           // first unlock
           thread::recursivemutex::rm4.unlock();
         }
-        thread.sleep(thread::recursivemutex::INTERVAL_LONG / 3);
+      thread.sleepFor(thread::recursivemutex::INTERVAL_LONG / 3);
 
       // second unlock
       thread::recursivemutex::rm4.unlock();

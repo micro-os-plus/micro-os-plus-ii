@@ -56,7 +56,7 @@ runTestAccuracy()
   os::core::Thread& thread = os::mainThread;
 
   //os::timerTicks.sleep(1);
-  thread.sleep(1);
+  thread.sleepFor(1);
 
   os::core::timer::ticks_t ticksBegin = os::timerTicks.getCurrentTicks();
 
@@ -64,7 +64,7 @@ runTestAccuracy()
   gettimeofday(&begTime, 0);
 
   //os::timerTicks.sleep(os::core::scheduler::TICKS_PER_SECOND);
-  thread.sleep(os::core::scheduler::TICKS_PER_SECOND);
+  thread.sleepFor(os::core::scheduler::TICKS_PER_SECOND);
 
   os::core::timer::ticks_t ticksEnd = os::timerTicks.getCurrentTicks();
 
@@ -197,7 +197,7 @@ Task::threadMain(void)
 #endif
 
   //os::timerTicks.sleep(10);
-  m_thread.sleep(10);
+  m_thread.sleepFor(10);
 
   os::core::timer::ticks_t ticksBegin = os::timerTicks.getCurrentTicks();
 
@@ -208,7 +208,7 @@ Task::threadMain(void)
       for (i = FROM; i <= TO; i++)
         {
           //os::timerTicks.sleep(i);
-          m_thread.sleep(i);
+          m_thread.sleepFor(i);
 
           m_count += i;
           ++m_sleepCalls;
@@ -220,7 +220,7 @@ Task::threadMain(void)
   m_deltaTicks = ticksEnd - ticksBegin;
 
   //os::timerTicks.sleep(50);
-  m_thread.sleep(50);
+  m_thread.sleepFor(50);
 
   ts << "Multiple sleeps of " << SUM << " ticks took " << m_deltaTicks
       << " counted ticks, \"" << getThread().getName() << "\"" << os::std::endl;

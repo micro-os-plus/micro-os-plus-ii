@@ -201,7 +201,7 @@ Task::threadMain(void)
       os::architecture.busyWaitMicros(nBusy);
 
       // simulate a period of waiting for an external event
-      getThread().sleep(nSleep);
+      getThread().sleepFor(nSleep);
       m_ticks += nSleep;
 
       mutex.lock();
@@ -215,7 +215,7 @@ Task::threadMain(void)
           os::architecture.busyWaitMicros(nBusy);
 
           // simulate a period of waiting for an external event
-          getThread().sleep(nSleep);
+          getThread().sleepFor(nSleep);
           m_ticks += nSleep;
 
           m_count++;
@@ -328,7 +328,7 @@ TaskPeriodic::threadMain(void)
   int t = 0;
   for (;;)
     {
-      getThread().sleep(5000);
+      getThread().sleepFor(5000);
       t += 5;
       if (MAX_RUN_SECONDS != 0 and t > MAX_RUN_SECONDS)
         break;

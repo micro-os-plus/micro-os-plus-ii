@@ -223,7 +223,7 @@ Task::threadMain(void)
 
       // simulate a period of waiting for an external event
       //os::timerTicks.sleep(nSleep);
-      getThread().sleep(nSleep);
+      getThread().sleepFor(nSleep);
 
       m_count++;
       m_ticks += nSleep;
@@ -332,7 +332,7 @@ TaskPeriodic::threadMain(void)
   for (;;)
     {
       //os::timerTicks.sleep(5000);
-      getThread().sleep(5000);
+      getThread().sleepFor(5000);
 
       t += 5;
       if (MAX_RUN_SECONDS != 0 and t > MAX_RUN_SECONDS)
