@@ -96,11 +96,6 @@ namespace os
 
       m_state = thread::State::NOT_STARTED;
 
-#if 0
-      m_isSuspended = true;
-      m_isSleeping = true;
-#endif
-
       m_isAttentionRequested = false;
 
       //m_resumeDetails = 0;
@@ -126,11 +121,6 @@ namespace os
           // already started
           return true;
         }
-
-#if 0
-      m_isSuspended = false;
-      m_isSleeping = false;
-#endif
 
       m_isAttentionRequested = false;
 
@@ -181,9 +171,6 @@ namespace os
     void
     Thread::cleanup()
     {
-#if 0
-      m_isSuspended = true;
-#endif
       m_state = thread::State::TERMINATED;
 
       if (m_id != scheduler::NO_ID)
@@ -197,7 +184,6 @@ namespace os
       m_pJoiner = nullptr;
     }
 
-#if 1
     /// \details
     /// Suspend the thread, remove it from the active list and
     /// yield to the next thread.
@@ -240,81 +226,6 @@ namespace os
           // ----- Critical section end ---------------------------------------
         }
     }
-
-#else
-    /// \details
-    /// Suspend the thread, remove it from the active list and
-    /// yield to the next thread.
-    ///
-    /// \warning Currently cannot be called from interrupt contexts.
-    /// \todo Check if interrupt context and call yield only if not.
-    resumeDetails_t
-    Thread::suspend(void)
-      {
-#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
-        os::diag::trace.putMemberFunctionWithName();
-#endif
-        m_isSuspended = true;
-
-        // Clear the detail flags
-        m_resumeDetails = 0;
-
-        // suspend should always yield, to remove the current thread
-        // from the active list, otherwise loops waiting for a condition
-        // will hang
-        os::scheduler.yield();
-
-        return m_resumeDetails;
-      }
-
-    resumeDetails_t
-    Thread::suspendWithTimeout(timer::ticks_t ticks, TimerBase& timer)
-      {
-#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
-        os::diag::trace.putMemberFunctionWithName();
-#endif
-
-        // ----- Timeout guard begin --------------------------------------------
-        TimeoutGuard tg(ticks, timer);
-
-        return suspend();
-        // ----- Timeout guard end ----------------------------------------------
-      }
-
-    /// \details
-    /// Resume the thread by inserting it into the active list.
-    ///
-    /// It assumes it is called from an interrupt context, and
-    /// no other synchronisations are performed.
-    void
-    Thread::resumeFromInterrupt(resumeDetails_t detail)
-      {
-#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
-        os::diag::trace.putMemberFunctionWithName();
-#endif
-        m_isSuspended = false;
-
-        // Add the detail flags. Be sure it is atomic.
-        m_resumeDetails |= detail;
-
-        os::scheduler.resumeThreadFromInterrupt(this);
-      }
-
-    /// \details
-    /// Resume the thread by inserting it into the active list.
-    ///
-    /// It assumes it is called from a thread context, so it
-    /// disables/enables interrupts.
-    void
-    Thread::resume(resumeDetails_t detail)
-      {
-        // ----- Critical section begin -----------------------------------------
-        os::core::scheduler::InterruptsCriticalSection cs;
-
-        resumeFromInterrupt(detail);
-        // ----- Critical section end -------------------------------------------
-      }
-#endif
 
     /// \details
     /// Block until the thread code has completed.
@@ -417,42 +328,6 @@ namespace os
       m_isAttentionRequested = false;
     }
 
-#if 0
-    thread::wakeupDetails_t
-    Thread::sleep(void)
-      {
-        // Clear the detail flags
-        m_wakeupDetails = 0;
-
-#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
-        os::diag::trace.putString("Thread::sleep()");
-        os::diag::trace.putNewLine();
-#endif
-
-        if (m_state != thread::State::RUNNING)
-          {
-            return m_wakeupDetails;
-          }
-
-        if (isAttentionRequested())
-          {
-            // Return immediately if attention was requested
-            return m_wakeupDetails;
-          }
-
-#if 0
-        m_isSuspended = true;
-        m_isSleeping = true;
-#endif
-
-        m_state = thread::State::SLEEPING;
-
-        os::scheduler.yield();
-
-        return m_wakeupDetails;
-      }
-#endif
-
     /// \details
     /// Insert the current thread with the given number of ticks in the
     /// timer counters storage, and suspend the current thread repeatedly
@@ -500,34 +375,10 @@ namespace os
 
       for (;;)
         {
-#if 1
           if (didSleepTimeout(ticks, timer, beginTicks))
             {
               return m_wakeupDetails;
             }
-#else
-          timer::ticks_t nowTicks = timer.getCurrentTicks();
-          if ((nowTicks - beginTicks) >= ticks)
-            {
-              return m_wakeupDetails;
-            }
-
-          if (isAttentionRequested())
-            {
-              // Return immediately if attention was requested
-              return m_wakeupDetails;
-            }
-
-            {
-              // ----- Timeout guard begin --------------------------------------------
-              TimeoutGuard tg(ticks - (nowTicks - beginTicks), timer);
-
-              m_state = thread::State::SLEEPING;
-
-              os::scheduler.yield();
-              // ----- Timeout guard end ----------------------------------------------
-            }
-#endif
         }
     }
 
@@ -548,10 +399,6 @@ namespace os
           // ----- Critical section begin -------------------------------------
           os::core::scheduler::InterruptsCriticalSection cs;
 
-#if 0
-          m_isSleeping = false;
-          m_isSuspended = false;
-#endif
           m_state = thread::State::RUNNING;
 
           // Add the detail flags. Be sure it is atomic.
@@ -562,6 +409,8 @@ namespace os
         }
     }
 
+    /// \details
+    /// Internal function, used in sleepFor() and sleepWhile().
     bool
     Thread::didSleepTimeout(timer::ticks_t ticks, TimerBase& timer,
         timer::ticks_t beginTicks)

@@ -31,20 +31,6 @@ namespace os
   {
     // ========================================================================
 
-#if 0
-    typedef unsigned int resumeDetails_t;
-
-    class ResumeDetails
-      {
-      public:
-        static constexpr resumeDetails_t REGULAR = (1 << 0);
-        static constexpr resumeDetails_t TIMER = (1 << 1);
-        static constexpr resumeDetails_t ATTENTION = (1 << 2);
-        // Even more details, in addition to REGULAR
-        static constexpr resumeDetails_t MUTEX = (1 << 8);
-      };
-#endif
-
     namespace thread
     {
       typedef unsigned int state_t;
@@ -314,7 +300,6 @@ namespace os
       thread::state_t
       getState(void);
 
-#if 1
       /// \brief Suspend the thread.
       ///
       /// \par Parameters
@@ -332,62 +317,6 @@ namespace os
       ///    Nothing.
       void
       resume(void);
-
-#else
-      /// \brief Suspend the thread.
-      ///
-      /// \par Parameters
-      ///    None.
-      /// \return The resume detail flags.
-      resumeDetails_t
-      suspend(void);
-
-      /// \brief Suspend the thread with timeout.
-      ///
-      /// \param [in] ticks   The number of counter ticks.
-      /// \param [in] timer   The timer to use.
-      /// \return The resume detail flags.
-      resumeDetails_t
-      suspendWithTimeout(timer::ticks_t ticks, TimerBase& timer);
-
-      /// \brief Resume the thread from an interrupt service routine.
-      ///
-      /// \par Parameters
-      ///    None.
-      /// \par Returns
-      ///    Nothing.
-      void
-      resumeFromInterrupt(resumeDetails_t detail = ResumeDetails::REGULAR);
-
-      /// \brief Resume the thread.
-      ///
-      /// \par Parameters
-      ///    None.
-      /// \par Returns
-      ///    Nothing.
-      void
-      resume(resumeDetails_t detail = ResumeDetails::REGULAR);
-#endif
-
-#if 0
-      /// \brief Check if the thread is suspended.
-      ///
-      /// \par Parameters
-      ///    None.
-      /// \retval true          The thread is suspended.
-      /// \retval false         Otherwise.
-      bool
-      isSuspended(void) const;
-
-      /// \brief Check if the thread is sleeping.
-      ///
-      /// \par Parameters
-      ///    None.
-      /// \retval true          The thread is sleeping.
-      /// \retval false         Otherwise.
-      bool
-      isSleeping(void) const;
-#endif
 
       /// \brief Check if the thread is waiting for attention.
       ///
@@ -450,16 +379,7 @@ namespace os
       ///    Nothing.
       void
       setError(errorNumber_t error);
-#if 0
-      /// \brief Sleep.
-      ///
-      /// \par Parameters
-      ///    None.
-      /// \return The wakeup() detailed flags.
-      ///    Nothing.
-      thread::wakeupDetails_t
-      sleep(void);
-#endif
+
       /// \brief Sleep for a number of ticks.
       ///
       /// \param [in] ticks   The number of counter ticks to sleep.
@@ -530,11 +450,13 @@ namespace os
       void
       setId(id_t id);
 
-      /// \brief Sleep, possibly with timeout
+      /// \brief Sleep, possibly with timeout.
       ///
-      /// \param [in] ticks       The number of counter ticks to sleep.
-      /// \param [in] timer       The timer to use.
-      /// \param [in] beginTicks       The number of ticks at the beginning.
+      /// \param [in] ticks             The number of counter ticks to sleep.
+      /// \param [in] timer             The timer to use.
+      /// \param [in] beginTicks        The number of ticks at the beginning.
+      /// \retval true                  The sleep was terminated with timeout.
+      /// \retval false                 Otherwise.
       bool
       didSleepTimeout(timer::ticks_t ticks, TimerBase& timer,
           timer::ticks_t beginTicks);
@@ -546,14 +468,6 @@ namespace os
 
       /// \brief Thread state.
       thread::state_t volatile m_state;
-
-#if 0
-      /// \brief Boolean to remember when the thread is suspended.
-      bool volatile m_isSuspended;
-
-      /// \brief Boolean to remember when the thread is sleeping.
-      bool volatile m_isSleeping;
-#endif
 
       /// \brief Boolean to remember when special attention is requested.
       bool volatile m_isAttentionRequested;
@@ -729,22 +643,6 @@ namespace os
       return m_state;
     }
 
-#if 0
-    inline bool
-    __attribute__((always_inline))
-    Thread::isSuspended(void) const
-      {
-        return m_isSuspended;
-      }
-
-    inline bool
-    __attribute__((always_inline))
-    Thread::isSleeping(void) const
-      {
-        return m_isSleeping;
-      }
-#endif
-
     inline bool
     __attribute__((always_inline))
     Thread::isAttentionRequested(void) const
@@ -801,45 +699,10 @@ namespace os
                 return m_wakeupDetails;
               }
 
-#if 1
             if (!didSleepTimeout(ticks, timer, beginTicks))
               {
                 return m_wakeupDetails;
               }
-#else
-            if (isAttentionRequested())
-              {
-                // Quit everything if attention was requested
-                return m_wakeupDetails;
-              }
-
-            // If the condition is still true, we must sleep,
-            // either indefinitely or for a limited number of ticks
-            if (ticks != 0)
-              {
-                timer::ticks_t nowTicks = timer.getCurrentTicks();
-                if ((nowTicks - beginTicks) >= ticks)
-                  {
-                    return m_wakeupDetails;
-                  }
-
-                  {
-                    // ----- Timeout guard begin --------------------------------------------
-                    TimeoutGuard tg(ticks - (nowTicks - beginTicks), timer);
-
-                    m_state = thread::State::SLEEPING;
-
-                    os::scheduler.yield();
-                    // ----- Timeout guard end ----------------------------------------------
-                  }
-              }
-            else
-              {
-                m_state = thread::State::SLEEPING;
-
-                os::scheduler.yield();
-              }
-#endif
           }
       }
 

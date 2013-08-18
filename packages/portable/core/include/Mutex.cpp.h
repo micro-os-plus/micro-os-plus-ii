@@ -193,81 +193,15 @@ namespace os
         // release it; the current thread is in the notification list,
         // we can suspend
 
-#if 1
-            pThread->sleepWhile([=]()
-              {
-                // check attention
-                if (pThread->isAttentionRequested())
-                  {
-                    // Return immediately if attention was requested
-                    pThread->setError(Error::CANCELLED);
-
-                    return false;
-                  }
-
-                // ----- Critical section begin -----------------------------------
-                CriticalSectionLock cs;
-
-                if (m_owningThread == nullptr)
-                  {
-                    // The mutex is free, acquire it
-                    m_owningThread = pThread;
-
-                    m_policy.initialise();
-                    m_policy.recursiveLock();
-
-                    m_notifier.clear();
-
-#if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
-                os::diag::trace.putString("os::core::TGenericMutex::lock()");
-                os::diag::trace.putString(" \"");
-                os::diag::trace.putString(getName());
-                os::diag::trace.putString("\" acquired by \"");
-                os::diag::trace.putString(pThread->getName());
-                os::diag::trace.putChar('"');
-                os::diag::trace.putNewLine();
-#endif
-
-                pThread->setError(Error::SUCCEEDED);
-
-                return false;
-              }
-
-            if (!m_notifier.hasElement(pThread))
-              {
-                if (!m_notifier.pushBack(pThread))
-                  {
-#if defined(DEBUG)
-                os::diag::trace.putString(
-                    "os::core::TGenericMutex::lock()");
-                os::diag::trace.putString(" \"");
-                os::diag::trace.putString(getName());
-                os::diag::trace.putString("\" by \"");
-                os::diag::trace.putString(pThread->getName());
-                os::diag::trace.putString("\" size exceeded");
-                os::diag::trace.putNewLine();
-#endif
-                pThread->setError(Error::INTERNAL_SIZE_EXCEEDED);
-
-                return false;
-              }
-          }
-        // ----- Critical section end -------------------------------------
-        return true;
-      });
-#else
-            for (;;)
-              {
-            pThread->sleep();
-            // The resume details are not used here
-
+        pThread->sleepWhile([=]()
+          {
             // check attention
             if (pThread->isAttentionRequested())
               {
                 // Return immediately if attention was requested
                 pThread->setError(Error::CANCELLED);
 
-                return;
+                return false;
               }
 
             // ----- Critical section begin -----------------------------------
@@ -284,42 +218,42 @@ namespace os
                 m_notifier.clear();
 
 #if defined(DEBUG) && defined(OS_DEBUG_MUTEX)
-                os::diag::trace.putString("os::core::TGenericMutex::lock()");
-                os::diag::trace.putString(" \"");
-                os::diag::trace.putString(getName());
-                os::diag::trace.putString("\" acquired by \"");
-                os::diag::trace.putString(pThread->getName());
-                os::diag::trace.putChar('"');
-                os::diag::trace.putNewLine();
+            os::diag::trace.putString("os::core::TGenericMutex::lock()");
+            os::diag::trace.putString(" \"");
+            os::diag::trace.putString(getName());
+            os::diag::trace.putString("\" acquired by \"");
+            os::diag::trace.putString(pThread->getName());
+            os::diag::trace.putChar('"');
+            os::diag::trace.putNewLine();
 #endif
 
-                pThread->setError(Error::SUCCEEDED);
+            pThread->setError(Error::SUCCEEDED);
 
-                return;
-              }
+            return false;
+          }
 
-            if (!m_notifier.hasElement(pThread))
+        if (!m_notifier.hasElement(pThread))
+          {
+            if (!m_notifier.pushBack(pThread))
               {
-                if (!m_notifier.pushBack(pThread))
-                  {
 #if defined(DEBUG)
-                    os::diag::trace.putString(
-                        "os::core::TGenericMutex::lock()");
-                    os::diag::trace.putString(" \"");
-                    os::diag::trace.putString(getName());
-                    os::diag::trace.putString("\" by \"");
-                    os::diag::trace.putString(pThread->getName());
-                    os::diag::trace.putString("\" size exceeded");
-                    os::diag::trace.putNewLine();
+            os::diag::trace.putString(
+                "os::core::TGenericMutex::lock()");
+            os::diag::trace.putString(" \"");
+            os::diag::trace.putString(getName());
+            os::diag::trace.putString("\" by \"");
+            os::diag::trace.putString(pThread->getName());
+            os::diag::trace.putString("\" size exceeded");
+            os::diag::trace.putNewLine();
 #endif
-                    pThread->setError(Error::INTERNAL_SIZE_EXCEEDED);
+            pThread->setError(Error::INTERNAL_SIZE_EXCEEDED);
 
-                    return;
-                  }
-              }
-            // ----- Critical section end -------------------------------------
-              } // loop
-#endif
+            return false;
+          }
+      }
+    // ----- Critical section end -------------------------------------
+    return true;
+  });
       }
 
     /// \details
@@ -438,6 +372,7 @@ namespace os
 
         return false;
       }
+
     /// \details
     /// Attempt to obtain ownership of the mutex for the calling thread.
     /// If the mutex is free, acquire it and return true immediately.
@@ -466,8 +401,6 @@ namespace os
         os::diag::trace.putChar('"');
         os::diag::trace.putNewLine();
 #endif
-
-#if 1
 
         pThread->sleepWhile([=]()
           {
@@ -514,80 +447,6 @@ return true;
           }
 
         return pThread->getError() == Error::SUCCEEDED;
-#else
-        // Remember the time when we entered this function
-        os::core::timer::ticks_t beginTicks = timer.getCurrentTicks();
-
-        for (;;)
-          {
-            if (tryLock())
-              {
-                // Got it!
-
-                // Error already set by tryLock() to SUCCEEDED
-                return true;
-              }
-            if (pThread->getError() != Error::BUSY)
-              {
-                return false;
-              }
-            os::core::timer::ticks_t nowTicks = timer.getCurrentTicks();
-
-            if ((nowTicks - beginTicks) >= ticks)
-              {
-                // timeout expired, mutex not acquired
-                pThread->setError(Error::TIMEOUT);
-
-                return false;
-              }
-
-            // check attention
-            if (pThread->isAttentionRequested())
-              {
-                // Return immediately if attention was requested
-                pThread->setError(Error::CANCELLED);
-
-                return false;
-              }
-
-              {
-                // ----- Critical section begin -------------------------------
-                CriticalSectionLock cs;
-
-                if (!m_notifier.hasElement(pThread))
-                  {
-                    if (!m_notifier.pushBack(pThread))
-                      {
-#if defined(DEBUG)
-                        os::diag::trace.putString(
-                            "os::core::TGenericMutex::lock()");
-                        os::diag::trace.putString(" \"");
-                        os::diag::trace.putString(getName());
-                        os::diag::trace.putString("\" by \"");
-                        os::diag::trace.putString(pThread->getName());
-                        os::diag::trace.putString("\" size exceeded");
-                        os::diag::trace.putNewLine();
-#endif
-                        pThread->setError(Error::INTERNAL_SIZE_EXCEEDED);
-
-                        return false;
-                      }
-                  }
-                // ----- Critical section end ---------------------------------
-              }
-
-            pThread->sleepFor(ticks - (nowTicks - beginTicks), timer);
-            // the resume details are not used here
-
-              {
-                // ----- Critical section begin -------------------------------
-                CriticalSectionLock cs;
-
-                m_notifier.remove(pThread);
-                // ----- Critical section end ---------------------------------
-              }
-          } // loop
-#endif
       }
 
     /// \details
