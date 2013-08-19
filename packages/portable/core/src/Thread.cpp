@@ -327,15 +327,16 @@ namespace os
     }
 
     /// \details
-    /// Insert the current thread with the given number of ticks in the
-    /// timer counters storage, and suspend the current thread repeatedly
-    /// until the number of ticks elapsed.
+    /// This is the second synchronisation primitive, a subset of the
+    /// more general sleepWhile(), but providing unconditional sleep
+    /// periods.
     ///
-    /// In case the thread was requested attention, the sleep is
-    /// cancelled as soon as possible.
+    /// It is implemented on top of internalSleepWhile(), but
+    /// with an always true constant condition.
     ///
-    /// If the scheduler is locked, this call is still functional, but
-    /// using a busy wait until the ticks elapse.
+    /// Passing a zero number of ticks means no timeout at all.
+    ///
+    /// The default timer is the scheduler ticks timer.
     void
     Thread::sleepFor(timer::ticks_t ticks, TimerBase& timer)
     {
@@ -351,7 +352,7 @@ namespace os
         }
 
       internalSleepWhile([]()
-        { return true;}, ticks, timer);
+        { return true; }, ticks, timer);
     }
 
     /// \details
@@ -380,6 +381,16 @@ namespace os
 
     /// \details
     /// Internal function, used in sleepFor() and sleepWhile().
+    ///
+    /// Insert the current thread with the given number of ticks in the
+    /// timer counters storage, and suspend the current thread.
+    ///
+    /// In case the thread did requested attention, the sleep is
+    /// cancelled as soon as possible.
+    ///
+    /// If the scheduler is locked, this call is still functional, but
+    /// using a busy wait until the ticks elapse (not yet implemented).
+
     bool
     Thread::didSleepTimeout(timer::ticks_t ticks, TimerBase& timer,
         timer::ticks_t beginTicks)
@@ -389,6 +400,8 @@ namespace os
           // Quit everything if attention was requested
           return true;
         }
+
+      /// TODO: If the scheduler is locked, use a busy wait.
 
       // If the condition is still true, we must sleep,
       // either indefinitely or for a limited number of ticks

@@ -369,18 +369,18 @@ namespace os
 
       /// \brief Sleep for a number of ticks.
       ///
-      /// \param [in] ticks   The number of counter ticks to sleep.
-      /// \param [in] timer   The timer to use.
+      /// \param [in] ticks   The number of counter ticks to sleep, default = 0 (no timeout).
+      /// \param [in] timer   The timer to use, default os::timerTicks.
       /// \par Returns
       ///    Nothing.
       void
       sleepFor(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
 
-      /// \brief Sleep while a condition is met, up to a number of ticks.
+      /// \brief Sleep while a condition is true, up to a number of ticks.
       ///
-      /// \param [in] predicate   The condition to test.
-      /// \param [in] ticks       The number of counter ticks to sleep.
-      /// \param [in] timer       The timer to use.
+      /// \param [in] predicate   The condition to test, usually a lambda.
+      /// \param [in] ticks       The number of counter ticks to sleep, default = 0 (no timeout).
+      /// \param [in] timer       The timer to use, default os::timerTicks.
       /// \par Returns
       ///    Nothing.
       template<class Predicate_T>
@@ -388,7 +388,7 @@ namespace os
         sleepWhile(Predicate_T predicate, timer::ticks_t ticks = 0,
             TimerBase& timer = os::timerTicks);
 
-      /// \brief Wakeup the thread.
+      /// \brief Wake-up the thread.
       ///
       /// \par Parameters
       ///    None.
@@ -664,12 +664,18 @@ namespace os
 
     /// \details
     /// This is the actual implementation of the thread synchronisation
-    /// primitive, used both in the public sleepWhile() and sleepFor().
+    /// primitive, used both in the public sleepWhile() and sleepFor()
+    /// member functions.
     ///
-    /// Overhead is low, so being always inlined does not have an
-    /// significant overhead, the predicate is expanded only one here,
+    /// The code should be simple, so being always inlined should not have an
+    /// significant overhead (the predicate is expanded anyway, but
+    /// only once each time,
     /// and the actual sleep code is performed as a separate
-    /// function.
+    /// function).
+    ///
+    /// The predicate shall return true as long as we need the
+    /// sleep to continue, i.e. the external condition was not
+    /// satisfied.
     template<class Predicate_T>
       inline void
       __attribute__((always_inline))
@@ -678,7 +684,6 @@ namespace os
       {
         if (m_state == thread::State::RUNNING)
           {
-
             // Remember the moment when this function was started,
             // to be able to compute the timeout.
             timer::ticks_t beginTicks = timer.getCurrentTicks();
@@ -698,8 +703,15 @@ namespace os
       }
 
     /// \details
-    /// The public complete synchronisation function. It might
-    /// display some debug info and call the internal primitive.
+    /// This is the main thread synchronisation primitive, it can
+    /// wait for a condition to change but not more than
+    /// an optional timeout.
+    /// It is implemented on top of the internalSleepWhile()
+    /// with some additional debug info.
+    ///
+    /// It is inlined, with minimum overhead, to give a better
+    /// chance to the condition lambda to be optimally compiled
+    /// together with the rest of the code.
     template<class Predicate_T>
       inline void
       __attribute__((always_inline))
