@@ -450,6 +450,18 @@ namespace os
       void
       setId(id_t id);
 
+      /// \brief Sleep while a condition is met, up to a number of ticks.
+      ///
+      /// \param [in] predicate   The condition to test.
+      /// \param [in] ticks       The number of counter ticks to sleep.
+      /// \param [in] timer       The timer to use.
+      /// \return The wakeup() detailed flags.
+      ///    Nothing.
+      template<class Predicate_T>
+        thread::wakeupDetails_t
+        internalSleepWhile(Predicate_T predicate, timer::ticks_t ticks = 0,
+            TimerBase& timer = os::timerTicks);
+
       /// \brief Sleep, possibly with timeout.
       ///
       /// \param [in] ticks             The number of counter ticks to sleep.
@@ -668,45 +680,73 @@ namespace os
       m_error = error;
     }
 
+    /// \details
+    /// This is the actual implementation of the thread synchronisation
+    /// primitive, used both in the public sleepWhile() and sleepFor().
+    ///
+    /// Overhead is low, so being always inlined does not have an
+    /// significant overhead, the predicate is expanded only one here,
+    /// and the actual sleep code is performed as a separate
+    /// function.
+    template<class Predicate_T>
+      inline thread::wakeupDetails_t
+      __attribute__((always_inline))
+      Thread::internalSleepWhile(Predicate_T predicate, timer::ticks_t ticks,
+          TimerBase& timer)
+      {
+        // Clear the detail flags
+        m_wakeupDetails = 0;
+
+        if (m_state == thread::State::RUNNING)
+          {
+
+            // Remember the moment when this function was started,
+            // to be able to compute the timeout.
+            timer::ticks_t beginTicks = timer.getCurrentTicks();
+
+            // TODO: make it run when the scheduler is disabled
+
+            // loop while the predicate is still true
+            while (predicate())
+              {
+                // perform the sleep and, if timeout, break
+                if (didSleepTimeout(ticks, timer, beginTicks))
+                  {
+                    break;
+                  }
+              }
+          }
+        return m_wakeupDetails;
+      }
+
+    /// \details
+    /// The public complete synchronisation function. It might
+    /// display some debug info and call the internal primitive.
     template<class Predicate_T>
       inline thread::wakeupDetails_t
       __attribute__((always_inline))
       Thread::sleepWhile(Predicate_T predicate, timer::ticks_t ticks,
           TimerBase& timer)
       {
-        // Clear the detail flags
-        m_wakeupDetails = 0;
-
 #if defined(DEBUG) && defined(OS_DEBUG_THREAD)
-        os::diag::trace.putString("Thread::sleepWhile()");
-        os::diag::trace.putNewLine();
+        if (ticks != 0)
+          {
+            os::diag::trace.putString("Thread::sleepWhile(");
+            os::diag::trace.putDec(ticks);
+            os::diag::trace.putString(")");
+            os::diag::trace.putNewLine();
+          }
+        else
+          {
+            os::diag::trace.putString("Thread::sleepWhile()");
+            os::diag::trace.putNewLine();
+          }
 #endif
 
-        if (m_state != thread::State::RUNNING)
-          {
-            return m_wakeupDetails;
-          }
-
-        timer::ticks_t beginTicks = timer.getCurrentTicks();
-
-        // TODO: make it run when the scheduler is disabled
-
-        for (;;)
-          {
-            if (!predicate())
-              {
-                // If the condition is no longer true, return
-                return m_wakeupDetails;
-              }
-
-            if (!didSleepTimeout(ticks, timer, beginTicks))
-              {
-                return m_wakeupDetails;
-              }
-          }
+        return internalSleepWhile(predicate, ticks, timer);
       }
 
-  // ==========================================================================
+// ==========================================================================
 
   }// namespace core
 } // namespace os

@@ -341,6 +341,22 @@ namespace os
     thread::wakeupDetails_t
     Thread::sleepFor(timer::ticks_t ticks, TimerBase& timer)
     {
+#if 1
+#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
+      os::diag::trace.putString("Thread::sleepFor(");
+      os::diag::trace.putDec(ticks);
+      os::diag::trace.putString(")");
+      os::diag::trace.putNewLine();
+#endif
+      if (ticks == 0)
+        {
+          m_wakeupDetails = 0;
+          return m_wakeupDetails;
+        }
+
+      return internalSleepWhile([]()
+        { return true;}, ticks, timer);
+#else
       // Clear the detail flags
       m_wakeupDetails = 0;
 
@@ -373,13 +389,13 @@ namespace os
           return m_wakeupDetails;
         }
 
-      for (;;)
+      while (!didSleepTimeout(ticks, timer, beginTicks))
         {
-          if (didSleepTimeout(ticks, timer, beginTicks))
-            {
-              return m_wakeupDetails;
-            }
+          ;
         }
+    }
+  return m_wakeupDetails;
+#endif
     }
 
     /// \details
@@ -418,7 +434,7 @@ namespace os
       if (isAttentionRequested())
         {
           // Quit everything if attention was requested
-          return false;
+          return true;
         }
 
       // If the condition is still true, we must sleep,
@@ -428,17 +444,17 @@ namespace os
           timer::ticks_t nowTicks = timer.getCurrentTicks();
           if ((nowTicks - beginTicks) >= ticks)
             {
-              return false;
+              return true;
             }
 
             {
-              // ----- Timeout guard begin --------------------------------------------
+              // ----- Timeout guard begin ------------------------------------
               TimeoutGuard tg(ticks - (nowTicks - beginTicks), timer);
 
               m_state = thread::State::SLEEPING;
 
               os::scheduler.yield();
-              // ----- Timeout guard end ----------------------------------------------
+              // ----- Timeout guard end --------------------------------------
             }
         }
       else
@@ -448,7 +464,7 @@ namespace os
           os::scheduler.yield();
         }
 
-      return true;
+      return false;
     }
 
   // ------------------------------------------------------------------------
