@@ -438,9 +438,7 @@ namespace os
 #if 1
           for (Element element : *this)
             {
-              element.pThread->wakeup(
-                  thread::WakeupDetails::REGULAR
-                      | thread::WakeupDetails::MUTEX);
+              element.pThread->wakeup();
             }
 
 #else

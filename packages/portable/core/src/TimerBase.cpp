@@ -361,7 +361,7 @@ namespace os
 #endif // defined(DEBUG) && defined(OS_DEBUG_TIMERBASE_INTERRUPTTICK)
                   // sleep period completed, resume the thread
                   //p->pThread->resumeFromInterrupt(ResumeDetails::TIMER);
-                  p->pThread->wakeup(thread::WakeupDetails::TIMER);
+                  p->pThread->wakeup();
 
                   // Remove the top element from the array
 

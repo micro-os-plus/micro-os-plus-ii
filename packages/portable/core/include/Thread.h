@@ -47,19 +47,6 @@ namespace os
         State(void) = delete;
       };
 
-      typedef unsigned int wakeupDetails_t;
-
-      class WakeupDetails
-      {
-      public:
-        static constexpr wakeupDetails_t REGULAR = (1 << 0);
-        static constexpr wakeupDetails_t TIMER = (1 << 1);
-        static constexpr wakeupDetails_t ATTENTION = (1 << 2);
-        // Even more details, in addition to REGULAR
-        static constexpr wakeupDetails_t MUTEX = (1 << 8);
-
-        WakeupDetails(void) = delete;
-      };
     }
     // ========================================================================
 
@@ -384,9 +371,9 @@ namespace os
       ///
       /// \param [in] ticks   The number of counter ticks to sleep.
       /// \param [in] timer   The timer to use.
-      /// \return The wakeup() detailed flags.
+      /// \par Returns
       ///    Nothing.
-      thread::wakeupDetails_t
+      void
       sleepFor(timer::ticks_t ticks, TimerBase& timer = os::timerTicks);
 
       /// \brief Sleep while a condition is met, up to a number of ticks.
@@ -394,20 +381,21 @@ namespace os
       /// \param [in] predicate   The condition to test.
       /// \param [in] ticks       The number of counter ticks to sleep.
       /// \param [in] timer       The timer to use.
-      /// \return The wakeup() detailed flags.
+      /// \par Returns
       ///    Nothing.
       template<class Predicate_T>
-        thread::wakeupDetails_t
+        void
         sleepWhile(Predicate_T predicate, timer::ticks_t ticks = 0,
             TimerBase& timer = os::timerTicks);
 
       /// \brief Wakeup the thread.
       ///
-      /// \param [in] detail   A negative integer or zero.
+      /// \par Parameters
+      ///    None.
       /// \par Returns
       ///    Nothing.
       void
-      wakeup(thread::wakeupDetails_t detail = thread::WakeupDetails::REGULAR);
+      wakeup(void);
 
       /// @} end of Public member functions
 
@@ -455,10 +443,10 @@ namespace os
       /// \param [in] predicate   The condition to test.
       /// \param [in] ticks       The number of counter ticks to sleep.
       /// \param [in] timer       The timer to use.
-      /// \return The wakeup() detailed flags.
+      /// \par Returns
       ///    Nothing.
       template<class Predicate_T>
-        thread::wakeupDetails_t
+        void
         internalSleepWhile(Predicate_T predicate, timer::ticks_t ticks = 0,
             TimerBase& timer = os::timerTicks);
 
@@ -495,12 +483,6 @@ namespace os
 
       /// \brief The initial priority given via the constructor.
       priority_t volatile m_initialPriority;
-
-      /// \brief A bitmask detailing the resume condition.
-      //resumeDetails_t m_resumeDetails;
-
-      /// \brief A bitmask detailing the wakeup() condition.
-      thread::wakeupDetails_t m_wakeupDetails;
 
       /// \brief The error code provided by the last call.
       /// Can indicate success or one of the multiple failure reasons.
@@ -689,14 +671,11 @@ namespace os
     /// and the actual sleep code is performed as a separate
     /// function.
     template<class Predicate_T>
-      inline thread::wakeupDetails_t
+      inline void
       __attribute__((always_inline))
       Thread::internalSleepWhile(Predicate_T predicate, timer::ticks_t ticks,
           TimerBase& timer)
       {
-        // Clear the detail flags
-        m_wakeupDetails = 0;
-
         if (m_state == thread::State::RUNNING)
           {
 
@@ -716,14 +695,13 @@ namespace os
                   }
               }
           }
-        return m_wakeupDetails;
       }
 
     /// \details
     /// The public complete synchronisation function. It might
     /// display some debug info and call the internal primitive.
     template<class Predicate_T>
-      inline thread::wakeupDetails_t
+      inline void
       __attribute__((always_inline))
       Thread::sleepWhile(Predicate_T predicate, timer::ticks_t ticks,
           TimerBase& timer)
@@ -743,7 +721,7 @@ namespace os
           }
 #endif
 
-        return internalSleepWhile(predicate, ticks, timer);
+        internalSleepWhile(predicate, ticks, timer);
       }
 
 // ==========================================================================

@@ -98,8 +98,6 @@ namespace os
 
       m_isAttentionRequested = false;
 
-      //m_resumeDetails = 0;
-
       // Normally not used directly, added for completeness
       m_entryPointAddress = entryPoint;
       m_entryPointParameter = pParameters;
@@ -338,10 +336,9 @@ namespace os
     ///
     /// If the scheduler is locked, this call is still functional, but
     /// using a busy wait until the ticks elapse.
-    thread::wakeupDetails_t
+    void
     Thread::sleepFor(timer::ticks_t ticks, TimerBase& timer)
     {
-#if 1
 #if defined(DEBUG) && defined(OS_DEBUG_THREAD)
       os::diag::trace.putString("Thread::sleepFor(");
       os::diag::trace.putDec(ticks);
@@ -350,52 +347,11 @@ namespace os
 #endif
       if (ticks == 0)
         {
-          m_wakeupDetails = 0;
-          return m_wakeupDetails;
+          return;
         }
 
-      return internalSleepWhile([]()
+      internalSleepWhile([]()
         { return true;}, ticks, timer);
-#else
-      // Clear the detail flags
-      m_wakeupDetails = 0;
-
-#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
-      os::diag::trace.putString("Thread::sleepFor(");
-      os::diag::trace.putDec(ticks);
-      os::diag::trace.putString(")");
-      os::diag::trace.putNewLine();
-#endif
-      if (ticks == 0)
-        {
-          return m_wakeupDetails;
-        }
-
-      if (m_state != thread::State::RUNNING)
-        {
-          return m_wakeupDetails;
-        }
-
-      timer::ticks_t beginTicks = timer.getCurrentTicks();
-
-      if (os::scheduler.isLocked())
-        {
-          // If the scheduler is locked we can only busy wait for the ticks
-          while ((timer.getCurrentTicks() - beginTicks) < ticks)
-            {
-              os::architecture.resetWatchdog();
-            }
-
-          return m_wakeupDetails;
-        }
-
-      while (!didSleepTimeout(ticks, timer, beginTicks))
-        {
-          ;
-        }
-    }
-  return m_wakeupDetails;
-#endif
     }
 
     /// \details
@@ -404,7 +360,7 @@ namespace os
     /// It assumes it is called from a thread context, so it
     /// disables/enables interrupts.
     void
-    Thread::wakeup(thread::wakeupDetails_t detail)
+    Thread::wakeup(void)
     {
 #if defined(DEBUG) && defined(OS_DEBUG_THREAD)
       os::diag::trace.putMemberFunctionWithName();
@@ -416,9 +372,6 @@ namespace os
           os::core::scheduler::InterruptsCriticalSection cs;
 
           m_state = thread::State::RUNNING;
-
-          // Add the detail flags. Be sure it is atomic.
-          m_wakeupDetails |= detail;
 
           os::scheduler.resumeThreadFromInterrupt(this);
           // ----- Critical section end ---------------------------------------
