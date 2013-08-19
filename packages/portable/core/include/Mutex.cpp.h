@@ -193,9 +193,13 @@ namespace os
         // release it; the current thread is in the notification list,
         // we can suspend
 
-        pThread->sleepWhile([=]()
+        // This is the condition to sleep while, as a lambda.
+        // 'this' and 'pThread' are copied auto-magically by the compiler.
+        auto condition = [=]()
           {
-            // check attention
+            // Check for attention.
+            // Intentionally placed before acquiring mutex,
+            // to prevent it for succeeding.
             if (pThread->isAttentionRequested())
               {
                 // Return immediately if attention was requested
@@ -232,6 +236,10 @@ namespace os
             return false;
           }
 
+        // At this point we know we have to sleep, so before doing it
+        // we have to think of the future, which means we have to
+        // add this thread to the notification list, to be informed
+        // when the mutex becomes free.
         if (!m_notifier.hasElement(pThread))
           {
             if (!m_notifier.pushBack(pThread))
@@ -252,8 +260,14 @@ namespace os
           }
       }
     // ----- Critical section end -------------------------------------
+
+    // If we reached this point, the condition is still true and we must
+    // inform sleepWhile() to loop.
     return true;
-  });
+  }     ;
+
+        // Finally sleep while the mutex is still locked
+        pThread->sleepWhile(condition);
       }
 
     /// \details
@@ -402,27 +416,48 @@ namespace os
         os::diag::trace.putNewLine();
 #endif
 
-        pThread->sleepWhile([=]()
+        // This is the condition to sleep while, as a lambda.
+        // 'this' and 'pThread' are copied auto-magically by the compiler.
+        auto condition = [=]()
           {
+            // Try to lock. If done, or if error, return.
             tryLock();
             if (pThread->getError() != Error::BUSY)
               {
                 return false;
               }
 
+            // If the mutex is busy, we need to wait for it to be freed.
               {
                 // ----- Critical section begin -------------------------------
-            CriticalSectionLock cs;
+                CriticalSectionLock cs;
 
-            if (!m_notifier.hasElement(pThread))
+#if defined(DEBUG)
+#if __GNUC__ == 4 && __GNUC_MINOR__ == 7
+// This strange contraption is required to keep GCC 4.7 happy :-(
+// For reasons known only by the GCC developers, moving the call to getName()
+// inside the ifs fails with some horrible template errors.
+            const char* p = getName();
+#endif
+#endif
+            // At this point we know we have to sleep, so before doing it
+            // we have to think of the future, which means we have to
+            // add this thread to the notification list, to be informed
+            // when the mutex becomes free.
+            if (!getNotifier().hasElement(pThread))
               {
-                if (!m_notifier.pushBack(pThread))
+                if (!getNotifier().pushBack(pThread))
                   {
 #if defined(DEBUG)
             os::diag::trace.putString(
                 "os::core::TGenericMutex::tryLockFor()");
             os::diag::trace.putString(" \"");
+
+#if __GNUC__ == 4 && __GNUC_MINOR__ == 7
+            os::diag::trace.putString(p);
+#else
             os::diag::trace.putString(getName());
+#endif
             os::diag::trace.putString("\" by \"");
             os::diag::trace.putString(pThread->getName());
             os::diag::trace.putString("\" size exceeded");
@@ -435,8 +470,13 @@ namespace os
       }
     // ----- Critical section end ---------------------------------
   }
+// If we reached this point, the condition is still true and we must
+// inform sleepWhile() to loop.
 return true;
-}, ticks, timer);
+}       ;
+
+        // Finally sleep while the mutex is still locked
+        pThread->sleepWhile(condition, ticks, timer);
 
           {
             // ----- Critical section begin -------------------------------
