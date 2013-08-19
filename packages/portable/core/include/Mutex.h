@@ -439,7 +439,8 @@ namespace os
           for (Element element : *this)
             {
               element.pThread->wakeup(
-                  thread::WakeupDetails::REGULAR | thread::WakeupDetails::MUTEX);
+                  thread::WakeupDetails::REGULAR
+                      | thread::WakeupDetails::MUTEX);
             }
 
 #else
@@ -959,6 +960,9 @@ namespace os
         void
         unlock(void) noexcept;
 
+        Notifier&
+        getNotifier(void);
+
         /// @} end of Public member functions
 
       private:
@@ -985,6 +989,14 @@ namespace os
     // ------------------------------------------------------------------------
 
     // inlines
+
+    template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
+      typename TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::Notifier&
+      TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::getNotifier(
+          void)
+      {
+        return m_notifier;
+      }
 
     // ========================================================================
 
