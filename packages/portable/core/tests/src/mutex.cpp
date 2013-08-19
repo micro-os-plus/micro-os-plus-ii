@@ -112,7 +112,6 @@ namespace thread
       m1.unlock();
 
       int proc = computeAbsoluteProcent(t0, t1, INTERVAL);
-      //ts << d << os::std::endl;
 
       ts.setFunctionNameOrPrefix("lock()");
       ts.assertCondition(proc < 10);
@@ -172,8 +171,6 @@ namespace thread
 
       int proc = computeAbsoluteProcent(t0, t1, INTERVAL_SHORT);
 
-      //ts << (t1-t0) << os::std::endl;
-
       ts.setFunctionNameOrPrefix("tryLockFor()");
       ts.setPreconditions("no timeout");
       ts.assertCondition(proc < 10);
@@ -198,8 +195,6 @@ namespace thread
 
       os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
       int proc = computeAbsoluteProcent(t0, t1, INTERVAL_SHORT);
-
-      //ts << (t1-t0) << os::std::endl;
 
       ts.setFunctionNameOrPrefix("tryLockFor()");
       ts.setPreconditions("with timeout");
@@ -332,7 +327,6 @@ namespace thread
       rm1.unlock();
 
       int proc = computeAbsoluteProcent(t0, t1, INTERVAL);
-      //ts << d << os::std::endl;
 
       ts.setFunctionNameOrPrefix("lock()");
       ts.assertCondition(proc < 10);
@@ -371,7 +365,6 @@ namespace thread
       rm2.unlock();
 
       int proc = computeAbsoluteProcent(t0, t1, INTERVAL);
-      //ts << d << " " << proc << os::std::endl;
 
       ts.setFunctionNameOrPrefix("tryLock()");
       ts.assertCondition(proc < 10);
@@ -403,8 +396,6 @@ namespace thread
 
       int proc = computeAbsoluteProcent(t0, t1, INTERVAL_SHORT);
 
-      //ts << (t1-t0) << os::std::endl;
-
       ts.setFunctionNameOrPrefix("tryLockFor()");
       ts.setPreconditions("no timeout");
       ts.assertCondition(proc < 10);
@@ -429,8 +420,6 @@ namespace thread
 
       os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
       int proc = computeAbsoluteProcent(t0, t1, INTERVAL_SHORT);
-
-      //ts << (t1-t0) << os::std::endl;
 
       ts.setFunctionNameOrPrefix("tryLockFor()");
       ts.setPreconditions("with timeout");
