@@ -36,7 +36,8 @@ Configuration(
         
         'setValue("OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS", 11)',
 
-        'setValue("OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND", 1000)',
+        # the default is 1000
+        #'setValue("OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND", 50000)',
         
     ],
                                 

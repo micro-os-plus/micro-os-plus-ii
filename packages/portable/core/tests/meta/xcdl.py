@@ -92,7 +92,7 @@ Package(
             ],
                   
             includeFiles=[
-                'sleepStress-config.py',
+                'sleepstress-config.py',
             ],
                   
             implements=[
@@ -136,7 +136,7 @@ Package(
             ],
                   
             includeFiles=[
-                'mutexStress-config.py',
+                'mutexstress-config.py',
             ],
                   
             implements=[
