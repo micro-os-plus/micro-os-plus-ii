@@ -41,7 +41,7 @@ static os::infra::TestSuiteOstream ts;
 // ----------------------------------------------------------------------------
 
 //#include <iostream>
-#include <sys/time.h>
+#include <time.h>
 
 // ----------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ static os::infra::TestSuiteOstream ts;
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-os::core::Mutex mutex;
+static os::core::Mutex mutex;
 //os::core::RecursiveMutex mutex;
 
 #pragma GCC diagnostic pop
@@ -310,7 +310,7 @@ TaskPeriodic::getThread(void)
   return m_thread;
 }
 
-Task* taskArray[10];
+static Task* taskArray[10];
 
 void
 TaskPeriodic::threadMain(void)

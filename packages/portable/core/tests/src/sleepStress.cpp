@@ -20,6 +20,8 @@
 constexpr int MAX_RUN_SECONDS = 30;
 //constexpr int MAX_RUN_SECONDS = 0;
 
+constexpr int PERIODIC_REPORT_SECONDS = 5;
+
 #pragma GCC diagnostic push
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wglobal-constructors"
@@ -41,7 +43,7 @@ static os::infra::TestSuiteOstream ts;
 // ----------------------------------------------------------------------------
 
 //#include <iostream>
-#include <sys/time.h>
+#include <time.h>
 
 // ----------------------------------------------------------------------------
 
@@ -221,9 +223,45 @@ Task::threadMain(void)
       // simulate a period of intense activity
       os::architecture.busyWaitMicros(nBusy);
 
+      os::core::timer::ticks_t ticksBegin = os::timerTicks.getCurrentTicks();
+
       // simulate a period of waiting for an external event
-      //os::timerTicks.sleep(nSleep);
-      getThread().sleepFor(nSleep);
+
+      if ((rand() % 3) == 0)
+        {
+          // One in 3 cases is done with single tick call,
+          // to exercise sleep(1)
+          for (uint16_t i = nSleep; i > 0; --i)
+            {
+              getThread().sleepFor(1);
+            }
+        }
+      else
+        {
+          getThread().sleepFor(nSleep);
+        }
+
+      os::core::timer::ticks_t ticksEnd = os::timerTicks.getCurrentTicks();
+
+      os::core::timer::ticks_t delta = ticksEnd - ticksBegin;
+
+      if (delta < nSleep)
+        {
+          // The sleep should not be shorter than requested
+          ts.reportFailed("delta < nSleep");
+          ts << nSleep << " " << delta << os::std::endl;
+        }
+      else if (delta > nSleep)
+        {
+#if 0
+          os::core::timer::ticks_t proc;
+          proc = (delta - nSleep) * 100 / nSleep;
+          ts << nSleep << " " << delta << " " << proc << "%" << os::std::endl;
+#endif
+        }
+
+      // and one more sleep(1)
+      getThread().sleepFor(1);
 
       m_count++;
       m_ticks += nSleep;
@@ -318,7 +356,7 @@ TaskPeriodic::getThread(void)
   return m_thread;
 }
 
-Task* taskArray[10];
+static Task* taskArray[10];
 
 void
 TaskPeriodic::threadMain(void)
@@ -331,10 +369,10 @@ TaskPeriodic::threadMain(void)
   int t = 0;
   for (;;)
     {
-      //os::timerTicks.sleep(5000);
-      getThread().sleepFor(5000);
+      getThread().sleepFor(
+          os::core::scheduler::TICKS_PER_SECOND * PERIODIC_REPORT_SECONDS);
 
-      t += 5;
+      t += PERIODIC_REPORT_SECONDS;
       if (MAX_RUN_SECONDS != 0 and t > MAX_RUN_SECONDS)
         break;
 
@@ -344,6 +382,10 @@ TaskPeriodic::threadMain(void)
 
           for (auto pTask : taskArray)
             {
+              // If the count is zero, the thread is probably dead
+              if (pTask->getCount() == 0)
+                ts.reportFailed("pTask->getCount() == 0");
+
               ts << pTask->getName() << ':' << pTask->getTicks() << '/'
                   << pTask->getCount() << '='
                   << (pTask->getTicks() / pTask->getCount()) << '('

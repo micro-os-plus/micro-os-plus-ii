@@ -78,13 +78,13 @@ namespace thread
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-    os::core::Mutex m1("m1");
+    static os::core::Mutex m1("m1");
 
-    os::core::Mutex m2("m2");
+    static os::core::Mutex m2("m2");
 
-    os::core::Mutex m3("m3");
+    static os::core::Mutex m3("m3");
 
-    os::core::Mutex m4("m4");
+    static os::core::Mutex m4("m4");
 
 #pragma GCC diagnostic pop
 
@@ -293,13 +293,13 @@ namespace thread
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #endif
 
-    os::core::RecursiveMutex rm1("rm1");
+    static os::core::RecursiveMutex rm1("rm1");
 
-    os::core::RecursiveMutex rm2("rm2");
+    static os::core::RecursiveMutex rm2("rm2");
 
-    os::core::RecursiveMutex rm3("rm3");
+    static os::core::RecursiveMutex rm3("rm3");
 
-    os::core::RecursiveMutex rm4("rm4");
+    static os::core::RecursiveMutex rm4("rm4");
 
 #pragma GCC diagnostic pop
 
