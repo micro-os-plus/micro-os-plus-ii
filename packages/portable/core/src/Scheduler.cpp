@@ -191,8 +191,8 @@ namespace os
           return;
         }
 
-      // Since the constructor set this to MainThread, this will
-      // always point to a thread.
+      // Since the constructor set this to MainThread, it will
+      // always point to a thread, so no need to validate each time.
       Thread* pThread = (Thread*) m_pCurrentThread;
 
 #if defined(DEBUG) && defined(OS_DEBUG_SCHEDULER)
@@ -208,6 +208,11 @@ namespace os
 
       // Eventually reinsert it at the end of the list (round robin)
 
+      // Note: This test is also used to prevent the sleep()/wakeup()
+      // race condition, so if wakeup() occured while
+      // entering sleep, the state was changed back to RUNNING,
+      // so we no longer effectively remove the thread from the
+      // active list, it'll be executed as soon as priorities allow.
       if (pThread->getState() == thread::State::RUNNING)
         {
           // If running, insert again

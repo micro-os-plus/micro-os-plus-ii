@@ -688,17 +688,36 @@ namespace os
             // to be able to compute the timeout.
             timer::ticks_t beginTicks = timer.getCurrentTicks();
 
-            // TODO: make it run when the scheduler is disabled
+            // TODO: check what happens when the scheduler is disabled
+            // and make unconditional sleepFor() work even so.
 
-            // loop while the predicate is still true
-            while (predicate())
+            for (;;)
               {
-                // perform the sleep and, if timeout, break
+                // Change the state to sleeping early, before the
+                // predicate is evaluated, to also prevent the
+                // sleep()/wakeup() race condition. wakeup() will
+                // set it back to running and prepareContextSwitch()
+                // will prevent the actual sleep.
+                m_state = thread::State::SLEEPING;
+
+                // Loop while the predicate remains true, quit
+                // if the predicate changes to false.
+
+                // The predicate lambda can be as complex as necessary,
+                // it is inlined here without problems.
+                if (!predicate())
+                  {
+                    break;
+                  }
+                // perform the sleep and, if timeout, quit
                 if (didSleepTimeout(ticks, timer, beginTicks))
                   {
                     break;
                   }
               }
+
+            // Leave the thread as running
+            m_state = thread::State::RUNNING;
           }
       }
 

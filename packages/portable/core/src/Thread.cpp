@@ -348,9 +348,12 @@ namespace os
 #endif
       if (ticks == 0)
         {
+          // No ticks, no sleep.
           return;
         }
 
+      // The function template is expanded inline here,
+      // with the 'always true' condition passed as lambda.
       internalSleepWhile([]()
         { return true; }, ticks, timer);
     }
@@ -417,16 +420,12 @@ namespace os
               // ----- Timeout guard begin ------------------------------------
               TimeoutGuard tg(ticks - (nowTicks - beginTicks), timer);
 
-              m_state = thread::State::SLEEPING;
-
               os::scheduler.yield();
               // ----- Timeout guard end --------------------------------------
             }
         }
       else
         {
-          m_state = thread::State::SLEEPING;
-
           os::scheduler.yield();
         }
 
