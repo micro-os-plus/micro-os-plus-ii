@@ -52,6 +52,8 @@ namespace os
     // ========================================================================
 
   }// namespace core
+
+  extern os::core::Error error;
 } // namespace os
 
 #endif // OS_PORTABLE_CORE_ERROR_H_
