@@ -109,10 +109,10 @@ then
 
 	time (
 	
-		if [ ! -z "$(g++ --version | grep 4.7)" ]
+		if [ ! -z "$(g++ --version | grep 4.7)" -a -x /usr/bin/g++-4.7 ]
 		then
 			defaultCompiler=gcc47
-		elif [ ! -z "$(g++ --version | grep 4.8)" ]
+		elif [ ! -z "$(g++ --version | grep 4.8)" -a -x /usr/bin/g++-4.8 ]
 		then
 			defaultCompiler=gcc48
 		else
