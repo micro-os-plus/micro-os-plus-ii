@@ -11,7 +11,7 @@
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F) || defined(__DOXYGEN__)
 
 #include "hal/architecture/arm/cortexm/stm32f/include/FamilyBase.h"
-#include "hal/architecture/include/FamilyImplementation.h"
+#include "hal/architecture/arm/cortexm/stm32f/include/FamilyImplementationSelector.h"
 
 namespace hal
 {

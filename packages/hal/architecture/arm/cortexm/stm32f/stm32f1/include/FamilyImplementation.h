@@ -61,6 +61,7 @@ namespace hal
       /// \par Returns
       ///    Nothing.
       static void
+      __attribute__((noreturn))
       resetSystem(void);
 
 #if defined(DEBUG) || defined(__DOXYGEN__)

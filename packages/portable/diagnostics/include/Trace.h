@@ -17,6 +17,15 @@
 
 #include "hal/architecture/synthetic/posix/diagnostics/include/TraceImplementation.h"
 
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F1_DIAGNOSTICS_TRACEIMPLEMENTATION)
+
+#include "hal/architecture/arm/cortexm/stm32f/stm32f1/diagnostics/include/TraceImplementation.h"
+
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F4_DIAGNOSTICS_TRACEIMPLEMENTATION)
+
+#include "hal/architecture/arm/cortexm/stm32f/stm32f4/diagnostics/include/TraceImplementation.h"
+
+
 #elif defined(OS_INCLUDE_HAL_ARCHITECTURE_DIAGNOSTICS_TRACEIMPLEMENTATION_CUSTOM)
 
 #include "hal/architecture/diagnostics/include/TraceImplementation.h"

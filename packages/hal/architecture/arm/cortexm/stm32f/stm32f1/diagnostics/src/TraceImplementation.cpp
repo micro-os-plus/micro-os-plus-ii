@@ -167,7 +167,7 @@ namespace hal
 
           GPIO_InitTypeDef GPIO_InitStructure;
 
-          /* Configure PC12 in output push/pull mode */
+          // Configure pin in output push/pull mode
           GPIO_InitStructure.GPIO_Pin = GPIO_BitMask;
           GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
           GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
@@ -186,7 +186,7 @@ namespace hal
         {
           GPIO_InitTypeDef GPIO_InitStructure;
 
-          /* Configure PC12 in output push/pull mode */
+          // Configure pin in output push/pull mode
           GPIO_InitStructure.GPIO_Pin = GPIO_BitMask;
           GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
           GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
@@ -306,7 +306,7 @@ namespace hal
       /// \brief SCL class type definition.
       typedef class TPinOpenDrain<WatchDog, SCL_PORT, SCL_BIT> SCL;
 
-    /// @}
+    /// @} end of ingroup stm32f1_diag
 
     // ----------------------------------------------------------------------
     }// namespace diag

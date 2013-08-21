@@ -18,6 +18,9 @@
 #include "portable/core/include/ConfigDefines.h"
 
 #include "portable/language/cpp/include/internal/__config.h"
+
+// undef to define lldiv_t on ARM
+#undef __STRICT_ANSI__
 #include <stdlib.h>
 
 #include "portable/language/cpp/include/abort.h"

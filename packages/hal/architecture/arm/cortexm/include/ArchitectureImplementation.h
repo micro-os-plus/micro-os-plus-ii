@@ -18,6 +18,8 @@
 // Include architecture definitions, like various types.
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 
+#include "hal/architecture/arm/cortexm/include/TimerTicksImplementation.h"
+
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F)
 
 #include "hal/architecture/arm/cortexm/stm32f/include/FamilyImplementationSelector.h"
@@ -84,6 +86,7 @@ namespace hal
       /// \par Returns
       ///    Nothing.
       static void
+      __attribute__((noreturn))
       resetSystem(void);
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
@@ -97,64 +100,15 @@ namespace hal
       putGreeting(void);
 #endif
 
+      static void
+      yield(void);
+
+      static void
+      waitForInterrupt(void);
+
       /// @} end of name Public member functions
 
-      /// \headerfile ArchitectureImplementation.h "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
-      /// \ingroup arm_cm
-      /// \nosubgrouping
-      ///
-      /// \brief Cortex-M context handling.
-      ///
-      /// \details
-      /// This class provides generic Cortex-M context handling support.
-      class Context
-      {
-      public:
-        /// \name Constructors/destructor
-        /// @{
-
-        /// \brief Default constructor.
-        Context(void) = default;
-
-        /// @} end of name Constructors/destructor
-
-        /// \name Public member functions
-        /// @{
-
-        /// \brief Create the initial context in the stack object.
-        ///
-        /// \param [in] pStackTop Pointer to the last stack element.
-        /// \param [in] entryPoint Pointer to thread code.
-        /// \param [in] pParameters Pointer to thread parameters.
-        /// \par Returns
-        ///    Nothing.
-        static hal::arch::stackElement_t*
-        createInitial(hal::arch::stackElement_t* pStackTop,
-            os::core::threadEntryPoint_t entryPoint, void* pParameters);
-
-        /// \brief Save the current context on the stack.
-        ///
-        /// \par Parameters
-        ///    None.
-        /// \par Returns
-        ///    Nothing.
-        static void
-        save(void);
-
-        /// \brief Restore the current context from the stack.
-        ///
-        /// \par Parameters
-        ///    None.
-        /// \par Returns
-        ///    Nothing.
-        static void
-        restore(void);
-
-        /// @} end of name Public member functions
-
-      };
-
-      Context context;
+      //ThreadContext context;
     };
 
     // ------------------------------------------------------------------------
@@ -177,32 +131,185 @@ namespace hal
       hal::cortexm::FamilyImplementation::resetSystem();
     }
 
-    /// \details
-    /// TBD
     inline void
     __attribute__((always_inline))
-    ArchitectureImplementation::Context::save(void)
+    ArchitectureImplementation::yield(void)
+    {
+    }
+
+    inline void
+    __attribute__((always_inline))
+    ArchitectureImplementation::waitForInterrupt(void)
+    {
+    }
+
+    // ========================================================================
+
+    /// \headerfile ArchitectureImplementation.h "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
+    /// \ingroup arm_cm
+    /// \nosubgrouping
+    ///
+    /// \brief Cortex-M context handling.
+    ///
+    /// \details
+    /// This class provides generic Cortex-M context handling support.
+    class ThreadContext
+    {
+    public:
+      /// \name Constructors/destructor
+      /// @{
+
+      /// \brief Default constructor.
+      ThreadContext(void);
+      ~ThreadContext(void);
+
+      /// @} end of name Constructors/destructor
+
+      /// \name Public member functions
+      /// @{
+
+#if 0
+      /// \brief Create the initial context in the stack object.
+      ///
+      /// \param [in] pStackTop Pointer to the last stack element.
+      /// \param [in] entryPoint Pointer to thread code.
+      /// \param [in] pParameters Pointer to thread parameters.
+      /// \par Returns
+      ///    Nothing.
+      static hal::arch::stackElement_t*
+      createInitial(hal::arch::stackElement_t* pStackTop,
+          os::core::threadEntryPoint_t entryPoint, void* pParameters);
+#endif
+
+      /// \brief Create the initial context in the local storage.
+      ///
+      /// \param [in] pStackBottom    Pointer to the first stack element.
+      /// \param [in] stackSizeBytes  Size of stack in bytes.
+      /// \param [in] trampolineEntryPoint      Pointer to trampoline code.
+      /// \param [in] p1              First parameter.
+      /// \param [in] p2              Second parameter.
+      /// \param [in] p3              Third parameter.
+      /// \par Returns
+      ///    Nothing.
+      void
+      create(hal::arch::stackElement_t* pStackBottom,
+          hal::arch::stackSize_t stackSizeBytes,
+          os::core::trampoline3_t trampolineEntryPoint, void* p1, void* p2,
+          void* p3);
+
+#if 0
+      /// \brief Save the current context on the stack.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      save(void);
+#endif
+
+      /// \brief Save the current context in the local storage.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \retval true  Context saved, returns for the first time
+      /// \retval false Context restored, returns for the second time
+      ///    Nothing.
+      bool
+      save(void);
+
+      /// \brief Restore the current context from the stack.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      void
+      restore(void);
+
+      /// @} end of name Public member functions
+
+    };
+
+    // ------------------------------------------------------------------------
+
+
+    /// \details
+    /// TBD
+    inline bool
+    __attribute__((always_inline))
+    ThreadContext::save(void)
     {
       // TBD
+      return true;
     }
 
     /// \details
     /// TBD
     inline void
     __attribute__((always_inline))
-    ArchitectureImplementation::Context::restore(void)
+    ThreadContext::restore(void)
     {
       // TBD
     }
 
-  } // namespace cortexm
+    // ========================================================================
+
+    /// \headerfile ArchitectureImplementation.h "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
+    /// \ingroup arm_cm
+    /// \nosubgrouping
+    ///
+    /// \brief Implementation of the interrupts critical section.
+    ///
+    /// \details
+    /// This class is used to create a critical section where the timer ticks
+    /// are disabled.
+    /// It uses the RAII paradigm, i.e. it blocks the signals in
+    /// the constructor and restores them to the initial state in the
+    /// destructor.
+    ///
+    /// Embedded calls are allowed, without other depth limitations other
+    /// than the available stack.
+    class InterruptsCriticalSection
+    {
+    public:
+      /// \name Constructors/destructor
+      /// @{
+
+      /// \brief Constructor
+      InterruptsCriticalSection(void);
+
+      /// \brief Destructor
+      ~InterruptsCriticalSection();
+
+      /// @} end of name Constructors/destructor
+
+    private:
+      /// \name Private member variables
+      /// @{
+
+      /// @} end of Private member variables
+
+    };
+
+  // ==========================================================================
+
+  }// namespace cortexm
 
   // --------------------------------------------------------------------------
 
   namespace arch
   {
     /// \brief Generic ArchitectureImplementation, pointing to specific one.
-    typedef hal::cortexm::ArchitectureImplementation ArchitectureImplementation;
+    using ArchitectureImplementation = hal::cortexm::ArchitectureImplementation;
+
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
+    using ThreadContext = hal::cortexm::ThreadContext;
+    using TimerTicksImplementation = hal::cortexm::TimerTicksImplementation;
+    using InterruptsCriticalSection = hal::cortexm::InterruptsCriticalSection;
+
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }
 
 // ==========================================================================

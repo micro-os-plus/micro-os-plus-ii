@@ -13,7 +13,6 @@
 
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F) || defined(__DOXYGEN__)
 
-
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F1)
 
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/include/FamilyImplementation.h"
@@ -28,4 +27,5 @@
 
 #endif
 
+#endif // defined(OS_INCLUDE_HAL_MCU_FAMILY_STM32F)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_FAMILYIMPLEMENTATIONSELECTOR_H_

@@ -52,13 +52,29 @@ namespace hal
 {
   namespace arch
   {
+    /// \addtogroup arm_cm
+    /// @{
+
+    /// \name Types and constants
+    /// @{
+
     /// \brief Type definition of a stack word unit.
     typedef uint32_t stackElement_t;
 
+    /// \brief Type definition to represent a stack size.
     typedef uint32_t stackSize_t;
 
+    /// \brief A magic value used to fill the stack.
     static constexpr stackElement_t STACK_FILL = 0x55AAAA55;
+
+    /// \brief The minimum stack size.
+    constexpr stackSize_t MIN_STACK_SIZE = 1024;
+
+  /// @} end of name Types and constants
+
+  /// @} end of addtogroup posix
+
   }// namespace arch
-}// namespace hal
+}    // namespace hal
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_ARCHITECTUREDEFINITIONS_H_

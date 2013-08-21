@@ -19,7 +19,10 @@ Configuration(
     requirements=[
         # enable the platform    
         'enable("package.os.hal.platform.olimex.stm32h103")',                
+        # we also need gpio  
         'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f10x.lib.stm.gpio")',              
+        # and the i2c trace implementation
+        'enable("component.os.portable.diagnostics.trace.i2c")',        
     ],
               
     buildFolder='stm32h103/minimal',
