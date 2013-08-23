@@ -24,6 +24,10 @@
 
 #include "hal/architecture/arm/cortexm/stm32f/include/FamilyImplementationSelector.h"
 
+#elif defined(OS_INCLUDE_HAL_MCU_FAMILY_QEMU)
+
+#include "hal/architecture/arm/cortexm/qemu/include/FamilyImplementation.h"
+
 #elif defined(OS_INCLUDE_HAL_ARCHITECTURE_FAMILY_CUSTOM)
 
 // Include one of the supported families,

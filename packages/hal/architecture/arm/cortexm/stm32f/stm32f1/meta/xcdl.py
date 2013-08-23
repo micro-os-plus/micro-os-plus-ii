@@ -17,6 +17,10 @@ Component(
     ],
 
     headerDefinition='OS_INCLUDE_HAL_MCU_FAMILY_STM32F1',
+    
+    requirements=[
+        'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f10x.lib.stm.cmsis")',
+    ],
        
     children=[
               

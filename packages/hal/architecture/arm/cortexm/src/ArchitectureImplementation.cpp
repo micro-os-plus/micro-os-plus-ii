@@ -22,6 +22,8 @@
 
 #include "portable/language/cpp/include/iterator.h"
 
+#include "portable/diagnostics/include/Trace.h"
+
 namespace hal
 {
   namespace cortexm
@@ -250,7 +252,7 @@ ThreadContext::create(
 /// of namespaces, it would be complicated to enter the long name
 /// into the GDB configuration, and it is easier to use this alias.
 extern "C" void
-_reset(void)
+Reset_Handler(void)
 __attribute__((alias("_ZN3hal7cortexm16InterruptHandler5ResetEv")));
 
 // ----------------------------------------------------------------------------

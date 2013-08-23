@@ -136,8 +136,10 @@ namespace os
 /// \brief Single static instance of the `os::core::EarlyInitialisations` class.
 ///
 /// \details
-/// This must be the first static object in this file, to guarantee
-/// that the constructor is called before others.
+/// The must be the first static object in this file, to guarantee
+/// that the initialisations performed by its constructor are
+/// called before others, and the cleanups performed by its
+/// destructor are performed right at the end.
 static os::core::EarlyInitialisations earlyInitialisations;
 
 #pragma GCC diagnostic pop
@@ -208,7 +210,7 @@ namespace os
       os::diag::trace.putString(os::osGreeting);
       os::diag::trace.putNewLine();
 
-      // than with HAL (platform, that will architecture)
+      // then with HAL (platform, that will call architecture)
       os::platform.putGreeting();
 
       os::diag::trace.putNewLine();
@@ -240,10 +242,8 @@ namespace os
 /// \brief Single static instance of the `os::core::EarlyInitialisations` class.
 ///
 /// \details
-/// The must be the first static object in this file, to guarantee
-/// that the initialisations performed by its constructor are
-/// called before others, and the cleanups performed by its
-/// destructor are performed right at the end.
+/// This must be the second static object in this file,
+/// to guarantee that it is executed right after the early initialisations.
 static os::core::EarlyGreetings earlyGreetings;
 
 #pragma GCC diagnostic pop

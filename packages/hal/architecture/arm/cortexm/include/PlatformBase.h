@@ -17,6 +17,8 @@
 //#include "hal/architecture/include/FamilyImplementation.h"
 #include "portable/core/include/XCDL_GreetingDefines.h"
 
+#include "portable/diagnostics/include/Trace.h"
+
 namespace hal
 {
   namespace cortexm

@@ -32,10 +32,8 @@ GROUP(libgcc.a libc.a libm.a)
  *   __stack
  */
  
-/* 
-No longer used, the embedded images entry point is in the interrupts table
-ENTRY(Reset_Handler) 
-*/
+/* Used in QEMU, the embedded images entry point is in the interrupts table */
+ENTRY(Reset_Handler)
 
 SECTIONS
 {

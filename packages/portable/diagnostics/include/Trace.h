@@ -17,6 +17,14 @@
 
 #include "hal/architecture/synthetic/posix/diagnostics/include/TraceImplementation.h"
 
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_DIAGNOSTICS_TRACEIMPLEMENTATIONSEMIHOSTING)
+
+#include "hal/architecture/arm/cortexm/diagnostics/include/TraceImplementationSemihosting.h"
+
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_QEMU_DIAGNOSTICS_TRACEIMPLEMENTATIONSEMIHOSTING)
+
+#include "hal/architecture/arm/cortexm/qemu/diagnostics/include/TraceImplementationSemihosting.h"
+
 #elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_STM32F_STM32F1_DIAGNOSTICS_TRACEIMPLEMENTATION)
 
 #include "hal/architecture/arm/cortexm/stm32f/stm32f1/diagnostics/include/TraceImplementation.h"

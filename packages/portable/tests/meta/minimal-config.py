@@ -83,6 +83,7 @@ Configuration(
     ],
                       
     includeFiles=[
+        'minimal-qemu-config.py',
         'minimal-stm32h103-config.py',
     ],
 )

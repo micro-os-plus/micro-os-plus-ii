@@ -10,7 +10,7 @@ Component(
     
     category='lib',
     
-    isEnabled=True,
+    isEnabled=False,
     
     children=[
               
