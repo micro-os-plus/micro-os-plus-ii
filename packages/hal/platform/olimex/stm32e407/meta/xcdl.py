@@ -43,7 +43,6 @@ Package(
     headerDefinition='OS_INCLUDE_HAL_BOARD_OLIMEX_STM32E407',
     
     sourceFiles=[
-        #'PlatformImplementation.cpp',
     ],
         
     copyFiles=[

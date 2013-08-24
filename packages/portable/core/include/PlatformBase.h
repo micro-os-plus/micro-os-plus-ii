@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief Base declarations for implementations of the platform classes.
+/// \brief Base declarations for generic platform classes.
 
 #ifndef OS_PORTABLE_CORE_PLATFORMBASE_H_
 #define OS_PORTABLE_CORE_PLATFORMBASE_H_
@@ -36,7 +36,7 @@ namespace os
       /// \name Constructors/destructor
       /// @{
 
-      /// \brief Deleted constructor.
+      /// \brief Default constructor.
       PlatformBase(void) = default;
 
       /// @} end of name Constructors/destructor
@@ -104,9 +104,33 @@ namespace os
       os::architecture.resetSystem();
     }
 
+#if defined(DEBUG)
+
+    /// \details
+    /// Display the XCDL defined platform greeting lines (if available)
+    /// and then call the architecture function.
+    inline void
+     __attribute__((always_inline))
+    PlatformBase::putGreeting(void)
+    {
+#if defined(OS_STRING_PLATFORM_GREETING_FIRST)
+      os::diag::trace.putString(OS_STRING_PLATFORM_GREETING_FIRST);
+      os::diag::trace.putNewLine();
+#endif
+#if defined(OS_STRING_PLATFORM_GREETING_SECOND)
+      os::diag::trace.putString(OS_STRING_PLATFORM_GREETING_SECOND);
+      os::diag::trace.putNewLine();
+#endif
+
+      // Output the architecture specific greetings.
+      os::architecture.putGreeting();
+    }
+
+#endif
+
   // ========================================================================
 
-  }
-}
+  } // namespace core
+} // namespace os
 
 #endif // OS_PORTABLE_CORE_PLATFORMBASE_H_

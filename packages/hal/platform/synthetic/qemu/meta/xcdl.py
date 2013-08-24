@@ -15,7 +15,6 @@ Package(
     isEnabled=False, 
 
     sourceFiles=[
-        'PlatformImplementation.cpp',
     ],
 
     # platform packages shall load corresponding architecture packages
@@ -24,11 +23,13 @@ Package(
     ],
         
     requirements=[
+        # use the QEMU architecture definitions
         'enable("package.os.hal.architecture.arm.cortexm.qemu")',
         
+        # use the default platform implementation
+        'enable("option.os.hal.architecture.arm.cortexm.platform.implementation.default")',
+        
         'setValue("OS_STRING_PLATFORM_GREETING_FIRST", "QEMU Processor Emulator")',        
-        #'setValue("OS_STRING_PLATFORM_GREETING_SECOND", "Synthetic Cortex-M3")',        
-
     ],
         
     implements=[
@@ -37,7 +38,4 @@ Package(
         
     headerDefinition='OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_QEMU',
         
-    copyFiles=[
-        ('../include/PlatformImplementation.h', 'include/hal/platform/include/PlatformImplementation.h'),
-    ],
 )

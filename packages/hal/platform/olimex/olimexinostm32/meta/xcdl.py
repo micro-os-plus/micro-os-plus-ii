@@ -44,7 +44,6 @@ based on STM32F103.',
     headerDefinition='OS_INCLUDE_HAL_BOARD_OLIMEX_OLIMEXINOSTM32',
     
     sourceFiles=[
-        #'PlatformImplementation.cpp',
     ],
         
     copyFiles=[

@@ -19,6 +19,16 @@ Package(
     
     children=[
 
+        Option(
+            id='option.os.hal.architecture.arm.cortexm.platform.implementation.default',
+            name='Use the default Cortex-M platform implementation definitions',
+            description='Default platform implementation.',
+
+            isEnabled=False,
+                    
+            headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_PLATFORMIMPLEMENTATIONDEFAULT',
+        ),
+
         Component(
             id='component.os.hal.architecture.arm.cortexm.ldscript',
             name='ARM Cortex-M generic linker script',

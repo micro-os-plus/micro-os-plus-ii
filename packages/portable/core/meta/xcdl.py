@@ -9,7 +9,6 @@ Package(
     description='All µOS++ Second Edition portable core packages.',
     
     sourceFiles=[
-        'PlatformBase.cpp',
     ],
         
     includeFiles=[
@@ -107,6 +106,27 @@ first place, to run all system initialisation.',
 
                     ],
                 ),
+                      
+                Option(
+                    id='option.os.portable.core.platform.implementation.default',
+                    name='Use the default platform implementation definitions',
+                    description='Default platform implementation.',
+
+                    isEnabled=False,
+                    
+                    headerDefinition='OS_INCLUDE_PORTABLE_CORE_PLATFORMIMPLEMENTATIONDEFAULT',
+                ),
+
+                Option(
+                    id='option.os.portable.core.platform.implementation.custom',
+                    name='Use custom platform implementation definitions',
+                    description='Custom platform implementation.',
+
+                    isEnabled=False,
+                    
+                    headerDefinition='OS_INCLUDE_PORTABLE_CORE_PLATFORMIMPLEMENTATION_CUSTOM',
+                ),
+
             ],
         ),              
  

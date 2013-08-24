@@ -16,17 +16,19 @@ command line tool, without system threading.',
     isEnabled=False, 
 
     sourceFiles=[
-        'PlatformImplementation.cpp',
     ],
 
     # platform packages shall load corresponding architecture packages
     loadPackages=[
         'package.os.hal.architecture.synthetic.posix',
-        #'package.os.hal.architecture.synthetic.osx',
     ],
         
     requirements=[
+        # use the POSIX architecture
         'enable("package.os.hal.architecture.synthetic.posix")',
+        
+        # use the default platform implementation
+        'enable("option.os.portable.core.platform.implementation.default")',
     ],
         
     implements=[
@@ -34,8 +36,4 @@ command line tool, without system threading.',
     ],
         
     headerDefinition='OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX',
-        
-    copyFiles=[
-        ('../include/PlatformImplementation.h', 'include/hal/platform/include/PlatformImplementation.h'),
-    ],
 )

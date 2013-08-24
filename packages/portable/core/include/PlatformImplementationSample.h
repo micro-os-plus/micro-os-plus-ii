@@ -80,7 +80,11 @@ namespace hal
     {
     }
 
-    typedef xxxx::PlatformImplementation PlatformImplementation;
+#if !defined(__DOXYGEN__)
+
+    using PlatformImplementation = xxxx::PlatformImplementation;
+
+#endif // !defined(__DOXYGEN__)
 
     // ========================================================================
 

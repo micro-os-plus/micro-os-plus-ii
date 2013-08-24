@@ -42,7 +42,7 @@ namespace hal
       /// \name Constructors/destructor
       /// @{
 
-      /// \brief Deleted constructor.
+      /// \brief Default constructor.
       PlatformBase(void) = default;
 
       /// @} end of name Constructors/destructor
@@ -68,7 +68,7 @@ namespace hal
 #if defined(DEBUG) || defined(__DOXYGEN__)
 
     /// \details
-    /// Display the platform greeting lines (if available)
+    /// Display the XCDL defined platform greeting lines (if available)
     /// and call the family function.
     inline void
     __attribute__((always_inline))
@@ -82,6 +82,9 @@ namespace hal
       os::diag::trace.putString(OS_STRING_PLATFORM_GREETING_SECOND);
       os::diag::trace.putNewLine();
 #endif
+
+      // Output the family specific greetings, that in
+      // turn might output the architecture greetings.
       hal::cortexm::FamilyImplementation::putGreeting();
     }
 

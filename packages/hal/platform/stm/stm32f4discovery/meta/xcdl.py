@@ -43,7 +43,6 @@ Package(
     headerDefinition='OS_INCLUDE_HAL_BOARD_STM_STM32F4DISCOVERY',
     
     sourceFiles=[
-        #'PlatformImplementation.cpp',
     ],
         
     copyFiles=[
