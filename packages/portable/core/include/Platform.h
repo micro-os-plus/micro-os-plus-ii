@@ -26,7 +26,7 @@
 
 #elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_PLATFORMIMPLEMENTATIONDEFAULT)
 
-#include "portable/core/include/PlatformImplementationDefault.h"
+#include "hal/architecture/arm/cortexm/include/PlatformImplementationDefault.h"
 
 #elif defined(OS_INCLUDE_PORTABLE_CORE_PLATFORMIMPLEMENTATION_CUSTOM)
 
