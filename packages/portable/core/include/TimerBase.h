@@ -13,11 +13,10 @@
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
-#include <stdint.h>
-
 #include "portable/diagnostics/include/Trace.h"
 
-//#include "portable/core/include/Thread.h"
+#include "portable/language/cpp/include/cstdint.h"
+
 
 namespace os
 {

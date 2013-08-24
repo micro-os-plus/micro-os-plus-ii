@@ -11,7 +11,7 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#include <stdint.h>
+#include "portable/language/cpp/include/cstdint.h"
 
 namespace os
 {
@@ -123,21 +123,18 @@ namespace os
     {
     }
 
-#pragma GCC diagnostic push
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Winvalid-noreturn"
-#endif
-
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
     /// with actual architecture specific system reset code.
     inline void
     __attribute__((always_inline))
+    __attribute__((noreturn))
     ArchitectureBase::resetSystem(void)
     {
+      for (;;)
+        ;
     }
 
-#pragma GCC diagnostic pop
 
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this

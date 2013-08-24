@@ -16,7 +16,6 @@
 #include "portable/language/cpp/include/memory.h"
 
 #include "portable/diagnostics/include/Trace.h"
-
 #include "portable/core/include/Architecture.h"
 
 namespace os

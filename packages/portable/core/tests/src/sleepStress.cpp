@@ -47,8 +47,6 @@ static os::infra::TestSuiteOstream ts;
 
 // ----------------------------------------------------------------------------
 
-// ----------------------------------------------------------------------------
-
 #pragma GCC diagnostic push
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wpadded"

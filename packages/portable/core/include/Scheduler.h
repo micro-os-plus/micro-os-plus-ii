@@ -24,7 +24,7 @@
 
 #include "portable/core/include/Architecture.h"
 
-#include <stdint.h>
+#include "portable/language/cpp/include/cstdint.h"
 
 namespace os
 {

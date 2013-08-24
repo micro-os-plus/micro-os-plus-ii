@@ -17,7 +17,6 @@
 #include "portable/core/include/IdleThread.h"
 #include "portable/core/include/TimerTicks.h"
 
-//#include "portable/core/include/PlatformBase.h"
 #include "portable/core/include/Architecture.h"
 
 #if !defined(OS_INCLUDE_CORE_SCHEDULER_CUSTOM)

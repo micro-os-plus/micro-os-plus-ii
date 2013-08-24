@@ -16,7 +16,7 @@
 #include "Trace.h"
 #include "TraceConversions.cpp.h"
 
-#include <string.h>
+#include "portable/language/cpp/include/cstring.h"
 
 namespace os
 {

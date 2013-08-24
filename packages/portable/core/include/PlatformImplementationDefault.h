@@ -24,19 +24,13 @@
 
 // ----------------------------------------------------------------------------
 
+#if !defined(__DOXYGEN__)
 namespace hal
 {
   namespace platform
   {
-    // ------------------------------------------------------------------------
-
-#if !defined(__DOXYGEN__)
-
     using PlatformImplementation = os::core::PlatformBase;
-
-#endif // !defined(__DOXYGEN__)
-  // --------------------------------------------------------------------------
-  }// namespace platform
+  } // namespace platform
 } // namespace hal
-
+#endif // !defined(__DOXYGEN__)
 #endif // OS_PORTABLE_CORE_PLATFORMIMPLEMENTATION_H_

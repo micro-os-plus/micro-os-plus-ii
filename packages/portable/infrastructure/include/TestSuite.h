@@ -39,7 +39,7 @@
 
 #endif
 
-#include <stdint.h>
+#include "portable/language/cpp/include/cstdint.h"
 
 namespace os
 {

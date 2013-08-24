@@ -112,10 +112,12 @@ namespace os
     EarlyInitialisations::~EarlyInitialisations()
     {
 #if defined(DEBUG)
-      // power down the trace device
+      // Power down the trace device
       os::diag::Trace::powerDown();
 #endif
 #if defined(OS_INCLUDE_PORTABLE_CORE_EARLYINITIALISATIONS_DESTRUCTOR_RESET)
+      // On platforms like Posix, the process must run its cleaup code,
+      // so we do not need to reset here.
       os::platform.resetSystem();
 #endif
     }
@@ -146,7 +148,7 @@ static os::core::EarlyInitialisations earlyInitialisations;
 
 // ----------------------------------------------------------------------------
 
-#if defined(DEBUG)
+#if defined(DEBUG) || defined(__DOXYGEN__)
 
 namespace os
 {
@@ -169,11 +171,11 @@ namespace os
   } // namespace diag
 } // namspace os
 
-#endif
+#endif // defined(DEBUG)
 
 // ----------------------------------------------------------------------------
 
-#if defined(DEBUG)
+#if defined(DEBUG) || defined(__DOXYGEN__)
 
 namespace os
 {
@@ -226,11 +228,11 @@ namespace os
   } // namespace core
 } // namespace os
 
-#endif
+#endif // defined(DEBUG)
 
 // ----------------------------------------------------------------------------
 
-#if defined(DEBUG)
+#if defined(DEBUG) || defined(__DOXYGEN__)
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -269,7 +271,7 @@ namespace os
 
   /// @} end of ingroup core_port
 
-#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
 #pragma GCC diagnostic push
 #if defined(__clang__)

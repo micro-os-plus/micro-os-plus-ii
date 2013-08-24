@@ -14,7 +14,7 @@
 
 #include "portable/infrastructure/include/TestSuite.h"
 
-#include <string.h>
+#include "portable/language/cpp/include/cstring.h"
 
 // We have a single instantiation of this template, so a separate
 // header with the template implementation definitions is not needed,

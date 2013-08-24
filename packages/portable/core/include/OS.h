@@ -5,11 +5,14 @@
 
 /// \file
 /// \brief System wide definitions.
+///
+/// \details
+/// Intended to be used in application files, not in the system classes.
 
 #ifndef OS_PORTABLE_CORE_OS_H_
 #define OS_PORTABLE_CORE_OS_H_
 
-#include <stdint.h>
+#include "portable/language/cpp/include/cstdint.h"
 
 #include "portable/core/include/ConfigDefines.h"
 

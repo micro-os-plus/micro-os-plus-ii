@@ -16,7 +16,7 @@
 
 #include "portable/core/include/XCDL_SchedulerDefines.h"
 
-#include <stdint.h>
+#include "portable/language/cpp/include/cstdint.h"
 
 #include "portable/core/include/Architecture.h"
 

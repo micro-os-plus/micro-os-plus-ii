@@ -12,11 +12,7 @@
 
 #include "portable/core/include/Mutex.h"
 #include "portable/core/include/Mutex.cpp.h"
-//#include "portable/core/include/Scheduler.h"
 #include "portable/core/include/CriticalSections.h"
-
-//#include "portable/core/include/PlatformBase.h"
-//#include "portable/core/include/Architecture.h"
 
 namespace os
 {
