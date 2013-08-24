@@ -15,11 +15,10 @@
 #include "portable/core/include/XCDL_SchedulerDefines.h"
 
 #include "portable/diagnostics/include/Trace.h"
-
 #include "hal/architecture/synthetic/posix/include/TimerTicksImplementation.h"
 #include "portable/core/include/TimerTicks.h"
 
-
+// Platform definitions
 #include <sys/time.h>
 
 namespace hal
@@ -89,11 +88,14 @@ namespace hal
 
       // set timer
       struct itimerval tv;
+      // first clear all fields
       timerclear(&tv.it_value);
+      // then set the required ones
       tv.it_value.tv_sec = 0;
       tv.it_value.tv_usec = 1000000 / OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
       tv.it_interval.tv_sec = 0;
-      tv.it_interval.tv_usec = 1000000 / OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
+      tv.it_interval.tv_usec = 1000000
+          / OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
 #if defined(__linux__)
 #define TIMER   0
 #else
@@ -157,7 +159,6 @@ namespace hal
 
       // block signal
       sigprocmask(SIG_BLOCK, &m_signalSet, NULL);
-
     }
 
     /// \details
@@ -196,7 +197,7 @@ namespace hal
       write(1, &c, 1);
 #endif
 
-      // Call the ticks timer ISR
+      // Call the ticks timer ISR.
       os::timerTicks.interruptServiceRoutine();
     }
 
@@ -206,5 +207,4 @@ namespace hal
 } // namespace hal
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)

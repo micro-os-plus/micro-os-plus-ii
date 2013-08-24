@@ -14,7 +14,9 @@ Package(
 
     sourceFiles=[
         'ArchitectureImplementation.cpp',
+        'InterruptsCriticalSection.cpp',
         'TimerTicksImplementation.cpp',
+        'ThreadContext.cpp',
     ],
 
     headerDefinition='OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX',

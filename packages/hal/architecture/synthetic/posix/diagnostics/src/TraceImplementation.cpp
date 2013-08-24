@@ -10,6 +10,8 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_DIAGNOSTICS_TRACEIMPLEMENTATION) || defined(__DOXYGEN__)
 
+#if defined(DEBUG) || defined(__DOXYGEN__)
+
 #include "hal/architecture/synthetic/posix/diagnostics/include/TraceImplementation.h"
 
 namespace hal
@@ -20,8 +22,6 @@ namespace hal
     {
 
       // ======================================================================
-
-#if defined(DEBUG) || defined(__DOXYGEN__)
 
       /// \details
       /// Called during early start-up, to perform
@@ -51,12 +51,11 @@ namespace hal
         return ::write(OUTPUT_DEVICE_FILE_DESCRIPTOR, pBuf, numBytes);
       }
 
-#endif
+    // ========================================================================
 
-      // ======================================================================
-
-    } // namespace diag
+    }// namespace diag
   } // namespace posix
 } // namespace hal
 
+#endif // defined(DEBUG)
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION)

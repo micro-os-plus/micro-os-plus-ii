@@ -10,10 +10,10 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION) || defined(__DOXYGEN__)
 
-#include "portable/core/include/OS.h"
-
 #include "hal/architecture/synthetic/posix/infrastructure/include/TestSuiteImplementation.h"
+#include "portable/diagnostics/include/Trace.h"
 
+// Platform headers
 #include <iostream>
 #include <fcntl.h>
 
@@ -84,8 +84,8 @@ namespace hal
 
             case '?':
               if (optopt == 'x')
-                std::cerr << "Option '-x"
-                    << "' requires an argument." << std::endl;
+                std::cerr << "Option '-x" << "' requires an argument."
+                    << std::endl;
               else if (isprint(optopt))
                 std::cerr << "Unknown option '-" << (char) optopt << "'."
                     << std::endl;
@@ -109,8 +109,8 @@ namespace hal
       int
       TestSuiteImplementation::createXmlFile(void)
       {
-        m_xmlFileDescriptor = ::open(m_filePath,
-            (O_CREAT | O_TRUNC | O_WRONLY), 0644);
+        m_xmlFileDescriptor = ::open(m_filePath, (O_CREAT | O_TRUNC | O_WRONLY),
+            0644);
 
         return m_xmlFileDescriptor;
       }
@@ -168,9 +168,9 @@ namespace hal
         return ::write(OUTPUT_DEVICE_FILE_DESCRIPTOR, cpBuf, numBytes);
       }
 
-      // ----------------------------------------------------------------------
+    // ----------------------------------------------------------------------
 
-    } // namespace infra
+    }// namespace infra
   } // namespace posix
 } // namespace hal
 

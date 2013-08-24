@@ -13,6 +13,9 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION) || defined(__DOXYGEN__)
 
+// Platform headers
+#include <unistd.h>
+
 namespace hal
 {
   namespace posix
@@ -30,6 +33,7 @@ namespace hal
       /// \headerfile TestSuiteImplementation.h "hal/architecture/synthetic/posix/include/TestSuiteImplementation.h"
       /// \nosubgrouping
       /// \ingroup posix
+      ///
       /// \brief The POSIX version of the TestSuiteImplementation.
       ///
       /// \details
@@ -153,8 +157,10 @@ namespace hal
 
       };
 
-      inline
-      size_t
+      // ----------------------------------------------------------------------
+
+      inline size_t
+      __attribute__((always_inline))
       TestSuiteImplementation::getVerbosity(void) const
       {
         return m_verbosity;
@@ -162,16 +168,14 @@ namespace hal
 
 #pragma GCC diagnostic pop
 
-      // ======================================================================
+    // ========================================================================
 
-    } // namespace infra
+    }// namespace infra
   } // namespace posix
 } // namespace hal
 
+// ============================================================================
 #if !defined(__DOXYGEN__)
-
-// Leave Doxygen think that the os::infra sample class is the real one.
-
 namespace os
 {
   namespace infra
@@ -181,9 +185,8 @@ namespace os
     typedef hal::posix::infra::TestSuiteImplementation TestSuiteImplementation;
   } // namespace infra
 } // namespace os
-
 #endif // !defined(__DOXYGEN__)
+// ============================================================================
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION)
-
 #endif // HAL_ARCHITECTURE_SYNTHETIC_POSIX_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_H_

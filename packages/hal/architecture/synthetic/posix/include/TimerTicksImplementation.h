@@ -15,6 +15,7 @@
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
+// Platform headers
 #include <signal.h>
 
 namespace hal
@@ -131,6 +132,19 @@ namespace hal
 
   }// namespace posix
 }      // namespace hal
+
+// ============================================================================
+
+#if !defined(__DOXYGEN__)
+namespace hal
+{
+  namespace arch
+  {
+    using TimerTicksImplementation = hal::posix::TimerTicksImplementation;
+  } // namespace arch
+} // namespace hal
+#endif // !defined(__DOXYGEN__)
+// ============================================================================
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)

@@ -4,7 +4,7 @@
 //
 
 /// \file
-/// \brief Cortex-M definitions.
+/// \brief POSIX definitions.
 
 #ifndef HAL_ARCHITECTURE_SYNTHETIC_POSIX_ARCHITECTUREDEFINITIONS_H_
 #define HAL_ARCHITECTURE_SYNTHETIC_POSIX_ARCHITECTUREDEFINITIONS_H_
@@ -13,6 +13,13 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX) || defined(__DOXYGEN__)
 
+#if defined(__APPLE__)
+// mainly for ucontext.h, but seems it is needed in other system
+// headers, since without it the sleep test crashes
+#define _XOPEN_SOURCE 600L
+#endif
+
+// Platform headers
 #include <stdint.h>
 #include <signal.h>
 

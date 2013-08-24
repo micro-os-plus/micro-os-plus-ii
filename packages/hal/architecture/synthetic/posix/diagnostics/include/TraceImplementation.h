@@ -13,6 +13,9 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_DIAGNOSTICS_TRACEIMPLEMENTATION) || defined(__DOXYGEN__)
 
+#if defined(DEBUG) || defined(__DOXYGEN__)
+
+// Platform headers
 #include <unistd.h>
 
 namespace hal
@@ -113,28 +116,27 @@ namespace hal
       {
       }
 
-      // ======================================================================
+    // ========================================================================
 
-    } // namespace diag
+    }// namespace diag
   } // namespace posix
 } // namespace hal
 
+// ============================================================================
+
 #if !defined(__DOXYGEN__)
-
-// Leave Doxygen think that the os::diag sample class is the real one.
-
 namespace os
 {
   namespace diag
   {
     /// \brief Define the generic type to refer to the POSIX implementation.
     /// for the Trace.
-    typedef hal::posix::diag::TraceImplementation TraceImplementation;
+    using TraceImplementation = hal::posix::diag::TraceImplementation;
   } // namespace diag
 } // namespace os
-
 #endif // !defined(__DOXYGEN__)
+// ============================================================================
 
+#endif // defined(DEBUG)
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX_DIAGNOSTICS_TRACEIMPLEMENTATION)
-
 #endif // HAL_ARCHITECTURE_SYNTHETIC_POSIX_DIAGNOSTICS_TRACEIMPLEMENTATION_H_
