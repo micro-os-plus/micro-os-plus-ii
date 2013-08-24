@@ -96,8 +96,8 @@ namespace hal
 typedef hal::cortexm::LinkerScript LinkerScript;
 template class os::infra::TCppStartup<LinkerScript>;
 
-extern int
-main(void);
+extern "C" int
+main(...);
 
 namespace hal
 {
@@ -145,7 +145,7 @@ namespace InterruptHandler
 #endif
 
     // Everything should be ready, the show can start
-    main();
+    main(0, &"");
 
     // Not usual in embedded environments, but if the application
     // terminates gracefully, run the destructors.
@@ -287,7 +287,7 @@ void
 operator
 delete(void* p __attribute__((unused)))
 {
-    // not yet implemented
+ // not yet implemented
 }
 
 // ----------------------------------------------------------------------------
