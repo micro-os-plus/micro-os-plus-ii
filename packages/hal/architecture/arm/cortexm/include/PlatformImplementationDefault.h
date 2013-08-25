@@ -21,21 +21,15 @@
 // As default, the base definitions are enough, if you need more
 // just derive your own class from PlatformBase and add the
 // specifics (see PlatformImplementationSample.h).
-
+#if !defined(__DOXYGEN__)
 namespace hal
 {
   namespace platform
   {
-    // ------------------------------------------------------------------------
-
-#if !defined(__DOXYGEN__)
-
-    using PlatformImplementation = hal::cortexm::PlatformBase;
-
-#endif // !defined(__DOXYGEN__)
-  // --------------------------------------------------------------------------
+     using PlatformImplementation = hal::cortexm::PlatformBase;
   }// namespace platform
 } // namespace hal
+#endif // !defined(__DOXYGEN__)
 
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_PLATFORMIMPLEMENTATIONDEFAULT_H_
