@@ -27,8 +27,8 @@ command line tool, without system threading.',
         # use the POSIX architecture
         'enable("package.os.hal.architecture.synthetic.posix")',
         
-        # use the default platform implementation
-        'enable("option.os.portable.core.platform.implementation.default")',
+        # use the default POSIX platform
+        'setValue("OS_PATH_HAL_PLATFORM_PLATFORMIMPLEMENTATION", "hal/architecture/synthetic/posix/include/PlatformImplementationDefault.h")',
     ],
         
     implements=[
