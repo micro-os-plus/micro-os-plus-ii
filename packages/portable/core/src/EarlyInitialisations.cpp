@@ -115,11 +115,10 @@ namespace os
       // Power down the trace device
       os::diag::Trace::powerDown();
 #endif
-#if defined(OS_INCLUDE_PORTABLE_CORE_EARLYINITIALISATIONS_DESTRUCTOR_RESET)
-      // On platforms like Posix, the process must run its cleaup code,
-      // so we do not need to reset here.
-      os::platform.resetSystem();
-#endif
+      // On platforms like Posix this is empty, 
+      // since the process must run its cleaup code.
+      // On bare metal this shall reset the system.
+      os::platform.exit();
     }
 
   // ========================================================================
