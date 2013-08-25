@@ -28,11 +28,11 @@
 
 #include "hal/architecture/arm/cortexm/include/PlatformImplementationDefault.h"
 
-#elif defined(OS_INCLUDE_PORTABLE_CORE_PLATFORMIMPLEMENTATION_CUSTOM)
+#elif defined(OS_PATH_HAL_PLATFORM_PLATFORMIMPLEMENTATION)
 
-// Don't search for this file in the source folders, since it is
-// read from the build folder, where the build procedure copies it.
-#include "hal/platform/include/PlatformImplementation.h"
+// Not very usual, but less problematic then all other solutions tested
+// (countless #ifs, xcdl copyFiles)
+#include OS_PATH_HAL_PLATFORM_PLATFORMIMPLEMENTATION
 
 #else
 
