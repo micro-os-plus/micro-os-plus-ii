@@ -73,6 +73,8 @@ namespace os
       __attribute__((noreturn))
       resetSystem(void);
 
+#if defined(DEBUG) || defined(__DOXYGEN__)
+
       /// \brief Put architecture greeting.
       ///
       /// \par Parameters
@@ -81,6 +83,8 @@ namespace os
       ///    Nothing.
       static void
       putGreeting(void);
+
+#endif // defined(DEBUG)
 
       /// \brief Reset watchdog.
       ///
@@ -123,27 +127,27 @@ namespace os
     {
     }
 
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Winvalid-noreturn"
+#endif
+
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
     /// with actual architecture specific system reset code.
+    ///
+    /// \note If the platform calls this, then
+    /// be sure this does not remain empty, but performs the
+    /// actual reset code, since it is also called from abort().
     inline void
     __attribute__((always_inline))
     __attribute__((noreturn))
     ArchitectureBase::resetSystem(void)
     {
-      for (;;)
-        ;
     }
 
+#pragma GCC diagnostic pop
 
-    /// \details
-    /// Empty inline function, so no code is generated. Overwrite this
-    /// with actual architecture specific code.
-    inline void
-    __attribute__((always_inline))
-    ArchitectureBase::putGreeting(void)
-    {
-    }
 
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
