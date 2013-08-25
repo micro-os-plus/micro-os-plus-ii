@@ -55,17 +55,6 @@ namespace hal
       /// \name Public member functions
       /// @{
 
-#if defined(DEBUG)
-      /// \brief Put architecture greeting.
-      ///
-      /// \par Parameters
-      ///    None.
-      /// \par Returns
-      ///    Nothing.
-      static void
-      putGreeting(void);
-#endif
-
       static void
       yield(void);
 
