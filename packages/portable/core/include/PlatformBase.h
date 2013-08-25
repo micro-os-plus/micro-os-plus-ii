@@ -62,6 +62,15 @@ namespace os
       static void
       resetSystem(void);
 
+      /// \brief Pass the main() return code to the calling environment.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      exit(void);
+
 #if defined(DEBUG)
       /// \brief Write the platform greeting on the trace device.
       ///
@@ -96,6 +105,9 @@ namespace os
     /// reset code. Overwrite this
     /// with actual platform specific system reset code,
     /// if the platform requires more specific functionality.
+    ///
+    /// \note Be sure this does not remain empty, but performs the
+    /// actual reset code, since it is also called from abort().
     inline void
     __attribute__((always_inline))
     __attribute__((noreturn))
@@ -104,7 +116,20 @@ namespace os
       os::architecture.resetSystem();
     }
 
-#if defined(DEBUG)
+    /// \details
+    /// Default implementation that uses the architecture
+    /// reset code. Overwrite this
+    /// with actual platform specific system reset code,
+    /// if the platform requires more specific functionality.
+    inline void
+    __attribute__((always_inline))
+    __attribute__((noreturn))
+    PlatformBase::exit(void)
+    {
+      os::architecture.resetSystem();
+    }
+
+#if defined(DEBUG) || defined(__DOXYGEN__)
 
     /// \details
     /// Display the XCDL defined platform greeting lines (if available)
@@ -126,7 +151,7 @@ namespace os
       os::architecture.putGreeting();
     }
 
-#endif
+#endif // defined(DEBUG)
 
   // ========================================================================
 
