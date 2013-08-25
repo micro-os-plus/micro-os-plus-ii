@@ -9,6 +9,7 @@ Package(
     description='All µOS++ Second Edition portable core packages.',
     
     sourceFiles=[
+        'ArchitectureBase.cpp',
     ],
         
     includeFiles=[
@@ -118,13 +119,14 @@ first place, to run all system initialisation.',
                 ),
 
                 Option(
-                    id='option.os.portable.core.platform.implementation.custom',
-                    name='Use custom platform implementation definitions',
+                    id='option.os.portable.core.platform.implementation.path',
+                    name='Use custom platform implementation header file',
                     description='Custom platform implementation.',
 
                     isEnabled=False,
                     
-                    headerDefinition='OS_INCLUDE_PORTABLE_CORE_PLATFORMIMPLEMENTATION_CUSTOM',
+                    valueType='string',
+                    headerDefinition='OS_PATH_HAL_PLATFORM_PLATFORMIMPLEMENTATION',
                 ),
 
             ],
