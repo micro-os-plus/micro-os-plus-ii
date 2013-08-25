@@ -13,6 +13,9 @@
 
 #include "portable/core/include/Architecture.h"
 
+extern "C" int
+main(...);
+
 namespace os
 {
   namespace core
@@ -71,6 +74,15 @@ namespace os
       static void
       exit(void);
 
+      /// \brief Execute the main() function.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      executeMain(void);
+
 #if defined(DEBUG)
       /// \brief Write the platform greeting on the trace device.
       ///
@@ -127,6 +139,18 @@ namespace os
     PlatformBase::exit(void)
     {
       os::architecture.resetSystem();
+    }
+
+    /// \details
+    /// Default implementation that uses the architecture
+    /// initialisations. Overwrite this
+    /// with actual platform specific system initialisation code,
+    /// if the platform requires more specific functionality.
+    inline void
+    __attribute__((always_inline))
+    PlatformBase::executeMain(void)
+    {
+      main(0, &"");
     }
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
