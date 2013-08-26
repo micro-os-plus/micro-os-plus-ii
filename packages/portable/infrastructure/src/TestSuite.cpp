@@ -356,16 +356,31 @@ namespace os
                 {
                   putString("PASS,\"All ");
                   putNumber(static_cast<int>(m_countPassed));
-                  putString(" checks passed! :-) ");
+                  putString(" check");
+                  if (m_countPassed > 1)
+                    {
+                      putString("s");
+                    }
+                  putString(" passed! :-) ");
                   putString("\"");
                 }
               else
                 {
                   putString("FAIL,\"");
                   putNumber(static_cast<int>(m_countFailed));
-                  putString(" checks failed, ");
+                  putString(" check");
+                  if (m_countFailed > 1)
+                    {
+                      putString("s");
+                    }
+                  putString(" failed, ");
                   putNumber(static_cast<int>(m_countPassed));
-                  putString(" checks passed. PROBLEMS?");
+                  putString(" check");
+                  if (m_countPassed > 1)
+                    {
+                      putString("s");
+                    }
+                  putString(" passed. PROBLEMS?");
                   putString("\"");
                 }
               break;
