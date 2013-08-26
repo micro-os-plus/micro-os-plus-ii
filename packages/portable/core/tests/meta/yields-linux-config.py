@@ -32,7 +32,7 @@ Configuration(
     toolchain='toolchain.linux.release.gcc.x64',                    
 ),
 
-# GCC x32
+# ----- GCC x32 ---------------------------------------------------------------
 Configuration(
     id='config.os.portable.core.tests.yields.linux.x32.gcc.debug',
     name='Debug GNU/Linux Yields configuration with i386 GCC',
@@ -90,7 +90,7 @@ Configuration(
     toolchain='toolchain.linux.release.gcc47.x64',                    
 ),
 
-# GCC 4.7 x32
+# ----- GCC 4.7 x32 -----------------------------------------------------------
 Configuration(
     id='config.os.portable.core.tests.yields.linux.x32.gcc47.debug',
     name='Debug GNU/Linux Yields configuration with i386 GCC 4.7',
@@ -148,7 +148,7 @@ Configuration(
     toolchain='toolchain.linux.release.gcc48.x64',                    
 ),
 
-# GCC 4.8 x32
+# ----- GCC 4.8 x32 -----------------------------------------------------------
 Configuration(
     id='config.os.portable.core.tests.yields.linux.x32.gcc48.debug',
     name='Debug GNU/Linux Yields configuration with i386 GCC 4.8',
@@ -207,7 +207,7 @@ Configuration(
     toolchain='toolchain.linux.release.llvm.x64',                    
 ),
 
-# LLVM x32
+# ----- LLVM x32 --------------------------------------------------------------
 Configuration(
     id='config.os.portable.core.tests.yields.linux.x32.llvm.debug',
     name='Debug GNU/Linux Yields configuration with i386 LLVM',
@@ -235,3 +235,4 @@ Configuration(
 
     toolchain='toolchain.linux.release.llvm.x32',                    
 ),
+# -----------------------------------------------------------------------------

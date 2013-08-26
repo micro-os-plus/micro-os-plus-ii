@@ -32,7 +32,7 @@ Configuration(
     toolchain='toolchain.osx.release.llvm.x64',                    
 ),
 
-# LLVM x32
+# ----- LLVM x32 --------------------------------------------------------------
 Configuration(
     id='config.os.portable.core.tests.ostream.osx.x32.llvm.debug',
     name='Debug OS X C++ ostream configuration with i386 LLVM',
@@ -91,7 +91,7 @@ Configuration(
     toolchain='toolchain.osx.release.mp.gcc47.x64',                    
 ),
 
-# GCC 4.7 x32
+# ----- GCC 4.7 x32 -----------------------------------------------------------
 Configuration(
     id='config.os.portable.core.tests.ostream.osx.x32.gcc47.debug',
     name='Debug OS X C++ ostream configuration with i386 GCC 4.7',
@@ -149,7 +149,7 @@ Configuration(
     toolchain='toolchain.osx.release.mp.gcc48.x64',                    
 ),
 
-# GCC 4.8 x32
+# ----- GCC 4.8 x32 -----------------------------------------------------------
 Configuration(
     id='config.os.portable.core.tests.ostream.osx.x32.gcc48.debug',
     name='Debug OS X C++ ostream configuration with i386 GCC 4.8',
@@ -177,4 +177,4 @@ Configuration(
 
     toolchain='toolchain.osx.release.mp.gcc48.x32',                    
 ),
-
+# -----------------------------------------------------------------------------

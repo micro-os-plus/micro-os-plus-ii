@@ -42,3 +42,4 @@ encoding//packages/support/toolchains/osx-mp-gcc.py=utf-8
 encoding//packages/support/toolchains/xcdl.py=utf-8
 encoding//scripts/linux-config-template.py=utf-8
 encoding//scripts/osx-config-template.py=utf-8
+encoding//scripts/qemu-config-template.py=utf-8
