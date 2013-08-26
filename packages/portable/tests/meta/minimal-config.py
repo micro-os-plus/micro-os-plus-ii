@@ -20,7 +20,7 @@ Configuration(
     ],
     
     requirements=[
-        'setValue("APP_STRING_APPLICATION_NAME", "Minimal")',        
+        'setValue("APP_STRING_APPLICATION_NAME", "Minimal")',
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
         
         # enable test artefact
@@ -46,7 +46,7 @@ Configuration(
                       
             requirements=[
                 # enable the platform    
-                'enable("package.os.hal.platform.synthetic.linux")',                
+                'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
             buildFolder='linux/minimal',
@@ -54,7 +54,7 @@ Configuration(
             includeFiles=[
                 'minimal-linux-config.py'
             ],
-        ),   
+        ),
               
         # configuration specific for platform OS X
         Configuration(
@@ -70,7 +70,7 @@ Configuration(
                       
             requirements=[
                 # enable the platform    
-                'enable("package.os.hal.platform.synthetic.osx")',                
+                'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
             buildFolder='osx/minimal',
@@ -78,12 +78,45 @@ Configuration(
             includeFiles=[
                 'minimal-osx-config.py'
             ],
-        )      
+        ),
+
+        # configuration specific for QEMU generic Cortex-M3
+        Configuration(
+              
+            id='config.os.portable.tests.minimal.qemu',
+            name='QEMU Minimal Test configuration',
+            description='Common Debug/Release definitions for Minimal Test running on QEMU.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.qemu',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.qemu")',
+                        
+                # we also need the semihosting trace output
+                'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
+            ],
+                      
+            buildFolder='qemu/minimal',
+            
+            buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+            
+            copyFiles=[
+                ('/support/makefile/aep_gcc_makefile_defs.mk', 'makefile_defs.mk'),
+                ('/support/makefile/aep_gcc_makefile_targets.mk', 'makefile_targets.mk'),
+            ],
+            
+            includeFiles=[
+                'minimal-qemu-config.py',
+            ],
+        )
                  
     ],
                       
     includeFiles=[
-        'minimal-qemu-config.py',
         'minimal-stm32h103-config.py',
     ],
 )

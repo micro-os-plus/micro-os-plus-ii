@@ -4,105 +4,62 @@
 # Copyright (c) 2013 Liviu Ionescu.
 
 
-# configuration specific for QEMU generic Cortex-M3
+# ---- GNU Tools for ARM Embedded Processors on OS X --------------------------
 Configuration(
-      
-    id='config.os.portable.tests.minimal.qemu',
-    name='Test Minimal on QEMU configuration',
-    description='Common definitions for Debug/Release build configurations running on QEMU',
+    id='config.os.portable.tests.minimal.qemu.osx.aep.gcc.debug',
+    name='Debug OS X QEMU Minimal configuration with ARM Embedded GCC',
+    description='Debug build configuration for Minimal.',
     
-    loadPackages=[
-        # mandatory platform requirement
-        'package.os.hal.platform.synthetic.qemu',
-    ],
-              
+    buildConfigurationName='qemu_minimal_osx_aep_gcc_Debug',
+    
+    buildFolder='$(PARENT)/osx/aep/gcc/Debug',
+    
     requirements=[
-        # enable the platform    
-        'enable("package.os.hal.platform.synthetic.qemu")',                
-
-        # we also need gpio  
-        #'enable("component.os.hal.architecture.arm.cortexm.stm32f.stm32f10x.lib.stm.gpio")',              
-
-        # and the i2c trace implementation
-        #'enable("component.os.portable.diagnostics.trace.i2c")', 
-        
-        # we also need the semihosting trace output
-        'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',       
+        'enable("DEBUG")',
     ],
-              
-    buildFolder='qemu/minimal',
+      
+    toolchain='toolchain.osx.aep.arm.gcc.debug',
+),
+
+Configuration(
+    id='config.os.portable.tests.minimal.qemu.osx.aep.gcc.release',
+    name='Release OS X QEMU Minimal configuration with ARM Embedded GCC',
+    description='Release build configuration for Minimal.',
     
-    buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+    buildConfigurationName='qemu_minimal_osx_aep_gcc_Release',
     
-    copyFiles=[
-        ('arm_makefile_defs.mk','makefile_defs.mk'),
-        ('arm_makefile_targets.mk','makefile_targets.mk'),
+    buildFolder='$(PARENT)/osx/aep/gcc/Release',
+
+    toolchain='toolchain.osx.aep.arm.gcc.release',
+),
+      
+      
+# ---- GNU Tools for ARM Embedded Processors on GNU/Linux ---------------------
+Configuration(
+    id='config.os.portable.tests.minimal.qemu.linux.aep.gcc.debug',
+    name='Debug GNU/Linux QEMU Minimal configuration with ARM Embedded GCC',
+    description='Debug build configuration for Minimal.',
+    
+    buildConfigurationName='qemu_minimal_linux_aep_gcc_Debug',
+    
+    buildFolder='$(PARENT)/linux/aep/gcc/Debug',
+    
+    requirements=[
+        'enable("DEBUG")',
     ],
+      
+    toolchain='toolchain.linux.aep.arm.gcc.debug',
+),
+
+Configuration(
+    id='config.os.portable.tests.minimal.qemu.linux.aep.gcc.release',
+    name='Release GNU/Linux QEMU Minimal configuration with ARM Embedded GCC',
+    description='Release build configuration for Minimal.',
     
-    artefactName='minimal',
+    buildConfigurationName='qemu_minimal_linux_aep_gcc_Release',
     
-    children=[
-               
-        # GNU Tools for ARM Embedded Processors on OS X  
-        Configuration(
-            id='config.os.portable.tests.minimal.qemu.osx.aep.gcc.debug',
-            name='Debug QEMU Minimal configuration with ARM Embedded GCC on OS X',
-            description='Debug build configuration for Minimal.',
-            
-            buildConfigurationName='qemu_minimal_osx_aep_gcc_Debug',
-            
-            buildFolder='$(PARENT)/osx/aep/gcc/Debug',
-            
-            requirements=[
-                'enable("DEBUG")',
-            ],
-              
-            #toolchain='toolchain.osx.aep.arm.gcc.debug',
-            toolchain='toolchain.osx.aep.arm.gcc.debug',
-        ),
+    buildFolder='$(PARENT)/linux/aep/gcc/Release',
 
-        Configuration(
-            id='config.os.portable.tests.minimal.qemu.osx.aep.gcc.release',
-            name='Release QEMU Minimal configuration with ARM Embedded GCC on OS X',
-            description='Release build configuration for Minimal.',
-            
-            buildConfigurationName='qemu_minimal_osx_aep_gcc_Release',
-            
-            buildFolder='$(PARENT)/osx/aep/gcc/Release',
-
-            toolchain='toolchain.osx.aep.arm.gcc.release',
-        ),
-              
-              
-        # GNU Tools for ARM Embedded Processors on GNU/Linux 
-        Configuration(
-            id='config.os.portable.tests.minimal.qemu.linux.aep.gcc.debug',
-            name='Debug QEMU Minimal configuration with ARM Embedded GCC on GNU/Linux',
-            description='Debug build configuration for Minimal.',
-            
-            buildConfigurationName='qemu_minimal_linux_aep_gcc_Debug',
-            
-            buildFolder='$(PARENT)/linux/aep/gcc/Debug',
-            
-            requirements=[
-                'enable("DEBUG")',
-            ],
-              
-            toolchain='toolchain.linux.aep.arm.gcc.debug',
-        ),
-
-        Configuration(
-            id='config.os.portable.tests.minimal.qemu.linux.aep.gcc.release',
-            name='Release QEMU Minimal configuration with ARM Embedded GCC on GNU/Linux',
-            description='Release build configuration for Minimal.',
-            
-            buildConfigurationName='qemu_minimal_linux_aep_gcc_Release',
-            
-            buildFolder='$(PARENT)/linux/aep/gcc/Release',
-
-            toolchain='toolchain.linux.aep.arm.gcc.release',
-        ),
-              
-
-    ],
-)
+    toolchain='toolchain.linux.aep.arm.gcc.release',
+),
+# -----------------------------------------------------------------------------

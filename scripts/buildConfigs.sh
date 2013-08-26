@@ -27,7 +27,7 @@ cd "$SCRIPT_PATH"
 echo 'Building configuration files from template...'
 echo
 
-
+# ----- trace -----------------------------------------------------------------
 CONFIG=/portable/diagnostics/tests/meta/trace-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/trace/' \
@@ -43,6 +43,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- minimal ---------------------------------------------------------------
 CONFIG=/portable/tests/meta/minimal-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.tests/' \
 -e 's/ARTEFACTNAME/minimal/' \
@@ -57,7 +58,15 @@ sed -e 's/IDPREFIX/config.os.portable.tests/' \
 osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
+CONFIG=/portable/tests/meta/minimal-qemu-config.py
+sed -e 's/IDPREFIX/config.os.portable.tests/' \
+-e 's/ARTEFACTNAME/minimal/' \
+-e 's/ARTEFACTDESCRIPTION/Minimal/' \
+qemu-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
 
+
+# ----- threads ---------------------------------------------------------------
 CONFIG=/portable/core/tests/meta/threads-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/threads/' \
@@ -88,6 +97,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- sleep -----------------------------------------------------------------
 CONFIG=/portable/core/tests/meta/sleep-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/sleep/' \
@@ -103,6 +113,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- sleepstress -----------------------------------------------------------
 CONFIG=/portable/core/tests/meta/sleepstress-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/sleepstress/' \
@@ -118,6 +129,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- mutex -----------------------------------------------------------------
 CONFIG=/portable/core/tests/meta/mutex-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/mutex/' \
@@ -133,6 +145,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- mutexstress -----------------------------------------------------------
 CONFIG=/portable/core/tests/meta/mutexstress-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/mutexstress/' \
@@ -148,6 +161,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- basic_ios -------------------------------------------------------------
 CONFIG=/portable/language/cpp/tests/meta/basic_ios-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/basic_ios/' \
@@ -163,6 +177,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- fpos ------------------------------------------------------------------
 CONFIG=/portable/language/cpp/tests/meta/fpos-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/fpos/' \
@@ -178,6 +193,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- ios_base --------------------------------------------------------------
 CONFIG=/portable/language/cpp/tests/meta/ios_base-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/ios_base/' \
@@ -193,6 +209,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- ostream ---------------------------------------------------------------
 CONFIG=/portable/language/cpp/tests/meta/ostream-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/ostream/' \
@@ -208,6 +225,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- ostreamConversions ----------------------------------------------------
 CONFIG=/portable/language/cpp/tests/meta/ostreamConversions-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/ostreamconv/' \
@@ -223,6 +241,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- streambuf -------------------------------------------------------------
 CONFIG=/portable/language/cpp/tests/meta/streambuf-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/streambuf/' \
@@ -238,6 +257,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- string ----------------------------------------------------------------
 CONFIG=/portable/language/cpp/tests/meta/string-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/string/' \
@@ -253,6 +273,7 @@ osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
+# ----- exceptions ------------------------------------------------------------
 CONFIG=/portable/language/cpp/tests/meta/exception-linux-config.py
 sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/exception/' \
@@ -267,5 +288,6 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 osx-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
+# -----------------------------------------------------------------------------
 echo
 echo '[done]'
