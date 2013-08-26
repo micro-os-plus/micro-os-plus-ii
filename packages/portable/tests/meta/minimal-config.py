@@ -8,7 +8,7 @@ RepositoryFolder('../..')
 Configuration(
               
     id='config.os.portable.tests.minimal',
-    name='Minimal application configuration',
+    name='Minimal test configuration',
     description='Build the minimal application.',
     
     loadPackages=[
@@ -32,36 +32,12 @@ Configuration(
             
     children=[
               
-        # configuration specific for platform GNU/Linux
-        Configuration(
-              
-            id='config.os.portable.tests.minimal.linux',
-            name='GNU/Linux Minimal Test configuration',
-            description='Common Debug/Release definitions for Minimal Test running on GNU/Linux.',
-            
-            loadPackages=[
-                # mandatory platform requirement
-                'package.os.hal.platform.synthetic.linux',
-            ],
-                      
-            requirements=[
-                # enable the platform    
-                'enable("package.os.hal.platform.synthetic.linux")',
-            ],
-                      
-            buildFolder='linux/minimal',
-            
-            includeFiles=[
-                'minimal-linux-config.py'
-            ],
-        ),
-              
-        # configuration specific for platform OS X
+        # Configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.tests.minimal.osx',
-            name='OS X Minimal Test configuration',
-            description='Common Debug/Release definitions for Minimal Test running on OS X.',
+            name='OS X Minimal test configuration',
+            description='Common Debug/Release definitions for Minimal test running on OS X.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -80,12 +56,36 @@ Configuration(
             ],
         ),
 
-        # configuration specific for QEMU generic Cortex-M3
+        # Configuration specific for platform GNU/Linux
+        Configuration(
+              
+            id='config.os.portable.tests.minimal.linux',
+            name='GNU/Linux Minimal test configuration',
+            description='Common Debug/Release definitions for Minimal test running on GNU/Linux.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.linux',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.linux")',
+            ],
+                      
+            buildFolder='linux/minimal',
+            
+            includeFiles=[
+                'minimal-linux-config.py'
+            ],
+        ),
+             
+        # Configuration specific for QEMU generic Cortex-M3
         Configuration(
               
             id='config.os.portable.tests.minimal.qemu',
-            name='QEMU Minimal Test configuration',
-            description='Common Debug/Release definitions for Minimal Test running on QEMU.',
+            name='QEMU ARM Minimal test configuration',
+            description='Common Debug/Release definitions for Minimal test running on QEMU.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -112,7 +112,7 @@ Configuration(
             includeFiles=[
                 'minimal-qemu-config.py',
             ],
-        )
+        ),
                  
     ],
                       

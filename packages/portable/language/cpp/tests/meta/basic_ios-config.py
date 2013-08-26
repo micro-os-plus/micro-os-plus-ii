@@ -8,7 +8,7 @@ RepositoryFolder('../../../../..')
 Configuration(
               
     id='config.os.portable.language.cpp.tests.basic_ios',
-    name='Test C++ basic_ios configuration',
+    name='C++ basic_ios test configuration',
     description='Test some methods of the basic_ios class.',
     
     loadPackages=[
@@ -41,15 +41,16 @@ Configuration(
     ],
  
     artefactName='basic_ios',
+    artefactDescription='C++ basic_ios Test',
                  
     children=[
  
-        # configuration specific for platform OS X
+        # Configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.language.cpp.tests.basic_ios.osx',
-            name='Test C++ basic_ios on OS X configuration',
-            description='Common definitions for Debug/Release build configurations running on OS X',
+            name='OS X C++ basic_ios test configuration',
+            description='Common Debug/Release definitions for C++ basic_ios test running on OS X.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -67,12 +68,12 @@ Configuration(
             ],
         ),
 
-        # configuration specific for platform GNU/Linux
+        # Configuration specific for platform GNU/Linux
         Configuration(
               
             id='config.os.portable.language.cpp.tests.basic_ios.linux',
-            name='Test C++ basic_ios on GNU/Linux configuration',
-            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            name='GNU/Linux C++ basic_ios test configuration',
+            description='Common Debug/Release definitions for C++ basic_ios test running on GNU/Linux.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -88,6 +89,41 @@ Configuration(
             includeFiles=[
                 'basic_ios-linux-config.py',
             ],
-	   ),          
+	    ), 
+              
+        # Configuration specific for QEMU generic Cortex-M3
+        Configuration(
+              
+            id='config.os.portable.language.cpp.tests.basic_ios.qemu',
+            name='QEMU ARM C++ basic_ios test configuration',
+            description='Common Debug/Release definitions for C++ basic_ios test running on QEMU.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.qemu',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.qemu")',
+                        
+                # we also need the semihosting trace output
+                'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
+            ],
+                      
+            buildFolder='qemu/basic_ios',
+            
+            buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+            
+            copyFiles=[
+                ('/support/makefile/aep_gcc_makefile_defs.mk', 'makefile_defs.mk'),
+                ('/support/makefile/aep_gcc_makefile_targets.mk', 'makefile_targets.mk'),
+            ],
+            
+            includeFiles=[
+                'basic_ios-qemu-config.py',
+            ],
+        ),
+                       
     ],
 )

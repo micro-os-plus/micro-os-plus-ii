@@ -8,7 +8,7 @@ RepositoryFolder('../../../..')
 Configuration(
               
     id='config.os.portable.diagnostics.tests.trace',
-    name='Test diagnostics trace configuration',
+    name='Trace test configuration',
     description='Test the diagnostics trace specific classes.',
     
     loadPackages=[
@@ -36,16 +36,17 @@ Configuration(
     ],
                   
     artefactName='trace',
+    artefactDescription='Trace Diagnostics',
             
     children=[
  
-        # configuration specific for platform OS X
+        # Configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.diagnostics.tests.trace.osx',
-            name='Test Trace on OS X configuration',
-            description='Common definitions for Debug/Release build configurations running on OS X',
-            
+            name='OS X Trace test configuration',
+            description='Common Debug/Release definitions for Trace test running on OS X.',
+      
             loadPackages=[
                 # mandatory platform requirement
                 'package.os.hal.platform.synthetic.osx',
@@ -63,12 +64,12 @@ Configuration(
             ],
         ),
               
-        # configuration specific for platform GNU/Linux
+        # Configuration specific for platform GNU/Linux
         Configuration(
               
             id='config.os.portable.diagnostics.tests.trace.linux',
-            name='Test Trace on GNU/Linux configuration',
-            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            name='GNU/Linux Trace test configuration',
+            description='Common Debug/Release definitions for Trace test running on GNU/Linux.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -84,6 +85,40 @@ Configuration(
             
             includeFiles=[
                 'trace-linux-config.py'
+            ],
+        ),
+
+        # Configuration specific for QEMU generic Cortex-M3
+        Configuration(
+              
+            id='config.os.portable.diagnostics.tests.trace.qemu',
+            name='QEMU ARM Trace test configuration',
+            description='Common Debug/Release definitions for Trace test running on QEMU.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.qemu',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.qemu")',                
+
+                # we also need the semihosting trace output
+                'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
+            ],
+                      
+            buildFolder='qemu/trace',
+
+            buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+            
+            copyFiles=[
+                ('/support/makefile/aep_gcc_makefile_defs.mk', 'makefile_defs.mk'),
+                ('/support/makefile/aep_gcc_makefile_targets.mk', 'makefile_targets.mk'),
+            ],
+            
+            includeFiles=[
+                'trace-qemu-config.py'
             ],
         ),
 

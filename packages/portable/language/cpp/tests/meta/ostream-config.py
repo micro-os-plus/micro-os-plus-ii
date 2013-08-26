@@ -8,8 +8,8 @@ RepositoryFolder('../../../../..')
 Configuration(
               
     id='config.os.portable.language.cpp.tests.ostream',
-    name='Test C++ ostream configuration',
-    description='Test some methods of the ostream class.',
+    name='C++ ostream test configuration',
+    description='Test some methods of the C++ ostream class.',
     
     loadPackages=[
         # mandatory test code package
@@ -40,15 +40,16 @@ Configuration(
     ],
     
     artefactName='ostream',
+    artefactDescription='C++ ostream Test',
                            
     children=[
  
-        # configuration specific for platform OS X
+        # Configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.language.cpp.tests.ostream.osx',
-            name='Test C++ ostream on OS X configuration',
-            description='Common definitions for Debug/Release build configurations running on OS X',
+            name='OS X C++ ostream test configuration',
+            description='Common Debug/Release definitions for C++ ostream test running on OS X.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -66,12 +67,12 @@ Configuration(
             ],
         ),
 
-        # configuration specific for platform GNU/Linux
+        # Configuration specific for platform GNU/Linux
         Configuration(
               
             id='config.os.portable.language.cpp.tests.ostream.linux',
-            name='Test C++ ostream on GNU/Linux configuration',
-            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            name='GNU/Linux C++ ostream test configuration',
+            description='Common Debug/Release definitions for C++ ostream test running on GNU/Linux.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -88,5 +89,40 @@ Configuration(
                 'ostream-linux-config.py',
             ],
         ),
+              
+        # Configuration specific for QEMU generic Cortex-M3
+        Configuration(
+              
+            id='config.os.portable.language.cpp.tests.ostream.qemu',
+            name='QEMU ARM C++ ostream test configuration',
+            description='Common Debug/Release definitions for C++ ostream test running on QEMU.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.qemu',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.qemu")',
+                        
+                # we also need the semihosting trace output
+                'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
+            ],
+                      
+            buildFolder='qemu/ostream',
+            
+            buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+            
+            copyFiles=[
+                ('/support/makefile/aep_gcc_makefile_defs.mk', 'makefile_defs.mk'),
+                ('/support/makefile/aep_gcc_makefile_targets.mk', 'makefile_targets.mk'),
+            ],
+            
+            includeFiles=[
+                'ostream-qemu-config.py',
+            ],
+        ),
+
     ],
 )

@@ -8,7 +8,7 @@ RepositoryFolder('../../../../..')
 Configuration(
               
     id='config.os.portable.language.cpp.tests.streambuf',
-    name='Test C++ streambuf configuration',
+    name='C++ streambuf test configuration',
     description='Test some methods of the streambuf class.',
     
     loadPackages=[
@@ -41,15 +41,16 @@ Configuration(
     ],
                   
     artefactName='streambuf',
+    artefactDescription='C++ streambuf Test',
             
     children=[
  
-        # configuration specific for platform OS X
+        # Configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.language.cpp.tests.streambuf.osx',
-            name='Test C++ streambuf on OS X configuration',
-            description='Common definitions for Debug/Release build configurations running on OS X',
+            name='OS X C++ streambuf test configuration',
+            description='Common Debug/Release definitions for C++ streambuf test running on OS X.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -67,12 +68,12 @@ Configuration(
             ],
         ),
 
-        # configuration specific for platform GNU/Linux
+        # Configuration specific for platform GNU/Linux
         Configuration(
               
             id='config.os.portable.language.cpp.tests.streambuf.linux',
-            name='Test C++ streambuf on GNU/Linux configuration',
-            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            name='GNU/Linux C++ streambuf test configuration',
+            description='Common Debug/Release definitions for C++ streambuf test running on GNU/Linux.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -89,5 +90,40 @@ Configuration(
                 'streambuf-linux-config.py',
             ],
         ),
+              
+        # Configuration specific for QEMU generic Cortex-M3
+        Configuration(
+              
+            id='config.os.portable.language.cpp.tests.streambuf.qemu',
+            name='QEMU ARM C++ streambuf test configuration',
+            description='Common Debug/Release definitions for C++ streambuf test running on QEMU.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.qemu',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.qemu")',
+                        
+                # we also need the semihosting trace output
+                'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
+            ],
+                      
+            buildFolder='qemu/streambuf',
+            
+            buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+            
+            copyFiles=[
+                ('/support/makefile/aep_gcc_makefile_defs.mk', 'makefile_defs.mk'),
+                ('/support/makefile/aep_gcc_makefile_targets.mk', 'makefile_targets.mk'),
+            ],
+            
+            includeFiles=[
+                'streambuf-qemu-config.py',
+            ],
+        ),
+
     ],
 )
