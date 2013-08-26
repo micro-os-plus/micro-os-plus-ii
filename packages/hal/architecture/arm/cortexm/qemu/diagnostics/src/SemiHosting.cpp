@@ -22,7 +22,9 @@ namespace hal
 
       /// \details
       /// Emulate the POSIX exit() code.
-      /// This is not exactly standard, but it uses
+      /// For success it returns a standard code and QEMU just returns,
+      /// but for failure
+      /// it call an unsupported BKPT function, to force QEMU to abort.
       void
       SemiHosting::exit(int code)
       {
@@ -37,6 +39,8 @@ namespace hal
             // Generate an unsupported call, to force qemu to quit.
             BKPT(0xF0 + code, (void*) 0, (void*) 0);
           }
+
+        // SHould not reach this
         for (;;)
           ;
       }

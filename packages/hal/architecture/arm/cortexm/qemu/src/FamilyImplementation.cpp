@@ -11,10 +11,9 @@
 #if defined(OS_INCLUDE_HAL_MCU_FAMILY_QEMU) || defined(__DOXYGEN__)
 
 #include "hal/architecture/arm/cortexm/qemu/include/FamilyImplementation.h"
-
 #include "portable/diagnostics/include/Trace.h"
-
 #include "hal/architecture/arm/cortexm/qemu/diagnostics/include/SemiHosting.h"
+#include "portable/core/include/Scheduler.h"
 
 namespace hal
 {
@@ -27,7 +26,6 @@ namespace hal
     void
     FamilyImplementation::initialiseSystem(void)
     {
-      //SystemInit();
     }
 
     /// \details
@@ -35,7 +33,6 @@ namespace hal
     void
     FamilyImplementation::resetSystem(void)
     {
-      //NVIC_SystemReset();
       diag::SemiHosting::exit(0);
     }
 
@@ -45,6 +42,10 @@ namespace hal
     {
       os::diag::trace.putString("Synthetic ARM Cortex-M3");
       os::diag::trace.putNewLine();
+
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+      os::scheduler.putGreeting();
+#endif
     }
 #endif
 

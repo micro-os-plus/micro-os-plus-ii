@@ -6,9 +6,6 @@
 /// \file
 /// \brief Default declarations for the Cortex-M platform implementation.
 
-// WARNING: This file is copied to the build folder, be sure you
-// edit the original and not the copy!
-
 #ifndef HAL_ARCHITECTURE_ARM_CORTEXM_PLATFORMIMPLEMENTATIONDEFAULT_H_
 #define HAL_ARCHITECTURE_ARM_CORTEXM_PLATFORMIMPLEMENTATIONDEFAULT_H_
 

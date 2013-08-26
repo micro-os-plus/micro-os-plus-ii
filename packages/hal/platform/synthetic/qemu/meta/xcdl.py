@@ -26,8 +26,8 @@ Package(
         # use the QEMU architecture definitions
         'enable("package.os.hal.architecture.arm.cortexm.qemu")',
         
-        # use the default platform implementation
-        'enable("option.os.hal.architecture.arm.cortexm.platform.implementation.default")',
+        # use the custom QEMU platform
+        'setValue("OS_PATH_HAL_PLATFORM_PLATFORMIMPLEMENTATION", "hal/platform/synthetic/qemu/include/PlatformImplementation.h")',
         
         'setValue("OS_STRING_PLATFORM_GREETING_FIRST", "QEMU Processor Emulator")',        
     ],

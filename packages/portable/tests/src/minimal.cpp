@@ -19,7 +19,7 @@ main()
 
   os::scheduler.start();
 
-  //os::mainThread.sleepFor(1);
+  os::mainThread.sleepFor(0);
 
   os::scheduler.stop();
 

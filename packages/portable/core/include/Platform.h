@@ -31,7 +31,7 @@
 #elif defined(OS_PATH_HAL_PLATFORM_PLATFORMIMPLEMENTATION)
 
 // Not very usual, but less problematic then all other solutions tested
-// (countless #ifs, xcdl copyFiles)
+// (countless #if/#elifs, xcdl copyFiles)
 #include OS_PATH_HAL_PLATFORM_PLATFORMIMPLEMENTATION
 
 #else
