@@ -17,6 +17,10 @@
 
 #include "hal/architecture/synthetic/posix/infrastructure/include/TestSuiteImplementation.h"
 
+#elif defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_QEMU_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION)
+
+#include "hal/architecture/arm/cortexm/qemu/infrastructure/include/TestSuiteImplementation.h"
+
 #elif defined(OS_INCLUDE_HAL_ARCHITECTURE_INFRASTRUCTURE_TESTSUITEIMPLEMENTATION_CUSTOM)
 
 #include "hal/architecture/infrastructure/include/TestSuiteImplementation.h"
