@@ -34,8 +34,45 @@ static os::infra::TestSuiteOstream ts;
 
 // ----------------------------------------------------------------------------
 
-#include <sys/time.h>
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
+#define HAS_GETTIMEOFDAY (1)
+#endif
 
+// ----------------------------------------------------------------------------
+
+#if defined(HAS_GETTIMEOFDAY)
+#include <sys/time.h>
+#endif
+
+// ----------------------------------------------------------------------------
+
+void
+toString(int value, char* pBuffer, ssize_t sz);
+
+void
+toString(int value, char* pBuffer, ssize_t sz)
+{
+  pBuffer[sz - 1] = '\0';
+  ssize_t pos;
+
+  for (pos = sz - 1; pos != 0;)
+    {
+      char ch = (value % 10) + '0';
+      pBuffer[--pos] = ch;
+      value /= 10;
+      if (value == 0)
+        break;
+    }
+
+  if (pos == 0)
+    return;
+
+  ssize_t i;
+  for (i = 0; pos < sz;)
+    {
+      pBuffer[i++] = pBuffer[pos++];
+    }
+}
 
 // ----------------------------------------------------------------------------
 
@@ -60,40 +97,48 @@ runTestAccuracy()
 
   os::core::timer::ticks_t ticksBegin = os::timerTicks.getCurrentTicks();
 
+#if defined(HAS_GETTIMEOFDAY)
   timeval begTime;
   gettimeofday(&begTime, 0);
+#endif
 
   //os::timerTicks.sleep(os::core::scheduler::TICKS_PER_SECOND);
   thread.sleepFor(os::core::scheduler::TICKS_PER_SECOND);
 
   os::core::timer::ticks_t ticksEnd = os::timerTicks.getCurrentTicks();
 
+#if defined(HAS_GETTIMEOFDAY)
   timeval endTime;
   gettimeofday(&endTime, 0);
-
 
   long deltaMicros = (endTime.tv_sec - begTime.tv_sec) * 1000000
       + (endTime.tv_usec - begTime.tv_usec);
   //int deltaMillis = (int)((deltaMicros + 500) / 1000);
 
   double deltaProcents = (deltaMicros - 1000000) * 100.0 / 1000000.0;
-
+#endif
 
   os::core::timer::ticks_t deltaTicks = ticksEnd - ticksBegin;
 
   ts.setFunctionNameOrPrefix("sleep()");
 
-  // TODO: replace snprintf() with a proper conversion
   char tmp[10];
+#if 1
+  toString(os::core::scheduler::TICKS_PER_SECOND, tmp, sizeof(tmp));
+#else
   snprintf(tmp, sizeof(tmp), "%d", os::core::scheduler::TICKS_PER_SECOND);
+#endif
   ts.setInputValues(tmp);
 
   ts.assertCondition(((deltaTicks - os::core::scheduler::TICKS_PER_SECOND) <= 1));
 
   ts << os::std::endl << "sleep(" << os::core::scheduler::TICKS_PER_SECOND
-      << ") took " << deltaTicks << " ticks, " << deltaMicros
-      << " real time micros, accuracy " << (long)(deltaProcents*1000) << "/1000 %" << os::std::endl;
-
+      << ") took " << deltaTicks << " ticks";
+#if defined(HAS_GETTIMEOFDAY)
+  ts << ", " << deltaMicros << " real time micros, accuracy "
+      << (long) (deltaProcents * 1000) << "/1000 %";
+#endif
+  ts << os::std::endl;
 
 }
 
@@ -258,7 +303,6 @@ runTestMulti()
   Task* taskArray[5] =
     { &task1, &task2, &task3, &task4, &task5 };
 
-
   for (auto pTask : taskArray)
     {
       ts.setPreconditions(pTask->getName());
@@ -267,7 +311,7 @@ runTestMulti()
 
   for (auto pTask : taskArray)
     {
-      pTask->getThread().start();
+      ts.assertCondition(pTask->getThread().start());
     }
 
   for (auto pTask : taskArray)

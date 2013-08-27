@@ -334,13 +334,13 @@ main(int argc, char* argv[])
   ts.assertCondition(multiThreadedTask.m_count3[2] == 0);
 
   // this order is mandatory, and must match the test below
-  threadC.start();
-  commonTask1.getThread().start();
-  commonTask2.getThread().start();
-  multiThreadedTask.m_thread1.start();
-  multiThreadedTask.m_thread2.start();
-  multiThreadedTask.m_thread3a.start();
-  multiThreadedTask.m_thread3b.start();
+  ts.assertCondition(threadC.start());
+  ts.assertCondition(commonTask1.getThread().start());
+  ts.assertCondition(commonTask2.getThread().start());
+  ts.assertCondition(multiThreadedTask.m_thread1.start());
+  ts.assertCondition(multiThreadedTask.m_thread2.start());
+  ts.assertCondition(multiThreadedTask.m_thread3a.start());
+  ts.assertCondition(multiThreadedTask.m_thread3b.start());
 
   os::scheduler.start();
 

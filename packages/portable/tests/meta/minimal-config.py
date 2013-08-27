@@ -28,7 +28,7 @@ Configuration(
     ],
 
     artefactName='minimal',
-    artefactDescription='Minimal Test',
+    artefactDescription='Minimal test',
             
     children=[
               

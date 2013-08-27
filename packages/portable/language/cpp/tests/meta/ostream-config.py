@@ -40,7 +40,7 @@ Configuration(
     ],
     
     artefactName='ostream',
-    artefactDescription='C++ ostream Test',
+    artefactDescription='C++ ostream test',
                            
     children=[
  

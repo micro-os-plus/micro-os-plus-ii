@@ -41,7 +41,7 @@ Configuration(
     ],
  
     artefactName='basic_ios',
-    artefactDescription='C++ basic_ios Test',
+    artefactDescription='C++ basic_ios test',
                  
     children=[
  

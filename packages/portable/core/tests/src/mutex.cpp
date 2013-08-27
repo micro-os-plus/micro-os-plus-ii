@@ -222,7 +222,7 @@ runTestMutex()
 
       thread::mutex::m1.lock();
 
-      th1.start();
+      ts.assertCondition(th1.start());
 
       os::core::Thread& thread = os::mainThread;
       thread.sleepFor(thread::mutex::INTERVAL);
@@ -238,7 +238,7 @@ runTestMutex()
 
       thread::mutex::m2.lock();
 
-      th2.start();
+      ts.assertCondition(th2.start());
 
       os::core::Thread& thread = os::mainThread;
       thread.sleepFor(thread::mutex::INTERVAL);
@@ -253,7 +253,7 @@ runTestMutex()
       os::core::Thread th3("t3", thread::mutex::fTryForNoTimeout, stack);
 
       thread::mutex::m3.lock();
-      th3.start();
+      ts.assertCondition(th3.start());
 
       // sleep less than tryLockFor(INTERVAL_LONG)
       os::core::Thread& thread = os::mainThread;
@@ -268,7 +268,7 @@ runTestMutex()
       os::core::Thread th4("t4", thread::mutex::fTryForTimeout, stack);
 
       thread::mutex::m4.lock();
-      th4.start();
+      ts.assertCondition(th4.start());
 
       // sleep longer than tryLock(INTERVAL_SHORT)
       os::core::Thread& thread = os::mainThread;
@@ -447,7 +447,7 @@ runTestRecursiveMutex()
       // first lock
       thread::recursivemutex::rm1.lock();
 
-      th1.start();
+      ts.assertCondition(th1.start());
 
       os::core::Thread& thread = os::mainThread;
       thread.sleepFor(thread::recursivemutex::INTERVAL / 3);
@@ -475,7 +475,7 @@ runTestRecursiveMutex()
       // first lock
       thread::recursivemutex::rm2.lock();
 
-      th2.start();
+      ts.assertCondition(th2.start());
 
       os::core::Thread& thread = os::mainThread;
       thread.sleepFor(thread::recursivemutex::INTERVAL / 3);
@@ -504,7 +504,7 @@ runTestRecursiveMutex()
       // first lock
       thread::recursivemutex::rm3.lock();
 
-      th3.start();
+      ts.assertCondition(th3.start());
 
       os::core::Thread& thread = os::mainThread;
       thread.sleepFor(thread::recursivemutex::INTERVAL_SHORT / 3);
@@ -533,7 +533,7 @@ runTestRecursiveMutex()
       // first lock
       thread::recursivemutex::rm4.lock();
 
-      th4.start();
+      ts.assertCondition(th4.start());
 
       os::core::Thread& thread = os::mainThread;
       thread.sleepFor(thread::recursivemutex::INTERVAL_LONG / 3);

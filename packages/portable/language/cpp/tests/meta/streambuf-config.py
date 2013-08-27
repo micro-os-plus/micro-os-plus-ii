@@ -41,7 +41,7 @@ Configuration(
     ],
                   
     artefactName='streambuf',
-    artefactDescription='C++ streambuf Test',
+    artefactDescription='C++ streambuf test',
             
     children=[
  

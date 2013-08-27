@@ -41,7 +41,7 @@ Configuration(
     ],
                   
     artefactName='ostreamConversions',
-    artefactDescription='C++ ostream conversions Test',
+    artefactDescription='C++ ostream conversions test',
             
     children=[
  

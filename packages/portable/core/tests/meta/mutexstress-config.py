@@ -8,7 +8,7 @@ RepositoryFolder('../../..')
 Configuration(
               
     id='config.os.portable.core.tests.mutexstress',
-    name='Test mutex stress creation configuration',
+    name='Mutex stress test configuration',
     description='Stress test the mutex calls.',
     
     loadPackages=[
@@ -16,8 +16,7 @@ Configuration(
         'package.os.portable.core.tests',
         
         # the minimal template
-        'package.os.template.minimal',
-        
+        'package.os.template.minimal', 
     ],
     
     requirements=[
@@ -36,19 +35,20 @@ Configuration(
         
         'setValue("OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS", 11)',
 
-        'setValue("OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND", 1000)',
-        
+        'setValue("OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND", 1000)',        
     ],
                                 
     artefactName='mutexstress',
+    artefactDescription='Mutex stress test',
 
     children=[
-        # configuration specific for platform OS X
+              
+        # Configuration specific for platform OS X
         Configuration(
               
             id='config.os.portable.core.tests.mutexstress.osx',
-            name='Test mutex stress on OS X configuration',
-            description='Common definitions for Debug/Release build configurations running on OS X',
+            name='OS X Mutex stress test configuration',
+            description='Common Debug/Release definitions for Mutex stress test running on OS X.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -56,6 +56,7 @@ Configuration(
             ],
                       
             requirements=[
+                # enable the platform    
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
@@ -63,16 +64,15 @@ Configuration(
                 
             includeFiles=[
                 'mutexstress-osx-config.py',
-            ],
-            
+            ],            
         ),
         
-        # configuration specific for platform GNU/Linux
+        # Configuration specific for platform GNU/Linux
         Configuration(
               
             id='config.os.portable.core.tests.mutexstress.linux',
-            name='Test mutex stress on GNU/Linux configuration',
-            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            name='GNU/Linux Mutex stress test configuration',
+            description='Common Debug/Release definitions for Mutex stress test running on GNU/Linux.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -80,6 +80,7 @@ Configuration(
             ],
                       
             requirements=[
+                # enable the platform    
                 'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
@@ -90,6 +91,40 @@ Configuration(
             ],
         ),
               
+        # Configuration specific for QEMU generic Cortex-M3
+        Configuration(
+              
+            id='config.os.portable.core.tests.mutexstress.qemu',
+            name='QEMU ARM Mutex stress test configuration',
+            description='Common Debug/Release definitions for Mutex stress test running on QEMU.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.qemu',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.qemu")',
+                        
+                # we also need the semihosting trace output
+                'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
+            ],
+                      
+            buildFolder='qemu/mutexstress',
+            
+            buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+            
+            copyFiles=[
+                ('/support/makefile/aep_gcc_makefile_defs.mk', 'makefile_defs.mk'),
+                ('/support/makefile/aep_gcc_makefile_targets.mk', 'makefile_targets.mk'),
+            ],
+            
+            includeFiles=[
+                'mutexstress-qemu-config.py',
+            ],
+        ),
+                 
     ],
 
 )

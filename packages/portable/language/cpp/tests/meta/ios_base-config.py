@@ -40,7 +40,7 @@ Configuration(
     ],
 
     artefactName='ios_base',        
-    artefactDescription='C++ ios_base Test',
+    artefactDescription='C++ ios_base test',
                   
     children=[
  

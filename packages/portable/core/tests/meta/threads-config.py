@@ -16,8 +16,7 @@ Configuration(
         'package.os.portable.core.tests',
         
         # the minimal template
-        'package.os.template.minimal',
-        
+        'package.os.template.minimal',       
     ],
     
     requirements=[
@@ -38,12 +37,11 @@ Configuration(
         
         'enable("component.os.portable.core.scheduler.custom")',
 
-        'setValue("OS_STRING_CORE_SCHEDULER_CUSTOM_HEADER", "portable/core/tests/include/FakeScheduler.h")',
-        
+        'setValue("OS_STRING_CORE_SCHEDULER_CUSTOM_HEADER", "portable/core/tests/include/FakeScheduler.h")',        
     ],
                                 
     artefactName='threads',
-    artefactDescription='Threads Creation Test',
+    artefactDescription='Threads creation test',
 
     children=[
               
@@ -68,8 +66,7 @@ Configuration(
                 
             includeFiles=[
                 'threads-osx-config.py',
-            ],
-            
+            ],            
         ),
         
         # Configuration specific for platform GNU/Linux

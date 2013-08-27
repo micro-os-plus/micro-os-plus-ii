@@ -42,8 +42,15 @@ static os::infra::TestSuiteOstream ts;
 
 // ----------------------------------------------------------------------------
 
-//#include <iostream>
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
+#define HAS_TIME (1)
+#endif
+
+// ----------------------------------------------------------------------------
+
+#if defined(HAS_TIME)
 #include <time.h>
+#endif
 
 // ----------------------------------------------------------------------------
 
@@ -444,7 +451,9 @@ runTestStress()
   os::diag::trace.putNewLine();
 #endif
 
+#if defined(HAS_TIME)
   Task::seed((uint16_t) time(NULL));
+#endif
 
   TaskPeriodic taskP("P", hal::arch::MIN_STACK_SIZE);
   Task task0("0", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
@@ -458,28 +467,28 @@ runTestStress()
   Task task8("8", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
   Task task9("9", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
 
-  taskP.getThread().start();
+  ts.assertCondition(taskP.getThread().start());
 
   taskArray[0] = &task0;
-  task0.getThread().start();
+  ts.assertCondition(task0.getThread().start());
   taskArray[1] = &task1;
-  task1.getThread().start();
+  ts.assertCondition(task1.getThread().start());
   taskArray[2] = &task2;
-  task2.getThread().start();
+  ts.assertCondition(task2.getThread().start());
   taskArray[3] = &task3;
-  task3.getThread().start();
+  ts.assertCondition(task3.getThread().start());
   taskArray[4] = &task4;
-  task4.getThread().start();
+  ts.assertCondition(task4.getThread().start());
   taskArray[5] = &task5;
-  task5.getThread().start();
+  ts.assertCondition(task5.getThread().start());
   taskArray[6] = &task6;
-  task6.getThread().start();
+  ts.assertCondition(task6.getThread().start());
   taskArray[7] = &task7;
-  task7.getThread().start();
+  ts.assertCondition(task7.getThread().start());
   taskArray[8] = &task8;
-  task8.getThread().start();
+  ts.assertCondition(task8.getThread().start());
   taskArray[9] = &task9;
-  task9.getThread().start();
+  ts.assertCondition(task9.getThread().start());
 
   // after MAX_RUN_SECONDS, the periodic thread terminates
   taskP.getThread().join();

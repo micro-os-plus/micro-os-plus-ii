@@ -40,8 +40,15 @@ static os::infra::TestSuiteOstream ts;
 
 // ----------------------------------------------------------------------------
 
-//#include <iostream>
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
+#define HAS_TIME (1)
+#endif
+
+// ----------------------------------------------------------------------------
+
+#if defined(HAS_TIME)
 #include <time.h>
+#endif
 
 // ----------------------------------------------------------------------------
 
@@ -427,7 +434,9 @@ runTestStress()
   os::diag::trace.putNewLine();
 #endif
 
+#if defined(HAS_TIME)
   Task::seed((uint16_t) time(NULL));
+#endif
 
   TaskPeriodic taskP("P");
 
@@ -453,18 +462,18 @@ runTestStress()
   taskArray[8] = &task8;
   taskArray[9] = &task9;
 
-  taskP.getThread().start();
+  ts.assertCondition(taskP.getThread().start());
 
-  task0.getThread().start();
-  task1.getThread().start();
-  task2.getThread().start();
-  task3.getThread().start();
-  task4.getThread().start();
-  task5.getThread().start();
-  task6.getThread().start();
-  task7.getThread().start();
-  task8.getThread().start();
-  task9.getThread().start();
+  ts.assertCondition(task0.getThread().start());
+  ts.assertCondition(task1.getThread().start());
+  ts.assertCondition(task2.getThread().start());
+  ts.assertCondition(task3.getThread().start());
+  ts.assertCondition(task4.getThread().start());
+  ts.assertCondition(task5.getThread().start());
+  ts.assertCondition(task6.getThread().start());
+  ts.assertCondition(task7.getThread().start());
+  ts.assertCondition(task8.getThread().start());
+  ts.assertCondition(task9.getThread().start());
 
   // after MAX_RUN_SECONDS, the periodic thread terminates
   taskP.getThread().join();
