@@ -45,24 +45,18 @@ namespace os
     void
     FakeScheduler::putGreeting(void)
     {
-      os::diag::trace.putString("Custom fake scheduler, runs each thread to completion.");
+      os::diag::trace.putString(
+          "Custom fake scheduler, runs each thread to completion.");
       os::diag::trace.putNewLine();
     }
 #endif
 
     /// \details
-    /// If the ID is valid, just return it, the thread was already registered.
-    /// Otherwise find an empty slot in the array and
+    /// Take the next slot in the array and
     /// store the pointer to the thread there.
-    scheduler::threadId_t
+    bool
     FakeScheduler::registerThread(Thread* pThread)
     {
-      scheduler::threadId_t id = pThread->getId();
-      if (id != scheduler::NO_ID)
-        {
-          return id;
-        }
-
       // here id = NO_ID;
       if (m_threadCount >= getThreadsArraySize())
         {
@@ -70,27 +64,17 @@ namespace os
           os::diag::trace.putString("RegisteredThreads full!");
           os::diag::trace.putNewLine();
 #endif
-          return scheduler::NO_ID;
+          return false;
         }
 
-      threadCount_t i;
-      // find an empty slot
-      for (i = 0; i < getThreadsArraySize(); ++i)
-        {
-          if (m_threads[i] == nullptr)
-            {
-              // register thread
-              m_threads[i] = pThread;
+      pThread->setId((Thread::id_t)m_threadCount);
 
-              // generate thread id
-              id = static_cast<scheduler::threadId_t>(i);
-              m_threadCount++;
+      // register thread
+      m_threads[m_threadCount] = pThread;
 
-              break;
-            }
-        }
+      m_threadCount++;
 
-      return id;
+      return true;
     }
 
     /// \details
@@ -132,7 +116,8 @@ namespace os
 #endif
 
       scheduler::threadPriority_t pri;
-      for (pri = scheduler::MAX_PRIORITY; pri >= scheduler::MAIN_PRIORITY; pri--)
+      for (pri = scheduler::MAX_PRIORITY; pri >= scheduler::MAIN_PRIORITY;
+          pri--)
         {
           threadCount_t i;
           for (i = 0; i < getThreadsArraySize(); ++i)

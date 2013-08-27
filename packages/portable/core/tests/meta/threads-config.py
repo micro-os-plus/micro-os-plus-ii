@@ -8,7 +8,7 @@ RepositoryFolder('../../..')
 Configuration(
               
     id='config.os.portable.core.tests.threads',
-    name='Test threads creation configuration',
+    name='Threads creation test configuration',
     description='Test the creation of Thread objects.',
     
     loadPackages=[
@@ -43,14 +43,16 @@ Configuration(
     ],
                                 
     artefactName='threads',
+    artefactDescription='Threads Creation Test',
 
     children=[
-        # configuration specific for platform OS X
+              
+        # oCnfiguration specific for platform OS X
         Configuration(
               
             id='config.os.portable.core.tests.threads.osx',
-            name='Test threads creation on OS X configuration',
-            description='Common definitions for Debug/Release build configurations running on OS X',
+            name='OS X Threads creation test configuration',
+            description='Common Debug/Release definitions for Threads creation test running on OS X.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -58,6 +60,7 @@ Configuration(
             ],
                       
             requirements=[
+                # enable the platform
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
@@ -69,12 +72,12 @@ Configuration(
             
         ),
         
-        # configuration specific for platform GNU/Linux
+        # Configuration specific for platform GNU/Linux
         Configuration(
               
             id='config.os.portable.core.tests.threads.linux',
-            name='Test threads creation on GNU/Linux configuration',
-            description='Common definitions for Debug/Release build configurations running on GNU/Linux',
+            name='GNU/Linux Threads creation test configuration',
+            description='Common Debug/Release definitions for Threads creation test running on GNU/Linux.',
             
             loadPackages=[
                 # mandatory platform requirement
@@ -92,6 +95,40 @@ Configuration(
             ],
         ),
               
+        # Configuration specific for QEMU generic Cortex-M3
+        Configuration(
+              
+            id='config.os.portable.core.tests.threads..qemu',
+            name='QEMU ARM Threads creation test configuration',
+            description='Common Debug/Release definitions for Threads creation test running on QEMU.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.synthetic.qemu',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.synthetic.qemu")',
+                        
+                # we also need the semihosting trace output
+                'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
+            ],
+                      
+            buildFolder='qemu/threads',
+            
+            buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+            
+            copyFiles=[
+                ('/support/makefile/aep_gcc_makefile_defs.mk', 'makefile_defs.mk'),
+                ('/support/makefile/aep_gcc_makefile_targets.mk', 'makefile_targets.mk'),
+            ],
+            
+            includeFiles=[
+                'threads-qemu-config.py',
+            ],
+        ),
+
     ],
 
 )

@@ -140,9 +140,9 @@ namespace os
       /// \brief Register thread to the scheduler lists.
       ///
       /// \param [in] pThread   Pointer to the thread.
-      /// \retval       NO_ID if the thread could not be registered.
-      /// \retval       The newly allocated thread ID, if successful.
-      scheduler::threadId_t
+      /// \retval       true    The thread was registered
+      /// \retval       false   The thread could not be registered.
+      bool
       registerThread(Thread* pThread);
 
       /// \brief Deregister thread from the scheduler lists.
