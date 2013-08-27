@@ -131,7 +131,7 @@ Package(
             ],
                   
             includeFiles=[
-                'ostreamConversions-config.py',
+                'ostreamconv-config.py',
             ],
 
             implements=[
