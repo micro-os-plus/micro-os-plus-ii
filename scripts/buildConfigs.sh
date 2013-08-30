@@ -72,6 +72,13 @@ sed -e 's/IDPREFIX/config.os.portable.tests/' \
 qemu-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
+CONFIG=/portable/tests/meta/minimal-stm32h103-config.py
+sed -e 's/IDPREFIX/config.os.portable.tests/' \
+-e 's/ARTEFACTNAME/minimal/' \
+-e 's/ARTEFACTDESCRIPTION/Minimal/' \
+stm32h103-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
 
 # ----- threads ---------------------------------------------------------------
 CONFIG=/portable/core/tests/meta/threads-linux-config.py
@@ -116,6 +123,13 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/yields/' \
 -e 's/ARTEFACTDESCRIPTION/Yields/' \
 qemu-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+CONFIG=/portable/core/tests/meta/yields-stm32h103-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/yields/' \
+-e 's/ARTEFACTDESCRIPTION/Yields/' \
+stm32h103-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
