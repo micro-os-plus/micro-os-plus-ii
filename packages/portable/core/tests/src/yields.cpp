@@ -163,6 +163,8 @@ main(int argc, char* argv[])
 
   ts.setClassName("os::core::Thread");
 
+  ts.setFunctionNameOrPrefix("inits");
+
   ts.assertCondition(task1.getCount1() == 0);
   ts.assertCondition(task1.getCount2() == 0);
 #if MULTI
