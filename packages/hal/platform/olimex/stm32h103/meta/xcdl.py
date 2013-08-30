@@ -22,6 +22,9 @@ based on STM32F103.',
         #'enable("package.os.hal.architecture.arm.cortexm.stm32f")',
         'enable("component.os.hal.architecture.arm.cortexm.stm32f103rb")',
         #'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace")',
+
+        # use the default Cortex-M platform
+        'setValue("OS_PATH_HAL_PLATFORM_PLATFORMIMPLEMENTATION", "hal/architecture/arm/cortexm/include/PlatformImplementationDefault.h")',
         
         'setValue("OS_STRING_PLATFORM_GREETING_FIRST", "Olimex SMT32-H103 header board")',        
         'setValue("OS_STRING_PLATFORM_GREETING_SECOND", "STM32F103RB Cortex-M3")',        
@@ -48,7 +51,4 @@ based on STM32F103.',
     sourceFiles=[
     ],
         
-    copyFiles=[
-        ('/hal/architecture/arm/cortexm/include/PlatformImplementationDefault.h', 'include/hal/platform/include/PlatformImplementation.h'),
-    ],
 )
