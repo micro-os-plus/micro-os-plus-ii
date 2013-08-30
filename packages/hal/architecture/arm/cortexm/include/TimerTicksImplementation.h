@@ -106,6 +106,15 @@ namespace hal
 
     };
 
+    /// \details
+    /// Not needed, SysTick can be configured to re-trigger automatically,
+    /// without program intervention.
+    inline void
+    __attribute__((always_inline))
+    TimerTicksImplementation::acknowledgeInterrupt(void)
+    {
+    }
+
   // ==========================================================================
 
   }// namespace cortexm

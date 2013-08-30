@@ -18,8 +18,11 @@
 
 #include "hal/architecture/arm/cortexm/include/TimerTicksImplementation.h"
 #include "portable/core/include/TimerTicks.h"
+#include "hal/architecture/arm/cortexm/include/Cpu.h"
 
-#include <sys/time.h>
+#include "hal/architecture/arm/cortexm/diagnostics/include/SemiHosting.h"
+
+//#include <sys/time.h>
 
 namespace hal
 {
@@ -53,6 +56,19 @@ namespace hal
       os::diag::trace.putNewLine();
 #endif
 
+      // Make SysTick the lowest priority interrupts (same as PendSV).
+      //portNVIC_SYSPRI2_REG |= portNVIC_SYSTICK_PRI;
+      (*((volatile unsigned long *) 0xe000ed20)) |=
+          (((unsigned long) configKERNEL_INTERRUPT_PRIORITY) << 24UL );
+
+      // TODO: set the register value to 1 (or 0?)
+      
+      // Configure SysTick to interrupt at the requested rate. */
+      // portNVIC_SYSTICK_LOAD_REG = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;
+      (*((volatile unsigned long *) 0xe000e014)) = (8000000 / 1000) - 1UL;
+
+      // portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT;
+      (*((volatile unsigned long *) 0xe000e010)) = (1UL << 2UL) | (1UL << 1UL);
     }
 
     /// \details
@@ -64,6 +80,10 @@ namespace hal
       os::diag::trace.putNewLine();
 #endif
 
+#if 1
+      //      portNVIC_SYSTICK_CTRL_REG |=  portNVIC_SYSTICK_ENABLE_BIT;
+      (*((volatile unsigned long *) 0xe000e010)) |= (1UL << 0UL);
+#endif
     }
 
     /// \details
@@ -75,29 +95,27 @@ namespace hal
       os::diag::trace.putNewLine();
 #endif
 
+      //      portNVIC_SYSTICK_CTRL_REG &= ~portNVIC_SYSTICK_ENABLE_BIT;
+      (*((volatile unsigned long *) 0xe000e010)) &= ~(1UL << 0UL);
     }
 
-    /// \details
-    /// Not needed, signals can be configured to re-trigger automatically,
-    /// without program intervention.
-    void
-    TimerTicksImplementation::acknowledgeInterrupt(void)
+    namespace InterruptHandler
     {
-    }
+      void
+      SystemTick(void)
+      {
+#if 0
+        hal::cortexm::diag::SemiHosting::writeChar('#');
+#else
+        Cpu::setBASEPRI(configMAX_SYSCALL_INTERRUPT_PRIORITY);
 
-    /// \details
-    /// This is the routine called by the system as signal handler.
-    /// It must be static, and have one integer parameter.
-    ///
-    /// Besides some diagnostics, at the end it calls the timer
-    /// interrupt service routine.
-    void
-    TimerTicksImplementation::signalHandler(int)
-    {
+        // Call the ticks timer ISR
+        os::timerTicks.interruptServiceRoutine();
 
-      // Call the ticks timer ISR
-      os::timerTicks.interruptServiceRoutine();
-    }
+        Cpu::setBASEPRI(0);
+#endif
+      }
+    } // namespace InterruptHandler
 
   // ========================================================================
 
