@@ -113,10 +113,40 @@ Configuration(
                 'minimal-qemu-config.py',
             ],
         ),
-                 
-    ],
+              
+        # Configuration specific for Olimex board STM32-H103
+        Configuration(
+              
+            id='config.os.portable.tests.minimal.stm32h103',
+            name='STM32-H103 Minimal test configuration',
+            description='Common Debug/Release definitions for Minimal test running on STM32-H103.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.olimex.stm32h103',
+            ],
                       
-    includeFiles=[
-        'minimal-stm32h103-config.py',
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.olimex.stm32h103")',    
+                    
+                # and the i2c trace output        
+                'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',                       
+            ],
+                      
+            buildFolder='stm32h103/minimal',
+            
+            buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+            
+            copyFiles=[
+                ('/support/makefile/aep_gcc_makefile_defs.mk', 'makefile_defs.mk'),
+                ('/support/makefile/aep_gcc_makefile_targets.mk', 'makefile_targets.mk'),
+            ],
+                                         
+            includeFiles=[
+                'minimal-stm32h103-config.py',
+            ],
+        ),
+              
     ],
 )
