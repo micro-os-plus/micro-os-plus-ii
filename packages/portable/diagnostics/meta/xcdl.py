@@ -33,6 +33,7 @@ Package(
             headerDefinition='OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE',
               
             children=[
+                      
                 Interface(
                     id='interface.os.portable.diagnostics.trace',
                     name='Diagnostics trace output interface',
