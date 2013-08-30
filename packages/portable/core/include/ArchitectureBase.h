@@ -73,6 +73,15 @@ namespace os
       __attribute__((noreturn))
       resetSystem(void);
 
+      /// \brief Initialise the scheduler.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      initialiseScheduler(void);
+
 #if defined(DEBUG) || defined(__DOXYGEN__)
 
       /// \brief Put architecture greeting.
@@ -143,6 +152,15 @@ namespace os
     __attribute__((always_inline))
     __attribute__((noreturn))
     ArchitectureBase::resetSystem(void)
+    {
+    }
+
+    /// \details
+    /// Empty inline function, so no code is generated. Overwrite this
+    /// with actual architecture specific system reset code.
+    inline void
+    __attribute__((always_inline))
+    ArchitectureBase::initialiseScheduler(void)
     {
     }
 

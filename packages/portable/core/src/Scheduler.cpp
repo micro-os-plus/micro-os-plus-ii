@@ -21,6 +21,8 @@
 
 #if !defined(OS_INCLUDE_CORE_SCHEDULER_CUSTOM)
 
+#define OS_DEBUG_SCHEDULER
+
 namespace os
 {
   namespace core
@@ -116,6 +118,9 @@ namespace os
       // Initialise and start the system timer
       os::timerTicks.initialise();
       os::timerTicks.start();
+
+      // Call the architecture initialisations
+      os::architecture.initialiseScheduler();
 
       // Mark that the scheduler is running
       m_isRunning = true;
