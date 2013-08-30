@@ -34,10 +34,13 @@ namespace hal
 
         os::diag::trace.putNewLine();
         os::diag::trace.putString(__PRETTY_FUNCTION__);
+        os::diag::trace.putString(" CFSR=0x");
+        os::diag::trace.putHex((uint32_t*)0xE000ED28);
         os::diag::trace.putNewLine();
 
         for (;;)
-        ;
+          ;
+
 #else
         // soft reset
         os::platform.resetSystem();

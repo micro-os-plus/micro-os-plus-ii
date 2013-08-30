@@ -19,7 +19,9 @@ main()
 
   os::scheduler.start();
 
-  os::mainThread.sleepFor(0);
+  os::scheduler.yield();
+
+  //os::mainThread.sleepFor(0);
 
   os::scheduler.stop();
 

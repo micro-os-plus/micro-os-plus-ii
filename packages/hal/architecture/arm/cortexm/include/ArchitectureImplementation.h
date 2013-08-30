@@ -46,6 +46,8 @@
 
 //#include "portable/core/include/Stack.h"
 
+#define OS_DEBUG_THREADCONTEXT  (1)
+
 namespace hal
 {
   namespace cortexm
@@ -93,6 +95,15 @@ namespace hal
       __attribute__((noreturn))
       resetSystem(void);
 
+      /// \brief Initialise the scheduler.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      initialiseScheduler(void);
+
 #if defined(DEBUG) || defined(__DOXYGEN__)
       /// \brief Put architecture specific greeting on the trace device.
       ///
@@ -109,6 +120,11 @@ namespace hal
 
       static void
       waitForInterrupt(void);
+
+      static void
+      contextSwitch(void);
+
+      static hal::arch::stackElement_t** ms_ppStack;
 
       /// @} end of name Public member functions
 
@@ -139,6 +155,14 @@ namespace hal
     __attribute__((always_inline))
     ArchitectureImplementation::yield(void)
     {
+      // Set a PendSV to request a context switch.
+      // portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+      (*((volatile unsigned long *) 0xe000ed04)) = (1UL << 28UL);
+
+      // Barriers are normally not required but do ensure the code is completely
+      // within the specified behaviour for the architecture.
+      __asm volatile( "dsb" );
+      __asm volatile( "isb" );
     }
 
     inline void
@@ -231,12 +255,26 @@ namespace hal
       void
       restore(void);
 
+      hal::arch::stackElement_t**
+      getPPStack(void);
+
       /// @} end of name Public member functions
 
+    private:
+
+      hal::arch::stackElement_t* m_pStack;
     };
 
     // ------------------------------------------------------------------------
 
+    /// \details
+    /// TBD
+    inline hal::arch::stackElement_t**
+    __attribute__((always_inline))
+    ThreadContext::getPPStack(void)
+    {
+      return &m_pStack;
+    }
 
     /// \details
     /// TBD
@@ -291,6 +329,8 @@ namespace hal
     private:
       /// \name Private member variables
       /// @{
+
+      basepri_t m_basepri;
 
       /// @} end of Private member variables
 

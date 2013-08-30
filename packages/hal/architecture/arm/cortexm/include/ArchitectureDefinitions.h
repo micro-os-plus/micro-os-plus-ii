@@ -13,7 +13,18 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
-#include <stdint.h>
+#include "portable/language/cpp/include/cstdint.h"
+
+// ----------------------------------------------------------------------------
+
+// The highest interrupt priority from which µOS++ API functions can be called.
+// Interrupts from 0x7F to 0x00 cannot call system functions.
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY (0x80)
+
+// The lowest possible priority, used for the PendSV and SysTick
+#define configKERNEL_INTERRUPT_PRIORITY (0xFF)
+
+// ----------------------------------------------------------------------------
 
 namespace hal
 {
@@ -41,6 +52,8 @@ namespace hal
     typedef int16_t interruptNumber_t;
 
     typedef uint8_t interruptPriority_t;
+
+    typedef uint32_t basepri_t;
 
   // --------------------------------------------------------------------------
 
