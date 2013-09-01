@@ -17,6 +17,12 @@
 
 // ----------------------------------------------------------------------------
 
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
+#define CHECK_ZERO_COUNT
+#endif
+
+// ----------------------------------------------------------------------------
+
 constexpr int MAX_RUN_SECONDS = 30;
 //constexpr int MAX_RUN_SECONDS = 0;
 
@@ -387,10 +393,11 @@ TaskPeriodic::threadMain(void)
 
           for (auto pTask : taskArray)
             {
+#if defined(CHECK_ZERO_COUNT)
               // If the count is zero, the thread is probably dead
               if (pTask->getCount() == 0)
                 ts.reportFailed("pTask->getCount() == 0");
-
+#endif
               ts << pTask->getName() << ':' << pTask->getTicks() << '/'
                   << pTask->getCount() << '='
                   << (pTask->getTicks() / pTask->getCount()) << '('
