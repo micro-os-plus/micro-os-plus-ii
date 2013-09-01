@@ -79,6 +79,12 @@ toString(int value, char* pBuffer, ssize_t sz)
 void
 runTestAccuracy();
 
+#if 1
+#define TICKS_TO_MEASURE_ACCURACY os::core::scheduler::TICKS_PER_SECOND
+#else
+#define TICKS_TO_MEASURE_ACCURACY 10
+#endif
+
 void
 runTestAccuracy()
 {
@@ -103,7 +109,7 @@ runTestAccuracy()
 #endif
 
   //os::timerTicks.sleep(os::core::scheduler::TICKS_PER_SECOND);
-  thread.sleepFor(os::core::scheduler::TICKS_PER_SECOND);
+  thread.sleepFor(TICKS_TO_MEASURE_ACCURACY);
 
   os::core::timer::ticks_t ticksEnd = os::timerTicks.getCurrentTicks();
 
@@ -123,16 +129,12 @@ runTestAccuracy()
   ts.setFunctionNameOrPrefix("sleep()");
 
   char tmp[10];
-#if 1
-  toString(os::core::scheduler::TICKS_PER_SECOND, tmp, sizeof(tmp));
-#else
-  snprintf(tmp, sizeof(tmp), "%d", os::core::scheduler::TICKS_PER_SECOND);
-#endif
+  toString(TICKS_TO_MEASURE_ACCURACY, tmp, sizeof(tmp));
   ts.setInputValues(tmp);
 
-  ts.assertCondition(((deltaTicks - os::core::scheduler::TICKS_PER_SECOND) <= 1));
+  ts.assertCondition(((deltaTicks - TICKS_TO_MEASURE_ACCURACY) <= 1));
 
-  ts << os::std::endl << "sleep(" << os::core::scheduler::TICKS_PER_SECOND
+  ts << os::std::endl << "sleep(" << TICKS_TO_MEASURE_ACCURACY
       << ") took " << deltaTicks << " ticks";
 #if defined(HAS_GETTIMEOFDAY)
   ts << ", " << deltaMicros << " real time micros, accuracy "
