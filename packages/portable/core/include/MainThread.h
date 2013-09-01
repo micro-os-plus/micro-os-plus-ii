@@ -64,9 +64,12 @@ namespace os
       /// is potentially wrong, since it is constructed after the
       /// parent class, but in this case we do not use the reference
       /// to the stack in the constructor.
+#if 0
       Stack m_stack
-        { nullptr, 0 };
-
+        { nullptr, 0};
+#else
+      TStaticStack<hal::arch::MIN_STACK_SIZE*2> m_stack;
+#endif
       /// @} end of Private member variables
 
     };
