@@ -161,14 +161,15 @@ namespace hal
 
       // Barriers are normally not required but do ensure the code is completely
       // within the specified behaviour for the architecture.
-      __asm volatile( "dsb" );
-      __asm volatile( "isb" );
+      __asm volatile( " dsb     \n" );
+      __asm volatile( " isb     \n" );
     }
 
     inline void
     __attribute__((always_inline))
     ArchitectureImplementation::waitForInterrupt(void)
     {
+      __asm volatile( " wfi     \n" );
     }
 
     // ========================================================================

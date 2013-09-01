@@ -22,8 +22,7 @@
 #include "portable/core/include/Thread.h"
 #include "hal/architecture/arm/cortexm/include/Cpu.h"
 #include "portable/core/include/MainThread.h"
-
-// ----------------------------------------------------------------------------
+#include "portable/core/include/Stack.h"
 
 // ----------------------------------------------------------------------------
 
@@ -83,7 +82,7 @@ namespace hal
 typedef hal::cortexm::LinkerScript LinkerScript;
 template class os::infra::TCppStartup<LinkerScript>;
 
-static char g_mainStack[1024];
+//static char g_mainStack[1024];
 
 namespace hal
 {
@@ -132,8 +131,26 @@ namespace hal
           }
 #endif
 
+#if 0
         // Initialise the processor stack to the static area
         Cpu::setPSP((uint32_t)&g_mainStack[sizeof(g_mainStack)-1]);
+#else
+        // early call, used to avoid further context creation
+        os::mainThread.start();
+
+        os::core::stack::element_t* pspStack = os::mainThread.getStack().getTopAligned(8);
+
+#if defined(DEBUG)
+
+        // normally should not reach this
+        os::diag::trace.putString("switching to PSP=");
+        os::diag::trace.putHex(pspStack);
+        os::diag::trace.putNewLine();
+
+#endif
+
+        Cpu::setPSP((uint32_t)pspStack);
+#endif
 
         // Switch to the PSP (the alternate stack)
         Cpu::setCONTROL(Cpu::getCONTROL() | 0x2);
@@ -216,7 +233,7 @@ namespace hal
             "       vstmdbeq r0!, {s16-s31}             \n"// If so, push high vfp registers.
 #endif
             "                                           \n"
-            "       stmdb r0!, {r4-r11, lr}             \n" // Save the core registers.
+            "       stmdb r0!, {r4-r11}                 \n" // Save the core registers.
             "                                           \n"
             "       str r0, [r2]                        \n"// Save the new top of stack into the first member of the TCB.
             "                                           \n"
@@ -235,7 +252,7 @@ namespace hal
             "       ldr r1, [r3]                        \n"// At *ms_ppStack is the new stack pointer.
             "       ldr r0, [r1]                        \n"
             "                                           \n"
-            "       ldmia r0!, {r4-r11, lr}             \n"// Pop the core registers.
+            "       ldmia r0!, {r4-r11}                 \n"// Pop the core registers.
             "                                           \n"
 #if 0
             "       tst r14, #0x10                      \n" // Is the task using the FPU context?
@@ -347,7 +364,6 @@ ThreadContext::create(hal::arch::stackElement_t* pStackBottom,
       hal::arch::stackElement_t* pStack;
       pStack = pStackBottom
           + stackSizeBytes / sizeof(hal::arch::stackElement_t);
-      pStack--;
 
       // Place a few bytes of known values on the bottom of the stack.
       // This has no functional purpose, it is useful only for debugging.
@@ -356,14 +372,14 @@ ThreadContext::create(hal::arch::stackElement_t* pStackBottom,
 
       // This magic should always be present here. If it is not,
       // someone else damaged the thread stack.
-      *pStack-- = 0x12345678;           // magic
+      *--pStack = 0x12345678;           // magic
 
       // To be safe, we need to align the stack frames to 8. In total
       // we have 16 words to store, so if the current address is not even,
       // descend an extra word.
-      if ((int) pStack & 1)
+      if (((int) pStack & 1) == 0)
         {
-          *pStack-- = 0x12345678;       // one more magic
+          *--pStack = 0x12345678;       // one more magic
         }
 
       // Simulate the Cortex-M exception stack frame, i.e. how the stack
@@ -371,35 +387,36 @@ ThreadContext::create(hal::arch::stackElement_t* pStackBottom,
 
       // Thread starts with interrupts enabled.
       // T bit set
-      *pStack-- = 0x01000000;           // xPSR        +15*4=64
+      *--pStack = 0x01000000;           // xPSR        +15*4=64
 
       // The address of the trampoline code will be popped off the stack last,
       // so place it first.
 
-      *pStack-- = (hal::arch::stackElement_t) trampolineEntryPoint; // PCL     +14*4=60
+      *--pStack = (hal::arch::stackElement_t) trampolineEntryPoint; // PCL     +14*4=60
 
       // Create the stack as if after a context save.
-      // Return to thread mode and on return use the main stack
-      // *pStack-- = 0xFFFFFFF9;      // LR        +13*4=56
-      *pStack-- = 0x0;             // LR        +13*4=56
 
-      *pStack-- = 0x12;      // R12       +12*4=52
+      // Return to thread mode and on return use the process stack
+      *--pStack = 0xFFFFFFFD;   // LR        +13*4=56
+      //*--pStack = 0x0;          // LR        +13*4=56
+
+      *--pStack = 12;           // R12       +12*4=52
 
       // According to ARM ABI, first 4 word parameters are passed in R0-R3.
       // We use only 3.
-      *pStack-- = 0x03;                           // R3   +11*4=48
-      *pStack-- = (hal::arch::stackElement_t) p3; // R2   +10*4=44
-      *pStack-- = (hal::arch::stackElement_t) p2; // R1   +9*4=40
-      *pStack-- = (hal::arch::stackElement_t) p1; // R0   +8*4=36
+      *--pStack = 3;                              // R3   +11*4=48
+      *--pStack = (hal::arch::stackElement_t) p3; // R2   +10*4=44
+      *--pStack = (hal::arch::stackElement_t) p2; // R1   +9*4=40
+      *--pStack = (hal::arch::stackElement_t) p1; // R0   +8*4=36
 
-      *pStack-- = 0x11;      // R11       +7*4=32
-      *pStack-- = 0x10;      // R10       +6*4=28
-      *pStack-- = 0x09;      // R9        +5*4=24
-      *pStack-- = 0x08;      // R8        +4*4=20
-      *pStack-- = 0x07;      // R7        +3*4=16
-      *pStack-- = 0x06;      // R6        +2*4=12
-      *pStack-- = 0x05;      // R5        +1*4=8
-      *pStack = 0x04;        // R4        +0*4=4
+      *--pStack = 11;           // R11       +7*4=32
+      *--pStack = 10;           // R10       +6*4=28
+      *--pStack = 9;            // R9        +5*4=24
+      *--pStack = 8;            // R8        +4*4=20
+      *--pStack = 7;            // R7        +3*4=16
+      *--pStack = 6;            // R6        +2*4=12
+      *--pStack = 5;            // R5        +1*4=8
+      *--pStack = 4;            // R4        +0*4=4
 
       // Be sure the stack is at least large enough to hold the exception frame.
       assert(pStack > pStackBottom);
@@ -435,19 +452,57 @@ __attribute__((alias("_ZN3hal7cortexm16InterruptHandler5ResetEv")));
 
 extern "C"
 {
-void*
-_sbrk();
+  caddr_t
+  _sbrk (int incr);
 
 void
 __cxa_pure_virtual(void);
 
-void*
-_sbrk()
+#if 1
+caddr_t
+_sbrk (int incr)
+{
+  extern char end asm ("end"); /* Defined by the linker.  */
+  static char * heap_end;
+  char * prev_heap_end;
+
+  if (heap_end == NULL)
+    heap_end = & end;
+
+  prev_heap_end = heap_end;
+
+#if 0
+  if (heap_end + incr > stack_ptr)
+    {
+      /* Some of the libstdc++-v3 tests rely upon detecting
+         out of memory errors, so do not abort here.  */
+#if 0
+      extern void abort (void);
+
+      _write (1, "_sbrk: Heap and stack collision\n", 32);
+
+      abort ();
+#else
+      errno = ENOMEM;
+      return (caddr_t) -1;
+#endif
+    }
+#endif
+
+  heap_end += incr;
+
+  return (caddr_t) prev_heap_end;
+}
+
+#else
+caddr_t
+_sbrk (int incr)
 {
 // not yet implemented
 // TODO: allocate space on heap
 return 0;
 }
+#endif
 
 void
 __cxa_pure_virtual(void)
