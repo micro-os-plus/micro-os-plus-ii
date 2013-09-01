@@ -110,6 +110,14 @@ namespace os
       stack::element_t*
       getStart(void);
 
+      /// \brief Get stack top aligned address.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \return The start of the stack area.
+      stack::element_t*
+      getTopAligned(size_t align);
+
       /// @} end of Public member functions
 
     private:
