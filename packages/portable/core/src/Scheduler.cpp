@@ -21,7 +21,7 @@
 
 #if !defined(OS_INCLUDE_CORE_SCHEDULER_CUSTOM)
 
-#define OS_DEBUG_SCHEDULER
+//#define OS_DEBUG_SCHEDULER
 
 namespace os
 {
@@ -102,7 +102,9 @@ namespace os
         }
 #endif
 
-      // start the two system threads
+      // Start the two system threads
+      // (on ARM, mainThread was already started in the Reset
+      // handler because its stack is needed for running main() code)
       os::mainThread.start();
       os::idleThread.start();
 
