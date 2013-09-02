@@ -17,6 +17,7 @@ Component(
          'IdleThread.cpp',
          'TimerBase.cpp',
          'TimerTicks.cpp',
+         'TimerSeconds.cpp',
          'Mutex.cpp',
          'Error.cpp',
      ],
