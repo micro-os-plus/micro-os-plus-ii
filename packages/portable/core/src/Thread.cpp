@@ -355,7 +355,7 @@ namespace os
       // The function template is expanded inline here,
       // with the 'always true' condition passed as lambda.
       internalSleepWhile([]()
-        { return true; }, ticks, timer);
+        { return true;}, ticks, timer);
     }
 
     /// \details
@@ -410,22 +410,45 @@ namespace os
       // either indefinitely or for a limited number of ticks
       if (ticks != 0)
         {
+#if 0
+          // ----- Critical section begin -------------------------------------
+          os::core::scheduler::InterruptsCriticalSection cs;
+
           timer::ticks_t nowTicks = timer.getCurrentTicks();
           if ((nowTicks - beginTicks) >= ticks)
             {
               return true;
             }
-
+          else
             {
-              // ----- Timeout guard begin ------------------------------------
-              TimeoutGuard tg(ticks - (nowTicks - beginTicks), timer);
+              // Normally the entry should not be there, but for just in case
+              timer.remove(this);
 
+              // insert timeout
+              timer.insert(ticks, this);
+
+              // Will return either with a condition change or with a timeout
               os::scheduler.yield();
-              // ----- Timeout guard end --------------------------------------
+
+              // remove timeout
+              timer.remove(this);
             }
+          // ----- Critical section end ---------------------------------------
+
+#else
+          // ----- Timeout guard begin ----------------------------------------
+          TimeoutGuard tg(beginTicks, ticks, timer, this);
+
+          if (tg.didTimeout())
+            return true;
+
+          os::scheduler.yield();
+          // ----- Timeout guard end ------------------------------------------
+#endif
         }
       else
         {
+          // If no timeout, sleep is just an yield
           os::scheduler.yield();
         }
 
