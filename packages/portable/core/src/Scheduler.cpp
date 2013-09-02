@@ -16,6 +16,7 @@
 #include "portable/core/include/MainThread.h"
 #include "portable/core/include/IdleThread.h"
 #include "portable/core/include/TimerTicks.h"
+#include "portable/core/include/TimerSeconds.h"
 
 #include "portable/core/include/Architecture.h"
 
@@ -117,6 +118,12 @@ namespace os
             }
         }
 
+      // Initialise and start the seconds timer.
+      // Being derived from the ticks timer, will effectively start
+      // with timerTicks
+      os::timerSeconds.initialise();
+      os::timerSeconds.start();
+
       // Initialise and start the system timer
       os::timerTicks.initialise();
       os::timerTicks.start();
@@ -190,7 +197,7 @@ namespace os
       // When the scheduler is not running, it is also used in sleep().
       os::architecture.resetWatchdog();
 
-      if (!m_isRunning || isLocked())
+      if (isContextSwitchLocked())
         {
           // If the scheduler is not running, or is locked,
           // do not change the current thread
