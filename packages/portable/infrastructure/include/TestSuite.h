@@ -260,6 +260,20 @@ namespace os
         void
         stop(void);
 
+        /// \brief Get the number of passed test cases.
+        /// \par Parameters
+        ///     None.
+        /// \return The accumulated number of passed test cases.
+        unsigned int
+        getCountPassed(void);
+
+        /// \brief Get the number of failed test cases.
+        /// \par Parameters
+        ///     None.
+        /// \return The accumulated number of failed test cases.
+        unsigned int
+        getCountFailed(void);
+
         /// \brief Compute the value to be returned by main().
         ///
         /// \par Parameters
@@ -368,20 +382,6 @@ namespace os
         ///     Nothing.
         void
         putNewLine(void);
-
-        /// \brief Get the number of passed test cases.
-        /// \par Parameters
-        ///     None.
-        /// \return The accumulated number of passed test cases.
-        unsigned int
-        getCountPassed(void);
-
-        /// \brief Get the number of failed test cases.
-        /// \par Parameters
-        ///     None.
-        /// \return The accumulated number of failed test cases.
-        unsigned int
-        getCountFailed(void);
 
         /// @} end of name Private member functions
 
