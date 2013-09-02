@@ -557,6 +557,9 @@ namespace os
       bool
       isLocked(void) const;
 
+      bool
+      isContextSwitchLocked(void) const;
+
       /// @} end of Public member functions
 
       // ----------------------------------------------------------------------
@@ -698,6 +701,13 @@ namespace os
     Scheduler::isLocked(void) const
     {
       return (m_lockCounter != 0);
+    }
+
+    inline bool
+    __attribute__((always_inline))
+    Scheduler::isContextSwitchLocked(void) const
+    {
+      return !m_isRunning || isLocked();
     }
 
 #if 0
