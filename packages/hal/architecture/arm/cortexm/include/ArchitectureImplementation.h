@@ -121,6 +121,23 @@ namespace hal
       static void
       waitForInterrupt(void);
 
+      /// \brief Busy wait microseconds.
+      ///
+      /// \param [in] micros     The number of microseconds to sleep.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      busyWaitMicros(uint32_t micros);
+
+      /// \brief Reset watchdog.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      resetWatchdog(void);
+
       static void
       contextSwitch(void);
 
