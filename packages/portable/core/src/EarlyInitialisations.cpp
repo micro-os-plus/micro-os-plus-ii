@@ -18,6 +18,7 @@
 #include "portable/core/include/MainThread.h"
 #include "portable/core/include/IdleThread.h"
 #include "portable/core/include/TimerTicks.h"
+#include "portable/core/include/TimerSeconds.h"
 
 #include "portable/core/include/Error.h"
 
@@ -301,6 +302,9 @@ namespace os
 
   /// \brief The timer counting scheduler ticks.
   os::core::TimerTicks timerTicks;
+
+  /// \brief The timer counting scheduler seconds.
+  os::core::TimerSeconds timerSeconds;
 
   /// \brief A redirection to the current thread error code.
   os::core::Error error;
