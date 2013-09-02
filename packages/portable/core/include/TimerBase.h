@@ -17,7 +17,6 @@
 
 #include "portable/language/cpp/include/cstdint.h"
 
-
 namespace os
 {
   namespace core
@@ -56,7 +55,6 @@ namespace os
     /// @} end of name Types and constants
 
     }// namespace timer
-
 
     // ========================================================================
 
@@ -139,6 +137,7 @@ namespace os
       /// @{
 
       friend class TimeoutGuard;
+      friend class Thread;
 
       /// @} end of Friends
 
@@ -267,6 +266,11 @@ namespace os
 
     // ========================================================================
 
+#pragma GCC diagnostic push
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wpadded"
+#endif
+
     /// \class TimeoutGuard Stack.h "portable/core/include/TimerBase.h"
     /// \ingroup core_timer
     /// \nosubgrouping
@@ -286,14 +290,20 @@ namespace os
 
       /// \brief Constructor.
       ///
+      /// \param [in] beginTicks   The number of counter ticks at the beginning of the function.
       /// \param [in] ticks   The number of counter ticks.
       /// \param [in] timer   The timer to use.
-      TimeoutGuard(timer::ticks_t ticks, TimerBase& timer);
+      /// \param [in] pThread   Pointer to the thread affected.
+      TimeoutGuard(timer::ticks_t beginTicks, timer::ticks_t ticks,
+          TimerBase& timer, Thread* pThread);
 
       /// \brief Destructor
       ~TimeoutGuard();
 
       /// @} end of name Constructors/destructor
+
+      bool
+      didTimeout(void);
 
     private:
 
@@ -303,9 +313,25 @@ namespace os
       /// \brief The timer object used in the constructor.
       TimerBase& m_timer;
 
+      /// \brief The thread object used in the constructor.
+      Thread* m_pThread;
+
+      bool m_didTimeout;
+
       /// @} end of Private member variables
 
     };
+
+#pragma GCC diagnostic pop
+
+    // ------------------------------------------------------------------------
+
+    inline bool
+    __attribute__((always_inline))
+    TimeoutGuard::didTimeout(void)
+    {
+      return m_didTimeout;
+    }
 
   // ==========================================================================
 
