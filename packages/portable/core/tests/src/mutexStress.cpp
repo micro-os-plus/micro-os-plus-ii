@@ -16,8 +16,8 @@
 // ----------------------------------------------------------------------------
 
 //constexpr int MAX_RUN_SECONDS = 30;
-constexpr int MAX_RUN_SECONDS = 60;
-//constexpr int MAX_RUN_SECONDS = 999999999;
+//constexpr int MAX_RUN_SECONDS = 60;
+constexpr int MAX_RUN_SECONDS = 999999999;
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -35,6 +35,7 @@ static os::infra::TestSuiteOstream ts;
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/Thread.h"
 #include "portable/core/include/TimerTicks.h"
+#include "portable/core/include/TimerSeconds.h"
 #include "portable/core/include/CriticalSections.h"
 #include "portable/core/include/Mutex.h"
 
@@ -62,6 +63,36 @@ static os::core::Mutex mutex;
 //os::core::RecursiveMutex mutex;
 
 #pragma GCC diagnostic pop
+
+// ----------------------------------------------------------------------------
+
+void
+toString(int value, char* pBuffer, ssize_t sz);
+
+void
+toString(int value, char* pBuffer, ssize_t sz)
+{
+  pBuffer[sz - 1] = '\0';
+  ssize_t pos;
+
+  for (pos = sz - 1; pos != 0;)
+    {
+      char ch = (value % 10) + '0';
+      pBuffer[--pos] = ch;
+      value /= 10;
+      if (value == 0)
+        break;
+    }
+
+  if (pos == 0)
+    return;
+
+  ssize_t i;
+  for (i = 0; pos < sz;)
+    {
+      pBuffer[i++] = pBuffer[pos++];
+    }
+}
 
 // ----------------------------------------------------------------------------
 
@@ -99,7 +130,13 @@ public:
   seed(uint16_t val);
 
   uint32_t
+  getAccumulatedCount(void);
+
+  uint32_t
   getCount(void);
+
+  void
+  clearCount(void);
 
   uint32_t
   getTicks(void);
@@ -120,6 +157,7 @@ private:
   uint16_t m_minTicks;
   uint16_t m_maxTicks;
 
+  uint32_t m_accumulatedCount;
   uint32_t m_count;
 
   os::core::timer::ticks_t m_ticks;
@@ -145,6 +183,7 @@ Task::Task(const char* pName, os::core::stack::size_t stackSizeBytes,
   os::diag::trace.putConstructorWithName();
 #endif
 
+  m_accumulatedCount = 0;
   m_count = 0;
   m_ticks = 0;
 
@@ -168,9 +207,21 @@ Task::getThread(void)
 }
 
 uint32_t
+Task::getAccumulatedCount(void)
+{
+  return m_accumulatedCount;
+}
+
+uint32_t
 Task::getCount(void)
 {
   return m_count;
+}
+
+void
+Task::clearCount(void)
+{
+  m_count = 0;
 }
 
 os::core::timer::ticks_t
@@ -225,6 +276,7 @@ Task::threadMain(void)
           getThread().sleepFor(nSleep);
           m_ticks += nSleep;
 
+          m_accumulatedCount++;
           m_count++;
         }
       mutex.unlock();
@@ -335,40 +387,46 @@ TaskPeriodic::threadMain(void)
   int t = 0;
   for (;;)
     {
-      getThread().sleepFor(5000);
+      getThread().sleepFor(5, os::timerSeconds);
       t += 5;
       if (MAX_RUN_SECONDS != 0 and t > MAX_RUN_SECONDS)
         break;
 
         {
-          // ----- begin of critical section -----------------------------------
+          // ----- begin of critical section ----------------------------------
           os::core::scheduler::CriticalSection cs;
+
+          ts << "[";
+          ts.width(4);
+          os::std::right(ts);
+          ts << t << "] ";
 
           int sum = 0;
           for (auto pTask : taskArray)
             {
-              uint32_t cnt = pTask->getCount();
+              uint32_t cnt = pTask->getAccumulatedCount();
               sum += cnt;
 
               //os::core::timer::ticks_t ticks = pTask->getTicks();
 
               ts << pTask->getName() << ':';
               //ts << ticks << "/" ;
-              ts << cnt << '\t';
+              ts.width(4); os::std::left(ts);
+              ts << cnt << "  ";
             }
           ts << "sum=" << sum;
           int average = (sum
               + (((int) (sizeof(taskArray) / sizeof(taskArray[0]))) / 2))
               / ((int) (sizeof(taskArray) / sizeof(taskArray[0])));
 
-          ts << " avg=" << average;
+          ts << ", avg=" << average;
 
           int min = 0;
           int max = 0;
 
           for (auto pTask : taskArray)
             {
-              int delta = (int) pTask->getCount();
+              int delta = (int) pTask->getAccumulatedCount();
               delta -= average;
 
               if (delta < min)
@@ -378,47 +436,65 @@ TaskPeriodic::threadMain(void)
                 max = delta;
             }
 
-          ts << " delta in [" << min << "," << max << "]";
+          ts << ", delta in [" << min << "," << max << "]";
           ts << " [" << (min * 100 + average / 2) / average << "%,"
               << (max * 100 + average / 2) / average << "%]";
 
+          if (ts.getCountFailed() > 0)
+            {
+              ts << ", " << ts.getCountFailed() << " failed";
+            }
           ts << os::std::endl;
 
-          // ----- end of critical section -------------------------------------
+          for (auto pTask : taskArray)
+            {
+              if (pTask->getCount() == 0)
+                {
+                  ts.setInputValues(pTask->getName());
+
+                  ts.reportFailed("getCount() == 0");
+                }
+              pTask->clearCount();
+            }
+          // ----- end of critical section ------------------------------------
         }
     }
 
-  os::core::scheduler::CriticalSection cs;
-
-  ts.setFunctionNameOrPrefix("lock()/unlock()");
-
-  int sum = 0;
-  for (auto pTask : taskArray)
     {
-      uint32_t cnt = pTask->getCount();
-      sum += cnt;
+      // ----- begin of critical section --------------------------------------
+      os::core::scheduler::CriticalSection cs;
+
+      ts.setFunctionNameOrPrefix("lock()/unlock()");
+
+      int sum = 0;
+      for (auto pTask : taskArray)
+        {
+          uint32_t cnt = pTask->getAccumulatedCount();
+          sum += cnt;
+        }
+
+      int average = (sum
+          + (((int) (sizeof(taskArray) / sizeof(taskArray[0]))) / 2))
+          / ((int) (sizeof(taskArray) / sizeof(taskArray[0])));
+
+      ts << "average=" << average << os::std::endl;
+
+      for (auto pTask : taskArray)
+        {
+          int delta = (int) pTask->getAccumulatedCount();
+          delta -= average;
+
+          int deltaProcent = (delta * 100 + average / 2) / average;
+
+          ts << pTask->getName() << ':' << delta << " " << deltaProcent << "%"
+              << '\t';
+
+          ts.setPreconditions(pTask->getName());
+          ts.assertCondition((-33 <= deltaProcent && deltaProcent <= 33));
+        }
+      ts << os::std::endl;
+      // ----- end of critical section ----------------------------------------
     }
-
-  int average = (sum + (((int) (sizeof(taskArray) / sizeof(taskArray[0]))) / 2))
-      / ((int) (sizeof(taskArray) / sizeof(taskArray[0])));
-
-  ts << "average=" << average << os::std::endl;
-
-  for (auto pTask : taskArray)
-    {
-      int delta = (int) pTask->getCount();
-      delta -= average;
-
-      int deltaProcent = (delta * 100 + average / 2) / average;
-
-      ts << pTask->getName() << ':' << delta << " " << deltaProcent << "%"
-          << '\t';
-
-      ts.setPreconditions(pTask->getName());
-      ts.assertCondition((-33 <= deltaProcent && deltaProcent <= 33));
-    }
-  ts << os::std::endl;
-
 }
 
 // ============================================================================

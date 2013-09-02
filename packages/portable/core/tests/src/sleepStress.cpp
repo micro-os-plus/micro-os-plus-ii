@@ -17,14 +17,16 @@
 
 // ----------------------------------------------------------------------------
 
-#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
+//#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
 #define CHECK_ZERO_COUNT
-#endif
+//#endif
+
+//#define TEST_SLEEP_1
 
 // ----------------------------------------------------------------------------
 
-constexpr int MAX_RUN_SECONDS = 30;
-//constexpr int MAX_RUN_SECONDS = 0;
+//constexpr int MAX_RUN_SECONDS = 30;
+constexpr int MAX_RUN_SECONDS = 99999999;
 
 constexpr int PERIODIC_REPORT_SECONDS = 5;
 
@@ -238,7 +240,12 @@ Task::threadMain(void)
 
       // simulate a period of waiting for an external event
 
-      if ((rand() % 3) == 0)
+      bool one = false;
+#if defined(TEST_SLEEP_1)
+
+      one = ((rand() % 3) == 0);
+
+      if (one)
         {
           // One in 3 cases is done with single tick call,
           // to exercise sleep(1)
@@ -248,9 +255,21 @@ Task::threadMain(void)
             }
         }
       else
+
         {
           getThread().sleepFor(nSleep);
         }
+
+#else
+
+      if (nSleep == 1)
+        {
+          nSleep = 2;
+        }
+
+      getThread().sleepFor(nSleep);
+
+#endif
 
       os::core::timer::ticks_t ticksEnd = os::timerTicks.getCurrentTicks();
 
@@ -264,15 +283,21 @@ Task::threadMain(void)
         }
       else if (delta > nSleep)
         {
-#if 0
+#if 1
           os::core::timer::ticks_t proc;
           proc = (delta - nSleep) * 100 / nSleep;
-          ts << nSleep << " " << delta << " " << proc << "%" << os::std::endl;
+          if (!one)
+            {
+              ts << getThread().getName() << ":" << nSleep << " " << delta
+                  << " " << proc << "%" << os::std::endl;
+            }
 #endif
         }
 
+#if defined(TEST_SLEEP_1)
       // and one more sleep(1)
       getThread().sleepFor(1);
+#endif
 
       m_count++;
       m_ticks += nSleep;
@@ -384,12 +409,28 @@ TaskPeriodic::threadMain(void)
           os::core::scheduler::TICKS_PER_SECOND * PERIODIC_REPORT_SECONDS);
 
       t += PERIODIC_REPORT_SECONDS;
-      if (MAX_RUN_SECONDS != 0 and t > MAX_RUN_SECONDS)
+      if ((MAX_RUN_SECONDS != 0) && (t > MAX_RUN_SECONDS))
         break;
 
         {
           // ----- begin of critical section -----------------------------------
           os::core::scheduler::CriticalSection cs;
+
+          ts << "[" << t << "] ";
+
+          for (auto pTask : taskArray)
+            {
+              ts << pTask->getName() << ':' << pTask->getTicks() << '/'
+                  << pTask->getCount() << '='
+                  << (pTask->getTicks() / pTask->getCount()) << '('
+                  << pTask->getDelta() << ')' << '\t';
+
+            }
+          if (ts.getCountFailed() > 0)
+            {
+              ts << ts.getCountFailed() << " failed";
+            }
+          ts << os::std::endl;
 
           for (auto pTask : taskArray)
             {
@@ -398,15 +439,9 @@ TaskPeriodic::threadMain(void)
               if (pTask->getCount() == 0)
                 ts.reportFailed("pTask->getCount() == 0");
 #endif
-              ts << pTask->getName() << ':' << pTask->getTicks() << '/'
-                  << pTask->getCount() << '='
-                  << (pTask->getTicks() / pTask->getCount()) << '('
-                  << pTask->getDelta() << ')' << '\t';
-
               pTask->resetCount();
               pTask->resetTicks();
             }
-          ts << os::std::endl;
           // ----- end of critical section -------------------------------------
         }
     }
