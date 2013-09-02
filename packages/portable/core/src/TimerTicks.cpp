@@ -11,6 +11,10 @@
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 
 #include "portable/core/include/TimerTicks.h"
+#include "portable/core/include/TimerSeconds.h"
+#include "portable/core/include/Scheduler.h"
+
+//#define OS_DEBUG_TIMERTICKS_ISR_MARK_SECONDS (1)
 
 namespace os
 {
@@ -69,21 +73,27 @@ namespace os
 
       processTickFromInterrupt();
 
+      // Call the derived timer ISR
+      os::timerSeconds.interruptServiceRoutine();
+
 #if defined(DEBUG) && defined(OS_DEBUG_TIMERTICKS_ISR_MARK_SECONDS)
 
-      if ((i++ % OS_CFGINT_TICK_RATE_HZ) == 0)
-        {
-          OSDeviceDebug::putChar('!');
-          if (OSSchedulerLock::isSet())
-          OSDeviceDebug::putChar('L');
-        }
+      static int i = 0;
+
+      if ((i++ % OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND)== 0){
+        os::diag::trace.putChar('!');
+        if (os::scheduler.isLocked())
+          {
+            os::diag::trace.putChar('L');
+          }
+      }
 
 #endif /* defined(DEBUG) && defined(OS_DEBUG_TIMERTICKS_ISR_MARK_SECONDS) */
 
-    }
+  }
 
-  // --------------------------------------------------------------------------
-  }// namespace core
+// --------------------------------------------------------------------------
+}// namespace core
 } // namespace os
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
