@@ -39,48 +39,48 @@ namespace os
     /// using a busy wait until the ticks elapse.
     void
     TimerBase::sleep(timer::ticks_t ticks)
-    {
+      {
 #if defined(DEBUG) && defined(OS_DEBUG_TIMERBASE)
-      os::diag::trace.putString("TimerBase::sleep(");
-      os::diag::trace.putDec(ticks);
-      os::diag::trace.putString(")");
-      os::diag::trace.putNewLine();
+        os::diag::trace.putString("TimerBase::sleep(");
+        os::diag::trace.putDec(ticks);
+        os::diag::trace.putString(")");
+        os::diag::trace.putNewLine();
 #endif
-      if (ticks == 0)
+        if (ticks == 0)
         return;
 
-      timer::ticks_t beginTicks = getCurrentTicks();
+        timer::ticks_t beginTicks = getCurrentTicks();
 
-      if (os::scheduler.isLocked())
-        {
-          // If the scheduler is locked we can only busy wait for the ticks
-          while ((getCurrentTicks() - beginTicks) < ticks)
-            {
-              os::architecture.resetWatchdog();
-            }
+        if (os::scheduler.isLocked())
+          {
+            // If the scheduler is locked we can only busy wait for the ticks
+            while ((getCurrentTicks() - beginTicks) < ticks)
+              {
+                os::architecture.resetWatchdog();
+              }
 
-          return;
-        }
+            return;
+          }
 
-      Thread* pThread = os::scheduler.getCurrentThread();
+        Thread* pThread = os::scheduler.getCurrentThread();
 
-      for (;;)
-        {
-          timer::ticks_t nowTicks = getCurrentTicks();
-          if ((nowTicks - beginTicks) >= ticks)
-            {
-              return;
-            }
+        for (;;)
+          {
+            timer::ticks_t nowTicks = getCurrentTicks();
+            if ((nowTicks - beginTicks) >= ticks)
+              {
+                return;
+              }
 
-          if (pThread->isAttentionRequested())
-            {
-              // Return immediately if attention was requested
-              return;
-            }
+            if (pThread->isAttentionRequested())
+              {
+                // Return immediately if attention was requested
+                return;
+              }
 
-          pThread->suspendWithTimeout(ticks - (nowTicks - beginTicks), *this);
-        }
-    }
+            pThread->suspendWithTimeout(ticks - (nowTicks - beginTicks), *this);
+          }
+      }
 #endif
 
 #if 0
@@ -276,6 +276,8 @@ namespace os
               os::diag::trace.putChar(' ');
               os::diag::trace.putDec(p->ticks);
               os::diag::trace.putNewLine();
+
+              // Do not return, to report multiple occurrences
             }
         }
 
@@ -379,18 +381,27 @@ namespace os
 
     // ========================================================================
 
-    TimeoutGuard::TimeoutGuard(timer::ticks_t ticks, TimerBase& timer)
-        : m_timer(timer)
+    TimeoutGuard::TimeoutGuard(timer::ticks_t beginTicks, timer::ticks_t ticks,
+        TimerBase& timer, Thread* pThread)
+        : m_timer(timer), m_pThread(pThread)
     {
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
 
-      Thread* pThread = os::scheduler.getCurrentThread();
+      timer::ticks_t nowTicks = timer.getCurrentTicks();
+      if ((nowTicks - beginTicks) >= ticks)
+        {
+          m_didTimeout = true;
+        }
+      else
+        {
+          // Normally the entry should not be there, but for just in case
+          timer.remove(pThread);
 
-      // Normally the entry should not be there, but for just in case
-      timer.remove(pThread);
+          timer.insert(ticks, pThread);
 
-      timer.insert(ticks, pThread);
+          m_didTimeout = false;
+        }
       // ----- Critical section end -------------------------------------------
     }
 
@@ -399,9 +410,7 @@ namespace os
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;
 
-      Thread* pThread = os::scheduler.getCurrentThread();
-
-      m_timer.remove(pThread);
+      m_timer.remove(m_pThread);
       // ----- Critical section end -------------------------------------------
     }
 
