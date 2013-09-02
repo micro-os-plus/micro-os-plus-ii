@@ -19,8 +19,8 @@
 #include "hal/architecture/arm/cortexm/include/TimerTicksImplementation.h"
 #include "portable/core/include/TimerTicks.h"
 #include "hal/architecture/arm/cortexm/include/Cpu.h"
-
 #include "hal/architecture/arm/cortexm/diagnostics/include/SemiHosting.h"
+#include "portable/core/include/Scheduler.h"
 
 //#include <sys/time.h>
 
@@ -62,7 +62,7 @@ namespace hal
           (((unsigned long) configKERNEL_INTERRUPT_PRIORITY) << 24UL );
 
       // TODO: set the register value to 1 (or 0?)
-      
+
       // Configure SysTick to interrupt at the requested rate. */
       // portNVIC_SYSTICK_LOAD_REG = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;
       (*((volatile unsigned long *) 0xe000e014)) = (8000000 / 1000) - 1UL;
@@ -104,16 +104,20 @@ namespace hal
       void
       SystemTick(void)
       {
-#if 0
-        hal::cortexm::diag::SemiHosting::writeChar('#');
-#else
         Cpu::setBASEPRI(configMAX_SYSCALL_INTERRUPT_PRIORITY);
 
         // Call the ticks timer ISR
         os::timerTicks.interruptServiceRoutine();
 
-        Cpu::setBASEPRI(0);
+#if 0
+        if (!os::scheduler.isContextSwitchLocked())
+          {
+            // Set a PendSV to request a context switch.
+            // portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+            (*((volatile unsigned long *) 0xe000ed04)) = (1UL << 28UL);
+          }
 #endif
+        Cpu::setBASEPRI(0);
       }
     } // namespace InterruptHandler
 
