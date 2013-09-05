@@ -430,8 +430,6 @@ TaskPeriodic::threadMain(void)
       getThread().sleepFor(PERIODIC_REPORT_SECONDS, os::timerSeconds);
 
       t += PERIODIC_REPORT_SECONDS;
-      if ((MAX_RUN_SECONDS != 0) && (t > MAX_RUN_SECONDS))
-        break;
 
         {
           // ----- begin of critical section -----------------------------------
@@ -494,6 +492,10 @@ TaskPeriodic::threadMain(void)
             }
           // ----- end of critical section ------------------------------------
         }
+
+        if ((MAX_RUN_SECONDS != 0) && (t >= MAX_RUN_SECONDS))
+          break;
+
     }
 
 }

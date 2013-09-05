@@ -15,9 +15,14 @@
 
 // ----------------------------------------------------------------------------
 
-//constexpr int MAX_RUN_SECONDS = 30;
+#if defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX) || defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_LINUX)
+constexpr int MAX_RUN_SECONDS = 30;
 //constexpr int MAX_RUN_SECONDS = 60;
+#elif defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_QEMU)
 constexpr int MAX_RUN_SECONDS = 999999999;
+#elif defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103)
+constexpr int MAX_RUN_SECONDS = 999999999;
+#endif
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -389,8 +394,6 @@ TaskPeriodic::threadMain(void)
     {
       getThread().sleepFor(5, os::timerSeconds);
       t += 5;
-      if (MAX_RUN_SECONDS != 0 and t > MAX_RUN_SECONDS)
-        break;
 
         {
           // ----- begin of critical section ----------------------------------
@@ -458,6 +461,9 @@ TaskPeriodic::threadMain(void)
             }
           // ----- end of critical section ------------------------------------
         }
+
+        if (MAX_RUN_SECONDS != 0 and t >= MAX_RUN_SECONDS)
+          break;
     }
 
     {
