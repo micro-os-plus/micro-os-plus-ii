@@ -149,11 +149,13 @@ namespace os
     /// Store the pointer to the beginning and the size
     /// in the private member variables.
     ///
+    /// Align both to the element size.
+    ///
     /// Leave the compiler to decide if it is inlined.
     inline
     Stack::Stack(stack::element_t* const pStack, stack::size_t const sizeBytes)
-        : m_pStart(pStack), //
-        m_sizeBytes(sizeBytes)
+        : m_pStart((stack::element_t*)((unsigned long)pStack & ~(sizeof(stack::element_t)-1))), //
+        m_sizeBytes(sizeBytes & ~(sizeof(stack::element_t)-1))
     {
 #if defined(DEBUG)
       os::diag::trace.putString("os::core::Stack::Stack(");
