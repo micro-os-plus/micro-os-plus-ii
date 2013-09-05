@@ -13,7 +13,9 @@
 #include "portable/core/include/TimerSeconds.h"
 #include "portable/core/include/Scheduler.h"
 
+#if defined(DEBUG)
 #define OS_DEBUG_TIMERSECONDS_ISR_MARK_SECONDS (1)
+#endif
 
 namespace os
 {
@@ -30,7 +32,8 @@ namespace os
       os::diag::trace.putConstructor();
 #endif
 
-      m_ticks = 0;
+      // Force the first second at the first tick
+      m_ticks = OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
     }
 
     TimerSeconds::~TimerSeconds()
@@ -70,7 +73,7 @@ namespace os
     {
       if (++m_ticks > OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND)
         {
-          processTickFromInterrupt();
+          TimerBase::interruptServiceRoutine();
           m_ticks = 0;
 
 #if defined(DEBUG) && defined(OS_DEBUG_TIMERSECONDS_ISR_MARK_SECONDS)

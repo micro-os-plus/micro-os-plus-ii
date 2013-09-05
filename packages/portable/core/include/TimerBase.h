@@ -127,7 +127,7 @@ namespace os
       /// \par Returns
       ///    Nothing.
       void
-      processTickFromInterrupt(void);
+      interruptServiceRoutine(void);
 
       /// @} end of Public member functions
 

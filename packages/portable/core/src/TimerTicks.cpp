@@ -71,7 +71,7 @@ namespace os
     {
       m_implementation.acknowledgeInterrupt();
 
-      processTickFromInterrupt();
+      TimerBase::interruptServiceRoutine();
 
       // Call the derived timer ISR
       os::timerSeconds.interruptServiceRoutine();
