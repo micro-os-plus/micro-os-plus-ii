@@ -50,7 +50,10 @@ namespace os
     {
       for (;;)
         {
+#if !defined(DEBUG)
+          // TODO: elaborate, to disable only when needed for debug sessions
           os::architecture.waitForInterrupt();
+#endif
 
 #if defined(DEBUG) && defined(OS_DEBUG_IDLETHREAD)
           os::diag::trace.putChar('i');
