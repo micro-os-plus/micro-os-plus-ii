@@ -44,6 +44,8 @@ namespace os
       // Not running until start()
       m_isRunning = false;
 
+      m_isPreemptive = true;
+
       // start by pointing to the main thread
       m_pCurrentThread = &mainThread;
 
@@ -191,7 +193,7 @@ namespace os
     /// \note An InterruptsCriticalSection is needed when called from
     /// a user context.
     void
-    Scheduler::prepareContextSwitchFromInterrupt(void)
+    Scheduler::prepareContextSwitchNoInterrupts(void)
     {
       // This should be the only place where the watchdog is reset.
       // When the scheduler is not running, it is also used in sleep().

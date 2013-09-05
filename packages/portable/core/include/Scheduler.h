@@ -23,6 +23,7 @@
 #else
 
 #include "portable/core/include/Architecture.h"
+//#include "portable/core/include/Thread.h"
 
 #include "portable/language/cpp/include/cstdint.h"
 
@@ -513,6 +514,15 @@ namespace os
       bool
       isRunning(void) const;
 
+      /// \brief Check if the scheduler is preemptive.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \retval true                Preemption is enabled.
+      /// \retval false               Otherwise.
+      bool
+      isPreemptive(void) const;
+
       /// \brief Yield (relinquish) control to the next thread.
       ///
       /// \par Parameters
@@ -560,6 +570,12 @@ namespace os
       bool
       isContextSwitchLocked(void) const;
 
+      bool
+      isPreemptionAllowed(void) const;
+
+      void
+      setPreemptive(bool preemption);
+
       /// @} end of Public member functions
 
       // ----------------------------------------------------------------------
@@ -572,6 +588,8 @@ namespace os
       friend class MainThread;
 
       friend class Thread;
+
+      friend hal::arch::ThreadContext;
 
 #if !defined(__DOXYGEN__)
       // Doxygen complains "no uniquely matching class member found"
@@ -606,7 +624,7 @@ namespace os
       /// \par Returns
       ///    Nothing.
       void
-      prepareContextSwitchFromInterrupt(void);
+      prepareContextSwitchNoInterrupts(void);
 
 #if 0
       // NOT synchronised
@@ -620,7 +638,7 @@ namespace os
       /// \par Returns
       ///    Nothing.
       void
-      resumeThreadFromInterrupt(Thread* pThread);
+      resumeThreadNoInterrupts(Thread* pThread);
 
       /// @} end of Private member functions
 
@@ -630,7 +648,7 @@ namespace os
       /// \brief The pointer to the current thread.
       ///
       /// \details
-      /// Set by prepareContextSwitchFromInterrupt() to the m_active.getTop().
+      /// Set by prepareContextSwitchNoInterrupts() to the m_active.getTop().
       ///
       /// The constructor sets this to main thread.
       Thread* volatile m_pCurrentThread;
@@ -641,6 +659,9 @@ namespace os
 
       /// \brief Flag to tell if the scheduler was started or not.
       bool volatile m_isRunning;
+
+      /// \brief Flag to tell if the scheduler is preemptive.
+      bool volatile m_isPreemptive;
 
       /// \brief An autoincrement counter used to set thread IDs.
       scheduler::threadId_t m_lastUsedId;
@@ -665,6 +686,20 @@ namespace os
     Scheduler::isRunning(void) const
     {
       return m_isRunning;
+    }
+
+    inline bool
+    __attribute__((always_inline))
+    Scheduler::isPreemptive(void) const
+    {
+      return m_isPreemptive;
+    }
+
+    inline void
+    __attribute__((always_inline))
+    Scheduler::setPreemptive(bool preemptive)
+    {
+       m_isPreemptive = preemptive;
     }
 
     inline Thread*
@@ -710,6 +745,13 @@ namespace os
       return !m_isRunning || isLocked();
     }
 
+    inline bool
+    __attribute__((always_inline))
+    Scheduler::isPreemptionAllowed(void) const
+    {
+      return !isContextSwitchLocked() && isPreemptive();
+    }
+
 #if 0
     inline void
     __attribute__((always_inline))
@@ -721,9 +763,11 @@ namespace os
 
     /// \details
     /// Insert the thread into the active list.
+    ///
+    /// \warning Must be called with interrupts disabled.
     inline void
     __attribute__((always_inline))
-    Scheduler::resumeThreadFromInterrupt(Thread* pThread)
+    Scheduler::resumeThreadNoInterrupts(Thread* pThread)
     {
       m_active.insert(pThread);
     }
