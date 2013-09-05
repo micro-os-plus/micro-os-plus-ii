@@ -189,7 +189,7 @@ namespace os
       setCurrentThread(Thread* pThread);
 
       void
-      prepareContextSwitchFromInterrupt(void);
+      prepareContextSwitchNoInterrupts(void);
 
       void
       lock(void);
@@ -201,7 +201,7 @@ namespace os
       isLocked(void);
 
       void
-      resumeThreadFromInterrupt(Thread* pThread);
+      resumeThreadNoInterrupts(Thread* pThread);
 
       /// @} end of Public member functions
 
@@ -244,7 +244,7 @@ namespace os
     }
 
     inline void
-    FakeScheduler::prepareContextSwitchFromInterrupt(void)
+    FakeScheduler::prepareContextSwitchNoInterrupts(void)
     {
 
     }
@@ -265,7 +265,7 @@ namespace os
     }
 
     inline void
-    FakeScheduler::resumeThreadFromInterrupt(
+    FakeScheduler::resumeThreadNoInterrupts(
         Thread* pThread __attribute__((unused)))
     {
 
