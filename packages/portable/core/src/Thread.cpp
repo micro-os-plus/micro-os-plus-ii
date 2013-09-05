@@ -220,7 +220,7 @@ namespace os
 
           m_state = thread::State::RUNNING;
 
-          os::scheduler.resumeThreadFromInterrupt(this);
+          os::scheduler.resumeThreadNoInterrupts(this);
           // ----- Critical section end ---------------------------------------
         }
     }
@@ -361,6 +361,25 @@ namespace os
     /// \details
     /// Wake-up the thread by inserting it into the active list.
     ///
+    /// \warning Must be called with interrupts disabled.
+    void
+    Thread::wakeupNoInterrupts(void)
+    {
+#if defined(DEBUG) && defined(OS_DEBUG_THREAD)
+      os::diag::trace.putMemberFunctionWithName();
+#endif
+      if ((m_state == thread::State::SLEEPING)
+          || (m_state == thread::State::RUNNING))
+        {
+          m_state = thread::State::RUNNING;
+
+          os::scheduler.resumeThreadNoInterrupts(this);
+        }
+    }
+
+    /// \details
+    /// Wake-up the thread by inserting it into the active list.
+    ///
     /// It assumes it is called from a thread context, so it
     /// disables/enables interrupts.
     void
@@ -369,17 +388,11 @@ namespace os
 #if defined(DEBUG) && defined(OS_DEBUG_THREAD)
       os::diag::trace.putMemberFunctionWithName();
 #endif
-      if ((m_state == thread::State::SLEEPING)
-          || (m_state == thread::State::RUNNING))
-        {
-          // ----- Critical section begin -------------------------------------
-          os::core::scheduler::InterruptsCriticalSection cs;
+      // ----- Critical section begin -----------------------------------------
+      os::core::scheduler::InterruptsCriticalSection cs;
 
-          m_state = thread::State::RUNNING;
-
-          os::scheduler.resumeThreadFromInterrupt(this);
-          // ----- Critical section end ---------------------------------------
-        }
+      wakeupNoInterrupts();
+      // ----- Critical section end -------------------------------------------
     }
 
     /// \details
@@ -440,7 +453,7 @@ namespace os
           TimeoutGuard tg(beginTicks, ticks, timer, this);
 
           if (tg.didTimeout())
-            return true;
+          return true;
 
           os::scheduler.yield();
           // ----- Timeout guard end ------------------------------------------

@@ -388,6 +388,15 @@ namespace os
         sleepWhile(Predicate_T predicate, timer::ticks_t ticks = 0,
             TimerBase& timer = os::timerTicks);
 
+      /// \brief Wake-up the thread from ISR.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      void
+      wakeupNoInterrupts(void);
+
       /// \brief Wake-up the thread.
       ///
       /// \par Parameters
@@ -396,6 +405,7 @@ namespace os
       ///    Nothing.
       void
       wakeup(void);
+
 
       /// @} end of Public member functions
 
