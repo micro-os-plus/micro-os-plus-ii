@@ -69,7 +69,7 @@ namespace hal
             { // ---- InterruptsCriticalSection begin -------------------------
               os::core::scheduler::InterruptsCriticalSection cs;
 
-              os::scheduler.prepareContextSwitchFromInterrupt();
+              os::scheduler.prepareContextSwitchNoInterrupts();
             } // ---- InterruptsCriticalSection end ---------------------------
           // and resume from there
           ((os::core::Thread*) os::scheduler.getCurrentThread())->getContext().restore();
