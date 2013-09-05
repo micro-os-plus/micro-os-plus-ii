@@ -21,7 +21,12 @@ main()
 
   os::scheduler.yield();
 
-  //os::mainThread.sleepFor(0);
+#if 1
+
+  // About 1.5 sec
+  os::architecture.busyWaitMicros(2000*1000);
+
+#endif
 
   os::scheduler.stop();
 
