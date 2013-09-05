@@ -36,7 +36,7 @@ Configuration(
         'setValue("OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS", 11)',
 
         # the default is 1000
-        #'setValue("OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND", 50000)',        
+        'setValue("OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND", 2000)',        
     ],
                                 
     artefactName='sleepstress',
@@ -123,6 +123,42 @@ Configuration(
             
             includeFiles=[
                 'sleepstress-qemu-config.py',
+            ],
+        ),
+
+        # Configuration specific for Olimex board STM32-H103
+        Configuration(
+              
+            id='config.os.portable.core.tests.sleepstress.stm32h103',
+            name='STM32-H103 Sleep stress test configuration',
+            description='Common Debug/Release definitions for Sleep stress test running on STM32-H103.',
+            
+            loadPackages=[
+                # mandatory platform requirement
+                'package.os.hal.platform.olimex.stm32h103',
+            ],
+                      
+            requirements=[
+                # enable the platform    
+                'enable("package.os.hal.platform.olimex.stm32h103")',    
+                    
+                # and the i2c trace output        
+                'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',   
+                
+                'enable("component.os.hal.architecture.arm.cortexm.infrastructure.testsuite.i2c")',                    
+            ],
+                      
+            buildFolder='stm32h103/sleepstress',
+            
+            buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
+            
+            copyFiles=[
+                ('/support/makefile/aep_gcc_makefile_defs.mk', 'makefile_defs.mk'),
+                ('/support/makefile/aep_gcc_makefile_targets.mk', 'makefile_targets.mk'),
+            ],
+                                         
+            includeFiles=[
+                'sleepstress-stm32h103-config.py',
             ],
         ),
               

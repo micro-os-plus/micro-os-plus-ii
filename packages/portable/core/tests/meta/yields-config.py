@@ -140,6 +140,9 @@ Configuration(
                     
                 # and the i2c trace output        
                 'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',                       
+
+                'enable("component.os.hal.architecture.arm.cortexm.infrastructure.testsuite.i2c")',                    
+
             ],
                       
             buildFolder='stm32h103/yields',

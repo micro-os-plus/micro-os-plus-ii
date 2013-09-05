@@ -102,6 +102,13 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 qemu-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
+CONFIG=/portable/core/tests/meta/threads-stm32h103-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/threads/' \
+-e 's/ARTEFACTDESCRIPTION/Threads/' \
+stm32h103-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
 
 # ----- yields ----------------------------------------------------------------
 CONFIG=/portable/core/tests/meta/yields-linux-config.py
@@ -155,6 +162,13 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 qemu-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
+CONFIG=/portable/core/tests/meta/sleep-stm32h103-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/sleep/' \
+-e 's/ARTEFACTDESCRIPTION/Sleep/' \
+stm32h103-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
 
 # ----- sleepstress -----------------------------------------------------------
 CONFIG=/portable/core/tests/meta/sleepstress-linux-config.py
@@ -176,6 +190,13 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/sleepstress/' \
 -e 's/ARTEFACTDESCRIPTION/Sleep Stress/' \
 qemu-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+CONFIG=/portable/core/tests/meta/sleepstress-stm32h103-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/sleepstress/' \
+-e 's/ARTEFACTDESCRIPTION/Sleep Stress/' \
+stm32h103-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
@@ -201,6 +222,13 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 qemu-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
+CONFIG=/portable/core/tests/meta/mutex-stm32h103-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/mutex/' \
+-e 's/ARTEFACTDESCRIPTION/Mutex/' \
+stm32h103-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
 
 # ----- mutexstress -----------------------------------------------------------
 CONFIG=/portable/core/tests/meta/mutexstress-linux-config.py
@@ -222,6 +250,13 @@ sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
 -e 's/ARTEFACTNAME/mutexstress/' \
 -e 's/ARTEFACTDESCRIPTION/Mutex Stress/' \
 qemu-config-template.py >$DEST/$CONFIG
+echo $CONFIG generated
+
+CONFIG=/portable/core/tests/meta/mutexstress-stm32h103-config.py
+sed -e 's/IDPREFIX/config.os.portable.core.tests/' \
+-e 's/ARTEFACTNAME/mutexstress/' \
+-e 's/ARTEFACTDESCRIPTION/Mutex Stress/' \
+stm32h103-config-template.py >$DEST/$CONFIG
 echo $CONFIG generated
 
 
