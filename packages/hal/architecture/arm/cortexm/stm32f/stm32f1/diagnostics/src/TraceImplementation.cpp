@@ -21,6 +21,8 @@
 
 #include "hal/platform/include/XCDL_TraceI2CDefines.h"
 
+#include "portable/core/include/CriticalSections.h"
+
 namespace hal
 {
   namespace stm32f1
@@ -375,6 +377,8 @@ namespace hal
           return 0;
 
         size_t count = 0;
+
+        os::core::scheduler::InterruptsCriticalSection cs;
 
         // DI
         for (;;)
