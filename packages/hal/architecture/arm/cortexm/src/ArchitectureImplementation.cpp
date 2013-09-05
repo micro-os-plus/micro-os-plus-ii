@@ -16,14 +16,14 @@
 #include "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
 #include "portable/infrastructure/include/CppStartup.h"
 #include "hal/architecture/arm/cortexm/ldscripts/LinkerScript.h"
-#include "portable/language/cpp/include/iterator.h"
+//#include "portable/language/cpp/include/iterator.h"
 #include "portable/diagnostics/include/Trace.h"
-#include "portable/core/include/Scheduler.h"
-#include "portable/core/include/Thread.h"
+//#include "portable/core/include/Scheduler.h"
+//#include "portable/core/include/Thread.h"
 #include "hal/architecture/arm/cortexm/include/Cpu.h"
 #include "portable/core/include/MainThread.h"
-#include "portable/core/include/Stack.h"
-#include "portable/core/include/CriticalSections.h"
+//#include "portable/core/include/Stack.h"
+//#include "portable/core/include/CriticalSections.h"
 
 // ----------------------------------------------------------------------------
 
