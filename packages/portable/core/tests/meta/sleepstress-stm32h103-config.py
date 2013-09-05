@@ -10,15 +10,15 @@ Configuration(
     name='Debug OS X STM32-H103 Sleep Stress configuration with ARM Embedded GCC',
     description='Debug build configuration for Sleep Stress.',
     
-    buildConfigurationName='stm32h103_sleepstress_osx_aep_gcc_Debug',
+    buildConfigurationName='stm32h103_osx_aep_gcc_sleepstress_Debug',
     
-    buildFolder='$(PARENT)/osx/aep/gcc/Debug',
+    buildFolder='$(PARENT)/osx/aep/gcc/sleepstress/Debug',
     
     requirements=[
         'enable("DEBUG")',
     ],
       
-    toolchain='toolchain.osx.aep.arm.gcc.debug',
+    toolchain='toolchain.osx.arm.ep.gcc.debug',
 ),
 
 Configuration(
@@ -26,11 +26,11 @@ Configuration(
     name='Release OS X STM32-H103 Sleep Stress configuration with ARM Embedded GCC',
     description='Release build configuration for Sleep Stress.',
     
-    buildConfigurationName='stm32h103_sleepstress_osx_aep_gcc_Release',
+    buildConfigurationName='stm32h103_osx_aep_gcc_sleepstress_Release',
     
-    buildFolder='$(PARENT)/osx/aep/gcc/Release',
+    buildFolder='$(PARENT)/osx/aep/gcc/sleepstress/Release',
 
-    toolchain='toolchain.osx.aep.arm.gcc.release',
+    toolchain='toolchain.osx.arm.ep.gcc.release',
 ),
       
       
@@ -40,15 +40,15 @@ Configuration(
     name='Debug GNU/Linux STM32-H103 Sleep Stress configuration with ARM Embedded GCC',
     description='Debug build configuration for Sleep Stress.',
     
-    buildConfigurationName='stm32h103_sleepstress_linux_aep_gcc_Debug',
+    buildConfigurationName='stm32h103_linux_aep_gcc_sleepstress_Debug',
     
-    buildFolder='$(PARENT)/linux/aep/gcc/Debug',
+    buildFolder='$(PARENT)/linux/aep/gcc/sleepstress/Debug',
     
     requirements=[
         'enable("DEBUG")',
     ],
       
-    toolchain='toolchain.linux.aep.arm.gcc.debug',
+    toolchain='toolchain.linux.arm.ep.gcc.debug',
 ),
 
 Configuration(
@@ -56,10 +56,10 @@ Configuration(
     name='Release GNU/Linux STM32-H103 Sleep Stress configuration with ARM Embedded GCC',
     description='Release build configuration for Sleep Stress.',
     
-    buildConfigurationName='stm32h103_sleepstress_linux_aep_gcc_Release',
+    buildConfigurationName='stm32h103_linux_aep_gcc_sleepstress_Release',
     
-    buildFolder='$(PARENT)/linux/aep/gcc/Release',
+    buildFolder='$(PARENT)/linux/aep/gcc/sleepstress/Release',
 
-    toolchain='toolchain.linux.aep.arm.gcc.release',
+    toolchain='toolchain.linux.arm.ep.gcc.release',
 ),
 # -----------------------------------------------------------------------------

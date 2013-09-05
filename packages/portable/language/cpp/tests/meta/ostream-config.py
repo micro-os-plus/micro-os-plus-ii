@@ -60,7 +60,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
-            buildFolder='osx/ostream',
+            buildFolder='osx',
             
             includeFiles=[
                 'ostream-osx-config.py',
@@ -83,7 +83,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
-            buildFolder='linux/ostream',
+            buildFolder='linux',
             
             includeFiles=[
                 'ostream-linux-config.py',
@@ -110,7 +110,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
             ],
                       
-            buildFolder='qemu/ostream',
+            buildFolder='qemu',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             

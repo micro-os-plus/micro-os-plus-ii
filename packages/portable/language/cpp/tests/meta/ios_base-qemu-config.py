@@ -10,15 +10,15 @@ Configuration(
     name='Debug OS X QEMU C++ ios_base configuration with ARM Embedded GCC',
     description='Debug build configuration for C++ ios_base.',
     
-    buildConfigurationName='qemu_ios_base_osx_aep_gcc_Debug',
+    buildConfigurationName='qemu_osx_aep_gcc_ios_base_Debug',
     
-    buildFolder='$(PARENT)/osx/aep/gcc/Debug',
+    buildFolder='$(PARENT)/osx/aep/gcc/ios_base/Debug',
     
     requirements=[
         'enable("DEBUG")',
     ],
       
-    toolchain='toolchain.osx.aep.arm.gcc.debug',
+    toolchain='toolchain.osx.arm.ep.gcc.debug',
 ),
 
 Configuration(
@@ -26,11 +26,11 @@ Configuration(
     name='Release OS X QEMU C++ ios_base configuration with ARM Embedded GCC',
     description='Release build configuration for C++ ios_base.',
     
-    buildConfigurationName='qemu_ios_base_osx_aep_gcc_Release',
+    buildConfigurationName='qemu_osx_aep_gcc_ios_base_Release',
     
-    buildFolder='$(PARENT)/osx/aep/gcc/Release',
+    buildFolder='$(PARENT)/osx/aep/gcc/ios_base/Release',
 
-    toolchain='toolchain.osx.aep.arm.gcc.release',
+    toolchain='toolchain.osx.arm.ep.gcc.release',
 ),
       
       
@@ -40,15 +40,15 @@ Configuration(
     name='Debug GNU/Linux QEMU C++ ios_base configuration with ARM Embedded GCC',
     description='Debug build configuration for C++ ios_base.',
     
-    buildConfigurationName='qemu_ios_base_linux_aep_gcc_Debug',
+    buildConfigurationName='qemu_linux_aep_gcc_ios_base_Debug',
     
-    buildFolder='$(PARENT)/linux/aep/gcc/Debug',
+    buildFolder='$(PARENT)/linux/aep/gcc/ios_base/Debug',
     
     requirements=[
         'enable("DEBUG")',
     ],
       
-    toolchain='toolchain.linux.aep.arm.gcc.debug',
+    toolchain='toolchain.linux.arm.ep.gcc.debug',
 ),
 
 Configuration(
@@ -56,10 +56,10 @@ Configuration(
     name='Release GNU/Linux QEMU C++ ios_base configuration with ARM Embedded GCC',
     description='Release build configuration for C++ ios_base.',
     
-    buildConfigurationName='qemu_ios_base_linux_aep_gcc_Release',
+    buildConfigurationName='qemu_linux_aep_gcc_ios_base_Release',
     
-    buildFolder='$(PARENT)/linux/aep/gcc/Release',
+    buildFolder='$(PARENT)/linux/aep/gcc/ios_base/Release',
 
-    toolchain='toolchain.linux.aep.arm.gcc.release',
+    toolchain='toolchain.linux.arm.ep.gcc.release',
 ),
 # -----------------------------------------------------------------------------

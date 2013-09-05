@@ -61,7 +61,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
-            buildFolder='osx/basic_ios',
+            buildFolder='osx',
                         
             includeFiles=[
                 'basic_ios-osx-config.py',
@@ -84,7 +84,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
-            buildFolder='linux/basic_ios',
+            buildFolder='linux',
             
             includeFiles=[
                 'basic_ios-linux-config.py',
@@ -111,7 +111,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
             ],
                       
-            buildFolder='qemu/basic_ios',
+            buildFolder='qemu',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             

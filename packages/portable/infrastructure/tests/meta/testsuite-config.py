@@ -56,7 +56,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',                
             ],
                       
-            buildFolder='osx/testsuite',
+            buildFolder='osx',
             
             artefactName='testsuite',
             
@@ -64,13 +64,13 @@ Configuration(
                        
                 # LLVM x64     
                 Configuration(
-                    id='config.os.portable.infrastructure.tests.testsuite.osx.x64.llvm.debug',
+                    id='config.os.portable.infrastructure.tests.testsuite.osx.llvm.x64.debug',
                     name='Debug OS X TestSuite configuration with x86_64 LLVM',
                     description='Debug build configuration for TestSuite',
                     
-                    buildConfigurationName='osx_testsuite_x64_llvm_Debug',
+                    buildConfigurationName='osx_llvm_x64_testsuite_Debug',
                     
-                    buildFolder='$(PARENT)/x64/llvm/Debug',
+                    buildFolder='$(PARENT)/llvm/x64/testsuite/Debug',
                     
                     requirements=[
                         'enable("DEBUG")',
@@ -80,13 +80,13 @@ Configuration(
                 ),
 
                 Configuration(
-                    id='config.os.portable.infrastructure.tests.testsuite.osx.x64.llvm.release',
+                    id='config.os.portable.infrastructure.tests.testsuite.osx.llvm.x64.release',
                     name='Release OS X TestSuite configuration with x86_64 LLVM',
                     description='Release build configuration for TestSuite',
                     
                     buildConfigurationName='osx_testsuite_x64_llvm_Release',
                     
-                    buildFolder='$(PARENT)/x64/llvm/Release',
+                    buildFolder='$(PARENT)/llvm/x64/testsuite/Release',
                     
                     toolchain='toolchain.osx.release.llvm.x64',
                 ),

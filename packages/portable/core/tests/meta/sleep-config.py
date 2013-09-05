@@ -60,7 +60,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
-            buildFolder='osx/sleep',
+            buildFolder='osx',
                 
             includeFiles=[
                 'sleep-osx-config.py',
@@ -84,7 +84,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
-            buildFolder='linux/sleep',
+            buildFolder='linux',
             
             includeFiles=[
                 'sleep-linux-config.py',
@@ -111,7 +111,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
             ],
                       
-            buildFolder='qemu/sleep',
+            buildFolder='qemu',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             
@@ -147,7 +147,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.infrastructure.testsuite.i2c")',                    
             ],
                       
-            buildFolder='stm32h103/sleep',
+            buildFolder='stm32h103',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             

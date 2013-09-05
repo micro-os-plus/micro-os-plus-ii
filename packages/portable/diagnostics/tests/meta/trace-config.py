@@ -57,7 +57,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',                
             ],
                       
-            buildFolder='osx/trace',
+            buildFolder='osx',
             
             includeFiles=[
                 'trace-osx-config.py'
@@ -81,7 +81,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.linux")',                
             ],
                       
-            buildFolder='linux/trace',
+            buildFolder='linux',
             
             includeFiles=[
                 'trace-linux-config.py'
@@ -108,7 +108,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
             ],
                       
-            buildFolder='qemu/trace',
+            buildFolder='qemu',
 
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             

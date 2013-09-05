@@ -5,13 +5,13 @@
 
 # ----- LLVM x64 --------------------------------------------------------------
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x64.llvm.debug',
+    id='config.os.portable.core.tests.ostream.osx.llvm.x64.debug',
     name='Debug OS X C++ ostream configuration with x86_64 LLVM',
     description='Debug build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x64_llvm_Debug',
+    buildConfigurationName='osx_llvm_x64_ostream_Debug',
     
-    buildFolder='$(PARENT)/x64/llvm/Debug',
+    buildFolder='$(PARENT)/llvm/x64/ostream/Debug',
     
     requirements=[
         'enable("DEBUG")',
@@ -21,26 +21,26 @@ Configuration(
 ),
 
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x64.llvm.release',
+    id='config.os.portable.core.tests.ostream.osx.llvm.x64.release',
     name='Release OS X C++ ostream configuration with x86_64 LLVM',
     description='Release build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x64_llvm_Release',
+    buildConfigurationName='osx_llvm_x64_ostream_Release',
     
-    buildFolder='$(PARENT)/x64/llvm/Release',
+    buildFolder='$(PARENT)/llvm/x64/ostream/Release',
                           
     toolchain='toolchain.osx.release.llvm.x64',                    
 ),
 
 # ----- LLVM x32 --------------------------------------------------------------
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x32.llvm.debug',
+    id='config.os.portable.core.tests.ostream.osx.llvm.x32.debug',
     name='Debug OS X C++ ostream configuration with i386 LLVM',
     description='Debug build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x32_llvm_Debug',
+    buildConfigurationName='osx_llvm_x32_ostream_Debug',
     
-    buildFolder='$(PARENT)/x32/llvm/Debug',
+    buildFolder='$(PARENT)/llvm/x32/ostream/Debug',
     
     requirements=[
         'enable("DEBUG")',
@@ -50,13 +50,13 @@ Configuration(
 ),
 
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x32.llvm.release',
+    id='config.os.portable.core.tests.ostream.osx.llvm.x32.release',
     name='Release OS X C++ ostream configuration with i386 LLVM',
     description='Release build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x32_llvm_Release',
+    buildConfigurationName='osx_llvm_x32_ostream_Release',
     
-    buildFolder='$(PARENT)/x32/llvm/Release',
+    buildFolder='$(PARENT)/llvm/x32/ostream/Release',
 
     toolchain='toolchain.osx.release.llvm.x32',                    
 ),
@@ -64,13 +64,13 @@ Configuration(
 
 # ----- GCC 4.7 x64 -----------------------------------------------------------
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x64.gcc47.debug',
+    id='config.os.portable.core.tests.ostream.osx.gcc47.x64.debug',
     name='Debug OS X C++ ostream configuration with x86_64 GCC 4.7',
     description='Debug build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x64_gcc47_Debug',
+    buildConfigurationName='osx_gcc47_x64_ostream_Debug',
     
-    buildFolder='$(PARENT)/x64/gcc47/Debug',
+    buildFolder='$(PARENT)/gcc47/x64/ostream/Debug',
     
     requirements=[
         'enable("DEBUG")',
@@ -80,26 +80,26 @@ Configuration(
 ),
 
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x64.gcc47.release',
+    id='config.os.portable.core.tests.ostream.osx.gcc47.x64.release',
     name='Release OS X C++ ostream configuration with x86_64 GCC 4.7',
     description='Release build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x64_gcc47_Release',
+    buildConfigurationName='osx_gcc47_x64_ostream_Release',
     
-    buildFolder='$(PARENT)/x64/gcc47/Release',
+    buildFolder='$(PARENT)/gcc47/x64/ostream/Release',
                           
     toolchain='toolchain.osx.release.mp.gcc47.x64',                    
 ),
 
 # ----- GCC 4.7 x32 -----------------------------------------------------------
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x32.gcc47.debug',
+    id='config.os.portable.core.tests.ostream.osx.gcc47.x32.debug',
     name='Debug OS X C++ ostream configuration with i386 GCC 4.7',
     description='Debug build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x32_gcc47_Debug',
+    buildConfigurationName='osx_gcc47_x32_ostream_Debug',
     
-    buildFolder='$(PARENT)/x32/gcc47/Debug',
+    buildFolder='$(PARENT)/gcc47/x32/ostream/Debug',
     
     requirements=[
         'enable("DEBUG")',
@@ -109,26 +109,26 @@ Configuration(
 ),
 
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x32.gcc47.release',
+    id='config.os.portable.core.tests.ostream.osx.gcc47.x32.release',
     name='Release OS X C++ ostream configuration with i386 GCC 4.7',
     description='Release build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x32_gcc47_Release',
+    buildConfigurationName='osx_gcc47_x32_ostream_Release',
     
-    buildFolder='$(PARENT)/x32/gcc47/Release',
+    buildFolder='$(PARENT)/gcc47/x32/ostream/Release',
 
     toolchain='toolchain.osx.release.mp.gcc47.x32',                    
 ),
 
 # ----- GCC 4.8 x64 -----------------------------------------------------------
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x64.gcc48.debug',
+    id='config.os.portable.core.tests.ostream.osx.gcc48.x64.debug',
     name='Debug OS X C++ ostream configuration with x86_64 GCC 4.8',
     description='Debug build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x64_gcc48_Debug',
+    buildConfigurationName='osx_gcc48_x64_ostream_Debug',
     
-    buildFolder='$(PARENT)/x64/gcc48/Debug',
+    buildFolder='$(PARENT)/gcc48/x64/ostream/Debug',
     
     requirements=[
         'enable("DEBUG")',
@@ -138,26 +138,26 @@ Configuration(
 ),
 
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x64.gcc48.release',
+    id='config.os.portable.core.tests.ostream.osx.gcc48.x64.release',
     name='Release OS X C++ ostream configuration with x86_64 GCC 4.8',
     description='Release build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x64_gcc48_Release',
+    buildConfigurationName='osx_gcc48_x64_ostream_Release',
     
-    buildFolder='$(PARENT)/x64/gcc48/Release',
+    buildFolder='$(PARENT)/gcc48/x64/ostream/Release',
                           
     toolchain='toolchain.osx.release.mp.gcc48.x64',                    
 ),
 
 # ----- GCC 4.8 x32 -----------------------------------------------------------
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x32.gcc48.debug',
+    id='config.os.portable.core.tests.ostream.osx.gcc48.x32.debug',
     name='Debug OS X C++ ostream configuration with i386 GCC 4.8',
     description='Debug build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x32_gcc48_Debug',
+    buildConfigurationName='osx_gcc48_x32_ostream_Debug',
     
-    buildFolder='$(PARENT)/x32/gcc48/Debug',
+    buildFolder='$(PARENT)/gcc48/x32/ostream/Debug',
     
     requirements=[
         'enable("DEBUG")',
@@ -167,13 +167,13 @@ Configuration(
 ),
 
 Configuration(
-    id='config.os.portable.core.tests.ostream.osx.x32.gcc48.release',
+    id='config.os.portable.core.tests.ostream.osx.gcc48.x32.release',
     name='Release OS X C++ ostream configuration with i386 GCC 4.8',
     description='Release build configuration for C++ ostream.',
     
-    buildConfigurationName='osx_ostream_x32_gcc48_Release',
+    buildConfigurationName='osx_gcc48_x32_ostream_Release',
     
-    buildFolder='$(PARENT)/x32/gcc48/Release',
+    buildFolder='$(PARENT)/gcc48/x32/ostream/Release',
 
     toolchain='toolchain.osx.release.mp.gcc48.x32',                    
 ),

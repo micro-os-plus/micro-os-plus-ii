@@ -49,7 +49,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
-            buildFolder='osx/minimal',
+            buildFolder='osx',
             
             includeFiles=[
                 'minimal-osx-config.py'
@@ -73,7 +73,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
-            buildFolder='linux/minimal',
+            buildFolder='linux',
             
             includeFiles=[
                 'minimal-linux-config.py'
@@ -100,7 +100,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
             ],
                       
-            buildFolder='qemu/minimal',
+            buildFolder='qemu',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             
@@ -134,7 +134,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',                       
             ],
                       
-            buildFolder='stm32h103/minimal',
+            buildFolder='stm32h103',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             

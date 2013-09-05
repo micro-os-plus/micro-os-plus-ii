@@ -60,7 +60,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
-            buildFolder='osx/mutex',
+            buildFolder='osx',
                 
             includeFiles=[
                 'mutex-osx-config.py',
@@ -84,7 +84,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
-            buildFolder='linux/mutex',
+            buildFolder='linux',
             
             includeFiles=[
                 'mutex-linux-config.py',
@@ -111,7 +111,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
             ],
                       
-            buildFolder='qemu/mutex',
+            buildFolder='qemu',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             

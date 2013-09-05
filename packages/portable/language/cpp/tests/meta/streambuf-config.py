@@ -61,7 +61,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
-            buildFolder='osx/streambuf',
+            buildFolder='osx',
             
             includeFiles=[
                 'streambuf-osx-config.py',
@@ -84,7 +84,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
-            buildFolder='linux/streambuf',
+            buildFolder='linux',
             
             includeFiles=[
                 'streambuf-linux-config.py',
@@ -111,7 +111,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
             ],
                       
-            buildFolder='qemu/streambuf',
+            buildFolder='qemu',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             

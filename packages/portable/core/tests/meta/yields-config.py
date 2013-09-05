@@ -57,7 +57,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
-            buildFolder='osx/yields',
+            buildFolder='osx',
             
             includeFiles=[
                 'yields-osx-config.py',
@@ -81,7 +81,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
-            buildFolder='linux/yields',
+            buildFolder='linux',
             
             includeFiles=[
                 'yields-linux-config.py',
@@ -108,7 +108,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
             ],
                       
-            buildFolder='qemu/yields',
+            buildFolder='qemu',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             
@@ -145,7 +145,7 @@ Configuration(
 
             ],
                       
-            buildFolder='stm32h103/yields',
+            buildFolder='stm32h103',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             

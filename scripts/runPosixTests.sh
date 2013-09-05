@@ -84,12 +84,12 @@ function runTestArray()
 	[ $# -ge 3 ] || exit 1
 
 	platform=$1
-	bits=$2
-	compiler=$3
+	compiler=$2
+	bits=$3
 	action=$4
-	for bc in "${testNames[@]}"
+	for testName in "${testNames[@]}"
 	do
-		(runTestPair $platform"_"$bc"_"$bits"_"$compiler $action) || exit $?
+		(runTestPair $platform"_"$compiler"_"$bits"_"$testName $action) || exit $?
 	done
 	
 	echo "$compiler $bits tests performed" >>$SUMMARY_FILE
@@ -98,7 +98,7 @@ function runTestArray()
 # make sure the destination folder is there
 mkdir -p $DEST
 
-SUMMARY_FILE=$DEST/summary.txt
+SUMMARY_FILE=$DEST/summary-`date "+%Y%m%d%H%M%S"`.txt
 rm -f $SUMMARY_FILE
 touch -f $SUMMARY_FILE
 
@@ -130,10 +130,10 @@ then
 			if [ "$MACHINE" == "x86_64" ]
 			then
 				echo "$UNAME $MACHINE, quick tests" >>$SUMMARY_FILE
-				(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
+				(PATH=$PATH; runTestArray "linux" "$compiler" "x64" "run") || exit $?
 			else
 				echo "$UNAME $MACHINE, quick tests" >>$SUMMARY_FILE
-				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
+				(PATH=$PATH; runTestArray "linux" "$compiler" "x32" "run") || exit $?
 			fi
 			
 		else
@@ -152,9 +152,9 @@ then
 				compiler=llvm			
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
+					(PATH=$PATH; runTestArray "linux" "$compiler" "x64" "run") || exit $?
 				fi
-				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
+				(PATH=$PATH; runTestArray "linux" "$compiler" "x32" "run") || exit $?
 			fi
 			
 			if [ -x /usr/bin/g++-4.8 -o "$defaultCompiler" == "gcc48" ]
@@ -167,9 +167,9 @@ then
 				fi		
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
+					(PATH=$PATH; runTestArray "linux" "$compiler" "x64" "run") || exit $?
 				fi
-				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
+				(PATH=$PATH; runTestArray "linux" "$compiler" "x32" "run") || exit $?
 			fi
 			
 			if [ -x /usr/bin/g++-4.7 -o "$defaultCompiler" == "gcc47" ]
@@ -182,9 +182,9 @@ then
 				fi		
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH; runTestArray "linux" "x64" "$compiler" "run") || exit $?
+					(PATH=$PATH; runTestArray "linux" "$compiler" "x64" "run") || exit $?
 				fi
-				(PATH=$PATH; runTestArray "linux" "x32" "$compiler" "run") || exit $?
+				(PATH=$PATH; runTestArray "linux" "$compiler" "x32" "run") || exit $?
 			fi
 			
 		fi
@@ -203,10 +203,10 @@ then
 			if [ "$MACHINE" == "x86_64" ]
 			then
 				echo "$UNAME $MACHINE, quick tests" >>$SUMMARY_FILE
-				(PATH=$PATH; runTestArray "osx" "x64" "llvm" "run") || exit $?
+				(PATH=$PATH; runTestArray "osx" "llvm" "x64" "run") || exit $?
 			else
 				echo "$UNAME $MACHINE, quick tests" >>$SUMMARY_FILE
-				(PATH=$PATH; runTestArray "osx" "x32" "llvm" "run") || exit $?
+				(PATH=$PATH; runTestArray "osx" "llvm" "x32" "run") || exit $?
 			fi
 		
 		else
@@ -223,18 +223,18 @@ then
 			# clang is always available on OS X
 			if [ "$MACHINE" == "x86_64" ]
 			then
-				(PATH=$PATH; runTestArray "osx" "x64" "llvm" "run") || exit $?
+				(PATH=$PATH; runTestArray "osx" "llvm" "x64" "run") || exit $?
 			fi
-			(PATH=$PATH; runTestArray "osx" "x32" "llvm" "run") || exit $?
+			(PATH=$PATH; runTestArray "osx" "llvm" "x32" "run") || exit $?
 	
 			PATH_GCC48=/opt/local/bin			
 			if [ -x /opt/local/bin/g++-mp-4.8 ]
 			then
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH_GCC48:$PATH; runTestArray "osx" "x64" "gcc48" "run") || exit $?
+					(PATH=$PATH_GCC48:$PATH; runTestArray "osx" "gcc48" "x64" "run") || exit $?
 				fi
-				(PATH=$PATH_GCC48:$PATH; runTestArray "osx" "x32" "gcc48" "run") || exit $?
+				(PATH=$PATH_GCC48:$PATH; runTestArray "osx" "gcc48" "x32" "run") || exit $?
 			fi
 
 			PATH_GCC47=/opt/local/bin			
@@ -242,9 +242,9 @@ then
 			then
 				if [ "$MACHINE" == "x86_64" ]
 				then
-					(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x64" "gcc47" "run") || exit $?
+					(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "gcc47" "x64" "run") || exit $?
 				fi
-				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "x32" "gcc47" "run") || exit $?
+				(PATH=$PATH_GCC47:$PATH; runTestArray "osx" "gcc47" "x32" "run") || exit $?
 			fi
 			
 		fi

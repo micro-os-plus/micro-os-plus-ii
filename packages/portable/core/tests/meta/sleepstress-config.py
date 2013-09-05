@@ -61,7 +61,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.osx")',
             ],
                       
-            buildFolder='osx/sleepstress',
+            buildFolder='osx',
                 
             includeFiles=[
                 'sleepstress-osx-config.py',
@@ -85,7 +85,7 @@ Configuration(
                 'enable("package.os.hal.platform.synthetic.linux")',
             ],
                       
-            buildFolder='linux/sleepstress',
+            buildFolder='linux',
             
             includeFiles=[
                 'sleepstress-linux-config.py',
@@ -112,7 +112,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.qemu.diagnostics.trace.semihosting")',
             ],
                       
-            buildFolder='qemu/sleepstress',
+            buildFolder='qemu',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             
@@ -148,7 +148,7 @@ Configuration(
                 'enable("component.os.hal.architecture.arm.cortexm.infrastructure.testsuite.i2c")',                    
             ],
                       
-            buildFolder='stm32h103/sleepstress',
+            buildFolder='stm32h103',
             
             buildTargetCpuOptions='-mcpu=cortex-m3 -mthumb -mfloat-abi=soft',
             
