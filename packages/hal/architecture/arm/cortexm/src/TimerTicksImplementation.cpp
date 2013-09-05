@@ -61,11 +61,22 @@ namespace hal
       (*((volatile unsigned long *) 0xe000ed20)) |=
           (((unsigned long) configKERNEL_INTERRUPT_PRIORITY) << 24UL );
 
-      // TODO: set the register value to 1 (or 0?)
+      // According to 'SysTick usage hints and tips'
+      // The correct initialisation sequence for the SysTick counter is:
+      // 1. Program reload value.
+      // 2. Clear current value.
+      // 3. Program Control and Status register
 
       // Configure SysTick to interrupt at the requested rate. */
       // portNVIC_SYSTICK_LOAD_REG = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;
+#if defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103)
+      (*((volatile unsigned long *) 0xe000e014)) = (72000000 / 1000) - 1UL;
+#else
       (*((volatile unsigned long *) 0xe000e014)) = (8000000 / 1000) - 1UL;
+#endif
+
+      // A write of any value sets the register to 0.
+      (*((volatile unsigned long *) 0xe000e018)) = 1;
 
       // portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT;
       (*((volatile unsigned long *) 0xe000e010)) = (1UL << 2UL) | (1UL << 1UL);
@@ -95,7 +106,7 @@ namespace hal
       os::diag::trace.putNewLine();
 #endif
 
-      //      portNVIC_SYSTICK_CTRL_REG &= ~portNVIC_SYSTICK_ENABLE_BIT;
+      // portNVIC_SYSTICK_CTRL_REG &= ~portNVIC_SYSTICK_ENABLE_BIT;
       (*((volatile unsigned long *) 0xe000e010)) &= ~(1UL << 0UL);
     }
 
@@ -104,13 +115,19 @@ namespace hal
       void
       SystemTick(void)
       {
+#if 0
+        os::diag::trace.putChar('.');
+#else
+        // Using setBASEPRI is cheaper than using critical sections
+        // since there is no need to save the current BASEPRI (having
+        // the lowest priority we know it is 0).
         Cpu::setBASEPRI(configMAX_SYSCALL_INTERRUPT_PRIORITY);
 
         // Call the ticks timer ISR
         os::timerTicks.interruptServiceRoutine();
 
-#if 0
-        if (!os::scheduler.isContextSwitchLocked())
+#if 1
+        if (os::scheduler.isPreemptionAllowed())
           {
             // Set a PendSV to request a context switch.
             // portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
@@ -118,6 +135,7 @@ namespace hal
           }
 #endif
         Cpu::setBASEPRI(0);
+#endif
       }
     } // namespace InterruptHandler
 
