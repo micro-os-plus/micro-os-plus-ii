@@ -180,6 +180,8 @@ main(int argc, char* argv[])
   ts.assertCondition(task3.getThread().start());
 #endif
 
+  os::scheduler.setPreemptive(false);
+
   os::scheduler.start();
 
   task1.getThread().join();

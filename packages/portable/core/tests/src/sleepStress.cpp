@@ -17,16 +17,34 @@
 
 // ----------------------------------------------------------------------------
 
-//#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
 #define CHECK_ZERO_COUNT
-//#endif
 
-//#define TEST_SLEEP_1
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
+#define HAS_TIME (1)
+#endif
 
 // ----------------------------------------------------------------------------
 
-//constexpr int MAX_RUN_SECONDS = 30;
+#if defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_OSX) || defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_LINUX)
+
+constexpr int MAX_RUN_SECONDS = 30;
+#define TEST_SLEEP_1
+
+#elif defined(OS_INCLUDE_HAL_PLATFORM_SYNTHETIC_QEMU)
+
 constexpr int MAX_RUN_SECONDS = 99999999;
+#define TEST_SLEEP_1
+#define ABORT_ON_FIRST_ERROR    (1)
+
+#elif defined(OS_INCLUDE_HAL_BOARD_OLIMEX_STM32H103)
+
+constexpr int MAX_RUN_SECONDS = 99999999;
+#define TEST_SLEEP_1
+#define ABORT_ON_FIRST_ERROR    (1)
+
+#else
+#error "missing platform"
+#endif
 
 constexpr int PERIODIC_REPORT_SECONDS = 5;
 
@@ -46,13 +64,9 @@ static os::infra::TestSuiteOstream ts;
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/Thread.h"
 #include "portable/core/include/TimerTicks.h"
+#include "portable/core/include/TimerSeconds.h"
 #include "portable/core/include/CriticalSections.h"
-
-// ----------------------------------------------------------------------------
-
-#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
-#define HAS_TIME (1)
-#endif
+#include "portable/language/cpp/include/abort.h"
 
 // ----------------------------------------------------------------------------
 
@@ -277,9 +291,13 @@ Task::threadMain(void)
 
       if (delta < nSleep)
         {
+          // ----- begin of critical section -----------------------------------
+          os::core::scheduler::CriticalSection cs;
+
           // The sleep should not be shorter than requested
           ts.reportFailed("delta < nSleep");
           ts << nSleep << " " << delta << os::std::endl;
+          // ----- end of critical section -------------------------------------
         }
       else if (delta > nSleep)
         {
@@ -288,8 +306,12 @@ Task::threadMain(void)
           proc = (delta - nSleep) * 100 / nSleep;
           if (!one)
             {
-              ts << getThread().getName() << ":" << nSleep << " " << delta
+              // ----- begin of critical section -----------------------------------
+              os::core::scheduler::CriticalSection cs;
+
+              ts << getThread().getName() << ":" << nSleep << "->" << delta
                   << " " << proc << "%" << os::std::endl;
+              // ----- end of critical section -------------------------------------
             }
 #endif
         }
@@ -405,8 +427,7 @@ TaskPeriodic::threadMain(void)
   int t = 0;
   for (;;)
     {
-      getThread().sleepFor(
-          os::core::scheduler::TICKS_PER_SECOND * PERIODIC_REPORT_SECONDS);
+      getThread().sleepFor(PERIODIC_REPORT_SECONDS, os::timerSeconds);
 
       t += PERIODIC_REPORT_SECONDS;
       if ((MAX_RUN_SECONDS != 0) && (t > MAX_RUN_SECONDS))
@@ -416,68 +437,65 @@ TaskPeriodic::threadMain(void)
           // ----- begin of critical section -----------------------------------
           os::core::scheduler::CriticalSection cs;
 
-          ts << "[" << t << "] ";
+          ts.setFunctionNameOrPrefix("sleep()");
+
+          ts << os::std::endl;
+          ts << "[" << t << "s] ";
+          ts << os::std::endl;
 
           for (auto pTask : taskArray)
             {
               ts << pTask->getName() << ':' << pTask->getTicks() << '/'
                   << pTask->getCount() << '='
-                  << (pTask->getTicks() / pTask->getCount()) << '('
-                  << pTask->getDelta() << ')' << '\t';
+                  << (pTask->getTicks() / pTask->getCount());
 
+              int proc = (pTask->getDelta() * 100)
+                  / ((int) (pTask->getMinTicks() + pTask->getMaxTicks()) / 2);
+
+              ts << ' ' << pTask->getDelta() << '/'
+                  << ((pTask->getMinTicks() + pTask->getMaxTicks()) / 2) << '='
+                  << proc << "%";
+              ts << os::std::endl;
+
+              proc = (pTask->getDelta() * 100)
+                  / ((int) (pTask->getMinTicks() + pTask->getMaxTicks()) / 2);
+
+              if (proc < 0)
+                {
+                  proc = -proc;
+                }
+              ts.setPreconditions(pTask->getName());
+              ts.assertCondition(proc <= 30);
             }
+
           if (ts.getCountFailed() > 0)
             {
               ts << ts.getCountFailed() << " failed";
             }
           ts << os::std::endl;
+          //ts << os::std::endl;
 
           for (auto pTask : taskArray)
             {
 #if defined(CHECK_ZERO_COUNT)
               // If the count is zero, the thread is probably dead
               if (pTask->getCount() == 0)
-                ts.reportFailed("pTask->getCount() == 0");
+                {
+#if defined(ABORT_ON_FIRST_ERROR)
+                  ts << pTask->getName() << " FAILED: getCount() == 0" << os::std::endl;
+                  os::std::abort();
+#else
+                  ts.reportFailed("pTask->getCount() == 0");
+#endif
+                }
 #endif
               pTask->resetCount();
               pTask->resetTicks();
             }
-          // ----- end of critical section -------------------------------------
+          // ----- end of critical section ------------------------------------
         }
     }
 
-    {
-      // ----- begin of critical section ---------------------------------------
-      os::core::scheduler::CriticalSection cs;
-
-      for (auto pTask : taskArray)
-        {
-          int proc = (pTask->getDelta() * 100)
-              / ((int) (pTask->getMinTicks() + pTask->getMaxTicks()) / 2);
-
-          ts << pTask->getName() << ':' << pTask->getDelta() << '/'
-              << ((pTask->getMinTicks() + pTask->getMaxTicks()) / 2) << '='
-              << proc << "%" << '\t';
-
-        }
-      ts << os::std::endl;
-      // ----- end of critical section -----------------------------------------
-    }
-
-  ts.setFunctionNameOrPrefix("sleep()");
-
-  for (auto pTask : taskArray)
-    {
-      int proc = (pTask->getDelta() * 100)
-          / ((int) (pTask->getMinTicks() + pTask->getMaxTicks()) / 2);
-
-      if (proc < 0)
-        {
-          proc = -proc;
-        }
-      ts.setPreconditions(pTask->getName());
-      ts.assertCondition(proc <= 30);
-    }
 }
 
 // ============================================================================
@@ -497,17 +515,17 @@ runTestStress()
   Task::seed((uint16_t) time(NULL));
 #endif
 
-  TaskPeriodic taskP("P", hal::arch::MIN_STACK_SIZE);
-  Task task0("0", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
-  Task task1("1", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
-  Task task2("2", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
-  Task task3("3", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 200);
-  Task task4("4", hal::arch::MIN_STACK_SIZE, 500, 2500, 1, 200);
-  Task task5("5", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 100);
-  Task task6("6", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
-  Task task7("7", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 400);
-  Task task8("8", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
-  Task task9("9", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
+  TaskPeriodic taskP("tP", hal::arch::MIN_STACK_SIZE);
+  Task task0("t0", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
+  Task task1("t1", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
+  Task task2("t2", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
+  Task task3("t3", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 200);
+  Task task4("t4", hal::arch::MIN_STACK_SIZE, 500, 2500, 1, 200);
+  Task task5("t5", hal::arch::MIN_STACK_SIZE, 30, 70, 1, 100);
+  Task task6("t6", hal::arch::MIN_STACK_SIZE, 0, 50, 1, 150);
+  Task task7("t7", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 400);
+  Task task8("t8", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 600);
+  Task task9("t9", hal::arch::MIN_STACK_SIZE, 10, 90, 1, 800);
 
   ts.assertCondition(taskP.getThread().start());
 
@@ -561,6 +579,7 @@ main(int argc, char* argv[])
   // mark the start of the test suite
   ts.start("portable/core/tests/src/sleepStress.cpp");
 
+  os::scheduler.setPreemptive(false);
   os::scheduler.start();
 
   runTestStress();

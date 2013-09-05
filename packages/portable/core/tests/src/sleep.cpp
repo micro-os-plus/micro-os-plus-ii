@@ -340,6 +340,7 @@ main(int argc, char* argv[])
   // mark the start of the test suite
   ts.start("portable/core/tests/src/sleep.cpp");
 
+  os::scheduler.setPreemptive(false);
   os::scheduler.start();
 
   runTestAccuracy();
