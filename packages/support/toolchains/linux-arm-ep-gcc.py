@@ -5,7 +5,7 @@
 
 Toolchain(
           
-    id='toolchain.linux.aep.arm.gcc.base',
+    id='toolchain.linux.arm.ep.gcc.base',
     name='GNU/Linux ARM Embedded GCC Base',
     description='The GNU/Linux ARM Embedded GCC toolchain base',
     
@@ -61,7 +61,7 @@ Toolchain(
 
         Toolchain(
                   
-            id='toolchain.linux.aep.arm.gcc.debug',
+            id='toolchain.linux.arm.ep.gcc.debug',
             name='GNU/Linux ARM Embedded Debug GCC -O0',
             description='The GNU/Linux ARM Embedded GCC toolchain for debug builds, with all optimisations disabled.',
             
@@ -73,7 +73,7 @@ Toolchain(
 
         Toolchain(
                   
-            id='toolchain.linux.aep.arm.gcc.debug.o',
+            id='toolchain.linux.arm.ep.gcc.debug.o',
             name='GNU/Linux ARM Embedded Debug GCC -O',
             description='The GNU/Linux ARM Embedded GCC toolchain for debug builds, with default optimisations.',
             
@@ -85,7 +85,7 @@ Toolchain(
 
         Toolchain(
                   
-            id='toolchain.linux.aep.arm.gcc.release',
+            id='toolchain.linux.arm.ep.gcc.release',
             name='GNU/Linux ARM Embedded Release GCC -Os',
             description='The GNU/Linux ARM Embedded GCC toolchain for release builds, with space optimisations.',
             
@@ -95,7 +95,7 @@ Toolchain(
               
         Toolchain(
                   
-            id='toolchain.linux.aep.arm.gcc.release.o0',
+            id='toolchain.linux.arm.ep.gcc.release.o0',
             name='GNU/Linux ARM Embedded Release GCC -O0',
             description='The GNU/Linux ARM Embedded GCC toolchain for release builds, with all optimisations disabled.',
             

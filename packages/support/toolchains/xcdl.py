@@ -27,7 +27,7 @@ Package(
                 'osx-mp-gcc.py',
                 
                 # ARM toolchains
-                'osx-aep-arm-gcc.py',
+                'osx-arm-ep-gcc.py',
                 
                 # AVR8 toolchains
                 'osx-mp-avr8-gcc.py',
@@ -49,7 +49,7 @@ Package(
                 'linux-llvm.py',
                 
                 # ARM toolchains
-                'linux-aep-arm-gcc.py',
+                'linux-arm-ep-gcc.py',
 
             ],
         ),
