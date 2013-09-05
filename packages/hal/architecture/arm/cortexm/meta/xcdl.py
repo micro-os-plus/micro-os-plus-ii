@@ -12,6 +12,8 @@ Package(
     
     sourceFiles=[
         'ArchitectureImplementation.cpp',
+        'ThreadContext.cpp',
+        'InterruptsCriticalSection.cpp',
         'TimerTicksImplementation.cpp',
     ],
     
