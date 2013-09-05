@@ -74,6 +74,15 @@ namespace os
       static void
       exit(void);
 
+      /// \brief Abort execution.
+      ///
+      /// \par Parameters
+      ///    None.
+      /// \par Returns
+      ///    Nothing.
+      static void
+      abort(void);
+
       /// \brief Execute the main() function.
       ///
       /// \par Parameters
@@ -139,6 +148,26 @@ namespace os
     PlatformBase::exit(void)
     {
       os::architecture.resetSystem();
+    }
+
+    /// \details
+    /// Default implementation that uses the architecture
+    /// abort code. Overwrite this
+    /// with actual platform specific system reset code,
+    /// if the platform requires more specific functionality.
+    inline void
+    __attribute__((always_inline))
+    __attribute__((noreturn))
+    PlatformBase::abort(void)
+    {
+#if defined(DEBUG)
+      // When debugging, an aborted program will hang,
+      // for the problem to be seen.
+      for(;;)
+        ;
+#else
+      os::architecture.resetSystem();
+#endif
     }
 
     /// \details
