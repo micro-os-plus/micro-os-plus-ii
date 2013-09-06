@@ -453,25 +453,19 @@ TaskPeriodic::threadMain(void)
               ts << ' ' << pTask->getDelta() << '/'
                   << ((pTask->getMinTicks() + pTask->getMaxTicks()) / 2) << '='
                   << proc << "%";
-              ts << os::std::endl;
 
-              proc = (pTask->getDelta() * 100)
-                  / ((int) (pTask->getMinTicks() + pTask->getMaxTicks()) / 2);
-
-              if (proc < 0)
+              if (proc < -30 || proc > 30)
                 {
-                  proc = -proc;
+                  ts <<  " proc out ot range!" << proc;
                 }
-              ts.setPreconditions(pTask->getName());
-              ts.assertCondition(proc <= 30);
+              ts << os::std::endl;
             }
 
           if (ts.getCountFailed() > 0)
             {
-              ts << ts.getCountFailed() << " failed";
+              ts << ts.getCountFailed() << " failed" << os::std::endl;
             }
           ts << os::std::endl;
-          //ts << os::std::endl;
 
           for (auto pTask : taskArray)
             {
@@ -480,7 +474,8 @@ TaskPeriodic::threadMain(void)
               if (pTask->getCount() == 0)
                 {
 #if defined(ABORT_ON_FIRST_ERROR)
-                  ts << pTask->getName() << " FAILED: getCount() == 0" << os::std::endl;
+                  ts << pTask->getName() << " FAILED: getCount() == 0"
+                      << os::std::endl;
                   os::std::abort();
 #else
                   ts.reportFailed("pTask->getCount() == 0");
@@ -493,8 +488,8 @@ TaskPeriodic::threadMain(void)
           // ----- end of critical section ------------------------------------
         }
 
-        if ((MAX_RUN_SECONDS != 0) && (t >= MAX_RUN_SECONDS))
-          break;
+      if ((MAX_RUN_SECONDS != 0) && (t >= MAX_RUN_SECONDS))
+        break;
 
     }
 

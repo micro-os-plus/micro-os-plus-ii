@@ -414,7 +414,8 @@ TaskPeriodic::threadMain(void)
 
               ts << pTask->getName() << ':';
               //ts << ticks << "/" ;
-              ts.width(4); os::std::left(ts);
+              ts.width(4);
+              os::std::left(ts);
               ts << cnt << "  ";
             }
           ts << "sum=" << sum;
@@ -462,8 +463,8 @@ TaskPeriodic::threadMain(void)
           // ----- end of critical section ------------------------------------
         }
 
-        if (MAX_RUN_SECONDS != 0 and t >= MAX_RUN_SECONDS)
-          break;
+      if (MAX_RUN_SECONDS != 0 and t >= MAX_RUN_SECONDS)
+        break;
     }
 
     {
@@ -495,8 +496,10 @@ TaskPeriodic::threadMain(void)
           ts << pTask->getName() << ':' << delta << " " << deltaProcent << "%"
               << '\t';
 
-          ts.setPreconditions(pTask->getName());
-          ts.assertCondition((-33 <= deltaProcent && deltaProcent <= 33));
+          if (deltaProcent < -33 || deltaProcent > 33)
+            {
+              ts << " out of range ";
+            }
         }
       ts << os::std::endl;
       // ----- end of critical section ----------------------------------------

@@ -30,6 +30,7 @@ encoding//packages/portable/language/cpp/tests/meta/xcdl.py=utf-8
 encoding//packages/portable/tests/meta/minimal-config.py=utf-8
 encoding//packages/portable/tests/meta/minimal-linux-config.py=utf-8
 encoding//packages/portable/tests/meta/minimal-osx-config.py=utf-8
+encoding//packages/portable/tests/meta/minimal-qemu-config.py=utf-8
 encoding//packages/support/templates/xcdl.py=utf-8
 encoding//packages/support/toolchains/linux-arm-ep-gcc.py=utf-8
 encoding//packages/support/toolchains/linux-gcc.py=utf-8
