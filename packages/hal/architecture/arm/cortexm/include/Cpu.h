@@ -368,7 +368,7 @@ namespace hal
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3) || defined(__DOXYGEN__)
 
     /// \detail
-    /// This function enables FIQ interrupts by clearing the F-bit in the CPSR.
+    /// This function enables FAULTMASK interrupts by clearing the F-bit in the CPSR.
     ///
     /// \note Can only be executed in Privileged modes.
     ///
@@ -381,7 +381,7 @@ namespace hal
     }
 
     /// \detail
-    /// This function disables FIQ interrupts by setting the F-bit in the CPSR.
+    /// This function disables FAULTMASK interrupts by setting the F-bit in the CPSR.
     ///
     /// \note Can only be executed in Privileged modes.
     ///
