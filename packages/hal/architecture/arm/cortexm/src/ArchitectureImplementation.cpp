@@ -130,6 +130,12 @@ namespace hal
       void
       Reset(void)
       {
+#if defined(DEBUG)
+        // Kludge to avoid Segger GDB server bug, which prevents
+        // semi-hosting strings located in high RAM to print.
+        char dummy[256] __attribute__((unused));
+#endif
+
         CppStartup::initialiseDataAndBss();
 
         // The os::platform::initialiseSystem() will be called
