@@ -164,7 +164,7 @@ namespace os
 /// \brief Single object allocation.
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS) || defined(__DOXYGEN__)
 void*
-operator new(os::std::size_t size) ;//throw(os::std::bad_alloc);
+operator new(os::std::size_t size); //throw(os::std::bad_alloc);
 #else
 void*
 operator new(os::std::size_t size) noexcept;
@@ -190,7 +190,7 @@ operator delete(void* ptr, const os::std::nothrow_t&) noexcept;
 /// \param [in] size        The size to allocate, in bytes.
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS) || defined(__DOXYGEN__)
 void*
-operator new[](os::std::size_t size) ;//throw(os::std::bad_alloc);
+operator new[](os::std::size_t size); //throw(os::std::bad_alloc);
 #else
 void*
 operator new[](os::std::size_t size) noexcept;

@@ -25,8 +25,8 @@ namespace os
 
     /// \details
     /// Call the TimerBase constructor with the current array.
-    TimerSeconds::TimerSeconds(void)
-        : TimerBase(m_array, sizeof(m_array) / sizeof(m_array[0]))
+    TimerSeconds::TimerSeconds(void) :
+        TimerBase(m_array, sizeof(m_array) / sizeof(m_array[0]))
     {
 #if defined(DEBUG)
       os::diag::trace.putConstructor();

@@ -113,8 +113,8 @@ namespace os
     template<class TState_T>
       inline
       __attribute__((always_inline))
-      fpos<TState_T>::fpos(streamoff off)
-          : m_off(off), m_st()
+      fpos<TState_T>::fpos(streamoff off) :
+          m_off(off), m_st()
       {
       }
 

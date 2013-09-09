@@ -20,6 +20,8 @@ namespace hal
   {
     namespace InterruptHandler
     {
+      // ======================================================================
+
       /// \ingroup arm_cm_irq
       /// \name Interrupt handlers
       /// \brief Default interrupt handler.
@@ -35,7 +37,7 @@ namespace hal
         os::diag::trace.putNewLine();
         os::diag::trace.putString(__PRETTY_FUNCTION__);
         os::diag::trace.putString(" CFSR=0x");
-        os::diag::trace.putHex((uint32_t*)0xE000ED28);
+        os::diag::trace.putHex((uint32_t*) 0xE000ED28);
         os::diag::trace.putNewLine();
 
         for (;;)
@@ -47,7 +49,9 @@ namespace hal
 #endif
       }
 
-    } // namespace InterruptHandler
+    // ========================================================================
+
+    }// namespace InterruptHandler
   } // namespace cortexm
 } // namespace hal
 

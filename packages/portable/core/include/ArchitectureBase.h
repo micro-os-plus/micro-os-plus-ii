@@ -94,7 +94,6 @@ namespace os
       putGreeting(void);
 
 #endif // defined(DEBUG)
-
       /// \brief Reset watchdog.
       ///
       /// \par Parameters
@@ -166,7 +165,6 @@ namespace os
 
 #pragma GCC diagnostic pop
 
-
     /// \details
     /// Empty inline function, so no code is generated. Overwrite this
     /// with actual architecture specific code.
@@ -192,7 +190,7 @@ namespace os
       return false;
     }
 
-  // ========================================================================
+  // ==========================================================================
 
   }// namespace core
 } // namespace os

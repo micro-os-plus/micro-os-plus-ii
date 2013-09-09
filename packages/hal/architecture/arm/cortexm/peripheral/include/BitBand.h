@@ -124,7 +124,7 @@ namespace hal
     /// Compute the bit-banding address and return the corresponding
     /// bit as a word.
     template<typename A_T>
-    inline bitband::bitValue_t
+      inline bitband::bitValue_t
       __attribute__((always_inline))
       BitBand::readPeripheralBitValue(A_T genericAddress, bitNumber_t bitNumber)
       {
@@ -143,7 +143,7 @@ namespace hal
     /// Compute the bit-banding address and write the corresponding
     /// bit as a word.
     template<typename A_T>
-    inline void
+      inline void
       __attribute__((always_inline))
       BitBand::writePeripheralBitValue(A_T genericAddress,
           bitNumber_t bitNumber, bitband::bitValue_t value)
@@ -162,7 +162,7 @@ namespace hal
     /// Compute the bit-banding address and set the corresponding
     /// bit to 1.
     template<typename A_T>
-    inline void
+      inline void
       __attribute__((always_inline))
       BitBand::setPeripheralBit(A_T genericAddress, bitNumber_t bitNumber)
       {
@@ -173,7 +173,7 @@ namespace hal
     /// Compute the bit-banding address and secleart the corresponding
     /// bit to 0.
     template<typename A_T>
-    inline void
+      inline void
       __attribute__((always_inline))
       BitBand::clearPeripheralBit(A_T genericAddress, bitNumber_t bitNumber)
       {

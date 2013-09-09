@@ -827,7 +827,8 @@ namespace os
     template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       streamsize
-      basic_streambuf<TChar_T, TTraits_T>::sputn(const char_type* s, streamsize n)
+      basic_streambuf<TChar_T, TTraits_T>::sputn(const char_type* s,
+          streamsize n)
       {
         return xsputn(s, n);
       }
@@ -878,8 +879,8 @@ namespace os
     template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_streambuf<TChar_T, TTraits_T>::setg(char_type* gbeg, char_type* gnext,
-          char_type* gend)
+      basic_streambuf<TChar_T, TTraits_T>::setg(char_type* gbeg,
+          char_type* gnext, char_type* gend)
       {
         m_binp = gbeg;
         m_ninp = gnext;
@@ -933,7 +934,8 @@ namespace os
     template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       void
-      basic_streambuf<TChar_T, TTraits_T>::setp(char_type* pbeg, char_type* pend)
+      basic_streambuf<TChar_T, TTraits_T>::setp(char_type* pbeg,
+          char_type* pend)
       {
         m_bout = m_nout = pbeg;
         m_eout = pend;
@@ -960,5 +962,4 @@ namespace os
 }
 
 #endif // defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS)
-
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_STEAMBUF_H_

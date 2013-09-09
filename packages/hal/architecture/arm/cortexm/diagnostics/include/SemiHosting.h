@@ -84,7 +84,6 @@ namespace hal
 
       };
 
-
       /// \details
       /// Write a character byte, to the debug channel.
       /// When executed under an ARM
@@ -107,6 +106,8 @@ namespace hal
       {
         BKPT(0x04, (void*) pString, (void*) 0);
       }
+
+    // ========================================================================
 
     }// namespace diag
   } // namespace cortexm

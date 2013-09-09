@@ -34,7 +34,7 @@ namespace os
       os::diag::trace.putNewLine();
 #endif
 
-      // The platform reset will abruptly end the application,
+      // The platform abort will abruptly end the application,
       // without running any C++ destructors or cleanups.
       os::platform.abort();
       // As specified in the declaration, it should never return.

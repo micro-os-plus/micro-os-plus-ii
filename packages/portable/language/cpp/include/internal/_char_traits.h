@@ -136,7 +136,7 @@ namespace os
         }
 
         __attribute__((always_inline))
-                        static constexpr int_type
+                          static constexpr int_type
         eof() noexcept
         {
           return int_type(EOF);
@@ -643,7 +643,8 @@ namespace os
 #endif
 
 //_LIBCPP_END_NAMESPACE_STD
-} //namespace std
-} // namespace os
+}
+ //namespace std
+}// namespace os
 
 #endif  /* OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_CHAR_TRAITS_H_ */

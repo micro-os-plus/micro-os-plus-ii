@@ -67,7 +67,7 @@ namespace os
           return false;
         }
 
-      pThread->setId((Thread::id_t)m_threadCount);
+      pThread->setId((Thread::id_t) m_threadCount);
 
       // register thread
       m_threads[m_threadCount] = pThread;

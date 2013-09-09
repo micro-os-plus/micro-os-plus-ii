@@ -23,10 +23,9 @@ namespace hal
 {
   namespace platform
   {
-     using PlatformImplementation = hal::cortexm::PlatformBase;
-  }// namespace platform
+    using PlatformImplementation = hal::cortexm::PlatformBase;
+  } // namespace platform
 } // namespace hal
 #endif // !defined(__DOXYGEN__)
-
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_PLATFORMIMPLEMENTATIONDEFAULT_H_

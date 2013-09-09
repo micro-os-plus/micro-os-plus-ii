@@ -19,7 +19,7 @@ namespace hal
 {
   namespace cortexm
   {
-    // ------------------------------------------------------------------------
+    // ========================================================================
 
     /// \ingroup arm_cm
     /// \headerfile MemoryMap.h "hal/architecture/arm/cortexm/include/MemoryMap.h"
@@ -32,55 +32,51 @@ namespace hal
     public:
 
       /// ITM (Instrumentation Trace Macrocell) Base Address
-      static constexpr hal::cortexm::address_t ITM_BASE_ADDRESS =
-          0xE0000000UL;
+      static constexpr hal::cortexm::address_t ITM_BASE_ADDRESS = 0xE0000000UL;
 
       /// DWT (Data Watchpoint and Trace) Base Address
-      static constexpr hal::cortexm::address_t DWT_BASE_ADDRESS =
-          0xE0001000UL;
+      static constexpr hal::cortexm::address_t DWT_BASE_ADDRESS = 0xE0001000UL;
 
       /// SCS (System Control Space) Base Address
-      static constexpr hal::cortexm::address_t SCS_BASE_ADDRESS =
-          0xE000E000UL;
+      static constexpr hal::cortexm::address_t SCS_BASE_ADDRESS = 0xE000E000UL;
 
       /// SysTick Base Address
       static constexpr hal::cortexm::address_t SysTick_BASE_ADDRESS =
-          (SCS_BASE_ADDRESS+0x0010UL);
+          (SCS_BASE_ADDRESS + 0x0010UL);
 
       /// NVIC (Nested Vectored Interrupt Controller) Base Address
       static constexpr hal::cortexm::address_t NVIC_BASE_ADDRESS =
-          (SCS_BASE_ADDRESS+0x0100UL);
+          (SCS_BASE_ADDRESS + 0x0100UL);
 
       /// SCB (System Control Block) Base Address
       static constexpr hal::cortexm::address_t SCB_BASE_ADDRESS =
-          (SCS_BASE_ADDRESS+0x0D00UL);
+          (SCS_BASE_ADDRESS + 0x0D00UL);
 
 #if (OS_BOOL_HAL_ARCHITECTURE_ARM_CORTEX_M_HAS_MPU)
       /// MPU (Memory Protection Unit) Base Address
       static constexpr hal::cortexm::address_t MPU_BASE_ADDRESS =
-          (SCS_BASE_ADDRESS+0x0D90UL);
+      (SCS_BASE_ADDRESS+0x0D90UL);
 #endif
 
       /// Core Debug Base Address
       static constexpr hal::cortexm::address_t CoreDebug_BASE_ADDRESS =
-          (SCS_BASE_ADDRESS+0x0DF0UL);
+          (SCS_BASE_ADDRESS + 0x0DF0UL);
 
 #if (OS_BOOL_HAL_ARCHITECTURE_ARM_CORTEX_M_HAS_FPU)
       /// FPU (Floating Point Unit) Base Address
       static constexpr hal::cortexm::address_t MPU_BASE_ADDRESS =
-          (SCS_BASE_ADDRESS+0x0D90UL);
+      (SCS_BASE_ADDRESS+0x0D90UL);
 #endif
 
       /// TPI (Trace Port Interface) Base Address
-      static constexpr hal::cortexm::address_t TPI_BASE_ADDRESS =
-          0xE0040000UL;
+      static constexpr hal::cortexm::address_t TPI_BASE_ADDRESS = 0xE0040000UL;
 
     };
 
-  } // namespace cortexm
+  // ==========================================================================
 
-// --------------------------------------------------------------------------
-}
+  }// namespace cortexm
+} // namespace hal
 
 #endif // OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_MEMORYMAP_H_

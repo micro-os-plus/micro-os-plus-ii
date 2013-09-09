@@ -61,7 +61,7 @@ computeAbsoluteProcent(os::core::timer::ticks_t beginTs,
 
 #if 0
   ts << endTs << "-" << beginTs << "=" << delta << " abs=" << abs << " " << proc
-      << "% of " << interval << os::std::endl;
+  << "% of " << interval << os::std::endl;
 #endif
 
   return proc;
@@ -136,9 +136,9 @@ namespace thread
       os::core::Thread* thread = os::scheduler.getCurrentThread();
 
       while (!m2.tryLock())
-      {
-        thread->sleepFor(1);
-      }
+        {
+          thread->sleepFor(1);
+        }
       os::core::timer::ticks_t t1 = os::timerTicks.getCurrentTicks();
 
       m2.unlock();

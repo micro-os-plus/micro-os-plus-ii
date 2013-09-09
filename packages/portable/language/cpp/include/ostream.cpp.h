@@ -34,8 +34,8 @@ namespace os
     /// true (*okay*).
     template<class TChar_T, class TTraits_T>
       basic_ostream<TChar_T, TTraits_T>::sentry::sentry(
-          basic_ostream<TChar_T, TTraits_T>& outs)
-          : m_ostream(outs), m_ok(false)
+          basic_ostream<TChar_T, TTraits_T>& outs) :
+          m_ostream(outs), m_ok(false)
       {
         if (outs.good())
           {
@@ -653,7 +653,8 @@ namespace os
     ///        unsigned char.
     template<class TChar_T, class TTraits_T>
       basic_ostream<TChar_T, TTraits_T>&
-      basic_ostream<TChar_T, TTraits_T>::write(const char_type* str, streamsize n)
+      basic_ostream<TChar_T, TTraits_T>::write(const char_type* str,
+          streamsize n)
       {
         basic_streambuf<TChar_T, TTraits_T>* sb;
         sb = this->rdbuf();
@@ -764,7 +765,8 @@ namespace os
     /// If that function fails, sets failbit.
     template<class TChar_T, class TTraits_T>
       basic_ostream<TChar_T, TTraits_T>&
-      basic_ostream<TChar_T, TTraits_T>::seekp(off_type off, ios_base::seekdir dir)
+      basic_ostream<TChar_T, TTraits_T>::seekp(off_type off,
+          ios_base::seekdir dir)
       {
         basic_streambuf<TChar_T, TTraits_T>* sb;
         sb = this->rdbuf();

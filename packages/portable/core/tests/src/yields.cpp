@@ -83,8 +83,8 @@ private:
 
 #pragma GCC diagnostic pop
 
-Task::Task(const char* pName)
-    : m_thread(pName, [](Task* pTask)
+Task::Task(const char* pName) :
+    m_thread(pName, [](Task* pTask)
       { pTask->threadMain();}, this, m_stack)
 {
 #if defined(DEBUG)
@@ -194,12 +194,12 @@ main(int argc, char* argv[])
 
 #if defined(_DEBUG)
   os::diag::trace << os::std::dec << task1.getCount1() << " "
-      << task1.getCount2() << os::std::endl;
+  << task1.getCount2() << os::std::endl;
 #if MULTI
   os::diag::trace << os::std::dec << task2.getCount1() << " "
-      << task2.getCount2() << os::std::endl;
+  << task2.getCount2() << os::std::endl;
   os::diag::trace << os::std::dec << task3.getCount1() << " "
-      << task3.getCount2() << os::std::endl;
+  << task3.getCount2() << os::std::endl;
 #endif
 #endif
 

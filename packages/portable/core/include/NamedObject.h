@@ -79,8 +79,8 @@ namespace os
     /// that require to be DefaultConstructible
     inline
     __attribute__((always_inline))
-    NamedObject::NamedObject(void)
-        : m_pName(ANONYMOUS)
+    NamedObject::NamedObject(void) :
+        m_pName(ANONYMOUS)
     {
     }
 
@@ -89,8 +89,8 @@ namespace os
     /// in the private member variable.
     inline
     __attribute__((always_inline))
-    NamedObject::NamedObject(const char* const pName)
-        : m_pName(pName)
+    NamedObject::NamedObject(const char* const pName) :
+        m_pName(pName)
     {
     }
 

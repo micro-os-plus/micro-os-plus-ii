@@ -17,7 +17,7 @@ namespace hal
 {
   namespace qemu
   {
-    // ------------------------------------------------------------------------
+    // ========================================================================
 
     /// \ingroup qemu
     /// \headerfile FamilyImplementation.h "hal/architecture/arm/cortexm/qemu/include/FamilyImplementation.h"
@@ -75,17 +75,24 @@ namespace hal
 
     };
 
-  } // namespace qemu
+  // ========================================================================
 
-  // --------------------------------------------------------------------------
+  }// namespace qemu
+} // namespace hal
 
+// --------------------------------------------------------------------------
+
+#if !defined(__DOXYGEN__)
+namespace hal
+{
   namespace cortexm
   {
-    using FamilyImplementation = hal::qemu::FamilyImplementation ;
-  }
+    using FamilyImplementation = hal::qemu::FamilyImplementation;
+  } // namespace cortexm
+} // namespace hal
+#endif
 
-  // ==========================================================================
-}
+// --------------------------------------------------------------------------
 
 #endif // OS_INCLUDE_HAL_MCU_FAMILY_QEMU
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_QEMU_FAMILYIMPLEMENTATION_H_

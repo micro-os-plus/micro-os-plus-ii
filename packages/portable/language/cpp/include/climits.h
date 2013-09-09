@@ -20,5 +20,4 @@
 #include "portable/language/cpp/include/internal/__config.h"
 #include <limits.h>
 
-
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_CLIMITS_H_

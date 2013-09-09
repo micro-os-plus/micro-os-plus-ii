@@ -50,8 +50,7 @@ namespace os
     /// members of facets so obtained, can safely be cached
     /// until the next time the member `imbue()` is called.
     template<class TChar_T, class TTraits_T>
-      basic_streambuf<TChar_T, TTraits_T>::basic_streambuf()
-          : //
+      basic_streambuf<TChar_T, TTraits_T>::basic_streambuf() : //
           m_binp(nullptr), //
           m_ninp(nullptr), //
           m_einp(nullptr), //
@@ -67,8 +66,7 @@ namespace os
     /// Construct an object based on a reference to another object.
     template<class TChar_T, class TTraits_T>
       basic_streambuf<TChar_T, TTraits_T>::basic_streambuf(
-          const basic_streambuf& rhs)
-          : //
+          const basic_streambuf& rhs) : //
           m_binp(rhs.m_binp), //
           m_ninp(rhs.m_ninp), //
           m_einp(rhs.m_einp), //
@@ -398,7 +396,8 @@ namespace os
     /// more efficient implementation by overriding this definition.
     template<class TChar_T, class TTraits_T>
       streamsize
-      basic_streambuf<TChar_T, TTraits_T>::xsputn(const char_type* s, streamsize n)
+      basic_streambuf<TChar_T, TTraits_T>::xsputn(const char_type* s,
+          streamsize n)
       {
         streamsize i = 0;
         int_type eof = traits_type::eof();

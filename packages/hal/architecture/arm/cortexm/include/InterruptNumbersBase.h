@@ -49,9 +49,9 @@ namespace hal
 
   /// @} end of ingroup arm_cm
 
-    // ========================================================================
+  // ==========================================================================
 
-  } // namespace cortexm
+  }// namespace cortexm
 } // namespace hal
 
 #endif // OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M

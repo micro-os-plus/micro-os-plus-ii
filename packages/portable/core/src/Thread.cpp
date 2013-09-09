@@ -34,8 +34,8 @@ namespace os
     /// \warning Be sure that the stack methods are not called from this
     /// constructor! (see initialise())
     Thread::Thread(const char* const pName, threadEntryPoint0_t entryPoint,
-        Stack& stack, priority_t priority)
-        : NamedObject(pName), //
+        Stack& stack, priority_t priority) :
+        NamedObject(pName), //
         m_stack(stack) // copy reference
     {
 #if defined(DEBUG)
@@ -54,8 +54,8 @@ namespace os
     /// \warning Be sure that the stack methods are not called from this
     /// constructor! (see initialise())
     Thread::Thread(const char* const pName, threadEntryPoint1_t entryPoint,
-        void* pParameters, Stack& stack, priority_t priority)
-        : NamedObject(pName), //
+        void* pParameters, Stack& stack, priority_t priority) :
+        NamedObject(pName), //
         m_stack(stack) // copy reference
     {
 #if defined(DEBUG)
@@ -453,7 +453,7 @@ namespace os
           TimeoutGuard tg(beginTicks, ticks, timer, this);
 
           if (tg.didTimeout())
-          return true;
+            return true;
 
           os::scheduler.yield();
           // ----- Timeout guard end ------------------------------------------
@@ -468,7 +468,7 @@ namespace os
       return false;
     }
 
-  // ------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
   }// namespace core
 } //namespace os
 

@@ -153,9 +153,11 @@ namespace os
     ///
     /// Leave the compiler to decide if it is inlined.
     inline
-    Stack::Stack(stack::element_t* const pStack, stack::size_t const sizeBytes)
-        : m_pStart((stack::element_t*)((unsigned long)pStack & ~(sizeof(stack::element_t)-1))), //
-        m_sizeBytes(sizeBytes & ~(sizeof(stack::element_t)-1))
+    Stack::Stack(stack::element_t* const pStack, stack::size_t const sizeBytes) :
+        m_pStart(
+            (stack::element_t*) ((unsigned long) pStack
+                & ~(sizeof(stack::element_t) - 1))), //
+        m_sizeBytes(sizeBytes & ~(sizeof(stack::element_t) - 1))
     {
 #if defined(DEBUG)
       os::diag::trace.putString("os::core::Stack::Stack(");
@@ -247,8 +249,8 @@ namespace os
     template<stack::size_t SizeBytes_T>
       inline
       __attribute__((always_inline))
-      TStaticStack<SizeBytes_T>::TStaticStack(void)
-          : Stack(m_stackArray, sizeof(m_stackArray))
+      TStaticStack<SizeBytes_T>::TStaticStack(void) :
+          Stack(m_stackArray, sizeof(m_stackArray))
       {
 #if defined(DEBUG)
         os::diag::trace.putStringAndAddress(
@@ -336,8 +338,8 @@ namespace os
     template<class Allocator_T>
       inline
       TAllocatedStack<Allocator_T>::TAllocatedStack(
-          stack::size_t const sizeBytes)
-          : Stack(m_allocator.allocate(sizeBytes / sizeof(stack::element_t)),
+          stack::size_t const sizeBytes) :
+          Stack(m_allocator.allocate(sizeBytes / sizeof(stack::element_t)),
               sizeBytes)
       {
 #if defined(DEBUG)

@@ -118,14 +118,17 @@ namespace hal
   // ==========================================================================
 
   }// namespace cortexm
+} // namespace hal
 
+namespace hal
+{
   // --------------------------------------------------------------------------
   namespace arch
   {
     using TimerTicksImplementation = hal::cortexm::TimerTicksImplementation;
   } // namespace arch
 // ----------------------------------------------------------------------------
-}// namespace hal
+} // namespace hal
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)

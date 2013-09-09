@@ -14,7 +14,6 @@
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
 #include "portable/core/include/Scheduler.h"
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
 namespace os
 {
   namespace core
@@ -85,12 +84,11 @@ namespace os
       // ======================================================================
 
       // TODO: make an empty instance available always
-#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) && !defined(__DOXYGEN__)
       /// \ingroup core_synchro
       /// \brief Critical section with interrupts disable/enable
       using InterruptsCriticalSection = hal::arch::InterruptsCriticalSection;
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
     // ========================================================================
     }// namespace scheduler
   } // namespace core

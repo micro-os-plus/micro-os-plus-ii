@@ -57,37 +57,36 @@ namespace os
 
 // MSVC, GNU libc and its derivates already have the correct prototype in <string.h> #ifdef __cplusplus
 #if 0 //!defined(__GLIBC__) && !defined(_MSC_VER) && !defined(__sun__)
-
     inline char*
     __attribute__((always_inline))
     strchr(char* __s, int __c)
-    {
-      return ::strchr(__s, __c);
-    }
+      {
+        return ::strchr(__s, __c);
+      }
     inline char*
     __attribute__((always_inline))
     strpbrk(char* __s1, const char* __s2)
-    {
-      return ::strpbrk(__s1, __s2);
-    }
+      {
+        return ::strpbrk(__s1, __s2);
+      }
     inline char*
     __attribute__((always_inline))
     strrchr(char* __s, int __c)
-    {
-      return ::strrchr(__s, __c);
-    }
+      {
+        return ::strrchr(__s, __c);
+      }
     inline void*
     __attribute__((always_inline))
     memchr(void* __s, int __c, size_t __n)
-    {
-      return ::memchr(__s, __c, __n);
-    }
+      {
+        return ::memchr(__s, __c, __n);
+      }
     inline char*
     __attribute__((always_inline))
     strstr(char* __s1, const char* __s2)
-    {
-      return ::strstr(__s1, __s2);
-    }
+      {
+        return ::strstr(__s1, __s2);
+      }
 
 #endif
 

@@ -237,8 +237,8 @@ namespace os
     public:
       constexpr
       __attribute__((always_inline))
-      id()
-          : __id_(0)
+      id() :
+          __id_(0)
       {
       }
     private:
@@ -295,7 +295,7 @@ namespace os
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
     template <class _Facet>
-    inline     const _Facet&
+    inline const _Facet&
     __attribute__((always_inline))
     use_facet(const locale& __l)
       {
@@ -313,7 +313,7 @@ namespace os
     extern num_put<char> num_put_char_tiny;
 
     template <class _Facet>
-    inline     const _Facet&
+    inline const _Facet&
     __attribute__((always_inline))
     use_facet(const locale& __l __attribute__((unused)))
       {
@@ -1617,7 +1617,8 @@ public codecvt_base
 #endif
 
 //_LIBCPP_END_NAMESPACE_STD
-} // namespace std
-} // namespace os
+}
+ // namespace std
+}// namespace os
 
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_INTERNAL_LOCALE_H_

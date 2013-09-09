@@ -288,7 +288,7 @@ namespace os
 #endif
 
 }
-    // namespace std
-}   // namespace os
+ // namespace std
+}// namespace os
 
 #endif

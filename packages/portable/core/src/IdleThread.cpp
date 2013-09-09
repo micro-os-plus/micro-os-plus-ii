@@ -22,8 +22,8 @@ namespace os
     /// \details
     /// The main thread has no entry point, no parameters, no stack
     /// and very low priority.
-    IdleThread::IdleThread(void)
-        : Thread("idle", [](IdleThread* p)
+    IdleThread::IdleThread(void) :
+        Thread("idle", [](IdleThread* p)
           { p->threadMain();}, (IdleThread*) this, m_stack,
             os::core::scheduler::IDLE_PRIORITY)
     {
@@ -65,7 +65,7 @@ namespace os
 
 #pragma GCC diagnostic pop
 
-  // ------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
   }// namespace core
 } //namespace os
 

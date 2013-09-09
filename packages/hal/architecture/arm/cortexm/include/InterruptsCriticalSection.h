@@ -18,7 +18,6 @@
 // Include architecture definitions, like various types.
 #include "hal/architecture/arm/cortexm/include/ArchitectureDefinitions.h"
 
-
 namespace hal
 {
   namespace cortexm
@@ -70,16 +69,15 @@ namespace hal
 
   // --------------------------------------------------------------------------
 
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+
   namespace arch
   {
-#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
-
     using InterruptsCriticalSection = hal::cortexm::InterruptsCriticalSection;
-
-#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
   }
 
-// ==========================================================================
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+// ============================================================================
 
 }// namspace hal
 

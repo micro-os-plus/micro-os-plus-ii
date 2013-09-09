@@ -15,6 +15,8 @@ namespace os
 {
   namespace infra
   {
+    // ========================================================================
+
     template<class LinkerScript_T,
         typename linkerAlign_T = typename LinkerScript_T::linkerAlign_t>
       class TCppStartup
@@ -69,8 +71,8 @@ namespace os
     template<class LinkerScript_T, typename linkerAlign_T>
       inline void
       __attribute__((always_inline))
-      TCppStartup<LinkerScript_T, linkerAlign_T>::clearBss(linkerAlign_t* bssBegin,
-          linkerAlign_t* bssEnd)
+      TCppStartup<LinkerScript_T, linkerAlign_T>::clearBss(
+          linkerAlign_t* bssBegin, linkerAlign_t* bssEnd)
       {
         // Zero fill the bss segment.
         linkerAlign_t* pDest = bssBegin;
@@ -117,8 +119,7 @@ namespace os
     template<class LinkerScript_T, typename linkerAlign_T>
       inline void
       __attribute__((always_inline))
-      TCppStartup<LinkerScript_T, linkerAlign_T>::initialiseDataAndBss(
-          void)
+      TCppStartup<LinkerScript_T, linkerAlign_T>::initialiseDataAndBss(void)
       {
         copyInitialisedData(LinkerScript::getFlashDataBegin(),
             LinkerScript::getRamDataBegin(), LinkerScript::getRamDataEnd());
@@ -144,7 +145,9 @@ namespace os
             LinkerScript::getFiniArrayEnd());
       }
 
-  }
-}
+  // ==========================================================================
+
+  } // namespace infra
+} // namespace os
 
 #endif // OS_PORTABLE_INFRASTRUCTURE_CPPSTARTUP_H_

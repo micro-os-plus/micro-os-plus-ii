@@ -75,11 +75,10 @@ namespace hal
 
     };
 
-    // ========================================================================
+  // ==========================================================================
 
-  } // namespace cortexm3
+  }// namespace cortexm3
 } // namespace hal
 
 #endif // OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M3
-
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_CORTEXM3_INTERRUPTNUMBERS_H_

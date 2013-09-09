@@ -67,7 +67,7 @@ namespace os
 
     template<class _ForwardIterator1, class _ForwardIterator2>
       inline __attribute__((always_inline))
-      _ForwardIterator2
+       _ForwardIterator2
       swap_ranges(_ForwardIterator1 __first1, _ForwardIterator1 __last1,
           _ForwardIterator2 __first2)
       {
@@ -87,6 +87,7 @@ namespace os
 
     template<class _Tp>
       inline __attribute__((always_inline))
+
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
       typename conditional
       <
@@ -109,7 +110,7 @@ namespace os
     extern const piecewise_construct_t piecewise_construct; // = piecewise_construct_t();
 #else
     constexpr piecewise_construct_t piecewise_construct =
-        piecewise_construct_t();
+    piecewise_construct_t();
 #endif
 
     template<class _T1, class _T2>
@@ -125,14 +126,14 @@ namespace os
         // pair(pair&&) = default;
 
         __attribute__((always_inline)) constexpr
-        pair()
-            : first(), second()
+        pair() :
+            first(), second()
         {
         }
 
         __attribute__((always_inline))
-        pair(const _T1& __x, const _T2& __y)
-            : first(__x), second(__y)
+        pair(const _T1& __x, const _T2& __y) :
+            first(__x), second(__y)
         {
         }
 
@@ -143,21 +144,21 @@ namespace os
               ,typename enable_if<is_convertible<const _U1&, _T1>::value &&
               is_convertible<const _U2&, _T2>::value>::type* = 0
 #endif
-              )
-              : first(__p.first), second(__p.second)
+              ) :
+              first(__p.first), second(__p.second)
           {
           }
 
         __attribute__((always_inline))
         pair(const pair& __p)
         noexcept (is_nothrow_copy_constructible<first_type>::value &&
-            is_nothrow_copy_constructible<second_type>::value)
-            : first(__p.first), second(__p.second)
+            is_nothrow_copy_constructible<second_type>::value) :
+            first(__p.first), second(__p.second)
         {
         }
 
         __attribute__((always_inline))
-        pair&
+         pair&
         operator=(const pair& __p)
         noexcept (is_nothrow_copy_assignable<first_type>::value &&
             is_nothrow_copy_assignable<second_type>::value)
@@ -315,54 +316,50 @@ namespace os
 
     template<class _T1, class _T2>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      __is_swappable<_T1>::value &&
-      __is_swappable<_T2>::value,
-      void
-      >::type
+       typename enable_if<
+          __is_swappable<_T1>::value && __is_swappable<_T2>::value, void>::type
       swap(pair<_T1, _T2>& __x, pair<_T1, _T2>& __y)
       noexcept ((__is_nothrow_swappable<_T1>::value &&
               __is_nothrow_swappable<_T2>::value))
-        {
-          __x.swap(__y);
-        }
+      {
+        __x.swap(__y);
+      }
 
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
 
-      template <class _Tp> class _LIBCPP_VISIBLE reference_wrapper;
+    template <class _Tp> class _LIBCPP_VISIBLE reference_wrapper;
 
-      template <class _Tp>
-      struct ___make_pair_return
-        {
-          typedef _Tp type;
-        };
+    template <class _Tp>
+    struct ___make_pair_return
+      {
+        typedef _Tp type;
+      };
 
-      template <class _Tp>
-      struct ___make_pair_return<reference_wrapper<_Tp>>
-        {
-          typedef _Tp& type;
-        };
+    template <class _Tp>
+    struct ___make_pair_return<reference_wrapper<_Tp>>
+      {
+        typedef _Tp& type;
+      };
 
-      template <class _Tp>
-      struct __make_pair_return
-        {
-          typedef typename ___make_pair_return<typename decay<_Tp>::type>::type type;
-        };
+    template <class _Tp>
+    struct __make_pair_return
+      {
+        typedef typename ___make_pair_return<typename decay<_Tp>::type>::type type;
+      };
 
-      template <class _T1, class _T2>
-      inline __attribute__((always_inline))
-      pair<typename __make_pair_return<_T1>::type, typename __make_pair_return<_T2>::type>
-      make_pair(_T1&& __t1, _T2&& __t2)
-        {
-          return pair<typename __make_pair_return<_T1>::type, typename __make_pair_return<_T2>::type>
-          (os::std::forward<_T1>(__t1), os::std::forward<_T2>(__t2));
-        }
+    template <class _T1, class _T2>
+    inline __attribute__((always_inline))
+    pair<typename __make_pair_return<_T1>::type, typename __make_pair_return<_T2>::type>
+    make_pair(_T1&& __t1, _T2&& __t2)
+      {
+        return pair<typename __make_pair_return<_T1>::type, typename __make_pair_return<_T2>::type>
+        (os::std::forward<_T1>(__t1), os::std::forward<_T2>(__t2));
+      }
 
 #else  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
     template<class _T1, class _T2>
       inline __attribute__((always_inline))
-      pair<_T1, _T2>
+       pair<_T1, _T2>
       make_pair(_T1 __x, _T2 __y)
       {
         return pair<_T1, _T2>(__x, __y);

@@ -32,8 +32,8 @@ namespace os
     /// constructor instead).
     template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
       TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::TGenericMutex(
-          void)
-          : NamedObject()
+          void) :
+          NamedObject()
       {
 #if defined(DEBUG)
         os::diag::trace.putStringAndAddress(
@@ -50,8 +50,8 @@ namespace os
     /// Construct a named mutex.
     template<class CriticalSectionLock_T, class Notifier_T, class Policy_T>
       TGenericMutex<CriticalSectionLock_T, Notifier_T, Policy_T>::TGenericMutex(
-          const char* const pName)
-          : NamedObject(pName)
+          const char* const pName) :
+          NamedObject(pName)
       {
 #if defined(DEBUG)
         os::diag::trace.putStringAndAddress(

@@ -19,6 +19,7 @@ namespace os
 {
   namespace diag
   {
+    // ========================================================================
 
     /// \headerfile TraceImplementationSample.h "portable/diagnostics/include/TraceImplementationSample.h"
     /// \ingroup diag
@@ -121,7 +122,9 @@ namespace os
     {
     }
 
-  } // namespace diag
+  // ==========================================================================
+
+  }// namespace diag
 } // namespace os
 
 #endif // defined(OS_INCLUDE_PORTABLE_DIAGNOSTICS_TRACE)

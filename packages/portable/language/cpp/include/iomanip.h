@@ -57,8 +57,8 @@ namespace os
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_resetiosflags(ios_base::fmtflags mask)
-          : m_mask(mask)
+      __iom_resetiosflags(ios_base::fmtflags mask) :
+          m_mask(mask)
       {
       }
 
@@ -76,24 +76,25 @@ namespace os
         operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
             const __iom_resetiosflags& x);
 #endif
-          };
+      };
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
-        template<class TChar_T, class TTraits_T>
-        _LIBCPP_INLINE_VISIBILITY
-        basic_istream<TChar_T, TTraits_T>&
-        operator>>(basic_istream<TChar_T, TTraits_T>& __is, const __iom_resetiosflags& __x)
-          {
-            __is.unsetf(__x.m_mask);
-            return __is;
-          }
+    template<class TChar_T, class TTraits_T>
+    _LIBCPP_INLINE_VISIBILITY
+    basic_istream<TChar_T, TTraits_T>&
+    operator>>(basic_istream<TChar_T, TTraits_T>& __is, const __iom_resetiosflags& __x)
+      {
+        __is.unsetf(__x.m_mask);
+        return __is;
+      }
 #endif
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
     template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<TChar_T, TTraits_T>&
-      operator<<(basic_ostream<TChar_T, TTraits_T>& outs, const __iom_resetiosflags& x)
+      operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+          const __iom_resetiosflags& x)
         {
           outs.unsetf(x.m_mask);
           return outs;
@@ -140,8 +141,8 @@ namespace os
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_setiosflags(ios_base::fmtflags mask)
-          : m_mask(mask)
+      __iom_setiosflags(ios_base::fmtflags mask) :
+          m_mask(mask)
       {
       }
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
@@ -155,19 +156,19 @@ namespace os
         friend _LIBCPP_INLINE_VISIBILITY
         basic_ostream<TChar_T, TTraits_T>&
         operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
-            const __iom_setiosflags& __x );
+            const __iom_setiosflags& __x);
 #endif
-          };
+    };
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
-        template<class TChar_T, class TTraits_T>
-        _LIBCPP_INLINE_VISIBILITY
-        basic_istream<TChar_T, TTraits_T>&
-        operator>>(basic_istream<TChar_T, TTraits_T>& __is, const __iom_setiosflags& __x)
-          {
-            __is.setf(__x.m_mask);
-            return __is;
-          }
+    template<class TChar_T, class TTraits_T>
+    _LIBCPP_INLINE_VISIBILITY
+    basic_istream<TChar_T, TTraits_T>&
+    operator>>(basic_istream<TChar_T, TTraits_T>& __is, const __iom_setiosflags& __x)
+      {
+        __is.setf(__x.m_mask);
+        return __is;
+      }
 #endif
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
@@ -175,34 +176,35 @@ namespace os
       inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<TChar_T, TTraits_T>&
       operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
-          const __iom_setiosflags& __x) {
-          outs.setf(__x.m_mask);
-          return outs;
-        }
+          const __iom_setiosflags& __x)
+      {
+        outs.setf(__x.m_mask);
+        return outs;
+      }
 #endif
 
-      /// \brief Set ios_base flags.
-      /// \param mask A combination of `ios_base::fmtflags`.
-      /// \returns An object of unspecified type such that if out is
-      /// an object of type `basic_ostream<charT, traits>` then
-      /// the expression `out << resetiosflags(mask)` behaves as if
-      /// it called `f(out, mask)`, or if in is an object of type
-      /// `basic_istream<charT, traits>` then the expression
-      /// `in >> resetiosflags(mask)` behaves as if it called
-      /// `f(in, mask)`, where the function `f` is defined as:
-      /// \code{.cpp}
-      /// void f(ios_base& str, ios_base::fmtflags mask)
-      /// {
-      ///     // reset specified flags
-      ///     str.setf(ios_base::fmtflags(0), mask);
-      /// }
-      /// \endcode
-      ///
-      /// \details
-      /// The expression `out << resetiosflags(mask)` shall have
-      /// type `basic_ostream<charT,traits>&` and value `out`.
-      /// The expression `in >> resetiosflags(mask)` shall have
-      /// `type basic_istream<charT, traits>&` and value `in`.
+    /// \brief Set ios_base flags.
+    /// \param mask A combination of `ios_base::fmtflags`.
+    /// \returns An object of unspecified type such that if out is
+    /// an object of type `basic_ostream<charT, traits>` then
+    /// the expression `out << resetiosflags(mask)` behaves as if
+    /// it called `f(out, mask)`, or if in is an object of type
+    /// `basic_istream<charT, traits>` then the expression
+    /// `in >> resetiosflags(mask)` behaves as if it called
+    /// `f(in, mask)`, where the function `f` is defined as:
+    /// \code{.cpp}
+    /// void f(ios_base& str, ios_base::fmtflags mask)
+    /// {
+    ///     // reset specified flags
+    ///     str.setf(ios_base::fmtflags(0), mask);
+    /// }
+    /// \endcode
+    ///
+    /// \details
+    /// The expression `out << resetiosflags(mask)` shall have
+    /// type `basic_ostream<charT,traits>&` and value `out`.
+    /// The expression `in >> resetiosflags(mask)` shall have
+    /// `type basic_istream<charT, traits>&` and value `in`.
     inline _LIBCPP_INLINE_VISIBILITY
     __iom_setiosflags
     setiosflags(ios_base::fmtflags mask)
@@ -220,8 +222,8 @@ namespace os
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_setbase(int __b)
-          : m_base(__b)
+      __iom_setbase(int __b) :
+          m_base(__b)
       {
       }
 
@@ -236,10 +238,11 @@ namespace os
       template<class TChar_T, class TTraits_T>
         friend _LIBCPP_INLINE_VISIBILITY
         basic_ostream<TChar_T, TTraits_T>&
-        operator<<(basic_ostream<TChar_T, TTraits_T>& outs, const __iom_setbase& __x );
+        operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+            const __iom_setbase& __x);
 #endif
 
-      };
+    };
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
     template<class TChar_T, class TTraits_T>
@@ -259,40 +262,42 @@ namespace os
     template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<TChar_T, TTraits_T>&
-      operator<<(basic_ostream<TChar_T, TTraits_T>& outs, const __iom_setbase& __x) {
-      outs.setf(__x.m_base == 8 ? ios_base::oct :
-          __x.m_base == 10 ? ios_base::dec :
-          __x.m_base == 16 ? ios_base::hex :
-          ios_base::fmtflags(0), ios_base::basefield);
-      return outs;
-    }
+      operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+          const __iom_setbase& __x)
+      {
+        outs.setf(
+            __x.m_base == 8 ? ios_base::oct : __x.m_base == 10 ? ios_base::dec :
+            __x.m_base == 16 ? ios_base::hex : ios_base::fmtflags(0),
+            ios_base::basefield);
+        return outs;
+      }
 #endif
 
-  /// \brief Set ios_base numerical base.
-  /// \param base An integer in [8, 10, 16].
-  /// \returns An object of unspecified type such that
-  /// if `out` is an object of type `basic_ostream<charT, traits>` then
-  /// the expression `out << setbase(base)` behaves as if it
-  /// called `f(out, base)`, or if `in` is an object of type
-  /// `basic_istream<charT, traits>` then the expression
-  /// `in >> setbase(base)` behaves as if it called
-  /// `f(in, base)`, where the function `f` is defined as:
-  /// \code{.cpp}
-  /// void f(ios_base& str, int base)
-  /// {
-  ///   // set basefield
-  ///   str.setf(base == 8 ? ios_base::oct :
-  ///           base == 10 ? ios_base::dec :
-  ///           base == 16 ? ios_base::hex :
-  ///           ios_base::fmtflags(0), ios_base::basefield);
-  /// }
-  /// \endcode
-  ///
-  /// \details
-  /// The expression `out << setbase(base)` shall have type
-  /// `basic_ostream<charT, traits>&` and value `out`.
-  /// The expression `in >> setbase(base)` shall have
-  /// type `basic_istream<charT, traits>&` and value `in`.
+    /// \brief Set ios_base numerical base.
+    /// \param base An integer in [8, 10, 16].
+    /// \returns An object of unspecified type such that
+    /// if `out` is an object of type `basic_ostream<charT, traits>` then
+    /// the expression `out << setbase(base)` behaves as if it
+    /// called `f(out, base)`, or if `in` is an object of type
+    /// `basic_istream<charT, traits>` then the expression
+    /// `in >> setbase(base)` behaves as if it called
+    /// `f(in, base)`, where the function `f` is defined as:
+    /// \code{.cpp}
+    /// void f(ios_base& str, int base)
+    /// {
+    ///   // set basefield
+    ///   str.setf(base == 8 ? ios_base::oct :
+    ///           base == 10 ? ios_base::dec :
+    ///           base == 16 ? ios_base::hex :
+    ///           ios_base::fmtflags(0), ios_base::basefield);
+    /// }
+    /// \endcode
+    ///
+    /// \details
+    /// The expression `out << setbase(base)` shall have type
+    /// `basic_ostream<charT, traits>&` and value `out`.
+    /// The expression `in >> setbase(base)` shall have
+    /// type `basic_istream<charT, traits>&` and value `in`.
     inline _LIBCPP_INLINE_VISIBILITY
     __iom_setbase
     setbase(int base)
@@ -312,8 +317,8 @@ namespace os
       public:
         _LIBCPP_INLINE_VISIBILITY
         explicit
-        __iom_setfill(TChar_T __c)
-            : m_fill(__c)
+        __iom_setfill(TChar_T __c) :
+            m_fill(__c)
         {
         }
 
@@ -321,31 +326,32 @@ namespace os
           friend _LIBCPP_INLINE_VISIBILITY
           basic_ostream<TChar_T, TTraits_T>&
           operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
-              const __iom_setfill& __x) {
-              outs.fill(__x.m_fill);
-              return outs;
-            }
-        };
+              const __iom_setfill& __x)
+          {
+            outs.fill(__x.m_fill);
+            return outs;
+          }
+      };
 
-          /// \brief Set ios_base fill character.
-          /// \param c A character.
-          /// \returns  An object of unspecified type such that
-          /// if out is an object of type basic_ostream<charT, traits>
-          /// and c has type charT then the expression out << setfill(c)
-          /// behaves as if it called f(out, c), where the function
-          /// f is defined as:
-          /// \code{.cpp}
-          /// template<class charT, class traits>
-          /// void f(basic_ios<charT,traits>& str, charT c)
-          /// {
-          ///         // set fill character
-          ///         str.fill(c);
-          /// }
-          /// \endcode
-          ///
-          /// \details
-          /// The expression `out << setfill(c)` shall have type
-          /// `basic_ostream<charT, traits>&` and value `out`.
+    /// \brief Set ios_base fill character.
+    /// \param c A character.
+    /// \returns  An object of unspecified type such that
+    /// if out is an object of type basic_ostream<charT, traits>
+    /// and c has type charT then the expression out << setfill(c)
+    /// behaves as if it called f(out, c), where the function
+    /// f is defined as:
+    /// \code{.cpp}
+    /// template<class charT, class traits>
+    /// void f(basic_ios<charT,traits>& str, charT c)
+    /// {
+    ///         // set fill character
+    ///         str.fill(c);
+    /// }
+    /// \endcode
+    ///
+    /// \details
+    /// The expression `out << setfill(c)` shall have type
+    /// `basic_ostream<charT, traits>&` and value `out`.
     template<class TChar_T>
       inline _LIBCPP_INLINE_VISIBILITY
       __iom_setfill<TChar_T>
@@ -366,8 +372,8 @@ namespace os
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_setprecision(int n)
-          : m_n(n)
+      __iom_setprecision(int n) :
+          m_n(n)
       {
       }
 
@@ -386,24 +392,25 @@ namespace os
             const __iom_setprecision& x);
 #endif
 
-          };
+      };
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
-        template<class TChar_T, class TTraits_T>
-        _LIBCPP_INLINE_VISIBILITY
-        basic_istream<TChar_T, TTraits_T>&
-        operator>>(basic_istream<TChar_T, TTraits_T>& __is, const __iom_setprecision& __x)
-          {
-            __is.precision(__x.m_num);
-            return __is;
-          }
+    template<class TChar_T, class TTraits_T>
+    _LIBCPP_INLINE_VISIBILITY
+    basic_istream<TChar_T, TTraits_T>&
+    operator>>(basic_istream<TChar_T, TTraits_T>& __is, const __iom_setprecision& __x)
+      {
+        __is.precision(__x.m_num);
+        return __is;
+      }
 #endif
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_OSTREAM)
     template<class TChar_T, class TTraits_T>
       inline _LIBCPP_INLINE_VISIBILITY
       basic_ostream<TChar_T, TTraits_T>&
-      operator<<(basic_ostream<TChar_T, TTraits_T>& outs, const __iom_setprecision& x)
+      operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+          const __iom_setprecision& x)
         {
           outs.precision(x.m_n);
           return outs;
@@ -450,8 +457,8 @@ namespace os
     public:
       _LIBCPP_INLINE_VISIBILITY
       explicit
-      __iom_setw(int n)
-          : m_width(n)
+      __iom_setw(int n) :
+          m_width(n)
       {
       }
 
@@ -533,144 +540,144 @@ namespace os
 // ------------------------------------------------------------------------
 // get_money
 
-template<class _MoneyT>
-class __iom_t7;
+  template<class _MoneyT>
+  class __iom_t7;
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-template<class TChar_T, class TTraits_T, class _MoneyT>
-basic_istream<TChar_T, TTraits_T>&
-operator>>(basic_istream<TChar_T, TTraits_T>& __is,
-    const __iom_t7 <_MoneyT>& __x);
+  template<class TChar_T, class TTraits_T, class _MoneyT>
+  basic_istream<TChar_T, TTraits_T>&
+  operator>>(basic_istream<TChar_T, TTraits_T>& __is,
+      const __iom_t7 <_MoneyT>& __x);
 #endif
 
-template<class _MoneyT>
-class __iom_t7
-  {
-    _MoneyT& m_money;
-    bool m_intl;
-  public:
-    _LIBCPP_INLINE_VISIBILITY
-    __iom_t7(_MoneyT& __mon, bool __intl)
-    : m_money(__mon), m_intl(__intl)
-      {
-      }
+  template<class _MoneyT>
+  class __iom_t7
+    {
+      _MoneyT& m_money;
+      bool m_intl;
+    public:
+      _LIBCPP_INLINE_VISIBILITY
+      __iom_t7(_MoneyT& __mon, bool __intl)
+      : m_money(__mon), m_intl(__intl)
+        {
+        }
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
-    template<class TChar_T, class TTraits_T, class _Mp>
-    friend basic_istream<TChar_T, TTraits_T>&
-    operator>>(basic_istream<TChar_T, TTraits_T>& __is,
-        const __iom_t7 <_Mp>& __x);
+      template<class TChar_T, class TTraits_T, class _Mp>
+      friend basic_istream<TChar_T, TTraits_T>&
+      operator>>(basic_istream<TChar_T, TTraits_T>& __is,
+          const __iom_t7 <_Mp>& __x);
 #endif
-  };
+    };
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_ISTREAM)
-template<class TChar_T, class TTraits_T, class _MoneyT>
-basic_istream<TChar_T, TTraits_T>&
-operator>>(basic_istream<TChar_T, TTraits_T>& __is,
-    const __iom_t7 <_MoneyT>& __x)
-  {
+  template<class TChar_T, class TTraits_T, class _MoneyT>
+  basic_istream<TChar_T, TTraits_T>&
+  operator>>(basic_istream<TChar_T, TTraits_T>& __is,
+      const __iom_t7 <_MoneyT>& __x)
+    {
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-    try
-      {
+      try
+        {
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-        typename basic_istream<TChar_T, TTraits_T>::sentry __s(__is);
-        if (__s)
-          {
-            typedef istreambuf_iterator<TChar_T, TTraits_T> _Ip;
-            typedef money_get<TChar_T, _Ip> _Fp;
-            ios_base::iostate __err = ios_base::goodbit;
-            const _Fp& __mf = use_facet<_Fp>(__is.getloc());
-            __mf.get(_Ip(__is), _Ip(), __x.m_intl, __is, __err, __x.m_money);
-            __is.setstate(__err);
-          }
+          typename basic_istream<TChar_T, TTraits_T>::sentry __s(__is);
+          if (__s)
+            {
+              typedef istreambuf_iterator<TChar_T, TTraits_T> _Ip;
+              typedef money_get<TChar_T, _Ip> _Fp;
+              ios_base::iostate __err = ios_base::goodbit;
+              const _Fp& __mf = use_facet<_Fp>(__is.getloc());
+              __mf.get(_Ip(__is), _Ip(), __x.m_intl, __is, __err, __x.m_money);
+              __is.setstate(__err);
+            }
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-      }
-    catch (...)
-      {
-        __is.__set_badbit_and_consider_rethrow();
-      }
+        }
+      catch (...)
+        {
+          __is.__set_badbit_and_consider_rethrow();
+        }
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-    return __is;
-  }
+      return __is;
+    }
 #endif
 
-template<class _MoneyT>
-inline _LIBCPP_INLINE_VISIBILITY
-__iom_t7<_MoneyT>
-get_money(_MoneyT& __mon, bool __intl = false)
-  {
-    return __iom_t7 < _MoneyT > (__mon, __intl);
-  }
+  template<class _MoneyT>
+  inline _LIBCPP_INLINE_VISIBILITY
+  __iom_t7<_MoneyT>
+  get_money(_MoneyT& __mon, bool __intl = false)
+    {
+      return __iom_t7 < _MoneyT > (__mon, __intl);
+    }
 
 // ----------------------------------------------------------------------
 // put_money
 
-template<class _MoneyT>
-class __iom_t8;
+  template<class _MoneyT>
+  class __iom_t8;
 
-template<class TChar_T, class TTraits_T, class _MoneyT>
-basic_ostream<TChar_T, TTraits_T>&
-operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
-    const __iom_t8 <_MoneyT>& __x);
+  template<class TChar_T, class TTraits_T, class _MoneyT>
+  basic_ostream<TChar_T, TTraits_T>&
+  operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+      const __iom_t8 <_MoneyT>& __x);
 
-template<class _MoneyT>
-class __iom_t8
-  {
-    const _MoneyT& m_money;
-    bool m_intl;
-  public:
-    _LIBCPP_INLINE_VISIBILITY
-    __iom_t8(const _MoneyT& __mon, bool __intl)
-    : m_money(__mon), m_intl(__intl)
-      {
-      }
+  template<class _MoneyT>
+  class __iom_t8
+    {
+      const _MoneyT& m_money;
+      bool m_intl;
+    public:
+      _LIBCPP_INLINE_VISIBILITY
+      __iom_t8(const _MoneyT& __mon, bool __intl)
+      : m_money(__mon), m_intl(__intl)
+        {
+        }
 
-    template<class TChar_T, class TTraits_T, class _Mp>
-    friend basic_ostream<TChar_T, TTraits_T>&
-    operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
-        const __iom_t8 <_Mp>& __x);
-  };
+      template<class TChar_T, class TTraits_T, class _Mp>
+      friend basic_ostream<TChar_T, TTraits_T>&
+      operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+          const __iom_t8 <_Mp>& __x);
+    };
 
-template<class TChar_T, class TTraits_T, class _MoneyT>
-basic_ostream<TChar_T, TTraits_T>&
-operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
-    const __iom_t8 <_MoneyT>& __x)
-  {
+  template<class TChar_T, class TTraits_T, class _MoneyT>
+  basic_ostream<TChar_T, TTraits_T>&
+  operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+      const __iom_t8 <_MoneyT>& __x)
+    {
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-    try
-      {
+      try
+        {
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-        typename basic_ostream<TChar_T, TTraits_T>::sentry __s(outs);
-        if (__s)
-          {
+          typename basic_ostream<TChar_T, TTraits_T>::sentry __s(outs);
+          if (__s)
+            {
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-            typedef ostreambuf_iterator<TChar_T, TTraits_T> _Op;
-            typedef money_put<TChar_T, _Op> _Fp;
-            const _Fp& __mf = use_facet<_Fp>(outs.getloc());
-            if (__mf.put(_Op(outs), __x.m_intl, outs, outs.fill(),
-                    __x.m_money).failed())
-              {
-                outs.setstate(ios_base::badbit);
-              }
+              typedef ostreambuf_iterator<TChar_T, TTraits_T> _Op;
+              typedef money_put<TChar_T, _Op> _Fp;
+              const _Fp& __mf = use_facet<_Fp>(outs.getloc());
+              if (__mf.put(_Op(outs), __x.m_intl, outs, outs.fill(),
+                      __x.m_money).failed())
+                {
+                  outs.setstate(ios_base::badbit);
+                }
 #endif
-          }
+            }
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-      }
-    catch (...)
-      {
-        outs.__set_badbit_and_consider_rethrow();
-      }
+        }
+      catch (...)
+        {
+          outs.__set_badbit_and_consider_rethrow();
+        }
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-    return outs;
-  }
+      return outs;
+    }
 
-template<class _MoneyT>
-inline _LIBCPP_INLINE_VISIBILITY
-__iom_t8<_MoneyT>
-put_money(const _MoneyT& __mon, bool __intl = false)
-  {
-    return __iom_t8<_MoneyT>(__mon, __intl);
-  }
+  template<class _MoneyT>
+  inline _LIBCPP_INLINE_VISIBILITY
+  __iom_t8<_MoneyT>
+  put_money(const _MoneyT& __mon, bool __intl = false)
+    {
+      return __iom_t8<_MoneyT>(__mon, __intl);
+    }
 #endif
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
@@ -678,69 +685,69 @@ put_money(const _MoneyT& __mon, bool __intl = false)
 // ------------------------------------------------------------------------
 // get_time
 
-template<class TChar_T>
-class __iom_t9;
+  template<class TChar_T>
+  class __iom_t9;
 
-template<class TChar_T, class TTraits_T>
-basic_istream<TChar_T, TTraits_T>&
-operator>>(basic_istream<TChar_T, TTraits_T>& __is,
-    const __iom_t9 <TChar_T>& __x);
+  template<class TChar_T, class TTraits_T>
+  basic_istream<TChar_T, TTraits_T>&
+  operator>>(basic_istream<TChar_T, TTraits_T>& __is,
+      const __iom_t9 <TChar_T>& __x);
 
-template<class TChar_T>
-class __iom_t9
-  {
-    tm* m_tm;
-    const TChar_T* m_fmt;
-  public:
-    _LIBCPP_INLINE_VISIBILITY
-    __iom_t9(tm* __tm, const TChar_T* __fmt)
-    : m_tm(__tm), m_fmt(__fmt)
-      {
-      }
+  template<class TChar_T>
+  class __iom_t9
+    {
+      tm* m_tm;
+      const TChar_T* m_fmt;
+    public:
+      _LIBCPP_INLINE_VISIBILITY
+      __iom_t9(tm* __tm, const TChar_T* __fmt)
+      : m_tm(__tm), m_fmt(__fmt)
+        {
+        }
 
-    template<class _Cp, class TTraits_T>
-    friend basic_istream<_Cp, TTraits_T>&
-    operator>>(basic_istream<_Cp, TTraits_T>& __is,
-        const __iom_t9 <_Cp>& __x);
-  };
+      template<class _Cp, class TTraits_T>
+      friend basic_istream<_Cp, TTraits_T>&
+      operator>>(basic_istream<_Cp, TTraits_T>& __is,
+          const __iom_t9 <_Cp>& __x);
+    };
 
-template<class TChar_T, class TTraits_T>
-basic_istream<TChar_T, TTraits_T>&
-operator>>(basic_istream<TChar_T, TTraits_T>& __is,
-    const __iom_t9 <TChar_T>& __x)
-  {
+  template<class TChar_T, class TTraits_T>
+  basic_istream<TChar_T, TTraits_T>&
+  operator>>(basic_istream<TChar_T, TTraits_T>& __is,
+      const __iom_t9 <TChar_T>& __x)
+    {
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-    try
-      {
+      try
+        {
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-        typename basic_istream<TChar_T, TTraits_T>::sentry __s(__is);
-        if (__s)
-          {
-            typedef istreambuf_iterator<TChar_T, TTraits_T> _Ip;
-            typedef time_get<TChar_T, _Ip> _Fp;
-            ios_base::iostate __err = ios_base::goodbit;
-            const _Fp& __tf = use_facet<_Fp>(__is.getloc());
-            __tf.get(_Ip(__is), _Ip(), __is, __err, __x.m_tm, __x.m_fmt,
-                __x.m_fmt + TTraits_T::length(__x.m_fmt));
-            __is.setstate(__err);
-          }
+          typename basic_istream<TChar_T, TTraits_T>::sentry __s(__is);
+          if (__s)
+            {
+              typedef istreambuf_iterator<TChar_T, TTraits_T> _Ip;
+              typedef time_get<TChar_T, _Ip> _Fp;
+              ios_base::iostate __err = ios_base::goodbit;
+              const _Fp& __tf = use_facet<_Fp>(__is.getloc());
+              __tf.get(_Ip(__is), _Ip(), __is, __err, __x.m_tm, __x.m_fmt,
+                  __x.m_fmt + TTraits_T::length(__x.m_fmt));
+              __is.setstate(__err);
+            }
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-      }
-    catch (...)
-      {
-        __is.__set_badbit_and_consider_rethrow();
-      }
+        }
+      catch (...)
+        {
+          __is.__set_badbit_and_consider_rethrow();
+        }
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-    return __is;
-  }
+      return __is;
+    }
 
-template<class TChar_T>
-inline _LIBCPP_INLINE_VISIBILITY
-__iom_t9<TChar_T>
-get_time(tm* __tm, const TChar_T* __fmt)
-  {
-    return __iom_t9<TChar_T>(__tm, __fmt);
-  }
+  template<class TChar_T>
+  inline _LIBCPP_INLINE_VISIBILITY
+  __iom_t9<TChar_T>
+  get_time(tm* __tm, const TChar_T* __fmt)
+    {
+      return __iom_t9<TChar_T>(__tm, __fmt);
+    }
 #endif
 
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
@@ -748,72 +755,72 @@ get_time(tm* __tm, const TChar_T* __fmt)
 // ------------------------------------------------------------------------
 // put_time
 
-template<class TChar_T>
-class __iom_t10;
+  template<class TChar_T>
+  class __iom_t10;
 
-template<class TChar_T, class TTraits_T>
-basic_ostream<TChar_T, TTraits_T>&
-operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
-    const __iom_t10 <TChar_T>& __x);
+  template<class TChar_T, class TTraits_T>
+  basic_ostream<TChar_T, TTraits_T>&
+  operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+      const __iom_t10 <TChar_T>& __x);
 
-template<class TChar_T>
-class __iom_t10
-  {
-    const tm* m_tm;
-    const TChar_T* m_fmt;
-  public:
-    _LIBCPP_INLINE_VISIBILITY
-    __iom_t10(const tm* __tm, const TChar_T* __fmt)
-    : m_tm(__tm), m_fmt(__fmt)
-      {
-      }
+  template<class TChar_T>
+  class __iom_t10
+    {
+      const tm* m_tm;
+      const TChar_T* m_fmt;
+    public:
+      _LIBCPP_INLINE_VISIBILITY
+      __iom_t10(const tm* __tm, const TChar_T* __fmt)
+      : m_tm(__tm), m_fmt(__fmt)
+        {
+        }
 
-    template<class _Cp, class TTraits_T>
-    friend basic_ostream<_Cp, TTraits_T>&
-    operator<<(basic_ostream<_Cp, TTraits_T>& outs,
-        const __iom_t10 <_Cp>& __x);
-  };
+      template<class _Cp, class TTraits_T>
+      friend basic_ostream<_Cp, TTraits_T>&
+      operator<<(basic_ostream<_Cp, TTraits_T>& outs,
+          const __iom_t10 <_Cp>& __x);
+    };
 
-template<class TChar_T, class TTraits_T>
-basic_ostream<TChar_T, TTraits_T>&
-operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
-    const __iom_t10 <TChar_T>& __x)
-  {
+  template<class TChar_T, class TTraits_T>
+  basic_ostream<TChar_T, TTraits_T>&
+  operator<<(basic_ostream<TChar_T, TTraits_T>& outs,
+      const __iom_t10 <TChar_T>& __x)
+    {
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-    try
-      {
+      try
+        {
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-        typename basic_ostream<TChar_T, TTraits_T>::sentry __s(outs);
-        if (__s)
-          {
+          typename basic_ostream<TChar_T, TTraits_T>::sentry __s(outs);
+          if (__s)
+            {
 #if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
-            typedef ostreambuf_iterator<TChar_T, TTraits_T> _Op;
-            typedef time_put<TChar_T, _Op> _Fp;
-            const _Fp& __tf = use_facet<_Fp>(outs.getloc());
-            if (__tf.put(_Op(outs), outs, outs.fill(), __x.m_tm, __x.m_fmt,
-                    __x.m_fmt + TTraits_T::length(__x.m_fmt)).failed())
-              {
-                outs.setstate(ios_base::badbit);
-              }
+              typedef ostreambuf_iterator<TChar_T, TTraits_T> _Op;
+              typedef time_put<TChar_T, _Op> _Fp;
+              const _Fp& __tf = use_facet<_Fp>(outs.getloc());
+              if (__tf.put(_Op(outs), outs, outs.fill(), __x.m_tm, __x.m_fmt,
+                      __x.m_fmt + TTraits_T::length(__x.m_fmt)).failed())
+                {
+                  outs.setstate(ios_base::badbit);
+                }
 #endif
-          }
+            }
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
-      }
-    catch (...)
-      {
-        outs.__set_badbit_and_consider_rethrow();
-      }
+        }
+      catch (...)
+        {
+          outs.__set_badbit_and_consider_rethrow();
+        }
 #endif  // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
-    return outs;
-  }
+      return outs;
+    }
 
-template<class TChar_T>
-inline _LIBCPP_INLINE_VISIBILITY
-__iom_t10<TChar_T>
-put_time(const tm* __tm, const TChar_T* __fmt)
-  {
-    return __iom_t10<TChar_T>(__tm, __fmt);
-  }
+  template<class TChar_T>
+  inline _LIBCPP_INLINE_VISIBILITY
+  __iom_t10<TChar_T>
+  put_time(const tm* __tm, const TChar_T* __fmt)
+    {
+      return __iom_t10<TChar_T>(__tm, __fmt);
+    }
 
 /// @} end of name Extended manipulators (27.7.5)
 

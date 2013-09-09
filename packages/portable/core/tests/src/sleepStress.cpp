@@ -157,8 +157,8 @@ uint32_t Task::ms_lineLength;
 
 Task::Task(const char* pName, os::core::stack::size_t stackSizeBytes,
     uint16_t minMicros, uint16_t maxMicros, uint16_t minTicks,
-    uint16_t maxTicks)
-    : NamedObject(pName), //
+    uint16_t maxTicks) :
+    NamedObject(pName), //
     m_stack(stackSizeBytes), //
     m_thread(pName, [](Task* pTask)
       { pTask->threadMain();}, this, m_stack)
@@ -388,8 +388,8 @@ private:
 #pragma GCC diagnostic pop
 
 TaskPeriodic::TaskPeriodic(const char* pName,
-    os::core::stack::size_t stackSizeBytes)
-    : NamedObject(pName), //
+    os::core::stack::size_t stackSizeBytes) :
+    NamedObject(pName), //
     m_stack(stackSizeBytes), //
     m_thread(pName, [](TaskPeriodic* pTask)
       { pTask->threadMain();}, this, m_stack,
@@ -456,7 +456,7 @@ TaskPeriodic::threadMain(void)
 
               if (proc < -30 || proc > 30)
                 {
-                  ts <<  " proc out ot range!" << proc;
+                  ts << " proc out ot range!" << proc;
                 }
               ts << os::std::endl;
             }

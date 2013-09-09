@@ -36,8 +36,8 @@ namespace os
 
       __attribute__((always_inline))
       explicit
-      type_info(const char* __n)
-          : __type_name(__n)
+      type_info(const char* __n) :
+          __type_name(__n)
       {
       }
 
@@ -60,7 +60,7 @@ namespace os
       }
 
       __attribute__((always_inline))
-      size_t
+       size_t
       hash_code() const noexcept
       {
 #pragma GCC diagnostic push

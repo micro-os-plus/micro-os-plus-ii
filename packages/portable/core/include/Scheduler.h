@@ -64,19 +64,19 @@ namespace os
 
       /// \brief Constant with the maximum number of user threads.
       constexpr threadCount_t MAX_USER_THREADS =
-          OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS;
+      OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS;
 
       /// \brief Constant with the number of system threads
       /// (currently two, main & idle).
       constexpr threadCount_t SYSTEM_THREADS =
-          OS_INTEGER_CORE_SCHEDULER_SYSTEMTHREADS;
+      OS_INTEGER_CORE_SCHEDULER_SYSTEMTHREADS;
 
       /// \brief Constant with the maximum number of threads to accommodate.
       constexpr threadCount_t MAX_THREADS = SYSTEM_THREADS + MAX_USER_THREADS;
 
       /// \brief Constant with the number of scheduler ticks per second.
       constexpr uint32_t TICKS_PER_SECOND =
-          OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
+      OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND;
 
       // ----------------------------------------------------------------------
 
@@ -699,7 +699,7 @@ namespace os
     __attribute__((always_inline))
     Scheduler::setPreemptive(bool preemptive)
     {
-       m_isPreemptive = preemptive;
+      m_isPreemptive = preemptive;
     }
 
     inline Thread*

@@ -175,9 +175,11 @@ namespace os
 
       /// \brief Constructor.
       ///
-      /// \param [in] pName             Pointer to the null terminated thread name.
+      /// \param [in] pName             Pointer to the null terminated
+      //                                thread name.
       /// \param [in] entryPoint        Pointer to the thread code.
-      /// \param [in] pParameters       Pointer to the parameters passed to the thread.
+      /// \param [in] pParameters       Pointer to the parameters passed
+      //                                to the thread.
       /// \param [in] stack             Reference to the stack object.
       /// \param [in] priority          Initial priority.
       Thread(const char* const pName, threadEntryPoint1_t entryPoint,
@@ -186,9 +188,11 @@ namespace os
 
       /// \brief Template Constructor.
       ///
-      /// \param [in] pName             Pointer to the null terminated thread name.
+      /// \param [in] pName             Pointer to the null terminated
+      ///                               thread name.
       /// \param [in] function          A lambda to be called with one parameter.
-      /// \param [in] pObject           Pointer to the parameters passed to the thread.
+      /// \param [in] pObject           Pointer to the parameters passed
+      ///                               to the thread.
       /// \param [in] stack             Reference to the stack object.
       /// \param [in] priority          Initial priority.
       template<class Lambda_T, class Object_T>
@@ -369,7 +373,8 @@ namespace os
 
       /// \brief Sleep for a number of ticks.
       ///
-      /// \param [in] ticks   The number of counter ticks to sleep, default = 0 (no timeout).
+      /// \param [in] ticks   The number of counter ticks to sleep,
+      //                        default = 0 (no timeout).
       /// \param [in] timer   The timer to use, default os::timerTicks.
       /// \par Returns
       ///    Nothing.
@@ -379,7 +384,8 @@ namespace os
       /// \brief Sleep while a condition is true, up to a number of ticks.
       ///
       /// \param [in] predicate   The condition to test, usually a lambda.
-      /// \param [in] ticks       The number of counter ticks to sleep, default = 0 (no timeout).
+      /// \param [in] ticks       The number of counter ticks to sleep,
+      ///                               default = 0 (no timeout).
       /// \param [in] timer       The timer to use, default os::timerTicks.
       /// \par Returns
       ///    Nothing.
@@ -405,7 +411,6 @@ namespace os
       ///    Nothing.
       void
       wakeup(void);
-
 
       /// @} end of Public member functions
 
@@ -540,8 +545,8 @@ namespace os
     /// constructor! (see initialise())
     template<class Lambda_T, class Object_T>
       Thread::Thread(const char* const pName, Lambda_T function,
-          Object_T* pObject, Stack& stack, priority_t priority)
-          : NamedObject(pName), //
+          Object_T* pObject, Stack& stack, priority_t priority) :
+          NamedObject(pName), //
           m_stack(stack) // copy constructor!
       {
 #if defined(DEBUG)

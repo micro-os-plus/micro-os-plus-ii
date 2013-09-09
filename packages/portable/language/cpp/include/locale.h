@@ -96,7 +96,7 @@ namespace os
 
     template<class _Facet>
       inline __attribute__((always_inline))
-      const _Facet&
+       const _Facet&
       use_facet(const locale& __l __attribute__((unused)))
       {
         return static_cast<const _Facet&>(num_put_char_tiny);

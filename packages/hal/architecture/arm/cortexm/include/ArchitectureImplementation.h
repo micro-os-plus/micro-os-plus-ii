@@ -46,7 +46,6 @@
 
 #endif
 
-
 namespace hal
 {
   namespace cortexm
@@ -151,8 +150,7 @@ namespace hal
     ArchitectureImplementation::initialiseSystem(void)
     {
       // Double word stack alignment
-      (*((volatile unsigned long *) 0xe000ed14)) |=
-          (1 << 9);
+      (*((volatile unsigned long *) 0xe000ed14)) |= (1 << 9);
 
       hal::cortexm::FamilyImplementation::initialiseSystem();
     }
@@ -199,7 +197,7 @@ namespace hal
     using ArchitectureImplementation = hal::cortexm::ArchitectureImplementation;
   }
 
-// ==========================================================================
+// ============================================================================
 
 }// namspace hal
 

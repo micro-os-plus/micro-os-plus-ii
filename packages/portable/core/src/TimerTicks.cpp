@@ -24,8 +24,8 @@ namespace os
 
     /// \details
     /// Call the TimerBase constructor with the current array.
-    TimerTicks::TimerTicks(void)
-        : TimerBase(m_array, sizeof(m_array) / sizeof(m_array[0]))
+    TimerTicks::TimerTicks(void) :
+        TimerBase(m_array, sizeof(m_array) / sizeof(m_array[0]))
     {
 #if defined(DEBUG)
       os::diag::trace.putConstructor();
@@ -80,20 +80,20 @@ namespace os
 
       static int i = 0;
 
-      if ((i++ % OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND)== 0){
-        os::diag::trace.putChar('!');
-        if (os::scheduler.isLocked())
-          {
-            os::diag::trace.putChar('L');
-          }
-      }
+      if ((i++ % OS_INTEGER_CORE_SCHEDULER_TICKSPERSECOND)== 0)
+        {
+          os::diag::trace.putChar('!');
+          if (os::scheduler.isLocked())
+            {
+              os::diag::trace.putChar('L');
+            }
+        }
 
-#endif /* defined(DEBUG) && defined(OS_DEBUG_TIMERTICKS_ISR_MARK_SECONDS) */
+#endif /// defined(DEBUG) && defined(OS_DEBUG_TIMERTICKS_ISR_MARK_SECONDS)
+    }
 
-  }
-
-// --------------------------------------------------------------------------
-}// namespace core
+  // --------------------------------------------------------------------------
+  }// namespace core
 } // namespace os
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)

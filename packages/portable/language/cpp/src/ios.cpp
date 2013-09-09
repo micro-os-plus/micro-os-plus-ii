@@ -60,31 +60,31 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
     class __iostream_category : public __do_message
-    {
-    public:
-      virtual const char*
-      name() const noexcept;
-      virtual string
-      message(int ev) const;
-    };
+      {
+      public:
+        virtual const char*
+        name() const noexcept;
+        virtual string
+        message(int ev) const;
+      };
 
     const char*
     __iostream_category::name() const noexcept
-    {
-      return "iostream";
-    }
+      {
+        return "iostream";
+      }
 
     string
     __iostream_category::message(int ev) const
-    {
-      if (ev != static_cast<int>(io_errc::stream)
+      {
+        if (ev != static_cast<int>(io_errc::stream)
 #ifdef ELAST
-          && ev <= ELAST
+            && ev <= ELAST
 #endif
-          )
+        )
         return __do_message::message(ev);
-      return string("unspecified iostream_category error");
-    }
+        return string("unspecified iostream_category error");
+      }
 
 #pragma GCC diagnostic push
 #if defined(__clang__)
@@ -93,28 +93,28 @@ namespace os
 
     const error_category&
     iostream_category()
-    {
-      static __iostream_category s;
-      return s;
-    }
+      {
+        static __iostream_category s;
+        return s;
+      }
 
 #pragma GCC diagnostic push
 
     // ios_base::failure
 
     ios_base::failure::failure(const string& msg, const error_code& ec)
-        : system_error(ec, msg)
-    {
-    }
+    : system_error(ec, msg)
+      {
+      }
 
     ios_base::failure::failure(const char* msg, const error_code& ec)
-        : system_error(ec, msg)
-    {
-    }
+    : system_error(ec, msg)
+      {
+      }
 
     ios_base::failure::~failure() throw ()
-    {
-    }
+      {
+      }
 
 #endif // OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS
     // ios_base locale

@@ -49,17 +49,17 @@ namespace os
         typedef _Tp type;
 
         static constexpr bool is_specialized = false;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return type();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return type();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return type();
@@ -72,12 +72,12 @@ namespace os
         static constexpr bool is_integer = false;
         static constexpr bool is_exact = false;
         static constexpr int radix = 0;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return type();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return type();
@@ -93,22 +93,22 @@ namespace os
         static constexpr bool has_signaling_NaN = false;
         static constexpr float_denorm_style has_denorm = denorm_absent;
         static constexpr bool has_denorm_loss = false;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return type();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return type();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return type();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return type();
@@ -157,17 +157,17 @@ namespace os
             is_signed>::value;
         static constexpr type __max =
             is_signed ? type(type(~0) ^ __min) : type(~0);
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return __min;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return __max;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return min();
@@ -176,12 +176,12 @@ namespace os
         static constexpr bool is_integer = true;
         static constexpr bool is_exact = true;
         static constexpr int radix = 2;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return type(0);
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return type(0);
@@ -197,22 +197,22 @@ namespace os
         static constexpr bool has_signaling_NaN = false;
         static constexpr float_denorm_style has_denorm = denorm_absent;
         static constexpr bool has_denorm_loss = false;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return type(0);
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return type(0);
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return type(0);
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return type(0);
@@ -245,17 +245,17 @@ namespace os
         static constexpr int max_digits10 = 0;
         static constexpr type __min = false;
         static constexpr type __max = true;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return __min;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return __max;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return min();
@@ -264,12 +264,12 @@ namespace os
         static constexpr bool is_integer = true;
         static constexpr bool is_exact = true;
         static constexpr int radix = 2;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return type(0);
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return type(0);
@@ -285,22 +285,22 @@ namespace os
         static constexpr bool has_signaling_NaN = false;
         static constexpr float_denorm_style has_denorm = denorm_absent;
         static constexpr bool has_denorm_loss = false;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return type(0);
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return type(0);
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return type(0);
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return type(0);
@@ -327,17 +327,17 @@ namespace os
         static constexpr int digits = __FLT_MANT_DIG__;
         static constexpr int digits10 = __FLT_DIG__;
         static constexpr int max_digits10 = 2 + (digits * 30103) / 100000;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return __FLT_MIN__;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return __FLT_MAX__;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return -max();
@@ -346,12 +346,12 @@ namespace os
         static constexpr bool is_integer = false;
         static constexpr bool is_exact = false;
         static constexpr int radix = __FLT_RADIX__;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return __FLT_EPSILON__;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return 0.5F;
@@ -367,22 +367,22 @@ namespace os
         static constexpr bool has_signaling_NaN = true;
         static constexpr float_denorm_style has_denorm = denorm_present;
         static constexpr bool has_denorm_loss = false;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return __builtin_huge_valf();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return __builtin_nanf("");
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return __builtin_nansf("");
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return __FLT_DENORM_MIN__;
@@ -409,17 +409,17 @@ namespace os
         static constexpr int digits = __DBL_MANT_DIG__;
         static constexpr int digits10 = __DBL_DIG__;
         static constexpr int max_digits10 = 2 + (digits * 30103) / 100000;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return __DBL_MIN__;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return __DBL_MAX__;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return -max();
@@ -428,12 +428,12 @@ namespace os
         static constexpr bool is_integer = false;
         static constexpr bool is_exact = false;
         static constexpr int radix = __FLT_RADIX__;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return __DBL_EPSILON__;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return 0.5;
@@ -449,22 +449,22 @@ namespace os
         static constexpr bool has_signaling_NaN = true;
         static constexpr float_denorm_style has_denorm = denorm_present;
         static constexpr bool has_denorm_loss = false;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return __builtin_huge_val();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return __builtin_nan("");
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return __builtin_nans("");
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return __DBL_DENORM_MIN__;
@@ -491,17 +491,17 @@ namespace os
         static constexpr int digits = __LDBL_MANT_DIG__;
         static constexpr int digits10 = __LDBL_DIG__;
         static constexpr int max_digits10 = 2 + (digits * 30103) / 100000;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return __LDBL_MIN__;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return __LDBL_MAX__;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return -max();
@@ -510,12 +510,12 @@ namespace os
         static constexpr bool is_integer = false;
         static constexpr bool is_exact = false;
         static constexpr int radix = __FLT_RADIX__;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return __LDBL_EPSILON__;
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return 0.5;
@@ -531,22 +531,22 @@ namespace os
         static constexpr bool has_signaling_NaN = true;
         static constexpr float_denorm_style has_denorm = denorm_present;
         static constexpr bool has_denorm_loss = false;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return __builtin_huge_vall();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return __builtin_nanl("");
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return __builtin_nansl("");
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return __LDBL_DENORM_MIN__;
@@ -575,17 +575,17 @@ namespace os
         typedef typename __base::type type;
       public:
         static constexpr bool is_specialized = __base::is_specialized;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return __base::min();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return __base::max();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return __base::lowest();
@@ -598,12 +598,12 @@ namespace os
         static constexpr bool is_integer = __base::is_integer;
         static constexpr bool is_exact = __base::is_exact;
         static constexpr int radix = __base::radix;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return __base::epsilon();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return __base::round_error();
@@ -619,22 +619,22 @@ namespace os
         static constexpr bool has_signaling_NaN = __base::has_signaling_NaN;
         static constexpr float_denorm_style has_denorm = __base::has_denorm;
         static constexpr bool has_denorm_loss = __base::has_denorm_loss;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return __base::infinity();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return __base::quiet_NaN();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return __base::signaling_NaN();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return __base::denorm_min();
@@ -703,17 +703,17 @@ namespace os
         typedef _Tp type;
       public:
         static constexpr bool is_specialized = __base::is_specialized;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return __base::min();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return __base::max();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return __base::lowest();
@@ -726,12 +726,12 @@ namespace os
         static constexpr bool is_integer = __base::is_integer;
         static constexpr bool is_exact = __base::is_exact;
         static constexpr int radix = __base::radix;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return __base::epsilon();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return __base::round_error();
@@ -747,22 +747,22 @@ namespace os
         static constexpr bool has_signaling_NaN = __base::has_signaling_NaN;
         static constexpr float_denorm_style has_denorm = __base::has_denorm;
         static constexpr bool has_denorm_loss = __base::has_denorm_loss;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return __base::infinity();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return __base::quiet_NaN();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return __base::signaling_NaN();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return __base::denorm_min();
@@ -831,17 +831,17 @@ namespace os
         typedef _Tp type;
       public:
         static constexpr bool is_specialized = __base::is_specialized;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return __base::min();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return __base::max();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return __base::lowest();
@@ -854,12 +854,12 @@ namespace os
         static constexpr bool is_integer = __base::is_integer;
         static constexpr bool is_exact = __base::is_exact;
         static constexpr int radix = __base::radix;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return __base::epsilon();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return __base::round_error();
@@ -875,22 +875,22 @@ namespace os
         static constexpr bool has_signaling_NaN = __base::has_signaling_NaN;
         static constexpr float_denorm_style has_denorm = __base::has_denorm;
         static constexpr bool has_denorm_loss = __base::has_denorm_loss;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return __base::infinity();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return __base::quiet_NaN();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return __base::signaling_NaN();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return __base::denorm_min();
@@ -959,17 +959,17 @@ namespace os
         typedef _Tp type;
       public:
         static constexpr bool is_specialized = __base::is_specialized;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         min() noexcept
         {
           return __base::min();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         max() noexcept
         {
           return __base::max();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         lowest() noexcept
         {
           return __base::lowest();
@@ -982,12 +982,12 @@ namespace os
         static constexpr bool is_integer = __base::is_integer;
         static constexpr bool is_exact = __base::is_exact;
         static constexpr int radix = __base::radix;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         epsilon() noexcept
         {
           return __base::epsilon();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         round_error() noexcept
         {
           return __base::round_error();
@@ -1003,22 +1003,22 @@ namespace os
         static constexpr bool has_signaling_NaN = __base::has_signaling_NaN;
         static constexpr float_denorm_style has_denorm = __base::has_denorm;
         static constexpr bool has_denorm_loss = __base::has_denorm_loss;
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         infinity() noexcept
         {
           return __base::infinity();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         quiet_NaN() noexcept
         {
           return __base::quiet_NaN();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         signaling_NaN() noexcept
         {
           return __base::signaling_NaN();
         }
-        __attribute__((always_inline)) static constexpr type
+        __attribute__((always_inline))  static constexpr type
         denorm_min() noexcept
         {
           return __base::denorm_min();

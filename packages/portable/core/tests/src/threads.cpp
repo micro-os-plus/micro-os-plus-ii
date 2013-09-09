@@ -118,8 +118,8 @@ private:
 
 #pragma GCC diagnostic pop
 
-CommonTask::CommonTask(const char* pName)
-    : m_thread(pName, [](CommonTask* pTask)
+CommonTask::CommonTask(const char* pName) :
+    m_thread(pName, [](CommonTask* pTask)
       { pTask->threadMain();}, this, m_stack)
 {
 #if defined(DEBUG)
@@ -236,8 +236,8 @@ auto th2 = [](MultiThreadedTask* pTask)
 
 #pragma GCC diagnostic pop
 
-MultiThreadedTask::MultiThreadedTask(void)
-    : m_thread1("MT1", &threadMain1, this, m_stack1), // with static function
+MultiThreadedTask::MultiThreadedTask(void) :
+    m_thread1("MT1", &threadMain1, this, m_stack1), // with static function
     m_thread2("MT2", th2, this, m_stack2), // with separate lambda
     m_thread3a("MT3A", [](MultiThreadedTask* pTask)
       { pTask->threadMain3(1);}, this, m_stack3a), // with inline lambda with more params

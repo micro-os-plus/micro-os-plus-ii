@@ -230,8 +230,8 @@ namespace os
     inline
     __attribute__((always_inline))
     TimerBase::TimerBase(timer::Element* const pArray,
-        timer::count_t const size)
-        : m_pArray(pArray), m_size(size)
+        timer::count_t const size) :
+        m_pArray(pArray), m_size(size)
     {
 #if defined(DEBUG)
       os::diag::trace.putConstructor();

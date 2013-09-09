@@ -239,8 +239,8 @@ namespace hal
           " msr control, %0       \n"
 
           : // no output
-          : "r" (control) // input
-          : // no clobber
+          : "r" (control)// input
+          :// no clobber
       );
     }
 
@@ -257,8 +257,8 @@ namespace hal
           " mrs %0, ipsr       \n"
 
           : "=r" (result) // output
-          : // no input
-          : // no clobber
+          :// no input
+          :// no clobber
       );
       return (result);
     }
@@ -300,8 +300,8 @@ namespace hal
           " mrs %0, psp       \n"
 
           : "=r" (result) // output
-          : // no input
-          : // no clobber
+          :// no input
+          :// no clobber
       );
       return (result);
     }
@@ -317,8 +317,8 @@ namespace hal
           " msr psp, %0       \n"
 
           : // no output
-          : "r" (topOfProcStack) // input
-          : // no clobber
+          : "r" (topOfProcStack)// input
+          :// no clobber
       );
     }
 
@@ -530,7 +530,7 @@ namespace hal
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M4)
 #pragma GCC diagnostic pop
 
-  // ========================================================================
+  // ==========================================================================
 
 }
   // namespace cortexm

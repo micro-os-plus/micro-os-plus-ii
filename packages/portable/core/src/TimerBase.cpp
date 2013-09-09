@@ -312,8 +312,8 @@ namespace os
     // ========================================================================
 
     TimeoutGuard::TimeoutGuard(timer::ticks_t beginTicks, timer::ticks_t ticks,
-        TimerBase& timer, Thread* pThread)
-        : m_timer(timer), m_pThread(pThread)
+        TimerBase& timer, Thread* pThread) :
+        m_timer(timer), m_pThread(pThread)
     {
       // ----- Critical section begin -----------------------------------------
       os::core::scheduler::InterruptsCriticalSection cs;

@@ -258,7 +258,7 @@ namespace os
 
 #pragma GCC diagnostic pop
 
-      // ------------------------------------------------------------------------
+      // ----------------------------------------------------------------------
 
       template<int Size_T>
         inline
@@ -450,7 +450,7 @@ namespace os
 #endif
         }
 
-      // ========================================================================
+      // ======================================================================
 
       /// \class RecursivePolicy Mutex.h "portable/core/include/Mutex.h"
       /// \ingroup core_synchro
@@ -644,7 +644,7 @@ namespace os
         return false;
       }
 
-      // ========================================================================
+      // ======================================================================
 
       /// \class NonRecursivePolicy Mutex.h "portable/core/include/Mutex.h"
       /// \ingroup core_synchro
@@ -1110,8 +1110,8 @@ namespace os
     template<class Lockable_T>
       inline
       __attribute__((always_inline))
-      TLockGuard<Lockable_T>::TLockGuard(Lockable& lockable)
-          : m_lockable(lockable)
+      TLockGuard<Lockable_T>::TLockGuard(Lockable& lockable) :
+          m_lockable(lockable)
       {
         m_lockable.lock();
       }
@@ -1122,8 +1122,8 @@ namespace os
     template<class Lockable_T>
       inline
       __attribute__((always_inline))
-      TLockGuard<Lockable_T>::TLockGuard(Lockable& lockable, adopt_lock_t)
-          : m_lockable(lockable)
+      TLockGuard<Lockable_T>::TLockGuard(Lockable& lockable, adopt_lock_t) :
+          m_lockable(lockable)
       {
         // nothing to do
       }
@@ -1164,7 +1164,7 @@ namespace os
     using RecursiveMutex = TGenericMutex<scheduler::CriticalSection,
     mutex::TNotifier<>, mutex::RecursivePolicy>;
 
-  // ========================================================================
+  // ==========================================================================
 
   }// namespace core
 } // namespace os

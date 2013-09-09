@@ -82,7 +82,7 @@ namespace hal
 
     }// namespace InterruptHandler
 
-  // ------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
   }// namespace cortexm
 } // namespace hal
 
@@ -124,7 +124,7 @@ namespace hal
     /// After this table each manufacturer adds specific vectors
     /// (see the manufacturer pages).
     __attribute__((section(".core_isr_vectors")))
-    interruptVector_t interruptVectors[] =
+     interruptVector_t interruptVectors[] =
       { //
         // Top of stack
         reinterpret_cast<interruptVector_t>(&__stack),
@@ -162,7 +162,7 @@ namespace hal
 
         };
 
-  // ------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
   }// namespace cortexm3
 } // namespace os

@@ -21,6 +21,7 @@ namespace hal
   namespace cortexm
   {
     // ========================================================================
+
     /// \headerfile SysTick.h "hal/architecture/arm/cortexm/peripheral/include/SysTick.h"
     /// \ingroup arm_cm_systick
     /// \nosubgrouping

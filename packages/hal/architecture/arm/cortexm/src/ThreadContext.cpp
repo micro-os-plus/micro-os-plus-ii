@@ -10,24 +10,11 @@
 
 #if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M) || defined(__DOXYGEN__)
 
-//#include "portable/core/include/OS.h"
-
-//#include "portable/core/include/Platform.h"
-//#include "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
-//#include "portable/infrastructure/include/CppStartup.h"
-//#include "hal/architecture/arm/cortexm/ldscripts/LinkerScript.h"
-//#include "portable/language/cpp/include/iterator.h"
-
 #include "hal/architecture/arm/cortexm/include/ThreadContext.h"
 #include "portable/diagnostics/include/Trace.h"
 #include "portable/language/cpp/include/cassert.h"
 #include "portable/core/include/Scheduler.h"
 #include "portable/core/include/Thread.h"
-
-//#include "hal/architecture/arm/cortexm/include/Cpu.h"
-//#include "portable/core/include/MainThread.h"
-//#include "portable/core/include/Stack.h"
-//#include "portable/core/include/CriticalSections.h"
 
 // ----------------------------------------------------------------------------
 
@@ -60,7 +47,6 @@ namespace hal
     // ========================================================================
 
 #if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
-
 
     hal::arch::stackElement_t** ThreadContext::ms_ppStack;
 
@@ -193,7 +179,6 @@ namespace hal
       // ----- end of critical section ----------------------------------------
     }
 
-#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
     // ========================================================================
 
     namespace InterruptHandler
@@ -260,6 +245,8 @@ namespace hal
       }
 
     } // namespace InterruptHandler
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+
   } // namespace cortexm
 } // namespace hal
 

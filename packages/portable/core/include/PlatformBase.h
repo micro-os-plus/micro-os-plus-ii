@@ -163,7 +163,7 @@ namespace os
 #if defined(DEBUG)
       // When debugging, an aborted program will hang,
       // for the problem to be seen.
-      for(;;)
+      for (;;)
         ;
 #else
       os::architecture.resetSystem();
@@ -188,7 +188,7 @@ namespace os
     /// Display the XCDL defined platform greeting lines (if available)
     /// and then call the architecture function.
     inline void
-     __attribute__((always_inline))
+    __attribute__((always_inline))
     PlatformBase::putGreeting(void)
     {
 #if defined(OS_STRING_PLATFORM_GREETING_FIRST)
@@ -205,10 +205,9 @@ namespace os
     }
 
 #endif // defined(DEBUG)
+  // ==========================================================================
 
-  // ========================================================================
-
-  } // namespace core
+  }// namespace core
 } // namespace os
 
 #endif // OS_PORTABLE_CORE_PLATFORMBASE_H_

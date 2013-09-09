@@ -103,7 +103,6 @@ namespace hal
 
       static hal::arch::stackElement_t** ms_ppStack;
 
-
       /// @} end of name Public member functions
 
     private:
@@ -123,21 +122,21 @@ namespace hal
     }
 
 #if 0
-    /// \details
-    /// TBD
-    inline bool
-    __attribute__((always_inline))
-    ThreadContext::save(void)
+  /// \details
+  /// TBD
+  inline bool
+  __attribute__((always_inline))
+  ThreadContext::save(void)
     {
       // TBD
       return true;
     }
 
-    /// \details
-    /// TBD
-    inline void
-    __attribute__((always_inline))
-    ThreadContext::restore(void)
+  /// \details
+  /// TBD
+  inline void
+  __attribute__((always_inline))
+  ThreadContext::restore(void)
     {
       // TBD
     }
@@ -145,20 +144,20 @@ namespace hal
 
   // ==========================================================================
 
-  }// namespace cortexm
+}
+  // namespace cortexm
 
-  // --------------------------------------------------------------------------
+// --------------==------------------------------------------------------------
 
-  namespace arch
-  {
-#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
-    using ThreadContext = hal::cortexm::ThreadContext;
+namespace arch
+{
+  using ThreadContext = hal::cortexm::ThreadContext;
+}
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-  }
-
-// ==========================================================================
+// --------------==------------------------------------------------------------
 
 }// namspace hal
 

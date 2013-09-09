@@ -30,7 +30,8 @@ namespace os
       _LIBCPP_HIDDEN
       _OutputIterator
       __padAndOutput(_OutputIterator __s, const TChar_T* __ob,
-          const TChar_T* __op, const TChar_T* __oe, ios_base& __iob, TChar_T __fl)
+          const TChar_T* __op, const TChar_T* __oe, ios_base& __iob,
+          TChar_T __fl)
       {
         streamsize length = __oe - __ob;
         streamsize width = __iob.width();

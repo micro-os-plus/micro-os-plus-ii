@@ -49,7 +49,7 @@ namespace os
 
       /// \brief The size of the array to store timer elements.
       static constexpr timer::count_t ARRAY_SIZE =
-          OS_INTEGER_CORE_SCHEDULER_TIMERTICKSSIZE;
+      OS_INTEGER_CORE_SCHEDULER_TIMERTICKSSIZE;
 
       /// @} end of name Types and constants
 

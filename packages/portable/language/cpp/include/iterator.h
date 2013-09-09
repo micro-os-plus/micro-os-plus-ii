@@ -228,7 +228,7 @@ namespace os
 
     template<class _InputIter>
       inline __attribute__((always_inline))
-       typename iterator_traits<_InputIter>::difference_type
+        typename iterator_traits<_InputIter>::difference_type
       __distance(_InputIter __first, _InputIter __last, input_iterator_tag)
       {
         typename iterator_traits<_InputIter>::difference_type __r(0);
@@ -239,7 +239,7 @@ namespace os
 
     template<class _RandIter>
       inline __attribute__((always_inline))
-       typename iterator_traits<_RandIter>::difference_type
+        typename iterator_traits<_RandIter>::difference_type
       __distance(_RandIter __first, _RandIter __last,
           random_access_iterator_tag)
       {
@@ -248,7 +248,7 @@ namespace os
 
     template<class _InputIter>
       inline __attribute__((always_inline))
-       typename iterator_traits<_InputIter>::difference_type
+        typename iterator_traits<_InputIter>::difference_type
       distance(_InputIter __first, _InputIter __last)
       {
         return __distance(__first, __last,
@@ -257,7 +257,7 @@ namespace os
 
     template<class _ForwardIter>
       inline __attribute__((always_inline))
-       _ForwardIter
+        _ForwardIter
       next(_ForwardIter __x,
           typename iterator_traits<_ForwardIter>::difference_type __n = 1,
           typename enable_if<__is_forward_iterator<_ForwardIter>::value>::type* =
@@ -269,7 +269,7 @@ namespace os
 
     template<class _BidiretionalIter>
       inline __attribute__((always_inline))
-       _BidiretionalIter
+        _BidiretionalIter
       prev(_BidiretionalIter __x,
           typename iterator_traits<_BidiretionalIter>::difference_type __n = 1,
           typename enable_if<
@@ -298,54 +298,54 @@ namespace os
         typedef typename iterator_traits<_Iter>::pointer pointer;
 
         __attribute__((always_inline))
-        reverse_iterator()
-            : current()
+        reverse_iterator() :
+            current()
         {
 
         }
 
         __attribute__((always_inline)) explicit
-        reverse_iterator(_Iter __x)
-            : __t(__x), current(__x)
+        reverse_iterator(_Iter __x) :
+            __t(__x), current(__x)
         {
 
         }
 
         template<class _Up>
           __attribute__((always_inline))
-          reverse_iterator(const reverse_iterator<_Up>& __u)
-              : __t(__u.base()), current(__u.base())
+          reverse_iterator(const reverse_iterator<_Up>& __u) :
+              __t(__u.base()), current(__u.base())
           {
 
           }
 
-        __attribute__((always_inline))  _Iter
+        __attribute__((always_inline))   _Iter
         base() const
         {
           return current;
         }
 
-        __attribute__((always_inline))  reference
+        __attribute__((always_inline))   reference
         operator*() const
         {
           __t = current;
           return *--__t;
         }
 
-        __attribute__((always_inline))  pointer
+        __attribute__((always_inline))   pointer
         operator->() const
         {
           return &(operator*());
         }
 
-        __attribute__((always_inline))  reverse_iterator&
+        __attribute__((always_inline))   reverse_iterator&
         operator++()
         {
           --current;
           return *this;
         }
 
-        __attribute__((always_inline))  reverse_iterator
+        __attribute__((always_inline))   reverse_iterator
         operator++(int)
         {
           reverse_iterator __tmp(*this);
@@ -353,14 +353,14 @@ namespace os
           return __tmp;
         }
 
-        __attribute__((always_inline))  reverse_iterator&
+        __attribute__((always_inline))   reverse_iterator&
         operator--()
         {
           ++current;
           return *this;
         }
 
-        __attribute__((always_inline))  reverse_iterator
+        __attribute__((always_inline))   reverse_iterator
         operator--(int)
         {
           reverse_iterator __tmp(*this);
@@ -368,33 +368,33 @@ namespace os
           return __tmp;
         }
 
-        __attribute__((always_inline))  reverse_iterator
+        __attribute__((always_inline))   reverse_iterator
         operator+(difference_type __n) const
         {
           return reverse_iterator(current - __n);
         }
 
-        __attribute__((always_inline))  reverse_iterator&
+        __attribute__((always_inline))   reverse_iterator&
         operator+=(difference_type __n)
         {
           current -= __n;
           return *this;
         }
 
-        __attribute__((always_inline))  reverse_iterator
+        __attribute__((always_inline))   reverse_iterator
         operator-(difference_type __n) const
         {
           return reverse_iterator(current + __n);
         }
 
-        __attribute__((always_inline))  reverse_iterator&
+        __attribute__((always_inline))   reverse_iterator&
         operator-=(difference_type __n)
         {
           current += __n;
           return *this;
         }
 
-        __attribute__((always_inline))  reference
+        __attribute__((always_inline))   reference
         operator[](difference_type __n) const
         {
           return current[-__n - 1];
@@ -457,7 +457,7 @@ namespace os
 
     template<class _Iter1, class _Iter2>
       inline __attribute__((always_inline))
-       typename reverse_iterator<_Iter1>::difference_type
+        typename reverse_iterator<_Iter1>::difference_type
       operator-(const reverse_iterator<_Iter1>& __x,
           const reverse_iterator<_Iter2>& __y)
       {
@@ -466,7 +466,7 @@ namespace os
 
     template<class _Iter>
       inline __attribute__((always_inline))
-       reverse_iterator<_Iter>
+        reverse_iterator<_Iter>
       operator+(typename reverse_iterator<_Iter>::difference_type __n,
           const reverse_iterator<_Iter>& __x)
       {
@@ -483,14 +483,14 @@ namespace os
         typedef _Container container_type;
 
         __attribute__((always_inline)) explicit
-        back_insert_iterator(_Container& __x)
-            : container(&__x)
+        back_insert_iterator(_Container& __x) :
+            container(&__x)
         {
           ;
         }
 
         __attribute__((always_inline))
-         back_insert_iterator&
+          back_insert_iterator&
         operator=(const typename _Container::value_type& __value_)
         {
           container->push_back(__value_);
@@ -507,21 +507,21 @@ namespace os
           }
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
         __attribute__((always_inline))
-         back_insert_iterator&
+          back_insert_iterator&
         operator*()
         {
           return *this;
         }
 
         __attribute__((always_inline))
-         back_insert_iterator&
+          back_insert_iterator&
         operator++()
         {
           return *this;
         }
 
         __attribute__((always_inline))
-         back_insert_iterator
+          back_insert_iterator
         operator++(int)
         {
           return *this;
@@ -530,7 +530,7 @@ namespace os
 
     template<class _Container>
       inline __attribute__((always_inline))
-       back_insert_iterator<_Container>
+        back_insert_iterator<_Container>
       back_inserter(_Container& __x)
       {
         return back_insert_iterator<_Container>(__x);
@@ -547,14 +547,14 @@ namespace os
         typedef _Container container_type;
 
         __attribute__((always_inline)) explicit
-        front_insert_iterator(_Container& __x)
-            : container(&__x)
+        front_insert_iterator(_Container& __x) :
+            container(&__x)
         {
           ;
         }
 
         __attribute__((always_inline))
-         front_insert_iterator&
+          front_insert_iterator&
         operator=(const typename _Container::value_type& __value_)
         {
           container->push_front(__value_);
@@ -571,21 +571,21 @@ namespace os
           }
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
         __attribute__((always_inline))
-         front_insert_iterator&
+          front_insert_iterator&
         operator*()
         {
           return *this;
         }
 
         __attribute__((always_inline))
-         front_insert_iterator&
+          front_insert_iterator&
         operator++()
         {
           return *this;
         }
 
         __attribute__((always_inline))
-         front_insert_iterator
+          front_insert_iterator
         operator++(int)
         {
           return *this;
@@ -594,7 +594,7 @@ namespace os
 
     template<class _Container>
       inline __attribute__((always_inline))
-       front_insert_iterator<_Container>
+        front_insert_iterator<_Container>
       front_inserter(_Container& __x)
       {
         return front_insert_iterator<_Container>(__x);
@@ -611,13 +611,13 @@ namespace os
         typedef _Container container_type;
 
         __attribute__((always_inline))
-        insert_iterator(_Container& __x, typename _Container::iterator __i)
-            : container(&__x), iter(__i)
+        insert_iterator(_Container& __x, typename _Container::iterator __i) :
+            container(&__x), iter(__i)
         {
           ;
         }
 
-        __attribute__((always_inline))  insert_iterator&
+        __attribute__((always_inline))   insert_iterator&
         operator=(const typename _Container::value_type& __value_)
         {
           iter = container->insert(iter, __value_);
@@ -630,19 +630,19 @@ namespace os
         operator=(typename _Container::value_type&& __value_)
           { iter = container->insert(iter, _VSTD::move(__value_)); ++iter; return *this;}
 #endif  // _LIBCPP_HAS_NO_RVALUE_REFERENCES
-        __attribute__((always_inline))  insert_iterator&
+        __attribute__((always_inline))   insert_iterator&
         operator*()
         {
           return *this;
         }
 
-        __attribute__((always_inline))  insert_iterator&
+        __attribute__((always_inline))   insert_iterator&
         operator++()
         {
           return *this;
         }
 
-        __attribute__((always_inline))  insert_iterator&
+        __attribute__((always_inline))   insert_iterator&
         operator++(int)
         {
           return *this;
@@ -651,7 +651,7 @@ namespace os
 
     template<class _Container>
       inline __attribute__((always_inline))
-       insert_iterator<_Container>
+        insert_iterator<_Container>
       inserter(_Container& __x, typename _Container::iterator __i)
       {
         return insert_iterator<_Container>(__x, __i);
@@ -744,20 +744,20 @@ namespace os
         const char_type* __delim_;
       public:
         __attribute__((always_inline))
-        ostream_iterator(ostream_type& __s)
-            : __out_stream_(&__s), __delim_(0)
+        ostream_iterator(ostream_type& __s) :
+            __out_stream_(&__s), __delim_(0)
         {
           ;
         }
 
         __attribute__((always_inline))
-        ostream_iterator(ostream_type& __s, const TChar_T* __delimiter)
-            : __out_stream_(&__s), __delim_(__delimiter)
+        ostream_iterator(ostream_type& __s, const TChar_T* __delimiter) :
+            __out_stream_(&__s), __delim_(__delimiter)
         {
           ;
         }
 
-        __attribute__((always_inline))  ostream_iterator&
+        __attribute__((always_inline))   ostream_iterator&
         operator=(const _Tp& __value_)
         {
           *__out_stream_ << __value_;
@@ -766,19 +766,19 @@ namespace os
           return *this;
         }
 
-        __attribute__((always_inline))  ostream_iterator&
+        __attribute__((always_inline))   ostream_iterator&
         operator*()
         {
           return *this;
         }
 
-        __attribute__((always_inline))  ostream_iterator&
+        __attribute__((always_inline))   ostream_iterator&
         operator++()
         {
           return *this;
         }
 
-        __attribute__((always_inline))  ostream_iterator&
+        __attribute__((always_inline))   ostream_iterator&
         operator++(int)
         {
           return *this;
@@ -955,113 +955,112 @@ namespace os
         /// \details
         /// Initialise the local pointer to the associated ostream buffer.
         __attribute__((always_inline))
-        ostreambuf_iterator(ostream_type& outs)
-noexcept            : m_pSbuf(outs.rdbuf())
+        ostreambuf_iterator(ostream_type& outs) noexcept : m_pSbuf(outs.rdbuf())
+          {
+          }
+
+        /// \brief Constructor.
+        ///
+        /// \details
+        /// Initialise the local pointer to the given streambuf pointer.
+        __attribute__((always_inline))
+        ostreambuf_iterator(streambuf_type* pSbuf) noexcept
+        : m_pSbuf(pSbuf)
+          {
+          }
+
+        /// @}
+
+        /// \name Operators
+        /// @{
+
+        /// \brief Assignment operator.
+        ///
+        /// \details
+        /// If the streambuf exists, call its `sputc()`.
+        /// In case the call fails, the local pointer is cleared.
+        __attribute__((always_inline))
+        ostreambuf_iterator&
+        operator=(TChar_T c)
+          {
+            if ((m_pSbuf != 0)
+                && traits_type::eq_int_type(m_pSbuf->sputc(c),
+                    traits_type::eof()))
               {
+                // clear pointer to mark failure
+                m_pSbuf = 0;
               }
+            return *this;
+          }
 
-            /// \brief Constructor.
-            ///
-            /// \details
-            /// Initialise the local pointer to the given streambuf pointer.
-            __attribute__((always_inline))
-            ostreambuf_iterator(streambuf_type* pSbuf) noexcept
-            : m_pSbuf(pSbuf)
-              {
-              }
+        /// \brief Indirection operator.
+        ///
+        /// \details
+        /// Nothing to do.
+        __attribute__((always_inline)) ostreambuf_iterator&
+        operator*()
+          {
+            return *this;
+          }
 
-            /// @}
+        /// \brief Pre-increment operator.
+        ///
+        /// \details
+        /// Nothing to do.
+        __attribute__((always_inline)) ostreambuf_iterator&
+        operator++()
+          {
+            return *this;
+          }
 
-            /// \name Operators
-            /// @{
+        /// \brief Post-increment operator.
+        __attribute__((always_inline)) ostreambuf_iterator&
+        ///
+        /// \details
+        /// Nothing to do.
+        operator++(int)
+          {
+            return *this;
+          }
 
-            /// \brief Assignment operator.
-            ///
-            /// \details
-            /// If the streambuf exists, call its `sputc()`.
-            /// In case the call fails, the local pointer is cleared.
-            __attribute__((always_inline))
-            ostreambuf_iterator&
-            operator=(TChar_T c)
-              {
-                if ((m_pSbuf != 0)
-                    && traits_type::eq_int_type(m_pSbuf->sputc(c),
-                        traits_type::eof()))
-                  {
-                    // clear pointer to mark failure
-                    m_pSbuf = 0;
-                  }
-                return *this;
-              }
+        /// @}
 
-            /// \brief Indirection operator.
-            ///
-            /// \details
-            /// Nothing to do.
-            __attribute__((always_inline)) ostreambuf_iterator&
-            operator*()
-              {
-                return *this;
-              }
+        /// \name Member functions
+        /// @{
 
-            /// \brief Pre-increment operator.
-            ///
-            /// \details
-            /// Nothing to do.
-            __attribute__((always_inline)) ostreambuf_iterator&
-            operator++()
-              {
-                return *this;
-              }
-
-            /// \brief Post-increment operator.
-            __attribute__((always_inline)) ostreambuf_iterator&
-            ///
-            /// \details
-            /// Nothing to do.
-            operator++(int)
-              {
-                return *this;
-              }
-
-            /// @}
-
-            /// \name Member functions
-            /// @{
-
-            /// \brief Check if assignments failed.
-            ///
-            /// \par Parameters
-            ///     None.
-            /// \retval true    The pointer is null.
-            /// \retval  false       Otherwise.
-            ///
-            /// \details
-            /// Normally the pointer is assigned during construction and is
-            /// non-null, meaning the ostream is functional.
-            ///
-            /// In case of an error during assignment, this pointer is cleared
-            /// and so this function will be able to report the failure.
-            __attribute__((always_inline))
-            bool
-            failed() const noexcept
-              {
-                return m_pSbuf == 0;
-              }
+        /// \brief Check if assignments failed.
+        ///
+        /// \par Parameters
+        ///     None.
+        /// \retval true    The pointer is null.
+        /// \retval  false       Otherwise.
+        ///
+        /// \details
+        /// Normally the pointer is assigned during construction and is
+        /// non-null, meaning the ostream is functional.
+        ///
+        /// In case of an error during assignment, this pointer is cleared
+        /// and so this function will be able to report the failure.
+        __attribute__((always_inline))
+        bool
+        failed() const noexcept
+          {
+            return m_pSbuf == 0;
+          }
 
 #if !defined(__APPLE__) || \
     (defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && __MAC_OS_X_VERSION_MIN_REQUIRED > __MAC_10_8) || \
     (defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && __IPHONE_OS_VERSION_MIN_REQUIRED > __IPHONE_6_0)
 
-            template<class _Ch, class _Tr>
-            friend _LIBCPP_HIDDEN
-            ostreambuf_iterator<_Ch, _Tr>
-            __pad_and_output(ostreambuf_iterator<_Ch, _Tr> __s, const _Ch* __ob,
-                const _Ch* __op, const _Ch* __oe, ios_base& __iob, _Ch __fl);
+        template<class _Ch, class _Tr>
+        friend _LIBCPP_HIDDEN
+        ostreambuf_iterator<_Ch, _Tr>
+        __pad_and_output(ostreambuf_iterator<_Ch, _Tr> __s, const _Ch* __ob,
+            const _Ch* __op, const _Ch* __oe, ios_base& __iob, _Ch __fl);
 #endif
 
-            /// @}
-          };
+        /// @}
+      };
 
     template<class _Iter>
       class move_iterator
@@ -1081,54 +1080,54 @@ noexcept            : m_pSbuf(outs.rdbuf())
 #endif
 
         __attribute__((always_inline))
-        move_iterator()
-            : __i()
+        move_iterator() :
+            __i()
         {
           ;
         }
 
         __attribute__((always_inline)) explicit
-        move_iterator(_Iter __x)
-            : __i(__x)
+        move_iterator(_Iter __x) :
+            __i(__x)
         {
           ;
         }
 
         template<class _Up>
           __attribute__((always_inline))
-          move_iterator(const move_iterator<_Up>& __u)
-              : __i(__u.base())
+          move_iterator(const move_iterator<_Up>& __u) :
+              __i(__u.base())
           {
             ;
           }
 
-        __attribute__((always_inline))  _Iter
+        __attribute__((always_inline))   _Iter
         base() const
         {
           return __i;
         }
 
-        __attribute__((always_inline))  reference
+        __attribute__((always_inline))   reference
         operator*() const
         {
           return static_cast<reference>(*__i);
         }
 
-        __attribute__((always_inline))  pointer
+        __attribute__((always_inline))   pointer
         operator->() const
         {
           typename iterator_traits<iterator_type>::reference __ref = *__i;
           return &__ref;
         }
 
-        __attribute__((always_inline))  move_iterator&
+        __attribute__((always_inline))   move_iterator&
         operator++()
         {
           ++__i;
           return *this;
         }
 
-        __attribute__((always_inline))  move_iterator
+        __attribute__((always_inline))   move_iterator
         operator++(int)
         {
           move_iterator __tmp(*this);
@@ -1136,14 +1135,14 @@ noexcept            : m_pSbuf(outs.rdbuf())
           return __tmp;
         }
 
-        __attribute__((always_inline))  move_iterator&
+        __attribute__((always_inline))   move_iterator&
         operator--()
         {
           --__i;
           return *this;
         }
 
-        __attribute__((always_inline))  move_iterator
+        __attribute__((always_inline))   move_iterator
         operator--(int)
         {
           move_iterator __tmp(*this);
@@ -1151,33 +1150,33 @@ noexcept            : m_pSbuf(outs.rdbuf())
           return __tmp;
         }
 
-        __attribute__((always_inline))  move_iterator
+        __attribute__((always_inline))   move_iterator
         operator+(difference_type __n) const
         {
           return move_iterator(__i + __n);
         }
 
-        __attribute__((always_inline))  move_iterator&
+        __attribute__((always_inline))   move_iterator&
         operator+=(difference_type __n)
         {
           __i += __n;
           return *this;
         }
 
-        __attribute__((always_inline))  move_iterator
+        __attribute__((always_inline))   move_iterator
         operator-(difference_type __n) const
         {
           return move_iterator(__i - __n);
         }
 
-        __attribute__((always_inline))  move_iterator&
+        __attribute__((always_inline))   move_iterator&
         operator-=(difference_type __n)
         {
           __i -= __n;
           return *this;
         }
 
-        __attribute__((always_inline))  reference
+        __attribute__((always_inline))   reference
         operator[](difference_type __n) const
         {
           return static_cast<reference>(__i[__n]);
@@ -1240,7 +1239,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
 
     template<class _Iter1, class _Iter2>
       inline __attribute__((always_inline))
-       typename move_iterator<_Iter1>::difference_type
+        typename move_iterator<_Iter1>::difference_type
       operator-(const move_iterator<_Iter1>& __x,
           const move_iterator<_Iter2>& __y)
       {
@@ -1249,7 +1248,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
 
     template<class _Iter>
       inline __attribute__((always_inline))
-       move_iterator<_Iter>
+        move_iterator<_Iter>
       operator+(typename move_iterator<_Iter>::difference_type __n,
           const move_iterator<_Iter>& __x)
       {
@@ -1258,7 +1257,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
 
     template<class _Iter>
       inline __attribute__((always_inline))
-       move_iterator<_Iter>
+        move_iterator<_Iter>
       make_move_iterator(const _Iter& __i)
       {
         return move_iterator<_Iter>(__i);
@@ -1307,13 +1306,13 @@ noexcept            : m_pSbuf(outs.rdbuf())
 
     template<class _Iter1, class _Iter2>
       __attribute__((always_inline))
-       typename __wrap_iter<_Iter1>::difference_type
+        typename __wrap_iter<_Iter1>::difference_type
       operator-(const __wrap_iter <_Iter1>&, const __wrap_iter <_Iter2>&)
           noexcept;
 
     template<class _Iter>
       __attribute__((always_inline))
-       __wrap_iter <_Iter>
+        __wrap_iter <_Iter>
       operator+(typename __wrap_iter<_Iter>::difference_type,
           __wrap_iter <_Iter>) noexcept;
 
@@ -1335,7 +1334,7 @@ noexcept            : m_pSbuf(outs.rdbuf())
 
     template<class _Tp>
       __attribute__((always_inline))
-       typename enable_if<
+        typename enable_if<
           is_trivially_copy_assignable<_Tp>::value, _Tp*>::type
       __unwrap_iter(__wrap_iter <_Tp*>);
 
@@ -1363,189 +1362,188 @@ noexcept            : m_pSbuf(outs.rdbuf())
           __attribute__((always_inline))
           __wrap_iter(const __wrap_iter <_Up>& __u,
               typename enable_if<is_convertible<_Up, iterator_type>::value>::type* =
-                  0)
-noexcept              : __i(__u.base())
-                {
+                  0) noexcept : __i(__u.base())
+            {
 #if _LIBCPP_DEBUG_LEVEL >= 2
-                  __get_db()->__iterator_copy(this, &__u);
+              __get_db()->__iterator_copy(this, &__u);
 #endif
-                }
+            }
 #if _LIBCPP_DEBUG_LEVEL >= 2
-              __attribute__((always_inline))
-              __wrap_iter(const __wrap_iter& __x)
-              : __i(__x.base())
+          __attribute__((always_inline))
+          __wrap_iter(const __wrap_iter& __x)
+          : __i(__x.base())
+            {
+              __get_db()->__iterator_copy(this, &__x);
+            }
+          __attribute__((always_inline))
+          __wrap_iter& operator=(const __wrap_iter& __x)
+            {
+              if (this != &__x)
                 {
                   __get_db()->__iterator_copy(this, &__x);
+                  __i = __x.__i;
                 }
-              __attribute__((always_inline))
-              __wrap_iter& operator=(const __wrap_iter& __x)
-                {
-                  if (this != &__x)
-                    {
-                      __get_db()->__iterator_copy(this, &__x);
-                      __i = __x.__i;
-                    }
-                  return *this;
-                }
-              __attribute__((always_inline))
-              ~__wrap_iter()
-                {
-                  __get_db()->__erase_i(this);
-                }
+              return *this;
+            }
+          __attribute__((always_inline))
+          ~__wrap_iter()
+            {
+              __get_db()->__erase_i(this);
+            }
 #endif
 
-              __attribute__((always_inline))
-              reference
-              operator*() const noexcept
-                {
+          __attribute__((always_inline))
+          reference
+          operator*() const noexcept
+            {
 #if _LIBCPP_DEBUG_LEVEL >= 2
-                  _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
-                      "Attempted to dereference a non-dereferenceable iterator");
+              _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
+                  "Attempted to dereference a non-dereferenceable iterator");
 #endif
-                  return *__i;
-                }
+              return *__i;
+            }
 
-              __attribute__((always_inline))
-              pointer
-              operator->() const noexcept
-                {
-                  return &(operator*());
-                }
+          __attribute__((always_inline))
+          pointer
+          operator->() const noexcept
+            {
+              return &(operator*());
+            }
 
-              __attribute__((always_inline))
-              __wrap_iter&
-              operator++() noexcept
-                {
+          __attribute__((always_inline))
+          __wrap_iter&
+          operator++() noexcept
+            {
 #if _LIBCPP_DEBUG_LEVEL >= 2
-                  _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
-                      "Attempted to increment non-incrementable iterator");
+              _LIBCPP_ASSERT(__get_const_db()->__dereferenceable(this),
+                  "Attempted to increment non-incrementable iterator");
 #endif
-                  ++__i;
-                  return *this;
-                }
+              ++__i;
+              return *this;
+            }
 
-              __attribute__((always_inline))
-              __wrap_iter
-              operator++(int) noexcept
-                {
-                  __wrap_iter __tmp(*this); ++(*this);
-                  return __tmp;
-                }
+          __attribute__((always_inline))
+          __wrap_iter
+          operator++(int) noexcept
+            {
+              __wrap_iter __tmp(*this); ++(*this);
+              return __tmp;
+            }
 
-              __attribute__((always_inline))
-              __wrap_iter&
-              operator--() noexcept
-                {
+          __attribute__((always_inline))
+          __wrap_iter&
+          operator--() noexcept
+            {
 #if _LIBCPP_DEBUG_LEVEL >= 2
-                  _LIBCPP_ASSERT(__get_const_db()->__decrementable(this),
-                      "Attempted to decrement non-decrementable iterator");
+              _LIBCPP_ASSERT(__get_const_db()->__decrementable(this),
+                  "Attempted to decrement non-decrementable iterator");
 #endif
-                  --__i;
-                  return *this;
-                }
+              --__i;
+              return *this;
+            }
 
-              __attribute__((always_inline)) __wrap_iter operator--(int) noexcept
-                { __wrap_iter __tmp(*this); --(*this); return __tmp;}
+          __attribute__((always_inline)) __wrap_iter operator--(int) noexcept
+            { __wrap_iter __tmp(*this); --(*this); return __tmp;}
 
-              __attribute__((always_inline)) __wrap_iter operator+ (difference_type __n) const noexcept
-                { __wrap_iter __w(*this); __w += __n; return __w;}
+          __attribute__((always_inline)) __wrap_iter operator+ (difference_type __n) const noexcept
+            { __wrap_iter __w(*this); __w += __n; return __w;}
 
-              __attribute__((always_inline)) __wrap_iter& operator+=(difference_type __n) noexcept
-                {
+          __attribute__((always_inline)) __wrap_iter& operator+=(difference_type __n) noexcept
+            {
 #if _LIBCPP_DEBUG_LEVEL >= 2
-                  _LIBCPP_ASSERT(__get_const_db()->__addable(this, __n),
-                      "Attempted to add/subtract iterator outside of valid range");
+              _LIBCPP_ASSERT(__get_const_db()->__addable(this, __n),
+                  "Attempted to add/subtract iterator outside of valid range");
 #endif
-                  __i += __n;
-                  return *this;
-                }
+              __i += __n;
+              return *this;
+            }
 
-              __attribute__((always_inline)) __wrap_iter operator- (difference_type __n) const noexcept
-                { return *this + (-__n);}
+          __attribute__((always_inline)) __wrap_iter operator- (difference_type __n) const noexcept
+            { return *this + (-__n);}
 
-              __attribute__((always_inline)) __wrap_iter& operator-=(difference_type __n) noexcept
-                { *this += -__n; return *this;}
+          __attribute__((always_inline)) __wrap_iter& operator-=(difference_type __n) noexcept
+            { *this += -__n; return *this;}
 
-              __attribute__((always_inline)) reference operator[](difference_type __n) const noexcept
-                {
+          __attribute__((always_inline)) reference operator[](difference_type __n) const noexcept
+            {
 #if _LIBCPP_DEBUG_LEVEL >= 2
-                  _LIBCPP_ASSERT(__get_const_db()->__subscriptable(this, __n),
-                      "Attempted to subscript iterator outside of valid range");
+              _LIBCPP_ASSERT(__get_const_db()->__subscriptable(this, __n),
+                  "Attempted to subscript iterator outside of valid range");
 #endif
-                  return __i[__n];
-                }
+              return __i[__n];
+            }
 
-              __attribute__((always_inline)) iterator_type base() const noexcept
-                { return __i;}
+          __attribute__((always_inline)) iterator_type base() const noexcept
+            { return __i;}
 
-            private:
-              __attribute__((always_inline)) __wrap_iter(iterator_type __x) noexcept : __i(__x)
-                {}
+        private:
+          __attribute__((always_inline)) __wrap_iter(iterator_type __x) noexcept : __i(__x)
+            {}
 #if _LIBCPP_DEBUG_LEVEL >= 2
-              __attribute__((always_inline)) __wrap_iter(const void* __p, iterator_type __x) : __i(__x)
-                {
-                  __get_db()->__insert_ic(this, __p);
-                }
+          __attribute__((always_inline)) __wrap_iter(const void* __p, iterator_type __x) : __i(__x)
+            {
+              __get_db()->__insert_ic(this, __p);
+            }
 #endif
 
-              template <class _Up> friend class __wrap_iter;
-              template <class TChar_T, class TTraits_T, class _Alloc> friend class basic_string;
-              template <class _Tp, class _Alloc> friend class vector;
+          template <class _Up> friend class __wrap_iter;
+          template <class TChar_T, class TTraits_T, class _Alloc> friend class basic_string;
+          template <class _Tp, class _Alloc> friend class vector;
 
-              template <class _Iter1, class _Iter2>
-              friend
-              bool
-              operator==(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
+          template <class _Iter1, class _Iter2>
+          friend
+          bool
+          operator==(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
 
-              template <class _Iter1, class _Iter2>
-              friend
-              bool
-              operator<(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
+          template <class _Iter1, class _Iter2>
+          friend
+          bool
+          operator<(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
 
-              template <class _Iter1, class _Iter2>
-              friend
-              bool
-              operator!=(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
+          template <class _Iter1, class _Iter2>
+          friend
+          bool
+          operator!=(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
 
-              template <class _Iter1, class _Iter2>
-              friend
-              bool
-              operator>(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
+          template <class _Iter1, class _Iter2>
+          friend
+          bool
+          operator>(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
 
-              template <class _Iter1, class _Iter2>
-              friend
-              bool
-              operator>=(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
+          template <class _Iter1, class _Iter2>
+          friend
+          bool
+          operator>=(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
 
-              template <class _Iter1, class _Iter2>
-              friend
-              bool
-              operator<=(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
+          template <class _Iter1, class _Iter2>
+          friend
+          bool
+          operator<=(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
 
-              template <class _Iter1, class _Iter2>
-              friend
-              typename __wrap_iter<_Iter1>::difference_type
-              operator-(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
+          template <class _Iter1, class _Iter2>
+          friend
+          typename __wrap_iter<_Iter1>::difference_type
+          operator-(const __wrap_iter<_Iter1>&, const __wrap_iter<_Iter2>&) noexcept;
 
-              template <class _Iter1>
-              friend
-              __wrap_iter<_Iter1>
-              operator+(typename __wrap_iter<_Iter1>::difference_type, __wrap_iter<_Iter1>) noexcept;
+          template <class _Iter1>
+          friend
+          __wrap_iter<_Iter1>
+          operator+(typename __wrap_iter<_Iter1>::difference_type, __wrap_iter<_Iter1>) noexcept;
 
-              template <class _Ip, class _Op> friend _Op copy(_Ip, _Ip, _Op);
-              template <class _B1, class _B2> friend _B2 copy_backward(_B1, _B1, _B2);
-              template <class _Ip, class _Op> friend _Op move(_Ip, _Ip, _Op);
-              template <class _B1, class _B2> friend _B2 move_backward(_B1, _B1, _B2);
+          template <class _Ip, class _Op> friend _Op copy(_Ip, _Ip, _Op);
+          template <class _B1, class _B2> friend _B2 copy_backward(_B1, _B1, _B2);
+          template <class _Ip, class _Op> friend _Op move(_Ip, _Ip, _Op);
+          template <class _B1, class _B2> friend _B2 move_backward(_B1, _B1, _B2);
 
-              template <class _Tp>
-              friend
-              typename enable_if
-              <
-              is_trivially_copy_assignable<_Tp>::value,
-              _Tp*
-              >::type
-              __unwrap_iter(__wrap_iter<_Tp*>);
-            };
+          template <class _Tp>
+          friend
+          typename enable_if
+          <
+          is_trivially_copy_assignable<_Tp>::value,
+          _Tp*
+          >::type
+          __unwrap_iter(__wrap_iter<_Tp*>);
+        };
 
     template<class _Iter1, class _Iter2>
       inline __attribute__((always_inline))
@@ -1647,7 +1645,7 @@ noexcept              : __i(__u.base())
 
     template<class _Iter1, class _Iter2>
       inline __attribute__((always_inline))
-       typename __wrap_iter<_Iter1>::difference_type
+        typename __wrap_iter<_Iter1>::difference_type
       operator-(const __wrap_iter <_Iter1>& __x,
           const __wrap_iter <_Iter2>& __y) noexcept
       {
@@ -1660,7 +1658,7 @@ noexcept              : __i(__u.base())
 
     template<class _Iter>
       inline __attribute__((always_inline))
-       __wrap_iter <_Iter>
+        __wrap_iter <_Iter>
       operator+(typename __wrap_iter<_Iter>::difference_type __n,
           __wrap_iter <_Iter> __x) noexcept
       {
@@ -2130,7 +2128,7 @@ noexcept              : __i(__u.base())
 #else  // !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_TRAILING_RETURN)
     template<class _Cp>
       inline __attribute__((always_inline))
-       typename _Cp::iterator
+        typename _Cp::iterator
       begin(_Cp& __c)
       {
         return __c.begin();
@@ -2138,7 +2136,7 @@ noexcept              : __i(__u.base())
 
     template<class _Cp>
       inline __attribute__((always_inline))
-       typename _Cp::const_iterator
+        typename _Cp::const_iterator
       begin(const _Cp& __c)
       {
         return __c.begin();
@@ -2146,7 +2144,7 @@ noexcept              : __i(__u.base())
 
     template<class _Cp>
       inline __attribute__((always_inline))
-       typename _Cp::iterator
+        typename _Cp::iterator
       end(_Cp& __c)
       {
         return __c.end();
@@ -2154,7 +2152,7 @@ noexcept              : __i(__u.base())
 
     template<class _Cp>
       inline __attribute__((always_inline))
-       typename _Cp::const_iterator
+        typename _Cp::const_iterator
       end(const _Cp& __c)
       {
         return __c.end();
@@ -2163,7 +2161,7 @@ noexcept              : __i(__u.base())
 #endif  // !defined(_LIBCPP_HAS_NO_RVALUE_REFERENCES) && !defined(_LIBCPP_HAS_NO_TRAILING_RETURN)
     template<class _Tp, size_t _Np>
       inline __attribute__((always_inline))
-       _Tp*
+        _Tp*
       begin(_Tp (&__array)[_Np])
       {
         return __array;
@@ -2171,7 +2169,7 @@ noexcept              : __i(__u.base())
 
     template<class _Tp, size_t _Np>
       inline __attribute__((always_inline))
-       _Tp*
+        _Tp*
       end(_Tp (&__array)[_Np])
       {
         return __array + _Np;

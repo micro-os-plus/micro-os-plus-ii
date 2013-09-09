@@ -97,7 +97,8 @@ namespace hal
         static constexpr reg32_t Enable = (1 << CtrlBit::Enable);
         static constexpr reg32_t TickInterruptEnable = (1
             << CtrlBit::TickInterruptEnable);
-        static constexpr reg32_t ClockSourceCore = (1 << CtrlBit::ClockSourceCore);
+        static constexpr reg32_t ClockSourceCore = (1
+            << CtrlBit::ClockSourceCore);
         static constexpr reg32_t CountFlag = (1 << CtrlBit::CountFlag);
       };
 

@@ -383,12 +383,12 @@ namespace std
 #define _VSTD std::_LIBCPP_NAMESPACE
 
 namespace std
+{
+  namespace _LIBCPP_NAMESPACE
   {
-    namespace _LIBCPP_NAMESPACE
-      {
-      }
-    using namespace _LIBCPP_NAMESPACE __attribute__((__strong__));
   }
+  using namespace _LIBCPP_NAMESPACE__attribute__((__strong__));
+}
 
 #else
 
@@ -423,8 +423,8 @@ namespace std
 #define _VSTD std
 
 namespace std
-  {
-  }
+{
+}
 
 #endif // __clang__ || __GNUC___ || _MSC_VER
 #ifdef _LIBCPP_HAS_NO_UNICODE_CHARS
@@ -438,12 +438,12 @@ template<bool>
 struct __static_assert_test;
 template<>
 struct __static_assert_test<true>
-  {
-  };
+{
+};
 template<unsigned>
 struct __static_assert_check
-  {
-  };
+{
+};
 #define static_assert(__b, __m) \
     typedef __static_assert_check<sizeof(__static_assert_test<(__b)>)> \
     _LIBCPP_CONCAT(__t, __LINE__)

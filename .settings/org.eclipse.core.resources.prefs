@@ -8,6 +8,7 @@ encoding//packages/hal/platform/synthetic/osx/meta/xcdl.py=utf-8
 encoding//packages/meta/xcdl.py=utf-8
 encoding//packages/portable/core/meta/greeting.py=utf-8
 encoding//packages/portable/core/meta/xcdl.py=utf-8
+encoding//packages/portable/core/tests/meta/sleepstress-stm32h103-config.py=utf-8
 encoding//packages/portable/core/tests/meta/threads-config.py=utf-8
 encoding//packages/portable/core/tests/meta/threads-linux-config.py=utf-8
 encoding//packages/portable/core/tests/meta/threads-osx-config.py=utf-8

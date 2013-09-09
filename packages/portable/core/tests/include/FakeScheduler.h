@@ -84,7 +84,7 @@ namespace os
 
       /// \brief Constant with the maximum number of user threads.
       constexpr threadCount_t MAX_USER_THREADS =
-          OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS;
+      OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS;
 
     }
 

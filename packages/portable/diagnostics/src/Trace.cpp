@@ -29,10 +29,10 @@ namespace os
 
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_STREAMS) || defined(__DOXYGEN__)
 
-    template class TTraceStreambufBase<TraceImplementation> ;
-    template class TTraceOstreamBase<TraceStreambuf, TraceImplementation> ;
+    template class TTraceStreambufBase<TraceImplementation>;
+    template class TTraceOstreamBase<TraceStreambuf, TraceImplementation>;
 
-    template class TTraceBase<TraceOstreamBase, TraceImplementation> ;
+    template class TTraceBase<TraceOstreamBase, TraceImplementation>;
 
 #endif
 
@@ -72,9 +72,8 @@ namespace os
       os::diag::trace.putNewLine();
     }
 
-#endif // DEBUG
-// ============================================================================
-
+#endif // defined(DEBUG)
+  // ==========================================================================
   }
 // namespace diag
 }// namespace os

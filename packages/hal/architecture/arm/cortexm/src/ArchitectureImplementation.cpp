@@ -13,17 +13,13 @@
 //#include "portable/core/include/OS.h"
 
 #include "portable/core/include/Platform.h"
+#include "portable/core/include/MainThread.h"
 #include "hal/architecture/arm/cortexm/include/ArchitectureImplementation.h"
 #include "portable/infrastructure/include/CppStartup.h"
 #include "hal/architecture/arm/cortexm/ldscripts/LinkerScript.h"
-//#include "portable/language/cpp/include/iterator.h"
 #include "portable/diagnostics/include/Trace.h"
-//#include "portable/core/include/Scheduler.h"
-//#include "portable/core/include/Thread.h"
 #include "hal/architecture/arm/cortexm/include/Cpu.h"
-#include "portable/core/include/MainThread.h"
-//#include "portable/core/include/Stack.h"
-//#include "portable/core/include/CriticalSections.h"
+#include "portable/language/cpp/include/abort.h"
 
 // ----------------------------------------------------------------------------
 
@@ -31,7 +27,7 @@ namespace hal
 {
   namespace cortexm
   {
-    // ------------------------------------------------------------------------
+    // ========================================================================
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
     void
@@ -42,31 +38,34 @@ namespace hal
     }
 #endif
 
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
+
     void
     ArchitectureImplementation::initialiseScheduler(void)
-    {
+      {
 #if defined(DEBUG)
-      os::diag::trace.putString(__PRETTY_FUNCTION__);
-      os::diag::trace.putNewLine();
+        os::diag::trace.putString(__PRETTY_FUNCTION__);
+        os::diag::trace.putNewLine();
 #endif
-      // The first context switch will be executed within the context
-      // of the main thread, so the first time when the context is saved
-      // onto the stack, the cached pointer shall be initialised with
-      // the main thread context.
-      ThreadContext::ms_ppStack = os::mainThread.getContext().getPPStack();
+        // The first context switch will be executed within the context
+        // of the main thread, so the first time when the context is saved
+        // onto the stack, the cached pointer shall be initialised with
+        // the main thread context.
+        ThreadContext::ms_ppStack = os::mainThread.getContext().getPPStack();
 
-      // Make PendSV the lowest priority interrupts (same for SysTick)
-      // portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
-      (*((volatile unsigned long *) 0xe000ed20)) |=
-          (((unsigned long) configKERNEL_INTERRUPT_PRIORITY) << 16UL );
+        // Make PendSV the lowest priority interrupts (same for SysTick)
+        // portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
+        (*((volatile unsigned long *) 0xe000ed20)) |=
+        (((unsigned long) configKERNEL_INTERRUPT_PRIORITY) << 16UL);
 
-      // Disable base priority (allow all interrupts).
-      Cpu::setBASEPRI(0);
+        // Disable base priority (allow all interrupts).
+        Cpu::setBASEPRI(0);
 
-      // Set the master interrupts enable bit.
-      Cpu::enableInterrupts();
-    }
+        // Set the master interrupts enable bit.
+        Cpu::enableInterrupts();
+      }
 
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
     void
     ArchitectureImplementation::resetWatchdog(void)
     {
@@ -147,11 +146,12 @@ namespace hal
           }
 #endif
 
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER) || defined(__DOXYGEN__)
         // early call, used to avoid further context creation
         os::mainThread.start();
 
         os::core::stack::element_t* pspStack =
-            os::mainThread.getStack().getTopAligned(8);
+        os::mainThread.getStack().getTopAligned(8);
 
 #if defined(DEBUG)
 
@@ -163,6 +163,7 @@ namespace hal
 #endif
 
         Cpu::setPSP((uint32_t) pspStack);
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 
         // Switch to the PSP (the alternate stack)
         Cpu::setCONTROL(Cpu::getCONTROL() | 0x2);

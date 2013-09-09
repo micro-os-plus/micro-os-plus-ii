@@ -156,8 +156,8 @@ namespace os
 
         __attribute__((always_inline))
         explicit
-        __negate(_Predicate __p)
-            : __p_(__p)
+        __negate(_Predicate __p) :
+            __p_(__p)
         {
         }
 
@@ -300,7 +300,7 @@ namespace os
 
     template<class _InputIterator, class _Function>
       inline __attribute__((always_inline))
-      _Function
+       _Function
       for_each(_InputIterator __first, _InputIterator __last, _Function __f)
       {
         for (; __first != __last; ++__first)
@@ -312,7 +312,7 @@ namespace os
 
     template<class _InputIterator, class _Tp>
       inline __attribute__((always_inline))
-      _InputIterator
+       _InputIterator
       find(_InputIterator __first, _InputIterator __last, const _Tp& __value_)
       {
         for (; __first != __last; ++__first)
@@ -325,7 +325,7 @@ namespace os
 
     template<class _InputIterator, class _Predicate>
       inline __attribute__((always_inline))
-      _InputIterator
+       _InputIterator
       find_if(_InputIterator __first, _InputIterator __last, _Predicate __pred)
       {
         for (; __first != __last; ++__first)
@@ -338,7 +338,7 @@ namespace os
 
     template<class _InputIterator, class _Predicate>
       inline __attribute__((always_inline))
-      _InputIterator
+       _InputIterator
       find_if_not(_InputIterator __first, _InputIterator __last,
           _Predicate __pred)
       {
@@ -482,7 +482,7 @@ namespace os
     template<class _ForwardIterator1, class _ForwardIterator2,
         class _BinaryPredicate>
       inline __attribute__((always_inline))
-      _ForwardIterator1
+       _ForwardIterator1
       find_end(_ForwardIterator1 __first1, _ForwardIterator1 __last1,
           _ForwardIterator2 __first2, _ForwardIterator2 __last2,
           _BinaryPredicate __pred)
@@ -496,7 +496,7 @@ namespace os
 
     template<class _ForwardIterator1, class _ForwardIterator2>
       inline __attribute__((always_inline))
-      _ForwardIterator1
+       _ForwardIterator1
       find_end(_ForwardIterator1 __first1, _ForwardIterator1 __last1,
           _ForwardIterator2 __first2, _ForwardIterator2 __last2)
       {
@@ -524,7 +524,7 @@ namespace os
 
     template<class _ForwardIterator1, class _ForwardIterator2>
       inline __attribute__((always_inline))
-      _ForwardIterator1
+       _ForwardIterator1
       find_first_of(_ForwardIterator1 __first1, _ForwardIterator1 __last1,
           _ForwardIterator2 __first2, _ForwardIterator2 __last2)
       {
@@ -538,7 +538,7 @@ namespace os
 
     template<class _ForwardIterator, class _BinaryPredicate>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       adjacent_find(_ForwardIterator __first, _ForwardIterator __last,
           _BinaryPredicate __pred)
       {
@@ -557,7 +557,7 @@ namespace os
 
     template<class _ForwardIterator>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       adjacent_find(_ForwardIterator __first, _ForwardIterator __last)
       {
         typedef typename iterator_traits<_ForwardIterator>::value_type __v;
@@ -568,36 +568,38 @@ namespace os
 
     template<class _InputIterator, class _Tp>
       inline __attribute__((always_inline))
-      typename iterator_traits<_InputIterator>::difference_type
+       typename iterator_traits<
+          _InputIterator>::difference_type
       count(_InputIterator __first, _InputIterator __last, const _Tp& __value_)
-        {
-          typename iterator_traits<_InputIterator>::difference_type __r(0);
-          for (; __first != __last; ++__first)
+      {
+        typename iterator_traits<_InputIterator>::difference_type __r(0);
+        for (; __first != __last; ++__first)
           if (*__first == __value_)
-          ++__r;
-          return __r;
-        }
+            ++__r;
+        return __r;
+      }
 
-      // count_if
+    // count_if
 
     template<class _InputIterator, class _Predicate>
       inline __attribute__((always_inline))
-      typename iterator_traits<_InputIterator>::difference_type
+       typename iterator_traits<
+          _InputIterator>::difference_type
       count_if(_InputIterator __first, _InputIterator __last, _Predicate __pred)
-        {
-          typename iterator_traits<_InputIterator>::difference_type __r(0);
-          for (; __first != __last; ++__first)
+      {
+        typename iterator_traits<_InputIterator>::difference_type __r(0);
+        for (; __first != __last; ++__first)
           if (__pred(*__first))
-          ++__r;
-          return __r;
-        }
+            ++__r;
+        return __r;
+      }
 
-      // mismatch
+    // mismatch
 
     template<class _InputIterator1, class _InputIterator2,
         class _BinaryPredicate>
       inline __attribute__((always_inline))
-      pair<_InputIterator1, _InputIterator2>
+       pair<_InputIterator1, _InputIterator2>
       mismatch(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _BinaryPredicate __pred)
       {
@@ -609,7 +611,7 @@ namespace os
 
     template<class _InputIterator1, class _InputIterator2>
       inline __attribute__((always_inline))
-      pair<_InputIterator1, _InputIterator2>
+       pair<_InputIterator1, _InputIterator2>
       mismatch(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2)
       {
@@ -865,7 +867,7 @@ namespace os
     template<class _ForwardIterator1, class _ForwardIterator2,
         class _BinaryPredicate>
       inline __attribute__((always_inline))
-      _ForwardIterator1
+       _ForwardIterator1
       search(_ForwardIterator1 __first1, _ForwardIterator1 __last1,
           _ForwardIterator2 __first2, _ForwardIterator2 __last2,
           _BinaryPredicate __pred)
@@ -879,7 +881,7 @@ namespace os
 
     template<class _ForwardIterator1, class _ForwardIterator2>
       inline __attribute__((always_inline))
-      _ForwardIterator1
+       _ForwardIterator1
       search(_ForwardIterator1 __first1, _ForwardIterator1 __last1,
           _ForwardIterator2 __first2, _ForwardIterator2 __last2)
       {
@@ -975,7 +977,7 @@ namespace os
     template<class _ForwardIterator, class _Size, class _Tp,
         class _BinaryPredicate>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       search_n(_ForwardIterator __first, _ForwardIterator __last, _Size __count,
           const _Tp& __value_, _BinaryPredicate __pred)
       {
@@ -987,7 +989,7 @@ namespace os
 
     template<class _ForwardIterator, class _Size, class _Tp>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       search_n(_ForwardIterator __first, _ForwardIterator __last, _Size __count,
           const _Tp& __value_)
       {
@@ -1018,7 +1020,7 @@ namespace os
 
     template<class _Iter>
       inline __attribute__((always_inline))
-      _Iter
+       _Iter
       __unwrap_iter(_Iter __i)
       {
         return __i;
@@ -1026,31 +1028,25 @@ namespace os
 
     template<class _Tp>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      is_trivially_copy_assignable<_Tp>::value,
-      _Tp*
-      >::type
+       typename enable_if<
+          is_trivially_copy_assignable<_Tp>::value, _Tp*>::type
       __unwrap_iter(move_iterator<_Tp*> __i)
-        {
-          return __i.base();
-        }
+      {
+        return __i.base();
+      }
 
     template<class _Tp>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      is_trivially_copy_assignable<_Tp>::value,
-      _Tp*
-      >::type
-      __unwrap_iter(__wrap_iter<_Tp*> __i)
-        {
-          return __i.base();
-        }
+       typename enable_if<
+          is_trivially_copy_assignable<_Tp>::value, _Tp*>::type
+      __unwrap_iter(__wrap_iter <_Tp*> __i)
+      {
+        return __i.base();
+      }
 
     template<class _InputIterator, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       __copy(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result)
       {
@@ -1061,22 +1057,19 @@ namespace os
 
     template<class _Tp, class _Up>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      is_same<typename remove_const<_Tp>::type, _Up>::value &&
-      is_trivially_copy_assignable<_Up>::value,
-      _Up*
-      >::type
+       typename enable_if<
+          is_same<typename remove_const<_Tp>::type, _Up>::value
+              && is_trivially_copy_assignable<_Up>::value, _Up*>::type
       __copy(_Tp* __first, _Tp* __last, _Up* __result)
-        {
-          const size_t __n = static_cast<size_t>(__last - __first);
-          os::std::memmove(__result, __first, __n * sizeof(_Up));
-          return __result + __n;
-        }
+      {
+        const size_t __n = static_cast<size_t>(__last - __first);
+        os::std::memmove(__result, __first, __n * sizeof(_Up));
+        return __result + __n;
+      }
 
     template<class _InputIterator, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       copy(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result)
       {
@@ -1088,7 +1081,7 @@ namespace os
 
     template<class _BidirectionalIterator, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       __copy_backward(_BidirectionalIterator __first,
           _BidirectionalIterator __last, _OutputIterator __result)
       {
@@ -1099,23 +1092,20 @@ namespace os
 
     template<class _Tp, class _Up>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      is_same<typename remove_const<_Tp>::type, _Up>::value &&
-      is_trivially_copy_assignable<_Up>::value,
-      _Up*
-      >::type
+       typename enable_if<
+          is_same<typename remove_const<_Tp>::type, _Up>::value
+              && is_trivially_copy_assignable<_Up>::value, _Up*>::type
       __copy_backward(_Tp* __first, _Tp* __last, _Up* __result)
-        {
-          const size_t __n = static_cast<size_t>(__last - __first);
-          __result -= __n;
-          os::std::memmove(__result, __first, __n * sizeof(_Up));
-          return __result;
-        }
+      {
+        const size_t __n = static_cast<size_t>(__last - __first);
+        __result -= __n;
+        os::std::memmove(__result, __first, __n * sizeof(_Up));
+        return __result;
+      }
 
     template<class _BidirectionalIterator1, class _BidirectionalIterator2>
       inline __attribute__((always_inline))
-      _BidirectionalIterator2
+       _BidirectionalIterator2
       copy_backward(_BidirectionalIterator1 __first,
           _BidirectionalIterator1 __last, _BidirectionalIterator2 __result)
       {
@@ -1127,7 +1117,7 @@ namespace os
 
     template<class _InputIterator, class _OutputIterator, class _Predicate>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       copy_if(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result, _Predicate __pred)
       {
@@ -1146,45 +1136,40 @@ namespace os
 
     template<class _InputIterator, class _Size, class _OutputIterator>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      __is_input_iterator<_InputIterator>::value &&
-      !__is_random_access_iterator<_InputIterator>::value,
-      _OutputIterator
-      >::type
+       typename enable_if<
+          __is_input_iterator<_InputIterator>::value
+              && !__is_random_access_iterator<_InputIterator>::value,
+          _OutputIterator>::type
       copy_n(_InputIterator __first, _Size __n, _OutputIterator __result)
-        {
-          if (__n > 0)
-            {
-              *__result = *__first;
-              ++__result;
-              for (--__n; __n > 0; --__n)
-                {
-                  ++__first;
-                  *__result = *__first;
-                  ++__result;
-                }
-            }
-          return __result;
-        }
+      {
+        if (__n > 0)
+          {
+            *__result = *__first;
+            ++__result;
+            for (--__n; __n > 0; --__n)
+              {
+                ++__first;
+                *__result = *__first;
+                ++__result;
+              }
+          }
+        return __result;
+      }
 
     template<class _InputIterator, class _Size, class _OutputIterator>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      __is_random_access_iterator<_InputIterator>::value,
-      _OutputIterator
-      >::type
+       typename enable_if<
+          __is_random_access_iterator<_InputIterator>::value, _OutputIterator>::type
       copy_n(_InputIterator __first, _Size __n, _OutputIterator __result)
-        {
-          return os::std::copy(__first, __first + __n, __result);
-        }
+      {
+        return os::std::copy(__first, __first + __n, __result);
+      }
 
-      // move
+    // move
 
     template<class _InputIterator, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       __move(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result)
       {
@@ -1195,22 +1180,19 @@ namespace os
 
     template<class _Tp, class _Up>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      is_same<typename remove_const<_Tp>::type, _Up>::value &&
-      is_trivially_copy_assignable<_Up>::value,
-      _Up*
-      >::type
+       typename enable_if<
+          is_same<typename remove_const<_Tp>::type, _Up>::value
+              && is_trivially_copy_assignable<_Up>::value, _Up*>::type
       __move(_Tp* __first, _Tp* __last, _Up* __result)
-        {
-          const size_t __n = static_cast<size_t>(__last - __first);
-          os::std::memmove(__result, __first, __n * sizeof(_Up));
-          return __result + __n;
-        }
+      {
+        const size_t __n = static_cast<size_t>(__last - __first);
+        os::std::memmove(__result, __first, __n * sizeof(_Up));
+        return __result + __n;
+      }
 
     template<class _InputIterator, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       move(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result)
       {
@@ -1222,7 +1204,7 @@ namespace os
 
     template<class _InputIterator, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       __move_backward(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result)
       {
@@ -1233,23 +1215,20 @@ namespace os
 
     template<class _Tp, class _Up>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      is_same<typename remove_const<_Tp>::type, _Up>::value &&
-      is_trivially_copy_assignable<_Up>::value,
-      _Up*
-      >::type
+       typename enable_if<
+          is_same<typename remove_const<_Tp>::type, _Up>::value
+              && is_trivially_copy_assignable<_Up>::value, _Up*>::type
       __move_backward(_Tp* __first, _Tp* __last, _Up* __result)
-        {
-          const size_t __n = static_cast<size_t>(__last - __first);
-          __result -= __n;
-          os::std::memmove(__result, __first, __n * sizeof(_Up));
-          return __result;
-        }
+      {
+        const size_t __n = static_cast<size_t>(__last - __first);
+        __result -= __n;
+        os::std::memmove(__result, __first, __n * sizeof(_Up));
+        return __result;
+      }
 
     template<class _BidirectionalIterator1, class _BidirectionalIterator2>
       inline __attribute__((always_inline))
-      _BidirectionalIterator2
+       _BidirectionalIterator2
       move_backward(_BidirectionalIterator1 __first,
           _BidirectionalIterator1 __last, _BidirectionalIterator2 __result)
       {
@@ -1265,7 +1244,7 @@ namespace os
 
     template<class _InputIterator, class _OutputIterator, class _UnaryOperation>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       transform(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result, _UnaryOperation __op)
       {
@@ -1277,7 +1256,7 @@ namespace os
     template<class _InputIterator1, class _InputIterator2,
         class _OutputIterator, class _BinaryOperation>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       transform(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _OutputIterator __result,
           _BinaryOperation __binary_op)
@@ -1317,7 +1296,7 @@ namespace os
 
     template<class _InputIterator, class _OutputIterator, class _Tp>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       replace_copy(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result, const _Tp& __old_value,
           const _Tp& __new_value)
@@ -1335,7 +1314,7 @@ namespace os
     template<class _InputIterator, class _OutputIterator, class _Predicate,
         class _Tp>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       replace_copy_if(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result, _Predicate __pred, const _Tp& __new_value)
       {
@@ -1351,7 +1330,7 @@ namespace os
 
     template<class _OutputIterator, class _Size, class _Tp>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       __fill_n(_OutputIterator __first, _Size __n, const _Tp& __value_,
           false_type)
       {
@@ -1362,7 +1341,7 @@ namespace os
 
     template<class _OutputIterator, class _Size, class _Tp>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       __fill_n(_OutputIterator __first, _Size __n, const _Tp& __value_,
           true_type)
       {
@@ -1373,7 +1352,7 @@ namespace os
 
     template<class _OutputIterator, class _Size, class _Tp>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       fill_n(_OutputIterator __first, _Size __n, const _Tp& __value_)
       {
         return os::std::__fill_n(__first, __n, __value_,
@@ -1430,7 +1409,7 @@ namespace os
 
     template<class _OutputIterator, class _Size, class _Generator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       generate_n(_OutputIterator __first, _Size __n, _Generator __gen)
       {
         for (; __n > 0; ++__first, --__n)
@@ -1490,7 +1469,7 @@ namespace os
 
     template<class _InputIterator, class _OutputIterator, class _Tp>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       remove_copy(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result, const _Tp& __value_)
       {
@@ -1509,7 +1488,7 @@ namespace os
 
     template<class _InputIterator, class _OutputIterator, class _Predicate>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       remove_copy_if(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result, _Predicate __pred)
       {
@@ -1549,7 +1528,7 @@ namespace os
 
     template<class _ForwardIterator>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       unique(_ForwardIterator __first, _ForwardIterator __last)
       {
         typedef typename iterator_traits<_ForwardIterator>::value_type __v;
@@ -1627,7 +1606,7 @@ namespace os
 
     template<class _InputIterator, class _OutputIterator, class _BinaryPredicate>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       unique_copy(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result, _BinaryPredicate __pred)
       {
@@ -1640,7 +1619,7 @@ namespace os
 
     template<class _InputIterator, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       unique_copy(_InputIterator __first, _InputIterator __last,
           _OutputIterator __result)
       {
@@ -1690,7 +1669,7 @@ namespace os
 
     template<class _BidirectionalIterator, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       reverse_copy(_BidirectionalIterator __first,
           _BidirectionalIterator __last, _OutputIterator __result)
       {
@@ -1765,7 +1744,7 @@ namespace os
 
     template<typename _Integral>
       inline __attribute__((always_inline))
-      _Integral
+       _Integral
       __gcd(_Integral __x, _Integral __y)
       {
         do
@@ -1817,7 +1796,7 @@ namespace os
 
     template<class _ForwardIterator>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       __rotate(_ForwardIterator __first, _ForwardIterator __middle,
           _ForwardIterator __last, os::std::forward_iterator_tag)
       {
@@ -1832,7 +1811,7 @@ namespace os
 
     template<class _BidirectionalIterator>
       inline __attribute__((always_inline))
-      _BidirectionalIterator
+       _BidirectionalIterator
       __rotate(_BidirectionalIterator __first, _BidirectionalIterator __middle,
           _BidirectionalIterator __last, os::std::bidirectional_iterator_tag)
       {
@@ -1849,7 +1828,7 @@ namespace os
 
     template<class _RandomAccessIterator>
       inline __attribute__((always_inline))
-      _RandomAccessIterator
+       _RandomAccessIterator
       __rotate(_RandomAccessIterator __first, _RandomAccessIterator __middle,
           _RandomAccessIterator __last, os::std::random_access_iterator_tag)
       {
@@ -1867,7 +1846,7 @@ namespace os
 
     template<class _ForwardIterator>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       rotate(_ForwardIterator __first, _ForwardIterator __middle,
           _ForwardIterator __last)
       {
@@ -1883,7 +1862,7 @@ namespace os
 
     template<class _ForwardIterator, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       rotate_copy(_ForwardIterator __first, _ForwardIterator __middle,
           _ForwardIterator __last, _OutputIterator __result)
       {
@@ -1895,7 +1874,7 @@ namespace os
 
     template<class _ForwardIterator, class _Compare>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       min_element(_ForwardIterator __first, _ForwardIterator __last,
           _Compare __comp)
       {
@@ -1911,7 +1890,7 @@ namespace os
 
     template<class _ForwardIterator>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       min_element(_ForwardIterator __first, _ForwardIterator __last)
       {
         return os::std::min_element(__first, __last,
@@ -1922,7 +1901,7 @@ namespace os
 
     template<class _Tp, class _Compare>
       inline __attribute__((always_inline))
-      const _Tp&
+       const _Tp&
       min(const _Tp& __a, const _Tp& __b, _Compare __comp)
       {
         return __comp(__b, __a) ? __b : __a;
@@ -1930,7 +1909,7 @@ namespace os
 
     template<class _Tp>
       inline __attribute__((always_inline))
-      const _Tp&
+       const _Tp&
       min(const _Tp& __a, const _Tp& __b)
       {
         return os::std::min(__a, __b, __less<_Tp>());
@@ -1939,17 +1918,17 @@ namespace os
 #ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
     template<class _Tp, class _Compare>
-      inline __attribute__((always_inline))
-      _Tp
-      min(initializer_list<_Tp> __t, _Compare __comp)
+    inline __attribute__((always_inline))
+    _Tp
+    min(initializer_list<_Tp> __t, _Compare __comp)
       {
         return *os::std::min_element(__t.begin(), __t.end(), __comp);
       }
 
     template<class _Tp>
-      inline __attribute__((always_inline))
-      _Tp
-      min(initializer_list<_Tp> __t)
+    inline __attribute__((always_inline))
+    _Tp
+    min(initializer_list<_Tp> __t)
       {
         return *os::std::min_element(__t.begin(), __t.end());
       }
@@ -1959,7 +1938,7 @@ namespace os
 
     template<class _ForwardIterator, class _Compare>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       max_element(_ForwardIterator __first, _ForwardIterator __last,
           _Compare __comp)
       {
@@ -1975,7 +1954,7 @@ namespace os
 
     template<class _ForwardIterator>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       max_element(_ForwardIterator __first, _ForwardIterator __last)
       {
         return os::std::max_element(__first, __last,
@@ -1986,7 +1965,7 @@ namespace os
 
     template<class _Tp, class _Compare>
       inline __attribute__((always_inline))
-      const _Tp&
+       const _Tp&
       max(const _Tp& __a, const _Tp& __b, _Compare __comp)
       {
         return __comp(__a, __b) ? __b : __a;
@@ -1994,7 +1973,7 @@ namespace os
 
     template<class _Tp>
       inline __attribute__((always_inline))
-      const _Tp&
+       const _Tp&
       max(const _Tp& __a, const _Tp& __b)
       {
         return os::std::max(__a, __b, __less<_Tp>());
@@ -2003,17 +1982,17 @@ namespace os
 #ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
     template<class _Tp, class _Compare>
-      inline __attribute__((always_inline))
-      _Tp
-      max(initializer_list<_Tp> __t, _Compare __comp)
+    inline __attribute__((always_inline))
+    _Tp
+    max(initializer_list<_Tp> __t, _Compare __comp)
       {
         return *os::std::max_element(__t.begin(), __t.end(), __comp);
       }
 
     template<class _Tp>
-      inline __attribute__((always_inline))
-      _Tp
-      max(initializer_list<_Tp> __t)
+    inline __attribute__((always_inline))
+    _Tp
+    max(initializer_list<_Tp> __t)
       {
         return *os::std::max_element(__t.begin(), __t.end());
       }
@@ -2072,7 +2051,8 @@ namespace os
 
     template<class _ForwardIterator>
       inline __attribute__((always_inline))
-      std::pair<_ForwardIterator, _ForwardIterator>
+       std::pair<_ForwardIterator,
+          _ForwardIterator>
       minmax_element(_ForwardIterator __first, _ForwardIterator __last)
       {
         return os::std::minmax_element(__first, __last,
@@ -2083,7 +2063,7 @@ namespace os
 
     template<class _Tp, class _Compare>
       inline __attribute__((always_inline))
-      pair<const _Tp&, const _Tp&>
+       pair<const _Tp&, const _Tp&>
       minmax(const _Tp& __a, const _Tp& __b, _Compare __comp)
       {
         return
@@ -2094,7 +2074,7 @@ namespace os
 
     template<class _Tp>
       inline __attribute__((always_inline))
-      pair<const _Tp&, const _Tp&>
+       pair<const _Tp&, const _Tp&>
       minmax(const _Tp& __a, const _Tp& __b)
       {
         return os::std::minmax(__a, __b, __less<_Tp>());
@@ -2103,9 +2083,9 @@ namespace os
 #ifndef _LIBCPP_HAS_NO_GENERALIZED_INITIALIZERS
 
     template<class _Tp>
-      inline __attribute__((always_inline))
-      pair<_Tp, _Tp>
-      minmax(initializer_list<_Tp> __t)
+    inline __attribute__((always_inline))
+    pair<_Tp, _Tp>
+    minmax(initializer_list<_Tp> __t)
       {
         pair<const _Tp*, const _Tp*> __p = os::std::minmax_element(__t.begin(),
             __t.end());
@@ -2113,9 +2093,9 @@ namespace os
       }
 
     template<class _Tp, class _Compare>
-      inline __attribute__((always_inline))
-      pair<_Tp, _Tp>
-      minmax(initializer_list<_Tp> __t, _Compare __comp)
+    inline __attribute__((always_inline))
+    pair<_Tp, _Tp>
+    minmax(initializer_list<_Tp> __t, _Compare __comp)
       {
         pair<const _Tp*, const _Tp*> __p = os::std::minmax_element(__t.begin(),
             __t.end(), __comp);
@@ -2179,10 +2159,10 @@ namespace os
 
 #ifdef _LIBCPP_HAS_NO_CONSTEXPR
         static const _Working_result_type _Rp = _Engine::_Max - _Engine::_Min
-        + _Working_result_type(1);
+            + _Working_result_type(1);
 #else
         static constexpr const _Working_result_type _Rp = _Engine::max()
-            - _Engine::min() + _Working_result_type(1);
+        - _Engine::min() + _Working_result_type(1);
 #endif
         static constexpr const size_t __m =
             __log2<_Working_result_type, _Rp>::value;
@@ -2212,8 +2192,8 @@ namespace os
 #if !defined(__DOXYGEN__)
     template<class _Engine, class _UIntType>
       __independent_bits_engine<_Engine, _UIntType>::__independent_bits_engine(
-          _Engine& __e, size_t __w)
-          : __e_(__e), __w_(__w)
+          _Engine& __e, size_t __w) :
+          __e_(__e), __w_(__w)
       {
         __n_ = __w_ / __m + (__w_ % __m != 0);
         __w0_ = __w_ / __n_;
@@ -2291,7 +2271,6 @@ namespace os
       }
 
 #endif // !defined(__DOXYGEN__)
-
     // uniform_int_distribution
 
     template<class _IntType = int>
@@ -2310,8 +2289,8 @@ namespace os
 
           explicit
           param_type(result_type __a = 0,
-              result_type __b = numeric_limits<result_type>::max())
-              : __a_(__a), __b_(__b)
+              result_type __b = numeric_limits<result_type>::max()) :
+              __a_(__a), __b_(__b)
           {
           }
 
@@ -2345,13 +2324,13 @@ namespace os
         // constructors and reset functions
         explicit
         uniform_int_distribution(result_type __a = 0, result_type __b =
-            numeric_limits<result_type>::max())
-            : __p_(param_type(__a, __b))
+            numeric_limits<result_type>::max()) :
+            __p_(param_type(__a, __b))
         {
         }
         explicit
-        uniform_int_distribution(const param_type& __p)
-            : __p_(__p)
+        uniform_int_distribution(const param_type& __p) :
+            __p_(__p)
         {
         }
         void
@@ -2448,8 +2427,8 @@ namespace os
 
     class __rs_default;
 
-    __rs_default          __rs_get();
-class    __rs_default
+    __rs_default           __rs_get();
+    class __rs_default
     {
       static unsigned __c_;
 
@@ -2477,13 +2456,14 @@ class    __rs_default
         return _Max;
       }
 
-      friend __rs_default          __rs_get();
-}      ;
+      friend __rs_default           __rs_get();
+    };
 
-    __rs_default          __rs_get();
-template<    class _RandomAccessIterator>
-    void
-    random_shuffle(_RandomAccessIterator __first, _RandomAccessIterator __last)
+    __rs_default           __rs_get();
+    template<class _RandomAccessIterator>
+      void
+      random_shuffle(_RandomAccessIterator __first,
+          _RandomAccessIterator __last)
       {
         typedef typename iterator_traits<_RandomAccessIterator>::difference_type difference_type;
         typedef uniform_int_distribution<ptrdiff_t> _Dp;
@@ -2492,12 +2472,12 @@ template<    class _RandomAccessIterator>
         if (__d > 1)
           {
             _Dp __uid;
-            __rs_default __g = __rs_get();
+            __rs_default  __g = __rs_get();
             for (--__last, --__d; __first < __last; ++__first, --__d)
               {
                 difference_type __i = __uid(__g, _Pp(0, __d));
                 if (__i != difference_type(0))
-                swap(*__first, *(__first + __i));
+                  swap(*__first, *(__first + __i));
               }
           }
       }
@@ -2617,7 +2597,7 @@ template<    class _RandomAccessIterator>
 
     template<class _ForwardIterator, class _Predicate>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       partition(_ForwardIterator __first, _ForwardIterator __last,
           _Predicate __pred)
       {
@@ -2703,8 +2683,8 @@ template<    class _RandomAccessIterator>
         if (__len <= __p.second)
           {   // The buffer is big enough to use
             typedef typename iterator_traits<_ForwardIterator>::value_type value_type;
-            __destruct_n          __d(0); unique_ptr
-            <value_type, __destruct_n &> __h(__p.first, __d);
+            __destruct_n           __d(0);
+            unique_ptr<value_type, __destruct_n &> __h(__p.first, __d);
             // Move the falses into the temporary buffer, and the trues to the front of the line
             // Update __first to always point to the end of the trues
             value_type* __t = __p.first;
@@ -2842,8 +2822,8 @@ template<    class _RandomAccessIterator>
         if (__len <= __p.second)
           {   // The buffer is big enough to use
             typedef typename iterator_traits<_BidirectionalIterator>::value_type value_type;
-            __destruct_n          __d(0); unique_ptr
-            <value_type, __destruct_n &> __h(__p.first, __d);
+            __destruct_n           __d(0);
+            unique_ptr<value_type, __destruct_n &> __h(__p.first, __d);
             // Move the falses into the temporary buffer, and the trues to the front of the line
             // Update __first to always point to the end of the trues
             value_type* __t = __p.first;
@@ -2968,7 +2948,7 @@ template<    class _RandomAccessIterator>
 
     template<class _ForwardIterator, class _Predicate>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       stable_partition(_ForwardIterator __first, _ForwardIterator __last,
           _Predicate __pred)
       {
@@ -3000,7 +2980,7 @@ template<    class _RandomAccessIterator>
 
     template<class _ForwardIterator>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       is_sorted_until(_ForwardIterator __first, _ForwardIterator __last)
       {
         return os::std::is_sorted_until(__first, __last,
@@ -3254,26 +3234,28 @@ template<    class _RandomAccessIterator>
         typedef typename iterator_traits<_BirdirectionalIterator>::value_type value_type;
         if (__first1 != __last1)
           {
-            __destruct_n          __d(0); unique_ptr<value_type, __destruct_n&> __h(__first2, __d);
+            __destruct_n           __d(0);
+            unique_ptr<value_type, __destruct_n &> __h(__first2, __d);
             value_type* __last2 = __first2;
-            ::new(__last2) value_type(os::std::move(*__first1));
-            __d.__incr((value_type*)0);
+            ::new (__last2) value_type(os::std::move(*__first1));
+            __d.__incr((value_type*) 0);
             for (++__last2; ++__first1 != __last1; ++__last2)
               {
                 value_type* __j2 = __last2;
                 value_type* __i2 = __j2;
                 if (__comp(*__first1, *--__i2))
                   {
-                    ::new(__j2) value_type(os::std::move(*__i2));
-                    __d.__incr((value_type*)0);
-                    for (--__j2; __i2 != __first2 && __comp(*__first1, *--__i2); --__j2)
-                    *__j2 = os::std::move(*__i2);
+                    ::new (__j2) value_type(os::std::move(*__i2));
+                    __d.__incr((value_type*) 0);
+                    for (--__j2; __i2 != __first2 && __comp(*__first1, *--__i2);
+                        --__j2)
+                      *__j2 = os::std::move(*__i2);
                     *__j2 = os::std::move(*__first1);
                   }
                 else
                   {
-                    ::new(__j2) value_type(os::std::move(*__first1));
-                    __d.__incr((value_type*)0);
+                    ::new (__j2) value_type(os::std::move(*__first1));
+                    __d.__incr((value_type*) 0);
                   }
               }
             __h.release();
@@ -3631,7 +3613,7 @@ template<    class _RandomAccessIterator>
 
     template<class _ForwardIterator, class _Tp, class _Compare>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       lower_bound(_ForwardIterator __first, _ForwardIterator __last,
           const _Tp& __value_, _Compare __comp)
       {
@@ -3647,7 +3629,7 @@ template<    class _RandomAccessIterator>
 
     template<class _ForwardIterator, class _Tp>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       lower_bound(_ForwardIterator __first, _ForwardIterator __last,
           const _Tp& __value_)
       {
@@ -3682,7 +3664,7 @@ template<    class _RandomAccessIterator>
 
     template<class _ForwardIterator, class _Tp, class _Compare>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       upper_bound(_ForwardIterator __first, _ForwardIterator __last,
           const _Tp& __value_, _Compare __comp)
       {
@@ -3698,7 +3680,7 @@ template<    class _RandomAccessIterator>
 
     template<class _ForwardIterator, class _Tp>
       inline __attribute__((always_inline))
-      _ForwardIterator
+       _ForwardIterator
       upper_bound(_ForwardIterator __first, _ForwardIterator __last,
           const _Tp& __value_)
       {
@@ -3743,7 +3725,8 @@ template<    class _RandomAccessIterator>
 
     template<class _ForwardIterator, class _Tp, class _Compare>
       inline __attribute__((always_inline))
-      pair<_ForwardIterator, _ForwardIterator>
+       pair<_ForwardIterator,
+          _ForwardIterator>
       equal_range(_ForwardIterator __first, _ForwardIterator __last,
           const _Tp& __value_, _Compare __comp)
       {
@@ -3759,7 +3742,8 @@ template<    class _RandomAccessIterator>
 
     template<class _ForwardIterator, class _Tp>
       inline __attribute__((always_inline))
-      pair<_ForwardIterator, _ForwardIterator>
+       pair<_ForwardIterator,
+          _ForwardIterator>
       equal_range(_ForwardIterator __first, _ForwardIterator __last,
           const _Tp& __value_)
       {
@@ -3835,7 +3819,7 @@ template<    class _RandomAccessIterator>
     template<class _InputIterator1, class _InputIterator2,
         class _OutputIterator, class _Compare>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       merge(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _InputIterator2 __last2,
           _OutputIterator __result, _Compare __comp)
@@ -3853,7 +3837,7 @@ template<    class _RandomAccessIterator>
 
     template<class _InputIterator1, class _InputIterator2, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       merge(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _InputIterator2 __last2,
           _OutputIterator __result)
@@ -3880,8 +3864,8 @@ template<    class _RandomAccessIterator>
         typedef typename iterator_traits<_BidirectionalIterator>::difference_type difference_type;
         typedef typename iterator_traits<_BidirectionalIterator>::pointer pointer;
 #endif
-        __destruct_n          __d(0); unique_ptr
-        <value_type, __destruct_n &> __h2(__buff, __d);
+        __destruct_n           __d(0);
+        unique_ptr<value_type, __destruct_n &> __h2(__buff, __d);
         if (__len1 <= __len2)
           {
             value_type* __p = __buff;
@@ -4037,7 +4021,7 @@ template<    class _RandomAccessIterator>
         typedef typename add_lvalue_reference<__debug_less<_Compare> >::type _Comp_ref;
         __debug_less<_Compare> __c(__comp);
         return os::std::__inplace_merge<_Comp_ref>(__first, __middle, __last, __c, __len1, __len2,
-            __buf.first, __buf.second);
+        __buf.first, __buf.second);
 #else  // _LIBCPP_DEBUG2
         typedef typename add_lvalue_reference<_Compare>::type _Comp_ref;
         return os::std::__inplace_merge<_Comp_ref>(__first, __middle, __last,
@@ -4065,8 +4049,8 @@ template<    class _RandomAccessIterator>
           _Compare __comp)
       {
         typedef typename iterator_traits<_InputIterator1>::value_type value_type;
-        __destruct_n          __d(0); unique_ptr
-        <value_type, __destruct_n &> __h(__result, __d);
+        __destruct_n           __d(0);
+        unique_ptr<value_type, __destruct_n &> __h(__result, __d);
         for (; true; ++__result)
           {
             if (__first1 == __last1)
@@ -4154,24 +4138,25 @@ template<    class _RandomAccessIterator>
           ::new (__first2) value_type(os::std::move(*__first1));
           return;
         case 2:
-          __destruct_n          __d(0); unique_ptr<value_type, __destruct_n&> __h2(__first2, __d);
+          __destruct_n           __d(0);
+          unique_ptr<value_type, __destruct_n &> __h2(__first2, __d);
           if (__comp(*--__last1, *__first1))
             {
-              ::new(__first2) value_type(os::std::move(*__last1));
-              __d.__incr((value_type*)0);
+              ::new (__first2) value_type(os::std::move(*__last1));
+              __d.__incr((value_type*) 0);
               ++__first2;
-              ::new(__first2) value_type(os::std::move(*__first1));
+              ::new (__first2) value_type(os::std::move(*__first1));
             }
           else
             {
-              ::new(__first2) value_type(os::std::move(*__first1));
-              __d.__incr((value_type*)0);
+              ::new (__first2) value_type(os::std::move(*__first1));
+              __d.__incr((value_type*) 0);
               ++__first2;
-              ::new(__first2) value_type(os::std::move(*__last1));
+              ::new (__first2) value_type(os::std::move(*__last1));
             }
           __h2.release();
           return;
-        }
+          }
         if (__len <= 8)
           {
             __insertion_sort_move<_Compare>(__first1, __last1, __first2,
@@ -4226,12 +4211,15 @@ template<    class _RandomAccessIterator>
         _RandomAccessIterator __m = __first + __l2;
         if (__len <= __buff_size)
           {
-            __destruct_n          __d(0); unique_ptr<value_type, __destruct_n&> __h2(__buff, __d);
+            __destruct_n           __d(0);
+            unique_ptr<value_type, __destruct_n &> __h2(__buff, __d);
             __stable_sort_move<_Compare>(__first, __m, __comp, __l2, __buff);
-            __d.__set(__l2, (value_type*)0);
-            __stable_sort_move<_Compare>(__m, __last, __comp, __len - __l2, __buff + __l2);
-            __d.__set(__len, (value_type*)0);
-            __merge_move_assign<_Compare>(__buff, __buff + __l2, __buff + __l2, __buff + __len, __first, __comp);
+            __d.__set(__l2, (value_type*) 0);
+            __stable_sort_move<_Compare>(__m, __last, __comp, __len - __l2,
+                __buff + __l2);
+            __d.__set(__len, (value_type*) 0);
+            __merge_move_assign<_Compare>(__buff, __buff + __l2, __buff + __l2,
+                __buff + __len, __first, __comp);
             //         __merge<_Compare>(move_iterator<value_type*>(__buff),
             //                           move_iterator<value_type*>(__buff + __l2),
             //                           move_iterator<_RandomAccessIterator>(__buff + __l2),
@@ -4315,7 +4303,7 @@ template<    class _RandomAccessIterator>
 
     template<class _RandomAccessIterator>
       inline __attribute__((always_inline))
-      _RandomAccessIterator
+       _RandomAccessIterator
       is_heap_until(_RandomAccessIterator __first, _RandomAccessIterator __last)
       {
         return os::std::is_heap_until(__first, __last,
@@ -4645,7 +4633,7 @@ template<    class _RandomAccessIterator>
 
     template<class _InputIterator, class _RandomAccessIterator, class _Compare>
       inline __attribute__((always_inline))
-      _RandomAccessIterator
+       _RandomAccessIterator
       partial_sort_copy(_InputIterator __first, _InputIterator __last,
           _RandomAccessIterator __result_first,
           _RandomAccessIterator __result_last, _Compare __comp)
@@ -4663,7 +4651,7 @@ template<    class _RandomAccessIterator>
 
     template<class _InputIterator, class _RandomAccessIterator>
       inline __attribute__((always_inline))
-      _RandomAccessIterator
+       _RandomAccessIterator
       partial_sort_copy(_InputIterator __first, _InputIterator __last,
           _RandomAccessIterator __result_first,
           _RandomAccessIterator __result_last)
@@ -4966,7 +4954,7 @@ template<    class _RandomAccessIterator>
     template<class _InputIterator1, class _InputIterator2,
         class _OutputIterator, class _Compare>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       set_union(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _InputIterator2 __last2,
           _OutputIterator __result, _Compare __comp)
@@ -4984,7 +4972,7 @@ template<    class _RandomAccessIterator>
 
     template<class _InputIterator1, class _InputIterator2, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       set_union(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _InputIterator2 __last2,
           _OutputIterator __result)
@@ -5025,7 +5013,7 @@ template<    class _RandomAccessIterator>
     template<class _InputIterator1, class _InputIterator2,
         class _OutputIterator, class _Compare>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       set_intersection(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _InputIterator2 __last2,
           _OutputIterator __result, _Compare __comp)
@@ -5043,7 +5031,7 @@ template<    class _RandomAccessIterator>
 
     template<class _InputIterator1, class _InputIterator2, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       set_intersection(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _InputIterator2 __last2,
           _OutputIterator __result)
@@ -5086,7 +5074,7 @@ template<    class _RandomAccessIterator>
     template<class _InputIterator1, class _InputIterator2,
         class _OutputIterator, class _Compare>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       set_difference(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _InputIterator2 __last2,
           _OutputIterator __result, _Compare __comp)
@@ -5104,7 +5092,7 @@ template<    class _RandomAccessIterator>
 
     template<class _InputIterator1, class _InputIterator2, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       set_difference(_InputIterator1 __first1, _InputIterator1 __last1,
           _InputIterator2 __first2, _InputIterator2 __last2,
           _OutputIterator __result)
@@ -5152,7 +5140,7 @@ template<    class _RandomAccessIterator>
     template<class _InputIterator1, class _InputIterator2,
         class _OutputIterator, class _Compare>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       set_symmetric_difference(_InputIterator1 __first1,
           _InputIterator1 __last1, _InputIterator2 __first2,
           _InputIterator2 __last2, _OutputIterator __result, _Compare __comp)
@@ -5170,7 +5158,7 @@ template<    class _RandomAccessIterator>
 
     template<class _InputIterator1, class _InputIterator2, class _OutputIterator>
       inline __attribute__((always_inline))
-      _OutputIterator
+       _OutputIterator
       set_symmetric_difference(_InputIterator1 __first1,
           _InputIterator1 __last1, _InputIterator2 __first2,
           _InputIterator2 __last2, _OutputIterator __result)
@@ -5342,33 +5330,32 @@ template<    class _RandomAccessIterator>
 
     template<class _Tp>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      is_integral<_Tp>::value,
-      _Tp
-      >::type
+       typename enable_if<
+          is_integral<_Tp>::value, _Tp>::type
       __rotate_left(_Tp __t, _Tp __n = 1)
-        {
-          const unsigned __bits = static_cast<unsigned>(sizeof(_Tp) * __CHAR_BIT__ - 1);
-          __n &= __bits;
-          return static_cast<_Tp>((__t << __n) | (static_cast<typename make_unsigned<_Tp>::type>(__t) >> (__bits - __n)));
-        }
+      {
+        const unsigned __bits = static_cast<unsigned>(sizeof(_Tp) * __CHAR_BIT__
+            - 1);
+        __n &= __bits;
+        return static_cast<_Tp>((__t << __n)
+            | (static_cast<typename make_unsigned<_Tp>::type>(__t)
+                >> (__bits - __n)));
+      }
 
     template<class _Tp>
       inline __attribute__((always_inline))
-      typename enable_if
-      <
-      is_integral<_Tp>::value,
-      _Tp
-      >::type
+       typename enable_if<
+          is_integral<_Tp>::value, _Tp>::type
       __rotate_right(_Tp __t, _Tp __n = 1)
-        {
-          const unsigned __bits = static_cast<unsigned>(sizeof(_Tp) * __CHAR_BIT__ - 1);
-          __n &= __bits;
-          return static_cast<_Tp>((__t << (__bits - __n)) | (static_cast<typename make_unsigned<_Tp>::type>(__t) >> __n));
-        }
+      {
+        const unsigned __bits = static_cast<unsigned>(sizeof(_Tp) * __CHAR_BIT__
+            - 1);
+        __n &= __bits;
+        return static_cast<_Tp>((__t << (__bits - __n))
+            | (static_cast<typename make_unsigned<_Tp>::type>(__t) >> __n));
+      }
 
-    } // namespace std
-  } // namespace os
+  } // namespace std
+} // namespace os
 
 #endif  // OS_PORTABLE_LANGUAGE_CPP_INCLUDE_ALGORITHM_H_

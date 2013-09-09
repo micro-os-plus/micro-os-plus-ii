@@ -55,7 +55,7 @@ namespace hal
 
         /// @} end of name Constructors/destructor
 
-        // ----- Getters --------------------------------------------------------
+        // ----- Getters ------------------------------------------------------
         /// \name Getters
         /// @{
 

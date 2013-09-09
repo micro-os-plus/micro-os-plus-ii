@@ -68,7 +68,7 @@ namespace os
       Stack m_stack
         { nullptr, 0};
 #else
-      TStaticStack<hal::arch::MIN_STACK_SIZE*2> m_stack;
+      TStaticStack<hal::arch::MIN_STACK_SIZE * 2> m_stack;
 #endif
       /// @} end of Private member variables
 
@@ -83,8 +83,8 @@ namespace os
     /// and very low priority.
     /// Using a null stack pointer will prevent creating a new context.
     inline
-    MainThread::MainThread(void)
-        : Thread("main()", nullptr, nullptr, m_stack,
+    MainThread::MainThread(void) :
+        Thread("main()", nullptr, nullptr, m_stack,
             os::core::scheduler::MAIN_PRIORITY)
     {
 #if defined(DEBUG)

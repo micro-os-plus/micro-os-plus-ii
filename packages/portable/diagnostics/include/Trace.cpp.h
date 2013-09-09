@@ -32,15 +32,15 @@ namespace os
     /// \details
     /// Pass the implementation reference to the base streambuf.
     template<class Implementation_T>
-      TTraceStreambufBase<Implementation_T>::TTraceStreambufBase(
-          Implementation& implementation)
-          : m_implementation(implementation)
+    TTraceStreambufBase<Implementation_T>::TTraceStreambufBase(
+        Implementation& implementation)
+    : m_implementation(implementation)
       {
         // Do not call putConstructor() since the stream is not yet ready
       }
 
     template<class Implementation_T>
-      TTraceStreambufBase<Implementation_T>::~TTraceStreambufBase()
+    TTraceStreambufBase<Implementation_T>::~TTraceStreambufBase()
       {
       }
 
@@ -49,8 +49,8 @@ namespace os
     /// parameter can be considered; if different from `traits::eof()`
     /// it is passed to the implementation `write()`.
     template<class Implementation_T>
-      os::std::streambuf::int_type
-      TTraceStreambufBase<Implementation_T>::overflow(int_type c)
+    os::std::streambuf::int_type
+    TTraceStreambufBase<Implementation_T>::overflow(int_type c)
       {
         if (c != traits_type::eof())
           {
@@ -68,9 +68,9 @@ namespace os
     /// and initialise the parent ostream with the pointer to the local
     /// streambuf.
     template<class Streambuf_T, class Implementation_T>
-      TTraceOstreamBase<Streambuf_T, Implementation_T>::TTraceOstreamBase(
-          Implementation& implementation)
-          : m_streambuf(implementation)
+    TTraceOstreamBase<Streambuf_T, Implementation_T>::TTraceOstreamBase(
+        Implementation& implementation)
+    : m_streambuf(implementation)
       {
         init(&m_streambuf);
         // this is the first time the ostream is properly initialised,
@@ -78,7 +78,7 @@ namespace os
       }
 
     template<class Streambuf_T, class Implementation_T>
-      TTraceOstreamBase<Streambuf_T, Implementation_T>::~TTraceOstreamBase()
+    TTraceOstreamBase<Streambuf_T, Implementation_T>::~TTraceOstreamBase()
       {
       }
 
@@ -88,8 +88,8 @@ namespace os
     // TraceBase
 
     template<class Base_T, class Implementation_T>
-      TTraceBase<Base_T, Implementation_T>::TTraceBase()
-          : Base_T(m_implementation)
+      TTraceBase<Base_T, Implementation_T>::TTraceBase() :
+          Base_T(m_implementation)
       {
       }
 
@@ -283,7 +283,7 @@ namespace os
         __putUnsigned(m_implementation, n);
       }
 
-  // ========================================================================
+  // ==========================================================================
 
   }// namespace diag
 } // namespace os

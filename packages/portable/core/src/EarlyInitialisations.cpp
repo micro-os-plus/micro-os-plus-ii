@@ -122,7 +122,7 @@ namespace os
       os::platform.exit();
     }
 
-  // ========================================================================
+  // ==========================================================================
 
   }// namespace core
 } // namespace os
@@ -172,7 +172,6 @@ namespace os
 } // namspace os
 
 #endif // defined(DEBUG)
-
 // ----------------------------------------------------------------------------
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
@@ -229,7 +228,6 @@ namespace os
 } // namespace os
 
 #endif // defined(DEBUG)
-
 // ----------------------------------------------------------------------------
 
 #if defined(DEBUG) || defined(__DOXYGEN__)
@@ -309,11 +307,11 @@ namespace os
   /// \brief A redirection to the current thread error code.
   os::core::Error error;
 
-  /// @} end of ingroup core
+/// @} end of ingroup core
 
 #pragma GCC diagnostic pop
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-}// namespace os
+}  // namespace os
 
 // ----------------------------------------------------------------------------

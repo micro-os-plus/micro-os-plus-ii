@@ -18,7 +18,8 @@ namespace os
 #if defined(DEBUG) || defined(__DOXYGEN__)
 
     void
-    assertFailed(const char* func, const char* file, int lineno, const char* expr)
+    assertFailed(const char* func, const char* file, int lineno,
+        const char* expr)
     {
       os::diag::trace.putString(file);
       os::diag::trace.putChar(':');

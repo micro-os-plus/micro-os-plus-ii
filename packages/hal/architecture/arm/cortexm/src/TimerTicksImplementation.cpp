@@ -59,7 +59,7 @@ namespace hal
       // Make SysTick the lowest priority interrupts (same as PendSV).
       //portNVIC_SYSPRI2_REG |= portNVIC_SYSTICK_PRI;
       (*((volatile unsigned long *) 0xe000ed20)) |=
-          (((unsigned long) configKERNEL_INTERRUPT_PRIORITY) << 24UL );
+          (((unsigned long) configKERNEL_INTERRUPT_PRIORITY) << 24UL);
 
       // According to 'SysTick usage hints and tips'
       // The correct initialisation sequence for the SysTick counter is:
@@ -139,7 +139,7 @@ namespace hal
       }
     } // namespace InterruptHandler
 
-  // ========================================================================
+  // ==========================================================================
 
   }// namespace cortexm
 } // namespace hal

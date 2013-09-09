@@ -118,7 +118,7 @@ runTestAccuracy()
   gettimeofday(&endTime, 0);
 
   long deltaMicros = (endTime.tv_sec - begTime.tv_sec) * 1000000
-      + (endTime.tv_usec - begTime.tv_usec);
+  + (endTime.tv_usec - begTime.tv_usec);
   //int deltaMillis = (int)((deltaMicros + 500) / 1000);
 
   double deltaProcents = (deltaMicros - 1000000) * 100.0 / 1000000.0;
@@ -134,11 +134,10 @@ runTestAccuracy()
 
   ts.assertCondition(((deltaTicks - TICKS_TO_MEASURE_ACCURACY) <= 1));
 
-  ts << os::std::endl << "sleep(" << TICKS_TO_MEASURE_ACCURACY
-      << ") took " << deltaTicks << " ticks";
+  ts << os::std::endl << "sleep(" << TICKS_TO_MEASURE_ACCURACY<< ") took " << deltaTicks << " ticks";
 #if defined(HAS_GETTIMEOFDAY)
   ts << ", " << deltaMicros << " real time micros, accuracy "
-      << (long) (deltaProcents * 1000) << "/1000 %";
+  << (long) (deltaProcents * 1000) << "/1000 %";
 #endif
   ts << os::std::endl;
 
@@ -191,8 +190,8 @@ private:
 
 #pragma GCC diagnostic pop
 
-Task::Task(const char* pName, os::core::stack::size_t stackSizeBytes)
-    : NamedObject(pName), //
+Task::Task(const char* pName, os::core::stack::size_t stackSizeBytes) :
+    NamedObject(pName), //
     m_stack(stackSizeBytes), //
     m_thread(pName, [](Task* pTask)
       { pTask->threadMain();}, this, m_stack)
@@ -324,7 +323,9 @@ runTestMulti()
   for (auto pTask : taskArray)
     {
       ts.setPreconditions(pTask->getName());
-      ts.assertCondition(((pTask->getDeltaTicks() - pTask->getCount()) <= pTask->getSleepCalls()));
+      ts.assertCondition(
+          ((pTask->getDeltaTicks() - pTask->getCount())
+              <= pTask->getSleepCalls()));
     }
 
 }
