@@ -6,16 +6,38 @@
 
 # ---- GNU Tools for ARM Embedded Processors on OS X --------------------------
 Configuration(
-    id='config.os.portable.core.tests.sleep.stm32h103.osx.aep.gcc.debug',
-    name='Debug OS X STM32-H103 Sleep configuration with ARM Embedded GCC',
-    description='Debug build configuration for Sleep.',
+    id='config.os.portable.core.tests.sleep.stm32h103.osx.aep.gcc.debug.sh',
+    name='Semi-hosting Debug OS X STM32-H103 Sleep configuration with ARM Embedded GCC',
+    description='Semi-hosting Debug build configuration for Sleep.',
     
-    buildConfigurationName='stm32h103_osx_aep_gcc_sleep_Debug',
+    buildConfigurationName='stm32h103_osx_aep_gcc_sleep_Debug_sh',
     
-    buildFolder='$(PARENT)/osx/aep/gcc/sleep/Debug',
+    buildFolder='$(PARENT)/osx/aep/gcc/sleep/Debug/sh',
     
     requirements=[
         'enable("DEBUG")',
+        
+        # the semi-hosting trace output
+        'enable("component.os.hal.architecture.arm.cortexm.diagnostics.trace.semihosting")',              
+    ],
+      
+    toolchain='toolchain.osx.arm.ep.gcc.debug',
+),
+
+Configuration(
+    id='config.os.portable.core.tests.sleep.stm32h103.osx.aep.gcc.debug.i2c',
+    name='I2C Debug OS X STM32-H103 Sleep configuration with ARM Embedded GCC',
+    description='I2C Debug build configuration for Sleep.',
+    
+    buildConfigurationName='stm32h103_osx_aep_gcc_sleep_Debug_i2c',
+    
+    buildFolder='$(PARENT)/osx/aep/gcc/sleep/Debug/i2c',
+    
+    requirements=[
+        'enable("DEBUG")',
+        
+        # and the i2c trace output        
+        'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',      
     ],
       
     toolchain='toolchain.osx.arm.ep.gcc.debug',
@@ -36,16 +58,38 @@ Configuration(
       
 # ---- GNU Tools for ARM Embedded Processors on GNU/Linux ---------------------
 Configuration(
-    id='config.os.portable.core.tests.sleep.stm32h103.linux.aep.gcc.debug',
-    name='Debug GNU/Linux STM32-H103 Sleep configuration with ARM Embedded GCC',
-    description='Debug build configuration for Sleep.',
+    id='config.os.portable.core.tests.sleep.stm32h103.linux.aep.gcc.debug.sh',
+    name='Semi-hosting Debug GNU/Linux STM32-H103 Sleep configuration with ARM Embedded GCC',
+    description='Semi-hosting Debug build configuration for Sleep.',
     
-    buildConfigurationName='stm32h103_linux_aep_gcc_sleep_Debug',
+    buildConfigurationName='stm32h103_linux_aep_gcc_sleep_Debug_sh',
     
-    buildFolder='$(PARENT)/linux/aep/gcc/sleep/Debug',
+    buildFolder='$(PARENT)/linux/aep/gcc/sleep/Debug/sh',
     
     requirements=[
         'enable("DEBUG")',
+        
+        # the semi-hosting trace output
+        'enable("component.os.hal.architecture.arm.cortexm.diagnostics.trace.semihosting")',              
+    ],
+      
+    toolchain='toolchain.linux.arm.ep.gcc.debug',
+),
+
+Configuration(
+    id='config.os.portable.core.tests.sleep.stm32h103.linux.aep.gcc.debug.i2c',
+    name='I2C Debug GNU/Linux STM32-H103 Sleep configuration with ARM Embedded GCC',
+    description='I2C Debug build configuration for Sleep.',
+    
+    buildConfigurationName='stm32h103_linux_aep_gcc_sleep_Debug_i2c',
+    
+    buildFolder='$(PARENT)/linux/aep/gcc/sleep/Debug/i2c',
+    
+    requirements=[
+        'enable("DEBUG")',
+        
+        # and the i2c trace output        
+        'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',      
     ],
       
     toolchain='toolchain.linux.arm.ep.gcc.debug',

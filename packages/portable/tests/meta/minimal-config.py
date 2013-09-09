@@ -129,9 +129,6 @@ Configuration(
             requirements=[
                 # enable the platform    
                 'enable("package.os.hal.platform.olimex.stm32h103")',    
-                    
-                # and the i2c trace output        
-                'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',                       
             ],
                       
             buildFolder='stm32h103',
@@ -147,6 +144,7 @@ Configuration(
                 'minimal-stm32h103-config.py',
             ],
         ),
+
               
     ],
 )
