@@ -21,6 +21,8 @@
 #include "hal/architecture/arm/cortexm/include/Cpu.h"
 #include "portable/language/cpp/include/abort.h"
 
+#include <sys/types.h>
+
 // ----------------------------------------------------------------------------
 
 namespace hal
