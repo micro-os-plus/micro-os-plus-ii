@@ -33,11 +33,16 @@ namespace os
       __attribute__((always_inline))
       __putHex(Implementation_T& implementation, number_T n)
       {
-        size_t pos;
-        char buff[sizeof(n) * 2];
+        // The extra byte is used to store a string terminator. It is
+        // not required by write(), which receives a length, but
+        // it helps implementations over semi-hosting.
+        char buff[sizeof(n) * 2 + 1];
+
+        size_t pos = sizeof(buff) - 1;
+        buff[pos] = '\0';
 
         // the size is fixed and is given by the size of the variable
-        for (pos = sizeof(buff); pos > 0;)
+        for (; pos > 0;)
           {
             char ch = (n & 0xF);
             // always use upper case letters
@@ -46,7 +51,7 @@ namespace os
           }
 
         // atomic call to the implementation
-        implementation.write(buff, sizeof(buff));
+        implementation.write(buff, sizeof(buff) - 1);
       }
 
     /// \ingroup diag_conv
@@ -66,11 +71,14 @@ namespace os
             n = -n;
           }
 
-        size_t pos;
         // the size is maximal and must fit all digits
-        char buff[sizeof(n) * 5 / 2 + 1]; // one more for the sign
+        // one more for the sign and one more for the string terminator
+        char buff[sizeof(n) * 5 / 2 + 1 + 1];
 
-        for (pos = sizeof(buff); pos != 0;)
+        size_t pos = sizeof(buff) - 1;
+        buff[pos] = '\0';
+
+        for (; pos > 0;)
           {
             char ch = (n % 10);
             buff[--pos] = ch + '0';
@@ -86,7 +94,7 @@ namespace os
           }
 
         // atomic call to the implementation
-        implementation.write(&buff[pos], (sizeof(buff) - pos));
+        implementation.write(&buff[pos], (sizeof(buff) - pos - 1));
       }
 
     /// \ingroup diag_conv
@@ -98,11 +106,13 @@ namespace os
       __attribute__((always_inline))
       __putUnsigned(Implementation_T& implementation, number_T n)
       {
-        size_t pos;
         // the size is maximal and must fit all digits
-        char buff[sizeof(n) * 5 / 2]; // one more for the sign
+        char buff[sizeof(n) * 5 / 2 + 1]; // one more for the terminator
 
-        for (pos = sizeof(buff); pos != 0;)
+        size_t pos = sizeof(buff)-1;
+        buff[pos] = '\0';
+
+        for (; pos != 0;)
           {
             char ch = (n % 10);
             buff[--pos] = ch + '0';
