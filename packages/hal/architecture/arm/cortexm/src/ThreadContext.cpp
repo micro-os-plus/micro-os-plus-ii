@@ -155,7 +155,7 @@ namespace hal
           *--pStack = 4;            // R4        +0*4=4
 
           // Be sure the stack is at least large enough to hold the exception frame.
-          assert(pStack > pStackBottom);
+          os_assert(pStack > pStackBottom);
 
           // Store the current stack pointer in the context
           m_pStack = pStack;

@@ -3924,6 +3924,8 @@ namespace os
                 __r.release();
               }
 
+#if defined(OS_SKIP_NOT_YET_IMPLEMENTED)
+
             template<class _Tp>
             template <class _Yp, class _Dp, class>
 #ifndef _LIBCPP_HAS_NO_RVALUE_REFERENCES
@@ -3941,6 +3943,8 @@ namespace os
                     __enable_weak_this(__r.get());
                     __r.release();
                   }
+
+#endif
 
 #ifndef _LIBCPP_HAS_NO_VARIADICS
 
@@ -4847,7 +4851,7 @@ namespace os
 #if defined(OS_INCLUDE_PORTABLE_LANGUAGE_CPP_EXCEPTIONS)
                     throw bad_weak_ptr();
 #else
-                    assert(!"bad_weak_ptr");
+                    os_assert(!"bad_weak_ptr");
 #endif
                   }
 

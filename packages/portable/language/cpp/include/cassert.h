@@ -17,8 +17,6 @@
 
 #include "portable/core/include/ConfigDefines.h"
 
-#undef assert
-
 #if defined(DEBUG) || defined(__DOXYGEN__)
 
 /// \headerfile cassert.h "portable/language/cpp/include/cassert.h"
@@ -35,9 +33,9 @@
 /// If the assertion evaluates to false, the program is terminated,
 /// eventually with an identifying message sent to the trace device.
 /// \note This macro is enabled only on debug configurations.
-#define assert(e) ((void) ((e) ? 0 : (os::infra::assertFailed(__func__, __FILE__, __LINE__, #e), 0)))
+#define os_assert(e) ((void) ((e) ? 0 : (os::infra::assertFailed(__func__, __FILE__, __LINE__, #e), 0)))
 
-#define assert_always(msg) ((void) ((os::infra::assertFailed(__func__, __FILE__, __LINE__, #msg), 0)))
+#define os_assert_always(msg) ((void) ((os::infra::assertFailed(__func__, __FILE__, __LINE__, #msg), 0)))
 
 namespace os
 {
@@ -52,8 +50,8 @@ namespace os
 
 #else
 
-#define assert(e) ((void)0)
-#define assert_always(msg) ((void)0)
+#define os_assert(e) ((void)0)
+#define os_assert_always(msg) ((void)0)
 
 #endif
 
