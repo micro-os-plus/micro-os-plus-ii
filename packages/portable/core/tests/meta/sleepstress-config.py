@@ -22,17 +22,16 @@ Configuration(
     requirements=[
         'setValue("APP_STRING_APPLICATION_NAME", "UnitTest: SleepStress")',        
         'setValue("APP_INTEGER_VERSION_REVISION", 1)',
-        
+
+        # enable test artefact
+        'enable("component.os.portable.core.tests.sleepstress")',
+
         # enable the test suite code
         'enable("component.os.portable.infrastructure.testsuite")',
 
         # enable ostream support for Trace
         'enable("option.os.portable.diagnostics.trace.ostream")',
-
-        # enable test artefact
-        'enable("component.os.portable.core.tests.sleepstress")',
-        
-        
+  
         'setValue("OS_INTEGER_CORE_SCHEDULER_MAXUSERTHREADS", 11)',
 
         # the default is 1000
@@ -143,9 +142,9 @@ Configuration(
                 'enable("package.os.hal.platform.olimex.stm32h103")',    
                     
                 # and the i2c trace output        
-                'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',   
+                #'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',   
                 
-                'enable("component.os.hal.architecture.arm.cortexm.infrastructure.testsuite.i2c")',                    
+                #'enable("component.os.hal.architecture.arm.cortexm.infrastructure.testsuite.i2c")',                    
             ],
                       
             buildFolder='stm32h103',

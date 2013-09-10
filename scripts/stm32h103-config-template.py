@@ -18,7 +18,10 @@ Configuration(
         'enable("DEBUG")',
         
         # the semi-hosting trace output
-        'enable("component.os.hal.architecture.arm.cortexm.diagnostics.trace.semihosting")',              
+        'enable("component.os.hal.architecture.arm.cortexm.diagnostics.trace.semihosting")', 
+        
+        # and the semi-hosting test suite output             
+        'enable("component.os.hal.architecture.arm.cortexm.infrastructure.testsuite.semihosting")',              
     ],
       
     toolchain='toolchain.osx.arm.ep.gcc.debug',
@@ -37,7 +40,10 @@ Configuration(
         'enable("DEBUG")',
         
         # and the i2c trace output        
-        'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',      
+        'enable("component.os.hal.architecture.arm.cortexm.stm32f1.diagnostics.trace.i2c")',    
+        
+        # and the i2c test suite output             
+        'enable("component.os.hal.architecture.arm.cortexm.infrastructure.testsuite.i2c")',  
     ],
       
     toolchain='toolchain.osx.arm.ep.gcc.debug',
