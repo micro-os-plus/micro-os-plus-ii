@@ -135,7 +135,7 @@ namespace hal
 #if defined(DEBUG)
         // Kludge to avoid Segger GDB server bug, which prevents
         // semi-hosting strings located in high RAM to print.
-        char dummy[256] __attribute__((unused));
+        char dummy[128] __attribute__((unused));
 #endif
 
         CppStartup::initialiseDataAndBss();
