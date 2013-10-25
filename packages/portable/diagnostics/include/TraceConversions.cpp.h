@@ -73,6 +73,7 @@ namespace os
 
         // the size is maximal and must fit all digits
         // one more for the sign and one more for the string terminator
+        // the terminator is there only to optimise semi-hosting
         char buff[sizeof(n) * 5 / 2 + 1 + 1];
 
         size_t pos = sizeof(buff) - 1;
@@ -107,9 +108,11 @@ namespace os
       __putUnsigned(Implementation_T& implementation, number_T n)
       {
         // the size is maximal and must fit all digits
-        char buff[sizeof(n) * 5 / 2 + 1]; // one more for the terminator
+        // one more for the terminator
+        // the terminator is there only to optimise semi-hosting
+        char buff[sizeof(n) * 5 / 2 + 1];
 
-        size_t pos = sizeof(buff)-1;
+        size_t pos = sizeof(buff) - 1;
         buff[pos] = '\0';
 
         for (; pos != 0;)
@@ -122,7 +125,7 @@ namespace os
           }
 
         // atomic call to the implementation
-        implementation.write(&buff[pos], (sizeof(buff) - pos));
+        implementation.write(&buff[pos], (sizeof(buff) - pos - 1));
       }
 
   // ==========================================================================
