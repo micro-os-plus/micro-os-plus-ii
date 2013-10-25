@@ -21,7 +21,7 @@ Toolchain(
     compilerInputOptions='"$<"',
     
     # These are options common for all versions (debug/release, 32/64)
-    compilerWarningOptions='-Werror -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic',
+    compilerWarningOptions='-Werror -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-documentation-unknown-command',
     compilerMiscOptions='-emit-llvm -fsigned-char -fsigned-bitfields -fmessage-length=0 -c',
     compilerPreprocessorOptions='-D__MICRO_OS_PLUS_PLUS__=1',
     compilerDebugOptions='-g',
