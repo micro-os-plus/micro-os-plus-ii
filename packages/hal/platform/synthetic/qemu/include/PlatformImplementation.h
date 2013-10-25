@@ -101,6 +101,52 @@ namespace hal
     __attribute__((always_inline))
     PlatformImplementation::executeMain(void)
     {
+#if false && defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEXM_DIAGNOSTICS_SEMIHOSTING)
+
+      diag::SemiHosting::CommandLineBlock commandLineBlock;
+      char commandLine[100];
+
+      commandLineBlock.pCommandLine = commandLine;
+      commandLineBlock.size = sizeof(commandLine);
+
+      int ret = diag::SemiHosting::getCommandLine(&commandLineBlock);
+      if (ret == 0)
+        {
+#if defined(DEBUG)
+          os::diag::trace.putString("command line=\"");
+          os::diag::trace.putString(commandLineBlock.pCommandLine);
+          os::diag::trace.putString("\", length=");
+          os::diag::trace.putDec(commandLineBlock.size);
+          os::diag::trace.putNewLine();
+#endif // defined(DEBUG)
+        }
+      else
+        {
+#if defined(DEBUG)
+          os::diag::trace.putString("getCommandLine() failed");
+          os::diag::trace.putNewLine();
+#endif // defined(DEBUG)
+        }
+
+#if defined(DEBUG)
+          os::diag::trace.putString("seconds=");
+          os::diag::trace.putDec(diag::SemiHosting::getTimeSeconds());
+          os::diag::trace.putNewLine();
+#endif // defined(DEBUG)
+
+#if defined(DEBUG)
+          os::diag::trace.putString("centiseconds=");
+          os::diag::trace.putDec(diag::SemiHosting::getTimeCentiseconds());
+          os::diag::trace.putNewLine();
+#endif // defined(DEBUG)
+
+#if defined(DEBUG)
+          os::diag::trace.putString("ticks=");
+          os::diag::trace.putDec(diag::SemiHosting::getTickFrequency());
+          os::diag::trace.putNewLine();
+#endif // defined(DEBUG)
+#endif
+
       m_returnCode = main(0, &"");
     }
 

@@ -61,9 +61,21 @@ namespace hal
         __attribute__((noreturn))
         exit(int code);
 
+        // Not supported on QEMU
+        static unsigned int
+        getTickFrequency(void);
+
         /// @} end of Public member functions
 
       };
+
+      inline unsigned int
+      __attribute__((always_inline))
+      SemiHosting::getTickFrequency(void)
+      {
+        return -1;
+      }
+
 
     // ========================================================================
 
