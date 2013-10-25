@@ -144,22 +144,25 @@ namespace hal
 
   // ==========================================================================
 
-}
-  // namespace cortexm
-
-// --------------==------------------------------------------------------------
-
-#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-
-namespace arch
-{
-  using ThreadContext = hal::cortexm::ThreadContext;
-}
-
-#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
-// --------------==------------------------------------------------------------
-
+}// namespace cortexm
 }// namspace hal
 
+#endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+
+// ============================================================================
+
+namespace hal
+{
+  namespace arch
+  {
+    using ThreadContext = hal::cortexm::ThreadContext;
+  } // namespace arch
+}// namspace hal
+
+// ============================================================================
+
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
 #endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_ARM_CORTEX_M)
 #endif // HAL_ARCHITECTURE_ARM_CORTEXM_THREADCONTEXT_H_

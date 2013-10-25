@@ -589,9 +589,10 @@ namespace os
 
       friend class Thread;
 
+#if !defined(__DOXYGEN__)
+      // Doxygen complains "no uniquely matching class member found"
       friend hal::arch::ThreadContext;
 
-#if !defined(__DOXYGEN__)
       // Doxygen complains "no uniquely matching class member found"
       friend hal::arch::ArchitectureImplementation;
 #endif

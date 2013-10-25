@@ -51,7 +51,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-      /// \class TNotifier Mutex.h "portable/core/include/Mutex.h"
+      /// \headerfile Mutex.h "portable/core/include/Mutex.h"
       /// \ingroup core_synchro
       /// \nosubgrouping
       ///
@@ -811,7 +811,7 @@ namespace os
 #pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-    /// \class TGenericMutex Mutex.h "portable/core/include/Mutex.h"
+    /// \headerfile Mutex.h "portable/core/include/Mutex.h"
     /// \ingroup core_synchro
     /// \nosubgrouping
     ///
@@ -1026,7 +1026,7 @@ namespace os
 
     // ------------------------------------------------------------------------
 
-    /// \class TLockGuard Mutex.h "portable/core/include/Mutex.h"
+    /// \headerfile Mutex.h "portable/core/include/Mutex.h"
     /// \ingroup core_synchro
     /// \nosubgrouping
     ///

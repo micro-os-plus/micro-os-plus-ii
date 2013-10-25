@@ -34,7 +34,7 @@ namespace os
 
     // 27.5.4 Class template fpos
 
-    /// \class fpos _fpos.h "portable/language/cpp/include/internal/_fpos.h"
+    /// \headerfile _fpos.h "portable/language/cpp/include/internal/_fpos.h"
     /// \ingroup std_io
     ///
     /// \brief  Class representing stream positions.

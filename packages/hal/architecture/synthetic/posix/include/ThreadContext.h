@@ -200,6 +200,11 @@ namespace hal
   }// namespace posix
 }      // namespace hal
 
+#endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+#endif // defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
+#if defined(OS_INCLUDE_HAL_ARCHITECTURE_SYNTHETIC_POSIX)
+#if defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
+
 // ============================================================================
 
 namespace hal
