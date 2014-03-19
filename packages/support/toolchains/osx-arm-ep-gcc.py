@@ -43,7 +43,8 @@ Toolchain(
         programName='arm-none-eabi-g++',
         description='OS X ARM Embedded GNU G++',
         standard='-std=c++11',
-        options='-fno-rtti -fno-exceptions -Wabi -fno-use-cxa-atexit -fno-threadsafe-statics',
+        # options='-fno-rtti -fno-exceptions -Wabi -fno-use-cxa-atexit -fno-threadsafe-statics',
+        options='-Wabi -fno-use-cxa-atexit -fno-threadsafe-statics',
     ),
           
     asm=Tool(

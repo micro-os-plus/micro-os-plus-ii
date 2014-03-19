@@ -44,28 +44,28 @@ namespace hal
 
     void
     ArchitectureImplementation::initialiseScheduler(void)
-      {
+    {
 #if defined(DEBUG)
-        os::diag::trace.putString(__PRETTY_FUNCTION__);
-        os::diag::trace.putNewLine();
+      os::diag::trace.putString(__PRETTY_FUNCTION__);
+      os::diag::trace.putNewLine();
 #endif
-        // The first context switch will be executed within the context
-        // of the main thread, so the first time when the context is saved
-        // onto the stack, the cached pointer shall be initialised with
-        // the main thread context.
-        ThreadContext::ms_ppStack = os::mainThread.getContext().getPPStack();
+      // The first context switch will be executed within the context
+      // of the main thread, so the first time when the context is saved
+      // onto the stack, the cached pointer shall be initialised with
+      // the main thread context.
+      ThreadContext::ms_ppStack = os::mainThread.getContext().getPPStack();
 
-        // Make PendSV the lowest priority interrupts (same for SysTick)
-        // portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
-        (*((volatile unsigned long *) 0xe000ed20)) |=
-        (((unsigned long) configKERNEL_INTERRUPT_PRIORITY) << 16UL);
+      // Make PendSV the lowest priority interrupts (same for SysTick)
+      // portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
+      (*((volatile unsigned long *) 0xe000ed20)) |=
+          (((unsigned long) configKERNEL_INTERRUPT_PRIORITY) << 16UL);
 
-        // Disable base priority (allow all interrupts).
-        Cpu::setBASEPRI(0);
+      // Disable base priority (allow all interrupts).
+      Cpu::setBASEPRI(0);
 
-        // Set the master interrupts enable bit.
-        Cpu::enableInterrupts();
-      }
+      // Set the master interrupts enable bit.
+      Cpu::enableInterrupts();
+    }
 
 #endif // defined(OS_INCLUDE_PORTABLE_CORE_SCHEDULER)
     void
@@ -159,7 +159,7 @@ namespace hal
         os::mainThread.start();
 
         os::core::stack::element_t* pspStack =
-        os::mainThread.getStack().getTopAligned(8);
+            os::mainThread.getStack().getTopAligned(8);
 
 #if defined(DEBUG)
 
@@ -235,6 +235,52 @@ extern "C"
 
   void
   __cxa_pure_virtual(void);
+
+  void
+  __attribute__((weak))
+  _exit(int);
+
+  void
+  __attribute__((weak))
+  _kill();
+
+  int
+  __attribute__((weak))
+  _getpid();
+
+  int
+  __attribute__((weak))
+  _write();
+
+  int
+  __attribute__((weak))
+  _close();
+
+  int
+  __attribute__((weak))
+  _isatty();
+
+  int
+  __attribute__((weak))
+  _lseek();
+
+  int
+  __attribute__((weak))
+  _read();
+
+  int
+  __attribute__((weak))
+  _fstat();
+
+  void
+  abort()
+  {
+    for (;;)
+      ;
+  }
+  char*
+  __cxa_demangle(const char* mangled_name, char* buf, size_t* n, int* status);
+
 } // end of "C"
 
 caddr_t
@@ -284,6 +330,67 @@ __cxa_pure_virtual(void)
 #endif
 
   os::std::abort();
+}
+
+void
+_exit(int)
+{
+  for (;;)
+    ;
+}
+
+void
+_kill()
+{
+
+}
+
+int
+_getpid()
+{
+  return -1;
+}
+
+int
+_write()
+{
+  return -1;
+}
+
+int
+_close()
+{
+  return -1;
+}
+
+int
+_isatty()
+{
+  return 0;
+}
+
+int
+_lseek()
+{
+  return -1;
+}
+
+int
+_read()
+{
+  return -1;
+}
+
+int
+_fstat()
+{
+  return -1;
+}
+
+char*
+__cxa_demangle(const char*, char*, size_t*, int*)
+{
+  return NULL;
 }
 
 // ----------------------------------------------------------------------------

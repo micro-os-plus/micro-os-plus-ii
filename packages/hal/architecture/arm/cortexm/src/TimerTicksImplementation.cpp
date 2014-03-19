@@ -113,7 +113,7 @@ namespace hal
     namespace InterruptHandler
     {
       void
-      SystemTick(void)
+      SystemTick(void) noexcept
       {
 #if 0
         os::diag::trace.putChar('.');

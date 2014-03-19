@@ -1,6 +1,7 @@
 17.6.1.3 Freestanding implementations
 
-A freestanding implementation has an implementation-defined set of headers. This set shall include at least the headers shown in Table 16.
+A freestanding implementation has an implementation-defined set of headers. 
+This set shall include at least the headers shown in Table 16.
 
 Table 16 — C++ headers for freestanding implementations
 
