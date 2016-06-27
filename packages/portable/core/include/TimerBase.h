@@ -281,7 +281,7 @@ namespace os
     /// Provide a safe timeout facility, using RAII.
     ///
     /// Insert a timer event on the constructor and remove it, if still there,
-    /// on the constructor.
+    /// on the destructor.
     class TimeoutGuard
     {
     public:

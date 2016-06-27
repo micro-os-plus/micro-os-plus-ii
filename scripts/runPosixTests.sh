@@ -221,11 +221,11 @@ then
 			# full tests, try to use all possible compilers
 		
 			# clang is always available on OS X
-			if [ "$MACHINE" == "x86_64" ]
-			then
-				(PATH=$PATH; runTestArray "osx" "llvm" "x64" "run") || exit $?
-			fi
-			(PATH=$PATH; runTestArray "osx" "llvm" "x32" "run") || exit $?
+#			if [ "$MACHINE" == "x86_64" ]
+#			then
+#				(PATH=$PATH; runTestArray "osx" "llvm" "x64" "run") || exit $?
+#			fi
+#			(PATH=$PATH; runTestArray "osx" "llvm" "x32" "run") || exit $?
 	
 			PATH_GCC48=/opt/local/bin			
 			if [ -x /opt/local/bin/g++-mp-4.8 ]
