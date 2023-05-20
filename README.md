@@ -1,4 +1,4 @@
-# micro-os-plus-ii
+# micro-os-plus-ii - µOS++ SE
 
 This project is the Second edition of µOS++, written in 2013.
 
