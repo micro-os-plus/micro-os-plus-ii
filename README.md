@@ -9,7 +9,7 @@ An experimental build system based on Python configurations
 was implemented as XCDL.
 
 The experience with the component based configuration and build 
-was considered successful, and system validated the concept.
+system was considered a success, and it validated the concept.
 
 The major weakness was the limitation to manual edits for the
 build metadata, since the Python code is not easily editable
