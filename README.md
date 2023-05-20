@@ -15,4 +15,7 @@ The major weakness was the limitation to manual edits for the
 build metadata, since the Python code is not easily editable
 via a GUI based IDE, as are the C/C++ settings in Eclipse CDT.
 
+The XCDL configuration and build system constituted the
+base for the future [xPack project](https://github.com/xpack).
+
 The project is now archived, and preserved for historical reasons.
